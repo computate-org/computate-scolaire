@@ -273,25 +273,6 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: vertxServiceAddress
-	 * r: classeDocumentSolr
-	 * r.enUS: classSolrDocument
-	 * r: VertxServiceAddresse
-	 * r.enUS: VertxServiceAddress
-	 * r: vertxServiceAddresse
-	 * r.enUS: vertxServiceAddress
-	 * r: frFR
-	 * r.enUS: enUS
-	 **/
-	protected void _vertxServiceAddresse(Couverture<String> c) {
-		String o = (String)classeDocumentSolr.get("vertxServiceAddresse_frFR_stored_string");
-		if(o == null)
-			o = configSite.getVertxServiceAddresse();
-		c.o(o);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: classExtendsBase
 	 * r: classeDocumentSolr
 	 * r.enUS: classSolrDocument
@@ -533,6 +514,25 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		List<String> o = (List<String>)classeDocumentSolr.get("classeRoles_frFR_stored_strings");
 		if(o == null)
 			o = new ArrayList<>();
+		c.o(o);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: vertxServiceAddress
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: VertxServiceAddresse
+	 * r.enUS: VertxServiceAddress
+	 * r: vertxServiceAddresse
+	 * r.enUS: vertxServiceAddress
+	 * r: frFR
+	 * r.enUS: enUS
+	 **/
+	protected void _vertxServiceAddresse(Couverture<String> c) {
+		String o = (String)classeDocumentSolr.get("vertxServiceAddresse_frFR_stored_string");
+		if(o == null)
+			o = classeNomSimple;
 		c.o(o);
 	}
 
@@ -986,12 +986,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "parameters:");
 			wChemins.s(wRequeteEnTete);
 			if("GET".equals(classeApiMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode)) {
-				wChemins.tl(4, "- name: pk");
+				wChemins.tl(4, "- name: id");
 				wChemins.tl(5, "in: path");
 				wChemins.t(5, "description: ").yamlStr(6, "");
 				wChemins.tl(5, "required: true");
 				wChemins.tl(5, "schema:");
-				wChemins.tl(6, "type: number");
+				wChemins.tl(6, "type: string");
 			}
 			else if(classeApiMethode.contains("Recherche")) {
 				wChemins.tl(4, "- in: query");

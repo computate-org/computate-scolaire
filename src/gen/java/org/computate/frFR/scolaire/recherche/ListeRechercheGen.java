@@ -1,16 +1,17 @@
 package org.computate.frFR.scolaire.recherche;
 
 import org.computate.frFR.scolaire.cluster.Cluster;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Objects;
 import java.util.List;
 import org.computate.frFR.scolaire.couverture.Couverture;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.commons.text.StringEscapeUtils;
+import java.lang.Boolean;
 import java.lang.Class;
-import org.apache.commons.lang3.StringUtils;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
@@ -80,6 +81,130 @@ public abstract class ListeRechercheGen<DEV> {
 	public void setRequeteSite_(RequeteSite requeteSite_) {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
+	}
+
+	/////////////
+	// stocker //
+	/////////////
+
+	/**	L'entité « stocker »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean stocker;
+	public Couverture<Boolean> stockerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("stocker").o(stocker);
+
+	/**	<br/>L'entité « stocker »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:stocker">Trouver l'entité stocker dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _stocker(Couverture<Boolean> c);
+
+	public Boolean getStocker() {
+		return stocker;
+	}
+
+	public void setStocker(Boolean stocker) {
+		this.stocker = stocker;
+		this.stockerCouverture.dejaInitialise = true;
+	}
+	public ListeRecherche setStocker(String o) {
+		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
+			this.stocker = Boolean.parseBoolean(o);
+		this.stockerCouverture.dejaInitialise = true;
+		return (ListeRecherche)this;
+	}
+	protected ListeRecherche stockerInit() {
+		if(!stockerCouverture.dejaInitialise) {
+			_stocker(stockerCouverture);
+			if(stocker == null)
+				setStocker(stockerCouverture.o);
+		}
+		stockerCouverture.dejaInitialise(true);
+		return (ListeRecherche)this;
+	}
+
+	public Boolean solrStocker() {
+		return stocker;
+	}
+
+	public String strStocker() {
+		return stocker == null ? "" : stocker.toString();
+	}
+
+	public String nomAffichageStocker() {
+		return null;
+	}
+
+	public String htmTooltipStocker() {
+		return null;
+	}
+
+	public String htmStocker() {
+		return stocker == null ? "" : StringEscapeUtils.escapeHtml4(strStocker());
+	}
+
+	/////////////
+	// peupler //
+	/////////////
+
+	/**	L'entité « peupler »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean peupler;
+	public Couverture<Boolean> peuplerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("peupler").o(peupler);
+
+	/**	<br/>L'entité « peupler »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:peupler">Trouver l'entité peupler dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _peupler(Couverture<Boolean> c);
+
+	public Boolean getPeupler() {
+		return peupler;
+	}
+
+	public void setPeupler(Boolean peupler) {
+		this.peupler = peupler;
+		this.peuplerCouverture.dejaInitialise = true;
+	}
+	public ListeRecherche setPeupler(String o) {
+		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
+			this.peupler = Boolean.parseBoolean(o);
+		this.peuplerCouverture.dejaInitialise = true;
+		return (ListeRecherche)this;
+	}
+	protected ListeRecherche peuplerInit() {
+		if(!peuplerCouverture.dejaInitialise) {
+			_peupler(peuplerCouverture);
+			if(peupler == null)
+				setPeupler(peuplerCouverture.o);
+		}
+		peuplerCouverture.dejaInitialise(true);
+		return (ListeRecherche)this;
+	}
+
+	public Boolean solrPeupler() {
+		return peupler;
+	}
+
+	public String strPeupler() {
+		return peupler == null ? "" : peupler.toString();
+	}
+
+	public String nomAffichagePeupler() {
+		return null;
+	}
+
+	public String htmTooltipPeupler() {
+		return null;
+	}
+
+	public String htmPeupler() {
+		return peupler == null ? "" : StringEscapeUtils.escapeHtml4(strPeupler());
 	}
 
 	///////////////
@@ -254,6 +379,8 @@ public abstract class ListeRechercheGen<DEV> {
 
 	public void initListeRecherche() {
 		cInit();
+		stockerInit();
+		peuplerInit();
 		solrQueryInit();
 		queryResponseInit();
 		solrDocumentListInit();
@@ -299,6 +426,10 @@ public abstract class ListeRechercheGen<DEV> {
 				return oListeRecherche.c;
 			case "requeteSite_":
 				return oListeRecherche.requeteSite_;
+			case "stocker":
+				return oListeRecherche.stocker;
+			case "peupler":
+				return oListeRecherche.peupler;
 			case "solrQuery":
 				return oListeRecherche.solrQuery;
 			case "queryResponse":
@@ -368,7 +499,7 @@ public abstract class ListeRechercheGen<DEV> {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash();
+		return Objects.hash(stocker, peupler);
 	}
 
 	////////////
@@ -381,7 +512,8 @@ public abstract class ListeRechercheGen<DEV> {
 		if(!(o instanceof ListeRecherche))
 			return false;
 		ListeRecherche that = (ListeRecherche)o;
-		return true;
+		return Objects.equals( stocker, that.stocker )
+				&& Objects.equals( peupler, that.peupler );
 	}
 
 	//////////////
@@ -391,6 +523,8 @@ public abstract class ListeRechercheGen<DEV> {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ListeRecherche {");
+		sb.append( "stocker: " ).append(stocker);
+		sb.append( ", peupler: " ).append(peupler);
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -1,21 +1,23 @@
 package org.computate.frFR.scolaire.contexte;
 
-import java.util.Objects;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.computate.frFR.scolaire.cluster.Cluster;
-import org.computate.frFR.scolaire.config.ConfigSite;
-import org.computate.frFR.scolaire.couverture.Couverture;
-import org.computate.frFR.scolaire.requete.RequeteSite;
-
 import io.vertx.core.Vertx;
+import org.computate.frFR.scolaire.config.ConfigSite;
+import io.vertx.ext.web.handler.OAuth2AuthHandler;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.lang.Integer;
+import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
+import java.util.Objects;
+import org.computate.frFR.scolaire.couverture.Couverture;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import java.lang.Object;
+import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import java.lang.String;
 import io.vertx.ext.sql.SQLClient;
-import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.ext.web.handler.OAuth2AuthHandler;
+import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.contexte.SiteContexte&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>

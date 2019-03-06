@@ -22,8 +22,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import org.apache.solr.common.SolrDocument;
 import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 import io.vertx.ext.sql.SQLConnection;
@@ -31,6 +31,7 @@ import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -962,17 +963,23 @@ public abstract class ClusterGen<DEV> extends Object {
 	// indexer //
 	/////////////
 
-	//public void indexerCluster() throws Exception {
-		//RequeteSite requeteSite = new RequeteSite();
-		//requeteSite.initLoinRequeteSite();
-		//SiteContexte siteContexte = new SiteContexte();
-		//siteContexte.initLoinSiteContexte();
-		//siteContexte.setRequeteSite_(requeteSite);
-		//requeteSite.setSiteContexte_(siteContexte);
-		//requeteSiteCluster(requeteSite);
-		//initLoinCluster(requeteSite);
-		//indexerCluster();
-	//}
+	public static void indexer() {
+		try {
+			RequeteSite requeteSite = new RequeteSite();
+			requeteSite.initLoinRequeteSite();
+			SiteContexte siteContexte = new SiteContexte();
+			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
+			siteContexte.initLoinSiteContexte();
+			siteContexte.setRequeteSite_(requeteSite);
+			requeteSite.setSiteContexte_(siteContexte);
+			Cluster o = new Cluster();
+			o.requeteSiteCluster(requeteSite);
+			o.initLoinCluster(requeteSite);
+			o.indexerCluster();
+		} catch(Exception e) {
+			ExceptionUtils.rethrow(e);
+		}
+	}
 
 
 	public void indexerPourClasse() throws Exception {
@@ -986,7 +993,6 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void indexerCluster(SolrClient clientSolr) throws Exception {
 		SolrInputDocument document = new SolrInputDocument();
 		indexerCluster(document);
-		document.addField("sauvegardesCluster_stored_strings", sauvegardesCluster);
 		clientSolr.add(document);
 		clientSolr.commit();
 	}
@@ -994,13 +1000,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void indexerCluster() throws Exception {
 		SolrInputDocument document = new SolrInputDocument();
 		indexerCluster(document);
-		document.addField("sauvegardesCluster_stored_strings", sauvegardesCluster);
 		SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 		clientSolr.add(document);
 		clientSolr.commit();
 	}
 
 	public void indexerCluster(SolrInputDocument document) throws Exception {
+		if(sauvegardesCluster != null)
+			document.addField("sauvegardesCluster_stored_strings", sauvegardesCluster);
+
 		if(pk != null) {
 			document.addField("pk_indexed_long", pk);
 			document.addField("pk_stored_long", pk);
@@ -1190,16 +1198,11 @@ public abstract class ClusterGen<DEV> extends Object {
 		sauvegardesCluster = (List<String>)solrDocument.get("sauvegardesCluster_stored_strings");
 		if(sauvegardesCluster != null) {
 
-			if(sauvegardesCluster.contains("pk")) {
-				Long pk = (Long)solrDocument.get("pk_stored_long");
-				if(pk != null)
-					oCluster.setPk(pk);
-			}
+			Long pk = (Long)solrDocument.get("pk_stored_long");
+			oCluster.setPk(pk);
 
-			if(sauvegardesCluster.contains("id")) {
-				String id = (String)solrDocument.get("id_stored_string");
-				oCluster.setId(id);
-			}
+			String id = (String)solrDocument.get("id");
+			oCluster.setId(id);
 
 			if(sauvegardesCluster.contains("utilisateurId")) {
 				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
@@ -1247,7 +1250,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(pk != null)
 			oCluster.setPk(pk);
 
-		String id = (String)solrDocument.get("id_stored_string");
+		String id = (String)solrDocument.get("id");
 		oCluster.setId(id);
 
 		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");

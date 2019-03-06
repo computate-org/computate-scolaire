@@ -231,6 +231,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 			if(appSwagger2 == null)
 				setAppSwagger2(appSwagger2Couverture.o);
 		}
+		if(appSwagger2 != null)
+			appSwagger2.initLoinPourClasse(requeteSite_);
 		appSwagger2Couverture.dejaInitialise(true);
 		return (ApiEcrivain)this;
 	}
@@ -270,6 +272,14 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	public ApiEcrivain addClasseUris(String o) {
 		if(o != null && !classeUris.contains(o))
 			this.classeUris.add(o);
+		return (ApiEcrivain)this;
+	}
+	public ApiEcrivain setClasseUris(JsonArray objets) {
+		classeUris.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addClasseUris(o);
+		}
 		return (ApiEcrivain)this;
 	}
 	protected ApiEcrivain classeUrisInit() {
@@ -1036,62 +1046,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 
 	public String htmClasseApiTag() {
 		return classeApiTag == null ? "" : StringEscapeUtils.escapeHtml4(strClasseApiTag());
-	}
-
-	//////////////////////////
-	// vertxServiceAddresse //
-	//////////////////////////
-
-	/**	L'entité « vertxServiceAddresse »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String vertxServiceAddresse;
-	public Couverture<String> vertxServiceAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("vertxServiceAddresse").o(vertxServiceAddresse);
-
-	/**	<br/>L'entité « vertxServiceAddresse »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vertxServiceAddresse">Trouver l'entité vertxServiceAddresse dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _vertxServiceAddresse(Couverture<String> c);
-
-	public String getVertxServiceAddresse() {
-		return vertxServiceAddresse;
-	}
-
-	public void setVertxServiceAddresse(String vertxServiceAddresse) {
-		this.vertxServiceAddresse = vertxServiceAddresse;
-		this.vertxServiceAddresseCouverture.dejaInitialise = true;
-	}
-	protected ApiEcrivain vertxServiceAddresseInit() {
-		if(!vertxServiceAddresseCouverture.dejaInitialise) {
-			_vertxServiceAddresse(vertxServiceAddresseCouverture);
-			if(vertxServiceAddresse == null)
-				setVertxServiceAddresse(vertxServiceAddresseCouverture.o);
-		}
-		vertxServiceAddresseCouverture.dejaInitialise(true);
-		return (ApiEcrivain)this;
-	}
-
-	public String solrVertxServiceAddresse() {
-		return vertxServiceAddresse;
-	}
-
-	public String strVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : vertxServiceAddresse;
-	}
-
-	public String nomAffichageVertxServiceAddresse() {
-		return null;
-	}
-
-	public String htmTooltipVertxServiceAddresse() {
-		return null;
-	}
-
-	public String htmVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddresse());
 	}
 
 	/////////////////////
@@ -1877,6 +1831,14 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 			this.classeMotsCles.add(o);
 		return (ApiEcrivain)this;
 	}
+	public ApiEcrivain setClasseMotsCles(JsonArray objets) {
+		classeMotsCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addClasseMotsCles(o);
+		}
+		return (ApiEcrivain)this;
+	}
 	protected ApiEcrivain classeMotsClesInit() {
 		if(!classeMotsClesCouverture.dejaInitialise) {
 			_classeMotsCles(classeMotsClesCouverture);
@@ -2006,6 +1968,14 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 			this.classeRoles.add(o);
 		return (ApiEcrivain)this;
 	}
+	public ApiEcrivain setClasseRoles(JsonArray objets) {
+		classeRoles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addClasseRoles(o);
+		}
+		return (ApiEcrivain)this;
+	}
 	protected ApiEcrivain classeRolesInit() {
 		if(!classeRolesCouverture.dejaInitialise) {
 			_classeRoles(classeRolesCouverture);
@@ -2034,6 +2004,62 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 
 	public String htmClasseRoles() {
 		return classeRoles == null ? "" : StringEscapeUtils.escapeHtml4(strClasseRoles());
+	}
+
+	//////////////////////////
+	// vertxServiceAddresse //
+	//////////////////////////
+
+	/**	L'entité « vertxServiceAddresse »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String vertxServiceAddresse;
+	public Couverture<String> vertxServiceAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("vertxServiceAddresse").o(vertxServiceAddresse);
+
+	/**	<br/>L'entité « vertxServiceAddresse »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vertxServiceAddresse">Trouver l'entité vertxServiceAddresse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _vertxServiceAddresse(Couverture<String> c);
+
+	public String getVertxServiceAddresse() {
+		return vertxServiceAddresse;
+	}
+
+	public void setVertxServiceAddresse(String vertxServiceAddresse) {
+		this.vertxServiceAddresse = vertxServiceAddresse;
+		this.vertxServiceAddresseCouverture.dejaInitialise = true;
+	}
+	protected ApiEcrivain vertxServiceAddresseInit() {
+		if(!vertxServiceAddresseCouverture.dejaInitialise) {
+			_vertxServiceAddresse(vertxServiceAddresseCouverture);
+			if(vertxServiceAddresse == null)
+				setVertxServiceAddresse(vertxServiceAddresseCouverture.o);
+		}
+		vertxServiceAddresseCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public String solrVertxServiceAddresse() {
+		return vertxServiceAddresse;
+	}
+
+	public String strVertxServiceAddresse() {
+		return vertxServiceAddresse == null ? "" : vertxServiceAddresse;
+	}
+
+	public String nomAffichageVertxServiceAddresse() {
+		return null;
+	}
+
+	public String htmTooltipVertxServiceAddresse() {
+		return null;
+	}
+
+	public String htmVertxServiceAddresse() {
+		return vertxServiceAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddresse());
 	}
 
 	////////////////////////
@@ -2114,7 +2140,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		wReponseSchemaInit();
 		ecrivainsInit();
 		classeApiTagInit();
-		vertxServiceAddresseInit();
 		classeEtendBaseInit();
 		classeEstBaseInit();
 		classeNomSimpleInit();
@@ -2131,6 +2156,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classeMotsClesInit();
 		classeRolesTrouvesInit();
 		classeRolesInit();
+		vertxServiceAddresseInit();
 		entiteDocumentSolrInit();
 	}
 
@@ -2143,6 +2169,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	/////////////////
 
 	public void requeteSiteApiEcrivain(RequeteSite requeteSite_) {
+		appSwagger2.setRequeteSite_(requeteSite_);
 		wChemins.setRequeteSite_(requeteSite_);
 		wCorpsRequetes.setRequeteSite_(requeteSite_);
 		wSchemas.setRequeteSite_(requeteSite_);
@@ -2228,8 +2255,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.ecrivains;
 			case "classeApiTag":
 				return oApiEcrivain.classeApiTag;
-			case "vertxServiceAddresse":
-				return oApiEcrivain.vertxServiceAddresse;
 			case "classeEtendBase":
 				return oApiEcrivain.classeEtendBase;
 			case "classeEstBase":
@@ -2262,6 +2287,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeRolesTrouves;
 			case "classeRoles":
 				return oApiEcrivain.classeRoles;
+			case "vertxServiceAddresse":
+				return oApiEcrivain.vertxServiceAddresse;
 			case "entiteDocumentSolr":
 				return oApiEcrivain.entiteDocumentSolr;
 			default:
@@ -2325,7 +2352,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(classeApiMethode, openApiVersion, classeUris, openApiVersionNumero, tabsSchema, tabsReponses, classeApiTag, vertxServiceAddresse, classeEtendBase, classeEstBase, classeNomSimple, classeCheminAbsolu, classeApiUriMethode, classeApiMethodeMethode, classeApiTypeMedia200Methode, classeApiOperationIdMethode, classeApiOperationIdMethodeRequete, classeApiOperationIdMethodeReponse, classeSuperApiOperationIdMethodeRequete, classeSuperApiOperationIdMethodeReponse, classeMotsClesTrouves, classeMotsCles, classeRolesTrouves, classeRoles);
+		return Objects.hash(classeApiMethode, openApiVersion, classeUris, openApiVersionNumero, tabsSchema, tabsReponses, classeApiTag, classeEtendBase, classeEstBase, classeNomSimple, classeCheminAbsolu, classeApiUriMethode, classeApiMethodeMethode, classeApiTypeMedia200Methode, classeApiOperationIdMethode, classeApiOperationIdMethodeRequete, classeApiOperationIdMethodeReponse, classeSuperApiOperationIdMethodeRequete, classeSuperApiOperationIdMethodeReponse, classeMotsClesTrouves, classeMotsCles, classeRolesTrouves, classeRoles, vertxServiceAddresse);
 	}
 
 	////////////
@@ -2345,7 +2372,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				&& Objects.equals( tabsSchema, that.tabsSchema )
 				&& Objects.equals( tabsReponses, that.tabsReponses )
 				&& Objects.equals( classeApiTag, that.classeApiTag )
-				&& Objects.equals( vertxServiceAddresse, that.vertxServiceAddresse )
 				&& Objects.equals( classeEtendBase, that.classeEtendBase )
 				&& Objects.equals( classeEstBase, that.classeEstBase )
 				&& Objects.equals( classeNomSimple, that.classeNomSimple )
@@ -2361,7 +2387,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				&& Objects.equals( classeMotsClesTrouves, that.classeMotsClesTrouves )
 				&& Objects.equals( classeMotsCles, that.classeMotsCles )
 				&& Objects.equals( classeRolesTrouves, that.classeRolesTrouves )
-				&& Objects.equals( classeRoles, that.classeRoles );
+				&& Objects.equals( classeRoles, that.classeRoles )
+				&& Objects.equals( vertxServiceAddresse, that.vertxServiceAddresse );
 	}
 
 	//////////////
@@ -2378,7 +2405,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		sb.append( ", tabsSchema: " ).append(tabsSchema);
 		sb.append( ", tabsReponses: " ).append(tabsReponses);
 		sb.append( ", classeApiTag: \"" ).append(classeApiTag).append( "\"" );
-		sb.append( ", vertxServiceAddresse: \"" ).append(vertxServiceAddresse).append( "\"" );
 		sb.append( ", classeEtendBase: " ).append(classeEtendBase);
 		sb.append( ", classeEstBase: " ).append(classeEstBase);
 		sb.append( ", classeNomSimple: \"" ).append(classeNomSimple).append( "\"" );
@@ -2395,6 +2421,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		sb.append( ", classeMotsCles: " ).append(classeMotsCles);
 		sb.append( ", classeRolesTrouves: " ).append(classeRolesTrouves);
 		sb.append( ", classeRoles: " ).append(classeRoles);
+		sb.append( ", vertxServiceAddresse: \"" ).append(vertxServiceAddresse).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

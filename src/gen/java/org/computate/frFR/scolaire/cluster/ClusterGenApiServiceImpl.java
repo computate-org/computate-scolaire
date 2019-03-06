@@ -85,7 +85,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	@Override
 	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
-		rechercheCluster(requeteSite, a -> {
+		rechercheCluster(requeteSite, false, true, a -> {
 			if(a.succeeded()) {
 				ListeRecherche<Cluster> listeCluster = a.result();
 				reponse200RechercheCluster(listeCluster, b -> {
@@ -101,12 +101,14 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		});
 	}
 
-	public void rechercheCluster(RequeteSite requeteSite, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void rechercheCluster(RequeteSite requeteSite, Boolean peupler, Boolean stocker, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
 			ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
+			listeRecherche.setPeupler(peupler);
+			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(Cluster.class);
 			listeRecherche.setRows(1000000);
@@ -172,6 +174,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			Buffer buffer = Buffer.buffer();
 			RequeteSite requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
 			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
 			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
 			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
@@ -190,8 +193,8 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
 			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
 			w.tl(1, ", \"liste\": [");
-			for(int i = 0; i < documentsSolr.size(); i++) {
-				SolrDocument documentSolr = documentsSolr.get(i);
+			for(int i = 0; i < listeCluster.size(); i++) {
+				Cluster o = listeCluster.getList().get(i);
 				Object entiteValeur;
 				Integer entiteNumero = 0;
 
@@ -200,29 +203,29 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 					w.s(", ");
 				w.s("{");
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("pk_stored_long")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("utilisateurId_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.q(entiteValeur));
+				entiteValeur = o.getUtilisateurId();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("cree_stored_date")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.q(entiteValeur));
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("modifie_stored_date")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.q(entiteValeur));
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("clusterNomCanonique_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomCanonique\": ", w.q(entiteValeur));
+				entiteValeur = o.getClusterNomCanonique();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomCanonique\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("clusterNomSimple_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomSimple\": ", w.q(entiteValeur));
+				entiteValeur = o.getClusterNomSimple();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomSimple\": ", w.q(entiteValeur));
 
 				w.tl(2, "}");
 			}
@@ -337,35 +340,35 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "pk":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pk", jsonObject.getLong(entiteVar), pk));
 						break;
 					case "id":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("id", jsonObject.getString(entiteVar), pk));
 						break;
 					case "supprime":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "utilisateurId":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
 						break;
 					case "cree":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "modifie":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "clusterNomCanonique":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("clusterNomCanonique", jsonObject.getString(entiteVar), pk));
 						break;
 					case "clusterNomSimple":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("clusterNomSimple", jsonObject.getString(entiteVar), pk));
 						break;
 					}
@@ -388,6 +391,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			Buffer buffer = Buffer.buffer();
 			RequeteSite requeteSite = o.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -401,7 +405,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete, body);
 		sqlCluster(requeteSite, a -> {
 			if(a.succeeded()) {
-				rechercheCluster(requeteSite, b -> {
+				rechercheCluster(requeteSite, false, true, b -> {
 					if(b.succeeded()) {
 						ListeRecherche<Cluster> listeCluster = b.result();
 						listePATCHCluster(listeCluster, c -> {
@@ -434,11 +438,28 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		});
 	}
 
-	public Future<OperationResponse> listePATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		return null;
+	public void listePATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		List<Future> futures = new ArrayList<>();
+		listeCluster.getList().forEach(o -> {
+			futures.add(
+				sqlPATCHCluster(o).compose(
+					a -> definirPATCHCluster(a).compose(
+						b -> indexerPATCHCluster(b)
+					)
+				)
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				reponse200PATCHCluster(listeCluster, gestionnaireEvenements);
+			} else {
+				erreurCluster(listeCluster.getRequeteSite_(), gestionnaireEvenements, a);
+			}
+		});
 	}
 
-	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public Future<Cluster> sqlPATCHCluster(Cluster o) {
+		Future<Cluster> future = Future.future();
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -447,40 +468,49 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
+			Cluster o2 = new Cluster();
 
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setPk":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("pk", requeteJson.getLong(methodeNom), pk));
+						o2.setPk(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("pk", o2.getPk(), pk));
 						break;
 					case "setId":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("id", requeteJson.getString(methodeNom), pk));
+						o2.setId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("id", o2.getId(), pk));
 						break;
 					case "setSupprime":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("supprime", requeteJson.getBoolean(methodeNom), pk));
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						break;
 					case "setUtilisateurId":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("utilisateurId", requeteJson.getString(methodeNom), pk));
+						o2.setUtilisateurId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.getUtilisateurId(), pk));
 						break;
 					case "setCree":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("cree", requeteJson.getInstant(methodeNom), pk));
+						o2.setCree(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
 						break;
 					case "setModifie":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("modifie", requeteJson.getInstant(methodeNom), pk));
+						o2.setModifie(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
 						break;
 					case "setClusterNomCanonique":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("clusterNomCanonique", requeteJson.getString(methodeNom), pk));
+						o2.setClusterNomCanonique(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("clusterNomCanonique", o2.getClusterNomCanonique(), pk));
 						break;
 					case "setClusterNomSimple":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("clusterNomSimple", requeteJson.getString(methodeNom), pk));
+						o2.setClusterNomSimple(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("clusterNomSimple", o2.getClusterNomSimple(), pk));
 						break;
 				}
 			}
@@ -489,17 +519,60 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				o2.setRequeteSite_(o.getRequeteSite_());
+				o2.setPk(pk);
+				future.complete(o2);
 			});
+			return future;
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			return Future.failedFuture(e);
+		}
+	}
+
+	public Future<Cluster> definirPATCHCluster(Cluster o) {
+		Future<Cluster> future = Future.future();
+		try {
+			RequeteSite requeteSite = o.getRequeteSite_();
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Long pk = o.getPk();
+			connexionSql.queryWithParams(
+					SiteContexte.SQL_definir
+					, new JsonArray(Arrays.asList(pk))
+					, definirAsync
+			-> {
+				if(definirAsync.succeeded()) {
+					for(JsonArray definition : definirAsync.result().getResults()) {
+						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					}
+					future.complete(o);
+				} else {
+			future.fail(definirAsync.cause());
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public Future<Void> indexerPATCHCluster(Cluster o) {
+		Future<Void> future = Future.future();
+		try {
+			o.initLoinPourClasse(o.getRequeteSite_());
+			o.indexerPourClasse();
+				future.complete();
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
 		}
 	}
 
 	public void reponse200PATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
+			RequeteSite requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -511,7 +584,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	@Override
 	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
-		rechercheCluster(requeteSite, a -> {
+		rechercheCluster(requeteSite, false, true, a -> {
 			if(a.succeeded()) {
 				ListeRecherche<Cluster> listeCluster = a.result();
 				reponse200GETCluster(listeCluster, b -> {
@@ -530,39 +603,42 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	public void reponse200GETCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
+			RequeteSite requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
 			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
 
-			if(documentsSolr.size() > 0) {
+			if(listeCluster.size() > 0) {
 				SolrDocument documentSolr = documentsSolr.get(0);
+				Cluster o = listeCluster.get(0);
 				Object entiteValeur;
 				Integer entiteNumero = 0;
 
 				w.l("{");
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("pk_stored_long")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("utilisateurId_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.q(entiteValeur));
+				entiteValeur = o.getUtilisateurId();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("cree_stored_date")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.q(entiteValeur));
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("modifie_stored_date")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.q(entiteValeur));
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("clusterNomCanonique_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomCanonique\": ", w.q(entiteValeur));
+				entiteValeur = o.getClusterNomCanonique();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomCanonique\": ", w.q(entiteValeur));
 
-			entiteValeur = Optional.ofNullable(documentSolr.getFieldValues("clusterNomSimple_stored_string")).map(Collection<Object>::stream).orElseGet(Stream::empty).findFirst().orElse(null);
-			if(entiteValeur != null)
-				w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomSimple\": ", w.q(entiteValeur));
+				entiteValeur = o.getClusterNomSimple();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"clusterNomSimple\": ", w.q(entiteValeur));
 
 				w.l("}");
 			}
@@ -670,35 +746,35 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "pk":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("pk", jsonObject.getLong(entiteVar), pk));
 						break;
 					case "id":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("id", jsonObject.getString(entiteVar), pk));
 						break;
 					case "supprime":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "utilisateurId":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("utilisateurId", jsonObject.getString(entiteVar), pk));
 						break;
 					case "cree":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "modifie":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "clusterNomCanonique":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("clusterNomCanonique", jsonObject.getString(entiteVar), pk));
 						break;
 					case "clusterNomSimple":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("clusterNomSimple", jsonObject.getString(entiteVar), pk));
 						break;
 					}
@@ -721,6 +797,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			Buffer buffer = Buffer.buffer();
 			RequeteSite requeteSite = o.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -734,7 +811,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
 		sqlCluster(requeteSite, a -> {
 			if(a.succeeded()) {
-				rechercheCluster(requeteSite, b -> {
+				rechercheCluster(requeteSite, false, true, b -> {
 					if(b.succeeded()) {
 						ListeRecherche<Cluster> listeCluster = b.result();
 						supprimerDELETECluster(requeteSite, c -> {
@@ -795,6 +872,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		try {
 			Buffer buffer = Buffer.buffer();
 			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));

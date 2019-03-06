@@ -27,8 +27,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Var.enUS: HTML_CLOSED_ELEMENTS
 	 */
-	public static List<String> HTML_ELEMENTS_FERMES = Arrays.asList("area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr");
-	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p");
+	public static final List<String> HTML_ELEMENTS_FERMES = Arrays.asList("area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr");
+	public static final List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p", "textarea");
 
 	/**
 	 * r: d MMM yyyy H'h'mm
@@ -755,7 +755,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 										sx("Ce site est open source. ");
 									g("div");
 									e("div").a("class", "w3-large ").f();
-										String urlSource = "https://github.com/computate/computate.org/blob/master/src/main/java/" + StringUtils.replace(getClass().getCanonicalName(), ".", "/") + ".java";
+										String urlSource = "https://github.com/computate/computate-scolaire/blob/master/src/main/java/" + StringUtils.replace(getClass().getCanonicalName(), ".", "/") + ".java";
 										e("a").a("href", urlSource).a("target", "_new").f();
 											sx("Voir le code source ici. ");
 										g("a");

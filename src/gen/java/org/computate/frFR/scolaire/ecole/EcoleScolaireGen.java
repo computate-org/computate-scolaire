@@ -17,7 +17,6 @@ import io.vertx.core.logging.Logger;
 import org.computate.frFR.scolaire.contexte.SiteContexte;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.frFR.scolaire.chaine.Chaine;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -104,7 +103,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleCle() {
-		return "NomAffichage.enUS: ";
+		return "Cl\u00E9";
 	}
 
 	public String htmTooltipEcoleCle() {
@@ -191,6 +190,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	public EcoleScolaire addEnfantCles(Long o) {
 		if(o != null && !enfantCles.contains(o))
 			this.enfantCles.add(o);
+		return (EcoleScolaire)this;
+	}
+	public EcoleScolaire setEnfantCles(JsonArray objets) {
+		enfantCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addEnfantCles(o);
+		}
 		return (EcoleScolaire)this;
 	}
 	public EcoleScolaire addEnfantCles(String o) {
@@ -306,6 +313,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 			this.blocCles.add(o);
 		return (EcoleScolaire)this;
 	}
+	public EcoleScolaire setBlocCles(JsonArray objets) {
+		blocCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addBlocCles(o);
+		}
+		return (EcoleScolaire)this;
+	}
 	public EcoleScolaire addBlocCles(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
 			Long p = Long.parseLong(o);
@@ -417,6 +432,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	public EcoleScolaire addGroupeAgeCles(Long o) {
 		if(o != null && !groupeAgeCles.contains(o))
 			this.groupeAgeCles.add(o);
+		return (EcoleScolaire)this;
+	}
+	public EcoleScolaire setGroupeAgeCles(JsonArray objets) {
+		groupeAgeCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addGroupeAgeCles(o);
+		}
 		return (EcoleScolaire)this;
 	}
 	public EcoleScolaire addGroupeAgeCles(String o) {
@@ -532,6 +555,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 			this.sessionCles.add(o);
 		return (EcoleScolaire)this;
 	}
+	public EcoleScolaire setSessionCles(JsonArray objets) {
+		sessionCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addSessionCles(o);
+		}
+		return (EcoleScolaire)this;
+	}
 	public EcoleScolaire addSessionCles(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
 			Long p = Long.parseLong(o);
@@ -645,6 +676,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 			this.saisonCles.add(o);
 		return (EcoleScolaire)this;
 	}
+	public EcoleScolaire setSaisonCles(JsonArray objets) {
+		saisonCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addSaisonCles(o);
+		}
+		return (EcoleScolaire)this;
+	}
 	public EcoleScolaire addSaisonCles(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
 			Long p = Long.parseLong(o);
@@ -756,6 +795,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	public EcoleScolaire addAnneeCles(Long o) {
 		if(o != null && !anneeCles.contains(o))
 			this.anneeCles.add(o);
+		return (EcoleScolaire)this;
+	}
+	public EcoleScolaire setAnneeCles(JsonArray objets) {
+		anneeCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addAnneeCles(o);
+		}
 		return (EcoleScolaire)this;
 	}
 	public EcoleScolaire addAnneeCles(String o) {
@@ -1251,47 +1298,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	/**	L'entité « ecoleNom »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine ecoleNom = new Chaine();
-	public Couverture<Chaine> ecoleNomCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("ecoleNom").o(ecoleNom);
+	protected String ecoleNom;
+	public Couverture<String> ecoleNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNom").o(ecoleNom);
 
 	/**	<br/>L'entité « ecoleNom »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNom">Trouver l'entité ecoleNom dans Solr</a>
 	 * <br/>
-	 * @param ecoleNom est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleNom(Chaine o);
+	protected abstract void _ecoleNom(Couverture<String> c);
 
-	public Chaine getEcoleNom() {
+	public String getEcoleNom() {
 		return ecoleNom;
 	}
 
-	public void setEcoleNom(Chaine ecoleNom) {
+	public void setEcoleNom(String ecoleNom) {
 		this.ecoleNom = ecoleNom;
 		this.ecoleNomCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setEcoleNom(String o) {
-		ecoleNom.s(o);
-		this.ecoleNomCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire ecoleNomInit() {
 		if(!ecoleNomCouverture.dejaInitialise) {
-			_ecoleNom(ecoleNom);
+			_ecoleNom(ecoleNomCouverture);
+			if(ecoleNom == null)
+				setEcoleNom(ecoleNomCouverture.o);
 		}
-		ecoleNom.initLoinPourClasse(requeteSite_);
 		ecoleNomCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrEcoleNom() {
-		return ecoleNom == null ? null : ecoleNom.toString();
+		return ecoleNom;
 	}
 
 	public String strEcoleNom() {
-		return ecoleNom == null ? "" : ecoleNom.toString();
+		return ecoleNom == null ? "" : ecoleNom;
 	}
 
 	public String nomAffichageEcoleNom() {
@@ -1352,47 +1395,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////////////////
 
 	/**	L'entité « ecoleNumeroTelephone »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine ecoleNumeroTelephone = new Chaine();
-	public Couverture<Chaine> ecoleNumeroTelephoneCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
+	protected String ecoleNumeroTelephone;
+	public Couverture<String> ecoleNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
 
 	/**	<br/>L'entité « ecoleNumeroTelephone »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumeroTelephone">Trouver l'entité ecoleNumeroTelephone dans Solr</a>
 	 * <br/>
-	 * @param ecoleNumeroTelephone est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleNumeroTelephone(Chaine o);
+	protected abstract void _ecoleNumeroTelephone(Couverture<String> c);
 
-	public Chaine getEcoleNumeroTelephone() {
+	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
 
-	public void setEcoleNumeroTelephone(Chaine ecoleNumeroTelephone) {
+	public void setEcoleNumeroTelephone(String ecoleNumeroTelephone) {
 		this.ecoleNumeroTelephone = ecoleNumeroTelephone;
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setEcoleNumeroTelephone(String o) {
-		ecoleNumeroTelephone.s(o);
-		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire ecoleNumeroTelephoneInit() {
 		if(!ecoleNumeroTelephoneCouverture.dejaInitialise) {
-			_ecoleNumeroTelephone(ecoleNumeroTelephone);
+			_ecoleNumeroTelephone(ecoleNumeroTelephoneCouverture);
+			if(ecoleNumeroTelephone == null)
+				setEcoleNumeroTelephone(ecoleNumeroTelephoneCouverture.o);
 		}
-		ecoleNumeroTelephone.initLoinPourClasse(requeteSite_);
 		ecoleNumeroTelephoneCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrEcoleNumeroTelephone() {
-		return ecoleNumeroTelephone == null ? null : ecoleNumeroTelephone.toString();
+		return ecoleNumeroTelephone;
 	}
 
 	public String strEcoleNumeroTelephone() {
-		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone.toString();
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
 
 	public String nomAffichageEcoleNumeroTelephone() {
@@ -1453,47 +1492,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	///////////////////
 
 	/**	L'entité « ecoleAddresse »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine ecoleAddresse = new Chaine();
-	public Couverture<Chaine> ecoleAddresseCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("ecoleAddresse").o(ecoleAddresse);
+	protected String ecoleAddresse;
+	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
 
 	/**	<br/>L'entité « ecoleAddresse »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAddresse">Trouver l'entité ecoleAddresse dans Solr</a>
 	 * <br/>
-	 * @param ecoleAddresse est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleAddresse(Chaine o);
+	protected abstract void _ecoleAddresse(Couverture<String> c);
 
-	public Chaine getEcoleAddresse() {
+	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
 
-	public void setEcoleAddresse(Chaine ecoleAddresse) {
+	public void setEcoleAddresse(String ecoleAddresse) {
 		this.ecoleAddresse = ecoleAddresse;
 		this.ecoleAddresseCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setEcoleAddresse(String o) {
-		ecoleAddresse.s(o);
-		this.ecoleAddresseCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire ecoleAddresseInit() {
 		if(!ecoleAddresseCouverture.dejaInitialise) {
-			_ecoleAddresse(ecoleAddresse);
+			_ecoleAddresse(ecoleAddresseCouverture);
+			if(ecoleAddresse == null)
+				setEcoleAddresse(ecoleAddresseCouverture.o);
 		}
-		ecoleAddresse.initLoinPourClasse(requeteSite_);
 		ecoleAddresseCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrEcoleAddresse() {
-		return ecoleAddresse == null ? null : ecoleAddresse.toString();
+		return ecoleAddresse;
 	}
 
 	public String strEcoleAddresse() {
-		return ecoleAddresse == null ? "" : ecoleAddresse.toString();
+		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
 
 	public String nomAffichageEcoleAddresse() {
@@ -1554,47 +1589,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	////////////////////////////
 
 	/**	L'entité « ecoleAdministrateurNom »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine ecoleAdministrateurNom = new Chaine();
-	public Couverture<Chaine> ecoleAdministrateurNomCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("ecoleAdministrateurNom").o(ecoleAdministrateurNom);
+	protected String ecoleAdministrateurNom;
+	public Couverture<String> ecoleAdministrateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAdministrateurNom").o(ecoleAdministrateurNom);
 
 	/**	<br/>L'entité « ecoleAdministrateurNom »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAdministrateurNom">Trouver l'entité ecoleAdministrateurNom dans Solr</a>
 	 * <br/>
-	 * @param ecoleAdministrateurNom est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleAdministrateurNom(Chaine o);
+	protected abstract void _ecoleAdministrateurNom(Couverture<String> c);
 
-	public Chaine getEcoleAdministrateurNom() {
+	public String getEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom;
 	}
 
-	public void setEcoleAdministrateurNom(Chaine ecoleAdministrateurNom) {
+	public void setEcoleAdministrateurNom(String ecoleAdministrateurNom) {
 		this.ecoleAdministrateurNom = ecoleAdministrateurNom;
 		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setEcoleAdministrateurNom(String o) {
-		ecoleAdministrateurNom.s(o);
-		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire ecoleAdministrateurNomInit() {
 		if(!ecoleAdministrateurNomCouverture.dejaInitialise) {
-			_ecoleAdministrateurNom(ecoleAdministrateurNom);
+			_ecoleAdministrateurNom(ecoleAdministrateurNomCouverture);
+			if(ecoleAdministrateurNom == null)
+				setEcoleAdministrateurNom(ecoleAdministrateurNomCouverture.o);
 		}
-		ecoleAdministrateurNom.initLoinPourClasse(requeteSite_);
 		ecoleAdministrateurNomCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrEcoleAdministrateurNom() {
-		return ecoleAdministrateurNom == null ? null : ecoleAdministrateurNom.toString();
+		return ecoleAdministrateurNom;
 	}
 
 	public String strEcoleAdministrateurNom() {
-		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom.toString();
+		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
 	}
 
 	public String nomAffichageEcoleAdministrateurNom() {
@@ -1758,47 +1789,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////////
 
 	/**	L'entité « objetSuggere »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine objetSuggere = new Chaine();
-	public Couverture<Chaine> objetSuggereCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("objetSuggere").o(objetSuggere);
+	protected String objetSuggere;
+	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
 
 	/**	<br/>L'entité « objetSuggere »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
 	 * <br/>
-	 * @param objetSuggere est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _objetSuggere(Chaine o);
+	protected abstract void _objetSuggere(Couverture<String> c);
 
-	public Chaine getObjetSuggere() {
+	public String getObjetSuggere() {
 		return objetSuggere;
 	}
 
-	public void setObjetSuggere(Chaine objetSuggere) {
+	public void setObjetSuggere(String objetSuggere) {
 		this.objetSuggere = objetSuggere;
 		this.objetSuggereCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setObjetSuggere(String o) {
-		objetSuggere.s(o);
-		this.objetSuggereCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire objetSuggereInit() {
 		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggere);
+			_objetSuggere(objetSuggereCouverture);
+			if(objetSuggere == null)
+				setObjetSuggere(objetSuggereCouverture.o);
 		}
-		objetSuggere.initLoinPourClasse(requeteSite_);
 		objetSuggereCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrObjetSuggere() {
-		return objetSuggere == null ? null : objetSuggere.toString();
+		return objetSuggere;
 	}
 
 	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere.toString();
+		return objetSuggere == null ? "" : objetSuggere;
 	}
 
 	public String nomAffichageObjetSuggere() {
@@ -1859,47 +1886,43 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	///////////////////
 
 	/**	L'entité « ecoleNomCourt »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *	 is defined as null before being initialized. 
 	 */
-	protected Chaine ecoleNomCourt = new Chaine();
-	public Couverture<Chaine> ecoleNomCourtCouverture = new Couverture<Chaine>().p(this).c(Chaine.class).var("ecoleNomCourt").o(ecoleNomCourt);
+	protected String ecoleNomCourt;
+	public Couverture<String> ecoleNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomCourt").o(ecoleNomCourt);
 
 	/**	<br/>L'entité « ecoleNomCourt »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut Chaine(). 
+	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNomCourt">Trouver l'entité ecoleNomCourt dans Solr</a>
 	 * <br/>
-	 * @param ecoleNomCourt est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecoleNomCourt(Chaine o);
+	protected abstract void _ecoleNomCourt(Couverture<String> c);
 
-	public Chaine getEcoleNomCourt() {
+	public String getEcoleNomCourt() {
 		return ecoleNomCourt;
 	}
 
-	public void setEcoleNomCourt(Chaine ecoleNomCourt) {
+	public void setEcoleNomCourt(String ecoleNomCourt) {
 		this.ecoleNomCourt = ecoleNomCourt;
 		this.ecoleNomCourtCouverture.dejaInitialise = true;
 	}
-	public EcoleScolaire setEcoleNomCourt(String o) {
-		ecoleNomCourt.s(o);
-		this.ecoleNomCourtCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
 	protected EcoleScolaire ecoleNomCourtInit() {
 		if(!ecoleNomCourtCouverture.dejaInitialise) {
-			_ecoleNomCourt(ecoleNomCourt);
+			_ecoleNomCourt(ecoleNomCourtCouverture);
+			if(ecoleNomCourt == null)
+				setEcoleNomCourt(ecoleNomCourtCouverture.o);
 		}
-		ecoleNomCourt.initLoinPourClasse(requeteSite_);
 		ecoleNomCourtCouverture.dejaInitialise(true);
 		return (EcoleScolaire)this;
 	}
 
 	public String solrEcoleNomCourt() {
-		return ecoleNomCourt == null ? null : ecoleNomCourt.toString();
+		return ecoleNomCourt;
 	}
 
 	public String strEcoleNomCourt() {
-		return ecoleNomCourt == null ? "" : ecoleNomCourt.toString();
+		return ecoleNomCourt == null ? "" : ecoleNomCourt;
 	}
 
 	public String nomAffichageEcoleNomCourt() {
@@ -1955,6 +1978,200 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	/////////////
+	// ecoleId //
+	/////////////
+
+	/**	L'entité « ecoleId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleId;
+	public Couverture<String> ecoleIdCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleId").o(ecoleId);
+
+	/**	<br/>L'entité « ecoleId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleId">Trouver l'entité ecoleId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleId(Couverture<String> c);
+
+	public String getEcoleId() {
+		return ecoleId;
+	}
+
+	public void setEcoleId(String ecoleId) {
+		this.ecoleId = ecoleId;
+		this.ecoleIdCouverture.dejaInitialise = true;
+	}
+	protected EcoleScolaire ecoleIdInit() {
+		if(!ecoleIdCouverture.dejaInitialise) {
+			_ecoleId(ecoleIdCouverture);
+			if(ecoleId == null)
+				setEcoleId(ecoleIdCouverture.o);
+		}
+		ecoleIdCouverture.dejaInitialise(true);
+		return (EcoleScolaire)this;
+	}
+
+	public String solrEcoleId() {
+		return ecoleId;
+	}
+
+	public String strEcoleId() {
+		return ecoleId == null ? "" : ecoleId;
+	}
+
+	public String nomAffichageEcoleId() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEcoleId() {
+		return null;
+	}
+
+	public String htmEcoleId() {
+		return ecoleId == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleId());
+	}
+
+	public void htmEcoleId(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcoleScolaire", strPk(), "EcoleId\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcoleScolaire", strPk(), "EcoleId() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleId\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleId()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleId\"");
+							r.s(" value=\"", htmEcoleId(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleId());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////
+	// pageUri //
+	/////////////
+
+	/**	L'entité « pageUri »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String pageUri;
+	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
+
+	/**	<br/>L'entité « pageUri »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUri">Trouver l'entité pageUri dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageUri(Couverture<String> c);
+
+	public String getPageUri() {
+		return pageUri;
+	}
+
+	public void setPageUri(String pageUri) {
+		this.pageUri = pageUri;
+		this.pageUriCouverture.dejaInitialise = true;
+	}
+	protected EcoleScolaire pageUriInit() {
+		if(!pageUriCouverture.dejaInitialise) {
+			_pageUri(pageUriCouverture);
+			if(pageUri == null)
+				setPageUri(pageUriCouverture.o);
+		}
+		pageUriCouverture.dejaInitialise(true);
+		return (EcoleScolaire)this;
+	}
+
+	public String solrPageUri() {
+		return pageUri;
+	}
+
+	public String strPageUri() {
+		return pageUri == null ? "" : pageUri;
+	}
+
+	public String nomAffichagePageUri() {
+		return null;
+	}
+
+	public String htmTooltipPageUri() {
+		return null;
+	}
+
+	public String htmPageUri() {
+		return pageUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUri());
+	}
+
+	public void htmPageUri(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcoleScolaire", strPk(), "PageUri\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcoleScolaire", strPk(), "PageUri() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPageUri\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUri()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"pageUri\"");
+							r.s(" value=\"", htmPageUri(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPageUri());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1994,6 +2211,8 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		objetSuggerePoidsInit();
 		objetSuggereInit();
 		ecoleNomCourtInit();
+		ecoleIdInit();
+		pageUriInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSite requeteSite_) {
@@ -2006,12 +2225,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 
 	public void requeteSiteEcoleScolaire(RequeteSite requeteSite_) {
 			super.requeteSiteCluster(requeteSite_);
-		ecoleNom.setRequeteSite_(requeteSite_);
-		ecoleNumeroTelephone.setRequeteSite_(requeteSite_);
-		ecoleAddresse.setRequeteSite_(requeteSite_);
-		ecoleAdministrateurNom.setRequeteSite_(requeteSite_);
-		objetSuggere.setRequeteSite_(requeteSite_);
-		ecoleNomCourt.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSite requeteSite_) {
@@ -2052,7 +2265,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	public void indexerEcoleScolaire(SolrClient clientSolr) throws Exception {
 		SolrInputDocument document = new SolrInputDocument();
 		indexerEcoleScolaire(document);
-		document.addField("sauvegardesEcoleScolaire_stored_strings", sauvegardesEcoleScolaire);
 		clientSolr.add(document);
 		clientSolr.commit();
 	}
@@ -2060,13 +2272,15 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	public void indexerEcoleScolaire() throws Exception {
 		SolrInputDocument document = new SolrInputDocument();
 		indexerEcoleScolaire(document);
-		document.addField("sauvegardesEcoleScolaire_stored_strings", sauvegardesEcoleScolaire);
 		SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 		clientSolr.add(document);
 		clientSolr.commit();
 	}
 
 	public void indexerEcoleScolaire(SolrInputDocument document) throws Exception {
+		if(sauvegardesEcoleScolaire != null)
+			document.addField("sauvegardesEcoleScolaire_stored_strings", sauvegardesEcoleScolaire);
+
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
@@ -2136,19 +2350,30 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleTri_stored_int", ecoleTri);
 		}
 		if(ecoleNom != null) {
+			document.addField("ecoleNom_indexed_string", ecoleNom);
 			document.addField("ecoleNom_stored_string", ecoleNom);
 		}
 		if(ecoleNumeroTelephone != null) {
+			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
 		if(ecoleAddresse != null) {
+			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
 			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
 		}
 		if(ecoleAdministrateurNom != null) {
+			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
 		}
 		if(ecoleNomCourt != null) {
 			document.addField("ecoleNomCourt_stored_string", ecoleNomCourt);
+		}
+		if(ecoleId != null) {
+			document.addField("ecoleId_stored_string", ecoleId);
+		}
+		if(pageUri != null) {
+			document.addField("pageUri_indexed_string", pageUri);
+			document.addField("pageUri_stored_string", pageUri);
 		}
 		super.indexerCluster(document);
 
@@ -2224,6 +2449,10 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				return oEcoleScolaire.objetSuggere;
 			case "ecoleNomCourt":
 				return oEcoleScolaire.ecoleNomCourt;
+			case "ecoleId":
+				return oEcoleScolaire.ecoleId;
+			case "pageUri":
+				return oEcoleScolaire.pageUri;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -2353,6 +2582,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				setEcoleNomCourt(val);
 				sauvegardesEcoleScolaire.add(var);
 				return val;
+			case "ecoleId":
+				setEcoleId(val);
+				sauvegardesEcoleScolaire.add(var);
+				return val;
+			case "pageUri":
+				setPageUri(val);
+				sauvegardesEcoleScolaire.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -2471,6 +2708,18 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				if(ecoleNomCourt != null)
 					oEcoleScolaire.setEcoleNomCourt(ecoleNomCourt);
 			}
+
+			if(sauvegardesEcoleScolaire.contains("ecoleId")) {
+				String ecoleId = (String)solrDocument.get("ecoleId_stored_string");
+				if(ecoleId != null)
+					oEcoleScolaire.setEcoleId(ecoleId);
+			}
+
+			if(sauvegardesEcoleScolaire.contains("pageUri")) {
+				String pageUri = (String)solrDocument.get("pageUri_stored_string");
+				if(pageUri != null)
+					oEcoleScolaire.setPageUri(pageUri);
+			}
 		}
 
 		super.peuplerCluster(solrDocument);
@@ -2550,6 +2799,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		if(ecoleNomCourt != null)
 			oEcoleScolaire.setEcoleNomCourt(ecoleNomCourt);
 
+		String ecoleId = (String)solrDocument.get("ecoleId_stored_string");
+		if(ecoleId != null)
+			oEcoleScolaire.setEcoleId(ecoleId);
+
+		String pageUri = (String)solrDocument.get("pageUri_stored_string");
+		if(pageUri != null)
+			oEcoleScolaire.setPageUri(pageUri);
+
 		super.stockerCluster(solrDocument);
 	}
 
@@ -2569,7 +2826,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, supprime, archive, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAddresse, ecoleAdministrateurNom, objetSuggerePoids, objetSuggere, ecoleNomCourt);
+		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, supprime, archive, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAddresse, ecoleAdministrateurNom, objetSuggerePoids, objetSuggere, ecoleNomCourt, ecoleId, pageUri);
 	}
 
 	////////////
@@ -2600,7 +2857,9 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
 				&& Objects.equals( objetSuggerePoids, that.objetSuggerePoids )
 				&& Objects.equals( objetSuggere, that.objetSuggere )
-				&& Objects.equals( ecoleNomCourt, that.ecoleNomCourt );
+				&& Objects.equals( ecoleNomCourt, that.ecoleNomCourt )
+				&& Objects.equals( ecoleId, that.ecoleId )
+				&& Objects.equals( pageUri, that.pageUri );
 	}
 
 	//////////////
@@ -2622,13 +2881,15 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		sb.append( ", archive: " ).append(archive);
 		sb.append( ", scolaireTri: " ).append(scolaireTri);
 		sb.append( ", ecoleTri: " ).append(ecoleTri);
-		sb.append( ", ecoleNom: " ).append(ecoleNom);
-		sb.append( ", ecoleNumeroTelephone: " ).append(ecoleNumeroTelephone);
-		sb.append( ", ecoleAddresse: " ).append(ecoleAddresse);
-		sb.append( ", ecoleAdministrateurNom: " ).append(ecoleAdministrateurNom);
+		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
+		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
+		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
+		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
 		sb.append( ", objetSuggerePoids: " ).append(objetSuggerePoids);
-		sb.append( ", objetSuggere: " ).append(objetSuggere);
-		sb.append( ", ecoleNomCourt: " ).append(ecoleNomCourt);
+		sb.append( ", objetSuggere: \"" ).append(objetSuggere).append( "\"" );
+		sb.append( ", ecoleNomCourt: \"" ).append(ecoleNomCourt).append( "\"" );
+		sb.append( ", ecoleId: \"" ).append(ecoleId).append( "\"" );
+		sb.append( ", pageUri: \"" ).append(pageUri).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

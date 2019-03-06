@@ -23,7 +23,7 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
  * ApiMethode: DELETE
  * ApiTag.enUS: Cluster
  * ApiTag.frFR: Cluster
- */       
+ */             
 public class Cluster extends ClusterGen<Object> {   
 
 	public static DateTimeFormatter FORMAT_dateMedicalCourt = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.FRANCE);
@@ -52,8 +52,6 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * ClePrimaire: true
-	 * HtmlLigne: 1
-	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire dans la base de données. 
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
@@ -72,7 +70,6 @@ public class Cluster extends ClusterGen<Object> {
 
 	/**        
 	 * Var.enUS: _deleted
-	 * HtmlLigne: 1
 	 * Description.frFR: Supprimé. 
 	 * Description.enUS: Deleted. 
 	 * NomAffichage.frFR: Supprimé
@@ -94,7 +91,6 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Var.enUS: _created
-	 * HtmlLigne: 2
 	 * Description.frFR: La date et l'heure créées. 
 	 * Description.enUS: The date and time created. 
 	 * NomAffichage.frFR: Crée
@@ -106,7 +102,6 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Var.enUS: _modified
-	 * HtmlLigne: 2
 	 * Description.frFR: La date et l'heure modifiéés. 
 	 * Description.enUS: The date and time modified. 
 	 * NomAffichage.frFR: Modifié

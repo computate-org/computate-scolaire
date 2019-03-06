@@ -32,6 +32,14 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	protected void _requeteSite_(Couverture<RequeteSite> c) {
 	}
 
+	protected void _stocker(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _peupler(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 **/
@@ -49,10 +57,8 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		try {
 			QueryResponse o = requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery);
 			c.o(o);
-		} catch (SolrServerException e) {
-			System.err.println(ExceptionUtils.getStackTrace(e));
-		} catch (IOException e) {
-			System.err.println(ExceptionUtils.getStackTrace(e));
+		} catch (SolrServerException | IOException e) {
+			ExceptionUtils.rethrow(e);
 		}
 	}
 
@@ -69,17 +75,15 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		for(SolrDocument solrDocument : solrDocumentList) {
 			try {
 				DEV o = c.newInstance();
-				MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
+				if(peupler)
+					MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
+				if(stocker)
+					MethodUtils.invokeMethod(o, "stockerPourClasse", solrDocument);
 				MethodUtils.invokeMethod(o, "initLoinPourClasse", requeteSite_);
 				l.add(o);
-			} catch (InstantiationException e) {
-				System.err.println(ExceptionUtils.getStackTrace(e));
-			} catch (IllegalAccessException e) {
-				System.err.println(ExceptionUtils.getStackTrace(e));
-			} catch (NoSuchMethodException e) {
-				System.err.println(ExceptionUtils.getStackTrace(e));
-			} catch (InvocationTargetException e) {
-				System.err.println(ExceptionUtils.getStackTrace(e));
+			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+					| InvocationTargetException e) {
+				ExceptionUtils.rethrow(e);
 			}
 		}
 	}

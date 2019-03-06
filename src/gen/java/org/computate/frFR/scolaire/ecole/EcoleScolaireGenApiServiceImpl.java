@@ -86,7 +86,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 	@Override
 	public void rechercheEcoleScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete);
-		rechercheEcoleScolaire(requeteSite, a -> {
+		rechercheEcoleScolaire(requeteSite, false, true, a -> {
 			if(a.succeeded()) {
 				ListeRecherche<EcoleScolaire> listeEcoleScolaire = a.result();
 				reponse200RechercheEcoleScolaire(listeEcoleScolaire, b -> {
@@ -102,12 +102,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 		});
 	}
 
-	public void rechercheEcoleScolaire(RequeteSite requeteSite, Handler<AsyncResult<ListeRecherche<EcoleScolaire>>> gestionnaireEvenements) {
+	public void rechercheEcoleScolaire(RequeteSite requeteSite, Boolean peupler, Boolean stocker, Handler<AsyncResult<ListeRecherche<EcoleScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
 			ListeRecherche<EcoleScolaire> listeRecherche = new ListeRecherche<EcoleScolaire>();
+			listeRecherche.setPeupler(peupler);
+			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(EcoleScolaire.class);
 			listeRecherche.setRows(1000000);
@@ -215,7 +217,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -229,7 +231,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -243,7 +245,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -257,7 +259,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -271,7 +273,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -285,7 +287,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -325,6 +327,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				entiteValeur = o.getEcoleNomCourt();
 				if(entiteValeur != null)
 					w.l(entiteNumero++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.q(entiteValeur));
+
+				entiteValeur = o.getEcoleId();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"ecoleId\": ", w.q(entiteValeur));
+
+				entiteValeur = o.getPageUri();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.q(entiteValeur));
 
 				w.tl(2, "}");
 			}
@@ -439,76 +449,84 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "ecoleCle":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleCle", jsonObject.getLong(entiteVar), pk));
 						break;
 					case "enfantCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "blocCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "groupeAgeCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("groupeAgeCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "sessionCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "saisonCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("saisonCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "anneeCles":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
 					case "supprime":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "archive":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "scolaireTri":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("scolaireTri", jsonObject.getInteger(entiteVar), pk));
 						break;
 					case "ecoleTri":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleTri", jsonObject.getInteger(entiteVar), pk));
 						break;
 					case "ecoleNom":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleNumeroTelephone":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleAddresse":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleAdministrateurNom":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
 						break;
 					case "objetSuggerePoids":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("objetSuggerePoids", jsonObject.getDouble(entiteVar), pk));
 						break;
 					case "objetSuggere":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("objetSuggere", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ecoleNomCourt":
-						postSql.append(SiteContexte.SQL_setP);
+						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleNomCourt", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleId":
+						postSql.append(SiteContexte.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleId", jsonObject.getString(entiteVar), pk));
+						break;
+					case "pageUri":
+						postSql.append(SiteContexte.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("pageUri", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -544,7 +562,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete, body);
 		sqlEcoleScolaire(requeteSite, a -> {
 			if(a.succeeded()) {
-				rechercheEcoleScolaire(requeteSite, b -> {
+				rechercheEcoleScolaire(requeteSite, false, true, b -> {
 					if(b.succeeded()) {
 						ListeRecherche<EcoleScolaire> listeEcoleScolaire = b.result();
 						listePATCHEcoleScolaire(listeEcoleScolaire, c -> {
@@ -577,11 +595,28 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 		});
 	}
 
-	public Future<OperationResponse> listePATCHEcoleScolaire(ListeRecherche<EcoleScolaire> listeEcoleScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		return null;
+	public void listePATCHEcoleScolaire(ListeRecherche<EcoleScolaire> listeEcoleScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		List<Future> futures = new ArrayList<>();
+		listeEcoleScolaire.getList().forEach(o -> {
+			futures.add(
+				sqlPATCHEcoleScolaire(o).compose(
+					a -> definirPATCHEcoleScolaire(a).compose(
+						b -> indexerPATCHEcoleScolaire(b)
+					)
+				)
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				reponse200PATCHEcoleScolaire(listeEcoleScolaire, gestionnaireEvenements);
+			} else {
+				erreurEcoleScolaire(listeEcoleScolaire.getRequeteSite_(), gestionnaireEvenements, a);
+			}
+		});
 	}
 
-	public void sqlPATCHEcoleScolaire(EcoleScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public Future<EcoleScolaire> sqlPATCHEcoleScolaire(EcoleScolaire o) {
+		Future<EcoleScolaire> future = Future.future();
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -590,98 +625,133 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
+			EcoleScolaire o2 = new EcoleScolaire();
 
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setEcoleCle":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleCle", requeteJson.getLong(methodeNom), pk));
+						o2.setEcoleCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleCle", o2.getEcoleCle(), pk));
 						break;
 					case "addEnfantCles":
+						o2.setEnfantCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("enfantCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("enfantCles", o2.getEnfantCles(), pk));
 					case "setEnfantCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("enfantCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setEnfantCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("enfantCles", o2.getEnfantCles(), pk));
 						break;
 					case "addBlocCles":
+						o2.setBlocCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("blocCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("blocCles", o2.getBlocCles(), pk));
 					case "setBlocCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("blocCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setBlocCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("blocCles", o2.getBlocCles(), pk));
 						break;
 					case "addGroupeAgeCles":
+						o2.setGroupeAgeCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("groupeAgeCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("groupeAgeCles", o2.getGroupeAgeCles(), pk));
 					case "setGroupeAgeCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("groupeAgeCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setGroupeAgeCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("groupeAgeCles", o2.getGroupeAgeCles(), pk));
 						break;
 					case "addSessionCles":
+						o2.setSessionCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("sessionCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("sessionCles", o2.getSessionCles(), pk));
 					case "setSessionCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("sessionCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setSessionCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("sessionCles", o2.getSessionCles(), pk));
 						break;
 					case "addSaisonCles":
+						o2.setSaisonCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("saisonCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCles", o2.getSaisonCles(), pk));
 					case "setSaisonCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("saisonCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setSaisonCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("saisonCles", o2.getSaisonCles(), pk));
 						break;
 					case "addAnneeCles":
+						o2.setAnneeCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", requeteJson.getJsonArray(methodeNom), pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getAnneeCles(), pk));
 					case "setAnneeCles":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", requeteJson.getJsonArray(methodeNom), pk));
+						o2.setAnneeCles(requeteJson.getJsonArray(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getAnneeCles(), pk));
 						break;
 					case "setSupprime":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("supprime", requeteJson.getBoolean(methodeNom), pk));
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						break;
 					case "setArchive":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("archive", requeteJson.getBoolean(methodeNom), pk));
+						o2.setArchive(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
 						break;
 					case "setScolaireTri":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("scolaireTri", requeteJson.getInteger(methodeNom), pk));
+						o2.setScolaireTri(requeteJson.getInteger(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("scolaireTri", o2.getScolaireTri(), pk));
 						break;
 					case "setEcoleTri":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleTri", requeteJson.getInteger(methodeNom), pk));
+						o2.setEcoleTri(requeteJson.getInteger(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleTri", o2.getEcoleTri(), pk));
 						break;
 					case "setEcoleNom":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleNom", requeteJson.getString(methodeNom), pk));
+						o2.setEcoleNom(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNom", o2.getEcoleNom(), pk));
 						break;
 					case "setEcoleNumeroTelephone":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", requeteJson.getString(methodeNom), pk));
+						o2.setEcoleNumeroTelephone(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.getEcoleNumeroTelephone(), pk));
 						break;
 					case "setEcoleAddresse":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleAddresse", requeteJson.getString(methodeNom), pk));
+						o2.setEcoleAddresse(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.getEcoleAddresse(), pk));
 						break;
 					case "setEcoleAdministrateurNom":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", requeteJson.getString(methodeNom), pk));
+						o2.setEcoleAdministrateurNom(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.getEcoleAdministrateurNom(), pk));
 						break;
 					case "setObjetSuggerePoids":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("objetSuggerePoids", requeteJson.getDouble(methodeNom), pk));
+						o2.setObjetSuggerePoids(requeteJson.getDouble(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("objetSuggerePoids", o2.getObjetSuggerePoids(), pk));
 						break;
 					case "setObjetSuggere":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("objetSuggere", requeteJson.getString(methodeNom), pk));
+						o2.setObjetSuggere(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("objetSuggere", o2.getObjetSuggere(), pk));
 						break;
 					case "setEcoleNomCourt":
-						patchSql.append(SiteContexte.SQL_setP);
-						patchSqlParams.addAll(Arrays.asList("ecoleNomCourt", requeteJson.getString(methodeNom), pk));
+						o2.setEcoleNomCourt(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNomCourt", o2.getEcoleNomCourt(), pk));
+						break;
+					case "setEcoleId":
+						o2.setEcoleId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleId", o2.getEcoleId(), pk));
+						break;
+					case "setPageUri":
+						o2.setPageUri(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("pageUri", o2.getPageUri(), pk));
 						break;
 				}
 			}
@@ -690,10 +760,51 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				o2.setRequeteSite_(o.getRequeteSite_());
+				o2.setPk(pk);
+				future.complete(o2);
 			});
+			return future;
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			return Future.failedFuture(e);
+		}
+	}
+
+	public Future<EcoleScolaire> definirPATCHEcoleScolaire(EcoleScolaire o) {
+		Future<EcoleScolaire> future = Future.future();
+		try {
+			RequeteSite requeteSite = o.getRequeteSite_();
+			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Long pk = o.getPk();
+			connexionSql.queryWithParams(
+					SiteContexte.SQL_definir
+					, new JsonArray(Arrays.asList(pk))
+					, definirAsync
+			-> {
+				if(definirAsync.succeeded()) {
+					for(JsonArray definition : definirAsync.result().getResults()) {
+						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					}
+					future.complete(o);
+				} else {
+			future.fail(definirAsync.cause());
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public Future<Void> indexerPATCHEcoleScolaire(EcoleScolaire o) {
+		Future<Void> future = Future.future();
+		try {
+			o.initLoinPourClasse(o.getRequeteSite_());
+			o.indexerPourClasse();
+				future.complete();
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
 		}
 	}
 
@@ -714,7 +825,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 	@Override
 	public void getEcoleScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete);
-		rechercheEcoleScolaire(requeteSite, a -> {
+		rechercheEcoleScolaire(requeteSite, false, true, a -> {
 			if(a.succeeded()) {
 				ListeRecherche<EcoleScolaire> listeEcoleScolaire = a.result();
 				reponse200GETEcoleScolaire(listeEcoleScolaire, b -> {
@@ -759,7 +870,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -773,7 +884,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -787,7 +898,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -801,7 +912,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -815,7 +926,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -829,7 +940,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						if(k > 0)
 							w.s(", ");
 						w.s(((Long)entiteValeur).toString());
-						entiteValeur = entiteValeurs.iterator().next();
+						entiteValeur = entiteValeurs.iterator().hasNext() ? entiteValeurs.iterator().next() : null;
 					}
 					w.s("]");
 				}
@@ -870,204 +981,16 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				if(entiteValeur != null)
 					w.l(entiteNumero++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.q(entiteValeur));
 
+				entiteValeur = o.getEcoleId();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"ecoleId\": ", w.q(entiteValeur));
+
+				entiteValeur = o.getPageUri();
+				if(entiteValeur != null)
+					w.l(entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.q(entiteValeur));
+
 				w.l("}");
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	// PUT //
-
-	@Override
-	public void putEcoleScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete, body);
-		sqlEcoleScolaire(requeteSite, a -> {
-			if(a.succeeded()) {
-				remplacerPUTEcoleScolaire(requeteSite, b -> {
-					if(b.succeeded()) {
-						EcoleScolaire ecoleScolaire = b.result();
-						sqlPUTEcoleScolaire(ecoleScolaire, c -> {
-							if(c.succeeded()) {
-								definirEcoleScolaire(ecoleScolaire, d -> {
-									if(d.succeeded()) {
-										attribuerEcoleScolaire(ecoleScolaire, e -> {
-											if(e.succeeded()) {
-												indexerEcoleScolaire(ecoleScolaire, f -> {
-													if(f.succeeded()) {
-														reponse200PUTEcoleScolaire(ecoleScolaire, g -> {
-															if(g.succeeded()) {
-																SQLConnection connexionSql = requeteSite.getConnexionSql();
-																connexionSql.commit(h -> {
-																	if(a.succeeded()) {
-																		connexionSql.close(i -> {
-																			if(a.succeeded()) {
-																				gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																			} else {
-																				erreurEcoleScolaire(requeteSite, gestionnaireEvenements, i);
-																			}
-																		});
-																	} else {
-																		erreurEcoleScolaire(requeteSite, gestionnaireEvenements, h);
-																	}
-																});
-															} else {
-																erreurEcoleScolaire(requeteSite, gestionnaireEvenements, g);
-															}
-														});
-													} else {
-														erreurEcoleScolaire(requeteSite, gestionnaireEvenements, f);
-													}
-												});
-											} else {
-												erreurEcoleScolaire(requeteSite, gestionnaireEvenements, e);
-											}
-										});
-									} else {
-										erreurEcoleScolaire(requeteSite, gestionnaireEvenements, d);
-									}
-								});
-							} else {
-								erreurEcoleScolaire(requeteSite, gestionnaireEvenements, c);
-							}
-						});
-					} else {
-						erreurEcoleScolaire(requeteSite, gestionnaireEvenements, b);
-					}
-				});
-			} else {
-				erreurEcoleScolaire(requeteSite, gestionnaireEvenements, a);
-			}
-		});
-	}
-
-	public void remplacerPUTEcoleScolaire(RequeteSite requeteSite, Handler<AsyncResult<EcoleScolaire>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexte.SQL_vider
-					, new JsonArray(Arrays.asList(pk, EcoleScolaire.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				EcoleScolaire o = new EcoleScolaire();
-				o.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void sqlPUTEcoleScolaire(EcoleScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSite requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			JsonObject jsonObject = requeteSite.getObjetJson();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				Set<String> entiteVars = jsonObject.fieldNames();
-				for(String entiteVar : entiteVars) {
-					switch(entiteVar) {
-					case "ecoleCle":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleCle", jsonObject.getLong(entiteVar), pk));
-						break;
-					case "enfantCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("enfantCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "blocCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("blocCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "groupeAgeCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("groupeAgeCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "sessionCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("sessionCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "saisonCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("saisonCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "anneeCles":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getJsonArray(entiteVar), pk));
-						break;
-					case "supprime":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "archive":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "scolaireTri":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("scolaireTri", jsonObject.getInteger(entiteVar), pk));
-						break;
-					case "ecoleTri":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleTri", jsonObject.getInteger(entiteVar), pk));
-						break;
-					case "ecoleNom":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entiteVar), pk));
-						break;
-					case "ecoleNumeroTelephone":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entiteVar), pk));
-						break;
-					case "ecoleAddresse":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
-						break;
-					case "ecoleAdministrateurNom":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
-						break;
-					case "objetSuggerePoids":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("objetSuggerePoids", jsonObject.getDouble(entiteVar), pk));
-						break;
-					case "objetSuggere":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("objetSuggere", jsonObject.getString(entiteVar), pk));
-						break;
-					case "ecoleNomCourt":
-						postSql.append(SiteContexte.SQL_setP);
-						postSqlParams.addAll(Arrays.asList("ecoleNomCourt", jsonObject.getString(entiteVar), pk));
-						break;
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200PUTEcoleScolaire(EcoleScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSite requeteSite = o.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -1081,7 +1004,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete);
 		sqlEcoleScolaire(requeteSite, a -> {
 			if(a.succeeded()) {
-				rechercheEcoleScolaire(requeteSite, b -> {
+				rechercheEcoleScolaire(requeteSite, false, true, b -> {
 					if(b.succeeded()) {
 						ListeRecherche<EcoleScolaire> listeEcoleScolaire = b.result();
 						supprimerDELETEEcoleScolaire(requeteSite, c -> {
@@ -1154,7 +1077,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 	@Override
 	public void recherchepageEcoleScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete);
-		recherchepageEcoleScolaire(requeteSite, a -> {
+		recherchepageEcoleScolaire(requeteSite, false, true, a -> {
 			if(a.succeeded()) {
 				ListeRecherche<EcoleScolaire> listeEcoleScolaire = a.result();
 				reponse200RecherchePageEcoleScolaire(listeEcoleScolaire, b -> {
@@ -1170,12 +1093,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 		});
 	}
 
-	public void recherchepageEcoleScolaire(RequeteSite requeteSite, Handler<AsyncResult<ListeRecherche<EcoleScolaire>>> gestionnaireEvenements) {
+	public void recherchepageEcoleScolaire(RequeteSite requeteSite, Boolean peupler, Boolean stocker, Handler<AsyncResult<ListeRecherche<EcoleScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
 			ListeRecherche<EcoleScolaire> listeRecherche = new ListeRecherche<EcoleScolaire>();
+			listeRecherche.setPeupler(peupler);
+			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(EcoleScolaire.class);
 			listeRecherche.setRows(1000000);
@@ -1282,6 +1207,16 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":
 				return "ecoleTri_indexed_int";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
+			case "pageUri":
+				return "pageUri_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
