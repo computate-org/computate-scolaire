@@ -39,7 +39,7 @@ import org.computate.frFR.scolaire.couverture.Couverture;
  * Map.this.Integer: 1
  * ApiTag.enUS: School
  * ApiTag.frFR: EcoleScolaire
- */                              
+ */                                    
 public class EcoleScolaire extends EcoleScolaireGen<Cluster> {   
 
 	/**
@@ -211,7 +211,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * NomAffichage.frFR: Administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */  
+	 */     
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 	}
 	
@@ -220,7 +220,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */
+	 */     
 	protected void _objetSuggerePoids(Couverture<Double> c) {
 		c.o(1D);
 	}

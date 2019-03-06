@@ -3,6 +3,7 @@ package org.computate.frFR.scolaire.ecole;
 import org.computate.frFR.scolaire.cluster.Cluster;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import org.computate.frFR.scolaire.recherche.ListeRecherche;
 import org.computate.frFR.scolaire.couverture.Couverture;
 import org.apache.commons.text.StringEscapeUtils;

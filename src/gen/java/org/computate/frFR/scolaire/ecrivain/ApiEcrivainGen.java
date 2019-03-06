@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import org.computate.frFR.scolaire.couverture.Couverture;
@@ -2062,6 +2063,62 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return vertxServiceAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddresse());
 	}
 
+	/////////////////////////
+	// classePageNomSimple //
+	/////////////////////////
+
+	/**	L'entité « classePageNomSimple »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String classePageNomSimple;
+	public Couverture<String> classePageNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classePageNomSimple").o(classePageNomSimple);
+
+	/**	<br/>L'entité « classePageNomSimple »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classePageNomSimple">Trouver l'entité classePageNomSimple dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classePageNomSimple(Couverture<String> c);
+
+	public String getClassePageNomSimple() {
+		return classePageNomSimple;
+	}
+
+	public void setClassePageNomSimple(String classePageNomSimple) {
+		this.classePageNomSimple = classePageNomSimple;
+		this.classePageNomSimpleCouverture.dejaInitialise = true;
+	}
+	protected ApiEcrivain classePageNomSimpleInit() {
+		if(!classePageNomSimpleCouverture.dejaInitialise) {
+			_classePageNomSimple(classePageNomSimpleCouverture);
+			if(classePageNomSimple == null)
+				setClassePageNomSimple(classePageNomSimpleCouverture.o);
+		}
+		classePageNomSimpleCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public String solrClassePageNomSimple() {
+		return classePageNomSimple;
+	}
+
+	public String strClassePageNomSimple() {
+		return classePageNomSimple == null ? "" : classePageNomSimple;
+	}
+
+	public String nomAffichageClassePageNomSimple() {
+		return null;
+	}
+
+	public String htmTooltipClassePageNomSimple() {
+		return null;
+	}
+
+	public String htmClassePageNomSimple() {
+		return classePageNomSimple == null ? "" : StringEscapeUtils.escapeHtml4(strClassePageNomSimple());
+	}
+
 	////////////////////////
 	// entiteDocumentSolr //
 	////////////////////////
@@ -2157,6 +2214,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classeRolesTrouvesInit();
 		classeRolesInit();
 		vertxServiceAddresseInit();
+		classePageNomSimpleInit();
 		entiteDocumentSolrInit();
 	}
 
@@ -2289,6 +2347,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeRoles;
 			case "vertxServiceAddresse":
 				return oApiEcrivain.vertxServiceAddresse;
+			case "classePageNomSimple":
+				return oApiEcrivain.classePageNomSimple;
 			case "entiteDocumentSolr":
 				return oApiEcrivain.entiteDocumentSolr;
 			default:
@@ -2352,7 +2412,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(classeApiMethode, openApiVersion, classeUris, openApiVersionNumero, tabsSchema, tabsReponses, classeApiTag, classeEtendBase, classeEstBase, classeNomSimple, classeCheminAbsolu, classeApiUriMethode, classeApiMethodeMethode, classeApiTypeMedia200Methode, classeApiOperationIdMethode, classeApiOperationIdMethodeRequete, classeApiOperationIdMethodeReponse, classeSuperApiOperationIdMethodeRequete, classeSuperApiOperationIdMethodeReponse, classeMotsClesTrouves, classeMotsCles, classeRolesTrouves, classeRoles, vertxServiceAddresse);
+		return Objects.hash(classeApiMethode, openApiVersion, classeUris, openApiVersionNumero, tabsSchema, tabsReponses, classeApiTag, classeEtendBase, classeEstBase, classeNomSimple, classeCheminAbsolu, classeApiUriMethode, classeApiMethodeMethode, classeApiTypeMedia200Methode, classeApiOperationIdMethode, classeApiOperationIdMethodeRequete, classeApiOperationIdMethodeReponse, classeSuperApiOperationIdMethodeRequete, classeSuperApiOperationIdMethodeReponse, classeMotsClesTrouves, classeMotsCles, classeRolesTrouves, classeRoles, vertxServiceAddresse, classePageNomSimple);
 	}
 
 	////////////
@@ -2388,7 +2448,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				&& Objects.equals( classeMotsCles, that.classeMotsCles )
 				&& Objects.equals( classeRolesTrouves, that.classeRolesTrouves )
 				&& Objects.equals( classeRoles, that.classeRoles )
-				&& Objects.equals( vertxServiceAddresse, that.vertxServiceAddresse );
+				&& Objects.equals( vertxServiceAddresse, that.vertxServiceAddresse )
+				&& Objects.equals( classePageNomSimple, that.classePageNomSimple );
 	}
 
 	//////////////
@@ -2422,6 +2483,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		sb.append( ", classeRolesTrouves: " ).append(classeRolesTrouves);
 		sb.append( ", classeRoles: " ).append(classeRoles);
 		sb.append( ", vertxServiceAddresse: \"" ).append(vertxServiceAddresse).append( "\"" );
+		sb.append( ", classePageNomSimple: \"" ).append(classePageNomSimple).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -116,6 +116,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("partNumero_indexed_int", ORDER.asc);
+
+			String pageUri = null;
+			String id = operationRequete.getParams().getJsonObject("path").getString("id");
+			if(id != null) {
+				pageUri = "/api/v1/ecole/" + id;
+				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;
@@ -1075,6 +1083,11 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 	// RecherchePage //
 
 	@Override
+	public void recherchepageEcoleScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		recherchepageEcoleScolaire(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
 	public void recherchepageEcoleScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete);
 		recherchepageEcoleScolaire(requeteSite, false, true, a -> {
@@ -1107,6 +1120,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("partNumero_indexed_int", ORDER.asc);
+
+			String pageUri = null;
+			String id = operationRequete.getParams().getJsonObject("path").getString("id");
+			if(id != null) {
+				pageUri = "/ecole/" + id;
+				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;

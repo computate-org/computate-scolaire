@@ -361,18 +361,27 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 				{ e("tbody").f();
 					for(int i = 0; i < listeEcoleScolaire.size(); i++) {
 						EcoleScolaire o = listeEcoleScolaire.getList().get(i);
+						String uri = o.getPageUri();
 						{ e("tr").f();
 							{ e("td").f();
-								sx(o.getEcoleCle());
+								{ e("a").a("href", uri).f();
+									sx(o.getEcoleCle());
+								} g("a");
 							} g("td");
 							{ e("td").f();
-								sx(o.getEcoleNom());
+								{ e("a").a("href", uri).f();
+									sx(o.getEcoleNom());
+								} g("a");
 							} g("td");
 							{ e("td").f();
-								sx(o.getEcoleNumeroTelephone());
+								{ e("a").a("href", uri).f();
+									sx(o.getEcoleNumeroTelephone());
+								} g("a");
 							} g("td");
 							{ e("td").f();
-								sx(o.getEcoleAddresse());
+								{ e("a").a("href", uri).f();
+									sx(o.getEcoleAddresse());
+								} g("a");
 							} g("td");
 						} g("tr");
 					}

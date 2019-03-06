@@ -464,11 +464,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: _pageInrEntry
-	 * r: /calcul-inr
-	 * r.enUS: /inr-entry
+	 * String.enUS: /school
 	 */
-	protected void _pageCalculInr(Couverture<String> c)  {
-		c.o("/calcul-inr");
+	protected void _pageEcole(Couverture<String> c)  {
+		c.o("/ecole");
 	}
 //
 //	protected void _pageBlogUri(Couverture<String> c)  {
@@ -832,10 +831,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("a");
 			g("div");
 			e("div").a("class", "w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageCalculInr).f();
+				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageEcole).f();
 					e("i").a("class", "fas fa-clipboard-prescription site-menu-icon ").f().g("i");
 					e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-						sx("Inr Entries");
+						sx("Ecoles");
 					g("span");
 				g("a");
 			g("div");
