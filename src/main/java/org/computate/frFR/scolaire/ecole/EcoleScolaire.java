@@ -9,7 +9,7 @@ import org.computate.frFR.scolaire.couverture.Couverture;
 
 
 
-/**               
+/**              
  * Modele: true
  * NomCanonique.enUS: org.computate.enUS.education.school.SchoolEducation
  * ApiUri.enUS: /api/v1/school
@@ -123,7 +123,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */
+	 */  
 	protected void _supprime(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -211,7 +211,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * NomAffichage.frFR: Administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */     
+	 */                 
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 	}
 	
@@ -242,18 +242,18 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */ 
+	 */   
 	protected void _ecoleNomCourt(Couverture<String> c) {
 		c.o(ecoleNom);
 	}
 
-	/**
+	/**   
 	 * Stocke: true
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */       
+	 */             
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);

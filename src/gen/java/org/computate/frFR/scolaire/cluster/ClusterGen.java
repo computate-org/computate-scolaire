@@ -1015,6 +1015,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 		if(id != null) {
 			document.addField("id", id);
+			document.addField("id_indexed_string", id);
 		}
 		if(utilisateurId != null) {
 			document.addField("utilisateurId_indexed_string", utilisateurId);

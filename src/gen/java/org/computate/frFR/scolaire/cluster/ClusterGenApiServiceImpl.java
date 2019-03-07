@@ -115,6 +115,14 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("partNumero_indexed_int", ORDER.asc);
+
+			String pageUri = null;
+			String id = operationRequete.getParams().getJsonObject("path").getString("id");
+			if(id != null) {
+				pageUri = "/api/v1/warfarin/cluster/" + id;
+				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;
@@ -883,6 +891,8 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
 			case "cree":

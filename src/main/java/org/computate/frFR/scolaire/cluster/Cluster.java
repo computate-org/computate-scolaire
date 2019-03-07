@@ -23,7 +23,7 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
  * ApiMethode: DELETE
  * ApiTag.enUS: Cluster
  * ApiTag.frFR: Cluster
- */             
+ */            
 public class Cluster extends ClusterGen<Object> {   
 
 	public static DateTimeFormatter FORMAT_dateMedicalCourt = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.FRANCE);

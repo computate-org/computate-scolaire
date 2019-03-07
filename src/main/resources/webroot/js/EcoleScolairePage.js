@@ -4,27 +4,99 @@
 /**
  */
 function rechercheEcoleScolaire($formulaireFiltres) {
-	var filtres = {};
+	var filtres = [];
 
 	var filtreEcoleNom = $formulaireFiltres.find('.valeurEcoleNom').val();
 	if(filtreEcoleNom)
-		filtres['ecoleNom'] = filtreEcoleNom;
+		filtres.push({ name: 'fq', value: 'ecoleNom:' + filtreEcoleNom });
 
 	var filtreEcoleNumeroTelephone = $formulaireFiltres.find('.valeurEcoleNumeroTelephone').val();
 	if(filtreEcoleNumeroTelephone)
-		filtres['ecoleNumeroTelephone'] = filtreEcoleNumeroTelephone;
+		filtres.push({ name: 'fq', value: 'ecoleNumeroTelephone:' + filtreEcoleNumeroTelephone });
 
 	var filtreEcoleAddresse = $formulaireFiltres.find('.valeurEcoleAddresse').val();
 	if(filtreEcoleAddresse)
-		filtres['ecoleAddresse'] = filtreEcoleAddresse;
+		filtres.push({ name: 'fq', value: 'ecoleAddresse:' + filtreEcoleAddresse });
 
 	var filtreEcoleAdministrateurNom = $formulaireFiltres.find('.valeurEcoleAdministrateurNom').val();
 	if(filtreEcoleAdministrateurNom)
-		filtres['ecoleAdministrateurNom'] = filtreEcoleAdministrateurNom;
+		filtres.push({ name: 'fq', value: 'ecoleAdministrateurNom:' + filtreEcoleAdministrateurNom });
+
+	var filtrePk = $formulaireFiltres.find('.valeurPk').val();
+	if(filtrePk)
+		filtres.push({ name: 'fq', value: 'pk:' + filtrePk });
+
+	var filtreId = $formulaireFiltres.find('.valeurId').val();
+	if(filtreId)
+		filtres.push({ name: 'fq', value: 'id:' + filtreId });
+
+	var filtreUtilisateurId = $formulaireFiltres.find('.valeurUtilisateurId').val();
+	if(filtreUtilisateurId)
+		filtres.push({ name: 'fq', value: 'utilisateurId:' + filtreUtilisateurId });
+
+	var filtreCree = $formulaireFiltres.find('.valeurCree').val();
+	if(filtreCree)
+		filtres.push({ name: 'fq', value: 'cree:' + filtreCree });
+
+	var filtreModifie = $formulaireFiltres.find('.valeurModifie').val();
+	if(filtreModifie)
+		filtres.push({ name: 'fq', value: 'modifie:' + filtreModifie });
+
+	var filtreClusterNomCanonique = $formulaireFiltres.find('.valeurClusterNomCanonique').val();
+	if(filtreClusterNomCanonique)
+		filtres.push({ name: 'fq', value: 'clusterNomCanonique:' + filtreClusterNomCanonique });
+
+	var filtreClusterNomSimple = $formulaireFiltres.find('.valeurClusterNomSimple').val();
+	if(filtreClusterNomSimple)
+		filtres.push({ name: 'fq', value: 'clusterNomSimple:' + filtreClusterNomSimple });
 
 	var filtreEcoleCle = $formulaireFiltres.find('.valeurEcoleCle').val();
 	if(filtreEcoleCle)
-		filtres['ecoleCle'] = filtreEcoleCle;
+		filtres.push({ name: 'fq', value: 'ecoleCle:' + filtreEcoleCle });
+
+	var filtreEnfantCles = $formulaireFiltres.find('.valeurEnfantCles').val();
+	if(filtreEnfantCles)
+		filtres.push({ name: 'fq', value: 'enfantCles:' + filtreEnfantCles });
+
+	var filtreBlocCles = $formulaireFiltres.find('.valeurBlocCles').val();
+	if(filtreBlocCles)
+		filtres.push({ name: 'fq', value: 'blocCles:' + filtreBlocCles });
+
+	var filtreGroupeAgeCles = $formulaireFiltres.find('.valeurGroupeAgeCles').val();
+	if(filtreGroupeAgeCles)
+		filtres.push({ name: 'fq', value: 'groupeAgeCles:' + filtreGroupeAgeCles });
+
+	var filtreSessionCles = $formulaireFiltres.find('.valeurSessionCles').val();
+	if(filtreSessionCles)
+		filtres.push({ name: 'fq', value: 'sessionCles:' + filtreSessionCles });
+
+	var filtreSaisonCles = $formulaireFiltres.find('.valeurSaisonCles').val();
+	if(filtreSaisonCles)
+		filtres.push({ name: 'fq', value: 'saisonCles:' + filtreSaisonCles });
+
+	var filtreAnneeCles = $formulaireFiltres.find('.valeurAnneeCles').val();
+	if(filtreAnneeCles)
+		filtres.push({ name: 'fq', value: 'anneeCles:' + filtreAnneeCles });
+
+	var filtreSupprime = $formulaireFiltres.find('.valeurSupprime').prop('checked');
+	if(filtreSupprime)
+		filtres.push({ name: 'fq', value: 'supprime:' + filtreSupprime });
+
+	var filtreArchive = $formulaireFiltres.find('.valeurArchive').prop('checked');
+	if(filtreArchive)
+		filtres.push({ name: 'fq', value: 'archive:' + filtreArchive });
+
+	var filtreScolaireTri = $formulaireFiltres.find('.valeurScolaireTri').val();
+	if(filtreScolaireTri)
+		filtres.push({ name: 'fq', value: 'scolaireTri:' + filtreScolaireTri });
+
+	var filtreEcoleTri = $formulaireFiltres.find('.valeurEcoleTri').val();
+	if(filtreEcoleTri)
+		filtres.push({ name: 'fq', value: 'ecoleTri:' + filtreEcoleTri });
+
+	var filtrePageUri = $formulaireFiltres.find('.valeurPageUri').val();
+	if(filtrePageUri)
+		filtres.push({ name: 'fq', value: 'pageUri:' + filtrePageUri });
 	$.ajax({
 		url: '/api/v1/ecole?' + $.param(filtres)
 		, dataType: 'json'
@@ -90,27 +162,99 @@ function postEcoleScolaire($formulaireValeurs) {
  *           Example: { pk: 1 }
  */
 function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
-	var filtres = {};
+	var filtres = [];
 
 	var filtreEcoleNom = $formulaireFiltres.find('.valeurEcoleNom').val();
 	if(filtreEcoleNom)
-		filtres['ecoleNom'] = filtreEcoleNom;
+		filtres.push({ name: 'fq', value: 'ecoleNom:' + filtreEcoleNom });
 
 	var filtreEcoleNumeroTelephone = $formulaireFiltres.find('.valeurEcoleNumeroTelephone').val();
 	if(filtreEcoleNumeroTelephone)
-		filtres['ecoleNumeroTelephone'] = filtreEcoleNumeroTelephone;
+		filtres.push({ name: 'fq', value: 'ecoleNumeroTelephone:' + filtreEcoleNumeroTelephone });
 
 	var filtreEcoleAddresse = $formulaireFiltres.find('.valeurEcoleAddresse').val();
 	if(filtreEcoleAddresse)
-		filtres['ecoleAddresse'] = filtreEcoleAddresse;
+		filtres.push({ name: 'fq', value: 'ecoleAddresse:' + filtreEcoleAddresse });
 
 	var filtreEcoleAdministrateurNom = $formulaireFiltres.find('.valeurEcoleAdministrateurNom').val();
 	if(filtreEcoleAdministrateurNom)
-		filtres['ecoleAdministrateurNom'] = filtreEcoleAdministrateurNom;
+		filtres.push({ name: 'fq', value: 'ecoleAdministrateurNom:' + filtreEcoleAdministrateurNom });
+
+	var filtrePk = $formulaireFiltres.find('.valeurPk').val();
+	if(filtrePk)
+		filtres.push({ name: 'fq', value: 'pk:' + filtrePk });
+
+	var filtreId = $formulaireFiltres.find('.valeurId').val();
+	if(filtreId)
+		filtres.push({ name: 'fq', value: 'id:' + filtreId });
+
+	var filtreUtilisateurId = $formulaireFiltres.find('.valeurUtilisateurId').val();
+	if(filtreUtilisateurId)
+		filtres.push({ name: 'fq', value: 'utilisateurId:' + filtreUtilisateurId });
+
+	var filtreCree = $formulaireFiltres.find('.valeurCree').val();
+	if(filtreCree)
+		filtres.push({ name: 'fq', value: 'cree:' + filtreCree });
+
+	var filtreModifie = $formulaireFiltres.find('.valeurModifie').val();
+	if(filtreModifie)
+		filtres.push({ name: 'fq', value: 'modifie:' + filtreModifie });
+
+	var filtreClusterNomCanonique = $formulaireFiltres.find('.valeurClusterNomCanonique').val();
+	if(filtreClusterNomCanonique)
+		filtres.push({ name: 'fq', value: 'clusterNomCanonique:' + filtreClusterNomCanonique });
+
+	var filtreClusterNomSimple = $formulaireFiltres.find('.valeurClusterNomSimple').val();
+	if(filtreClusterNomSimple)
+		filtres.push({ name: 'fq', value: 'clusterNomSimple:' + filtreClusterNomSimple });
 
 	var filtreEcoleCle = $formulaireFiltres.find('.valeurEcoleCle').val();
 	if(filtreEcoleCle)
-		filtres['ecoleCle'] = filtreEcoleCle;
+		filtres.push({ name: 'fq', value: 'ecoleCle:' + filtreEcoleCle });
+
+	var filtreEnfantCles = $formulaireFiltres.find('.valeurEnfantCles').val();
+	if(filtreEnfantCles)
+		filtres.push({ name: 'fq', value: 'enfantCles:' + filtreEnfantCles });
+
+	var filtreBlocCles = $formulaireFiltres.find('.valeurBlocCles').val();
+	if(filtreBlocCles)
+		filtres.push({ name: 'fq', value: 'blocCles:' + filtreBlocCles });
+
+	var filtreGroupeAgeCles = $formulaireFiltres.find('.valeurGroupeAgeCles').val();
+	if(filtreGroupeAgeCles)
+		filtres.push({ name: 'fq', value: 'groupeAgeCles:' + filtreGroupeAgeCles });
+
+	var filtreSessionCles = $formulaireFiltres.find('.valeurSessionCles').val();
+	if(filtreSessionCles)
+		filtres.push({ name: 'fq', value: 'sessionCles:' + filtreSessionCles });
+
+	var filtreSaisonCles = $formulaireFiltres.find('.valeurSaisonCles').val();
+	if(filtreSaisonCles)
+		filtres.push({ name: 'fq', value: 'saisonCles:' + filtreSaisonCles });
+
+	var filtreAnneeCles = $formulaireFiltres.find('.valeurAnneeCles').val();
+	if(filtreAnneeCles)
+		filtres.push({ name: 'fq', value: 'anneeCles:' + filtreAnneeCles });
+
+	var filtreSupprime = $formulaireFiltres.find('.valeurSupprime').prop('checked');
+	if(filtreSupprime)
+		filtres.push({ name: 'fq', value: 'supprime:' + filtreSupprime });
+
+	var filtreArchive = $formulaireFiltres.find('.valeurArchive').prop('checked');
+	if(filtreArchive)
+		filtres.push({ name: 'fq', value: 'archive:' + filtreArchive });
+
+	var filtreScolaireTri = $formulaireFiltres.find('.valeurScolaireTri').val();
+	if(filtreScolaireTri)
+		filtres.push({ name: 'fq', value: 'scolaireTri:' + filtreScolaireTri });
+
+	var filtreEcoleTri = $formulaireFiltres.find('.valeurEcoleTri').val();
+	if(filtreEcoleTri)
+		filtres.push({ name: 'fq', value: 'ecoleTri:' + filtreEcoleTri });
+
+	var filtrePageUri = $formulaireFiltres.find('.valeurPageUri').val();
+	if(filtrePageUri)
+		filtres.push({ name: 'fq', value: 'pageUri:' + filtrePageUri });
 
 	var valeurs = {};
 
@@ -183,7 +327,7 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
  */
 function getEcoleScolaire(pk) {
 	$.ajax({
-		url: '/api/v1/ecole/{id}
+		url: '/api/v1/ecole/' + id
 		, dataType: 'json'
 		, type: 'GET'
 		, contentType: 'application/json; charset=utf-8'
@@ -200,7 +344,7 @@ function getEcoleScolaire(pk) {
  */
 function deleteEcoleScolaire(pk) {
 	$.ajax({
-		url: '/api/v1/ecole/{id}
+		url: '/api/v1/ecole/' + id
 		, dataType: 'json'
 		, type: 'DELETE'
 		, contentType: 'application/json; charset=utf-8'

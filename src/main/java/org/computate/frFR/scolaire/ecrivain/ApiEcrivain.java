@@ -1007,7 +1007,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wChemins.tl(4, "- ", classeApiTypeMedia200Methode);
 			}
 	
-			if(!wRequeteEnTete.getVide() || "GET".equals(classeApiMethodeMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode)) {
+			if(!wRequeteEnTete.getVide() || "GET".equals(classeApiMethodeMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 				wChemins.tl(3, "parameters:");
 				wChemins.s(wRequeteEnTete);
 				if(classeApiUriMethode.endsWith("/{id}") || "GET".equals(classeApiMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode)) {
@@ -1018,7 +1018,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 					wChemins.tl(5, "schema:");
 					wChemins.tl(6, "type: string");
 				}
-				else if(classeApiMethode.contains("Recherche")) {
+				else if(classeApiMethode.contains("Recherche") || classeApiMethode.contains("PATCH")) {
 					wChemins.tl(4, "- in: query");
 					wChemins.tl(5, "name: q");
 					wChemins.tl(5, "description: ''");

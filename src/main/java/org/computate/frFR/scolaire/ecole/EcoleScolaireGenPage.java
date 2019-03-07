@@ -83,6 +83,75 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 	@Override public void htmlScriptEcoleScolaireGenPage() {
 	}
 
+	public void htmlFormPageEcoleScolaire(EcoleScolaire o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
+					e("label").a("class", "").f().sx("Nom de l'école").g("label");
+
+					e("input")
+						.a("type", "text")
+						.a("placeholder", "Nom de l'école")
+						.a("title", "Nom de l'école. ")
+						.a("class", "setEcoleNom w3-input w3-border ")
+						.a("name", "setEcoleNom")
+						.a("onchange", "patchEcoleScolaire($('#EcoleScolaireForm'), $('#ecoleNomForm')); ")
+						.a("value", o.strEcoleNom())
+					.fg();
+
+				} g("form");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+					e("label").a("class", "").f().sx("Numéro de téléphone").g("label");
+
+					e("input")
+						.a("type", "text")
+						.a("placeholder", "Numéro de téléphone")
+						.a("title", "Numéro de téléphone de l'école. ")
+						.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+						.a("name", "setEcoleNumeroTelephone")
+						.a("onchange", "patchEcoleScolaire($('#EcoleScolaireForm'), $('#ecoleNumeroTelephoneForm')); ")
+						.a("value", o.strEcoleNumeroTelephone())
+					.fg();
+
+				} g("form");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
+					e("label").a("class", "").f().sx("Addresse").g("label");
+
+					e("textarea")
+						.a("placeholder", "Addresse")
+						.a("title", "Description.enUS: ")
+						.a("class", "setEcoleAddresse w3-input w3-border ")
+						.a("name", "setEcoleAddresse")
+						.a("onchange", "patchEcoleScolaire($('#EcoleScolaireForm'), $('#ecoleAddresseForm')); ")
+					.f().sx(o.strEcoleAddresse()).g("textarea");
+
+				} g("form");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
+					e("label").a("class", "").f().sx("Administrateur de l'école").g("label");
+
+					e("input")
+						.a("type", "text")
+						.a("placeholder", "Administrateur de l'école")
+						.a("title", "Description.enUS: ")
+						.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
+						.a("name", "setEcoleAdministrateurNom")
+						.a("onchange", "patchEcoleScolaire($('#EcoleScolaireForm'), $('#ecoleAdministrateurNomForm')); ")
+						.a("value", o.strEcoleAdministrateurNom())
+					.fg();
+
+				} g("form");
+			} g("div");
+		} g("div");
+	}
+
 	public void htmlFormPOSTEcoleScolaire(EcoleScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -90,12 +159,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNom")
-					.a("name", "ecoleNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Nom de l'école")
 					.a("title", "Nom de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleNom w3-input w3-border ")
+					.a("name", "ecoleNom")
 					.a("value", o.strEcoleNom())
 				.fg();
 
@@ -105,12 +172,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNumeroTelephone")
-					.a("name", "ecoleNumeroTelephone")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Numéro de téléphone")
 					.a("title", "Numéro de téléphone de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "ecoleNumeroTelephone")
 					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
@@ -121,12 +186,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 				e("label").a("class", "").f().sx("Addresse").g("label");
 
 				e("textarea")
-					.a("class", "valeurEcoleAddresse")
-					.a("name", "ecoleAddresse")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Addresse")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleAddresse w3-input w3-border ")
+					.a("name", "ecoleAddresse")
 				.f().sx(o.strEcoleAddresse()).g("textarea");
 
 			} g("div");
@@ -135,12 +198,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleAdministrateurNom")
-					.a("name", "ecoleAdministrateurNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Administrateur de l'école")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleAdministrateurNom w3-input w3-border ")
+					.a("name", "ecoleAdministrateurNom")
 					.a("value", o.strEcoleAdministrateurNom())
 				.fg();
 
@@ -155,12 +216,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNom")
-					.a("name", "ecoleNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Nom de l'école")
 					.a("title", "Nom de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "setEcoleNom w3-input w3-border ")
+					.a("name", "setEcoleNom")
 					.a("value", o.strEcoleNom())
 				.fg();
 
@@ -170,12 +229,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNumeroTelephone")
-					.a("name", "ecoleNumeroTelephone")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Numéro de téléphone")
 					.a("title", "Numéro de téléphone de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "setEcoleNumeroTelephone")
 					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
@@ -186,12 +243,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 				e("label").a("class", "").f().sx("Addresse").g("label");
 
 				e("textarea")
-					.a("class", "valeurEcoleAddresse")
-					.a("name", "ecoleAddresse")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Addresse")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "setEcoleAddresse w3-input w3-border ")
+					.a("name", "setEcoleAddresse")
 				.f().sx(o.strEcoleAddresse()).g("textarea");
 
 			} g("div");
@@ -200,12 +255,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleAdministrateurNom")
-					.a("name", "ecoleAdministrateurNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Administrateur de l'école")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
+					.a("name", "setEcoleAdministrateurNom")
 					.a("value", o.strEcoleAdministrateurNom())
 				.fg();
 
@@ -217,12 +270,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleCle")
-					.a("name", "ecoleCle")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Clé")
 					.a("title", "La clé primaire de l'école dans la base de données. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "setEcoleCle w3-input w3-border ")
+					.a("name", "setEcoleCle")
 					.a("value", o.strEcoleCle())
 				.fg();
 
@@ -237,12 +288,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNom")
-					.a("name", "ecoleNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Nom de l'école")
 					.a("title", "Nom de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleNom w3-input w3-border ")
+					.a("name", "ecoleNom")
 					.a("value", o.strEcoleNom())
 				.fg();
 
@@ -252,12 +301,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleNumeroTelephone")
-					.a("name", "ecoleNumeroTelephone")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Numéro de téléphone")
 					.a("title", "Numéro de téléphone de l'école. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "ecoleNumeroTelephone")
 					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
@@ -268,12 +315,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 				e("label").a("class", "").f().sx("Addresse").g("label");
 
 				e("textarea")
-					.a("class", "valeurEcoleAddresse")
-					.a("name", "ecoleAddresse")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Addresse")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleAddresse w3-input w3-border ")
+					.a("name", "ecoleAddresse")
 				.f().sx(o.strEcoleAddresse()).g("textarea");
 
 			} g("div");
@@ -282,12 +327,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleAdministrateurNom")
-					.a("name", "ecoleAdministrateurNom")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Administrateur de l'école")
 					.a("title", "Description.enUS: ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleAdministrateurNom w3-input w3-border ")
+					.a("name", "ecoleAdministrateurNom")
 					.a("value", o.strEcoleAdministrateurNom())
 				.fg();
 
@@ -299,12 +342,10 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 
 				e("input")
 					.a("type", "text")
-					.a("class", "valeurEcoleCle")
-					.a("name", "ecoleCle")
-					.a("class", "w3-input w3-border ")
 					.a("placeholder", "Clé")
 					.a("title", "La clé primaire de l'école dans la base de données. ")
-					.a("onchange", "envoyer(); ")
+					.a("class", "valeurEcoleCle w3-input w3-border ")
+					.a("name", "ecoleCle")
 					.a("value", o.strEcoleCle())
 				.fg();
 
@@ -335,8 +376,17 @@ public class EcoleScolaireGenPage extends EcoleScolaireGenPageGen<MiseEnPage> {
 			}
 			{ e("div").a("class", "w3-card w3-margin w3-padding w3-margin-top w3-show ").f();
 
-				if(o.getPk() != null)
-					htmlFormPATCHEcoleScolaire(o);
+				if(o.getPk() != null) {
+					{ e("form").a("id", "EcoleScolaireForm").a("style", "display: inline-block; ").f();
+						e("input")
+						.a("name", "pk")
+						.a("class", "valeurPk")
+						.a("type", "hidden")
+						.a("value", o.getPk())
+						.fg();
+					} g("form");
+					htmlFormPageEcoleScolaire(o);
+				}
 
 				o.htmlBody();
 

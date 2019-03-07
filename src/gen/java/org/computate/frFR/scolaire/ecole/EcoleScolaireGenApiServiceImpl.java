@@ -1206,6 +1206,20 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 
 	public String varIndexeEcoleScolaire(String entiteVar) {
 		switch(entiteVar) {
+			case "pk":
+				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "modifie":
+				return "modifie_indexed_date";
+			case "clusterNomCanonique":
+				return "clusterNomCanonique_indexed_string";
+			case "clusterNomSimple":
+				return "clusterNomSimple_indexed_string";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "enfantCles":
