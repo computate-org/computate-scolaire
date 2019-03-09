@@ -99,15 +99,6 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	 */  
 	protected void _w(Couverture<ToutEcrivain> c) {
 	}
-//
-//	protected void _siteIdKeycloak(Couverture<String> c) {
-//		String o = configSite_.siteIdKeycloak;
-//		c.o(o);
-//	}
-//
-//	/**	Le jeton d'acces Keycloak pour l'utilisateur. **/
-//	protected void _jetonAcces(Couverture<AccessToken> c) {
-//	}
 
 	protected void _utilisateurVertx(Couverture<JsonObject> c) {
 		if(operationRequete != null) {
@@ -118,10 +109,6 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	}
 
 	protected void _principalJson(Couverture<JsonObject> c) {
-//		if(jetonAcces != null) {
-//			JsonObject o = jetonAcces.principal();
-//			c.o(o);
-//		}
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 			c.o(o);
@@ -144,8 +131,7 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	 \*	Aussi l'ID d'utilisateur cle primaire dans la base de donnees Keycloak. **/
 	protected void _utilisateurId(Couverture<String> c) {
 		if(principalJson != null) {
-			String o = KeycloakHelper.rawIdToken(principalJson);
-//			String o = jetonAcces.getSubject();
+			String o = principalJson.getString("sub");
 			c.o(o);
 		}
 	}
@@ -153,9 +139,7 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	/**	Le nom d'utilisateur prefere de l'utilisateur. **/
 	protected void _utilisateurNom(Couverture<String> c) {
 		if(principalJson != null) {
-//			String o = KeycloakHelper.preferredUsername(principalJson);
 			String o = principalJson.getString("preferred_username");
-//			String o = jetonAcces.getPreferredUsername();
 			c.o(o);
 		}
 	}
@@ -163,9 +147,7 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	/**	Le nom de famille de l'utilisateur. **/
 	protected void _utilisateurNomFamille(Couverture<String> c) {
 		if(principalJson != null) {
-//			String o = KeycloakHelper.name(principalJson);
 			String o = principalJson.getString("family_name");
-//			String o = jetonAcces.getFamilyName();
 			c.o(o);
 		}
 	}
@@ -183,7 +165,6 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 	protected void _utilisateurNomComplet(Couverture<String> c) {
 		if(principalJson != null) {
 			String o = principalJson.getString("name");
-//			String o = KeycloakHelper.name(principalJson);
 			c.o(o);
 		}
 	}
@@ -233,6 +214,14 @@ public class RequeteSite extends RequeteSiteGen<Object> implements Serializable 
 
 	/**	L'utilisateur de la requête. **/
 	protected void _utilisateurSite(Couverture<UtilisateurSite> c) { 
+		if(utilisateurId != null) {
+			UtilisateurSite o = new UtilisateurSite();
+			o.setUtilisateurNom(utilisateurNom);
+			o.setUtilisateurPrenom(utilisateurPrenom);
+			o.setUtilisateurNomFamille(utilisateurNomFamille);
+			o.setUtilisateurId(utilisateurId);
+			c.o(o);
+		}
 	}
 
 	protected void _xmlPile(Stack<String> o) {}

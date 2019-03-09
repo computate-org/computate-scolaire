@@ -1,30 +1,33 @@
 package org.computate.frFR.scolaire.requete;
 
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.util.Objects;
-import java.util.Stack;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.computate.frFR.scolaire.cluster.Cluster;
-import org.computate.frFR.scolaire.config.ConfigSite;
-import org.computate.frFR.scolaire.contexte.SiteContexte;
-import org.computate.frFR.scolaire.couverture.Couverture;
+import org.apache.solr.common.SolrDocumentList;
+import java.security.MessageDigest;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.lang3.StringUtils;
+import javax.crypto.Cipher;
+import java.util.Stack;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
-import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
-
-import io.vertx.core.Vertx;
+import java.security.SecureRandom;
+import org.computate.frFR.scolaire.couverture.Couverture;
+import java.lang.Long;
+import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.sql.SQLConnection;
+import java.lang.String;
+import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
+import org.computate.frFR.scolaire.contexte.SiteContexte;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.frFR.scolaire.config.ConfigSite;
+import io.vertx.core.Vertx;
+import org.apache.commons.text.StringEscapeUtils;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
 import io.vertx.ext.web.api.OperationRequest;
+import org.apache.solr.client.solrj.SolrQuery;
+import io.vertx.ext.sql.SQLConnection;
+import java.lang.Object;
+import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.requete.RequeteSite&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>

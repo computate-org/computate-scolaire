@@ -9,6 +9,7 @@ import java.lang.Integer;
 import java.io.File;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import org.computate.frFR.scolaire.couverture.Couverture;
 import java.lang.Object;
 import java.lang.String;

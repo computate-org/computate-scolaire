@@ -13,8 +13,8 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
 /**
  * NomCanonique.enUS: org.computate.site.course.c000.cluster.Cluster
  * Modele: true
- * ApiUri.enUS: /api/v1/warfarin/cluster
- * ApiUri.frFR: /api/v1/warfarin/cluster
+ * ApiUri.enUS: /api/warfarin/cluster
+ * ApiUri.frFR: /api/warfarin/cluster
  * ApiMethode: Recherche
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -80,12 +80,16 @@ public class Cluster extends ClusterGen<Object> {
 		c.o(o);
 	}
 
-	/**
+	/**	
+	 * Var.enUS: _userId
+	 * description.frFR: L'identifiant Keycloak pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
-	 * Var.enUS: _userId
 	 */
-	protected void _utilisateurId(Couverture<String> c) {}
+	protected void _utilisateurId(Couverture<String> c) {
+		String o = requeteSite_.getUtilisateurId();
+		c.o(o);
+	}
 
 	/**
 	 * Indexe: true
@@ -109,12 +113,12 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	protected void _modifie(Couverture<LocalDateTime> c) {}
 
-	/**
+	/**   
 	 * Indexe: true
 	 * Stocke: true
-	 * Var.enUS: _clusterCanonicalName
-	 */      
-	protected void _clusterNomCanonique(Couverture<String> c) {
+	 * Var.enUS: _classCanonicalName
+	 */       
+	protected void _classeNomCanonique(Couverture<String> c) {
 		String o = getClass().getCanonicalName();
 		c.o(o);
 	}
@@ -122,9 +126,9 @@ public class Cluster extends ClusterGen<Object> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * Var.enUS: _clusterSimpleName
+	 * Var.enUS: _classSimpleName
 	 */          
-	protected void _clusterNomSimple(Couverture<String> c) {
+	protected void _classeNomSimple(Couverture<String> c) {
 		String o = getClass().getSimpleName();
 		c.o(o);
 	}

@@ -17,6 +17,7 @@ import org.computate.frFR.scolaire.couverture.Couverture;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import org.computate.frFR.scolaire.page.parti.PagePart;
 import org.computate.frFR.scolaire.requete.RequeteSite;
+import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
 import org.computate.frFR.scolaire.xml.OutilXml;
 
 /**
@@ -53,6 +54,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: Locale.US
 	 */
 	public static DateTimeFormatter FORMATAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm", Locale.FRANCE);
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _utilisateurSite(Couverture<UtilisateurSite> c) {
+		c.o(requeteSite_.getUtilisateurSite());
+	}
 
 	protected void _pageParts(List<PagePart> l) {
 	}
@@ -649,6 +658,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("script").a("src", "/static/js/moment.min.js").f().g("script");
 		e("script").a("src", "/static/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", "/static/js/jquery.serialize-object.js").f().g("script");
+		e("script").a("src", "/static/js/UtilisateurSitePage.js").f().g("script");
 //		e("script").a("async", "").a("defer", "").a("src", "https://apis.google.com/js/platform.js").f().g("script");
 //		e("script").a("async", "").a("src", "https://www.googletagmanager.com/gtag/js?id=UA-118970786-1").f().g("script");
 //		e("script").f().l("/*<![CDATA[*/");
@@ -865,7 +875,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("div");
 			}
 			if(requeteSite_.getUtilisateurId() != null) {
-				e("div").a("class", "w3-bar-item ").f();
+				e("div").a("class", "w3-dropdown-hover ").f();
 					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
 						e("i").a("class", "fas fa-sign-out site-menu-icon ").f().g("i");
 						e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
@@ -873,6 +883,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							sx("Se déconnecter");
 						g("span");
 					g("a");
+					e("div").a("class", "w3-dropdown-content w3-bar-block w3-card-4 ").f();
+						{ e("form").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; ").f();
+							e("input")
+							.a("name", "pk")
+							.a("class", "valeurPk")
+							.a("type", "hidden")
+							.a("value", utilisateurSite.getPk())
+							.fg();
+						} g("form");
+						htmlFormOptionsUtilisateurSite(utilisateurSite);
+					g("div");
 				g("div");
 			}
 		g("div");
@@ -1270,5 +1291,59 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		w.s(">");
 		
 		return this;
+	}
+
+	public void htmlFormOptionsUtilisateurSite(UtilisateurSite o) {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "voirArchiveForm").a("style", "display: inline-block; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "voirArchive")
+						.a("id", "Page_voirArchive")
+						.a("value", "false")
+					.fg();
+
+					e("input")
+						.a("type", "checkbox")
+						.a("value", "true")
+						.a("class", "setVoirArchive")
+						.a("name", "setVoirArchive")
+						.a("id", "Page_voirArchive")
+						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirArchiveForm')); ")
+						;
+						if(o.getVoirArchive() != null && o.getVoirArchive())
+							a("checked", "checked");
+					fg();
+
+					e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
+				} g("form");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("form").a("id", "voirSupprimeForm").a("style", "display: inline-block; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "voirSupprime")
+						.a("id", "Page_voirSupprime")
+						.a("value", "false")
+					.fg();
+
+					e("input");
+						a("type", "checkbox");
+						a("value", "true");
+						a("class", "setVoirSupprime");
+						a("name", "setVoirSupprime");
+						a("id", "Page_voirSupprime");
+						a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirSupprimeForm')); ");
+						if(o.getVoirSupprime() != null && o.getVoirSupprime())
+							a("checked", "checked");
+					fg();
+
+					e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
+				} g("form");
+			} g("div");
+		} g("div");
 	}
 }

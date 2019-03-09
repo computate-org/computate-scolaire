@@ -220,7 +220,7 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 //		wChemins.t(1, "description: ").yamlStr(2, configSite.getApiDescription());
 		if(openApiVersionNumero == 2) {
 			wChemins.t(1, "version: ").string(apiVersion).l();
-			wChemins.t(0, "host: ").js(configSite.getApiNomHote()).l();
+			wChemins.t(0, "host: ").l(wChemins.js(configSite.getApiNomHote()));
 			wChemins.tl(0, "schemes:");
 			wChemins.tl(1, "- \"https\"");
 		}

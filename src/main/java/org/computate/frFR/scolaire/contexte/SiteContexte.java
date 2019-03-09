@@ -20,6 +20,7 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 public class SiteContexte extends SiteContexteGen<Object> {    
 	protected Logger log = LoggerFactory.getLogger(getClass());
 
+	public static final String SQL_selectC = "select pk, ajour, nom_canonique, cree, modifie, id_utilisateur from c where nom_canonique=? and id_utilisateur=?;\n";
 	public static final String SQL_existe = "select count(*), nom_canonique, id_utilisateur from c group by nom_canonique, id_utilisateur having c.pk=?;\n";
 	public static final String SQL_creer = "insert into c(nom_canonique, id_utilisateur) values(?, ?) returning pk;\n";
 	public static final String SQL_modifier = "update c set modifie=now() where objet.pk=? and objet.nom_canonique=? returning cree;\n";

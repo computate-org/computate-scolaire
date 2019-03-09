@@ -5,7 +5,7 @@ info:
 servers:
   - url: https://scolaire.computate.org:11280
 paths:
-  /api/v1/warfarin/cluster:
+  /api/warfarin/cluster:
     get:
       operationId: rechercheCluster
       x-vertx-event-bus: Cluster
@@ -292,7 +292,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/v1/warfarin/cluster/{id}:
+  /api/warfarin/cluster/{id}:
     get:
       operationId: getClusterId
       x-vertx-event-bus: Cluster
@@ -501,7 +501,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/v1/ecole:
+  /api/ecole:
     get:
       operationId: rechercheEcoleScolaire
       x-vertx-event-bus: EcoleScolaire
@@ -797,7 +797,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/v1/ecole/{id}:
+  /api/ecole/{id}:
     get:
       operationId: getEcoleScolaireId
       x-vertx-event-bus: EcoleScolaire
@@ -1119,6 +1119,304 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /api/utilisateur:
+    patch:
+      operationId: patchUtilisateurSite
+      x-vertx-event-bus: UtilisateurSite
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - UtilisateurSite
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/PATCHUtilisateurSiteRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHUtilisateurSiteReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /utilisateur:
+    get:
+      operationId: recherchepageUtilisateurSite
+      x-vertx-event-bus: UtilisateurSite
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - UtilisateurSite
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageUtilisateurSiteReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /utilisateur/{id}:
+    get:
+      operationId: recherchepageUtilisateurSiteId
+      x-vertx-event-bus: UtilisateurSite
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - UtilisateurSite
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageUtilisateurSiteReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
 components:
   securitySchemes:
     openIdConnect:
@@ -1215,6 +1513,21 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/RecherchePageEcoleScolaireReponse'
+    PATCHUtilisateurSiteRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHUtilisateurSiteRequete'
+    PATCHUtilisateurSiteReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHUtilisateurSiteReponse'
+    RecherchePageUtilisateurSiteReponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RecherchePageUtilisateurSiteReponse'
   schemas:
     RechercheClusterReponse:
       allOf:
@@ -1236,9 +1549,9 @@ components:
               modifie:
                 type: string
                 format: date-time
-              clusterNomCanonique:
+              classeNomCanonique:
                 type: string
-              clusterNomSimple:
+              classeNomSimple:
                 type: string
     POSTClusterRequete:
       allOf:
@@ -1258,9 +1571,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     POSTClusterReponse:
       allOf:
@@ -1280,9 +1593,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     PATCHClusterRequete:
       allOf:
@@ -1302,9 +1615,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     PATCHClusterReponse:
       allOf:
@@ -1324,9 +1637,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     GETClusterReponse:
       allOf:
@@ -1346,9 +1659,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     PUTClusterRequete:
       allOf:
@@ -1368,9 +1681,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     PUTClusterReponse:
       allOf:
@@ -1390,9 +1703,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     DELETEClusterReponse:
       allOf:
@@ -1412,9 +1725,9 @@ components:
             modifie:
               type: string
               format: date-time
-            clusterNomCanonique:
+            classeNomCanonique:
               type: string
-            clusterNomSimple:
+            classeNomSimple:
               type: string
     RechercheEcoleScolaireReponse:
       allOf:
@@ -1449,9 +1762,9 @@ components:
                 type: array
                 items:
                   type: number
-              supprime:
-                type: boolean
               archive:
+                type: boolean
+              supprime:
                 type: boolean
               scolaireTri:
                 type: number
@@ -1461,9 +1774,9 @@ components:
                 type: string
               ecoleNumeroTelephone:
                 type: string
-              ecoleAddresse:
-                type: string
               ecoleAdministrateurNom:
+                type: string
+              ecoleAddresse:
                 type: string
               objetSuggerePoids:
                 type: number
@@ -1506,9 +1819,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1518,9 +1831,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1563,9 +1876,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1575,9 +1888,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1620,9 +1933,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1632,9 +1945,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1677,9 +1990,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1689,9 +2002,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1734,9 +2047,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1746,9 +2059,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1791,9 +2104,9 @@ components:
               type: array
               items:
                 type: number
-            supprime:
-              type: boolean
             archive:
+              type: boolean
+            supprime:
               type: boolean
             scolaireTri:
               type: number
@@ -1803,9 +2116,9 @@ components:
               type: string
             ecoleNumeroTelephone:
               type: string
-            ecoleAddresse:
-              type: string
             ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
               type: string
             objetSuggerePoids:
               type: number
@@ -1818,6 +2131,95 @@ components:
             pageUri:
               type: string
     RecherchePageEcoleScolaireReponse:
+      allOf:
+        - type: string
+    PATCHUtilisateurSiteRequete:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequete"
+        - type: object
+          properties:
+            calculInrPks:
+              type: array
+              items:
+                type: number
+            utilisateurNom:
+              type: string
+            utilisateurMail:
+              type: string
+            utilisateurPrenom:
+              type: string
+            utilisateurNomFamille:
+              type: string
+            utilisateurNomComplet:
+              type: string
+            utilisateurSite:
+              type: string
+            utilisateurRecevoirCourriels:
+              type: boolean
+            modeleSupprime:
+              type: boolean
+            modeleCree:
+              type: string
+              format: date-time
+            modeleModifie:
+              type: string
+              format: date-time
+            modeleClasseNomCanonique:
+              type: string
+            modeleCle:
+              type: number
+            modeleSuggestionStocke:
+              type: string
+            modeleSuggestionIndexe:
+              type: string
+            voirArchive:
+              type: boolean
+            voirSupprime:
+              type: boolean
+    PATCHUtilisateurSiteReponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterReponse"
+        - type: object
+          properties:
+            calculInrPks:
+              type: array
+              items:
+                type: number
+            utilisateurNom:
+              type: string
+            utilisateurMail:
+              type: string
+            utilisateurPrenom:
+              type: string
+            utilisateurNomFamille:
+              type: string
+            utilisateurNomComplet:
+              type: string
+            utilisateurSite:
+              type: string
+            utilisateurRecevoirCourriels:
+              type: boolean
+            modeleSupprime:
+              type: boolean
+            modeleCree:
+              type: string
+              format: date-time
+            modeleModifie:
+              type: string
+              format: date-time
+            modeleClasseNomCanonique:
+              type: string
+            modeleCle:
+              type: number
+            modeleSuggestionStocke:
+              type: string
+            modeleSuggestionIndexe:
+              type: string
+            voirArchive:
+              type: boolean
+            voirSupprime:
+              type: boolean
+    RecherchePageUtilisateurSiteReponse:
       allOf:
         - type: string
     ErrorResponse:

@@ -122,7 +122,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleCle() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -243,7 +243,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EnfantCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -364,7 +364,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "BlocCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -485,7 +485,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "GroupeAgeCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -606,7 +606,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "SessionCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -727,7 +727,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "SaisonCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -848,7 +848,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "AnneeCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -876,109 +876,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmAnneeCles());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////
-	// supprime //
-	//////////////
-
-	/**	L'entité « supprime »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean supprime;
-	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
-
-	/**	<br/>L'entité « supprime »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:supprime">Trouver l'entité supprime dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _supprime(Couverture<Boolean> c);
-
-	public Boolean getSupprime() {
-		return supprime;
-	}
-
-	public void setSupprime(Boolean supprime) {
-		this.supprime = supprime;
-		this.supprimeCouverture.dejaInitialise = true;
-	}
-	public EcoleScolaire setSupprime(String o) {
-		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
-			this.supprime = Boolean.parseBoolean(o);
-		this.supprimeCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
-	protected EcoleScolaire supprimeInit() {
-		if(!supprimeCouverture.dejaInitialise) {
-			_supprime(supprimeCouverture);
-			if(supprime == null)
-				setSupprime(supprimeCouverture.o);
-		}
-		supprimeCouverture.dejaInitialise(true);
-		return (EcoleScolaire)this;
-	}
-
-	public Boolean solrSupprime() {
-		return supprime;
-	}
-
-	public String strSupprime() {
-		return supprime == null ? "" : supprime.toString();
-	}
-
-	public String nomAffichageSupprime() {
-		return "NomAffichage.enUS: ";
-	}
-
-	public String htmTooltipSupprime() {
-		return null;
-	}
-
-	public String htmSupprime() {
-		return supprime == null ? "" : StringEscapeUtils.escapeHtml4(strSupprime());
-	}
-
-	public void htmSupprime(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcoleScolaire", strPk(), "Supprime\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcoleScolaire", strPk(), "Supprime() {");
-				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSupprime\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSupprime()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"supprime\"");
-							r.s(" value=\"", htmSupprime(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSupprime());
 			}
 			r.l("</div>");
 		}
@@ -1035,7 +932,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageArchive() {
-		return "NomAffichage.enUS: ";
+		return "Archiv\u00E9";
 	}
 
 	public String htmTooltipArchive() {
@@ -1054,7 +951,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "Archive() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1082,6 +979,109 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmArchive());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////
+	// supprime //
+	//////////////
+
+	/**	L'entité « supprime »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean supprime;
+	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
+
+	/**	<br/>L'entité « supprime »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:supprime">Trouver l'entité supprime dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _supprime(Couverture<Boolean> c);
+
+	public Boolean getSupprime() {
+		return supprime;
+	}
+
+	public void setSupprime(Boolean supprime) {
+		this.supprime = supprime;
+		this.supprimeCouverture.dejaInitialise = true;
+	}
+	public EcoleScolaire setSupprime(String o) {
+		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
+			this.supprime = Boolean.parseBoolean(o);
+		this.supprimeCouverture.dejaInitialise = true;
+		return (EcoleScolaire)this;
+	}
+	protected EcoleScolaire supprimeInit() {
+		if(!supprimeCouverture.dejaInitialise) {
+			_supprime(supprimeCouverture);
+			if(supprime == null)
+				setSupprime(supprimeCouverture.o);
+		}
+		supprimeCouverture.dejaInitialise(true);
+		return (EcoleScolaire)this;
+	}
+
+	public Boolean solrSupprime() {
+		return supprime;
+	}
+
+	public String strSupprime() {
+		return supprime == null ? "" : supprime.toString();
+	}
+
+	public String nomAffichageSupprime() {
+		return "Supprim\u00E9";
+	}
+
+	public String htmTooltipSupprime() {
+		return null;
+	}
+
+	public String htmSupprime() {
+		return supprime == null ? "" : StringEscapeUtils.escapeHtml4(strSupprime());
+	}
+
+	public void htmSupprime(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcoleScolaire", strPk(), "Supprime\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcoleScolaire", strPk(), "Supprime() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSupprime\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSupprime()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"supprime\"");
+							r.s(" value=\"", htmSupprime(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSupprime());
 			}
 			r.l("</div>");
 		}
@@ -1157,7 +1157,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "ScolaireTri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1260,7 +1260,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleTri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1357,7 +1357,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1454,7 +1454,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleNumeroTelephone() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1482,103 +1482,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmEcoleNumeroTelephone());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// ecoleAddresse //
-	///////////////////
-
-	/**	L'entité « ecoleAddresse »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String ecoleAddresse;
-	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
-
-	/**	<br/>L'entité « ecoleAddresse »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAddresse">Trouver l'entité ecoleAddresse dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _ecoleAddresse(Couverture<String> c);
-
-	public String getEcoleAddresse() {
-		return ecoleAddresse;
-	}
-
-	public void setEcoleAddresse(String ecoleAddresse) {
-		this.ecoleAddresse = ecoleAddresse;
-		this.ecoleAddresseCouverture.dejaInitialise = true;
-	}
-	protected EcoleScolaire ecoleAddresseInit() {
-		if(!ecoleAddresseCouverture.dejaInitialise) {
-			_ecoleAddresse(ecoleAddresseCouverture);
-			if(ecoleAddresse == null)
-				setEcoleAddresse(ecoleAddresseCouverture.o);
-		}
-		ecoleAddresseCouverture.dejaInitialise(true);
-		return (EcoleScolaire)this;
-	}
-
-	public String solrEcoleAddresse() {
-		return ecoleAddresse;
-	}
-
-	public String strEcoleAddresse() {
-		return ecoleAddresse == null ? "" : ecoleAddresse;
-	}
-
-	public String nomAffichageEcoleAddresse() {
-		return "Addresse";
-	}
-
-	public String htmTooltipEcoleAddresse() {
-		return null;
-	}
-
-	public String htmEcoleAddresse() {
-		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
-	}
-
-	public void htmEcoleAddresse(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcoleScolaire", strPk(), "EcoleAddresse\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcoleScolaire", strPk(), "EcoleAddresse() {");
-				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleAddresse\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAddresse()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleAddresse\"");
-							r.s(" value=\"", htmEcoleAddresse(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleAddresse());
 			}
 			r.l("</div>");
 		}
@@ -1648,7 +1551,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleAdministrateurNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1676,6 +1579,103 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmEcoleAdministrateurNom());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////
+	// ecoleAddresse //
+	///////////////////
+
+	/**	L'entité « ecoleAddresse »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleAddresse;
+	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
+
+	/**	<br/>L'entité « ecoleAddresse »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAddresse">Trouver l'entité ecoleAddresse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleAddresse(Couverture<String> c);
+
+	public String getEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public void setEcoleAddresse(String ecoleAddresse) {
+		this.ecoleAddresse = ecoleAddresse;
+		this.ecoleAddresseCouverture.dejaInitialise = true;
+	}
+	protected EcoleScolaire ecoleAddresseInit() {
+		if(!ecoleAddresseCouverture.dejaInitialise) {
+			_ecoleAddresse(ecoleAddresseCouverture);
+			if(ecoleAddresse == null)
+				setEcoleAddresse(ecoleAddresseCouverture.o);
+		}
+		ecoleAddresseCouverture.dejaInitialise(true);
+		return (EcoleScolaire)this;
+	}
+
+	public String solrEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public String strEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String nomAffichageEcoleAddresse() {
+		return "Addresse";
+	}
+
+	public String htmTooltipEcoleAddresse() {
+		return null;
+	}
+
+	public String htmEcoleAddresse() {
+		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
+	}
+
+	public void htmEcoleAddresse(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcoleScolaire", strPk(), "EcoleAddresse\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcoleScolaire", strPk(), "EcoleAddresse() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleAddresse\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAddresse()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleAddresse\"");
+							r.s(" value=\"", htmEcoleAddresse(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleAddresse());
 			}
 			r.l("</div>");
 		}
@@ -1751,7 +1751,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "ObjetSuggerePoids() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1848,7 +1848,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "ObjetSuggere() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1945,7 +1945,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleNomCourt() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -2042,7 +2042,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "EcoleId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -2139,7 +2139,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcoleScolaire", strPk(), "PageUri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/v1/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -2200,14 +2200,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		sessionClesInit();
 		saisonClesInit();
 		anneeClesInit();
-		supprimeInit();
 		archiveInit();
+		supprimeInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		ecoleNomInit();
 		ecoleNumeroTelephoneInit();
-		ecoleAddresseInit();
 		ecoleAdministrateurNomInit();
+		ecoleAddresseInit();
 		objetSuggerePoidsInit();
 		objetSuggereInit();
 		ecoleNomCourtInit();
@@ -2333,13 +2333,13 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				document.addField("anneeCles_stored_longs", o);
 			}
 		}
-		if(supprime != null) {
-			document.addField("supprime_indexed_boolean", supprime);
-			document.addField("supprime_stored_boolean", supprime);
-		}
 		if(archive != null) {
 			document.addField("archive_indexed_boolean", archive);
 			document.addField("archive_stored_boolean", archive);
+		}
+		if(supprime != null) {
+			document.addField("supprime_indexed_boolean", supprime);
+			document.addField("supprime_stored_boolean", supprime);
 		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
@@ -2357,13 +2357,13 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
-		if(ecoleAddresse != null) {
-			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
-			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
-		}
 		if(ecoleAdministrateurNom != null) {
 			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
+		}
+		if(ecoleAddresse != null) {
+			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
+			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
 		}
 		if(ecoleNomCourt != null) {
 			document.addField("ecoleNomCourt_stored_string", ecoleNomCourt);
@@ -2427,10 +2427,10 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				return oEcoleScolaire.saisonCles;
 			case "anneeCles":
 				return oEcoleScolaire.anneeCles;
-			case "supprime":
-				return oEcoleScolaire.supprime;
 			case "archive":
 				return oEcoleScolaire.archive;
+			case "supprime":
+				return oEcoleScolaire.supprime;
 			case "scolaireTri":
 				return oEcoleScolaire.scolaireTri;
 			case "ecoleTri":
@@ -2439,10 +2439,10 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				return oEcoleScolaire.ecoleNom;
 			case "ecoleNumeroTelephone":
 				return oEcoleScolaire.ecoleNumeroTelephone;
-			case "ecoleAddresse":
-				return oEcoleScolaire.ecoleAddresse;
 			case "ecoleAdministrateurNom":
 				return oEcoleScolaire.ecoleAdministrateurNom;
+			case "ecoleAddresse":
+				return oEcoleScolaire.ecoleAddresse;
 			case "objetSuggerePoids":
 				return oEcoleScolaire.objetSuggerePoids;
 			case "objetSuggere":
@@ -2538,12 +2538,12 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				if(!sauvegardesEcoleScolaire.contains(var))
 					sauvegardesEcoleScolaire.add(var);
 				return val;
-			case "supprime":
-				setSupprime(val);
-				sauvegardesEcoleScolaire.add(var);
-				return val;
 			case "archive":
 				setArchive(val);
+				sauvegardesEcoleScolaire.add(var);
+				return val;
+			case "supprime":
+				setSupprime(val);
 				sauvegardesEcoleScolaire.add(var);
 				return val;
 			case "scolaireTri":
@@ -2562,12 +2562,12 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				setEcoleNumeroTelephone(val);
 				sauvegardesEcoleScolaire.add(var);
 				return val;
-			case "ecoleAddresse":
-				setEcoleAddresse(val);
-				sauvegardesEcoleScolaire.add(var);
-				return val;
 			case "ecoleAdministrateurNom":
 				setEcoleAdministrateurNom(val);
+				sauvegardesEcoleScolaire.add(var);
+				return val;
+			case "ecoleAddresse":
+				setEcoleAddresse(val);
 				sauvegardesEcoleScolaire.add(var);
 				return val;
 			case "objetSuggerePoids":
@@ -2655,16 +2655,16 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 					oEcoleScolaire.anneeCles.addAll(anneeCles);
 			}
 
-			if(sauvegardesEcoleScolaire.contains("supprime")) {
-				Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
-				if(supprime != null)
-					oEcoleScolaire.setSupprime(supprime);
-			}
-
 			if(sauvegardesEcoleScolaire.contains("archive")) {
 				Boolean archive = (Boolean)solrDocument.get("archive_stored_boolean");
 				if(archive != null)
 					oEcoleScolaire.setArchive(archive);
+			}
+
+			if(sauvegardesEcoleScolaire.contains("supprime")) {
+				Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
+				if(supprime != null)
+					oEcoleScolaire.setSupprime(supprime);
 			}
 
 			if(sauvegardesEcoleScolaire.contains("scolaireTri")) {
@@ -2691,16 +2691,16 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 					oEcoleScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 			}
 
-			if(sauvegardesEcoleScolaire.contains("ecoleAddresse")) {
-				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
-				if(ecoleAddresse != null)
-					oEcoleScolaire.setEcoleAddresse(ecoleAddresse);
-			}
-
 			if(sauvegardesEcoleScolaire.contains("ecoleAdministrateurNom")) {
 				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 				if(ecoleAdministrateurNom != null)
 					oEcoleScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
+			}
+
+			if(sauvegardesEcoleScolaire.contains("ecoleAddresse")) {
+				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+				if(ecoleAddresse != null)
+					oEcoleScolaire.setEcoleAddresse(ecoleAddresse);
 			}
 
 			if(sauvegardesEcoleScolaire.contains("ecoleNomCourt")) {
@@ -2763,13 +2763,13 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		if(anneeCles != null)
 			oEcoleScolaire.anneeCles.addAll(anneeCles);
 
-		Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
-		if(supprime != null)
-			oEcoleScolaire.setSupprime(supprime);
-
 		Boolean archive = (Boolean)solrDocument.get("archive_stored_boolean");
 		if(archive != null)
 			oEcoleScolaire.setArchive(archive);
+
+		Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
+		if(supprime != null)
+			oEcoleScolaire.setSupprime(supprime);
 
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
@@ -2787,13 +2787,13 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		if(ecoleNumeroTelephone != null)
 			oEcoleScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 
-		String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
-		if(ecoleAddresse != null)
-			oEcoleScolaire.setEcoleAddresse(ecoleAddresse);
-
 		String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 		if(ecoleAdministrateurNom != null)
 			oEcoleScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
+
+		String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+		if(ecoleAddresse != null)
+			oEcoleScolaire.setEcoleAddresse(ecoleAddresse);
 
 		String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 		if(ecoleNomCourt != null)
@@ -2826,7 +2826,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, supprime, archive, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAddresse, ecoleAdministrateurNom, objetSuggerePoids, objetSuggere, ecoleNomCourt, ecoleId, pageUri);
+		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, archive, supprime, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse, objetSuggerePoids, objetSuggere, ecoleNomCourt, ecoleId, pageUri);
 	}
 
 	////////////
@@ -2847,14 +2847,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( sessionCles, that.sessionCles )
 				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( anneeCles, that.anneeCles )
-				&& Objects.equals( supprime, that.supprime )
 				&& Objects.equals( archive, that.archive )
+				&& Objects.equals( supprime, that.supprime )
 				&& Objects.equals( scolaireTri, that.scolaireTri )
 				&& Objects.equals( ecoleTri, that.ecoleTri )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
-				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
+				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( objetSuggerePoids, that.objetSuggerePoids )
 				&& Objects.equals( objetSuggere, that.objetSuggere )
 				&& Objects.equals( ecoleNomCourt, that.ecoleNomCourt )
@@ -2877,14 +2877,14 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		sb.append( ", sessionCles: " ).append(sessionCles);
 		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", anneeCles: " ).append(anneeCles);
-		sb.append( ", supprime: " ).append(supprime);
 		sb.append( ", archive: " ).append(archive);
+		sb.append( ", supprime: " ).append(supprime);
 		sb.append( ", scolaireTri: " ).append(scolaireTri);
 		sb.append( ", ecoleTri: " ).append(ecoleTri);
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
-		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
+		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", objetSuggerePoids: " ).append(objetSuggerePoids);
 		sb.append( ", objetSuggere: \"" ).append(objetSuggere).append( "\"" );
 		sb.append( ", ecoleNomCourt: \"" ).append(ecoleNomCourt).append( "\"" );

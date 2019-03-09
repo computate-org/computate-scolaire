@@ -4,9 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.frFR.scolaire.config.ConfigSite;
 import org.computate.frFR.scolaire.contexte.SiteContexte;
-import org.computate.frFR.scolaire.ecole.EcoleScolaireApiServiceImpl;
 import org.computate.frFR.scolaire.ecole.EcoleScolaireGenApiService;
 import org.computate.frFR.scolaire.requete.RequeteSite;
+import org.computate.frFR.scolaire.utilisateur.UtilisateurSiteGenApiService;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -378,6 +378,7 @@ public class AppliVertx extends AbstractVerticle {
 		Future<Void> future = Future.future();
 
 		EcoleScolaireGenApiService.enregistrerService(siteContexte, vertx);
+		UtilisateurSiteGenApiService.enregistrerService(siteContexte, vertx);
 
 		Router siteRouteur = siteContexte.getUsineRouteur().getRouter();
 		// siteContexte.setSiteRouteur_(siteRouteur);

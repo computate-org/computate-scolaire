@@ -9,13 +9,11 @@ import org.computate.frFR.scolaire.couverture.Couverture;
 
 
 
-/**              
+/**
  * Modele: true
- * NomCanonique.enUS: org.computate.enUS.education.school.SchoolEducation
- * ApiUri.enUS: /api/v1/school
- * ApiUri.frFR: /api/v1/ecole
- * PageUri.enUS: /school
- * PageUri.frFR: /ecole
+ * NomCanonique.enUS: org.computate.enUS.education.school.School
+ * ApiUri.enUS: /api/school
+ * ApiUri.frFR: /api/ecole
  * ApiMethode: Recherche
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -26,20 +24,17 @@ import org.computate.frFR.scolaire.couverture.Couverture;
  * ApiMotCleRecherchePage.enUS: page
  * ApiUriRecherchePage.frFR: /ecole
  * ApiUriRecherchePage.enUS: /school
- * ApiTypeMedia200GETPage: text/html
  * PageRecherchePage: EcoleScolairePage
  * UnNomMinuscule.frFR: une école
  * UnNomMinuscule.enUS: a school
  * Couleur: pink
  * IconeGroupe: regular
  * IconeNom: fort-awesome
- * Page: true
  * 
  * Role.frFR: SiteAdmin
- * Map.this.Integer: 1
  * ApiTag.enUS: School
  * ApiTag.frFR: EcoleScolaire
- */                                    
+ */
 public class EcoleScolaire extends EcoleScolaireGen<Cluster> {   
 
 	/**
@@ -119,24 +114,26 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */  
-	protected void _supprime(Couverture<Boolean> c) {
+	 * HtmlLigne: 1
+	 * Description.frFR: Archivé. 
+	 * Description.enUS: Archived. 
+	 * NomAffichage.frFR: Archivé
+	 * NomAffichage.enUS: Archived
+	 */
+	protected void _archive(Couverture<Boolean> c) {
 		c.o(false);
 	}
 	
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
-	protected void _archive(Couverture<Boolean> c) {
+	 * HtmlLigne: 1
+	 * Description.frFR: Supprimé. 
+	 * Description.enUS: Deleted. 
+	 * NomAffichage.frFR: Supprimé
+	 * NomAffichage.enUS: Deleted
+	 */  
+	protected void _supprime(Couverture<Boolean> c) {
 		c.o(false);
 	}
 
@@ -167,7 +164,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 1
+	 * HtmlLigne: 2
 	 * HtmlColonne: 2
 	 * NomAffichage.frFR: Nom de l'école
 	 * NomAffichage.enUS: Name of the school
@@ -180,7 +177,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 1
+	 * HtmlLigne: 2
 	 * HtmlColonne: 3
 	 * NomAffichage.frFR: Numéro de téléphone
 	 * NomAffichage.enUS: Phone number
@@ -188,19 +185,6 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: Telephone number of the school. 
 	 */    
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
-	}
-	/**
-	 * Indexe: true
-	 * Stocke: true
-	 * HtmlLigne: 2
-	 * HtmlColonne: 4
-	 * Multiligne: true
-	 * NomAffichage.frFR: Addresse
-	 * NomAffichage.enUS: Address
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 */
-	protected void _ecoleAddresse(Couverture<String> c) {
 	}
 
 	/**
@@ -211,8 +195,22 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * NomAffichage.frFR: Administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */                 
+	 */                  
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
+	}
+
+	/**
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 4
+	 * Multiligne: true
+	 * NomAffichage.frFR: Addresse
+	 * NomAffichage.enUS: Address
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
 	}
 	
 	/**
@@ -253,7 +251,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */             
+	 */           
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);

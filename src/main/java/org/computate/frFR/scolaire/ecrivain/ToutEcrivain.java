@@ -341,11 +341,22 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return o.toString();
 	}
 
-	public ToutEcrivain js(Object...objets) {
+	public String qjs(Object...objets) {
+		StringBuilder o = new StringBuilder();
+		o.append("\"");
 		for(Object objet : objets)
 			if(objet != null)
-				s(StringEscapeUtils.escapeJava(objet.toString()));
-		return this;
+				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
+		o.append("\"");
+		return o.toString();
+	}
+
+	public String js(Object...objets) {
+		StringBuilder o = new StringBuilder();
+		for(Object objet : objets)
+			if(objet != null)
+				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
+		return o.toString();
 	}
 
 	public ToutEcrivain yamlStr(int tabNumber, Object...objets) {

@@ -1,17 +1,20 @@
 package org.computate.frFR.scolaire.ecrivain;
 
-import java.io.File;
+import org.computate.frFR.scolaire.cluster.Cluster;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Objects;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.frFR.scolaire.cluster.Cluster;
-import org.computate.frFR.scolaire.couverture.Couverture;
-import org.computate.frFR.scolaire.requete.RequeteSite;
-
+import org.apache.commons.lang3.StringUtils;
+import java.io.File;
+import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.buffer.Buffer;
+import org.computate.frFR.scolaire.couverture.Couverture;
+import java.lang.Boolean;
+import java.lang.Object;
+import java.lang.String;
+import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecrivain.ToutEcrivain&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
