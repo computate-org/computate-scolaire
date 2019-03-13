@@ -90,17 +90,23 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 			RequeteSite requeteSite = genererRequeteSitePourUtilisateurSite(siteContexte, operationRequete, body);
 			sqlUtilisateurSite(requeteSite, a -> {
 				if(a.succeeded()) {
-					rechercheUtilisateurSite(requeteSite, false, true, null, b -> {
+					utilisateurUtilisateurSite(requeteSite, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<UtilisateurSite> listeUtilisateurSite = b.result();
-							listePATCHUtilisateurSite(listeUtilisateurSite, c -> {
+							rechercheUtilisateurSite(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									SQLConnection connexionSql = requeteSite.getConnexionSql();
-									connexionSql.commit(d -> {
-										if(a.succeeded()) {
-											connexionSql.close(e -> {
-												if(a.succeeded()) {
-													gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
+									listePATCHUtilisateurSite(listeUtilisateurSite, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													connexionSql.close(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														} else {
+															erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+														}
+													});
 												} else {
 													erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
 												}
@@ -158,8 +164,55 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 			Set<String> methodeNoms = requeteJson.fieldNames();
 			UtilisateurSite o2 = new UtilisateurSite();
 
+			patchSql.append(SiteContexte.SQL_modifier);
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.frFR.scolaire.utilisateur.UtilisateurSite"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setPk":
+						o2.setPk(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("pk", o2.getPk(), pk));
+						break;
+					case "setId":
+						o2.setId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("id", o2.getId(), pk));
+						break;
+					case "setCree":
+						o2.setCree(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						break;
+					case "setModifie":
+						o2.setModifie(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						break;
+					case "setArchive":
+						o2.setArchive(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						break;
+					case "setSupprime":
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						break;
+					case "setClasseNomCanonique":
+						o2.setClasseNomCanonique(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("classeNomCanonique", o2.getClasseNomCanonique(), pk));
+						break;
+					case "setClasseNomSimple":
+						o2.setClasseNomSimple(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("classeNomSimple", o2.getClasseNomSimple(), pk));
+						break;
+					case "setUtilisateurId":
+						o2.setUtilisateurId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("utilisateurId", o2.getUtilisateurId(), pk));
+						break;
 					case "addCalculInrPks":
 						o2.setCalculInrPks(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_addA);
@@ -239,7 +292,7 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_definir
-					, new JsonArray(Arrays.asList(pk))
+					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -364,16 +417,20 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
-			case "utilisateurId":
-				return "utilisateurId_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
 			case "modifie":
 				return "modifie_indexed_date";
+			case "archive":
+				return "archive_indexed_boolean";
+			case "supprime":
+				return "supprime_indexed_boolean";
 			case "classeNomCanonique":
 				return "classeNomCanonique_indexed_string";
 			case "classeNomSimple":
 				return "classeNomSimple_indexed_string";
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
 			case "calculInrPks":
 				return "calculInrPks_indexed_longs";
 			case "utilisateurNom":
@@ -506,7 +563,7 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 
 								connexionSql.queryWithParams(
 										SiteContexte.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur))
+										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 										, definirAsync
 								-> {
 									if(definirAsync.succeeded()) {
@@ -539,7 +596,7 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 
 							connexionSql.queryWithParams(
 									SiteContexte.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur))
+									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 									, definirAsync
 							-> {
 								if(definirAsync.succeeded()) {
@@ -580,11 +637,17 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(UtilisateurSite.class);
-			listeRecherche.setRows(1000000);
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addFilterQuery("classeNomCanonique_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.frFR.scolaire.utilisateur.UtilisateurSite"));
+			listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getUtilisateurId()));
+			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
+			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -654,7 +717,7 @@ public class UtilisateurSiteGenApiServiceImpl implements UtilisateurSiteGenApiSe
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_definir
-					, new JsonArray(Arrays.asList(pk))
+					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

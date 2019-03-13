@@ -1,6 +1,6 @@
 package org.computate.frFR.scolaire.cluster;     
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -23,8 +23,8 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
  * ApiMethode: DELETE
  * ApiTag.enUS: Cluster
  * ApiTag.frFR: Cluster
- */            
-public class Cluster extends ClusterGen<Object> {   
+ */             
+public class Cluster extends ClusterGen<Object> {  
 
 	public static DateTimeFormatter FORMAT_dateMedicalCourt = DateTimeFormatter.ofPattern("M/d/yyyy", Locale.FRANCE);
 
@@ -52,11 +52,13 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * ClePrimaire: true
+	 * HtmlLigne: 1
+	 * Modifier: false
 	 * Description.frFR: La clé primaire dans la base de données. 
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
 	 * NomAffichage.enUS: primary key
-	 */                          
+	 */                             
 	protected void _pk(Couverture<Long> c) {}
 
 	/**
@@ -68,52 +70,59 @@ public class Cluster extends ClusterGen<Object> {
 			c.o(pk.toString());
 	}
 
-	/**        
-	 * Var.enUS: _deleted
-	 * Description.frFR: Supprimé. 
-	 * Description.enUS: Deleted. 
-	 * NomAffichage.frFR: Supprimé
-	 * NomAffichage.enUS: Deleted
-	 */
-	protected void _supprime(Couverture<Boolean> c) {
-		Boolean o = false;
-		c.o(o);
-	}
-
-	/**	
-	 * Var.enUS: _userId
-	 * description.frFR: L'identifiant Keycloak pour cet utilisateur. 
-	 * Indexe: true
-	 * Stocke: true
-	 */
-	protected void _utilisateurId(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurId();
-		c.o(o);
-	}
-
 	/**
 	 * Indexe: true
 	 * Stocke: true
+	 * Modifier: false
 	 * Var.enUS: _created
+	 * HtmlLigne: 1
 	 * Description.frFR: La date et l'heure créées. 
 	 * Description.enUS: The date and time created. 
-	 * NomAffichage.frFR: Crée
-	 * NomAffichage.enUS: Created
-	 */
-	protected void _cree(Couverture<LocalDateTime> c) {}
+	 * NomAffichage.frFR: crée
+	 * NomAffichage.enUS: created
+	 */ 
+	protected void _cree(Couverture<ZonedDateTime> c) {}
 
 	/**
 	 * Indexe: true
 	 * Stocke: true
+	 * Modifier: false
 	 * Var.enUS: _modified
+	 * HtmlLigne: 1
 	 * Description.frFR: La date et l'heure modifiéés. 
 	 * Description.enUS: The date and time modified. 
-	 * NomAffichage.frFR: Modifié
-	 * NomAffichage.enUS: Modified
+	 * NomAffichage.frFR: modifié
+	 * NomAffichage.enUS: modified
 	 */
-	protected void _modifie(Couverture<LocalDateTime> c) {}
+	protected void _modifie(Couverture<ZonedDateTime> c) {}
+	
+	/**
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 1
+	 * Description.frFR: archivé. 
+	 * Description.enUS: archived. 
+	 * NomAffichage.frFR: archivé
+	 * NomAffichage.enUS: archived
+	 */
+	protected void _archive(Couverture<Boolean> c) {
+		c.o(false);
+	}
+	
+	/**
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 1
+	 * Description.frFR: supprimé. 
+	 * Description.enUS: deleted. 
+	 * NomAffichage.frFR: supprimé
+	 * NomAffichage.enUS: deleted
+	 */  
+	protected void _supprime(Couverture<Boolean> c) {
+		c.o(false);
+	}
 
-	/**   
+	/**  
 	 * Indexe: true
 	 * Stocke: true
 	 * Var.enUS: _classCanonicalName

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.frFR.scolaire.config.ConfigSite;
 import org.computate.frFR.scolaire.contexte.SiteContexte;
 import org.computate.frFR.scolaire.ecole.EcoleScolaireGenApiService;
+import org.computate.frFR.scolaire.mission.MissionScolaireGenApiService;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 import org.computate.frFR.scolaire.utilisateur.UtilisateurSiteGenApiService;
 
@@ -223,6 +224,15 @@ public class AppliVertx extends AbstractVerticle {
 
 				gestionnaireAuth.setupCallback(routeur.get("/callback"));
 
+				routeur.get("/deconnexion").handler(rc -> {
+					Session session = rc.session();
+					if (session != null) {
+						session.destroy();
+					}
+					rc.clearUser();
+					rc.reroute("/mission");
+				});
+
 				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
 
 				usineRouteur.initRouter();
@@ -379,6 +389,7 @@ public class AppliVertx extends AbstractVerticle {
 
 		EcoleScolaireGenApiService.enregistrerService(siteContexte, vertx);
 		UtilisateurSiteGenApiService.enregistrerService(siteContexte, vertx);
+		MissionScolaireGenApiService.enregistrerService(siteContexte, vertx);
 
 		Router siteRouteur = siteContexte.getUsineRouteur().getRouter();
 		// siteContexte.setSiteRouteur_(siteRouteur);

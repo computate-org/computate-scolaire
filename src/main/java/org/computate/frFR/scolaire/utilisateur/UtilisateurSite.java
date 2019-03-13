@@ -26,15 +26,30 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
  * IconeNom: user
  * 
  * Role.frFR: SiteAdmin
+ * Filtre: utilisateurId
  * ApiTag.enUS: SiteUser
  * ApiTag.frFR: UtilisateurSite
- */     
+ */      
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> { 
+
+	/**  
+	 * Var.enUS: _userId
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 2
+	 * Description.frFR: L'identifiant Keycloak pour cet utilisateur. 
+	 * NomAffichage.frFR: utilisateur ID
+	 * NomAffichage.enUS: user ID
+	 */  
+	protected void _utilisateurId(Couverture<String> c) {
+		String o = requeteSite_.getUtilisateurId();
+		c.o(o);
+	}
 
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * attribuer: CalculInr.utilisateurPk
+	 * Attribuer: CalculInr.utilisateurPk
 	 */   
 	protected void _calculInrPks(List<Long> l) {
 	}
@@ -75,7 +90,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * description.frFR: Le nom de famille pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
-	 */
+	 */ 
 	protected void _utilisateurNomFamille(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNomFamille();
 		c.o(o);
@@ -110,7 +125,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * description.frFR: Le nom de famille pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
-	 */ 
+	 */  
 	protected void _utilisateurRecevoirCourriels(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -120,12 +135,12 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Var.enUS: seeArchived
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 1
+	 * HtmlLigne: 2
 	 * NomAffichage.frFR: voir archivé
 	 * NomAffichage.enUS: see archived
 	 * Description.frFR: Filter the search results in the application to show archived records. 
 	 * Description.enUS: Filtrer les résultats de recherche dans l'application à voir les données archivées. 
-	 **/
+	**/ 
 	protected void _voirArchive(Couverture<Boolean> c) {
 		c.o(false);
 	}

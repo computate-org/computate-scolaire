@@ -1417,6 +1417,1221 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /api/mission:
+    get:
+      operationId: rechercheMissionScolaire
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RechercheMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    post:
+      operationId: postMissionScolaire
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/POSTMissionScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchMissionScolaire
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/PATCHMissionScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/mission/{id}:
+    get:
+      operationId: getMissionScolaireId
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteMissionScolaireId
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETEMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /mission:
+    get:
+      operationId: recherchepageMissionScolaire
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /mission/{id}:
+    get:
+      operationId: recherchepageMissionScolaireId
+      x-vertx-event-bus: MissionScolaire
+      description: >+
+      summary: >+
+      tags:
+        - MissionScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageMissionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/ecole:
+    get:
+      operationId: rechercheEcoleScolaire
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RechercheEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    post:
+      operationId: postEcoleScolaire
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/POSTEcoleScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchEcoleScolaire
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/PATCHEcoleScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/ecole/{id}:
+    get:
+      operationId: getEcoleScolaireId
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteEcoleScolaireId
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETEEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /ecole:
+    get:
+      operationId: recherchepageEcoleScolaire
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /ecole/{id}:
+    get:
+      operationId: recherchepageEcoleScolaireId
+      x-vertx-event-bus: EcoleScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - EcoleScolaire
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RecherchePageEcoleScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
 components:
   securitySchemes:
     openIdConnect:
@@ -1528,6 +2743,86 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/RecherchePageUtilisateurSiteReponse'
+    RechercheMissionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RechercheMissionScolaireReponse'
+    POSTMissionScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTMissionScolaireRequete'
+    POSTMissionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTMissionScolaireReponse'
+    PATCHMissionScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHMissionScolaireRequete'
+    PATCHMissionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHMissionScolaireReponse'
+    GETMissionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETMissionScolaireReponse'
+    DELETEMissionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEMissionScolaireReponse'
+    RecherchePageMissionScolaireReponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RecherchePageMissionScolaireReponse'
+    RechercheEcoleScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RechercheEcoleScolaireReponse'
+    POSTEcoleScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTEcoleScolaireRequete'
+    POSTEcoleScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTEcoleScolaireReponse'
+    PATCHEcoleScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHEcoleScolaireRequete'
+    PATCHEcoleScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHEcoleScolaireReponse'
+    GETEcoleScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETEcoleScolaireReponse'
+    DELETEEcoleScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEEcoleScolaireReponse'
+    RecherchePageEcoleScolaireReponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RecherchePageEcoleScolaireReponse'
   schemas:
     RechercheClusterReponse:
       allOf:
@@ -1539,16 +2834,16 @@ components:
                 type: number
               id:
                 type: string
-              supprime:
-                type: boolean
-              utilisateurId:
-                type: string
               cree:
                 type: string
                 format: date-time
               modifie:
                 type: string
                 format: date-time
+              archive:
+                type: boolean
+              supprime:
+                type: boolean
               classeNomCanonique:
                 type: string
               classeNomSimple:
@@ -1561,16 +2856,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1583,16 +2878,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1605,16 +2900,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1627,16 +2922,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1649,16 +2944,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1671,16 +2966,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1693,16 +2988,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1715,16 +3010,16 @@ components:
               type: number
             id:
               type: string
-            supprime:
-              type: boolean
-            utilisateurId:
-              type: string
             cree:
               type: string
               format: date-time
             modifie:
               type: string
               format: date-time
+            archive:
+              type: boolean
+            supprime:
+              type: boolean
             classeNomCanonique:
               type: string
             classeNomSimple:
@@ -1762,10 +3057,6 @@ components:
                 type: array
                 items:
                   type: number
-              archive:
-                type: boolean
-              supprime:
-                type: boolean
               scolaireTri:
                 type: number
               ecoleTri:
@@ -1819,10 +3110,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -1876,10 +3163,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -1933,10 +3216,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -1990,10 +3269,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -2047,10 +3322,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -2104,10 +3375,6 @@ components:
               type: array
               items:
                 type: number
-            archive:
-              type: boolean
-            supprime:
-              type: boolean
             scolaireTri:
               type: number
             ecoleTri:
@@ -2138,6 +3405,8 @@ components:
         - $ref: "#/components/schemas/PATCHClusterRequete"
         - type: object
           properties:
+            utilisateurId:
+              type: string
             calculInrPks:
               type: array
               items:
@@ -2156,22 +3425,6 @@ components:
               type: string
             utilisateurRecevoirCourriels:
               type: boolean
-            modeleSupprime:
-              type: boolean
-            modeleCree:
-              type: string
-              format: date-time
-            modeleModifie:
-              type: string
-              format: date-time
-            modeleClasseNomCanonique:
-              type: string
-            modeleCle:
-              type: number
-            modeleSuggestionStocke:
-              type: string
-            modeleSuggestionIndexe:
-              type: string
             voirArchive:
               type: boolean
             voirSupprime:
@@ -2181,6 +3434,8 @@ components:
         - $ref: "#/components/schemas/PATCHClusterReponse"
         - type: object
           properties:
+            utilisateurId:
+              type: string
             calculInrPks:
               type: array
               items:
@@ -2199,27 +3454,483 @@ components:
               type: string
             utilisateurRecevoirCourriels:
               type: boolean
-            modeleSupprime:
-              type: boolean
-            modeleCree:
-              type: string
-              format: date-time
-            modeleModifie:
-              type: string
-              format: date-time
-            modeleClasseNomCanonique:
-              type: string
-            modeleCle:
-              type: number
-            modeleSuggestionStocke:
-              type: string
-            modeleSuggestionIndexe:
-              type: string
             voirArchive:
               type: boolean
             voirSupprime:
               type: boolean
     RecherchePageUtilisateurSiteReponse:
+      allOf:
+        - type: string
+    RechercheMissionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/RechercheClusterReponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              missionNom:
+                type: string
+              ecoleNumeroTelephone:
+                type: string
+              missionId:
+                type: string
+              pageUri:
+                type: string
+    POSTMissionScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequete"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    POSTMissionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterReponse"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    PATCHMissionScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequete"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    PATCHMissionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterReponse"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    GETMissionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterReponse"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    DELETEMissionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterReponse"
+        - type: object
+          properties:
+            missionNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            missionId:
+              type: string
+            pageUri:
+              type: string
+    RecherchePageMissionScolaireReponse:
+      allOf:
+        - type: string
+    RechercheEcoleScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/RechercheClusterReponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              ecoleCle:
+                type: number
+              enfantCles:
+                type: array
+                items:
+                  type: number
+              blocCles:
+                type: array
+                items:
+                  type: number
+              groupeAgeCles:
+                type: array
+                items:
+                  type: number
+              sessionCles:
+                type: array
+                items:
+                  type: number
+              saisonCles:
+                type: array
+                items:
+                  type: number
+              anneeCles:
+                type: array
+                items:
+                  type: number
+              scolaireTri:
+                type: number
+              ecoleTri:
+                type: number
+              ecoleNom:
+                type: string
+              ecoleNumeroTelephone:
+                type: string
+              ecoleAdministrateurNom:
+                type: string
+              ecoleAddresse:
+                type: string
+              objetSuggerePoids:
+                type: number
+              objetSuggere:
+                type: string
+              ecoleNomCourt:
+                type: string
+              ecoleId:
+                type: string
+              pageUri:
+                type: string
+    POSTEcoleScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequete"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    POSTEcoleScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    PATCHEcoleScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequete"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    PATCHEcoleScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    GETEcoleScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    DELETEEcoleScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: number
+            enfantCles:
+              type: array
+              items:
+                type: number
+            blocCles:
+              type: array
+              items:
+                type: number
+            groupeAgeCles:
+              type: array
+              items:
+                type: number
+            sessionCles:
+              type: array
+              items:
+                type: number
+            saisonCles:
+              type: array
+              items:
+                type: number
+            anneeCles:
+              type: array
+              items:
+                type: number
+            scolaireTri:
+              type: number
+            ecoleTri:
+              type: number
+            ecoleNom:
+              type: string
+            ecoleNumeroTelephone:
+              type: string
+            ecoleAdministrateurNom:
+              type: string
+            ecoleAddresse:
+              type: string
+            objetSuggerePoids:
+              type: number
+            objetSuggere:
+              type: string
+            ecoleNomCourt:
+              type: string
+            ecoleId:
+              type: string
+            pageUri:
+              type: string
+    RecherchePageEcoleScolaireReponse:
       allOf:
         - type: string
     ErrorResponse:

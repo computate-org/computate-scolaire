@@ -1,4 +1,4 @@
-package org.computate.frFR.scolaire.utilisateur;
+package org.computate.frFR.scolaire.mission;
 
 import io.vertx.core.http.HttpServerRequest;
 import org.computate.frFR.scolaire.contexte.SiteContexte;
@@ -8,38 +8,35 @@ import java.time.LocalDateTime;
 import java.io.IOException;
 import org.computate.frFR.scolaire.page.MiseEnPage;
 import org.computate.frFR.scolaire.recherche.ListeRecherche;
-import java.util.List;
 import org.computate.frFR.scolaire.couverture.Couverture;
-import java.lang.Long;
 import io.vertx.core.http.HttpServerResponse;
 import java.util.Locale;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.lang.Boolean;
 import java.lang.String;
 import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 
 
-public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage> {
+public class MissionScolaireGenPage extends MissionScolaireGenPageGen<MiseEnPage> {
 
 	/**
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _listeUtilisateurSite(Couverture<ListeRecherche<UtilisateurSite>> c) {
+	protected void _listeMissionScolaire(Couverture<ListeRecherche<MissionScolaire>> c) {
 	}
 
-	protected void _utilisateurSite(Couverture<UtilisateurSite> c) {
-		if(listeUtilisateurSite.size() == 1)
-			c.o(listeUtilisateurSite.get(0));
+	protected void _missionScolaire(Couverture<MissionScolaire> c) {
+		if(listeMissionScolaire.size() == 1)
+			c.o(listeMissionScolaire.get(0));
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(utilisateurSite != null)
-			c.o("un utilisateur");
-		else if(listeUtilisateurSite.size() == 0)
-			c.o("aucun utilisateur trouvé");
+		if(missionScolaire != null)
+			c.o("une mission");
+		else if(listeMissionScolaire.size() == 0)
+			c.o("aucune mission trouvée");
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
@@ -51,10 +48,10 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(utilisateurSite != null)
-			c.o("un utilisateur");
-		else if(listeUtilisateurSite.size() == 0)
-			c.o("aucun utilisateur trouvé");
+		if(missionScolaire != null)
+			c.o("une mission");
+		else if(listeMissionScolaire.size() == 0)
+			c.o("aucune mission trouvée");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -62,26 +59,26 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 	}
 
 	@Override protected void _contexteIconeNom(Couverture<String> c) {
-			c.o("user");
+			c.o("fort-awesome");
 	}
 
-	@Override public void initLoinUtilisateurSiteGenPage() {
-		initUtilisateurSiteGenPage();
+	@Override public void initLoinMissionScolaireGenPage() {
+		initMissionScolaireGenPage();
 		super.initLoinMiseEnPage();
 	}
 
-	@Override public void htmlScriptsUtilisateurSiteGenPage() {
-		e("script").a("src", "/static/js/UtilisateurSitePage.js").f().g("script");
+	@Override public void htmlScriptsMissionScolaireGenPage() {
+		e("script").a("src", "/static/js/MissionScolairePage.js").f().g("script");
 	}
 
-	protected void _pageUriUtilisateurSite(Couverture<String> c) {
-			c.o("/utilisateur");
+	protected void _pageUriMissionScolaire(Couverture<String> c) {
+			c.o("/mission");
 	}
 
-	@Override public void htmlScriptUtilisateurSiteGenPage() {
+	@Override public void htmlScriptMissionScolaireGenPage() {
 	}
 
-	public void htmlFormPageUtilisateurSite(UtilisateurSite o) {
+	public void htmlFormPageMissionScolaire(MissionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
@@ -122,7 +119,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 						.a("class", "setArchive")
 						.a("name", "setArchive")
 						.a("id", "Page_archive")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#archiveForm')); ")
+						.a("onchange", "patchMissionScolaire($('#MissionScolaireForm'), $('#archiveForm')); ")
 						;
 						if(o.getArchive() != null && o.getArchive())
 							a("checked", "checked");
@@ -146,7 +143,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 						.a("class", "setSupprime")
 						.a("name", "setSupprime")
 						.a("id", "Page_supprime")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#supprimeForm')); ")
+						.a("onchange", "patchMissionScolaire($('#MissionScolaireForm'), $('#supprimeForm')); ")
 						;
 						if(o.getSupprime() != null && o.getSupprime())
 							a("checked", "checked");
@@ -158,74 +155,43 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "utilisateurIdForm").a("style", "display: inline-block; ").f();
-					e("label").a("for", "Page_utilisateurId").a("class", "").f().sx("utilisateur ID").g("label");
+				{ e("form").a("id", "missionNomForm").a("style", "display: inline-block; ").f();
+					e("label").a("for", "Page_missionNom").a("class", "").f().sx("nom de la mission").g("label");
 
 					e("input")
 						.a("type", "text")
-						.a("placeholder", "utilisateur ID")
-						.a("title", "L'identifiant Keycloak pour cet utilisateur. ")
-						.a("class", "setUtilisateurId w3-input w3-border ")
-						.a("name", "setUtilisateurId")
-						.a("id", "Page_utilisateurId")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#utilisateurIdForm')); ")
-						.a("value", o.strUtilisateurId())
+						.a("placeholder", "nom de la mission")
+						.a("title", "Nom de la mission. ")
+						.a("class", "setMissionNom w3-input w3-border ")
+						.a("name", "setMissionNom")
+						.a("id", "Page_missionNom")
+						.a("onchange", "patchMissionScolaire($('#MissionScolaireForm'), $('#missionNomForm')); ")
+						.a("value", o.strMissionNom())
 					.fg();
 
 				} g("form");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirArchiveForm").a("style", "display: inline-block; ").f();
+				{ e("form").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+					e("label").a("for", "Page_ecoleNumeroTelephone").a("class", "").f().sx("description de la mission").g("label");
+
 					e("input")
-						.a("type", "hidden")
-						.a("name", "voirArchive")
-						.a("id", "Page_voirArchive")
-						.a("value", "false")
+						.a("type", "text")
+						.a("placeholder", "description de la mission")
+						.a("title", "Numéro de téléphone de l'école. ")
+						.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+						.a("name", "setEcoleNumeroTelephone")
+						.a("id", "Page_ecoleNumeroTelephone")
+						.a("onchange", "patchMissionScolaire($('#MissionScolaireForm'), $('#ecoleNumeroTelephoneForm')); ")
+						.a("value", o.strEcoleNumeroTelephone())
 					.fg();
 
-					e("input")
-						.a("type", "checkbox")
-						.a("value", "true")
-						.a("class", "setVoirArchive")
-						.a("name", "setVoirArchive")
-						.a("id", "Page_voirArchive")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirArchiveForm')); ")
-						;
-						if(o.getVoirArchive() != null && o.getVoirArchive())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-				} g("form");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("id", "voirSupprimeForm").a("style", "display: inline-block; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "voirSupprime")
-						.a("id", "Page_voirSupprime")
-						.a("value", "false")
-					.fg();
-
-					e("input")
-						.a("type", "checkbox")
-						.a("value", "true")
-						.a("class", "setVoirSupprime")
-						.a("name", "setVoirSupprime")
-						.a("id", "Page_voirSupprime")
-						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirSupprimeForm')); ")
-						;
-						if(o.getVoirSupprime() != null && o.getVoirSupprime())
-							a("checked", "checked");
-					fg();
-
-					e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
 				} g("form");
 			} g("div");
 		} g("div");
 	}
 
-	public void htmlFormPOSTUtilisateurSite(UtilisateurSite o) {
+	public void htmlFormPOSTMissionScolaire(MissionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
@@ -296,65 +262,37 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "POST_utilisateurId").a("class", "").f().sx("utilisateur ID").g("label");
+				e("label").a("for", "POST_missionNom").a("class", "").f().sx("nom de la mission").g("label");
 
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "utilisateur ID")
-					.a("title", "L'identifiant Keycloak pour cet utilisateur. ")
-					.a("class", "valeurUtilisateurId w3-input w3-border ")
-					.a("name", "utilisateurId")
-					.a("id", "POST_utilisateurId")
-					.a("value", o.strUtilisateurId())
+					.a("placeholder", "nom de la mission")
+					.a("title", "Nom de la mission. ")
+					.a("class", "valeurMissionNom w3-input w3-border ")
+					.a("name", "missionNom")
+					.a("id", "POST_missionNom")
+					.a("value", o.strMissionNom())
 				.fg();
 
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				e("label").a("for", "POST_ecoleNumeroTelephone").a("class", "").f().sx("description de la mission").g("label");
+
 				e("input")
-					.a("type", "hidden")
-					.a("name", "voirArchive")
-					.a("id", "POST_voirArchive")
-					.a("value", "false")
+					.a("type", "text")
+					.a("placeholder", "description de la mission")
+					.a("title", "Numéro de téléphone de l'école. ")
+					.a("class", "valeurEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "ecoleNumeroTelephone")
+					.a("id", "POST_ecoleNumeroTelephone")
+					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "valeurVoirArchive")
-					.a("name", "voirArchive")
-					.a("id", "POST_voirArchive")
-					;
-					if(o.getVoirArchive() != null && o.getVoirArchive())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "POST_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("input")
-					.a("type", "hidden")
-					.a("name", "voirSupprime")
-					.a("id", "POST_voirSupprime")
-					.a("value", "false")
-				.fg();
-
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "valeurVoirSupprime")
-					.a("name", "voirSupprime")
-					.a("id", "POST_voirSupprime")
-					;
-					if(o.getVoirSupprime() != null && o.getVoirSupprime())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "POST_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
 			} g("div");
 		} g("div");
 	}
 
-	public void htmlFormPATCHUtilisateurSite(UtilisateurSite o) {
+	public void htmlFormPATCHMissionScolaire(MissionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
@@ -425,65 +363,37 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "PATCH_utilisateurId").a("class", "").f().sx("utilisateur ID").g("label");
+				e("label").a("for", "PATCH_missionNom").a("class", "").f().sx("nom de la mission").g("label");
 
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "utilisateur ID")
-					.a("title", "L'identifiant Keycloak pour cet utilisateur. ")
-					.a("class", "setUtilisateurId w3-input w3-border ")
-					.a("name", "setUtilisateurId")
-					.a("id", "PATCH_utilisateurId")
-					.a("value", o.strUtilisateurId())
+					.a("placeholder", "nom de la mission")
+					.a("title", "Nom de la mission. ")
+					.a("class", "setMissionNom w3-input w3-border ")
+					.a("name", "setMissionNom")
+					.a("id", "PATCH_missionNom")
+					.a("value", o.strMissionNom())
 				.fg();
 
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				e("label").a("for", "PATCH_ecoleNumeroTelephone").a("class", "").f().sx("description de la mission").g("label");
+
 				e("input")
-					.a("type", "hidden")
-					.a("name", "voirArchive")
-					.a("id", "PATCH_voirArchive")
-					.a("value", "false")
+					.a("type", "text")
+					.a("placeholder", "description de la mission")
+					.a("title", "Numéro de téléphone de l'école. ")
+					.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "setEcoleNumeroTelephone")
+					.a("id", "PATCH_ecoleNumeroTelephone")
+					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "setVoirArchive")
-					.a("name", "setVoirArchive")
-					.a("id", "PATCH_voirArchive")
-					;
-					if(o.getVoirArchive() != null && o.getVoirArchive())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "PATCH_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("input")
-					.a("type", "hidden")
-					.a("name", "voirSupprime")
-					.a("id", "PATCH_voirSupprime")
-					.a("value", "false")
-				.fg();
-
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "setVoirSupprime")
-					.a("name", "setVoirSupprime")
-					.a("id", "PATCH_voirSupprime")
-					;
-					if(o.getVoirSupprime() != null && o.getVoirSupprime())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "PATCH_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
 			} g("div");
 		} g("div");
 	}
 
-	public void htmlFormRechercheUtilisateurSite(UtilisateurSite o) {
+	public void htmlFormRechercheMissionScolaire(MissionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
@@ -554,89 +464,61 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "Recherche_utilisateurId").a("class", "").f().sx("utilisateur ID").g("label");
+				e("label").a("for", "Recherche_missionNom").a("class", "").f().sx("nom de la mission").g("label");
 
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "utilisateur ID")
-					.a("title", "L'identifiant Keycloak pour cet utilisateur. ")
-					.a("class", "valeurUtilisateurId w3-input w3-border ")
-					.a("name", "utilisateurId")
-					.a("id", "Recherche_utilisateurId")
-					.a("value", o.strUtilisateurId())
+					.a("placeholder", "nom de la mission")
+					.a("title", "Nom de la mission. ")
+					.a("class", "valeurMissionNom w3-input w3-border ")
+					.a("name", "missionNom")
+					.a("id", "Recherche_missionNom")
+					.a("value", o.strMissionNom())
 				.fg();
 
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				e("label").a("for", "Recherche_ecoleNumeroTelephone").a("class", "").f().sx("description de la mission").g("label");
+
 				e("input")
-					.a("type", "hidden")
-					.a("name", "voirArchive")
-					.a("id", "Recherche_voirArchive")
-					.a("value", "false")
+					.a("type", "text")
+					.a("placeholder", "description de la mission")
+					.a("title", "Numéro de téléphone de l'école. ")
+					.a("class", "valeurEcoleNumeroTelephone w3-input w3-border ")
+					.a("name", "ecoleNumeroTelephone")
+					.a("id", "Recherche_ecoleNumeroTelephone")
+					.a("value", o.strEcoleNumeroTelephone())
 				.fg();
 
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "valeurVoirArchive")
-					.a("name", "voirArchive")
-					.a("id", "Recherche_voirArchive")
-					;
-					if(o.getVoirArchive() != null && o.getVoirArchive())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "Recherche_voirArchive").a("class", "").f().sx("voir archivé").g("label");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("input")
-					.a("type", "hidden")
-					.a("name", "voirSupprime")
-					.a("id", "Recherche_voirSupprime")
-					.a("value", "false")
-				.fg();
-
-				e("input")
-					.a("type", "checkbox")
-					.a("value", "true")
-					.a("class", "valeurVoirSupprime")
-					.a("name", "voirSupprime")
-					.a("id", "Recherche_voirSupprime")
-					;
-					if(o.getVoirSupprime() != null && o.getVoirSupprime())
-						a("checked", "checked");
-				fg();
-
-				e("label").a("for", "Recherche_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
 			} g("div");
 		} g("div");
 	}
 
-	@Override public void htmlBodyUtilisateurSiteGenPage() {
+	@Override public void htmlBodyMissionScolaireGenPage() {
 
-		if(listeUtilisateurSite.size() == 0) {
-			//aucun utilisateur trouvé
+		if(listeMissionScolaire.size() == 0) {
+			//aucune mission trouvée
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
 					e("i").a("class", contexteIconeClassesCss + " w3-margin-right-4 ").f().g("i");
-				e("span").a("class", " ").f().sx("aucun utilisateur trouvé").g("span");
+				e("span").a("class", " ").f().sx("aucune mission trouvée").g("span");
 			} g("h1");
-		} else if(listeUtilisateurSite.size() == 1) {
-			// un utilisateur
-			UtilisateurSite o = listeUtilisateurSite.first();
+		} else if(listeMissionScolaire.size() == 1) {
+			// une mission
+			MissionScolaire o = listeMissionScolaire.first();
 
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " w3-margin-right-4 ").f().g("i");
-					e("span").a("class", " ").f().sx("un utilisateur").g("span");
+					e("span").a("class", " ").f().sx("une mission").g("span");
 				} g("h1");
 			}
 			{ e("div").a("class", "w3-card w3-margin w3-padding w3-margin-top w3-show ").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; ").f();
+					{ e("form").a("id", "MissionScolaireForm").a("style", "display: inline-block; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")
@@ -644,30 +526,42 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 						.a("value", o.getPk())
 						.fg();
 					} g("form");
-					htmlFormPageUtilisateurSite(o);
+					htmlFormPageMissionScolaire(o);
 				}
 
 				o.htmlBody();
 
 			} g("div");
 		} else {
-			// plusiers utilisateurs
+			// plusiers missions
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
 					e("i").a("class", contexteIconeClassesCss + " w3-margin-right-4 ").f().g("i");
-				e("span").a("class", " ").f().sx("utilisateurs").g("i");
+				e("span").a("class", " ").f().sx("missions").g("i");
 			} g("h1");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
+						e("th").f().sx("nom de la mission").g("th");
+						e("th").f().sx("description de la mission").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
-					for(int i = 0; i < listeUtilisateurSite.size(); i++) {
-						UtilisateurSite o = listeUtilisateurSite.getList().get(i);
-						String uri = "/utilisateur/" + o.getPk();
+					for(int i = 0; i < listeMissionScolaire.size(); i++) {
+						MissionScolaire o = listeMissionScolaire.getList().get(i);
+						String uri = o.getPageUri();
 						{ e("tr").f();
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getMissionNom());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getEcoleNumeroTelephone());
+								} g("a");
+							} g("td");
 						} g("tr");
 					}
 				} g("tbody");
@@ -677,36 +571,92 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-deep-purple ")
-			.a("onclick", "$('#patchUtilisateurSiteModale').show(); ")
-			.f().sx("Modifier des utilisateurs")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+			.a("onclick", "$('#postMissionScolaireModale').show(); ")
+			.f().sx("Créer une mission")
 		.g("button");
-		{ e("div").a("id", "patchUtilisateurSiteModale").a("class", "w3-modal ").f();
+		{ e("div").a("id", "postMissionScolaireModale").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-deep-purple ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modifier des utilisateurs").g("h2");
+				{ e("header").a("class", "w3-container w3-pink ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postMissionScolaireModale').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Créer une mission").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
-					UtilisateurSite o = new UtilisateurSite();
+					MissionScolaire o = new MissionScolaire();
 
-					{ e("form").a("id", "patchUtilisateurSiteFormFiltres").f();
-						htmlFormRechercheUtilisateurSite(o);
+					{ e("form").a("id", "postMissionScolaireForm").f();
+						htmlFormPOSTMissionScolaire(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-deep-purple ")
-						.a("onclick", "rechercheUtilisateurSite($('#patchUtilisateurSiteFormFiltres')); ")
-						.f().sx("Modifier des utilisateurs")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+						.a("onclick", "postMissionScolaire($('#postMissionScolaireForm')); ")
+						.f().sx("Créer une mission")
+					.g("button");
+
+				} g("div");
+			} g("div");
+		} g("div");
+
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+			.a("onclick", "$('#patchMissionScolaireModale').show(); ")
+			.f().sx("Modifier des missions")
+		.g("button");
+		{ e("div").a("id", "patchMissionScolaireModale").a("class", "w3-modal ").f();
+			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+				{ e("header").a("class", "w3-container w3-pink ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchMissionScolaireModale').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Modifier des missions").g("h2");
+				} g("header");
+				{ e("div").a("class", "w3-container ").f();
+					MissionScolaire o = new MissionScolaire();
+
+					{ e("form").a("id", "patchMissionScolaireFormFiltres").f();
+						htmlFormRechercheMissionScolaire(o);
+					} g("form");
+					e("button")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+						.a("onclick", "rechercheMissionScolaire($('#patchMissionScolaireFormFiltres')); ")
+						.f().sx("Modifier des missions")
 					.g("button");
 
 
-					{ e("form").a("id", "patchUtilisateurSiteFormValeurs").f();
-						htmlFormPATCHUtilisateurSite(o);
+					{ e("form").a("id", "patchMissionScolaireFormValeurs").f();
+						htmlFormPATCHMissionScolaire(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-deep-purple ")
-						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormFiltres'), $('#patchUtilisateurSiteFormValeurs')); ")
-						.f().sx("Modifier des utilisateurs")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+						.a("onclick", "patchMissionScolaire($('#patchMissionScolaireFormFiltres'), $('#patchMissionScolaireFormValeurs')); ")
+						.f().sx("Modifier des missions")
+					.g("button");
+
+				} g("div");
+			} g("div");
+		} g("div");
+
+
+		e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+			.a("onclick", "$('#deleteMissionScolaireModale').show(); ")
+			.f().sx("Supprimer des missions")
+		.g("button");
+		{ e("div").a("id", "deleteMissionScolaireModale").a("class", "w3-modal ").f();
+			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+				{ e("header").a("class", "w3-container w3-pink ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteMissionScolaireModale').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Supprimer des missions").g("h2");
+				} g("header");
+				{ e("div").a("class", "w3-container ").f();
+					MissionScolaire o = new MissionScolaire();
+
+					{ e("form").a("id", "deleteMissionScolaireForm").f();
+						htmlFormPATCHMissionScolaire(o);
+					} g("form");
+					e("button")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-pink ")
+						.a("onclick", "deleteMissionScolaire(); ")
+						.f().sx("Supprimer des missions")
 					.g("button");
 
 				} g("div");

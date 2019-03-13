@@ -1,72 +1,40 @@
 package org.computate.frFR.scolaire.ecole;
 
-import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
-import java.util.Arrays;
-import io.vertx.ext.web.api.validation.ParameterTypeValidator;
-import org.apache.solr.common.SolrDocumentList;
-import java.util.Date;
-import io.vertx.core.MultiMap;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.reactivestreams.ReactiveReadStream;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.api.OperationResponse;
-import org.apache.commons.lang3.StringUtils;
-import java.math.BigDecimal;
-import java.util.Map;
-import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.core.json.JsonObject;
-import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.http.CaseInsensitiveHeaders;
-import java.io.PrintWriter;
-import org.computate.frFR.scolaire.contexte.SiteContexte;
-import java.util.Collection;
-import java.sql.Timestamp;
-import org.computate.frFR.scolaire.config.ConfigSite;
-import java.util.Set;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import java.util.stream.Collectors;
-import io.vertx.core.Future;
-import java.time.ZoneId;
-import org.computate.frFR.scolaire.recherche.ListeRecherche;
-import java.util.List;
-import java.security.Principal;
-import java.util.stream.Stream;
-import io.vertx.core.buffer.Buffer;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.http.client.utils.URLEncodedUtils;
-import java.util.Optional;
-import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import org.apache.solr.client.solrj.util.ClientUtils;
-import io.vertx.ext.sql.SQLClient;
-import org.apache.http.NameValuePair;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import io.vertx.core.json.Json;
-import java.time.LocalDateTime;
-import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
-import io.vertx.core.CompositeFuture;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
-import java.nio.charset.Charset;
-import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
-import io.vertx.core.AsyncResult;
-import io.vertx.ext.web.api.validation.ValidationException;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import io.vertx.core.Vertx;
-import java.io.IOException;
-import org.computate.frFR.scolaire.recherche.ResultatRecherche;
-import io.vertx.ext.reactivestreams.ReactiveWriteStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.apache.solr.common.SolrDocument;
-import io.vertx.core.json.JsonArray;
-import io.vertx.ext.web.api.OperationRequest;
-import org.computate.frFR.scolaire.ecole.EcoleScolairePage;
-import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
-import io.vertx.core.Handler;
-import java.util.Collections;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.computate.frFR.scolaire.contexte.SiteContexte;
+import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
+import org.computate.frFR.scolaire.recherche.ListeRecherche;
 import org.computate.frFR.scolaire.requete.RequeteSite;
+import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
+
+import io.vertx.core.AsyncResult;
+import io.vertx.core.CompositeFuture;
+import io.vertx.core.Future;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.CaseInsensitiveHeaders;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
+import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.sql.SQLClient;
+import io.vertx.ext.sql.SQLConnection;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.ext.web.api.OperationResponse;
 
 
 public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiService {
@@ -145,10 +113,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
 
-				entiteValeur = o.getUtilisateurId();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.qjs(entiteValeur));
-
 				entiteValeur = o.getCree();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
@@ -156,6 +120,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				entiteValeur = o.getModifie();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				entiteValeur = o.getClasseNomCanonique();
 				if(entiteValeur != null)
@@ -252,14 +224,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 					}
 					w.l("]");
 				}
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				entiteValeur = o.getScolaireTri();
 				if(entiteValeur != null)
@@ -441,14 +405,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getJsonArray(entiteVar), pk));
 						break;
-					case "archive":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "supprime":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
-						break;
 					case "scolaireTri":
 						postSql.append(SiteContexte.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("scolaireTri", jsonObject.getInteger(entiteVar), pk));
@@ -528,17 +484,23 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			RequeteSite requeteSite = genererRequeteSitePourEcoleScolaire(siteContexte, operationRequete, body);
 			sqlEcoleScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					rechercheEcoleScolaire(requeteSite, false, true, null, b -> {
+					utilisateurEcoleScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<EcoleScolaire> listeEcoleScolaire = b.result();
-							listePATCHEcoleScolaire(listeEcoleScolaire, c -> {
+							rechercheEcoleScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									SQLConnection connexionSql = requeteSite.getConnexionSql();
-									connexionSql.commit(d -> {
-										if(a.succeeded()) {
-											connexionSql.close(e -> {
-												if(a.succeeded()) {
-													gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+									ListeRecherche<EcoleScolaire> listeEcoleScolaire = c.result();
+									listePATCHEcoleScolaire(listeEcoleScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													connexionSql.close(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														} else {
+															erreurEcoleScolaire(requeteSite, gestionnaireEvenements, f);
+														}
+													});
 												} else {
 													erreurEcoleScolaire(requeteSite, gestionnaireEvenements, e);
 												}
@@ -596,8 +558,50 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			Set<String> methodeNoms = requeteJson.fieldNames();
 			EcoleScolaire o2 = new EcoleScolaire();
 
+			patchSql.append(SiteContexte.SQL_modifier);
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.frFR.scolaire.ecole.EcoleScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setPk":
+						o2.setPk(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("pk", o2.getPk(), pk));
+						break;
+					case "setId":
+						o2.setId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("id", o2.getId(), pk));
+						break;
+					case "setCree":
+						o2.setCree(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						break;
+					case "setModifie":
+						o2.setModifie(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						break;
+					case "setArchive":
+						o2.setArchive(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						break;
+					case "setSupprime":
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						break;
+					case "setClasseNomCanonique":
+						o2.setClasseNomCanonique(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("classeNomCanonique", o2.getClasseNomCanonique(), pk));
+						break;
+					case "setClasseNomSimple":
+						o2.setClasseNomSimple(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("classeNomSimple", o2.getClasseNomSimple(), pk));
+						break;
 					case "setEcoleCle":
 						o2.setEcoleCle(requeteJson.getLong(methodeNom));
 						patchSql.append(SiteContexte.SQL_setD);
@@ -656,16 +660,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 						o2.setAnneeCles(requeteJson.getJsonArray(methodeNom));
 						patchSql.append(SiteContexte.SQL_setD);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getAnneeCles(), pk));
-						break;
-					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexte.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
-						break;
-					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexte.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						break;
 					case "setScolaireTri":
 						o2.setScolaireTri(requeteJson.getInteger(methodeNom));
@@ -747,7 +741,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_definir
-					, new JsonArray(Arrays.asList(pk))
+					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -834,10 +828,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
 
-				entiteValeur = o.getUtilisateurId();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"utilisateurId\": ", w.qjs(entiteValeur));
-
 				entiteValeur = o.getCree();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
@@ -845,6 +835,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				entiteValeur = o.getModifie();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				entiteValeur = o.getClasseNomCanonique();
 				if(entiteValeur != null)
@@ -941,14 +939,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 					}
 					w.l("]");
 				}
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				entiteValeur = o.getScolaireTri();
 				if(entiteValeur != null)
@@ -1156,12 +1146,14 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
-			case "utilisateurId":
-				return "utilisateurId_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
 			case "modifie":
 				return "modifie_indexed_date";
+			case "archive":
+				return "archive_indexed_boolean";
+			case "supprime":
+				return "supprime_indexed_boolean";
 			case "classeNomCanonique":
 				return "classeNomCanonique_indexed_string";
 			case "classeNomSimple":
@@ -1180,10 +1172,6 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 				return "saisonCles_indexed_longs";
 			case "anneeCles":
 				return "anneeCles_indexed_longs";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":
@@ -1310,7 +1298,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 
 								connexionSql.queryWithParams(
 										SiteContexte.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur))
+										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 										, definirAsync
 								-> {
 									if(definirAsync.succeeded()) {
@@ -1343,7 +1331,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 
 							connexionSql.queryWithParams(
 									SiteContexte.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur))
+									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 									, definirAsync
 							-> {
 								if(definirAsync.succeeded()) {
@@ -1384,11 +1372,16 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(EcoleScolaire.class);
-			listeRecherche.setRows(1000000);
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addFilterQuery("classeNomCanonique_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.frFR.scolaire.ecole.EcoleScolaire"));
+			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
+			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1458,7 +1451,7 @@ public class EcoleScolaireGenApiServiceImpl implements EcoleScolaireGenApiServic
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_definir
-					, new JsonArray(Arrays.asList(pk))
+					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {

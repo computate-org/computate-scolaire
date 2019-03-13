@@ -1,17 +1,14 @@
 package org.computate.frFR.scolaire.ecole;
 
-import org.computate.frFR.scolaire.cluster.Cluster;
-import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.computate.frFR.scolaire.recherche.ListeRecherche;
-import org.computate.frFR.scolaire.couverture.Couverture;
-import org.apache.commons.text.StringEscapeUtils;
-import org.computate.frFR.scolaire.ecole.EcoleScolaire;
-import java.lang.String;
+
 import org.apache.commons.lang3.StringUtils;
-import org.computate.frFR.scolaire.requete.RequeteSite;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.frFR.scolaire.cluster.Cluster;
+import org.computate.frFR.scolaire.couverture.Couverture;
 import org.computate.frFR.scolaire.page.MiseEnPage;
+import org.computate.frFR.scolaire.recherche.ListeRecherche;
+import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaireGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -311,7 +308,6 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	}
 
 	public void htmlBodyEcoleScolaireGenPage() {
-		ecoleScolaire.htmlBody();
 	}
 
 	//////////////

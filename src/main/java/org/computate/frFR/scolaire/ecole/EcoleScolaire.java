@@ -34,19 +34,18 @@ import org.computate.frFR.scolaire.couverture.Couverture;
  * Role.frFR: SiteAdmin
  * ApiTag.enUS: School
  * ApiTag.frFR: EcoleScolaire
- */
-public class EcoleScolaire extends EcoleScolaireGen<Cluster> {   
+ */    
+public class EcoleScolaire extends EcoleScolaireGen<Cluster> {  
 
 	/**
 	 * Var.enUS: contactInfo
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: Clé
-	 * NomAffichage.enUS: Key
-	 */         
+	 * NomAffichage.frFR: clé
+	 * NomAffichage.enUS: key
+	 */     
 	protected void _ecoleCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -110,32 +109,6 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 */
 	protected void _anneeCles(List<Long> o) {}
-	
-	/**
-	 * Indexe: true
-	 * Stocke: true
-	 * HtmlLigne: 1
-	 * Description.frFR: Archivé. 
-	 * Description.enUS: Archived. 
-	 * NomAffichage.frFR: Archivé
-	 * NomAffichage.enUS: Archived
-	 */
-	protected void _archive(Couverture<Boolean> c) {
-		c.o(false);
-	}
-	
-	/**
-	 * Indexe: true
-	 * Stocke: true
-	 * HtmlLigne: 1
-	 * Description.frFR: Supprimé. 
-	 * Description.enUS: Deleted. 
-	 * NomAffichage.frFR: Supprimé
-	 * NomAffichage.enUS: Deleted
-	 */  
-	protected void _supprime(Couverture<Boolean> c) {
-		c.o(false);
-	}
 
 	/**
 	 * Indexe: true
@@ -144,7 +117,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */
+	 */ 
 	protected void _scolaireTri(Couverture<Integer> c) {
 		c.o(1);
 	}
@@ -164,10 +137,10 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 2
+	 * HtmlLigne: 3
 	 * HtmlColonne: 2
-	 * NomAffichage.frFR: Nom de l'école
-	 * NomAffichage.enUS: Name of the school
+	 * NomAffichage.frFR: nom de l'école
+	 * NomAffichage.enUS: name of the school
 	 * Description.frFR: Nom de l'école. 
 	 * Description.enUS: Name of the school. 
 	 */ 
@@ -177,22 +150,22 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 2
+	 * HtmlLigne: 3
 	 * HtmlColonne: 3
-	 * NomAffichage.frFR: Numéro de téléphone
-	 * NomAffichage.enUS: Phone number
+	 * NomAffichage.frFR: numéro de téléphone
+	 * NomAffichage.enUS: phone number
 	 * Description.frFR: Numéro de téléphone de l'école. 
 	 * Description.enUS: Telephone number of the school. 
-	 */    
+	 */  
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
 	}
 
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 2
-	 * NomAffichage.enUS: Administrator of the school
-	 * NomAffichage.frFR: Administrateur de l'école
+	 * HtmlLigne: 3
+	 * NomAffichage.enUS: administrator of the school
+	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 */                  
@@ -202,10 +175,10 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
+	 * HtmlLigne: 4
 	 * HtmlColonne: 4
 	 * Multiligne: true
-	 * NomAffichage.frFR: Addresse
+	 * NomAffichage.frFR: addresse
 	 * NomAffichage.enUS: Address
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -251,7 +224,7 @@ public class EcoleScolaire extends EcoleScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */           
+	 */          
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);

@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
+import java.time.ZoneOffset;
 import org.computate.frFR.scolaire.utilisateur.UtilisateurSite;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 
@@ -29,41 +30,41 @@ import org.computate.frFR.scolaire.requete.RequeteSite;
  **/
 public abstract class MiseEnPageGen<DEV> extends Object {
 
-	/////////////////////
-	// utilisateurSite //
-	/////////////////////
+	/////////////////////////
+	// pageUtilisateurSite //
+	/////////////////////////
 
-	/**	L'entité « utilisateurSite »
+	/**	L'entité « pageUtilisateurSite »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected UtilisateurSite utilisateurSite;
-	public Couverture<UtilisateurSite> utilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite").o(utilisateurSite);
+	protected UtilisateurSite pageUtilisateurSite;
+	public Couverture<UtilisateurSite> pageUtilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("pageUtilisateurSite").o(pageUtilisateurSite);
 
-	/**	<br/>L'entité « utilisateurSite »
+	/**	<br/>L'entité « pageUtilisateurSite »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurSite">Trouver l'entité utilisateurSite dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUtilisateurSite">Trouver l'entité pageUtilisateurSite dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _utilisateurSite(Couverture<UtilisateurSite> c);
+	protected abstract void _pageUtilisateurSite(Couverture<UtilisateurSite> c);
 
-	public UtilisateurSite getUtilisateurSite() {
-		return utilisateurSite;
+	public UtilisateurSite getPageUtilisateurSite() {
+		return pageUtilisateurSite;
 	}
 
-	public void setUtilisateurSite(UtilisateurSite utilisateurSite) {
-		this.utilisateurSite = utilisateurSite;
-		this.utilisateurSiteCouverture.dejaInitialise = true;
+	public void setPageUtilisateurSite(UtilisateurSite pageUtilisateurSite) {
+		this.pageUtilisateurSite = pageUtilisateurSite;
+		this.pageUtilisateurSiteCouverture.dejaInitialise = true;
 	}
-	protected MiseEnPage utilisateurSiteInit() {
-		if(!utilisateurSiteCouverture.dejaInitialise) {
-			_utilisateurSite(utilisateurSiteCouverture);
-			if(utilisateurSite == null)
-				setUtilisateurSite(utilisateurSiteCouverture.o);
+	protected MiseEnPage pageUtilisateurSiteInit() {
+		if(!pageUtilisateurSiteCouverture.dejaInitialise) {
+			_pageUtilisateurSite(pageUtilisateurSiteCouverture);
+			if(pageUtilisateurSite == null)
+				setPageUtilisateurSite(pageUtilisateurSiteCouverture.o);
 		}
-		if(utilisateurSite != null)
-			utilisateurSite.initLoinPourClasse(requeteSite_);
-		utilisateurSiteCouverture.dejaInitialise(true);
+		if(pageUtilisateurSite != null)
+			pageUtilisateurSite.initLoinPourClasse(requeteSite_);
+		pageUtilisateurSiteCouverture.dejaInitialise(true);
 		return (MiseEnPage)this;
 	}
 
@@ -409,8 +410,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageVisibleAuxBots(String o) {
-		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
-			this.pageVisibleAuxBots = Boolean.parseBoolean(o);
+		this.pageVisibleAuxBots = Boolean.parseBoolean(o);
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -2149,7 +2149,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public void initMiseEnPage() {
-		utilisateurSiteInit();
+		pageUtilisateurSiteInit();
 		pagePartsInit();
 		pageDocumentSolrInit();
 		wInit();
@@ -2197,7 +2197,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/////////////////
 
 	public void requeteSiteMiseEnPage(RequeteSite requeteSite_) {
-		utilisateurSite.setRequeteSite_(requeteSite_);
+		pageUtilisateurSite.setRequeteSite_(requeteSite_);
 		w.setRequeteSite_(requeteSite_);
 	}
 
@@ -2225,8 +2225,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public Object obtenirMiseEnPage(String var) throws Exception {
 		MiseEnPage oMiseEnPage = (MiseEnPage)this;
 		switch(var) {
-			case "utilisateurSite":
-				return oMiseEnPage.utilisateurSite;
+			case "pageUtilisateurSite":
+				return oMiseEnPage.pageUtilisateurSite;
 			case "pageParts":
 				return oMiseEnPage.pageParts;
 			case "requeteSite_":
@@ -2432,7 +2432,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public void htmlBodyMiseEnPage() {
-		utilisateurSite.htmlBody();
+		pageUtilisateurSite.htmlBody();
 	}
 
 	//////////////

@@ -1,4 +1,4 @@
-package org.computate.frFR.scolaire.cluster;
+package org.computate.frFR.scolaire.mission;
 
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import java.util.Arrays;
@@ -57,6 +57,7 @@ import java.io.IOException;
 import org.computate.frFR.scolaire.recherche.ResultatRecherche;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import java.util.concurrent.TimeUnit;
+import org.computate.frFR.scolaire.mission.MissionScolairePage;
 import org.apache.solr.common.SolrDocument;
 import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.api.OperationRequest;
@@ -68,52 +69,52 @@ import java.util.Collections;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 
 
-public class ClusterGenApiServiceImpl implements ClusterGenApiService {
+public class MissionScolaireGenApiServiceImpl implements MissionScolaireGenApiService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterGenApiServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MissionScolaireGenApiServiceImpl.class);
 
-	private static final String SERVICE_ADDRESS = "ClusterApiServiceImpl";
+	private static final String SERVICE_ADDRESS = "MissionScolaireApiServiceImpl";
 
 	protected SiteContexte siteContexte;
 
-	public ClusterGenApiServiceImpl(SiteContexte siteContexte) {
+	public MissionScolaireGenApiServiceImpl(SiteContexte siteContexte) {
 		this.siteContexte = siteContexte;
-		ClusterGenApiService service = ClusterGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+		MissionScolaireGenApiService service = MissionScolaireGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// Recherche //
 
 	@Override
-	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheMissionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
-			rechercheCluster(requeteSite, false, true, null, a -> {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete);
+			rechercheMissionScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<Cluster> listeCluster = a.result();
-					reponse200RechercheCluster(listeCluster, b -> {
+					ListeRecherche<MissionScolaire> listeMissionScolaire = a.result();
+					reponse200RechercheMissionScolaire(listeMissionScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200RechercheMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSite requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			RequeteSite requeteSite = listeMissionScolaire.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
-			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
-			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
+			QueryResponse reponseRecherche = listeMissionScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeMissionScolaire.getSolrDocumentList();
 			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
 			Long millisTransmission = reponseRecherche.getElapsedTime();
 			Long numCommence = reponseRecherche.getResults().getStart();
@@ -130,8 +131,8 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
 			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
 			w.tl(1, ", \"liste\": [");
-			for(int i = 0; i < listeCluster.size(); i++) {
-				Cluster o = listeCluster.getList().get(i);
+			for(int i = 0; i < listeMissionScolaire.size(); i++) {
+				MissionScolaire o = listeMissionScolaire.getList().get(i);
 				Object entiteValeur;
 				Integer entiteNumero = 0;
 
@@ -168,6 +169,22 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
 
+				entiteValeur = o.getMissionNom();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionNom\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleNumeroTelephone();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getMissionId();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionId\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getPageUri();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entiteValeur));
+
 				w.tl(2, "}");
 			}
 			w.tl(1, "]");
@@ -184,23 +201,23 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	// POST //
 
 	@Override
-	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void postMissionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete, body);
-			sqlCluster(requeteSite, a -> {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete, body);
+			sqlMissionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPOSTCluster(requeteSite, b -> {
+					creerPOSTMissionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							Cluster cluster = b.result();
-							sqlPOSTCluster(cluster, c -> {
+							MissionScolaire missionScolaire = b.result();
+							sqlPOSTMissionScolaire(missionScolaire, c -> {
 								if(c.succeeded()) {
-									definirCluster(cluster, d -> {
+									definirMissionScolaire(missionScolaire, d -> {
 										if(d.succeeded()) {
-											attribuerCluster(cluster, e -> {
+											attribuerMissionScolaire(missionScolaire, e -> {
 												if(e.succeeded()) {
-													indexerCluster(cluster, f -> {
+													indexerMissionScolaire(missionScolaire, f -> {
 														if(f.succeeded()) {
-															reponse200POSTCluster(cluster, g -> {
+															reponse200POSTMissionScolaire(missionScolaire, g -> {
 																if(f.succeeded()) {
 																	SQLConnection connexionSql = requeteSite.getConnexionSql();
 																	connexionSql.commit(h -> {
@@ -209,61 +226,61 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 																				if(a.succeeded()) {
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					erreurCluster(requeteSite, gestionnaireEvenements, i);
+																					erreurMissionScolaire(requeteSite, gestionnaireEvenements, i);
 																				}
 																			});
 																		} else {
-																			erreurCluster(requeteSite, gestionnaireEvenements, h);
+																			erreurMissionScolaire(requeteSite, gestionnaireEvenements, h);
 																		}
 																	});
 																} else {
-																	erreurCluster(requeteSite, gestionnaireEvenements, g);
+																	erreurMissionScolaire(requeteSite, gestionnaireEvenements, g);
 																}
 															});
 														} else {
-															erreurCluster(requeteSite, gestionnaireEvenements, f);
+															erreurMissionScolaire(requeteSite, gestionnaireEvenements, f);
 														}
 													});
 												} else {
-													erreurCluster(requeteSite, gestionnaireEvenements, e);
+													erreurMissionScolaire(requeteSite, gestionnaireEvenements, e);
 												}
 											});
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											erreurMissionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									erreurMissionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void creerPOSTCluster(RequeteSite requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
+	public void creerPOSTMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<MissionScolaire>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_creer
-					, new JsonArray(Arrays.asList(Cluster.class.getCanonicalName(), utilisateurId))
+					, new JsonArray(Arrays.asList(MissionScolaire.class.getCanonicalName(), utilisateurId))
 					, creerAsync
 			-> {
 				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = creerLigne.getLong(0);
-				Cluster o = new Cluster();
+				MissionScolaire o = new MissionScolaire();
 				o.setPk(pk);
-				o.initLoinCluster(requeteSite);
+				o.initLoinMissionScolaire(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -271,7 +288,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlPOSTMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -284,37 +301,21 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "pk":
+					case "missionNom":
 						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("pk", jsonObject.getLong(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("missionNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "id":
+					case "ecoleNumeroTelephone":
 						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("id", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entiteVar), pk));
 						break;
-					case "cree":
+					case "missionId":
 						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("missionId", jsonObject.getString(entiteVar), pk));
 						break;
-					case "modifie":
+					case "pageUri":
 						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
-						break;
-					case "archive":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "supprime":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "classeNomCanonique":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("classeNomCanonique", jsonObject.getString(entiteVar), pk));
-						break;
-					case "classeNomSimple":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("classeNomSimple", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("pageUri", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -331,7 +332,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void reponse200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200POSTMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
 			RequeteSite requeteSite = o.getRequeteSite_();
@@ -346,17 +347,17 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	// PATCH //
 
 	@Override
-	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchMissionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete, body);
-			sqlCluster(requeteSite, a -> {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete, body);
+			sqlMissionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurCluster(requeteSite, b -> {
+					utilisateurMissionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, null, c -> {
+							rechercheMissionScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									ListeRecherche<Cluster> listeCluster = c.result();
-									listePATCHCluster(listeCluster, d -> {
+									ListeRecherche<MissionScolaire> listeMissionScolaire = c.result();
+									listePATCHMissionScolaire(listeMissionScolaire, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											connexionSql.commit(e -> {
@@ -365,56 +366,56 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 														if(f.succeeded()) {
 															gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 														} else {
-															erreurCluster(requeteSite, gestionnaireEvenements, f);
+															erreurMissionScolaire(requeteSite, gestionnaireEvenements, f);
 														}
 													});
 												} else {
-													erreurCluster(requeteSite, gestionnaireEvenements, e);
+													erreurMissionScolaire(requeteSite, gestionnaireEvenements, e);
 												}
 											});
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											erreurMissionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									erreurMissionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void listePATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-		listeCluster.getList().forEach(o -> {
+		listeMissionScolaire.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHCluster(o).compose(
-					a -> definirPATCHCluster(a).compose(
-						b -> indexerPATCHCluster(b)
+				sqlPATCHMissionScolaire(o).compose(
+					a -> definirPATCHMissionScolaire(a).compose(
+						b -> indexerPATCHMissionScolaire(b)
 					)
 				)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHCluster(listeCluster, gestionnaireEvenements);
+				reponse200PATCHMissionScolaire(listeMissionScolaire, gestionnaireEvenements);
 			} else {
-				erreurCluster(listeCluster.getRequeteSite_(), gestionnaireEvenements, a);
+				erreurMissionScolaire(listeMissionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<Cluster> sqlPATCHCluster(Cluster o) {
-		Future<Cluster> future = Future.future();
+	public Future<MissionScolaire> sqlPATCHMissionScolaire(MissionScolaire o) {
+		Future<MissionScolaire> future = Future.future();
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -423,10 +424,10 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
-			Cluster o2 = new Cluster();
+			MissionScolaire o2 = new MissionScolaire();
 
 			patchSql.append(SiteContexte.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.frFR.scolaire.cluster.Cluster"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.frFR.scolaire.mission.MissionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setPk":
@@ -469,6 +470,26 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 						patchSql.append(SiteContexte.SQL_setD);
 						patchSqlParams.addAll(Arrays.asList("classeNomSimple", o2.getClasseNomSimple(), pk));
 						break;
+					case "setMissionNom":
+						o2.setMissionNom(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("missionNom", o2.getMissionNom(), pk));
+						break;
+					case "setEcoleNumeroTelephone":
+						o2.setEcoleNumeroTelephone(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.getEcoleNumeroTelephone(), pk));
+						break;
+					case "setMissionId":
+						o2.setMissionId(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("missionId", o2.getMissionId(), pk));
+						break;
+					case "setPageUri":
+						o2.setPageUri(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexte.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("pageUri", o2.getPageUri(), pk));
+						break;
 				}
 			}
 			connexionSql.queryWithParams(
@@ -486,8 +507,8 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public Future<Cluster> definirPATCHCluster(Cluster o) {
-		Future<Cluster> future = Future.future();
+	public Future<MissionScolaire> definirPATCHMissionScolaire(MissionScolaire o) {
+		Future<MissionScolaire> future = Future.future();
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -512,7 +533,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public Future<Void> indexerPATCHCluster(Cluster o) {
+	public Future<Void> indexerPATCHMissionScolaire(MissionScolaire o) {
 		Future<Void> future = Future.future();
 		try {
 			o.initLoinPourClasse(o.getRequeteSite_());
@@ -524,11 +545,11 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void reponse200PATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSite requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			RequeteSite requeteSite = listeMissionScolaire.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
@@ -539,39 +560,39 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	// GET //
 
 	@Override
-	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void getMissionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
-			rechercheCluster(requeteSite, false, true, null, a -> {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete);
+			rechercheMissionScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<Cluster> listeCluster = a.result();
-					reponse200GETCluster(listeCluster, b -> {
+					ListeRecherche<MissionScolaire> listeMissionScolaire = a.result();
+					reponse200GETMissionScolaire(listeMissionScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200GETCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200GETMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSite requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			RequeteSite requeteSite = listeMissionScolaire.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
-			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
+			SolrDocumentList documentsSolr = listeMissionScolaire.getSolrDocumentList();
 
-			if(listeCluster.size() > 0) {
+			if(listeMissionScolaire.size() > 0) {
 				SolrDocument documentSolr = documentsSolr.get(0);
-				Cluster o = listeCluster.get(0);
+				MissionScolaire o = listeMissionScolaire.get(0);
 				Object entiteValeur;
 				Integer entiteNumero = 0;
 
@@ -605,168 +626,24 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
 
+				entiteValeur = o.getMissionNom();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionNom\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleNumeroTelephone();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getMissionId();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionId\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getPageUri();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entiteValeur));
+
 				w.l("}");
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	// PUT //
-
-	@Override
-	public void putCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete, body);
-			sqlCluster(requeteSite, a -> {
-				if(a.succeeded()) {
-					remplacerPUTCluster(requeteSite, b -> {
-						if(b.succeeded()) {
-							Cluster cluster = b.result();
-							sqlPUTCluster(cluster, c -> {
-								if(c.succeeded()) {
-									definirCluster(cluster, d -> {
-										if(d.succeeded()) {
-											attribuerCluster(cluster, e -> {
-												if(e.succeeded()) {
-													indexerCluster(cluster, f -> {
-														if(f.succeeded()) {
-															reponse200PUTCluster(cluster, g -> {
-																if(g.succeeded()) {
-																	SQLConnection connexionSql = requeteSite.getConnexionSql();
-																	connexionSql.commit(h -> {
-																		if(a.succeeded()) {
-																			connexionSql.close(i -> {
-																				if(a.succeeded()) {
-																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					erreurCluster(requeteSite, gestionnaireEvenements, i);
-																				}
-																			});
-																		} else {
-																			erreurCluster(requeteSite, gestionnaireEvenements, h);
-																		}
-																	});
-																} else {
-																	erreurCluster(requeteSite, gestionnaireEvenements, g);
-																}
-															});
-														} else {
-															erreurCluster(requeteSite, gestionnaireEvenements, f);
-														}
-													});
-												} else {
-													erreurCluster(requeteSite, gestionnaireEvenements, e);
-												}
-											});
-										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void remplacerPUTCluster(RequeteSite requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
-		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
-
-			connexionSql.queryWithParams(
-					SiteContexte.SQL_vider
-					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk))
-					, remplacerAsync
-			-> {
-				Cluster o = new Cluster();
-				o.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void sqlPUTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSite requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			JsonObject jsonObject = requeteSite.getObjetJson();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				Set<String> entiteVars = jsonObject.fieldNames();
-				for(String entiteVar : entiteVars) {
-					switch(entiteVar) {
-					case "pk":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("pk", jsonObject.getLong(entiteVar), pk));
-						break;
-					case "id":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("id", jsonObject.getString(entiteVar), pk));
-						break;
-					case "cree":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
-						break;
-					case "modifie":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
-						break;
-					case "archive":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "supprime":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "classeNomCanonique":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("classeNomCanonique", jsonObject.getString(entiteVar), pk));
-						break;
-					case "classeNomSimple":
-						postSql.append(SiteContexte.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("classeNomSimple", jsonObject.getString(entiteVar), pk));
-						break;
-					}
-				}
-			}
-			connexionSql.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200PUTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSite requeteSite = o.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -776,17 +653,17 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 	// DELETE //
 
 	@Override
-	public void deleteCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void deleteMissionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSite requeteSite = genererRequeteSitePourCluster(siteContexte, operationRequete);
-			sqlCluster(requeteSite, a -> {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete);
+			sqlMissionScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					rechercheCluster(requeteSite, false, true, null, b -> {
+					rechercheMissionScolaire(requeteSite, false, true, null, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<Cluster> listeCluster = b.result();
-							supprimerDELETECluster(requeteSite, c -> {
+							ListeRecherche<MissionScolaire> listeMissionScolaire = b.result();
+							supprimerDELETEMissionScolaire(requeteSite, c -> {
 								if(c.succeeded()) {
-									reponse200DELETECluster(requeteSite, d -> {
+									reponse200DELETEMissionScolaire(requeteSite, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											connexionSql.commit(e -> {
@@ -795,35 +672,35 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 														if(f.succeeded()) {
 															gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 														} else {
-															erreurCluster(requeteSite, gestionnaireEvenements, f);
+															erreurMissionScolaire(requeteSite, gestionnaireEvenements, f);
 														}
 													});
 												} else {
-													erreurCluster(requeteSite, gestionnaireEvenements, e);
+													erreurMissionScolaire(requeteSite, gestionnaireEvenements, e);
 												}
 											});
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											erreurMissionScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									erreurMissionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void supprimerDELETECluster(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void supprimerDELETEMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -831,7 +708,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 
 			connexionSql.queryWithParams(
 					SiteContexte.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, MissionScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
 			-> {
 				gestionnaireEvenements.handle(Future.succeededFuture());
@@ -841,7 +718,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void reponse200DELETECluster(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200DELETEMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
 			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
@@ -852,7 +729,84 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public String varIndexeCluster(String entiteVar) {
+	// RecherchePage //
+
+	@Override
+	public void recherchepageMissionScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		recherchepageMissionScolaire(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void recherchepageMissionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSite requeteSite = genererRequeteSitePourMissionScolaire(siteContexte, operationRequete);
+			sqlMissionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurMissionScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheMissionScolaire(requeteSite, false, true, "/mission", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<MissionScolaire> listeMissionScolaire = c.result();
+									reponse200RecherchePageMissionScolaire(listeMissionScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											connexionSql.commit(e -> {
+												if(e.succeeded()) {
+													connexionSql.close(f -> {
+														if(f.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														} else {
+															erreurMissionScolaire(requeteSite, gestionnaireEvenements, f);
+														}
+													});
+												} else {
+													erreurMissionScolaire(requeteSite, gestionnaireEvenements, e);
+												}
+											});
+										} else {
+											erreurMissionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurMissionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurMissionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurMissionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200RecherchePageMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			RequeteSite requeteSite = listeMissionScolaire.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
+			MissionScolairePage page = new MissionScolairePage();
+			page.setPageUrl("/api/mission");
+			SolrDocument pageDocumentSolr = new SolrDocument();
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/mission");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			page.setListeMissionScolaire(listeMissionScolaire);
+			page.initLoinMissionScolairePage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public String varIndexeMissionScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -870,6 +824,12 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 				return "classeNomCanonique_indexed_string";
 			case "classeNomSimple":
 				return "classeNomSimple_indexed_string";
+			case "missionNom":
+				return "missionNom_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "pageUri":
+				return "pageUri_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -877,7 +837,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 
 	// Partagé //
 
-	public void erreurCluster(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
+	public void erreurMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -914,7 +874,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void sqlCluster(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
@@ -938,11 +898,11 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public RequeteSite genererRequeteSitePourCluster(SiteContexte siteContexte, OperationRequest operationRequete) {
-		return genererRequeteSitePourCluster(siteContexte, operationRequete, null);
+	public RequeteSite genererRequeteSitePourMissionScolaire(SiteContexte siteContexte, OperationRequest operationRequete) {
+		return genererRequeteSitePourMissionScolaire(siteContexte, operationRequete, null);
 	}
 
-	public RequeteSite genererRequeteSitePourCluster(SiteContexte siteContexte, OperationRequest operationRequete, JsonObject body) {
+	public RequeteSite genererRequeteSitePourMissionScolaire(SiteContexte siteContexte, OperationRequest operationRequete, JsonObject body) {
 		Vertx vertx = siteContexte.getVertx();
 		RequeteSite requeteSite = new RequeteSite();
 		requeteSite.setObjetJson(body);
@@ -955,7 +915,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		return requeteSite;
 	}
 
-	public void utilisateurCluster(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void utilisateurMissionScolaire(RequeteSite requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -1046,21 +1006,21 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void rechercheCluster(RequeteSite requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void rechercheMissionScolaire(RequeteSite requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<MissionScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
+			ListeRecherche<MissionScolaire> listeRecherche = new ListeRecherche<MissionScolaire>();
 			listeRecherche.setPeupler(peupler);
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(Cluster.class);
+			listeRecherche.setC(MissionScolaire.class);
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomCanonique_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.frFR.scolaire.cluster.Cluster"));
+			listeRecherche.addFilterQuery("classeNomCanonique_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.frFR.scolaire.mission.MissionScolaire"));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1090,24 +1050,24 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 						case "q":
 							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":"));
-							varIndexe = "*".equals(entiteVar) ? entiteVar : varIndexeCluster(entiteVar);
+							varIndexe = "*".equals(entiteVar) ? entiteVar : varIndexeMissionScolaire(entiteVar);
 							listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 							break;
 						case "fq":
 							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":"));
-							varIndexe = varIndexeCluster(entiteVar);
+							varIndexe = varIndexeMissionScolaire(entiteVar);
 							listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 							break;
 						case "sort":
 							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 							valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-							varIndexe = varIndexeCluster(entiteVar);
+							varIndexe = varIndexeMissionScolaire(entiteVar);
 							listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 							break;
 						case "fl":
 							entiteVar = StringUtils.trim((String)paramObjet);
-							varIndexe = varIndexeCluster(entiteVar);
+							varIndexe = varIndexeMissionScolaire(entiteVar);
 							listeRecherche.addField(varIndexe);
 							break;
 						case "start":
@@ -1128,7 +1088,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void definirCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void definirMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1152,7 +1112,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void attribuerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void attribuerMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSite requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1178,7 +1138,7 @@ public class ClusterGenApiServiceImpl implements ClusterGenApiService {
 		}
 	}
 
-	public void indexerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void indexerMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSite requeteSite = o.getRequeteSite_();
 		try {
 			o.initLoinPourClasse(requeteSite);

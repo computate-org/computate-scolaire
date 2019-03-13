@@ -1,4 +1,4 @@
-package org.computate.frFR.scolaire.utilisateur;
+package org.computate.frFR.scolaire.mission;
 
 import org.computate.frFR.scolaire.cluster.Cluster;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
@@ -6,53 +6,53 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.frFR.scolaire.couverture.Couverture;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.frFR.scolaire.mission.MissionScolaireGenPage;
 import org.apache.commons.lang3.StringUtils;
-import org.computate.frFR.scolaire.utilisateur.UtilisateurSiteGenPage;
 import org.computate.frFR.scolaire.requete.RequeteSite;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.utilisateur.UtilisateurSitePage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.mission.MissionScolairePage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage {
+public abstract class MissionScolairePageGen<DEV> extends MissionScolaireGenPage {
 
 	//////////////
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseUtilisateurSitePage = false;
+	protected boolean dejaInitialiseMissionScolairePage = false;
 
-	public UtilisateurSitePage initLoinUtilisateurSitePage(RequeteSite requeteSite_) {
+	public MissionScolairePage initLoinMissionScolairePage(RequeteSite requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseUtilisateurSitePage) {
-			dejaInitialiseUtilisateurSitePage = true;
-			initLoinUtilisateurSitePage();
+		if(!dejaInitialiseMissionScolairePage) {
+			dejaInitialiseMissionScolairePage = true;
+			initLoinMissionScolairePage();
 		}
-		return (UtilisateurSitePage)this;
+		return (MissionScolairePage)this;
 	}
 
-	public void initLoinUtilisateurSitePage() {
-		super.initLoinUtilisateurSiteGenPage(requeteSite_);
-		initUtilisateurSitePage();
+	public void initLoinMissionScolairePage() {
+		super.initLoinMissionScolaireGenPage(requeteSite_);
+		initMissionScolairePage();
 	}
 
-	public void initUtilisateurSitePage() {
+	public void initMissionScolairePage() {
 	}
 
 	@Override public void initLoinPourClasse(RequeteSite requeteSite_) {
-		initLoinUtilisateurSitePage(requeteSite_);
+		initLoinMissionScolairePage(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteUtilisateurSitePage(RequeteSite requeteSite_) {
-			super.requeteSiteUtilisateurSiteGenPage(requeteSite_);
+	public void requeteSiteMissionScolairePage(RequeteSite requeteSite_) {
+			super.requeteSiteMissionScolaireGenPage(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSite requeteSite_) {
-		requeteSiteUtilisateurSitePage(requeteSite_);
+		requeteSiteMissionScolairePage(requeteSite_);
 	}
 
 	/////////////
@@ -64,7 +64,7 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirUtilisateurSitePage(v);
+				o = obtenirMissionScolairePage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -72,11 +72,11 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		}
 		return o;
 	}
-	public Object obtenirUtilisateurSitePage(String var) throws Exception {
-		UtilisateurSitePage oUtilisateurSitePage = (UtilisateurSitePage)this;
+	public Object obtenirMissionScolairePage(String var) throws Exception {
+		MissionScolairePage oMissionScolairePage = (MissionScolairePage)this;
 		switch(var) {
 			default:
-				return super.obtenirUtilisateurSiteGenPage(var);
+				return super.obtenirMissionScolaireGenPage(var);
 		}
 	}
 
@@ -89,7 +89,7 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerUtilisateurSitePage(v, val);
+				o = attribuerMissionScolairePage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -97,11 +97,11 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		}
 		return o != null;
 	}
-	public Object attribuerUtilisateurSitePage(String var, Object val) {
-		UtilisateurSitePage oUtilisateurSitePage = (UtilisateurSitePage)this;
+	public Object attribuerMissionScolairePage(String var, Object val) {
+		MissionScolairePage oMissionScolairePage = (MissionScolairePage)this;
 		switch(var) {
 			default:
-				return super.attribuerUtilisateurSiteGenPage(var, val);
+				return super.attribuerMissionScolaireGenPage(var, val);
 		}
 	}
 
@@ -115,7 +115,7 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirUtilisateurSitePage(v, val);
+					o = definirMissionScolairePage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -124,10 +124,10 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		}
 		return o != null;
 	}
-	public Object definirUtilisateurSitePage(String var, String val) {
+	public Object definirMissionScolairePage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirUtilisateurSiteGenPage(var, val);
+				return super.definirMissionScolaireGenPage(var, val);
 		}
 	}
 
@@ -146,9 +146,9 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof UtilisateurSitePage))
+		if(!(o instanceof MissionScolairePage))
 			return false;
-		UtilisateurSitePage that = (UtilisateurSitePage)o;
+		MissionScolairePage that = (MissionScolairePage)o;
 		return super.equals(o);
 	}
 
@@ -159,7 +159,7 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("UtilisateurSitePage {");
+		sb.append("MissionScolairePage {");
 		sb.append(" }");
 		return sb.toString();
 	}

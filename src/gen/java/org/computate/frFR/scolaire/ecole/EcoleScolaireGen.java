@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import org.computate.frFR.scolaire.ecrivain.ToutEcrivain;
 import org.computate.frFR.scolaire.couverture.Couverture;
 import java.lang.Long;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
@@ -103,7 +102,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleCle() {
-		return "Cl\u00E9";
+		return "cl\u00E9";
 	}
 
 	public String htmTooltipEcoleCle() {
@@ -881,212 +880,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////
-	// archive //
-	/////////////
-
-	/**	L'entité « archive »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean archive;
-	public Couverture<Boolean> archiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("archive").o(archive);
-
-	/**	<br/>L'entité « archive »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:archive">Trouver l'entité archive dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _archive(Couverture<Boolean> c);
-
-	public Boolean getArchive() {
-		return archive;
-	}
-
-	public void setArchive(Boolean archive) {
-		this.archive = archive;
-		this.archiveCouverture.dejaInitialise = true;
-	}
-	public EcoleScolaire setArchive(String o) {
-		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
-			this.archive = Boolean.parseBoolean(o);
-		this.archiveCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
-	protected EcoleScolaire archiveInit() {
-		if(!archiveCouverture.dejaInitialise) {
-			_archive(archiveCouverture);
-			if(archive == null)
-				setArchive(archiveCouverture.o);
-		}
-		archiveCouverture.dejaInitialise(true);
-		return (EcoleScolaire)this;
-	}
-
-	public Boolean solrArchive() {
-		return archive;
-	}
-
-	public String strArchive() {
-		return archive == null ? "" : archive.toString();
-	}
-
-	public String nomAffichageArchive() {
-		return "Archiv\u00E9";
-	}
-
-	public String htmTooltipArchive() {
-		return null;
-	}
-
-	public String htmArchive() {
-		return archive == null ? "" : StringEscapeUtils.escapeHtml4(strArchive());
-	}
-
-	public void htmArchive(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcoleScolaire", strPk(), "Archive\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcoleScolaire", strPk(), "Archive() {");
-				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setArchive\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageArchive()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"archive\"");
-							r.s(" value=\"", htmArchive(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmArchive());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////
-	// supprime //
-	//////////////
-
-	/**	L'entité « supprime »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean supprime;
-	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
-
-	/**	<br/>L'entité « supprime »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.frFR.scolaire.ecole.EcoleScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:supprime">Trouver l'entité supprime dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _supprime(Couverture<Boolean> c);
-
-	public Boolean getSupprime() {
-		return supprime;
-	}
-
-	public void setSupprime(Boolean supprime) {
-		this.supprime = supprime;
-		this.supprimeCouverture.dejaInitialise = true;
-	}
-	public EcoleScolaire setSupprime(String o) {
-		if(org.apache.commons.lang3.BooleanUtils.isTrue(org.apache.commons.lang3.BooleanUtils.toBoolean(o)))
-			this.supprime = Boolean.parseBoolean(o);
-		this.supprimeCouverture.dejaInitialise = true;
-		return (EcoleScolaire)this;
-	}
-	protected EcoleScolaire supprimeInit() {
-		if(!supprimeCouverture.dejaInitialise) {
-			_supprime(supprimeCouverture);
-			if(supprime == null)
-				setSupprime(supprimeCouverture.o);
-		}
-		supprimeCouverture.dejaInitialise(true);
-		return (EcoleScolaire)this;
-	}
-
-	public Boolean solrSupprime() {
-		return supprime;
-	}
-
-	public String strSupprime() {
-		return supprime == null ? "" : supprime.toString();
-	}
-
-	public String nomAffichageSupprime() {
-		return "Supprim\u00E9";
-	}
-
-	public String htmTooltipSupprime() {
-		return null;
-	}
-
-	public String htmSupprime() {
-		return supprime == null ? "" : StringEscapeUtils.escapeHtml4(strSupprime());
-	}
-
-	public void htmSupprime(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcoleScolaire", strPk(), "Supprime\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcoleScolaire", strPk(), "Supprime() {");
-				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSupprime\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSupprime()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"supprime\"");
-							r.s(" value=\"", htmSupprime(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSupprime());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////
 	// scolaireTri //
 	/////////////////
@@ -1338,7 +1131,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleNom() {
-		return "Nom de l'\u00E9cole";
+		return "nom de l'\u00E9cole";
 	}
 
 	public String htmTooltipEcoleNom() {
@@ -1435,7 +1228,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleNumeroTelephone() {
-		return "Num\u00E9ro de t\u00E9l\u00E9phone";
+		return "num\u00E9ro de t\u00E9l\u00E9phone";
 	}
 
 	public String htmTooltipEcoleNumeroTelephone() {
@@ -1532,7 +1325,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleAdministrateurNom() {
-		return "Administrateur de l'\u00E9cole";
+		return "administrateur de l'\u00E9cole";
 	}
 
 	public String htmTooltipEcoleAdministrateurNom() {
@@ -1629,7 +1422,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleAddresse() {
-		return "Addresse";
+		return "addresse";
 	}
 
 	public String htmTooltipEcoleAddresse() {
@@ -2200,8 +1993,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		sessionClesInit();
 		saisonClesInit();
 		anneeClesInit();
-		archiveInit();
-		supprimeInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		ecoleNomInit();
@@ -2333,14 +2124,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				document.addField("anneeCles_stored_longs", o);
 			}
 		}
-		if(archive != null) {
-			document.addField("archive_indexed_boolean", archive);
-			document.addField("archive_stored_boolean", archive);
-		}
-		if(supprime != null) {
-			document.addField("supprime_indexed_boolean", supprime);
-			document.addField("supprime_stored_boolean", supprime);
-		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -2427,10 +2210,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				return oEcoleScolaire.saisonCles;
 			case "anneeCles":
 				return oEcoleScolaire.anneeCles;
-			case "archive":
-				return oEcoleScolaire.archive;
-			case "supprime":
-				return oEcoleScolaire.supprime;
 			case "scolaireTri":
 				return oEcoleScolaire.scolaireTri;
 			case "ecoleTri":
@@ -2537,14 +2316,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				addAnneeCles(val);
 				if(!sauvegardesEcoleScolaire.contains(var))
 					sauvegardesEcoleScolaire.add(var);
-				return val;
-			case "archive":
-				setArchive(val);
-				sauvegardesEcoleScolaire.add(var);
-				return val;
-			case "supprime":
-				setSupprime(val);
-				sauvegardesEcoleScolaire.add(var);
 				return val;
 			case "scolaireTri":
 				setScolaireTri(val);
@@ -2655,18 +2426,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 					oEcoleScolaire.anneeCles.addAll(anneeCles);
 			}
 
-			if(sauvegardesEcoleScolaire.contains("archive")) {
-				Boolean archive = (Boolean)solrDocument.get("archive_stored_boolean");
-				if(archive != null)
-					oEcoleScolaire.setArchive(archive);
-			}
-
-			if(sauvegardesEcoleScolaire.contains("supprime")) {
-				Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
-				if(supprime != null)
-					oEcoleScolaire.setSupprime(supprime);
-			}
-
 			if(sauvegardesEcoleScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 				if(scolaireTri != null)
@@ -2763,14 +2522,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		if(anneeCles != null)
 			oEcoleScolaire.anneeCles.addAll(anneeCles);
 
-		Boolean archive = (Boolean)solrDocument.get("archive_stored_boolean");
-		if(archive != null)
-			oEcoleScolaire.setArchive(archive);
-
-		Boolean supprime = (Boolean)solrDocument.get("supprime_stored_boolean");
-		if(supprime != null)
-			oEcoleScolaire.setSupprime(supprime);
-
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
 			oEcoleScolaire.setScolaireTri(scolaireTri);
@@ -2826,7 +2577,7 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, archive, supprime, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse, objetSuggerePoids, objetSuggere, ecoleNomCourt, ecoleId, pageUri);
+		return Objects.hash(super.hashCode(), ecoleCle, enfantCles, blocCles, groupeAgeCles, sessionCles, saisonCles, anneeCles, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse, objetSuggerePoids, objetSuggere, ecoleNomCourt, ecoleId, pageUri);
 	}
 
 	////////////
@@ -2847,8 +2598,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( sessionCles, that.sessionCles )
 				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( anneeCles, that.anneeCles )
-				&& Objects.equals( archive, that.archive )
-				&& Objects.equals( supprime, that.supprime )
 				&& Objects.equals( scolaireTri, that.scolaireTri )
 				&& Objects.equals( ecoleTri, that.ecoleTri )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
@@ -2877,8 +2626,6 @@ public abstract class EcoleScolaireGen<DEV> extends Cluster {
 		sb.append( ", sessionCles: " ).append(sessionCles);
 		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", anneeCles: " ).append(anneeCles);
-		sb.append( ", archive: " ).append(archive);
-		sb.append( ", supprime: " ).append(supprime);
 		sb.append( ", scolaireTri: " ).append(scolaireTri);
 		sb.append( ", ecoleTri: " ).append(ecoleTri);
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );

@@ -59,7 +59,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _utilisateurSite(Couverture<UtilisateurSite> c) {
+	protected void _pageUtilisateurSite(Couverture<UtilisateurSite> c) {
 		c.o(requeteSite_.getUtilisateurSite());
 	}
 
@@ -511,7 +511,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * logout
 	 */
 	protected void _pageDeconnexionUri(Couverture<String> c)  {
-		c.o("/deconnexion");
+		c.o("https://auth.computate.org/auth/realms/computate.org/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Fscolaire.computate.org%3A11280%2Fdeconnexion");
 	}
 //
 //	protected void _pageCoursUri(Couverture<String> c)  {
@@ -802,20 +802,16 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/** 
-	 * r.enUS: Home 
-	 * Accueil 
-	 * r.enUS: toutXml
-	 * allXml
-	 * r: Langue
-	 * r.enUS: Language
-	 * r: Accueil
-	 * r.enUS: Home
-	 * r: À propos
-	 * r.enUS: About
-	 * r: Se connecter
-	 * r.enUS: Login
-	 * r: Se déconnecter
-	 * r.enUS: Logout
+	 * r: langue
+	 * r.enUS: language
+	 * r: accueil
+	 * r.enUS: home
+	 * r: à propos
+	 * r.enUS: about
+	 * r: se connecter
+	 * r.enUS: login
+	 * r: se déconnecter
+	 * r.enUS: logout
 	 */
 	public void menu()  {
 		e("div").a("class", "w3-black w3-bar w3-text-white w3-card-2 w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
@@ -836,7 +832,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
 					e("i").a("class", "fas fa-clinic-medical site-menu-icon ").f().g("i");
 					e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-						sx("Home");
+						sx("accueil");
 					g("span");
 				g("a");
 			g("div");
@@ -844,7 +840,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageEcole).f();
 					e("i").a("class", "fas fa-clipboard-prescription site-menu-icon ").f().g("i");
 					e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-						sx("Ecoles");
+						sx("ecoles");
 					g("span");
 				g("a");
 			g("div");
@@ -852,7 +848,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAProposUri).f();
 					e("i").a("class", "fas fa-book-open site-menu-icon ").f().g("i");
 					e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-						sx("About");
+						sx("à propos");
 					g("span");
 				g("a");
 			g("div");
@@ -869,18 +865,25 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
 						e("i").a("class", "fas fa-sign-in site-menu-icon ").f().g("i");
 						e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-							sx("Login");
+							sx("se connecter");
 						g("span");
 					g("a");
 				g("div");
 			}
 			if(requeteSite_.getUtilisateurId() != null) {
-				e("div").a("class", "w3-dropdown-hover ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
+				e("div").a("class", "w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f(); 
+						e("i").a("class", "fas fa-sign-in site-menu-icon ").f().g("i");
+						e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
+							sx("se déconnecter");
+						g("span");
+					g("a");
+				g("div");
+				e("div").a("class", "w3-bar-item w3-dropdown-hover ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f();
 						e("i").a("class", "fas fa-sign-out site-menu-icon ").f().g("i");
 						e("span").a("class", "site-menu-item").a("id", "computate_org_span").f();
-							sx("Logout");
-							sx("Se déconnecter");
+							sx("utilisateur");
 						g("span");
 					g("a");
 					e("div").a("class", "w3-dropdown-content w3-bar-block w3-card-4 ").f();
@@ -889,10 +892,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							.a("name", "pk")
 							.a("class", "valeurPk")
 							.a("type", "hidden")
-							.a("value", utilisateurSite.getPk())
+							.a("value", pageUtilisateurSite.getPk())
 							.fg();
 						} g("form");
-						htmlFormOptionsUtilisateurSite(utilisateurSite);
+						htmlFormOptionsUtilisateurSite(pageUtilisateurSite);
 					g("div");
 				g("div");
 			}

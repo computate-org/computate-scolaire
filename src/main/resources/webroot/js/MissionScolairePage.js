@@ -3,7 +3,7 @@
 
 /**
  */
-function rechercheEcoleScolaire($formulaireFiltres) {
+function rechercheMissionScolaire($formulaireFiltres) {
 	var filtres = [];
 
 	var filtrePk = $formulaireFiltres.find('.valeurPk').val();
@@ -26,21 +26,13 @@ function rechercheEcoleScolaire($formulaireFiltres) {
 	if(filtreSupprime != null && filtreSupprime === true)
 		filtres.push({ name: 'fq', value: 'supprime:' + filtreSupprime });
 
-	var filtreEcoleNom = $formulaireFiltres.find('.valeurEcoleNom').val();
-	if(filtreEcoleNom != null && filtreEcoleNom !== '')
-		filtres.push({ name: 'fq', value: 'ecoleNom:' + filtreEcoleNom });
+	var filtreMissionNom = $formulaireFiltres.find('.valeurMissionNom').val();
+	if(filtreMissionNom != null && filtreMissionNom !== '')
+		filtres.push({ name: 'fq', value: 'missionNom:' + filtreMissionNom });
 
 	var filtreEcoleNumeroTelephone = $formulaireFiltres.find('.valeurEcoleNumeroTelephone').val();
 	if(filtreEcoleNumeroTelephone != null && filtreEcoleNumeroTelephone !== '')
 		filtres.push({ name: 'fq', value: 'ecoleNumeroTelephone:' + filtreEcoleNumeroTelephone });
-
-	var filtreEcoleAdministrateurNom = $formulaireFiltres.find('.valeurEcoleAdministrateurNom').val();
-	if(filtreEcoleAdministrateurNom != null && filtreEcoleAdministrateurNom !== '')
-		filtres.push({ name: 'fq', value: 'ecoleAdministrateurNom:' + filtreEcoleAdministrateurNom });
-
-	var filtreEcoleAddresse = $formulaireFiltres.find('.valeurEcoleAddresse').val();
-	if(filtreEcoleAddresse != null && filtreEcoleAddresse !== '')
-		filtres.push({ name: 'fq', value: 'ecoleAddresse:' + filtreEcoleAddresse });
 
 	var filtreId = $formulaireFiltres.find('.valeurId').val();
 	if(filtreId != null && filtreId !== '')
@@ -54,47 +46,11 @@ function rechercheEcoleScolaire($formulaireFiltres) {
 	if(filtreClasseNomSimple != null && filtreClasseNomSimple !== '')
 		filtres.push({ name: 'fq', value: 'classeNomSimple:' + filtreClasseNomSimple });
 
-	var filtreEcoleCle = $formulaireFiltres.find('.valeurEcoleCle').val();
-	if(filtreEcoleCle != null && filtreEcoleCle !== '')
-		filtres.push({ name: 'fq', value: 'ecoleCle:' + filtreEcoleCle });
-
-	var filtreEnfantCles = $formulaireFiltres.find('.valeurEnfantCles').val();
-	if(filtreEnfantCles != null && filtreEnfantCles !== '')
-		filtres.push({ name: 'fq', value: 'enfantCles:' + filtreEnfantCles });
-
-	var filtreBlocCles = $formulaireFiltres.find('.valeurBlocCles').val();
-	if(filtreBlocCles != null && filtreBlocCles !== '')
-		filtres.push({ name: 'fq', value: 'blocCles:' + filtreBlocCles });
-
-	var filtreGroupeAgeCles = $formulaireFiltres.find('.valeurGroupeAgeCles').val();
-	if(filtreGroupeAgeCles != null && filtreGroupeAgeCles !== '')
-		filtres.push({ name: 'fq', value: 'groupeAgeCles:' + filtreGroupeAgeCles });
-
-	var filtreSessionCles = $formulaireFiltres.find('.valeurSessionCles').val();
-	if(filtreSessionCles != null && filtreSessionCles !== '')
-		filtres.push({ name: 'fq', value: 'sessionCles:' + filtreSessionCles });
-
-	var filtreSaisonCles = $formulaireFiltres.find('.valeurSaisonCles').val();
-	if(filtreSaisonCles != null && filtreSaisonCles !== '')
-		filtres.push({ name: 'fq', value: 'saisonCles:' + filtreSaisonCles });
-
-	var filtreAnneeCles = $formulaireFiltres.find('.valeurAnneeCles').val();
-	if(filtreAnneeCles != null && filtreAnneeCles !== '')
-		filtres.push({ name: 'fq', value: 'anneeCles:' + filtreAnneeCles });
-
-	var filtreScolaireTri = $formulaireFiltres.find('.valeurScolaireTri').val();
-	if(filtreScolaireTri != null && filtreScolaireTri !== '')
-		filtres.push({ name: 'fq', value: 'scolaireTri:' + filtreScolaireTri });
-
-	var filtreEcoleTri = $formulaireFiltres.find('.valeurEcoleTri').val();
-	if(filtreEcoleTri != null && filtreEcoleTri !== '')
-		filtres.push({ name: 'fq', value: 'ecoleTri:' + filtreEcoleTri });
-
 	var filtrePageUri = $formulaireFiltres.find('.valeurPageUri').val();
 	if(filtrePageUri != null && filtrePageUri !== '')
 		filtres.push({ name: 'fq', value: 'pageUri:' + filtrePageUri });
 	$.ajax({
-		url: '/api/ecole?' + $.param(filtres)
+		url: '/api/mission?' + $.param(filtres)
 		, dataType: 'json'
 		, type: 'GET'
 		, contentType: 'application/json; charset=utf-8'
@@ -109,7 +65,7 @@ function rechercheEcoleScolaire($formulaireFiltres) {
 
 /**
  */
-function postEcoleScolaire($formulaireValeurs) {
+function postMissionScolaire($formulaireValeurs) {
 	var valeurs = {};
 
 	var valeurPk = $formulaireValeurs.find('.valeurPk').val();
@@ -132,24 +88,16 @@ function postEcoleScolaire($formulaireValeurs) {
 	if(valeurSupprime != null && valeurSupprime !== '')
 		valeurs['supprime'] = valeurSupprime;
 
-	var valeurEcoleNom = $formulaireValeurs.find('.valeurEcoleNom').val();
-	if(valeurEcoleNom != null && valeurEcoleNom !== '')
-		valeurs['ecoleNom'] = valeurEcoleNom;
+	var valeurMissionNom = $formulaireValeurs.find('.valeurMissionNom').val();
+	if(valeurMissionNom != null && valeurMissionNom !== '')
+		valeurs['missionNom'] = valeurMissionNom;
 
 	var valeurEcoleNumeroTelephone = $formulaireValeurs.find('.valeurEcoleNumeroTelephone').val();
 	if(valeurEcoleNumeroTelephone != null && valeurEcoleNumeroTelephone !== '')
 		valeurs['ecoleNumeroTelephone'] = valeurEcoleNumeroTelephone;
 
-	var valeurEcoleAdministrateurNom = $formulaireValeurs.find('.valeurEcoleAdministrateurNom').val();
-	if(valeurEcoleAdministrateurNom != null && valeurEcoleAdministrateurNom !== '')
-		valeurs['ecoleAdministrateurNom'] = valeurEcoleAdministrateurNom;
-
-	var valeurEcoleAddresse = $formulaireValeurs.find('.valeurEcoleAddresse').val();
-	if(valeurEcoleAddresse != null && valeurEcoleAddresse !== '')
-		valeurs['ecoleAddresse'] = valeurEcoleAddresse;
-
 	$.ajax({
-		url: '/api/ecole'
+		url: '/api/mission'
 		, dataType: 'json'
 		, type: 'POST'
 		, contentType: 'application/json; charset=utf-8'
@@ -164,16 +112,16 @@ function postEcoleScolaire($formulaireValeurs) {
 // PATCH //
 
 /**
- * Modifier un ou plusiers écoles sans valuers qui change, 
- * ou changer des valeurs pour un ou plusiers l'école. 
+ * Modifier un ou plusiers missions sans valuers qui change, 
+ * ou changer des valeurs pour un ou plusiers la mission. 
  * @param params: [ "q=*:*", "fq=pk:1", "sort=pk asc", "rows=1", "fl=pk" ]
- *        Une liste des opérations de recherche sur des écoles 
+ *        Une liste des opérations de recherche sur des missions 
  *        pour rechercher "q=*:*", filtrer "fq=pk:1", trier "sort=pk desc", 
  *        limiter les résultats "rows=1", ou limiter les valeurs "fl=pk". 
  * @param valeurs Noms des champs et valeurs à changer selon les filtres fq. 
  *           Example: { pk: 1 }
  */
-function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
+function patchMissionScolaire($formulaireFiltres, $formulaireValeurs) {
 	var filtres = [];
 
 	var filtrePk = $formulaireFiltres.find('.valeurPk').val();
@@ -196,21 +144,13 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
 	if(filtreSupprime != null && filtreSupprime === true)
 		filtres.push({ name: 'fq', value: 'supprime:' + filtreSupprime });
 
-	var filtreEcoleNom = $formulaireFiltres.find('.valeurEcoleNom').val();
-	if(filtreEcoleNom != null && filtreEcoleNom !== '')
-		filtres.push({ name: 'fq', value: 'ecoleNom:' + filtreEcoleNom });
+	var filtreMissionNom = $formulaireFiltres.find('.valeurMissionNom').val();
+	if(filtreMissionNom != null && filtreMissionNom !== '')
+		filtres.push({ name: 'fq', value: 'missionNom:' + filtreMissionNom });
 
 	var filtreEcoleNumeroTelephone = $formulaireFiltres.find('.valeurEcoleNumeroTelephone').val();
 	if(filtreEcoleNumeroTelephone != null && filtreEcoleNumeroTelephone !== '')
 		filtres.push({ name: 'fq', value: 'ecoleNumeroTelephone:' + filtreEcoleNumeroTelephone });
-
-	var filtreEcoleAdministrateurNom = $formulaireFiltres.find('.valeurEcoleAdministrateurNom').val();
-	if(filtreEcoleAdministrateurNom != null && filtreEcoleAdministrateurNom !== '')
-		filtres.push({ name: 'fq', value: 'ecoleAdministrateurNom:' + filtreEcoleAdministrateurNom });
-
-	var filtreEcoleAddresse = $formulaireFiltres.find('.valeurEcoleAddresse').val();
-	if(filtreEcoleAddresse != null && filtreEcoleAddresse !== '')
-		filtres.push({ name: 'fq', value: 'ecoleAddresse:' + filtreEcoleAddresse });
 
 	var filtreId = $formulaireFiltres.find('.valeurId').val();
 	if(filtreId != null && filtreId !== '')
@@ -223,42 +163,6 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
 	var filtreClasseNomSimple = $formulaireFiltres.find('.valeurClasseNomSimple').val();
 	if(filtreClasseNomSimple != null && filtreClasseNomSimple !== '')
 		filtres.push({ name: 'fq', value: 'classeNomSimple:' + filtreClasseNomSimple });
-
-	var filtreEcoleCle = $formulaireFiltres.find('.valeurEcoleCle').val();
-	if(filtreEcoleCle != null && filtreEcoleCle !== '')
-		filtres.push({ name: 'fq', value: 'ecoleCle:' + filtreEcoleCle });
-
-	var filtreEnfantCles = $formulaireFiltres.find('.valeurEnfantCles').val();
-	if(filtreEnfantCles != null && filtreEnfantCles !== '')
-		filtres.push({ name: 'fq', value: 'enfantCles:' + filtreEnfantCles });
-
-	var filtreBlocCles = $formulaireFiltres.find('.valeurBlocCles').val();
-	if(filtreBlocCles != null && filtreBlocCles !== '')
-		filtres.push({ name: 'fq', value: 'blocCles:' + filtreBlocCles });
-
-	var filtreGroupeAgeCles = $formulaireFiltres.find('.valeurGroupeAgeCles').val();
-	if(filtreGroupeAgeCles != null && filtreGroupeAgeCles !== '')
-		filtres.push({ name: 'fq', value: 'groupeAgeCles:' + filtreGroupeAgeCles });
-
-	var filtreSessionCles = $formulaireFiltres.find('.valeurSessionCles').val();
-	if(filtreSessionCles != null && filtreSessionCles !== '')
-		filtres.push({ name: 'fq', value: 'sessionCles:' + filtreSessionCles });
-
-	var filtreSaisonCles = $formulaireFiltres.find('.valeurSaisonCles').val();
-	if(filtreSaisonCles != null && filtreSaisonCles !== '')
-		filtres.push({ name: 'fq', value: 'saisonCles:' + filtreSaisonCles });
-
-	var filtreAnneeCles = $formulaireFiltres.find('.valeurAnneeCles').val();
-	if(filtreAnneeCles != null && filtreAnneeCles !== '')
-		filtres.push({ name: 'fq', value: 'anneeCles:' + filtreAnneeCles });
-
-	var filtreScolaireTri = $formulaireFiltres.find('.valeurScolaireTri').val();
-	if(filtreScolaireTri != null && filtreScolaireTri !== '')
-		filtres.push({ name: 'fq', value: 'scolaireTri:' + filtreScolaireTri });
-
-	var filtreEcoleTri = $formulaireFiltres.find('.valeurEcoleTri').val();
-	if(filtreEcoleTri != null && filtreEcoleTri !== '')
-		filtres.push({ name: 'fq', value: 'ecoleTri:' + filtreEcoleTri });
 
 	var filtrePageUri = $formulaireFiltres.find('.valeurPageUri').val();
 	if(filtrePageUri != null && filtrePageUri !== '')
@@ -316,15 +220,15 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
 	if(removeSupprime != null && removeSupprime !== '')
 		valeurs['removeSupprime'] = removeSupprime;
 
-	var setEcoleNom = $formulaireValeurs.find('.setEcoleNom').val();
-	if(setEcoleNom != null && setEcoleNom !== '')
-		valeurs['setEcoleNom'] = setEcoleNom;
-	var addEcoleNom = $formulaireValeurs.find('.addEcoleNom').val();
-	if(addEcoleNom != null && addEcoleNom !== '')
-		valeurs['addEcoleNom'] = addEcoleNom;
-	var removeEcoleNom = $formulaireValeurs.find('.removeEcoleNom').val();
-	if(removeEcoleNom != null && removeEcoleNom !== '')
-		valeurs['removeEcoleNom'] = removeEcoleNom;
+	var setMissionNom = $formulaireValeurs.find('.setMissionNom').val();
+	if(setMissionNom != null && setMissionNom !== '')
+		valeurs['setMissionNom'] = setMissionNom;
+	var addMissionNom = $formulaireValeurs.find('.addMissionNom').val();
+	if(addMissionNom != null && addMissionNom !== '')
+		valeurs['addMissionNom'] = addMissionNom;
+	var removeMissionNom = $formulaireValeurs.find('.removeMissionNom').val();
+	if(removeMissionNom != null && removeMissionNom !== '')
+		valeurs['removeMissionNom'] = removeMissionNom;
 
 	var setEcoleNumeroTelephone = $formulaireValeurs.find('.setEcoleNumeroTelephone').val();
 	if(setEcoleNumeroTelephone != null && setEcoleNumeroTelephone !== '')
@@ -336,28 +240,8 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
 	if(removeEcoleNumeroTelephone != null && removeEcoleNumeroTelephone !== '')
 		valeurs['removeEcoleNumeroTelephone'] = removeEcoleNumeroTelephone;
 
-	var setEcoleAdministrateurNom = $formulaireValeurs.find('.setEcoleAdministrateurNom').val();
-	if(setEcoleAdministrateurNom != null && setEcoleAdministrateurNom !== '')
-		valeurs['setEcoleAdministrateurNom'] = setEcoleAdministrateurNom;
-	var addEcoleAdministrateurNom = $formulaireValeurs.find('.addEcoleAdministrateurNom').val();
-	if(addEcoleAdministrateurNom != null && addEcoleAdministrateurNom !== '')
-		valeurs['addEcoleAdministrateurNom'] = addEcoleAdministrateurNom;
-	var removeEcoleAdministrateurNom = $formulaireValeurs.find('.removeEcoleAdministrateurNom').val();
-	if(removeEcoleAdministrateurNom != null && removeEcoleAdministrateurNom !== '')
-		valeurs['removeEcoleAdministrateurNom'] = removeEcoleAdministrateurNom;
-
-	var setEcoleAddresse = $formulaireValeurs.find('.setEcoleAddresse').val();
-	if(setEcoleAddresse != null && setEcoleAddresse !== '')
-		valeurs['setEcoleAddresse'] = setEcoleAddresse;
-	var addEcoleAddresse = $formulaireValeurs.find('.addEcoleAddresse').val();
-	if(addEcoleAddresse != null && addEcoleAddresse !== '')
-		valeurs['addEcoleAddresse'] = addEcoleAddresse;
-	var removeEcoleAddresse = $formulaireValeurs.find('.removeEcoleAddresse').val();
-	if(removeEcoleAddresse != null && removeEcoleAddresse !== '')
-		valeurs['removeEcoleAddresse'] = removeEcoleAddresse;
-
 	$.ajax({
-		url: '/api/ecole?' + $.param(filtres)
+		url: '/api/mission?' + $.param(filtres)
 		, dataType: 'json'
 		, type: 'PATCH'
 		, contentType: 'application/json; charset=utf-8'
@@ -373,9 +257,9 @@ function patchEcoleScolaire($formulaireFiltres, $formulaireValeurs) {
 
 /**
  */
-function getEcoleScolaire(pk) {
+function getMissionScolaire(pk) {
 	$.ajax({
-		url: '/api/ecole/' + id
+		url: '/api/mission/' + id
 		, dataType: 'json'
 		, type: 'GET'
 		, contentType: 'application/json; charset=utf-8'
@@ -390,9 +274,9 @@ function getEcoleScolaire(pk) {
 
 /**
  */
-function deleteEcoleScolaire(pk) {
+function deleteMissionScolaire(pk) {
 	$.ajax({
-		url: '/api/ecole/' + id
+		url: '/api/mission/' + id
 		, dataType: 'json'
 		, type: 'DELETE'
 		, contentType: 'application/json; charset=utf-8'
