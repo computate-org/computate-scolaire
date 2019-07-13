@@ -21,14 +21,24 @@
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 		<vertx-maven-plugin.version>1.0.9</vertx-maven-plugin.version>
 		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-		<vertx.verticle>org.computate.frFR.scolaire.AppVertx</vertx.verticle>
+		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+		<vertx.verticle>org.computate.scolaire.frFR.AppVertx</vertx.verticle>
 		<!--<vertx.version>3.5.4</vertx.version> -->
 		<vertx.version>3.6.2</vertx.version>
+		<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest</fabric8.generator.from>
 	</properties>
 
 	<dependencies>
 		<!-- <dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-classic</artifactId> 
 			<version>1.2.3</version> </dependency> -->
+
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>fabric8-project-bom-with-platform-deps</artifactId>
+			<version>${fabric8.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -118,6 +128,11 @@
 
 		<dependency>
 			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
 			<artifactId>vertx-web</artifactId>
 			<version>${vertx.version}</version>
 			<exclusions>
@@ -197,6 +212,27 @@
 			<artifactId>vertx-web-api-service</artifactId>
 			<version>${vertx.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-health-check</artifactId>
+			<version>${vertx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-vertx-web</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-solr-client</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<version>4.12</version>
+		</dependency>
 
 
 		<!-- <dependency> <groupId>com.github.phiz71</groupId> <artifactId>vertx-swagger-parent</artifactId> 
@@ -223,6 +259,25 @@
 				<groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> 
 				<version>${spring-boot.version}</version> <executions> <execution> <goals> 
 				<goal>repackage</goal> </goals> </execution> </executions> </plugin> -->
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>/usr/local/src/computate.org/config/keystore.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -256,40 +311,96 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>vertx-maven-plugin</artifactId>
-				<version>${vertx-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>vmp</id>
-						<goals>
-							<goal>initialize</goal>
-							<goal>package</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<redeploy>true</redeploy>
-				</configuration>
-			</plugin>
-
-			<!--
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-				<version>${fabric8-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>resource</goal>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			-->
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>fabric8-maven-plugin</artifactId>
+						<version>3.5.40</version>
+						<configuration>
+							<generator>
+								<config>
+									<java-exec>
+										<mainClass>org.computate.scolaire.frFR.vertx.AppliVertx</mainClass>
+									</java-exec>
+								</config>
+							</generator>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>resource</goal>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>2.3</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+								<configuration>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+											</excludes>
+										</filter>
+									</filters>
+									<transformers>
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+											<manifestEntries>
+												<Main-Class>org.computate.scolaire.frFR.vertx.AppliVertx</Main-Class>
+											</manifestEntries>
+										</transformer>
+									</transformers>
+									<shadedArtifactAttached>true</shadedArtifactAttached>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>verify</id>
+								<goals>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<keystore>${keystore-path}</keystore>
+							<alias>${keystore-alias}</alias>
+							<storepass>${keystore-storepass}</storepass>
+							<keypass>${keystore-keypass}</keypass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
