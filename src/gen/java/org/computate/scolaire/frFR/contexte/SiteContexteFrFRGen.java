@@ -237,7 +237,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		if(!configSiteCouverture.dejaInitialise) {
 			_configSite(configSite);
 		}
-		configSite.initLoinPourClasse(requeteSite_);
+		configSite.initLoinPourClasse(null);
 		configSiteCouverture.dejaInitialise(true);
 		return (SiteContexteFrFR)this;
 	}
@@ -502,40 +502,6 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return nombreExecuteurs == null ? "" : StringEscapeUtils.escapeHtml4(strNombreExecuteurs());
 	}
 
-	//////////////////
-	// requeteSite_ //
-	//////////////////
-
-	/**	L'entité « requeteSite_ »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut RequeteSiteFrFR(). 
-	 */
-	protected RequeteSiteFrFR requeteSite_ = new RequeteSiteFrFR();
-	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
-
-	/**	<br/>L'entité « requeteSite_ »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut RequeteSiteFrFR(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
-	 * <br/>
-	 * @param requeteSite_ est l'entité déjà construit. 
-	 **/
-	protected abstract void _requeteSite_(RequeteSiteFrFR o);
-
-	public RequeteSiteFrFR getRequeteSite_() {
-		return requeteSite_;
-	}
-
-	public void setRequeteSite_(RequeteSiteFrFR requeteSite_) {
-		this.requeteSite_ = requeteSite_;
-		this.requeteSite_Couverture.dejaInitialise = true;
-	}
-	protected SiteContexteFrFR requeteSite_Init() {
-		if(!requeteSite_Couverture.dejaInitialise) {
-			_requeteSite_(requeteSite_);
-		}
-		requeteSite_Couverture.dejaInitialise(true);
-		return (SiteContexteFrFR)this;
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -543,7 +509,6 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	protected boolean dejaInitialiseSiteContexteFrFR = false;
 
 	public SiteContexteFrFR initLoinSiteContexteFrFR(RequeteSiteFrFR requeteSite_) {
-		setRequeteSite_(requeteSite_);
 		if(!dejaInitialiseSiteContexteFrFR) {
 			dejaInitialiseSiteContexteFrFR = true;
 			initLoinSiteContexteFrFR();
@@ -568,24 +533,10 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		clientSolrComputateInit();
 		motDePasseCryptageInit();
 		nombreExecuteursInit();
-		requeteSite_Init();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
 		initLoinSiteContexteFrFR(requeteSite_);
-	}
-
-	/////////////////
-	// requeteSite //
-	/////////////////
-
-	public void requeteSiteSiteContexteFrFR(RequeteSiteFrFR requeteSite_) {
-		if(configSite != null)
-			configSite.setRequeteSite_(requeteSite_);
-	}
-
-	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteSiteContexteFrFR(requeteSite_);
 	}
 
 	/////////////
@@ -632,8 +583,6 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				return oSiteContexteFrFR.motDePasseCryptage;
 			case "nombreExecuteurs":
 				return oSiteContexteFrFR.nombreExecuteurs;
-			case "requeteSite_":
-				return oSiteContexteFrFR.requeteSite_;
 			default:
 				return null;
 		}

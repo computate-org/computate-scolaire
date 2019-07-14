@@ -1,8 +1,8 @@
-package org.computate.scolaire.frFR.cluster;
+package org.computate.scolaire.enUS.cluster;
 
-import org.computate.scolaire.frFR.config.ConfigSite;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import java.io.IOException;
@@ -68,43 +68,44 @@ import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
+import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
 
 
 /**
  * Traduire: false
  **/
-public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
+public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(ClusterFrFRGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(ClusterEnUSGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "ClusterFrFRApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "ClusterEnUSApiServiceImpl";
 
-	protected SiteContexteFrFR siteContexte;
+	protected SiteContextEnUS siteContexte;
 
-	public ClusterFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
+	public ClusterEnUSGenApiServiceImpl(SiteContextEnUS siteContexte) {
 		this.siteContexte = siteContexte;
-		ClusterFrFRGenApiService service = ClusterFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+		ClusterEnUSGenApiService service = ClusterEnUSGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
-	// RechercheFrFRPage //
+	// RechercheEnUSPage //
 
 	@Override
-	public void recherchefrfrpageClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		recherchefrfrpageCluster(operationRequete, gestionnaireEvenements);
+	public void rechercheenuspageClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		rechercheenuspageCluster(operationRequete, gestionnaireEvenements);
 	}
 
 	@Override
-	public void recherchefrfrpageCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheenuspageCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/frFR/cluster", c -> {
+							rechercheCluster(requeteSite, false, true, "/enUS/cluster", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Cluster> listeCluster = c.result();
-									reponse200RechercheFrFRPageCluster(listeCluster, d -> {
+									reponse200RechercheEnUSPageCluster(listeCluster, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -145,20 +146,20 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void reponse200RechercheFrFRPageCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200RechercheEnUSPageCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
-			ClusterFrFRPage page = new ClusterFrFRPage();
+			ClusterEnUSPage page = new ClusterEnUSPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/cluster");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/enUS/cluster");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeCluster(listeCluster);
-			page.initLoinClusterFrFRPage(requeteSite);
+			page.initLoinClusterEnUSPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -171,7 +172,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
 			rechercheCluster(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
 					ListeRecherche<Cluster> listeCluster = a.result();
@@ -194,7 +195,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
@@ -225,49 +226,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					w.s(", ");
 				w.l("{");
 
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomSimple();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
-
-				{
-					List<String> entiteValeurs = o.getClasseNomsCanoniques();
-					w.t(3, entiteNumero++ == 0 ? "" : ", ");
-					w.s("\"classeNomsCanoniques\": [");
-					for(int k = 0; k < entiteValeurs.size(); k++) {
-						entiteValeur = entiteValeurs.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entiteValeur));
-						w.s("\"");
-					}
-					w.l("]");
-				}
-
 				w.tl(2, "}");
 			}
 			w.tl(1, "]");
@@ -286,7 +244,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, body);
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					creerPOSTCluster(requeteSite, b -> {
@@ -349,13 +307,13 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void creerPOSTCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
+	public void creerPOSTCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_creer
+					SiteContextEnUS.SQL_creer
 					, new JsonArray(Arrays.asList(Cluster.class.getCanonicalName(), utilisateurId))
 					, creerAsync
 			-> {
@@ -373,7 +331,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
@@ -385,19 +343,19 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "cree":
-						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "modifie":
-						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
 						break;
 					case "archive":
-						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "supprime":
-						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					}
@@ -418,7 +376,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void reponse200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
@@ -432,7 +390,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, body);
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
@@ -504,7 +462,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public Future<Cluster> sqlPATCHCluster(Cluster o) {
 		Future<Cluster> future = Future.future();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject requeteJson = requeteSite.getObjetJson();
@@ -513,30 +471,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			Set<String> methodeNoms = requeteJson.fieldNames();
 			Cluster o2 = new Cluster();
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.cluster.Cluster"));
+			patchSql.append(SiteContextEnUS.SQL_modifier);
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
-						break;
-					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
-						break;
-					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
-						break;
-					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
-						break;
 				}
 			}
 			connexionSql.queryWithParams(
@@ -557,11 +495,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public Future<Cluster> definirPATCHCluster(Cluster o) {
 		Future<Cluster> future = Future.future();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
+					SiteContextEnUS.SQL_definir
 					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
@@ -595,7 +533,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void reponse200PATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			buffer.appendString("{}");
@@ -610,7 +548,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
 			rechercheCluster(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
 					ListeRecherche<Cluster> listeCluster = a.result();
@@ -633,7 +571,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public void reponse200GETCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
 			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
@@ -645,49 +583,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				Integer entiteNumero = 0;
 
 				w.l("{");
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomSimple();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
-
-				{
-					List<String> entiteValeurs = o.getClasseNomsCanoniques();
-					w.t(3, entiteNumero++ == 0 ? "" : ", ");
-					w.s("\"classeNomsCanoniques\": [");
-					for(int k = 0; k < entiteValeurs.size(); k++) {
-						entiteValeur = entiteValeurs.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entiteValeur));
-						w.s("\"");
-					}
-					w.l("]");
-				}
 
 				w.l("}");
 			}
@@ -702,7 +597,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void deleteCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
 			sqlCluster(requeteSite, a -> {
 				if(a.succeeded()) {
 					rechercheCluster(requeteSite, false, true, null, b -> {
@@ -751,14 +646,14 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void supprimerDELETECluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void supprimerDELETECluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_supprimer
+					SiteContextEnUS.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
 			-> {
@@ -769,7 +664,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void reponse200DELETECluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200DELETECluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
 			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
@@ -821,7 +716,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	// Partagé //
 
-	public void erreurCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
+	public void erreurCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -858,7 +753,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void sqlCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
@@ -886,24 +781,24 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourCluster(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
-		return genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, null);
+	public SiteRequestEnUS genererSiteRequestEnUSPourCluster(SiteContextEnUS siteContexte, OperationRequest operationRequete) {
+		return genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, null);
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourCluster(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
+	public SiteRequestEnUS genererSiteRequestEnUSPourCluster(SiteContextEnUS siteContexte, OperationRequest operationRequete, JsonObject body) {
 		Vertx vertx = siteContexte.getVertx();
-		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
+		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
 		requeteSite.setObjetJson(body);
 		requeteSite.setVertx(vertx);
 		requeteSite.setSiteContexte_(siteContexte);
 		requeteSite.setConfigSite_(siteContexte.getConfigSite());
 		requeteSite.setOperationRequete(operationRequete);
-		requeteSite.initLoinRequeteSiteFrFR(requeteSite);
+		requeteSite.initLoinSiteRequestEnUS(requeteSite);
 
 		return requeteSite;
 	}
 
-	public void utilisateurCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void utilisateurCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -911,7 +806,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				gestionnaireEvenements.handle(Future.succeededFuture());
 			} else {
 				connexionSql.queryWithParams(
-						SiteContexteFrFR.SQL_selectC
+						SiteContextEnUS.SQL_selectC
 						, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
 						, selectCAsync
 				-> {
@@ -919,7 +814,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
 						if(utilisateurValeurs == null) {
 							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
+									SiteContextEnUS.SQL_creer
 									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
 									, creerAsync
 							-> {
@@ -929,7 +824,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
+										SiteContextEnUS.SQL_definir
 										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 										, definirAsync
 								-> {
@@ -966,7 +861,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
+									SiteContextEnUS.SQL_definir
 									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 									, definirAsync
 							-> {
@@ -1003,7 +898,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void rechercheCluster(SiteRequestEnUS requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -1017,7 +912,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.cluster.Cluster"));
+			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1098,11 +993,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public void definirCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
+					SiteContextEnUS.SQL_definir
 					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
@@ -1122,11 +1017,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public void attribuerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_attribuer
+					SiteContextEnUS.SQL_attribuer
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
@@ -1147,7 +1042,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 	public void indexerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+		SiteRequestEnUS requeteSite = o.getRequeteSite_();
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();

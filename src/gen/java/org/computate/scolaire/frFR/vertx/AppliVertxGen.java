@@ -6,6 +6,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import io.vertx.core.AbstractVerticle;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,9 +15,138 @@ import org.apache.commons.lang3.StringUtils;
  * <br/>
  **/
 public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
+	public static final String configurerDonneesErreurConnexion1 = "Impossible d'ouvrir la connexion du client de base de données. ";
+	public static final String configurerDonneesErreurConnexion = configurerDonneesErreurConnexion1;
+	public static final String configurerDonneesSuccesConnexion1 = "La connexion du client de base de données a réussi. ";
+	public static final String configurerDonneesSuccesConnexion = configurerDonneesSuccesConnexion1;
+	public static final String configurerDonneesErreurInit1 = "Impossible d'initialiser les tables de la base de données. ";
+	public static final String configurerDonneesErreurInit = configurerDonneesErreurInit1;
+	public static final String configurerDonneesSuccesInit1 = "Les tables de base de données ont été créées avec succès. ";
+	public static final String configurerDonneesSuccesInit = configurerDonneesSuccesInit1;
+
+	public static final String configurerClusterErreurDonnees1 = "Impossible de configurer les données du cluster partagé.";
+	public static final String configurerClusterErreurDonnees = configurerClusterErreurDonnees1;
+	public static final String configurerClusterSuccesDonnees1 = "Les données du cluster partagé ont été configurées avec succès. ";
+	public static final String configurerClusterSuccesDonnees = configurerClusterSuccesDonnees1;
+
 	public static final String fermerDonneesErreur1 = "Impossible de fermer la connexion du client de base de données. ";
 	public static final String fermerDonneesErreur = fermerDonneesErreur1;
+	public static final String fermerDonneesSucces1 = "La connexion client de la base de données a été fermée.";
+	public static final String fermerDonneesSucces = fermerDonneesSucces1;
 
+
+	//////////////
+	// initLoin //
+	//////////////
+
+	protected boolean dejaInitialiseAppliVertx = false;
+
+	public AppliVertx initLoinAppliVertx(RequeteSiteFrFR requeteSite_) {
+		setRequeteSite_(requeteSite_);
+		if(!dejaInitialiseAppliVertx) {
+			dejaInitialiseAppliVertx = true;
+			initLoinAppliVertx();
+		}
+		return (AppliVertx)this;
+	}
+
+	public void initLoinAppliVertx() {
+		initAppliVertx();
+	}
+
+	public void initAppliVertx() {
+	}
+
+	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
+		initLoinAppliVertx(requeteSite_);
+	}
+
+	/////////////////
+	// requeteSite //
+	/////////////////
+
+	public void requeteSiteAppliVertx(RequeteSiteFrFR requeteSite_) {
+	}
+
+	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
+		requeteSiteAppliVertx(requeteSite_);
+	}
+
+	/////////////
+	// obtenir //
+	/////////////
+
+	public Object obtenirPourClasse(String var) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		for(String v : vars) {
+			if(o == null)
+				o = obtenirAppliVertx(v);
+			else if(o instanceof Cluster) {
+				Cluster cluster = (Cluster)o;
+				o = cluster.obtenirPourClasse(v);
+			}
+		}
+		return o;
+	}
+	public Object obtenirAppliVertx(String var) {
+		AppliVertx oAppliVertx = (AppliVertx)this;
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////
+	// attribuer //
+	///////////////
+
+	public boolean attribuerPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		for(String v : vars) {
+			if(o == null)
+				o = attribuerAppliVertx(v, val);
+			else if(o instanceof Cluster) {
+				Cluster cluster = (Cluster)o;
+				o = cluster.attribuerPourClasse(v, val);
+			}
+		}
+		return o != null;
+	}
+	public Object attribuerAppliVertx(String var, Object val) {
+		AppliVertx oAppliVertx = (AppliVertx)this;
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	/////////////
+	// definir //
+	/////////////
+
+	public boolean definirPourClasse(String var, String val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirAppliVertx(v, val);
+				else if(o instanceof Cluster) {
+					Cluster cluster = (Cluster)o;
+					o = cluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirAppliVertx(String var, String val) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
 
 	//////////////
 	// hashCode //
@@ -50,5 +180,5 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppliVertxVals = new String[] { fermerDonneesErreur1 };
+	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, fermerDonneesErreur1, fermerDonneesSucces1 };
 }

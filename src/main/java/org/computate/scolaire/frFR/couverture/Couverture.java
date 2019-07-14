@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * 
  * NomCanonique.enUS: org.computate.scolaire.enUS.wrap.Wrap
  * MotCle: classeNomSimpleCouverture
- */ 
+ */   
 public class Couverture<DEV> implements Serializable { 
 	private static final long serialVersionUID = 4171725370071929571L;
 

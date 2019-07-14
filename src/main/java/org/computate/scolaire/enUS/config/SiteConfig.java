@@ -1,44 +1,34 @@
-package org.computate.scolaire.frFR.config;   
+package org.computate.scolaire.enUS.config;
 
 import java.io.File;
 import java.io.Serializable;
-
 import org.apache.commons.configuration2.INIConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.enUS.wrap.Wrap;
 
+/**	
+ *	Loads the properties in the application config file into specific fields. 
+ **/
+public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 
-
-/** 
- * NomCanonique.enUS: org.computate.scolaire.enUS.config.SiteConfig
- * MotCle: classeNomSimpleConfigSite
- * enUS: Loads the properties in the application config file into specific fields. 
- * frFR: Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
- */    
-public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {   
-
-	/**	Le chemin vers le fichier de config du site. **/
-	protected void _configChemin(Couverture<String> c) {   
+	protected void _configChemin(Wrap<String> c) {   
 		String o = System.getenv("configChemin");
 		c.o(o);
 	}
 
-	/**
 	/**	
-	 * r: fichierConfig
-	 * r.enUS: configFile
-	 * enUS: The INI Configuration Object for the config file. 
-	 **/ 
-	protected void _config(Couverture<INIConfiguration> c) {
+	 *	The INI Configuration Object for the config file. 
+	 **/
+	protected void _config(Wrap<INIConfiguration> c) {
 		Configurations configurations = new Configurations();
-		File fichierConfig = new File(configChemin);
-		if(configChemin != null && fichierConfig.exists()) {
+		File configFile = new File(configChemin);
+		if(configChemin != null && configFile.exists()) {
 			try {
-				INIConfiguration o = configurations.ini(fichierConfig);
+				INIConfiguration o = configurations.ini(configFile);
 				c.o(o);
 			} catch (ConfigurationException e) {
 				ExceptionUtils.rethrow(e);
@@ -46,8 +36,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		}
 	}
 
-	/**	Le nom du groupe principal du config pour ce site Web. **/
-	protected void _identifiantSite(Couverture<String> c) {
+	protected void _identifiantSite(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv("appliNom");
@@ -57,14 +46,12 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le préfixe déjà échappé pour trouver des propriétés du site. **/
-	protected void _prefixeEchappe(Couverture<String> c) {
+	protected void _prefixeEchappe(Wrap<String> c) {
 		String o = StringUtils.replace(identifiantSite, ".", "..") + ".";
 		c.o(o);
 	}
 
-	/**	Le chemin vers le projet du site cloné de git. **/  
-	protected void _appliChemin(Couverture<String> c) {
+	protected void _appliChemin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -74,8 +61,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le chemin vers la racine de document pour le projet. **/
-	protected void _racineDocument(Couverture<String> c) {
+	protected void _racineDocument(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -84,8 +70,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le nom de l'entreprise. **/
-	protected void _nomEntreprise(Couverture<String> c) {
+	protected void _nomEntreprise(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -94,8 +79,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le nom de domaine du site. **/
-	protected void _nomDomaine(Couverture<String> c) {
+	protected void _nomDomaine(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -104,8 +88,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le nom d'hôte du site. **/
-	protected void _siteNomHote(Couverture<String> c) {
+	protected void _siteNomHote(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -114,8 +97,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le port du site. **/
-	protected void _sitePort(Couverture<Integer> c) {
+	protected void _sitePort(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var));
@@ -124,8 +106,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'ID client Keycloak du site. **/
-	protected void _authRoyaume(Couverture<String> c) {
+	protected void _authRoyaume(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -134,8 +115,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'ID client Keycloak du site. **/
-	protected void _authRessource(Couverture<String> c) {
+	protected void _authRessource(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -144,8 +124,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'ID client Keycloak du site. **/
-	protected void _authSecret(Couverture<String> c) {
+	protected void _authSecret(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -154,8 +133,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'ID client Keycloak du site. **/
-	protected void _authSslRequis(Couverture<String> c) {
+	protected void _authSslRequis(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -164,7 +142,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _sslJksChemin(Couverture<String> c) {
+	protected void _sslJksChemin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -173,7 +151,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _sslJksMotDePasse(Couverture<String> c) {
+	protected void _sslJksMotDePasse(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -182,8 +160,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'ID client Keycloak du site. **/
-	protected void _authUrl(Couverture<String> c) {
+	protected void _authUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -192,8 +169,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le sel de cryptage à utiliser pour tout cryptage. **/
-	protected void _cryptageSel(Couverture<String> c) {
+	protected void _cryptageSel(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -202,8 +178,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le mot de passe de cryptage à utiliser pour tout cryptage. **/
-	protected void _cryptageMotDePasse(Couverture<String> c) {
+	protected void _cryptageMotDePasse(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -212,10 +187,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**
-	 * Var.enUS: siteBaseUrl
-	 * 	L'URL du domaine de base pour les URLs du site. **/
-	protected void _siteUrlBase(Couverture<String> c) {
+	protected void _siteBaseUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -224,8 +196,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le nom d'affichage du site. **/
-	protected void _siteNomAffichage(Couverture<String> c) {
+	protected void _siteNomAffichage(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -234,7 +205,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcClassePilote(Couverture<String> c) {
+	protected void _jdbcClassePilote(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = StringUtils.defaultIfEmpty(System.getenv(c.var), "org.postgresql.Driver");
@@ -243,7 +214,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcUtilisateur(Couverture<String> c) {
+	protected void _jdbcUtilisateur(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -252,7 +223,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcMotDePasse(Couverture<String> c) {
+	protected void _jdbcMotDePasse(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -261,7 +232,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcTailleMaxPiscine(Couverture<Integer> c) {
+	protected void _jdbcTailleMaxPiscine(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 15);
@@ -270,7 +241,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcTailleInitialePiscine(Couverture<Integer> c) {
+	protected void _jdbcTailleInitialePiscine(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 3);
@@ -279,7 +250,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcTailleMinPiscine(Couverture<Integer> c) {
+	protected void _jdbcTailleMinPiscine(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
@@ -288,7 +259,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcMaxDeclarations(Couverture<Integer> c) {
+	protected void _jdbcMaxDeclarations(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
@@ -297,7 +268,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcMaxDeclarationsParConnexion(Couverture<Integer> c) {
+	protected void _jdbcMaxDeclarationsParConnexion(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
@@ -306,7 +277,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _jdbcTempsInactiviteMax(Couverture<Integer> c) {
+	protected void _jdbcTempsInactiviteMax(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
@@ -315,8 +286,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'URL JDBC vers le source de données. **/ 
-	protected void _jdbcUrl(Couverture<String> c) {
+	protected void _jdbcUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -325,8 +295,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'URL vers le moteur de recherche SOLR. **/
-	protected void _solrUrl(Couverture<String> c) {
+	protected void _solrUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -335,8 +304,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'URL vers le moteur de recherche SOLR. **/
-	protected void _solrUrlComputate(Couverture<String> c) {
+	protected void _solrUrlComputate(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -345,8 +313,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le jeton d'identité Paypal pour valider des transactions Paypal. **/
-	protected void _jetonIdentitePaypal(Couverture<String> c) {
+	protected void _jetonIdentitePaypal(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -355,8 +322,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Facebook pour le site. **/
-	protected void _compteFacebook(Couverture<String> c) {
+	protected void _compteFacebook(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -365,8 +331,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Twitter pour le site. **/
-	protected void _compteTwitter(Couverture<String> c) {
+	protected void _compteTwitter(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -375,8 +340,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Google Plus pour le site. **/
-	protected void _compteGooglePlus(Couverture<String> c) {
+	protected void _compteGooglePlus(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -385,8 +349,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Instagram pour le site. **/
-	protected void _compteInstagram(Couverture<String> c) {
+	protected void _compteInstagram(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -395,8 +358,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Youtube pour le site. **/
-	protected void _compteYoutube(Couverture<String> c) {
+	protected void _compteYoutube(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -405,8 +367,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'identifiant du canal Youtube pour le site. **/
-	protected void _identifiantCanalYoutube(Couverture<String> c) {
+	protected void _identifiantCanalYoutube(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -415,8 +376,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Pinterest pour le site. **/
-	protected void _comptePinterest(Couverture<String> c) {
+	protected void _comptePinterest(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -425,8 +385,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte Open Clipart pour le site. **/
-	protected void _compteOpenclipart(Couverture<String> c) {
+	protected void _compteOpenclipart(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -435,8 +394,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le compte mail pour le site. **/
-	protected void _compteMail(Couverture<String> c) {
+	protected void _compteMail(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -445,8 +403,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le rôle OpenID Connect pour un administrateur. **/
-	protected void _roleAdmin(Couverture<String> c) {
+	protected void _roleAdmin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -455,8 +412,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	L'addresse mail pour l'administrateur du site pour les rapports d'erreur. **/
-	protected void _mailAdmin(Couverture<String> c) {
+	protected void _mailAdmin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -465,8 +421,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	Le nombre de fils pour executer des tâches daemon dans le site. **/
-	protected void _nombreExecuteurs(Couverture<Integer> c) {
+	protected void _nombreExecuteurs(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = Integer.parseInt(System.getenv(c.var), 1);
@@ -475,7 +430,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _openApiVersion(Couverture<String> c) {
+	protected void _openApiVersion(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -484,7 +439,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiDescription(Couverture<String> c) {
+	protected void _apiDescription(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -493,7 +448,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiTitre(Couverture<String> c) {
+	protected void _apiTitre(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -502,7 +457,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiTermsService(Couverture<String> c) {
+	protected void _apiTermsService(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -511,7 +466,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiVersion(Couverture<String> c) {
+	protected void _apiVersion(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -520,7 +475,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiContactMail(Couverture<String> c) {
+	protected void _apiContactMail(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -529,7 +484,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiLicenceNom(Couverture<String> c) {
+	protected void _apiLicenceNom(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -538,7 +493,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiLicenceUrl(Couverture<String> c) {
+	protected void _apiLicenceUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -547,7 +502,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiNomHote(Couverture<String> c) {
+	protected void _apiNomHote(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -556,7 +511,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _apiCheminBase(Couverture<String> c) {
+	protected void _apiCheminBase(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -565,21 +520,16 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**
-	 * Var.enUS: vertxServiceAddress
-	 * r: addresse
-	 * r.enUS: address
-	 */
-	protected void _vertxServiceAddresse(Couverture<String> c) {
+	protected void _vertxServiceAddress(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "addresse");
+			o = config.getString(prefixeEchappe + c.var, "address");
 		c.o(o);
 	}
 
-	protected void _statiqueUrlBase(Couverture<String> c) {
+	protected void _statiqueUrlBase(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);

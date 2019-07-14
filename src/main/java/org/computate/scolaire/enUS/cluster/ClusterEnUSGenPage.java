@@ -1,6 +1,6 @@
-package org.computate.scolaire.frFR.cluster;
+package org.computate.scolaire.enUS.cluster;
 
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.util.List;
 import org.computate.scolaire.frFR.page.parti.PagePart;
 import java.lang.Long;
@@ -9,15 +9,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.lang.Boolean;
-import org.computate.scolaire.frFR.page.MiseEnPage;
-import org.computate.scolaire.frFR.config.ConfigSite;
-import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.enUS.school.page.PageLayout;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import java.io.IOException;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.enUS.wrap.Wrap;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import io.vertx.core.json.JsonObject;
@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Traduire: false
  **/
-public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
+public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 
 	/**
 	 * {@inheritDoc}
@@ -69,38 +69,38 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/cluster");
-	}
-
-	@Override protected void _pageUriEnUS(Couverture<String> c) {
 		c.o("/enUS/cluster");
 	}
 
-	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/cluster-999.png");
+	@Override protected void _pageUriFrFR(Couverture<String> c) {
+		c.o("/frFR/cluster");
 	}
 
-	@Override public void initLoinClusterFrFRGenPage() {
-		initClusterFrFRGenPage();
+	@Override protected void _pageImageUri(Couverture<String> c) {
+			c.o("/png/enUS/cluster-999.png");
+	}
+
+	@Override public void initLoinClusterEnUSGenPage() {
+		initClusterEnUSGenPage();
 		super.initLoinMiseEnPage();
 	}
 
-	@Override public void htmlScriptsClusterFrFRGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/ClusterFrFRPage.js").f().g("script");
+	@Override public void htmlScriptsClusterEnUSGenPage() {
+		e("script").a("src", statiqueUrlBase, "/js/ClusterEnUSPage.js").f().g("script");
 	}
 
 	protected void _pageUriCluster(Couverture<String> c) {
-			c.o("/frFR/cluster");
+			c.o("/enUS/cluster");
 	}
 
-	@Override public void htmlScriptClusterFrFRGenPage() {
+	@Override public void htmlScriptClusterEnUSGenPage() {
 	}
 
 	public void htmlFormPageCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
+					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strCree()).g("span");
@@ -108,7 +108,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strModifie()).g("span");
@@ -121,7 +121,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
+					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strCree()).g("span");
@@ -129,7 +129,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strModifie()).g("span");
@@ -142,7 +142,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
+					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strCree()).g("span");
@@ -150,7 +150,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strModifie()).g("span");
@@ -163,7 +163,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
+					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strCree()).g("span");
@@ -171,7 +171,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
 					e("span").f().sx(o.strModifie()).g("span");
@@ -180,7 +180,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodyClusterFrFRGenPage() {
+	@Override public void htmlBodyClusterEnUSGenPage() {
 
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
@@ -221,7 +221,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 						Cluster o = listeCluster.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/cluster/" + o.getPk();
+						String uri = "/enUS/cluster/" + o.getPk();
 						{ e("tr").f();
 						} g("tr");
 					}
@@ -248,10 +248,10 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 
 			} g("div");
 		}
-		htmlBodyFormsClusterFrFRGenPage();
+		htmlBodyFormsClusterEnUSGenPage();
 	}
 
-	public void htmlBodyFormsClusterFrFRGenPage() {
+	public void htmlBodyFormsClusterEnUSGenPage() {
 		e("div").f();
 
 

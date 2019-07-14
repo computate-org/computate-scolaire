@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.vertx;
+package org.computate.scolaire.frFR.vertx; 
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +53,7 @@ import io.vertx.serviceproxy.ServiceBinder;
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppVertx
  * enUS: A Java class to start the Vert.x application as a main method. 
- */
+ */ 
 public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
@@ -108,6 +108,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	private JDBCClient jdbcClient;
 
 	/**
+	 * enUS: A site context object for storing information about the entire site in English. 
+	 * Var.enUS: siteContextEnUS
+	 */
+	SiteContexteFrFR siteContexteFrFR;
+
+	/**
 	 * enUS: For logging information and errors in the application. 
 	 * r: AppliVertx
 	 * r.enUS: AppVertx
@@ -135,6 +141,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: initDeep
 	 * r: demarrerFuture
 	 * r.enUS: startFuture
+	 * r: configurerDonnees
+	 * r.enUS: configureData
 	 * r: configurerCluster
 	 * r.enUS: configureCluster
 	 * r: configurerOpenApi
@@ -155,16 +163,16 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	@Override
 	public void start(Future<Void> demarrerFuture) throws Exception {
 
-		SiteContexteFrFR siteContexteFrFR = new SiteContexteFrFR();
+		siteContexteFrFR = new SiteContexteFrFR();
 		siteContexteFrFR.setVertx(vertx);
 		siteContexteFrFR.initLoinSiteContexteFrFR();
 
-		Future<Void> etapesFutures = configurerDonnees(siteContexteFrFR).compose(a -> 
-			configurerCluster(siteContexteFrFR).compose(b -> 
-				configurerOpenApi(siteContexteFrFR).compose(c -> 
-					configurerControlesSante(siteContexteFrFR).compose(d -> 
-						configurerExecuteurTravailleurPartage(siteContexteFrFR).compose(e -> 
-							demarrerServeur(siteContexteFrFR)
+		Future<Void> etapesFutures = configurerDonnees().compose(a -> 
+			configurerCluster().compose(b -> 
+				configurerOpenApi().compose(c -> 
+					configurerControlesSante().compose(d -> 
+						configurerExecuteurTravailleurPartage().compose(e -> 
+							demarrerServeur()
 						)
 					)
 				)
@@ -175,8 +183,42 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
 	 * Var.enUS: configureData
+	 * 
+	 * Val.ConnectionError.enUS:Could not open the database client connection. 
+	 * Val.ErreurConnexion.frFR:Impossible d'ouvrir la connexion du client de base de données. 
+	 * Val.ConnectionSuccess.enUS:The database client connection was successful. 
+	 * Val.SuccesConnexion.frFR:La connexion du client de base de données a réussi. 
+	 * 
+	 * Val.InitError.enUS:Could not initialize the database tables. 
+	 * Val.ErreurInit.frFR:Impossible d'initialiser les tables de la base de données. 
+	 * Val.InitSuccess.enUS:The database tables were created successfully. 
+	 * Val.SuccesInit.frFR:Les tables de base de données ont été créées avec succès. 
+	 * 
+	 * enUS: Configure shared database connections across the cluster for massive scaling of the application. 
+	 * enUS: Return a future that configures a shared database client connection. 
+	 * enUS: Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+	 * enUS: Initialize the database tables if not already created for the first time. 
+	 * 
+	 * r: configurerDonnees
+	 * r.enUS: configureData
+	 * r: ErreurConnexion
+	 * r.enUS: ConnectionError
+	 * r: SuccesConnexion
+	 * r.enUS: ConnectionSuccess
+	 * r: ErreurInit
+	 * r.enUS: InitError
+	 * r: SuccesInit
+	 * r.enUS: InitSuccess
+	 * r: initTout
+	 * r.enUS: initAll
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
 	 */
-	private Future<Void> configurerDonnees(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerDonnees() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 
@@ -205,19 +247,20 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 		siteContexteFrFR.setClientSql(jdbcClient);
 
-		jdbcClient.getConnection(ar -> {
-			if (ar.failed()) {
-				System.err.println("Could not open a database connection. ");
-				ExceptionUtils.printRootCauseStackTrace(ar.cause());
-				future.fail(ar.cause());
+		jdbcClient.getConnection(a -> {
+			if (a.failed()) {
+				LOGGER.error(configurerDonneesErreurConnexion, a.cause());
+				future.fail(a.cause());
 			} else {
-				SQLConnection connection = ar.result();
+				LOGGER.info(configurerDonneesSuccesConnexion);
+				SQLConnection connection = a.result();
 				connection.execute(SQL_initTout, create -> {
 					connection.close();
 					if (create.failed()) {
-						LOGGER.error("Database preparation error", create.cause());
+						LOGGER.error(configurerDonneesErreurInit, create.cause());
 						future.fail(create.cause());
 					} else {
+						LOGGER.info(configurerDonneesSuccesInit);
 						future.complete();
 					}
 				});
@@ -227,60 +270,59 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	/**
-	 * Var.enUS: closeData
-	 * Val.Error.enUS:Could not close the database client connection. 
-	 * Val.Erreur.frFR:Impossible de fermer la connexion du client de base de données. 
-	 * r: fermerDonneesErreur
-	 * r.enUS: closeDataError
-	 * enUS: Return a future to close the database client connection. 
-	 */        
-	private Future<Void> fermerDonnees(SiteContexteFrFR siteContexteFrFR) {
-		Future<Void> future = Future.future();
-		SQLClient clientSql = siteContexteFrFR.getClientSql();
-
-		if(clientSql != null) {
-			clientSql.close(a -> {
-				if (a.failed()) {
-					LOGGER.error(fermerDonneesErreur, a.cause());
-					future.fail(a.cause());
-				} else {
-					future.complete();
-				}
-			});
-		}
-		return future;
-	}
-
-	private Future<Void> configurerCluster(SiteContexteFrFR siteContexte) {
-		ConfigSite configSite = siteContexte.getConfigSite();
+	/**  
+	 * Var.enUS: configureCluster
+	 * 
+	 * Val.DataError.enUS:Could not configure the shared cluster data. 
+	 * Val.ErreurDonnees.frFR:Impossible de configurer les données du cluster partagé.
+	 * Val.DataSuccess.enUS:The shared cluster data was configured successfully. 
+	 * Val.SuccesDonnees.frFR:Les données du cluster partagé ont été configurées avec succès. 
+	 * 
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: donneesPartagees
+	 * r.enUS: sharedData
+	 * r: donneesCluster
+	 * r.enUS: clusterData
+	 * r: configurerCluster
+	 * r.enUS: configureCluster
+	 * r: ErreurDonnees
+	 * r.enUS: DataError
+	 * r: SuccesDonnees
+	 * r.enUS: DataSuccess
+	 * 
+	 * enUS: Configure shared data across the cluster for massive scaling of the application. 
+	 * enUS: Return a future that configures a shared cluster data. 
+	 */
+	private Future<Void> configurerCluster() {
+		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 		SharedData donneesPartagees = vertx.sharedData();
 		donneesPartagees.getClusterWideMap("donneesCluster", res -> {
 			if (res.succeeded()) {
-				try {
-					AsyncMap<Object, Object> donneesCluster = res.result();
-					donneesCluster.put("configSite", configSite, resPut -> {
-						if (resPut.succeeded()) {
-							future.complete();
-						} else {
-							LOGGER.error("Could not configure the cluster", res.cause());
-							future.fail(res.cause());
-						}
-					});
-				} catch (Exception e) {
-					LOGGER.error("Could not configure the cluster", res.cause());
-					future.fail(e);
-				}
+				AsyncMap<Object, Object> donneesCluster = res.result();
+				donneesCluster.put("configSite", configSite, resPut -> {
+					if (resPut.succeeded()) {
+						LOGGER.error(configurerClusterSuccesDonnees);
+						future.complete();
+					} else {
+						LOGGER.error(configurerClusterErreurDonnees, res.cause());
+						future.fail(res.cause());
+					}
+				});
 			} else {
-				LOGGER.error("Could not configure the cluster", res.cause());
+				LOGGER.error(configurerClusterErreurDonnees, res.cause());
 				future.fail(res.cause());
 			}
 		});
 		return future;
 	}
 
-	private Future<Void> configurerOpenApi(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 		Router routeur = Router.router(vertx);
@@ -422,7 +464,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	}
 
 //	private Future<Void> configurerExecuteurTravailleurPartage(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
-	private Future<Void> configurerExecuteurTravailleurPartage(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerExecuteurTravailleurPartage() {
 		Future<Void> future = Future.future();
 
 		WorkerExecutor executeurTravailleur = vertx.createSharedWorkerExecutor("WorkerExecutor");
@@ -433,7 +475,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	}
 
 //	private Future<Void> configurerControlesSante(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
-	private Future<Void> configurerControlesSante(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerControlesSante() {
 		Future<Void> future = Future.future();
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
@@ -477,7 +519,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: EnUS
 	 */ 
 //	private Future<Void> demarrerServeur(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
-	private Future<Void> demarrerServeur(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 
@@ -522,6 +564,56 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			}
 		});
 
+		return future;
+	}
+
+	/**
+	 * Param1.var.enUS: stopFuture
+	 * r: SiteContexteFrFR
+	 * r.enUS: SiteContextEnUS
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: initLoin
+	 * r.enUS: initDeep
+	 * r: arreterFuture
+	 * r.enUS: stopFuture
+	 * 
+	 * enUS: This is called by Vert.x when the verticle instance is undeployed. 
+	 * enUS: Setup the stopFuture to handle tearing down the server. 
+	 */
+	@Override
+	public void stop(Future<Void> arreterFuture) throws Exception {
+		Future<Void> etapesFutures = fermerDonnees();
+		etapesFutures.setHandler(arreterFuture.completer());
+	}
+
+	/**
+	 * Var.enUS: closeData
+	 * Val.Error.enUS:Could not close the database client connection. 
+	 * Val.Erreur.frFR:Impossible de fermer la connexion du client de base de données. 
+	 * Val.Success.enUS:The database client connextion was closed. 
+	 * Val.Succes.frFR:La connexion client de la base de données a été fermée.
+	 * r: fermerDonneesErreur
+	 * r.enUS: closeDataError
+	 * r: fermerDonneesSucces
+	 * r.enUS: closeDataSuccess
+	 * enUS: Return a future to close the database client connection. 
+	 */        
+	private Future<Void> fermerDonnees() {
+		Future<Void> future = Future.future();
+		SQLClient clientSql = siteContexteFrFR.getClientSql();
+
+		if(clientSql != null) {
+			clientSql.close(a -> {
+				if (a.failed()) {
+					LOGGER.error(fermerDonneesErreur, a.cause());
+					future.fail(a.cause());
+				} else {
+					LOGGER.error(fermerDonneesSucces, a.cause());
+					future.complete();
+				}
+			});
+		}
 		return future;
 	}
 }

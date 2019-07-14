@@ -8,6 +8,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.WorkerExecutor;
@@ -79,6 +82,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	private JDBCClient jdbcClient;
 
 	/**	
+	 *	A site context object for storing information about the entire site in English. 
+	 **/
+	SiteContextEnUS siteContextEnUS;
+
+	/**	
 	 *	For logging information and errors in the application. 
 	 **/
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppVertx.class);
@@ -98,16 +106,16 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	@Override()
 	public void  start(Future<Void> startFuture) throws Exception, Exception {
 
-		SiteContextEnUS siteContextEnUS = new SiteContextEnUS();
+		siteContextEnUS = new SiteContextEnUS();
 		siteContextEnUS.setVertx(vertx);
 		siteContextEnUS.initDeepSiteContextEnUS();
 
-		Future<Void> futureSteps = configurerDonnees(siteContextEnUS).compose(a -> 
-			configureCluster(siteContextEnUS).compose(b -> 
-				configureOpenApi(siteContextEnUS).compose(c -> 
-					configureHealthChecks(siteContextEnUS).compose(d -> 
-						configureSharedWorkerExecutor(siteContextEnUS).compose(e -> 
-							startServer(siteContextEnUS)
+		Future<Void> futureSteps = configureData().compose(a -> 
+			configureCluster().compose(b -> 
+				configureOpenApi().compose(c -> 
+					configureHealthChecks().compose(d -> 
+						configureSharedWorkerExecutor().compose(e -> 
+							startServer()
 						)
 					)
 				)
@@ -116,48 +124,55 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		futureSteps.setHandler(startFuture.completer());
 	}
 
-	private Future<Void> configureData(SiteContexteFrFR siteContexteFrFR) {
-		ConfigSite configSite = siteContexteFrFR.getConfigSite();
+	/**	
+	 *	Configure shared database connections across the cluster for massive scaling of the application. 
+	 *	Return a future that configures a shared database client connection. 
+	 *	Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+	 *	Initialize the database tables if not already created for the first time. 
+	 **/
+	private Future<Void> configureData() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Future<Void> future = Future.future();
 
 		JsonObject jdbcConfig = new JsonObject();
-		if (StringUtils.isNotEmpty(configSite.getJdbcUrl()))
-			jdbcConfig.put("url", configSite.getJdbcUrl());
-		if (StringUtils.isNotEmpty(configSite.getJdbcClassePilote()))
-			jdbcConfig.put("driver_class", configSite.getJdbcClassePilote());
-		if (StringUtils.isNotEmpty(configSite.getJdbcUtilisateur()))
-			jdbcConfig.put("user", configSite.getJdbcUtilisateur());
-		if (StringUtils.isNotEmpty(configSite.getJdbcMotDePasse()))
-			jdbcConfig.put("password", configSite.getJdbcMotDePasse());
-		if (configSite.getJdbcTailleMaxPiscine() != null)
-			jdbcConfig.put("max_pool_size", configSite.getJdbcTailleMaxPiscine());
-		if (configSite.getJdbcTailleInitialePiscine() != null)
-			jdbcConfig.put("initial_pool_size", configSite.getJdbcTailleInitialePiscine());
-		if (configSite.getJdbcTailleMinPiscine() != null)
-			jdbcConfig.put("min_pool_size", configSite.getJdbcTailleMinPiscine());
-		if (configSite.getJdbcMaxDeclarations() != null)
-			jdbcConfig.put("max_statements", configSite.getJdbcMaxDeclarations());
-		if (configSite.getJdbcMaxDeclarationsParConnexion() != null)
-			jdbcConfig.put("max_statements_per_connection", configSite.getJdbcMaxDeclarationsParConnexion());
-		if (configSite.getJdbcTempsInactiviteMax() != null)
-			jdbcConfig.put("max_idle_time", configSite.getJdbcTempsInactiviteMax());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
+			jdbcConfig.put("url", siteConfig.getJdbcUrl());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcClassePilote()))
+			jdbcConfig.put("driver_class", siteConfig.getJdbcClassePilote());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcUtilisateur()))
+			jdbcConfig.put("user", siteConfig.getJdbcUtilisateur());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcMotDePasse()))
+			jdbcConfig.put("password", siteConfig.getJdbcMotDePasse());
+		if (siteConfig.getJdbcTailleMaxPiscine() != null)
+			jdbcConfig.put("max_pool_size", siteConfig.getJdbcTailleMaxPiscine());
+		if (siteConfig.getJdbcTailleInitialePiscine() != null)
+			jdbcConfig.put("initial_pool_size", siteConfig.getJdbcTailleInitialePiscine());
+		if (siteConfig.getJdbcTailleMinPiscine() != null)
+			jdbcConfig.put("min_pool_size", siteConfig.getJdbcTailleMinPiscine());
+		if (siteConfig.getJdbcMaxDeclarations() != null)
+			jdbcConfig.put("max_statements", siteConfig.getJdbcMaxDeclarations());
+		if (siteConfig.getJdbcMaxDeclarationsParConnexion() != null)
+			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxDeclarationsParConnexion());
+		if (siteConfig.getJdbcTempsInactiviteMax() != null)
+			jdbcConfig.put("max_idle_time", siteConfig.getJdbcTempsInactiviteMax());
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
-		siteContexteFrFR.setClientSql(jdbcClient);
+		siteContextEnUS.setClientSql(jdbcClient);
 
-		jdbcClient.getConnection(ar -> {
-			if (ar.failed()) {
-				System.err.println("Could not open a database connection. ");
-				ExceptionUtils.printRootCauseStackTrace(ar.cause());
-				future.fail(ar.cause());
+		jdbcClient.getConnection(a -> {
+			if (a.failed()) {
+				LOGGER.error(configureDataConnectionError, a.cause());
+				future.fail(a.cause());
 			} else {
-				SQLConnection connection = ar.result();
-				connection.execute(SQL_initTout, create -> {
+				LOGGER.info(configureDataConnectionSuccess);
+				SQLConnection connection = a.result();
+				connection.execute(SQL_initAll, create -> {
 					connection.close();
 					if (create.failed()) {
-						LOGGER.error("Database preparation error", create.cause());
+						LOGGER.error(configureDataInitError, create.cause());
 						future.fail(create.cause());
 					} else {
+						LOGGER.info(configureDataInitSuccess);
 						future.complete();
 					}
 				});
@@ -168,54 +183,34 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	}
 
 	/**	
-	 *	Return a future to close the database client connection. 
+	 *	Configure shared data across the cluster for massive scaling of the application. 
+	 *	Return a future that configures a shared cluster data. 
 	 **/
-	private Future<Void> closeData(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configureCluster() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Future<Void> future = Future.future();
-		SQLClient clientSql = siteContexteFrFR.getClientSql();
-
-		if(clientSql != null) {
-			clientSql.close(a -> {
-				if (a.failed()) {
-					LOGGER.error(closeDataError, a.cause());
-					future.fail(a.cause());
-				} else {
-					future.complete();
-				}
-			});
-		}
-		return future;
-	}
-
-	private Future<Void> configurerCluster(SiteContexteFrFR siteContexte) {
-		ConfigSite configSite = siteContexte.getConfigSite();
-		Future<Void> future = Future.future();
-		SharedData donneesPartagees = vertx.sharedData();
-		donneesPartagees.getClusterWideMap("donneesCluster", res -> {
+		SharedData sharedData = vertx.sharedData();
+		sharedData.getClusterWideMap("clusterData", res -> {
 			if (res.succeeded()) {
-				try {
-					AsyncMap<Object, Object> donneesCluster = res.result();
-					donneesCluster.put("configSite", configSite, resPut -> {
-						if (resPut.succeeded()) {
-							future.complete();
-						} else {
-							LOGGER.error("Could not configure the cluster", res.cause());
-							future.fail(res.cause());
-						}
-					});
-				} catch (Exception e) {
-					LOGGER.error("Could not configure the cluster", res.cause());
-					future.fail(e);
-				}
+				AsyncMap<Object, Object> clusterData = res.result();
+				clusterData.put("siteConfig", siteConfig, resPut -> {
+					if (resPut.succeeded()) {
+						LOGGER.error(configureClusterDataSuccess);
+						future.complete();
+					} else {
+						LOGGER.error(configureClusterDataError, res.cause());
+						future.fail(res.cause());
+					}
+				});
 			} else {
-				LOGGER.error("Could not configure the cluster", res.cause());
+				LOGGER.error(configureClusterDataError, res.cause());
 				future.fail(res.cause());
 			}
 		});
 		return future;
 	}
 
-	private Future<Void> configurerOpenApi(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 		Router routeur = Router.router(vertx);
@@ -282,7 +277,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	public AppVertx setupCallback(SiteContexteFrFR siteContexte, String callbackPath) { 
+	public AppVertx setupCallback(SiteContextEnUS siteContexte, String callbackPath) { 
 		OpenAPI3RouterFactory usineRouteur = siteContexte.getUsineRouteur();
 		OAuth2AuthHandler gestionnaireAuth = siteContexte.getGestionnaireAuth();
 		ConfigSite configSite = siteContexte.getConfigSite();
@@ -356,7 +351,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		MessageConsumer<JsonObject> calculInrApiConsumer = serviceBinder.register(c, service);
 	}
 
-	private Future<Void> configurerExecuteurTravailleurPartage(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerExecuteurTravailleurPartage() {
 		Future<Void> future = Future.future();
 
 		WorkerExecutor executeurTravailleur = vertx.createSharedWorkerExecutor("WorkerExecutor");
@@ -366,7 +361,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	private Future<Void> configurerControlesSante(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> configurerControlesSante() {
 		Future<Void> future = Future.future();
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
@@ -405,7 +400,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	private Future<Void> demarrerServeur(SiteContexteFrFR siteContexteFrFR) {
+	private Future<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteEnUS.getConfigSite();
 		Future<Void> future = Future.future();
 
@@ -450,6 +445,37 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			}
 		});
 
+		return future;
+	}
+
+	/**	
+	 *	This is called by Vert.x when the verticle instance is undeployed. 
+	 *	Setup the stopFuture to handle tearing down the server. 
+	 **/
+	@Override()
+	public void  stop(Future<Void> stopFuture) throws Exception, Exception {
+		Future<Void> etapesFutures = fermerDonnees();
+		etapesFutures.setHandler(stopFuture.completer());
+	}
+
+	/**	
+	 *	Return a future to close the database client connection. 
+	 **/
+	private Future<Void> closeData() {
+		Future<Void> future = Future.future();
+		SQLClient clientSql = siteContexteFrFR.getClientSql();
+
+		if(clientSql != null) {
+			clientSql.close(a -> {
+				if (a.failed()) {
+					LOGGER.error(closeDataError, a.cause());
+					future.fail(a.cause());
+				} else {
+					LOGGER.error(closeDataSuccess, a.cause());
+					future.complete();
+				}
+			});
+		}
 		return future;
 	}
 }

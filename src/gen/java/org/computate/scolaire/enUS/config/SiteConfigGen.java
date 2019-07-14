@@ -1,24 +1,24 @@
-package org.computate.scolaire.frFR.config;
+package org.computate.scolaire.enUS.config;
 
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.commons.configuration2.INIConfiguration;
-import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 
 /**	
- *	Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ *	Loads the properties in the application config file into specific fields. 
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class ConfigSiteGen<DEV> extends Object {
+public abstract class SiteConfigGen<DEV> extends Object {
 
 	//////////////////
 	// configChemin //
@@ -28,15 +28,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String configChemin;
-	public Couverture<String> configCheminCouverture = new Couverture<String>().p(this).c(String.class).var("configChemin").o(configChemin);
+	public Wrap<String> configCheminWrap = new Wrap<String>().p(this).c(String.class).var("configChemin").o(configChemin);
 
 	/**	<br/>L'entité « configChemin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:configChemin">Trouver l'entité configChemin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configChemin">Trouver l'entité configChemin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _configChemin(Couverture<String> c);
+	protected abstract void _configChemin(Wrap<String> c);
 
 	public String getConfigChemin() {
 		return configChemin;
@@ -44,16 +44,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setConfigChemin(String configChemin) {
 		this.configChemin = configChemin;
-		this.configCheminCouverture.dejaInitialise = true;
+		this.configCheminWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite configCheminInit() {
-		if(!configCheminCouverture.dejaInitialise) {
-			_configChemin(configCheminCouverture);
+	protected SiteConfig configCheminInit() {
+		if(!configCheminWrap.alreadyInitialized) {
+			_configChemin(configCheminWrap);
 			if(configChemin == null)
-				setConfigChemin(configCheminCouverture.o);
+				setConfigChemin(configCheminWrap.o);
 		}
-		configCheminCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		configCheminWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrConfigChemin() {
@@ -81,18 +81,20 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	////////////
 
 	/**	L'entité « config »
+The INI Configuration Object for the config file. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected INIConfiguration config;
-	public Couverture<INIConfiguration> configCouverture = new Couverture<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
+	public Wrap<INIConfiguration> configWrap = new Wrap<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
 
 	/**	<br/>L'entité « config »
+The INI Configuration Object for the config file. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:config">Trouver l'entité config dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:config">Trouver l'entité config dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _config(Couverture<INIConfiguration> c);
+	protected abstract void _config(Wrap<INIConfiguration> c);
 
 	public INIConfiguration getConfig() {
 		return config;
@@ -100,16 +102,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setConfig(INIConfiguration config) {
 		this.config = config;
-		this.configCouverture.dejaInitialise = true;
+		this.configWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite configInit() {
-		if(!configCouverture.dejaInitialise) {
-			_config(configCouverture);
+	protected SiteConfig configInit() {
+		if(!configWrap.alreadyInitialized) {
+			_config(configWrap);
 			if(config == null)
-				setConfig(configCouverture.o);
+				setConfig(configWrap.o);
 		}
-		configCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		configWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	/////////////////////
@@ -120,15 +122,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String identifiantSite;
-	public Couverture<String> identifiantSiteCouverture = new Couverture<String>().p(this).c(String.class).var("identifiantSite").o(identifiantSite);
+	public Wrap<String> identifiantSiteWrap = new Wrap<String>().p(this).c(String.class).var("identifiantSite").o(identifiantSite);
 
 	/**	<br/>L'entité « identifiantSite »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:identifiantSite">Trouver l'entité identifiantSite dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:identifiantSite">Trouver l'entité identifiantSite dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _identifiantSite(Couverture<String> c);
+	protected abstract void _identifiantSite(Wrap<String> c);
 
 	public String getIdentifiantSite() {
 		return identifiantSite;
@@ -136,16 +138,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setIdentifiantSite(String identifiantSite) {
 		this.identifiantSite = identifiantSite;
-		this.identifiantSiteCouverture.dejaInitialise = true;
+		this.identifiantSiteWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite identifiantSiteInit() {
-		if(!identifiantSiteCouverture.dejaInitialise) {
-			_identifiantSite(identifiantSiteCouverture);
+	protected SiteConfig identifiantSiteInit() {
+		if(!identifiantSiteWrap.alreadyInitialized) {
+			_identifiantSite(identifiantSiteWrap);
 			if(identifiantSite == null)
-				setIdentifiantSite(identifiantSiteCouverture.o);
+				setIdentifiantSite(identifiantSiteWrap.o);
 		}
-		identifiantSiteCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		identifiantSiteWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrIdentifiantSite() {
@@ -176,15 +178,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String prefixeEchappe;
-	public Couverture<String> prefixeEchappeCouverture = new Couverture<String>().p(this).c(String.class).var("prefixeEchappe").o(prefixeEchappe);
+	public Wrap<String> prefixeEchappeWrap = new Wrap<String>().p(this).c(String.class).var("prefixeEchappe").o(prefixeEchappe);
 
 	/**	<br/>L'entité « prefixeEchappe »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:prefixeEchappe">Trouver l'entité prefixeEchappe dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:prefixeEchappe">Trouver l'entité prefixeEchappe dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _prefixeEchappe(Couverture<String> c);
+	protected abstract void _prefixeEchappe(Wrap<String> c);
 
 	public String getPrefixeEchappe() {
 		return prefixeEchappe;
@@ -192,16 +194,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setPrefixeEchappe(String prefixeEchappe) {
 		this.prefixeEchappe = prefixeEchappe;
-		this.prefixeEchappeCouverture.dejaInitialise = true;
+		this.prefixeEchappeWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite prefixeEchappeInit() {
-		if(!prefixeEchappeCouverture.dejaInitialise) {
-			_prefixeEchappe(prefixeEchappeCouverture);
+	protected SiteConfig prefixeEchappeInit() {
+		if(!prefixeEchappeWrap.alreadyInitialized) {
+			_prefixeEchappe(prefixeEchappeWrap);
 			if(prefixeEchappe == null)
-				setPrefixeEchappe(prefixeEchappeCouverture.o);
+				setPrefixeEchappe(prefixeEchappeWrap.o);
 		}
-		prefixeEchappeCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		prefixeEchappeWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrPrefixeEchappe() {
@@ -232,15 +234,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String appliChemin;
-	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
+	public Wrap<String> appliCheminWrap = new Wrap<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
 
 	/**	<br/>L'entité « appliChemin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:appliChemin">Trouver l'entité appliChemin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appliChemin">Trouver l'entité appliChemin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _appliChemin(Couverture<String> c);
+	protected abstract void _appliChemin(Wrap<String> c);
 
 	public String getAppliChemin() {
 		return appliChemin;
@@ -248,16 +250,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAppliChemin(String appliChemin) {
 		this.appliChemin = appliChemin;
-		this.appliCheminCouverture.dejaInitialise = true;
+		this.appliCheminWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite appliCheminInit() {
-		if(!appliCheminCouverture.dejaInitialise) {
-			_appliChemin(appliCheminCouverture);
+	protected SiteConfig appliCheminInit() {
+		if(!appliCheminWrap.alreadyInitialized) {
+			_appliChemin(appliCheminWrap);
 			if(appliChemin == null)
-				setAppliChemin(appliCheminCouverture.o);
+				setAppliChemin(appliCheminWrap.o);
 		}
-		appliCheminCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		appliCheminWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAppliChemin() {
@@ -288,15 +290,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String racineDocument;
-	public Couverture<String> racineDocumentCouverture = new Couverture<String>().p(this).c(String.class).var("racineDocument").o(racineDocument);
+	public Wrap<String> racineDocumentWrap = new Wrap<String>().p(this).c(String.class).var("racineDocument").o(racineDocument);
 
 	/**	<br/>L'entité « racineDocument »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:racineDocument">Trouver l'entité racineDocument dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:racineDocument">Trouver l'entité racineDocument dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _racineDocument(Couverture<String> c);
+	protected abstract void _racineDocument(Wrap<String> c);
 
 	public String getRacineDocument() {
 		return racineDocument;
@@ -304,16 +306,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setRacineDocument(String racineDocument) {
 		this.racineDocument = racineDocument;
-		this.racineDocumentCouverture.dejaInitialise = true;
+		this.racineDocumentWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite racineDocumentInit() {
-		if(!racineDocumentCouverture.dejaInitialise) {
-			_racineDocument(racineDocumentCouverture);
+	protected SiteConfig racineDocumentInit() {
+		if(!racineDocumentWrap.alreadyInitialized) {
+			_racineDocument(racineDocumentWrap);
 			if(racineDocument == null)
-				setRacineDocument(racineDocumentCouverture.o);
+				setRacineDocument(racineDocumentWrap.o);
 		}
-		racineDocumentCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		racineDocumentWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrRacineDocument() {
@@ -344,15 +346,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String nomEntreprise;
-	public Couverture<String> nomEntrepriseCouverture = new Couverture<String>().p(this).c(String.class).var("nomEntreprise").o(nomEntreprise);
+	public Wrap<String> nomEntrepriseWrap = new Wrap<String>().p(this).c(String.class).var("nomEntreprise").o(nomEntreprise);
 
 	/**	<br/>L'entité « nomEntreprise »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:nomEntreprise">Trouver l'entité nomEntreprise dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nomEntreprise">Trouver l'entité nomEntreprise dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nomEntreprise(Couverture<String> c);
+	protected abstract void _nomEntreprise(Wrap<String> c);
 
 	public String getNomEntreprise() {
 		return nomEntreprise;
@@ -360,16 +362,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setNomEntreprise(String nomEntreprise) {
 		this.nomEntreprise = nomEntreprise;
-		this.nomEntrepriseCouverture.dejaInitialise = true;
+		this.nomEntrepriseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite nomEntrepriseInit() {
-		if(!nomEntrepriseCouverture.dejaInitialise) {
-			_nomEntreprise(nomEntrepriseCouverture);
+	protected SiteConfig nomEntrepriseInit() {
+		if(!nomEntrepriseWrap.alreadyInitialized) {
+			_nomEntreprise(nomEntrepriseWrap);
 			if(nomEntreprise == null)
-				setNomEntreprise(nomEntrepriseCouverture.o);
+				setNomEntreprise(nomEntrepriseWrap.o);
 		}
-		nomEntrepriseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		nomEntrepriseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrNomEntreprise() {
@@ -400,15 +402,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String nomDomaine;
-	public Couverture<String> nomDomaineCouverture = new Couverture<String>().p(this).c(String.class).var("nomDomaine").o(nomDomaine);
+	public Wrap<String> nomDomaineWrap = new Wrap<String>().p(this).c(String.class).var("nomDomaine").o(nomDomaine);
 
 	/**	<br/>L'entité « nomDomaine »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:nomDomaine">Trouver l'entité nomDomaine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nomDomaine">Trouver l'entité nomDomaine dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nomDomaine(Couverture<String> c);
+	protected abstract void _nomDomaine(Wrap<String> c);
 
 	public String getNomDomaine() {
 		return nomDomaine;
@@ -416,16 +418,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setNomDomaine(String nomDomaine) {
 		this.nomDomaine = nomDomaine;
-		this.nomDomaineCouverture.dejaInitialise = true;
+		this.nomDomaineWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite nomDomaineInit() {
-		if(!nomDomaineCouverture.dejaInitialise) {
-			_nomDomaine(nomDomaineCouverture);
+	protected SiteConfig nomDomaineInit() {
+		if(!nomDomaineWrap.alreadyInitialized) {
+			_nomDomaine(nomDomaineWrap);
 			if(nomDomaine == null)
-				setNomDomaine(nomDomaineCouverture.o);
+				setNomDomaine(nomDomaineWrap.o);
 		}
-		nomDomaineCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		nomDomaineWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrNomDomaine() {
@@ -456,15 +458,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteNomHote;
-	public Couverture<String> siteNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomHote").o(siteNomHote);
+	public Wrap<String> siteNomHoteWrap = new Wrap<String>().p(this).c(String.class).var("siteNomHote").o(siteNomHote);
 
 	/**	<br/>L'entité « siteNomHote »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteNomHote">Trouver l'entité siteNomHote dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteNomHote">Trouver l'entité siteNomHote dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteNomHote(Couverture<String> c);
+	protected abstract void _siteNomHote(Wrap<String> c);
 
 	public String getSiteNomHote() {
 		return siteNomHote;
@@ -472,16 +474,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSiteNomHote(String siteNomHote) {
 		this.siteNomHote = siteNomHote;
-		this.siteNomHoteCouverture.dejaInitialise = true;
+		this.siteNomHoteWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite siteNomHoteInit() {
-		if(!siteNomHoteCouverture.dejaInitialise) {
-			_siteNomHote(siteNomHoteCouverture);
+	protected SiteConfig siteNomHoteInit() {
+		if(!siteNomHoteWrap.alreadyInitialized) {
+			_siteNomHote(siteNomHoteWrap);
 			if(siteNomHote == null)
-				setSiteNomHote(siteNomHoteCouverture.o);
+				setSiteNomHote(siteNomHoteWrap.o);
 		}
-		siteNomHoteCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		siteNomHoteWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSiteNomHote() {
@@ -512,15 +514,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer sitePort;
-	public Couverture<Integer> sitePortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
+	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
 
 	/**	<br/>L'entité « sitePort »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sitePort">Trouver l'entité sitePort dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sitePort">Trouver l'entité sitePort dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sitePort(Couverture<Integer> c);
+	protected abstract void _sitePort(Wrap<Integer> c);
 
 	public Integer getSitePort() {
 		return sitePort;
@@ -528,22 +530,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSitePort(Integer sitePort) {
 		this.sitePort = sitePort;
-		this.sitePortCouverture.dejaInitialise = true;
+		this.sitePortWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setSitePort(String o) {
+	public SiteConfig setSitePort(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.sitePort = Integer.parseInt(o);
-		this.sitePortCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.sitePortWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite sitePortInit() {
-		if(!sitePortCouverture.dejaInitialise) {
-			_sitePort(sitePortCouverture);
+	protected SiteConfig sitePortInit() {
+		if(!sitePortWrap.alreadyInitialized) {
+			_sitePort(sitePortWrap);
 			if(sitePort == null)
-				setSitePort(sitePortCouverture.o);
+				setSitePort(sitePortWrap.o);
 		}
-		sitePortCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		sitePortWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrSitePort() {
@@ -574,15 +576,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authRoyaume;
-	public Couverture<String> authRoyaumeCouverture = new Couverture<String>().p(this).c(String.class).var("authRoyaume").o(authRoyaume);
+	public Wrap<String> authRoyaumeWrap = new Wrap<String>().p(this).c(String.class).var("authRoyaume").o(authRoyaume);
 
 	/**	<br/>L'entité « authRoyaume »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authRoyaume">Trouver l'entité authRoyaume dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRoyaume">Trouver l'entité authRoyaume dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authRoyaume(Couverture<String> c);
+	protected abstract void _authRoyaume(Wrap<String> c);
 
 	public String getAuthRoyaume() {
 		return authRoyaume;
@@ -590,16 +592,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAuthRoyaume(String authRoyaume) {
 		this.authRoyaume = authRoyaume;
-		this.authRoyaumeCouverture.dejaInitialise = true;
+		this.authRoyaumeWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite authRoyaumeInit() {
-		if(!authRoyaumeCouverture.dejaInitialise) {
-			_authRoyaume(authRoyaumeCouverture);
+	protected SiteConfig authRoyaumeInit() {
+		if(!authRoyaumeWrap.alreadyInitialized) {
+			_authRoyaume(authRoyaumeWrap);
 			if(authRoyaume == null)
-				setAuthRoyaume(authRoyaumeCouverture.o);
+				setAuthRoyaume(authRoyaumeWrap.o);
 		}
-		authRoyaumeCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		authRoyaumeWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAuthRoyaume() {
@@ -630,15 +632,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authRessource;
-	public Couverture<String> authRessourceCouverture = new Couverture<String>().p(this).c(String.class).var("authRessource").o(authRessource);
+	public Wrap<String> authRessourceWrap = new Wrap<String>().p(this).c(String.class).var("authRessource").o(authRessource);
 
 	/**	<br/>L'entité « authRessource »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authRessource">Trouver l'entité authRessource dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRessource">Trouver l'entité authRessource dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authRessource(Couverture<String> c);
+	protected abstract void _authRessource(Wrap<String> c);
 
 	public String getAuthRessource() {
 		return authRessource;
@@ -646,16 +648,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAuthRessource(String authRessource) {
 		this.authRessource = authRessource;
-		this.authRessourceCouverture.dejaInitialise = true;
+		this.authRessourceWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite authRessourceInit() {
-		if(!authRessourceCouverture.dejaInitialise) {
-			_authRessource(authRessourceCouverture);
+	protected SiteConfig authRessourceInit() {
+		if(!authRessourceWrap.alreadyInitialized) {
+			_authRessource(authRessourceWrap);
 			if(authRessource == null)
-				setAuthRessource(authRessourceCouverture.o);
+				setAuthRessource(authRessourceWrap.o);
 		}
-		authRessourceCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		authRessourceWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAuthRessource() {
@@ -686,15 +688,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSecret;
-	public Couverture<String> authSecretCouverture = new Couverture<String>().p(this).c(String.class).var("authSecret").o(authSecret);
+	public Wrap<String> authSecretWrap = new Wrap<String>().p(this).c(String.class).var("authSecret").o(authSecret);
 
 	/**	<br/>L'entité « authSecret »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authSecret">Trouver l'entité authSecret dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSecret">Trouver l'entité authSecret dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authSecret(Couverture<String> c);
+	protected abstract void _authSecret(Wrap<String> c);
 
 	public String getAuthSecret() {
 		return authSecret;
@@ -702,16 +704,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAuthSecret(String authSecret) {
 		this.authSecret = authSecret;
-		this.authSecretCouverture.dejaInitialise = true;
+		this.authSecretWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite authSecretInit() {
-		if(!authSecretCouverture.dejaInitialise) {
-			_authSecret(authSecretCouverture);
+	protected SiteConfig authSecretInit() {
+		if(!authSecretWrap.alreadyInitialized) {
+			_authSecret(authSecretWrap);
 			if(authSecret == null)
-				setAuthSecret(authSecretCouverture.o);
+				setAuthSecret(authSecretWrap.o);
 		}
-		authSecretCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		authSecretWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAuthSecret() {
@@ -742,15 +744,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSslRequis;
-	public Couverture<String> authSslRequisCouverture = new Couverture<String>().p(this).c(String.class).var("authSslRequis").o(authSslRequis);
+	public Wrap<String> authSslRequisWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequis").o(authSslRequis);
 
 	/**	<br/>L'entité « authSslRequis »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authSslRequis">Trouver l'entité authSslRequis dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSslRequis">Trouver l'entité authSslRequis dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authSslRequis(Couverture<String> c);
+	protected abstract void _authSslRequis(Wrap<String> c);
 
 	public String getAuthSslRequis() {
 		return authSslRequis;
@@ -758,16 +760,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAuthSslRequis(String authSslRequis) {
 		this.authSslRequis = authSslRequis;
-		this.authSslRequisCouverture.dejaInitialise = true;
+		this.authSslRequisWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite authSslRequisInit() {
-		if(!authSslRequisCouverture.dejaInitialise) {
-			_authSslRequis(authSslRequisCouverture);
+	protected SiteConfig authSslRequisInit() {
+		if(!authSslRequisWrap.alreadyInitialized) {
+			_authSslRequis(authSslRequisWrap);
 			if(authSslRequis == null)
-				setAuthSslRequis(authSslRequisCouverture.o);
+				setAuthSslRequis(authSslRequisWrap.o);
 		}
-		authSslRequisCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		authSslRequisWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAuthSslRequis() {
@@ -798,15 +800,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksChemin;
-	public Couverture<String> sslJksCheminCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksChemin").o(sslJksChemin);
+	public Wrap<String> sslJksCheminWrap = new Wrap<String>().p(this).c(String.class).var("sslJksChemin").o(sslJksChemin);
 
 	/**	<br/>L'entité « sslJksChemin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sslJksChemin">Trouver l'entité sslJksChemin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksChemin">Trouver l'entité sslJksChemin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sslJksChemin(Couverture<String> c);
+	protected abstract void _sslJksChemin(Wrap<String> c);
 
 	public String getSslJksChemin() {
 		return sslJksChemin;
@@ -814,16 +816,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSslJksChemin(String sslJksChemin) {
 		this.sslJksChemin = sslJksChemin;
-		this.sslJksCheminCouverture.dejaInitialise = true;
+		this.sslJksCheminWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite sslJksCheminInit() {
-		if(!sslJksCheminCouverture.dejaInitialise) {
-			_sslJksChemin(sslJksCheminCouverture);
+	protected SiteConfig sslJksCheminInit() {
+		if(!sslJksCheminWrap.alreadyInitialized) {
+			_sslJksChemin(sslJksCheminWrap);
 			if(sslJksChemin == null)
-				setSslJksChemin(sslJksCheminCouverture.o);
+				setSslJksChemin(sslJksCheminWrap.o);
 		}
-		sslJksCheminCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		sslJksCheminWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSslJksChemin() {
@@ -854,15 +856,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksMotDePasse;
-	public Couverture<String> sslJksMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksMotDePasse").o(sslJksMotDePasse);
+	public Wrap<String> sslJksMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("sslJksMotDePasse").o(sslJksMotDePasse);
 
 	/**	<br/>L'entité « sslJksMotDePasse »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sslJksMotDePasse">Trouver l'entité sslJksMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksMotDePasse">Trouver l'entité sslJksMotDePasse dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sslJksMotDePasse(Couverture<String> c);
+	protected abstract void _sslJksMotDePasse(Wrap<String> c);
 
 	public String getSslJksMotDePasse() {
 		return sslJksMotDePasse;
@@ -870,16 +872,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSslJksMotDePasse(String sslJksMotDePasse) {
 		this.sslJksMotDePasse = sslJksMotDePasse;
-		this.sslJksMotDePasseCouverture.dejaInitialise = true;
+		this.sslJksMotDePasseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite sslJksMotDePasseInit() {
-		if(!sslJksMotDePasseCouverture.dejaInitialise) {
-			_sslJksMotDePasse(sslJksMotDePasseCouverture);
+	protected SiteConfig sslJksMotDePasseInit() {
+		if(!sslJksMotDePasseWrap.alreadyInitialized) {
+			_sslJksMotDePasse(sslJksMotDePasseWrap);
 			if(sslJksMotDePasse == null)
-				setSslJksMotDePasse(sslJksMotDePasseCouverture.o);
+				setSslJksMotDePasse(sslJksMotDePasseWrap.o);
 		}
-		sslJksMotDePasseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		sslJksMotDePasseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSslJksMotDePasse() {
@@ -910,15 +912,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authUrl;
-	public Couverture<String> authUrlCouverture = new Couverture<String>().p(this).c(String.class).var("authUrl").o(authUrl);
+	public Wrap<String> authUrlWrap = new Wrap<String>().p(this).c(String.class).var("authUrl").o(authUrl);
 
 	/**	<br/>L'entité « authUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authUrl">Trouver l'entité authUrl dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authUrl">Trouver l'entité authUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authUrl(Couverture<String> c);
+	protected abstract void _authUrl(Wrap<String> c);
 
 	public String getAuthUrl() {
 		return authUrl;
@@ -926,16 +928,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setAuthUrl(String authUrl) {
 		this.authUrl = authUrl;
-		this.authUrlCouverture.dejaInitialise = true;
+		this.authUrlWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite authUrlInit() {
-		if(!authUrlCouverture.dejaInitialise) {
-			_authUrl(authUrlCouverture);
+	protected SiteConfig authUrlInit() {
+		if(!authUrlWrap.alreadyInitialized) {
+			_authUrl(authUrlWrap);
 			if(authUrl == null)
-				setAuthUrl(authUrlCouverture.o);
+				setAuthUrl(authUrlWrap.o);
 		}
-		authUrlCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		authUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrAuthUrl() {
@@ -966,15 +968,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String cryptageSel;
-	public Couverture<String> cryptageSelCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageSel").o(cryptageSel);
+	public Wrap<String> cryptageSelWrap = new Wrap<String>().p(this).c(String.class).var("cryptageSel").o(cryptageSel);
 
 	/**	<br/>L'entité « cryptageSel »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageSel">Trouver l'entité cryptageSel dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cryptageSel">Trouver l'entité cryptageSel dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _cryptageSel(Couverture<String> c);
+	protected abstract void _cryptageSel(Wrap<String> c);
 
 	public String getCryptageSel() {
 		return cryptageSel;
@@ -982,16 +984,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCryptageSel(String cryptageSel) {
 		this.cryptageSel = cryptageSel;
-		this.cryptageSelCouverture.dejaInitialise = true;
+		this.cryptageSelWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite cryptageSelInit() {
-		if(!cryptageSelCouverture.dejaInitialise) {
-			_cryptageSel(cryptageSelCouverture);
+	protected SiteConfig cryptageSelInit() {
+		if(!cryptageSelWrap.alreadyInitialized) {
+			_cryptageSel(cryptageSelWrap);
 			if(cryptageSel == null)
-				setCryptageSel(cryptageSelCouverture.o);
+				setCryptageSel(cryptageSelWrap.o);
 		}
-		cryptageSelCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		cryptageSelWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCryptageSel() {
@@ -1022,15 +1024,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String cryptageMotDePasse;
-	public Couverture<String> cryptageMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
+	public Wrap<String> cryptageMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
 
 	/**	<br/>L'entité « cryptageMotDePasse »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cryptageMotDePasse">Trouver l'entité cryptageMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cryptageMotDePasse">Trouver l'entité cryptageMotDePasse dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _cryptageMotDePasse(Couverture<String> c);
+	protected abstract void _cryptageMotDePasse(Wrap<String> c);
 
 	public String getCryptageMotDePasse() {
 		return cryptageMotDePasse;
@@ -1038,16 +1040,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCryptageMotDePasse(String cryptageMotDePasse) {
 		this.cryptageMotDePasse = cryptageMotDePasse;
-		this.cryptageMotDePasseCouverture.dejaInitialise = true;
+		this.cryptageMotDePasseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite cryptageMotDePasseInit() {
-		if(!cryptageMotDePasseCouverture.dejaInitialise) {
-			_cryptageMotDePasse(cryptageMotDePasseCouverture);
+	protected SiteConfig cryptageMotDePasseInit() {
+		if(!cryptageMotDePasseWrap.alreadyInitialized) {
+			_cryptageMotDePasse(cryptageMotDePasseWrap);
 			if(cryptageMotDePasse == null)
-				setCryptageMotDePasse(cryptageMotDePasseCouverture.o);
+				setCryptageMotDePasse(cryptageMotDePasseWrap.o);
 		}
-		cryptageMotDePasseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		cryptageMotDePasseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCryptageMotDePasse() {
@@ -1071,59 +1073,59 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	}
 
 	/////////////////
-	// siteUrlBase //
+	// siteBaseUrl //
 	/////////////////
 
-	/**	L'entité « siteUrlBase »
+	/**	L'entité « siteBaseUrl »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String siteUrlBase;
-	public Couverture<String> siteUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("siteUrlBase").o(siteUrlBase);
+	protected String siteBaseUrl;
+	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
 
-	/**	<br/>L'entité « siteUrlBase »
+	/**	<br/>L'entité « siteBaseUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteUrlBase">Trouver l'entité siteUrlBase dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteBaseUrl">Trouver l'entité siteBaseUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteUrlBase(Couverture<String> c);
+	protected abstract void _siteBaseUrl(Wrap<String> c);
 
-	public String getSiteUrlBase() {
-		return siteUrlBase;
+	public String getSiteBaseUrl() {
+		return siteBaseUrl;
 	}
 
-	public void setSiteUrlBase(String siteUrlBase) {
-		this.siteUrlBase = siteUrlBase;
-		this.siteUrlBaseCouverture.dejaInitialise = true;
+	public void setSiteBaseUrl(String siteBaseUrl) {
+		this.siteBaseUrl = siteBaseUrl;
+		this.siteBaseUrlWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite siteUrlBaseInit() {
-		if(!siteUrlBaseCouverture.dejaInitialise) {
-			_siteUrlBase(siteUrlBaseCouverture);
-			if(siteUrlBase == null)
-				setSiteUrlBase(siteUrlBaseCouverture.o);
+	protected SiteConfig siteBaseUrlInit() {
+		if(!siteBaseUrlWrap.alreadyInitialized) {
+			_siteBaseUrl(siteBaseUrlWrap);
+			if(siteBaseUrl == null)
+				setSiteBaseUrl(siteBaseUrlWrap.o);
 		}
-		siteUrlBaseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		siteBaseUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
-	public String solrSiteUrlBase() {
-		return siteUrlBase;
+	public String solrSiteBaseUrl() {
+		return siteBaseUrl;
 	}
 
-	public String strSiteUrlBase() {
-		return siteUrlBase == null ? "" : siteUrlBase;
+	public String strSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : siteBaseUrl;
 	}
 
-	public String nomAffichageSiteUrlBase() {
+	public String nomAffichageSiteBaseUrl() {
 		return null;
 	}
 
-	public String htmTooltipSiteUrlBase() {
+	public String htmTooltipSiteBaseUrl() {
 		return null;
 	}
 
-	public String htmSiteUrlBase() {
-		return siteUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strSiteUrlBase());
+	public String htmSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSiteBaseUrl());
 	}
 
 	//////////////////////
@@ -1134,15 +1136,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteNomAffichage;
-	public Couverture<String> siteNomAffichageCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomAffichage").o(siteNomAffichage);
+	public Wrap<String> siteNomAffichageWrap = new Wrap<String>().p(this).c(String.class).var("siteNomAffichage").o(siteNomAffichage);
 
 	/**	<br/>L'entité « siteNomAffichage »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteNomAffichage">Trouver l'entité siteNomAffichage dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteNomAffichage">Trouver l'entité siteNomAffichage dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteNomAffichage(Couverture<String> c);
+	protected abstract void _siteNomAffichage(Wrap<String> c);
 
 	public String getSiteNomAffichage() {
 		return siteNomAffichage;
@@ -1150,16 +1152,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSiteNomAffichage(String siteNomAffichage) {
 		this.siteNomAffichage = siteNomAffichage;
-		this.siteNomAffichageCouverture.dejaInitialise = true;
+		this.siteNomAffichageWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite siteNomAffichageInit() {
-		if(!siteNomAffichageCouverture.dejaInitialise) {
-			_siteNomAffichage(siteNomAffichageCouverture);
+	protected SiteConfig siteNomAffichageInit() {
+		if(!siteNomAffichageWrap.alreadyInitialized) {
+			_siteNomAffichage(siteNomAffichageWrap);
 			if(siteNomAffichage == null)
-				setSiteNomAffichage(siteNomAffichageCouverture.o);
+				setSiteNomAffichage(siteNomAffichageWrap.o);
 		}
-		siteNomAffichageCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		siteNomAffichageWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSiteNomAffichage() {
@@ -1190,15 +1192,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcClassePilote;
-	public Couverture<String> jdbcClassePiloteCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcClassePilote").o(jdbcClassePilote);
+	public Wrap<String> jdbcClassePiloteWrap = new Wrap<String>().p(this).c(String.class).var("jdbcClassePilote").o(jdbcClassePilote);
 
 	/**	<br/>L'entité « jdbcClassePilote »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcClassePilote">Trouver l'entité jdbcClassePilote dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcClassePilote">Trouver l'entité jdbcClassePilote dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcClassePilote(Couverture<String> c);
+	protected abstract void _jdbcClassePilote(Wrap<String> c);
 
 	public String getJdbcClassePilote() {
 		return jdbcClassePilote;
@@ -1206,16 +1208,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcClassePilote(String jdbcClassePilote) {
 		this.jdbcClassePilote = jdbcClassePilote;
-		this.jdbcClassePiloteCouverture.dejaInitialise = true;
+		this.jdbcClassePiloteWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite jdbcClassePiloteInit() {
-		if(!jdbcClassePiloteCouverture.dejaInitialise) {
-			_jdbcClassePilote(jdbcClassePiloteCouverture);
+	protected SiteConfig jdbcClassePiloteInit() {
+		if(!jdbcClassePiloteWrap.alreadyInitialized) {
+			_jdbcClassePilote(jdbcClassePiloteWrap);
 			if(jdbcClassePilote == null)
-				setJdbcClassePilote(jdbcClassePiloteCouverture.o);
+				setJdbcClassePilote(jdbcClassePiloteWrap.o);
 		}
-		jdbcClassePiloteCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcClassePiloteWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrJdbcClassePilote() {
@@ -1246,15 +1248,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUtilisateur;
-	public Couverture<String> jdbcUtilisateurCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUtilisateur").o(jdbcUtilisateur);
+	public Wrap<String> jdbcUtilisateurWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUtilisateur").o(jdbcUtilisateur);
 
 	/**	<br/>L'entité « jdbcUtilisateur »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcUtilisateur">Trouver l'entité jdbcUtilisateur dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUtilisateur">Trouver l'entité jdbcUtilisateur dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcUtilisateur(Couverture<String> c);
+	protected abstract void _jdbcUtilisateur(Wrap<String> c);
 
 	public String getJdbcUtilisateur() {
 		return jdbcUtilisateur;
@@ -1262,16 +1264,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcUtilisateur(String jdbcUtilisateur) {
 		this.jdbcUtilisateur = jdbcUtilisateur;
-		this.jdbcUtilisateurCouverture.dejaInitialise = true;
+		this.jdbcUtilisateurWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite jdbcUtilisateurInit() {
-		if(!jdbcUtilisateurCouverture.dejaInitialise) {
-			_jdbcUtilisateur(jdbcUtilisateurCouverture);
+	protected SiteConfig jdbcUtilisateurInit() {
+		if(!jdbcUtilisateurWrap.alreadyInitialized) {
+			_jdbcUtilisateur(jdbcUtilisateurWrap);
 			if(jdbcUtilisateur == null)
-				setJdbcUtilisateur(jdbcUtilisateurCouverture.o);
+				setJdbcUtilisateur(jdbcUtilisateurWrap.o);
 		}
-		jdbcUtilisateurCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcUtilisateurWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrJdbcUtilisateur() {
@@ -1302,15 +1304,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcMotDePasse;
-	public Couverture<String> jdbcMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcMotDePasse").o(jdbcMotDePasse);
+	public Wrap<String> jdbcMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("jdbcMotDePasse").o(jdbcMotDePasse);
 
 	/**	<br/>L'entité « jdbcMotDePasse »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcMotDePasse">Trouver l'entité jdbcMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMotDePasse">Trouver l'entité jdbcMotDePasse dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMotDePasse(Couverture<String> c);
+	protected abstract void _jdbcMotDePasse(Wrap<String> c);
 
 	public String getJdbcMotDePasse() {
 		return jdbcMotDePasse;
@@ -1318,16 +1320,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcMotDePasse(String jdbcMotDePasse) {
 		this.jdbcMotDePasse = jdbcMotDePasse;
-		this.jdbcMotDePasseCouverture.dejaInitialise = true;
+		this.jdbcMotDePasseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite jdbcMotDePasseInit() {
-		if(!jdbcMotDePasseCouverture.dejaInitialise) {
-			_jdbcMotDePasse(jdbcMotDePasseCouverture);
+	protected SiteConfig jdbcMotDePasseInit() {
+		if(!jdbcMotDePasseWrap.alreadyInitialized) {
+			_jdbcMotDePasse(jdbcMotDePasseWrap);
 			if(jdbcMotDePasse == null)
-				setJdbcMotDePasse(jdbcMotDePasseCouverture.o);
+				setJdbcMotDePasse(jdbcMotDePasseWrap.o);
 		}
-		jdbcMotDePasseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcMotDePasseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrJdbcMotDePasse() {
@@ -1358,15 +1360,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleMaxPiscine;
-	public Couverture<Integer> jdbcTailleMaxPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
+	public Wrap<Integer> jdbcTailleMaxPiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
 
 	/**	<br/>L'entité « jdbcTailleMaxPiscine »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcTailleMaxPiscine">Trouver l'entité jdbcTailleMaxPiscine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleMaxPiscine">Trouver l'entité jdbcTailleMaxPiscine dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTailleMaxPiscine(Couverture<Integer> c);
+	protected abstract void _jdbcTailleMaxPiscine(Wrap<Integer> c);
 
 	public Integer getJdbcTailleMaxPiscine() {
 		return jdbcTailleMaxPiscine;
@@ -1374,22 +1376,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcTailleMaxPiscine(Integer jdbcTailleMaxPiscine) {
 		this.jdbcTailleMaxPiscine = jdbcTailleMaxPiscine;
-		this.jdbcTailleMaxPiscineCouverture.dejaInitialise = true;
+		this.jdbcTailleMaxPiscineWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcTailleMaxPiscine(String o) {
+	public SiteConfig setJdbcTailleMaxPiscine(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcTailleMaxPiscine = Integer.parseInt(o);
-		this.jdbcTailleMaxPiscineCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcTailleMaxPiscineWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcTailleMaxPiscineInit() {
-		if(!jdbcTailleMaxPiscineCouverture.dejaInitialise) {
-			_jdbcTailleMaxPiscine(jdbcTailleMaxPiscineCouverture);
+	protected SiteConfig jdbcTailleMaxPiscineInit() {
+		if(!jdbcTailleMaxPiscineWrap.alreadyInitialized) {
+			_jdbcTailleMaxPiscine(jdbcTailleMaxPiscineWrap);
 			if(jdbcTailleMaxPiscine == null)
-				setJdbcTailleMaxPiscine(jdbcTailleMaxPiscineCouverture.o);
+				setJdbcTailleMaxPiscine(jdbcTailleMaxPiscineWrap.o);
 		}
-		jdbcTailleMaxPiscineCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcTailleMaxPiscineWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcTailleMaxPiscine() {
@@ -1420,15 +1422,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleInitialePiscine;
-	public Couverture<Integer> jdbcTailleInitialePiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
+	public Wrap<Integer> jdbcTailleInitialePiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
 
 	/**	<br/>L'entité « jdbcTailleInitialePiscine »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcTailleInitialePiscine">Trouver l'entité jdbcTailleInitialePiscine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleInitialePiscine">Trouver l'entité jdbcTailleInitialePiscine dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTailleInitialePiscine(Couverture<Integer> c);
+	protected abstract void _jdbcTailleInitialePiscine(Wrap<Integer> c);
 
 	public Integer getJdbcTailleInitialePiscine() {
 		return jdbcTailleInitialePiscine;
@@ -1436,22 +1438,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcTailleInitialePiscine(Integer jdbcTailleInitialePiscine) {
 		this.jdbcTailleInitialePiscine = jdbcTailleInitialePiscine;
-		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
+		this.jdbcTailleInitialePiscineWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcTailleInitialePiscine(String o) {
+	public SiteConfig setJdbcTailleInitialePiscine(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcTailleInitialePiscine = Integer.parseInt(o);
-		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcTailleInitialePiscineWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcTailleInitialePiscineInit() {
-		if(!jdbcTailleInitialePiscineCouverture.dejaInitialise) {
-			_jdbcTailleInitialePiscine(jdbcTailleInitialePiscineCouverture);
+	protected SiteConfig jdbcTailleInitialePiscineInit() {
+		if(!jdbcTailleInitialePiscineWrap.alreadyInitialized) {
+			_jdbcTailleInitialePiscine(jdbcTailleInitialePiscineWrap);
 			if(jdbcTailleInitialePiscine == null)
-				setJdbcTailleInitialePiscine(jdbcTailleInitialePiscineCouverture.o);
+				setJdbcTailleInitialePiscine(jdbcTailleInitialePiscineWrap.o);
 		}
-		jdbcTailleInitialePiscineCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcTailleInitialePiscineWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcTailleInitialePiscine() {
@@ -1482,15 +1484,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleMinPiscine;
-	public Couverture<Integer> jdbcTailleMinPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
+	public Wrap<Integer> jdbcTailleMinPiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
 
 	/**	<br/>L'entité « jdbcTailleMinPiscine »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcTailleMinPiscine">Trouver l'entité jdbcTailleMinPiscine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleMinPiscine">Trouver l'entité jdbcTailleMinPiscine dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTailleMinPiscine(Couverture<Integer> c);
+	protected abstract void _jdbcTailleMinPiscine(Wrap<Integer> c);
 
 	public Integer getJdbcTailleMinPiscine() {
 		return jdbcTailleMinPiscine;
@@ -1498,22 +1500,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcTailleMinPiscine(Integer jdbcTailleMinPiscine) {
 		this.jdbcTailleMinPiscine = jdbcTailleMinPiscine;
-		this.jdbcTailleMinPiscineCouverture.dejaInitialise = true;
+		this.jdbcTailleMinPiscineWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcTailleMinPiscine(String o) {
+	public SiteConfig setJdbcTailleMinPiscine(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcTailleMinPiscine = Integer.parseInt(o);
-		this.jdbcTailleMinPiscineCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcTailleMinPiscineWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcTailleMinPiscineInit() {
-		if(!jdbcTailleMinPiscineCouverture.dejaInitialise) {
-			_jdbcTailleMinPiscine(jdbcTailleMinPiscineCouverture);
+	protected SiteConfig jdbcTailleMinPiscineInit() {
+		if(!jdbcTailleMinPiscineWrap.alreadyInitialized) {
+			_jdbcTailleMinPiscine(jdbcTailleMinPiscineWrap);
 			if(jdbcTailleMinPiscine == null)
-				setJdbcTailleMinPiscine(jdbcTailleMinPiscineCouverture.o);
+				setJdbcTailleMinPiscine(jdbcTailleMinPiscineWrap.o);
 		}
-		jdbcTailleMinPiscineCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcTailleMinPiscineWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcTailleMinPiscine() {
@@ -1544,15 +1546,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxDeclarations;
-	public Couverture<Integer> jdbcMaxDeclarationsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
+	public Wrap<Integer> jdbcMaxDeclarationsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
 
 	/**	<br/>L'entité « jdbcMaxDeclarations »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcMaxDeclarations">Trouver l'entité jdbcMaxDeclarations dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxDeclarations">Trouver l'entité jdbcMaxDeclarations dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMaxDeclarations(Couverture<Integer> c);
+	protected abstract void _jdbcMaxDeclarations(Wrap<Integer> c);
 
 	public Integer getJdbcMaxDeclarations() {
 		return jdbcMaxDeclarations;
@@ -1560,22 +1562,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcMaxDeclarations(Integer jdbcMaxDeclarations) {
 		this.jdbcMaxDeclarations = jdbcMaxDeclarations;
-		this.jdbcMaxDeclarationsCouverture.dejaInitialise = true;
+		this.jdbcMaxDeclarationsWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcMaxDeclarations(String o) {
+	public SiteConfig setJdbcMaxDeclarations(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcMaxDeclarations = Integer.parseInt(o);
-		this.jdbcMaxDeclarationsCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcMaxDeclarationsWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcMaxDeclarationsInit() {
-		if(!jdbcMaxDeclarationsCouverture.dejaInitialise) {
-			_jdbcMaxDeclarations(jdbcMaxDeclarationsCouverture);
+	protected SiteConfig jdbcMaxDeclarationsInit() {
+		if(!jdbcMaxDeclarationsWrap.alreadyInitialized) {
+			_jdbcMaxDeclarations(jdbcMaxDeclarationsWrap);
 			if(jdbcMaxDeclarations == null)
-				setJdbcMaxDeclarations(jdbcMaxDeclarationsCouverture.o);
+				setJdbcMaxDeclarations(jdbcMaxDeclarationsWrap.o);
 		}
-		jdbcMaxDeclarationsCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcMaxDeclarationsWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcMaxDeclarations() {
@@ -1606,15 +1608,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxDeclarationsParConnexion;
-	public Couverture<Integer> jdbcMaxDeclarationsParConnexionCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
+	public Wrap<Integer> jdbcMaxDeclarationsParConnexionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
 
 	/**	<br/>L'entité « jdbcMaxDeclarationsParConnexion »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcMaxDeclarationsParConnexion">Trouver l'entité jdbcMaxDeclarationsParConnexion dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxDeclarationsParConnexion">Trouver l'entité jdbcMaxDeclarationsParConnexion dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMaxDeclarationsParConnexion(Couverture<Integer> c);
+	protected abstract void _jdbcMaxDeclarationsParConnexion(Wrap<Integer> c);
 
 	public Integer getJdbcMaxDeclarationsParConnexion() {
 		return jdbcMaxDeclarationsParConnexion;
@@ -1622,22 +1624,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcMaxDeclarationsParConnexion(Integer jdbcMaxDeclarationsParConnexion) {
 		this.jdbcMaxDeclarationsParConnexion = jdbcMaxDeclarationsParConnexion;
-		this.jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise = true;
+		this.jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcMaxDeclarationsParConnexion(String o) {
+	public SiteConfig setJdbcMaxDeclarationsParConnexion(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcMaxDeclarationsParConnexion = Integer.parseInt(o);
-		this.jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcMaxDeclarationsParConnexionInit() {
-		if(!jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise) {
-			_jdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionCouverture);
+	protected SiteConfig jdbcMaxDeclarationsParConnexionInit() {
+		if(!jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized) {
+			_jdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionWrap);
 			if(jdbcMaxDeclarationsParConnexion == null)
-				setJdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionCouverture.o);
+				setJdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionWrap.o);
 		}
-		jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcMaxDeclarationsParConnexion() {
@@ -1668,15 +1670,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTempsInactiviteMax;
-	public Couverture<Integer> jdbcTempsInactiviteMaxCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
+	public Wrap<Integer> jdbcTempsInactiviteMaxWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
 
 	/**	<br/>L'entité « jdbcTempsInactiviteMax »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcTempsInactiviteMax">Trouver l'entité jdbcTempsInactiviteMax dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTempsInactiviteMax">Trouver l'entité jdbcTempsInactiviteMax dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTempsInactiviteMax(Couverture<Integer> c);
+	protected abstract void _jdbcTempsInactiviteMax(Wrap<Integer> c);
 
 	public Integer getJdbcTempsInactiviteMax() {
 		return jdbcTempsInactiviteMax;
@@ -1684,22 +1686,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcTempsInactiviteMax(Integer jdbcTempsInactiviteMax) {
 		this.jdbcTempsInactiviteMax = jdbcTempsInactiviteMax;
-		this.jdbcTempsInactiviteMaxCouverture.dejaInitialise = true;
+		this.jdbcTempsInactiviteMaxWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setJdbcTempsInactiviteMax(String o) {
+	public SiteConfig setJdbcTempsInactiviteMax(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.jdbcTempsInactiviteMax = Integer.parseInt(o);
-		this.jdbcTempsInactiviteMaxCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.jdbcTempsInactiviteMaxWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite jdbcTempsInactiviteMaxInit() {
-		if(!jdbcTempsInactiviteMaxCouverture.dejaInitialise) {
-			_jdbcTempsInactiviteMax(jdbcTempsInactiviteMaxCouverture);
+	protected SiteConfig jdbcTempsInactiviteMaxInit() {
+		if(!jdbcTempsInactiviteMaxWrap.alreadyInitialized) {
+			_jdbcTempsInactiviteMax(jdbcTempsInactiviteMaxWrap);
 			if(jdbcTempsInactiviteMax == null)
-				setJdbcTempsInactiviteMax(jdbcTempsInactiviteMaxCouverture.o);
+				setJdbcTempsInactiviteMax(jdbcTempsInactiviteMaxWrap.o);
 		}
-		jdbcTempsInactiviteMaxCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcTempsInactiviteMaxWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrJdbcTempsInactiviteMax() {
@@ -1730,15 +1732,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUrl;
-	public Couverture<String> jdbcUrlCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
+	public Wrap<String> jdbcUrlWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
 
 	/**	<br/>L'entité « jdbcUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcUrl">Trouver l'entité jdbcUrl dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUrl">Trouver l'entité jdbcUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcUrl(Couverture<String> c);
+	protected abstract void _jdbcUrl(Wrap<String> c);
 
 	public String getJdbcUrl() {
 		return jdbcUrl;
@@ -1746,16 +1748,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJdbcUrl(String jdbcUrl) {
 		this.jdbcUrl = jdbcUrl;
-		this.jdbcUrlCouverture.dejaInitialise = true;
+		this.jdbcUrlWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite jdbcUrlInit() {
-		if(!jdbcUrlCouverture.dejaInitialise) {
-			_jdbcUrl(jdbcUrlCouverture);
+	protected SiteConfig jdbcUrlInit() {
+		if(!jdbcUrlWrap.alreadyInitialized) {
+			_jdbcUrl(jdbcUrlWrap);
 			if(jdbcUrl == null)
-				setJdbcUrl(jdbcUrlCouverture.o);
+				setJdbcUrl(jdbcUrlWrap.o);
 		}
-		jdbcUrlCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jdbcUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrJdbcUrl() {
@@ -1786,15 +1788,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrl;
-	public Couverture<String> solrUrlCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
+	public Wrap<String> solrUrlWrap = new Wrap<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
 
 	/**	<br/>L'entité « solrUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrUrl">Trouver l'entité solrUrl dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrl">Trouver l'entité solrUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _solrUrl(Couverture<String> c);
+	protected abstract void _solrUrl(Wrap<String> c);
 
 	public String getSolrUrl() {
 		return solrUrl;
@@ -1802,16 +1804,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSolrUrl(String solrUrl) {
 		this.solrUrl = solrUrl;
-		this.solrUrlCouverture.dejaInitialise = true;
+		this.solrUrlWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite solrUrlInit() {
-		if(!solrUrlCouverture.dejaInitialise) {
-			_solrUrl(solrUrlCouverture);
+	protected SiteConfig solrUrlInit() {
+		if(!solrUrlWrap.alreadyInitialized) {
+			_solrUrl(solrUrlWrap);
 			if(solrUrl == null)
-				setSolrUrl(solrUrlCouverture.o);
+				setSolrUrl(solrUrlWrap.o);
 		}
-		solrUrlCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		solrUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSolrUrl() {
@@ -1842,15 +1844,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrlComputate;
-	public Couverture<String> solrUrlComputateCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
+	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
 
 	/**	<br/>L'entité « solrUrlComputate »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _solrUrlComputate(Couverture<String> c);
+	protected abstract void _solrUrlComputate(Wrap<String> c);
 
 	public String getSolrUrlComputate() {
 		return solrUrlComputate;
@@ -1858,16 +1860,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setSolrUrlComputate(String solrUrlComputate) {
 		this.solrUrlComputate = solrUrlComputate;
-		this.solrUrlComputateCouverture.dejaInitialise = true;
+		this.solrUrlComputateWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite solrUrlComputateInit() {
-		if(!solrUrlComputateCouverture.dejaInitialise) {
-			_solrUrlComputate(solrUrlComputateCouverture);
+	protected SiteConfig solrUrlComputateInit() {
+		if(!solrUrlComputateWrap.alreadyInitialized) {
+			_solrUrlComputate(solrUrlComputateWrap);
 			if(solrUrlComputate == null)
-				setSolrUrlComputate(solrUrlComputateCouverture.o);
+				setSolrUrlComputate(solrUrlComputateWrap.o);
 		}
-		solrUrlComputateCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		solrUrlComputateWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrSolrUrlComputate() {
@@ -1898,15 +1900,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jetonIdentitePaypal;
-	public Couverture<String> jetonIdentitePaypalCouverture = new Couverture<String>().p(this).c(String.class).var("jetonIdentitePaypal").o(jetonIdentitePaypal);
+	public Wrap<String> jetonIdentitePaypalWrap = new Wrap<String>().p(this).c(String.class).var("jetonIdentitePaypal").o(jetonIdentitePaypal);
 
 	/**	<br/>L'entité « jetonIdentitePaypal »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jetonIdentitePaypal">Trouver l'entité jetonIdentitePaypal dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jetonIdentitePaypal">Trouver l'entité jetonIdentitePaypal dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jetonIdentitePaypal(Couverture<String> c);
+	protected abstract void _jetonIdentitePaypal(Wrap<String> c);
 
 	public String getJetonIdentitePaypal() {
 		return jetonIdentitePaypal;
@@ -1914,16 +1916,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setJetonIdentitePaypal(String jetonIdentitePaypal) {
 		this.jetonIdentitePaypal = jetonIdentitePaypal;
-		this.jetonIdentitePaypalCouverture.dejaInitialise = true;
+		this.jetonIdentitePaypalWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite jetonIdentitePaypalInit() {
-		if(!jetonIdentitePaypalCouverture.dejaInitialise) {
-			_jetonIdentitePaypal(jetonIdentitePaypalCouverture);
+	protected SiteConfig jetonIdentitePaypalInit() {
+		if(!jetonIdentitePaypalWrap.alreadyInitialized) {
+			_jetonIdentitePaypal(jetonIdentitePaypalWrap);
 			if(jetonIdentitePaypal == null)
-				setJetonIdentitePaypal(jetonIdentitePaypalCouverture.o);
+				setJetonIdentitePaypal(jetonIdentitePaypalWrap.o);
 		}
-		jetonIdentitePaypalCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		jetonIdentitePaypalWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrJetonIdentitePaypal() {
@@ -1954,15 +1956,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteFacebook;
-	public Couverture<String> compteFacebookCouverture = new Couverture<String>().p(this).c(String.class).var("compteFacebook").o(compteFacebook);
+	public Wrap<String> compteFacebookWrap = new Wrap<String>().p(this).c(String.class).var("compteFacebook").o(compteFacebook);
 
 	/**	<br/>L'entité « compteFacebook »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteFacebook">Trouver l'entité compteFacebook dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteFacebook">Trouver l'entité compteFacebook dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteFacebook(Couverture<String> c);
+	protected abstract void _compteFacebook(Wrap<String> c);
 
 	public String getCompteFacebook() {
 		return compteFacebook;
@@ -1970,16 +1972,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteFacebook(String compteFacebook) {
 		this.compteFacebook = compteFacebook;
-		this.compteFacebookCouverture.dejaInitialise = true;
+		this.compteFacebookWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteFacebookInit() {
-		if(!compteFacebookCouverture.dejaInitialise) {
-			_compteFacebook(compteFacebookCouverture);
+	protected SiteConfig compteFacebookInit() {
+		if(!compteFacebookWrap.alreadyInitialized) {
+			_compteFacebook(compteFacebookWrap);
 			if(compteFacebook == null)
-				setCompteFacebook(compteFacebookCouverture.o);
+				setCompteFacebook(compteFacebookWrap.o);
 		}
-		compteFacebookCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteFacebookWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteFacebook() {
@@ -2010,15 +2012,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteTwitter;
-	public Couverture<String> compteTwitterCouverture = new Couverture<String>().p(this).c(String.class).var("compteTwitter").o(compteTwitter);
+	public Wrap<String> compteTwitterWrap = new Wrap<String>().p(this).c(String.class).var("compteTwitter").o(compteTwitter);
 
 	/**	<br/>L'entité « compteTwitter »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteTwitter">Trouver l'entité compteTwitter dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteTwitter">Trouver l'entité compteTwitter dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteTwitter(Couverture<String> c);
+	protected abstract void _compteTwitter(Wrap<String> c);
 
 	public String getCompteTwitter() {
 		return compteTwitter;
@@ -2026,16 +2028,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteTwitter(String compteTwitter) {
 		this.compteTwitter = compteTwitter;
-		this.compteTwitterCouverture.dejaInitialise = true;
+		this.compteTwitterWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteTwitterInit() {
-		if(!compteTwitterCouverture.dejaInitialise) {
-			_compteTwitter(compteTwitterCouverture);
+	protected SiteConfig compteTwitterInit() {
+		if(!compteTwitterWrap.alreadyInitialized) {
+			_compteTwitter(compteTwitterWrap);
 			if(compteTwitter == null)
-				setCompteTwitter(compteTwitterCouverture.o);
+				setCompteTwitter(compteTwitterWrap.o);
 		}
-		compteTwitterCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteTwitterWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteTwitter() {
@@ -2066,15 +2068,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteGooglePlus;
-	public Couverture<String> compteGooglePlusCouverture = new Couverture<String>().p(this).c(String.class).var("compteGooglePlus").o(compteGooglePlus);
+	public Wrap<String> compteGooglePlusWrap = new Wrap<String>().p(this).c(String.class).var("compteGooglePlus").o(compteGooglePlus);
 
 	/**	<br/>L'entité « compteGooglePlus »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteGooglePlus">Trouver l'entité compteGooglePlus dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteGooglePlus">Trouver l'entité compteGooglePlus dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteGooglePlus(Couverture<String> c);
+	protected abstract void _compteGooglePlus(Wrap<String> c);
 
 	public String getCompteGooglePlus() {
 		return compteGooglePlus;
@@ -2082,16 +2084,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteGooglePlus(String compteGooglePlus) {
 		this.compteGooglePlus = compteGooglePlus;
-		this.compteGooglePlusCouverture.dejaInitialise = true;
+		this.compteGooglePlusWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteGooglePlusInit() {
-		if(!compteGooglePlusCouverture.dejaInitialise) {
-			_compteGooglePlus(compteGooglePlusCouverture);
+	protected SiteConfig compteGooglePlusInit() {
+		if(!compteGooglePlusWrap.alreadyInitialized) {
+			_compteGooglePlus(compteGooglePlusWrap);
 			if(compteGooglePlus == null)
-				setCompteGooglePlus(compteGooglePlusCouverture.o);
+				setCompteGooglePlus(compteGooglePlusWrap.o);
 		}
-		compteGooglePlusCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteGooglePlusWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteGooglePlus() {
@@ -2122,15 +2124,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteInstagram;
-	public Couverture<String> compteInstagramCouverture = new Couverture<String>().p(this).c(String.class).var("compteInstagram").o(compteInstagram);
+	public Wrap<String> compteInstagramWrap = new Wrap<String>().p(this).c(String.class).var("compteInstagram").o(compteInstagram);
 
 	/**	<br/>L'entité « compteInstagram »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteInstagram">Trouver l'entité compteInstagram dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteInstagram">Trouver l'entité compteInstagram dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteInstagram(Couverture<String> c);
+	protected abstract void _compteInstagram(Wrap<String> c);
 
 	public String getCompteInstagram() {
 		return compteInstagram;
@@ -2138,16 +2140,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteInstagram(String compteInstagram) {
 		this.compteInstagram = compteInstagram;
-		this.compteInstagramCouverture.dejaInitialise = true;
+		this.compteInstagramWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteInstagramInit() {
-		if(!compteInstagramCouverture.dejaInitialise) {
-			_compteInstagram(compteInstagramCouverture);
+	protected SiteConfig compteInstagramInit() {
+		if(!compteInstagramWrap.alreadyInitialized) {
+			_compteInstagram(compteInstagramWrap);
 			if(compteInstagram == null)
-				setCompteInstagram(compteInstagramCouverture.o);
+				setCompteInstagram(compteInstagramWrap.o);
 		}
-		compteInstagramCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteInstagramWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteInstagram() {
@@ -2178,15 +2180,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteYoutube;
-	public Couverture<String> compteYoutubeCouverture = new Couverture<String>().p(this).c(String.class).var("compteYoutube").o(compteYoutube);
+	public Wrap<String> compteYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("compteYoutube").o(compteYoutube);
 
 	/**	<br/>L'entité « compteYoutube »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteYoutube">Trouver l'entité compteYoutube dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteYoutube">Trouver l'entité compteYoutube dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteYoutube(Couverture<String> c);
+	protected abstract void _compteYoutube(Wrap<String> c);
 
 	public String getCompteYoutube() {
 		return compteYoutube;
@@ -2194,16 +2196,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteYoutube(String compteYoutube) {
 		this.compteYoutube = compteYoutube;
-		this.compteYoutubeCouverture.dejaInitialise = true;
+		this.compteYoutubeWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteYoutubeInit() {
-		if(!compteYoutubeCouverture.dejaInitialise) {
-			_compteYoutube(compteYoutubeCouverture);
+	protected SiteConfig compteYoutubeInit() {
+		if(!compteYoutubeWrap.alreadyInitialized) {
+			_compteYoutube(compteYoutubeWrap);
 			if(compteYoutube == null)
-				setCompteYoutube(compteYoutubeCouverture.o);
+				setCompteYoutube(compteYoutubeWrap.o);
 		}
-		compteYoutubeCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteYoutubeWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteYoutube() {
@@ -2234,15 +2236,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String identifiantCanalYoutube;
-	public Couverture<String> identifiantCanalYoutubeCouverture = new Couverture<String>().p(this).c(String.class).var("identifiantCanalYoutube").o(identifiantCanalYoutube);
+	public Wrap<String> identifiantCanalYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("identifiantCanalYoutube").o(identifiantCanalYoutube);
 
 	/**	<br/>L'entité « identifiantCanalYoutube »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:identifiantCanalYoutube">Trouver l'entité identifiantCanalYoutube dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:identifiantCanalYoutube">Trouver l'entité identifiantCanalYoutube dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _identifiantCanalYoutube(Couverture<String> c);
+	protected abstract void _identifiantCanalYoutube(Wrap<String> c);
 
 	public String getIdentifiantCanalYoutube() {
 		return identifiantCanalYoutube;
@@ -2250,16 +2252,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setIdentifiantCanalYoutube(String identifiantCanalYoutube) {
 		this.identifiantCanalYoutube = identifiantCanalYoutube;
-		this.identifiantCanalYoutubeCouverture.dejaInitialise = true;
+		this.identifiantCanalYoutubeWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite identifiantCanalYoutubeInit() {
-		if(!identifiantCanalYoutubeCouverture.dejaInitialise) {
-			_identifiantCanalYoutube(identifiantCanalYoutubeCouverture);
+	protected SiteConfig identifiantCanalYoutubeInit() {
+		if(!identifiantCanalYoutubeWrap.alreadyInitialized) {
+			_identifiantCanalYoutube(identifiantCanalYoutubeWrap);
 			if(identifiantCanalYoutube == null)
-				setIdentifiantCanalYoutube(identifiantCanalYoutubeCouverture.o);
+				setIdentifiantCanalYoutube(identifiantCanalYoutubeWrap.o);
 		}
-		identifiantCanalYoutubeCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		identifiantCanalYoutubeWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrIdentifiantCanalYoutube() {
@@ -2290,15 +2292,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String comptePinterest;
-	public Couverture<String> comptePinterestCouverture = new Couverture<String>().p(this).c(String.class).var("comptePinterest").o(comptePinterest);
+	public Wrap<String> comptePinterestWrap = new Wrap<String>().p(this).c(String.class).var("comptePinterest").o(comptePinterest);
 
 	/**	<br/>L'entité « comptePinterest »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:comptePinterest">Trouver l'entité comptePinterest dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:comptePinterest">Trouver l'entité comptePinterest dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _comptePinterest(Couverture<String> c);
+	protected abstract void _comptePinterest(Wrap<String> c);
 
 	public String getComptePinterest() {
 		return comptePinterest;
@@ -2306,16 +2308,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setComptePinterest(String comptePinterest) {
 		this.comptePinterest = comptePinterest;
-		this.comptePinterestCouverture.dejaInitialise = true;
+		this.comptePinterestWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite comptePinterestInit() {
-		if(!comptePinterestCouverture.dejaInitialise) {
-			_comptePinterest(comptePinterestCouverture);
+	protected SiteConfig comptePinterestInit() {
+		if(!comptePinterestWrap.alreadyInitialized) {
+			_comptePinterest(comptePinterestWrap);
 			if(comptePinterest == null)
-				setComptePinterest(comptePinterestCouverture.o);
+				setComptePinterest(comptePinterestWrap.o);
 		}
-		comptePinterestCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		comptePinterestWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrComptePinterest() {
@@ -2346,15 +2348,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteOpenclipart;
-	public Couverture<String> compteOpenclipartCouverture = new Couverture<String>().p(this).c(String.class).var("compteOpenclipart").o(compteOpenclipart);
+	public Wrap<String> compteOpenclipartWrap = new Wrap<String>().p(this).c(String.class).var("compteOpenclipart").o(compteOpenclipart);
 
 	/**	<br/>L'entité « compteOpenclipart »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteOpenclipart">Trouver l'entité compteOpenclipart dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteOpenclipart">Trouver l'entité compteOpenclipart dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteOpenclipart(Couverture<String> c);
+	protected abstract void _compteOpenclipart(Wrap<String> c);
 
 	public String getCompteOpenclipart() {
 		return compteOpenclipart;
@@ -2362,16 +2364,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteOpenclipart(String compteOpenclipart) {
 		this.compteOpenclipart = compteOpenclipart;
-		this.compteOpenclipartCouverture.dejaInitialise = true;
+		this.compteOpenclipartWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteOpenclipartInit() {
-		if(!compteOpenclipartCouverture.dejaInitialise) {
-			_compteOpenclipart(compteOpenclipartCouverture);
+	protected SiteConfig compteOpenclipartInit() {
+		if(!compteOpenclipartWrap.alreadyInitialized) {
+			_compteOpenclipart(compteOpenclipartWrap);
 			if(compteOpenclipart == null)
-				setCompteOpenclipart(compteOpenclipartCouverture.o);
+				setCompteOpenclipart(compteOpenclipartWrap.o);
 		}
-		compteOpenclipartCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteOpenclipartWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteOpenclipart() {
@@ -2402,15 +2404,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteMail;
-	public Couverture<String> compteMailCouverture = new Couverture<String>().p(this).c(String.class).var("compteMail").o(compteMail);
+	public Wrap<String> compteMailWrap = new Wrap<String>().p(this).c(String.class).var("compteMail").o(compteMail);
 
 	/**	<br/>L'entité « compteMail »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteMail">Trouver l'entité compteMail dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteMail">Trouver l'entité compteMail dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteMail(Couverture<String> c);
+	protected abstract void _compteMail(Wrap<String> c);
 
 	public String getCompteMail() {
 		return compteMail;
@@ -2418,16 +2420,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setCompteMail(String compteMail) {
 		this.compteMail = compteMail;
-		this.compteMailCouverture.dejaInitialise = true;
+		this.compteMailWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite compteMailInit() {
-		if(!compteMailCouverture.dejaInitialise) {
-			_compteMail(compteMailCouverture);
+	protected SiteConfig compteMailInit() {
+		if(!compteMailWrap.alreadyInitialized) {
+			_compteMail(compteMailWrap);
 			if(compteMail == null)
-				setCompteMail(compteMailCouverture.o);
+				setCompteMail(compteMailWrap.o);
 		}
-		compteMailCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		compteMailWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrCompteMail() {
@@ -2458,15 +2460,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String roleAdmin;
-	public Couverture<String> roleAdminCouverture = new Couverture<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
+	public Wrap<String> roleAdminWrap = new Wrap<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
 
 	/**	<br/>L'entité « roleAdmin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:roleAdmin">Trouver l'entité roleAdmin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:roleAdmin">Trouver l'entité roleAdmin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _roleAdmin(Couverture<String> c);
+	protected abstract void _roleAdmin(Wrap<String> c);
 
 	public String getRoleAdmin() {
 		return roleAdmin;
@@ -2474,16 +2476,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setRoleAdmin(String roleAdmin) {
 		this.roleAdmin = roleAdmin;
-		this.roleAdminCouverture.dejaInitialise = true;
+		this.roleAdminWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite roleAdminInit() {
-		if(!roleAdminCouverture.dejaInitialise) {
-			_roleAdmin(roleAdminCouverture);
+	protected SiteConfig roleAdminInit() {
+		if(!roleAdminWrap.alreadyInitialized) {
+			_roleAdmin(roleAdminWrap);
 			if(roleAdmin == null)
-				setRoleAdmin(roleAdminCouverture.o);
+				setRoleAdmin(roleAdminWrap.o);
 		}
-		roleAdminCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		roleAdminWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrRoleAdmin() {
@@ -2514,15 +2516,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String mailAdmin;
-	public Couverture<String> mailAdminCouverture = new Couverture<String>().p(this).c(String.class).var("mailAdmin").o(mailAdmin);
+	public Wrap<String> mailAdminWrap = new Wrap<String>().p(this).c(String.class).var("mailAdmin").o(mailAdmin);
 
 	/**	<br/>L'entité « mailAdmin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailAdmin">Trouver l'entité mailAdmin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mailAdmin">Trouver l'entité mailAdmin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _mailAdmin(Couverture<String> c);
+	protected abstract void _mailAdmin(Wrap<String> c);
 
 	public String getMailAdmin() {
 		return mailAdmin;
@@ -2530,16 +2532,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setMailAdmin(String mailAdmin) {
 		this.mailAdmin = mailAdmin;
-		this.mailAdminCouverture.dejaInitialise = true;
+		this.mailAdminWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite mailAdminInit() {
-		if(!mailAdminCouverture.dejaInitialise) {
-			_mailAdmin(mailAdminCouverture);
+	protected SiteConfig mailAdminInit() {
+		if(!mailAdminWrap.alreadyInitialized) {
+			_mailAdmin(mailAdminWrap);
 			if(mailAdmin == null)
-				setMailAdmin(mailAdminCouverture.o);
+				setMailAdmin(mailAdminWrap.o);
 		}
-		mailAdminCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		mailAdminWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrMailAdmin() {
@@ -2570,15 +2572,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer nombreExecuteurs;
-	public Couverture<Integer> nombreExecuteursCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
+	public Wrap<Integer> nombreExecuteursWrap = new Wrap<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
 
 	/**	<br/>L'entité « nombreExecuteurs »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:nombreExecuteurs">Trouver l'entité nombreExecuteurs dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nombreExecuteurs">Trouver l'entité nombreExecuteurs dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nombreExecuteurs(Couverture<Integer> c);
+	protected abstract void _nombreExecuteurs(Wrap<Integer> c);
 
 	public Integer getNombreExecuteurs() {
 		return nombreExecuteurs;
@@ -2586,22 +2588,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setNombreExecuteurs(Integer nombreExecuteurs) {
 		this.nombreExecuteurs = nombreExecuteurs;
-		this.nombreExecuteursCouverture.dejaInitialise = true;
+		this.nombreExecuteursWrap.alreadyInitialized = true;
 	}
-	public ConfigSite setNombreExecuteurs(String o) {
+	public SiteConfig setNombreExecuteurs(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.nombreExecuteurs = Integer.parseInt(o);
-		this.nombreExecuteursCouverture.dejaInitialise = true;
-		return (ConfigSite)this;
+		this.nombreExecuteursWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
 	}
-	protected ConfigSite nombreExecuteursInit() {
-		if(!nombreExecuteursCouverture.dejaInitialise) {
-			_nombreExecuteurs(nombreExecuteursCouverture);
+	protected SiteConfig nombreExecuteursInit() {
+		if(!nombreExecuteursWrap.alreadyInitialized) {
+			_nombreExecuteurs(nombreExecuteursWrap);
 			if(nombreExecuteurs == null)
-				setNombreExecuteurs(nombreExecuteursCouverture.o);
+				setNombreExecuteurs(nombreExecuteursWrap.o);
 		}
-		nombreExecuteursCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		nombreExecuteursWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public Integer solrNombreExecuteurs() {
@@ -2632,15 +2634,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
-	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
+	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:openApiVersion">Trouver l'entité openApiVersion dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:openApiVersion">Trouver l'entité openApiVersion dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _openApiVersion(Couverture<String> c);
+	protected abstract void _openApiVersion(Wrap<String> c);
 
 	public String getOpenApiVersion() {
 		return openApiVersion;
@@ -2648,16 +2650,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setOpenApiVersion(String openApiVersion) {
 		this.openApiVersion = openApiVersion;
-		this.openApiVersionCouverture.dejaInitialise = true;
+		this.openApiVersionWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite openApiVersionInit() {
-		if(!openApiVersionCouverture.dejaInitialise) {
-			_openApiVersion(openApiVersionCouverture);
+	protected SiteConfig openApiVersionInit() {
+		if(!openApiVersionWrap.alreadyInitialized) {
+			_openApiVersion(openApiVersionWrap);
 			if(openApiVersion == null)
-				setOpenApiVersion(openApiVersionCouverture.o);
+				setOpenApiVersion(openApiVersionWrap.o);
 		}
-		openApiVersionCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		openApiVersionWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrOpenApiVersion() {
@@ -2688,15 +2690,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiDescription;
-	public Couverture<String> apiDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
+	public Wrap<String> apiDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
 
 	/**	<br/>L'entité « apiDescription »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiDescription">Trouver l'entité apiDescription dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiDescription">Trouver l'entité apiDescription dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiDescription(Couverture<String> c);
+	protected abstract void _apiDescription(Wrap<String> c);
 
 	public String getApiDescription() {
 		return apiDescription;
@@ -2704,16 +2706,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiDescription(String apiDescription) {
 		this.apiDescription = apiDescription;
-		this.apiDescriptionCouverture.dejaInitialise = true;
+		this.apiDescriptionWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiDescriptionInit() {
-		if(!apiDescriptionCouverture.dejaInitialise) {
-			_apiDescription(apiDescriptionCouverture);
+	protected SiteConfig apiDescriptionInit() {
+		if(!apiDescriptionWrap.alreadyInitialized) {
+			_apiDescription(apiDescriptionWrap);
 			if(apiDescription == null)
-				setApiDescription(apiDescriptionCouverture.o);
+				setApiDescription(apiDescriptionWrap.o);
 		}
-		apiDescriptionCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiDescriptionWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiDescription() {
@@ -2744,15 +2746,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTitre;
-	public Couverture<String> apiTitreCouverture = new Couverture<String>().p(this).c(String.class).var("apiTitre").o(apiTitre);
+	public Wrap<String> apiTitreWrap = new Wrap<String>().p(this).c(String.class).var("apiTitre").o(apiTitre);
 
 	/**	<br/>L'entité « apiTitre »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiTitre">Trouver l'entité apiTitre dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTitre">Trouver l'entité apiTitre dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiTitre(Couverture<String> c);
+	protected abstract void _apiTitre(Wrap<String> c);
 
 	public String getApiTitre() {
 		return apiTitre;
@@ -2760,16 +2762,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiTitre(String apiTitre) {
 		this.apiTitre = apiTitre;
-		this.apiTitreCouverture.dejaInitialise = true;
+		this.apiTitreWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiTitreInit() {
-		if(!apiTitreCouverture.dejaInitialise) {
-			_apiTitre(apiTitreCouverture);
+	protected SiteConfig apiTitreInit() {
+		if(!apiTitreWrap.alreadyInitialized) {
+			_apiTitre(apiTitreWrap);
 			if(apiTitre == null)
-				setApiTitre(apiTitreCouverture.o);
+				setApiTitre(apiTitreWrap.o);
 		}
-		apiTitreCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiTitreWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiTitre() {
@@ -2800,15 +2802,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTermsService;
-	public Couverture<String> apiTermsServiceCouverture = new Couverture<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
+	public Wrap<String> apiTermsServiceWrap = new Wrap<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
 
 	/**	<br/>L'entité « apiTermsService »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiTermsService">Trouver l'entité apiTermsService dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTermsService">Trouver l'entité apiTermsService dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiTermsService(Couverture<String> c);
+	protected abstract void _apiTermsService(Wrap<String> c);
 
 	public String getApiTermsService() {
 		return apiTermsService;
@@ -2816,16 +2818,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiTermsService(String apiTermsService) {
 		this.apiTermsService = apiTermsService;
-		this.apiTermsServiceCouverture.dejaInitialise = true;
+		this.apiTermsServiceWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiTermsServiceInit() {
-		if(!apiTermsServiceCouverture.dejaInitialise) {
-			_apiTermsService(apiTermsServiceCouverture);
+	protected SiteConfig apiTermsServiceInit() {
+		if(!apiTermsServiceWrap.alreadyInitialized) {
+			_apiTermsService(apiTermsServiceWrap);
 			if(apiTermsService == null)
-				setApiTermsService(apiTermsServiceCouverture.o);
+				setApiTermsService(apiTermsServiceWrap.o);
 		}
-		apiTermsServiceCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiTermsServiceWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiTermsService() {
@@ -2856,15 +2858,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
-	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
+	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiVersion">Trouver l'entité apiVersion dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiVersion">Trouver l'entité apiVersion dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiVersion(Couverture<String> c);
+	protected abstract void _apiVersion(Wrap<String> c);
 
 	public String getApiVersion() {
 		return apiVersion;
@@ -2872,16 +2874,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiVersion(String apiVersion) {
 		this.apiVersion = apiVersion;
-		this.apiVersionCouverture.dejaInitialise = true;
+		this.apiVersionWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiVersionInit() {
-		if(!apiVersionCouverture.dejaInitialise) {
-			_apiVersion(apiVersionCouverture);
+	protected SiteConfig apiVersionInit() {
+		if(!apiVersionWrap.alreadyInitialized) {
+			_apiVersion(apiVersionWrap);
 			if(apiVersion == null)
-				setApiVersion(apiVersionCouverture.o);
+				setApiVersion(apiVersionWrap.o);
 		}
-		apiVersionCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiVersionWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiVersion() {
@@ -2912,15 +2914,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiContactMail;
-	public Couverture<String> apiContactMailCouverture = new Couverture<String>().p(this).c(String.class).var("apiContactMail").o(apiContactMail);
+	public Wrap<String> apiContactMailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactMail").o(apiContactMail);
 
 	/**	<br/>L'entité « apiContactMail »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiContactMail">Trouver l'entité apiContactMail dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiContactMail">Trouver l'entité apiContactMail dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiContactMail(Couverture<String> c);
+	protected abstract void _apiContactMail(Wrap<String> c);
 
 	public String getApiContactMail() {
 		return apiContactMail;
@@ -2928,16 +2930,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiContactMail(String apiContactMail) {
 		this.apiContactMail = apiContactMail;
-		this.apiContactMailCouverture.dejaInitialise = true;
+		this.apiContactMailWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiContactMailInit() {
-		if(!apiContactMailCouverture.dejaInitialise) {
-			_apiContactMail(apiContactMailCouverture);
+	protected SiteConfig apiContactMailInit() {
+		if(!apiContactMailWrap.alreadyInitialized) {
+			_apiContactMail(apiContactMailWrap);
 			if(apiContactMail == null)
-				setApiContactMail(apiContactMailCouverture.o);
+				setApiContactMail(apiContactMailWrap.o);
 		}
-		apiContactMailCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiContactMailWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiContactMail() {
@@ -2968,15 +2970,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenceNom;
-	public Couverture<String> apiLicenceNomCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceNom").o(apiLicenceNom);
+	public Wrap<String> apiLicenceNomWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenceNom").o(apiLicenceNom);
 
 	/**	<br/>L'entité « apiLicenceNom »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiLicenceNom">Trouver l'entité apiLicenceNom dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenceNom">Trouver l'entité apiLicenceNom dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiLicenceNom(Couverture<String> c);
+	protected abstract void _apiLicenceNom(Wrap<String> c);
 
 	public String getApiLicenceNom() {
 		return apiLicenceNom;
@@ -2984,16 +2986,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiLicenceNom(String apiLicenceNom) {
 		this.apiLicenceNom = apiLicenceNom;
-		this.apiLicenceNomCouverture.dejaInitialise = true;
+		this.apiLicenceNomWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiLicenceNomInit() {
-		if(!apiLicenceNomCouverture.dejaInitialise) {
-			_apiLicenceNom(apiLicenceNomCouverture);
+	protected SiteConfig apiLicenceNomInit() {
+		if(!apiLicenceNomWrap.alreadyInitialized) {
+			_apiLicenceNom(apiLicenceNomWrap);
 			if(apiLicenceNom == null)
-				setApiLicenceNom(apiLicenceNomCouverture.o);
+				setApiLicenceNom(apiLicenceNomWrap.o);
 		}
-		apiLicenceNomCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiLicenceNomWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiLicenceNom() {
@@ -3024,15 +3026,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenceUrl;
-	public Couverture<String> apiLicenceUrlCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceUrl").o(apiLicenceUrl);
+	public Wrap<String> apiLicenceUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenceUrl").o(apiLicenceUrl);
 
 	/**	<br/>L'entité « apiLicenceUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiLicenceUrl">Trouver l'entité apiLicenceUrl dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenceUrl">Trouver l'entité apiLicenceUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiLicenceUrl(Couverture<String> c);
+	protected abstract void _apiLicenceUrl(Wrap<String> c);
 
 	public String getApiLicenceUrl() {
 		return apiLicenceUrl;
@@ -3040,16 +3042,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiLicenceUrl(String apiLicenceUrl) {
 		this.apiLicenceUrl = apiLicenceUrl;
-		this.apiLicenceUrlCouverture.dejaInitialise = true;
+		this.apiLicenceUrlWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiLicenceUrlInit() {
-		if(!apiLicenceUrlCouverture.dejaInitialise) {
-			_apiLicenceUrl(apiLicenceUrlCouverture);
+	protected SiteConfig apiLicenceUrlInit() {
+		if(!apiLicenceUrlWrap.alreadyInitialized) {
+			_apiLicenceUrl(apiLicenceUrlWrap);
 			if(apiLicenceUrl == null)
-				setApiLicenceUrl(apiLicenceUrlCouverture.o);
+				setApiLicenceUrl(apiLicenceUrlWrap.o);
 		}
-		apiLicenceUrlCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiLicenceUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiLicenceUrl() {
@@ -3080,15 +3082,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiNomHote;
-	public Couverture<String> apiNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("apiNomHote").o(apiNomHote);
+	public Wrap<String> apiNomHoteWrap = new Wrap<String>().p(this).c(String.class).var("apiNomHote").o(apiNomHote);
 
 	/**	<br/>L'entité « apiNomHote »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiNomHote">Trouver l'entité apiNomHote dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiNomHote">Trouver l'entité apiNomHote dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiNomHote(Couverture<String> c);
+	protected abstract void _apiNomHote(Wrap<String> c);
 
 	public String getApiNomHote() {
 		return apiNomHote;
@@ -3096,16 +3098,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiNomHote(String apiNomHote) {
 		this.apiNomHote = apiNomHote;
-		this.apiNomHoteCouverture.dejaInitialise = true;
+		this.apiNomHoteWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiNomHoteInit() {
-		if(!apiNomHoteCouverture.dejaInitialise) {
-			_apiNomHote(apiNomHoteCouverture);
+	protected SiteConfig apiNomHoteInit() {
+		if(!apiNomHoteWrap.alreadyInitialized) {
+			_apiNomHote(apiNomHoteWrap);
 			if(apiNomHote == null)
-				setApiNomHote(apiNomHoteCouverture.o);
+				setApiNomHote(apiNomHoteWrap.o);
 		}
-		apiNomHoteCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiNomHoteWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiNomHote() {
@@ -3136,15 +3138,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiCheminBase;
-	public Couverture<String> apiCheminBaseCouverture = new Couverture<String>().p(this).c(String.class).var("apiCheminBase").o(apiCheminBase);
+	public Wrap<String> apiCheminBaseWrap = new Wrap<String>().p(this).c(String.class).var("apiCheminBase").o(apiCheminBase);
 
 	/**	<br/>L'entité « apiCheminBase »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiCheminBase">Trouver l'entité apiCheminBase dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiCheminBase">Trouver l'entité apiCheminBase dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiCheminBase(Couverture<String> c);
+	protected abstract void _apiCheminBase(Wrap<String> c);
 
 	public String getApiCheminBase() {
 		return apiCheminBase;
@@ -3152,16 +3154,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setApiCheminBase(String apiCheminBase) {
 		this.apiCheminBase = apiCheminBase;
-		this.apiCheminBaseCouverture.dejaInitialise = true;
+		this.apiCheminBaseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite apiCheminBaseInit() {
-		if(!apiCheminBaseCouverture.dejaInitialise) {
-			_apiCheminBase(apiCheminBaseCouverture);
+	protected SiteConfig apiCheminBaseInit() {
+		if(!apiCheminBaseWrap.alreadyInitialized) {
+			_apiCheminBase(apiCheminBaseWrap);
 			if(apiCheminBase == null)
-				setApiCheminBase(apiCheminBaseCouverture.o);
+				setApiCheminBase(apiCheminBaseWrap.o);
 		}
-		apiCheminBaseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		apiCheminBaseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrApiCheminBase() {
@@ -3184,60 +3186,60 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiCheminBase == null ? "" : StringEscapeUtils.escapeHtml4(strApiCheminBase());
 	}
 
-	//////////////////////////
-	// vertxServiceAddresse //
-	//////////////////////////
+	/////////////////////////
+	// vertxServiceAddress //
+	/////////////////////////
 
-	/**	L'entité « vertxServiceAddresse »
+	/**	L'entité « vertxServiceAddress »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String vertxServiceAddresse;
-	public Couverture<String> vertxServiceAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("vertxServiceAddresse").o(vertxServiceAddresse);
+	protected String vertxServiceAddress;
+	public Wrap<String> vertxServiceAddressWrap = new Wrap<String>().p(this).c(String.class).var("vertxServiceAddress").o(vertxServiceAddress);
 
-	/**	<br/>L'entité « vertxServiceAddresse »
+	/**	<br/>L'entité « vertxServiceAddress »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vertxServiceAddresse">Trouver l'entité vertxServiceAddresse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:vertxServiceAddress">Trouver l'entité vertxServiceAddress dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _vertxServiceAddresse(Couverture<String> c);
+	protected abstract void _vertxServiceAddress(Wrap<String> c);
 
-	public String getVertxServiceAddresse() {
-		return vertxServiceAddresse;
+	public String getVertxServiceAddress() {
+		return vertxServiceAddress;
 	}
 
-	public void setVertxServiceAddresse(String vertxServiceAddresse) {
-		this.vertxServiceAddresse = vertxServiceAddresse;
-		this.vertxServiceAddresseCouverture.dejaInitialise = true;
+	public void setVertxServiceAddress(String vertxServiceAddress) {
+		this.vertxServiceAddress = vertxServiceAddress;
+		this.vertxServiceAddressWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite vertxServiceAddresseInit() {
-		if(!vertxServiceAddresseCouverture.dejaInitialise) {
-			_vertxServiceAddresse(vertxServiceAddresseCouverture);
-			if(vertxServiceAddresse == null)
-				setVertxServiceAddresse(vertxServiceAddresseCouverture.o);
+	protected SiteConfig vertxServiceAddressInit() {
+		if(!vertxServiceAddressWrap.alreadyInitialized) {
+			_vertxServiceAddress(vertxServiceAddressWrap);
+			if(vertxServiceAddress == null)
+				setVertxServiceAddress(vertxServiceAddressWrap.o);
 		}
-		vertxServiceAddresseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		vertxServiceAddressWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
-	public String solrVertxServiceAddresse() {
-		return vertxServiceAddresse;
+	public String solrVertxServiceAddress() {
+		return vertxServiceAddress;
 	}
 
-	public String strVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : vertxServiceAddresse;
+	public String strVertxServiceAddress() {
+		return vertxServiceAddress == null ? "" : vertxServiceAddress;
 	}
 
-	public String nomAffichageVertxServiceAddresse() {
+	public String nomAffichageVertxServiceAddress() {
 		return null;
 	}
 
-	public String htmTooltipVertxServiceAddresse() {
+	public String htmTooltipVertxServiceAddress() {
 		return null;
 	}
 
-	public String htmVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddresse());
+	public String htmVertxServiceAddress() {
+		return vertxServiceAddress == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddress());
 	}
 
 	/////////////////////
@@ -3248,15 +3250,15 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String statiqueUrlBase;
-	public Couverture<String> statiqueUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
+	public Wrap<String> statiqueUrlBaseWrap = new Wrap<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
 
 	/**	<br/>L'entité « statiqueUrlBase »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:statiqueUrlBase">Trouver l'entité statiqueUrlBase dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:statiqueUrlBase">Trouver l'entité statiqueUrlBase dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _statiqueUrlBase(Couverture<String> c);
+	protected abstract void _statiqueUrlBase(Wrap<String> c);
 
 	public String getStatiqueUrlBase() {
 		return statiqueUrlBase;
@@ -3264,16 +3266,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public void setStatiqueUrlBase(String statiqueUrlBase) {
 		this.statiqueUrlBase = statiqueUrlBase;
-		this.statiqueUrlBaseCouverture.dejaInitialise = true;
+		this.statiqueUrlBaseWrap.alreadyInitialized = true;
 	}
-	protected ConfigSite statiqueUrlBaseInit() {
-		if(!statiqueUrlBaseCouverture.dejaInitialise) {
-			_statiqueUrlBase(statiqueUrlBaseCouverture);
+	protected SiteConfig statiqueUrlBaseInit() {
+		if(!statiqueUrlBaseWrap.alreadyInitialized) {
+			_statiqueUrlBase(statiqueUrlBaseWrap);
 			if(statiqueUrlBase == null)
-				setStatiqueUrlBase(statiqueUrlBaseCouverture.o);
+				setStatiqueUrlBase(statiqueUrlBaseWrap.o);
 		}
-		statiqueUrlBaseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
+		statiqueUrlBaseWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
 	}
 
 	public String solrStatiqueUrlBase() {
@@ -3297,25 +3299,25 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	}
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseConfigSite = false;
+	protected boolean alreadyInitializedSiteConfig = false;
 
-	public ConfigSite initLoinConfigSite(RequeteSiteFrFR requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseConfigSite) {
-			dejaInitialiseConfigSite = true;
-			initLoinConfigSite();
+	public SiteConfig initDeepSiteConfig(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedSiteConfig) {
+			alreadyInitializedSiteConfig = true;
+			initDeepSiteConfig();
 		}
-		return (ConfigSite)this;
+		return (SiteConfig)this;
 	}
 
-	public void initLoinConfigSite() {
-		initConfigSite();
+	public void initDeepSiteConfig() {
+		initSiteConfig();
 	}
 
-	public void initConfigSite() {
+	public void initSiteConfig() {
 		configCheminInit();
 		configInit();
 		identifiantSiteInit();
@@ -3335,7 +3337,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		authUrlInit();
 		cryptageSelInit();
 		cryptageMotDePasseInit();
-		siteUrlBaseInit();
+		siteBaseUrlInit();
 		siteNomAffichageInit();
 		jdbcClassePiloteInit();
 		jdbcUtilisateurInit();
@@ -3372,23 +3374,23 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		apiLicenceUrlInit();
 		apiNomHoteInit();
 		apiCheminBaseInit();
-		vertxServiceAddresseInit();
+		vertxServiceAddressInit();
 		statiqueUrlBaseInit();
 	}
 
-	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinConfigSite(requeteSite_);
+	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepSiteConfig(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteConfigSite(RequeteSiteFrFR requeteSite_) {
+	public void siteRequestSiteConfig(SiteRequestEnUS siteRequest_) {
 	}
 
-	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteConfigSite(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestSiteConfig(siteRequest_);
 	}
 
 	/////////////
@@ -3400,7 +3402,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirConfigSite(v);
+				o = obtenirSiteConfig(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -3408,125 +3410,125 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		return o;
 	}
-	public Object obtenirConfigSite(String var) {
-		ConfigSite oConfigSite = (ConfigSite)this;
+	public Object obtenirSiteConfig(String var) {
+		SiteConfig oSiteConfig = (SiteConfig)this;
 		switch(var) {
 			case "configChemin":
-				return oConfigSite.configChemin;
+				return oSiteConfig.configChemin;
 			case "config":
-				return oConfigSite.config;
+				return oSiteConfig.config;
 			case "identifiantSite":
-				return oConfigSite.identifiantSite;
+				return oSiteConfig.identifiantSite;
 			case "prefixeEchappe":
-				return oConfigSite.prefixeEchappe;
+				return oSiteConfig.prefixeEchappe;
 			case "appliChemin":
-				return oConfigSite.appliChemin;
+				return oSiteConfig.appliChemin;
 			case "racineDocument":
-				return oConfigSite.racineDocument;
+				return oSiteConfig.racineDocument;
 			case "nomEntreprise":
-				return oConfigSite.nomEntreprise;
+				return oSiteConfig.nomEntreprise;
 			case "nomDomaine":
-				return oConfigSite.nomDomaine;
+				return oSiteConfig.nomDomaine;
 			case "siteNomHote":
-				return oConfigSite.siteNomHote;
+				return oSiteConfig.siteNomHote;
 			case "sitePort":
-				return oConfigSite.sitePort;
+				return oSiteConfig.sitePort;
 			case "authRoyaume":
-				return oConfigSite.authRoyaume;
+				return oSiteConfig.authRoyaume;
 			case "authRessource":
-				return oConfigSite.authRessource;
+				return oSiteConfig.authRessource;
 			case "authSecret":
-				return oConfigSite.authSecret;
+				return oSiteConfig.authSecret;
 			case "authSslRequis":
-				return oConfigSite.authSslRequis;
+				return oSiteConfig.authSslRequis;
 			case "sslJksChemin":
-				return oConfigSite.sslJksChemin;
+				return oSiteConfig.sslJksChemin;
 			case "sslJksMotDePasse":
-				return oConfigSite.sslJksMotDePasse;
+				return oSiteConfig.sslJksMotDePasse;
 			case "authUrl":
-				return oConfigSite.authUrl;
+				return oSiteConfig.authUrl;
 			case "cryptageSel":
-				return oConfigSite.cryptageSel;
+				return oSiteConfig.cryptageSel;
 			case "cryptageMotDePasse":
-				return oConfigSite.cryptageMotDePasse;
-			case "siteUrlBase":
-				return oConfigSite.siteUrlBase;
+				return oSiteConfig.cryptageMotDePasse;
+			case "siteBaseUrl":
+				return oSiteConfig.siteBaseUrl;
 			case "siteNomAffichage":
-				return oConfigSite.siteNomAffichage;
+				return oSiteConfig.siteNomAffichage;
 			case "jdbcClassePilote":
-				return oConfigSite.jdbcClassePilote;
+				return oSiteConfig.jdbcClassePilote;
 			case "jdbcUtilisateur":
-				return oConfigSite.jdbcUtilisateur;
+				return oSiteConfig.jdbcUtilisateur;
 			case "jdbcMotDePasse":
-				return oConfigSite.jdbcMotDePasse;
+				return oSiteConfig.jdbcMotDePasse;
 			case "jdbcTailleMaxPiscine":
-				return oConfigSite.jdbcTailleMaxPiscine;
+				return oSiteConfig.jdbcTailleMaxPiscine;
 			case "jdbcTailleInitialePiscine":
-				return oConfigSite.jdbcTailleInitialePiscine;
+				return oSiteConfig.jdbcTailleInitialePiscine;
 			case "jdbcTailleMinPiscine":
-				return oConfigSite.jdbcTailleMinPiscine;
+				return oSiteConfig.jdbcTailleMinPiscine;
 			case "jdbcMaxDeclarations":
-				return oConfigSite.jdbcMaxDeclarations;
+				return oSiteConfig.jdbcMaxDeclarations;
 			case "jdbcMaxDeclarationsParConnexion":
-				return oConfigSite.jdbcMaxDeclarationsParConnexion;
+				return oSiteConfig.jdbcMaxDeclarationsParConnexion;
 			case "jdbcTempsInactiviteMax":
-				return oConfigSite.jdbcTempsInactiviteMax;
+				return oSiteConfig.jdbcTempsInactiviteMax;
 			case "jdbcUrl":
-				return oConfigSite.jdbcUrl;
+				return oSiteConfig.jdbcUrl;
 			case "solrUrl":
-				return oConfigSite.solrUrl;
+				return oSiteConfig.solrUrl;
 			case "solrUrlComputate":
-				return oConfigSite.solrUrlComputate;
+				return oSiteConfig.solrUrlComputate;
 			case "jetonIdentitePaypal":
-				return oConfigSite.jetonIdentitePaypal;
+				return oSiteConfig.jetonIdentitePaypal;
 			case "compteFacebook":
-				return oConfigSite.compteFacebook;
+				return oSiteConfig.compteFacebook;
 			case "compteTwitter":
-				return oConfigSite.compteTwitter;
+				return oSiteConfig.compteTwitter;
 			case "compteGooglePlus":
-				return oConfigSite.compteGooglePlus;
+				return oSiteConfig.compteGooglePlus;
 			case "compteInstagram":
-				return oConfigSite.compteInstagram;
+				return oSiteConfig.compteInstagram;
 			case "compteYoutube":
-				return oConfigSite.compteYoutube;
+				return oSiteConfig.compteYoutube;
 			case "identifiantCanalYoutube":
-				return oConfigSite.identifiantCanalYoutube;
+				return oSiteConfig.identifiantCanalYoutube;
 			case "comptePinterest":
-				return oConfigSite.comptePinterest;
+				return oSiteConfig.comptePinterest;
 			case "compteOpenclipart":
-				return oConfigSite.compteOpenclipart;
+				return oSiteConfig.compteOpenclipart;
 			case "compteMail":
-				return oConfigSite.compteMail;
+				return oSiteConfig.compteMail;
 			case "roleAdmin":
-				return oConfigSite.roleAdmin;
+				return oSiteConfig.roleAdmin;
 			case "mailAdmin":
-				return oConfigSite.mailAdmin;
+				return oSiteConfig.mailAdmin;
 			case "nombreExecuteurs":
-				return oConfigSite.nombreExecuteurs;
+				return oSiteConfig.nombreExecuteurs;
 			case "openApiVersion":
-				return oConfigSite.openApiVersion;
+				return oSiteConfig.openApiVersion;
 			case "apiDescription":
-				return oConfigSite.apiDescription;
+				return oSiteConfig.apiDescription;
 			case "apiTitre":
-				return oConfigSite.apiTitre;
+				return oSiteConfig.apiTitre;
 			case "apiTermsService":
-				return oConfigSite.apiTermsService;
+				return oSiteConfig.apiTermsService;
 			case "apiVersion":
-				return oConfigSite.apiVersion;
+				return oSiteConfig.apiVersion;
 			case "apiContactMail":
-				return oConfigSite.apiContactMail;
+				return oSiteConfig.apiContactMail;
 			case "apiLicenceNom":
-				return oConfigSite.apiLicenceNom;
+				return oSiteConfig.apiLicenceNom;
 			case "apiLicenceUrl":
-				return oConfigSite.apiLicenceUrl;
+				return oSiteConfig.apiLicenceUrl;
 			case "apiNomHote":
-				return oConfigSite.apiNomHote;
+				return oSiteConfig.apiNomHote;
 			case "apiCheminBase":
-				return oConfigSite.apiCheminBase;
-			case "vertxServiceAddresse":
-				return oConfigSite.vertxServiceAddresse;
+				return oSiteConfig.apiCheminBase;
+			case "vertxServiceAddress":
+				return oSiteConfig.vertxServiceAddress;
 			case "statiqueUrlBase":
-				return oConfigSite.statiqueUrlBase;
+				return oSiteConfig.statiqueUrlBase;
 			default:
 				return null;
 		}
@@ -3541,7 +3543,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerConfigSite(v, val);
+				o = attribuerSiteConfig(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -3549,8 +3551,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object attribuerConfigSite(String var, Object val) {
-		ConfigSite oConfigSite = (ConfigSite)this;
+	public Object attribuerSiteConfig(String var, Object val) {
+		SiteConfig oSiteConfig = (SiteConfig)this;
 		switch(var) {
 			default:
 				return null;
@@ -3561,22 +3563,22 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	// definir //
 	/////////////
 
-	public boolean definirPourClasse(String var, String val) {
+	public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirConfigSite(v, val);
+					o = definirSiteConfig(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirConfigSite(String var, String val) {
+	public Object definirSiteConfig(String var, String val) {
 		switch(var) {
 			default:
 				return null;
@@ -3598,9 +3600,9 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof ConfigSite))
+		if(!(o instanceof SiteConfig))
 			return false;
-		ConfigSite that = (ConfigSite)o;
+		SiteConfig that = (SiteConfig)o;
 		return true;
 	}
 
@@ -3610,7 +3612,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ConfigSite {");
+		sb.append("SiteConfig {");
 		sb.append(" }");
 		return sb.toString();
 	}

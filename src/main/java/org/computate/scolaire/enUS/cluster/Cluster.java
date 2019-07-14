@@ -1,176 +1,58 @@
-package org.computate.scolaire.frFR.cluster;  
+package org.computate.scolaire.enUS.cluster;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.commons.lang3.StringUtils;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.page.MiseEnPage;
-import org.computate.scolaire.frFR.page.parti.PagePart;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.xml.OutilXml;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.enUS.school.page.PageLayout;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+public class Cluster extends ClusterGen<Object> {
 
-
-/**       
- * Api: true
- * ApiUri: /api/cluster
- * Role: SiteAdmin
- * ApiMethode: RechercheFrFRPage
- * ApiMethode: RechercheEnUSPage
- * ApiMethode: Recherche
- * ApiMethode: POST
- * ApiMethode: PATCH
- * ApiMethode: GET
- * ApiMethode: DELETE
- * ApiUriRechercheFrFRPage: /frFR/cluster
- * ApiUriRechercheEnUSPage: /enUS/cluster
- * PageRechercheFrFRPage: ClusterFrFRPage
- * PageRechercheEnUSPage: ClusterEnUSPage
- * MotCle: classeNomSimpleCluster
- * Modele: true
- */   
-public class Cluster extends ClusterGen<Object> { 
-
-	/**
-	 * {@inheritDoc}
-	 */       
-	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
+	protected void _requeteSite_(Wrap<SiteRequestEnUS> c) {}
 
 	protected void _pageParts(List<PagePart> l) {
 	}
 
-	public void avantPagePart(PagePart o, String var) {
+	public void  avantPagePart(PagePart o, String var) {
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * ClePrimaire: true
-	 * Description.frFR: La clé primaire dans la base de données. 
-	 * Description.enUS: The primary key in the database. 
-	 * NomAffichage.frFR: clé primaire
-	 * NomAffichage.enUS: primary key
-	 */                          
-	protected void _pk(Couverture<Long> c) {}
+	protected void _pk(Wrap<Long> c) {}
 
-	/**
-	 * {@inheritDoc}
-	 * CleUnique: true
-	 */
-	protected void _id(Couverture<String> c) {
+	protected void _id(Wrap<String> c) {
 		if(pk != null)
 			c.o(pk.toString());
-	} 
-
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Modifier: false
-	 * HtmlLigne: 1
-	 * Description.frFR: La date et l'heure créées. 
-	 * Description.enUS: The date and time created. 
-	 * NomAffichage.frFR: crée
-	 * NomAffichage.enUS: created
-	 */    
-	protected void _cree(Couverture<ZonedDateTime> c) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Modifier: false
-	 * HtmlLigne: 1
-	 * Description.frFR: La date et l'heure modifiéés. 
-	 * Description.enUS: The date and time modified. 
-	 * NomAffichage.frFR: modifié
-	 * NomAffichage.enUS: modified
-	 */
-	protected void _modifie(Couverture<ZonedDateTime> c) {}
-	
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: archivé. 
-	 * Description.enUS: archived. 
-	 * NomAffichage.frFR: archivé
-	 * NomAffichage.enUS: archived
-	 */
-	protected void _archive(Couverture<Boolean> c) {
-		c.o(false);
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: supprimé. 
-	 * Description.enUS: deleted. 
-	 * NomAffichage.frFR: supprimé
-	 * NomAffichage.enUS: deleted
-	 */ 
-	protected void _supprime(Couverture<Boolean> c) {
+
+	protected void _cree(Wrap<ZonedDateTime> c) {}
+
+	protected void _modifie(Wrap<ZonedDateTime> c) {}
+
+	protected void _archive(Wrap<Boolean> c) {
 		c.o(false);
 	}
 
-	/**  
-	 * Indexe: true
-	 * Stocke: true
-	 */       
-	protected void _classeNomCanonique(Couverture<String> c) {
+	protected void _supprime(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _classeNomCanonique(Wrap<String> c) {
 		String o = getClass().getCanonicalName();
 		c.o(o);
 	}
 
-	/**
-	 * Indexe: true
-	 * Stocke: true
-	 */          
-	protected void _classeNomSimple(Couverture<String> c) {
+	protected void _classeNomSimple(Wrap<String> c) {
 		String o = getClass().getSimpleName();
 		c.o(o);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 **/      
 	protected void _classeNomsCanoniques(List<String> l) { 
 		l.add(Cluster.class.getCanonicalName());
 	}
-//
-//	/**
-//	 * genInclure: true
-//	 */
-//	public Cluster e(String nomLocal) {
-//		if(page_ != null)
-//			page_.e(nomLocal);
-//		return page_;
-//	}
-//
-//	/**
-//	 * genInclure: true
-//	 */
-//	public Cluster a(String nomAttribut, Object...objets) {
-//		if(page_ != null)
-//			page_.a(nomAttribut, objets);
-//		return page_;
-//	}
 
-	/**
-	 */
 	public Cluster e(String nomLocal) {
 		ToutEcrivain w = requeteSite_.getW();
 		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
@@ -207,8 +89,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**  
-	 */
 	public Cluster a(String nomAttribut, Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
 		w.s(" ");
@@ -232,8 +112,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/** 
-	 */
 	public Cluster f() {
 		ToutEcrivain w = requeteSite_.getW();
 		w.s(">");
@@ -241,8 +119,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster s(Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
 		for(Object objet : objets) {
@@ -255,8 +131,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster t(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
 			s("\t");
@@ -264,8 +138,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster tl(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
 			s("\t");
@@ -274,8 +146,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/** 
-	 */
 	public Cluster l(Object...objets) {
 		s(objets);
 		s("\n");
@@ -288,8 +158,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/** 
-	 */
 	public Cluster sx(Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
 		for(Object objet : objets) {
@@ -302,8 +170,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster tx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
@@ -311,8 +177,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster tlx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
@@ -321,8 +185,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**
-	 */
 	public Cluster fg() {
 		ToutEcrivain w = requeteSite_.getW();
 		w.s("/>");
@@ -331,8 +193,6 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	/**     
-	 */
 	public Cluster g(String nomLocal) {
 		ToutEcrivain w = requeteSite_.getW();
 		String nomLocalParent = requeteSite_.getXmlPile().peek();

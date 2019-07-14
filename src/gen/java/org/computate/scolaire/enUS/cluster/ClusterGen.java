@@ -1,25 +1,25 @@
-package org.computate.scolaire.frFR.cluster;
+package org.computate.scolaire.enUS.cluster;
 
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
-import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
-import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.page.parti.PagePart;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
@@ -39,7 +39,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe classeNomsCanoniques dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -57,32 +57,32 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected RequeteSiteFrFR requeteSite_;
-	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
+	protected SiteRequestEnUS requeteSite_;
+	public Wrap<SiteRequestEnUS> requeteSite_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _requeteSite_(Couverture<RequeteSiteFrFR> c);
+	protected abstract void _requeteSite_(Wrap<SiteRequestEnUS> c);
 
-	public RequeteSiteFrFR getRequeteSite_() {
+	public SiteRequestEnUS getRequeteSite_() {
 		return requeteSite_;
 	}
 
-	public void setRequeteSite_(RequeteSiteFrFR requeteSite_) {
+	public void setRequeteSite_(SiteRequestEnUS requeteSite_) {
 		this.requeteSite_ = requeteSite_;
-		this.requeteSite_Couverture.dejaInitialise = true;
+		this.requeteSite_Wrap.alreadyInitialized = true;
 	}
 	protected Cluster requeteSite_Init() {
-		if(!requeteSite_Couverture.dejaInitialise) {
-			_requeteSite_(requeteSite_Couverture);
+		if(!requeteSite_Wrap.alreadyInitialized) {
+			_requeteSite_(requeteSite_Wrap);
 			if(requeteSite_ == null)
-				setRequeteSite_(requeteSite_Couverture.o);
+				setRequeteSite_(requeteSite_Wrap.o);
 		}
-		requeteSite_Couverture.dejaInitialise(true);
+		requeteSite_Wrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -94,11 +94,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.parti.PagePart>();
-	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
+	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageParts">Trouver l'entité pageParts dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageParts">Trouver l'entité pageParts dans Solr</a>
 	 * <br/>
 	 * @param pageParts est l'entité déjà construit. 
 	 **/
@@ -110,7 +110,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setPageParts(List<PagePart> pageParts) {
 		this.pageParts = pageParts;
-		this.pagePartsCouverture.dejaInitialise = true;
+		this.pagePartsWrap.alreadyInitialized = true;
 	}
 	public Cluster addPageParts(PagePart...objets) {
 		for(PagePart o : objets) {
@@ -125,10 +125,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	public abstract void avantPagePart(PagePart o, String entiteVar);
 	protected Cluster pagePartsInit() {
-		if(!pagePartsCouverture.dejaInitialise) {
+		if(!pagePartsWrap.alreadyInitialized) {
 			_pageParts(pageParts);
 		}
-		pagePartsCouverture.dejaInitialise(true);
+		pagePartsWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -140,15 +140,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long pk;
-	public Couverture<Long> pkCouverture = new Couverture<Long>().p(this).c(Long.class).var("pk").o(pk);
+	public Wrap<Long> pkWrap = new Wrap<Long>().p(this).c(Long.class).var("pk").o(pk);
 
 	/**	<br/>L'entité « pk »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pk">Trouver l'entité pk dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pk">Trouver l'entité pk dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _pk(Couverture<Long> c);
+	protected abstract void _pk(Wrap<Long> c);
 
 	public Long getPk() {
 		return pk;
@@ -156,21 +156,21 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setPk(Long pk) {
 		this.pk = pk;
-		this.pkCouverture.dejaInitialise = true;
+		this.pkWrap.alreadyInitialized = true;
 	}
 	public Cluster setPk(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
 			this.pk = Long.parseLong(o);
-		this.pkCouverture.dejaInitialise = true;
+		this.pkWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	protected Cluster pkInit() {
-		if(!pkCouverture.dejaInitialise) {
-			_pk(pkCouverture);
+		if(!pkWrap.alreadyInitialized) {
+			_pk(pkWrap);
 			if(pk == null)
-				setPk(pkCouverture.o);
+				setPk(pkWrap.o);
 		}
-		pkCouverture.dejaInitialise(true);
+		pkWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -183,7 +183,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String nomAffichagePk() {
-		return "clé primaire";
+		return "primary key";
 	}
 
 	public String htmTooltipPk() {
@@ -243,15 +243,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String id;
-	public Couverture<String> idCouverture = new Couverture<String>().p(this).c(String.class).var("id").o(id);
+	public Wrap<String> idWrap = new Wrap<String>().p(this).c(String.class).var("id").o(id);
 
 	/**	<br/>L'entité « id »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:id">Trouver l'entité id dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:id">Trouver l'entité id dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _id(Couverture<String> c);
+	protected abstract void _id(Wrap<String> c);
 
 	public String getId() {
 		return id;
@@ -259,15 +259,15 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setId(String id) {
 		this.id = id;
-		this.idCouverture.dejaInitialise = true;
+		this.idWrap.alreadyInitialized = true;
 	}
 	protected Cluster idInit() {
-		if(!idCouverture.dejaInitialise) {
-			_id(idCouverture);
+		if(!idWrap.alreadyInitialized) {
+			_id(idWrap);
 			if(id == null)
-				setId(idCouverture.o);
+				setId(idWrap.o);
 		}
-		idCouverture.dejaInitialise(true);
+		idWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -340,15 +340,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime cree;
-	public Couverture<ZonedDateTime> creeCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
+	public Wrap<ZonedDateTime> creeWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
 
 	/**	<br/>L'entité « cree »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cree">Trouver l'entité cree dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cree">Trouver l'entité cree dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _cree(Couverture<ZonedDateTime> c);
+	protected abstract void _cree(Wrap<ZonedDateTime> c);
 
 	public ZonedDateTime getCree() {
 		return cree;
@@ -356,31 +356,31 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setCree(ZonedDateTime cree) {
 		this.cree = cree;
-		this.creeCouverture.dejaInitialise = true;
+		this.creeWrap.alreadyInitialized = true;
 	}
 	public Cluster setCree(Instant o) {
 		this.cree = ZonedDateTime.from(o);
-		this.creeCouverture.dejaInitialise = true;
+		this.creeWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCree(String o) {
 		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-		this.creeCouverture.dejaInitialise = true;
+		this.creeWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setCree(Date o) {
 		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
-		this.creeCouverture.dejaInitialise = true;
+		this.creeWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	protected Cluster creeInit() {
-		if(!creeCouverture.dejaInitialise) {
-			_cree(creeCouverture);
+		if(!creeWrap.alreadyInitialized) {
+			_cree(creeWrap);
 			if(cree == null)
-				setCree(creeCouverture.o);
+				setCree(creeWrap.o);
 		}
-		creeCouverture.dejaInitialise(true);
+		creeWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -389,11 +389,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ssa zz", Locale.US));
 	}
 
 	public String nomAffichageCree() {
-		return "crée";
+		return "created";
 	}
 
 	public String htmTooltipCree() {
@@ -453,15 +453,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime modifie;
-	public Couverture<ZonedDateTime> modifieCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modifie").o(modifie);
+	public Wrap<ZonedDateTime> modifieWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modifie").o(modifie);
 
 	/**	<br/>L'entité « modifie »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:modifie">Trouver l'entité modifie dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:modifie">Trouver l'entité modifie dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _modifie(Couverture<ZonedDateTime> c);
+	protected abstract void _modifie(Wrap<ZonedDateTime> c);
 
 	public ZonedDateTime getModifie() {
 		return modifie;
@@ -469,31 +469,31 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setModifie(ZonedDateTime modifie) {
 		this.modifie = modifie;
-		this.modifieCouverture.dejaInitialise = true;
+		this.modifieWrap.alreadyInitialized = true;
 	}
 	public Cluster setModifie(Instant o) {
 		this.modifie = ZonedDateTime.from(o);
-		this.modifieCouverture.dejaInitialise = true;
+		this.modifieWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModifie(String o) {
 		this.modifie = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-		this.modifieCouverture.dejaInitialise = true;
+		this.modifieWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setModifie(Date o) {
 		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
-		this.modifieCouverture.dejaInitialise = true;
+		this.modifieWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	protected Cluster modifieInit() {
-		if(!modifieCouverture.dejaInitialise) {
-			_modifie(modifieCouverture);
+		if(!modifieWrap.alreadyInitialized) {
+			_modifie(modifieWrap);
 			if(modifie == null)
-				setModifie(modifieCouverture.o);
+				setModifie(modifieWrap.o);
 		}
-		modifieCouverture.dejaInitialise(true);
+		modifieWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -502,11 +502,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModifie() {
-		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ssa zz", Locale.US));
 	}
 
 	public String nomAffichageModifie() {
-		return "modifié";
+		return "modified";
 	}
 
 	public String htmTooltipModifie() {
@@ -566,15 +566,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean archive;
-	public Couverture<Boolean> archiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("archive").o(archive);
+	public Wrap<Boolean> archiveWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("archive").o(archive);
 
 	/**	<br/>L'entité « archive »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:archive">Trouver l'entité archive dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:archive">Trouver l'entité archive dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _archive(Couverture<Boolean> c);
+	protected abstract void _archive(Wrap<Boolean> c);
 
 	public Boolean getArchive() {
 		return archive;
@@ -582,20 +582,20 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setArchive(Boolean archive) {
 		this.archive = archive;
-		this.archiveCouverture.dejaInitialise = true;
+		this.archiveWrap.alreadyInitialized = true;
 	}
 	public Cluster setArchive(String o) {
 		this.archive = Boolean.parseBoolean(o);
-		this.archiveCouverture.dejaInitialise = true;
+		this.archiveWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	protected Cluster archiveInit() {
-		if(!archiveCouverture.dejaInitialise) {
-			_archive(archiveCouverture);
+		if(!archiveWrap.alreadyInitialized) {
+			_archive(archiveWrap);
 			if(archive == null)
-				setArchive(archiveCouverture.o);
+				setArchive(archiveWrap.o);
 		}
-		archiveCouverture.dejaInitialise(true);
+		archiveWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -608,7 +608,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String nomAffichageArchive() {
-		return "archivé";
+		return "archived";
 	}
 
 	public String htmTooltipArchive() {
@@ -668,15 +668,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean supprime;
-	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
+	public Wrap<Boolean> supprimeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
 
 	/**	<br/>L'entité « supprime »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:supprime">Trouver l'entité supprime dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:supprime">Trouver l'entité supprime dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _supprime(Couverture<Boolean> c);
+	protected abstract void _supprime(Wrap<Boolean> c);
 
 	public Boolean getSupprime() {
 		return supprime;
@@ -684,20 +684,20 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setSupprime(Boolean supprime) {
 		this.supprime = supprime;
-		this.supprimeCouverture.dejaInitialise = true;
+		this.supprimeWrap.alreadyInitialized = true;
 	}
 	public Cluster setSupprime(String o) {
 		this.supprime = Boolean.parseBoolean(o);
-		this.supprimeCouverture.dejaInitialise = true;
+		this.supprimeWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	protected Cluster supprimeInit() {
-		if(!supprimeCouverture.dejaInitialise) {
-			_supprime(supprimeCouverture);
+		if(!supprimeWrap.alreadyInitialized) {
+			_supprime(supprimeWrap);
 			if(supprime == null)
-				setSupprime(supprimeCouverture.o);
+				setSupprime(supprimeWrap.o);
 		}
-		supprimeCouverture.dejaInitialise(true);
+		supprimeWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -710,7 +710,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String nomAffichageSupprime() {
-		return "supprimé";
+		return "deleted";
 	}
 
 	public String htmTooltipSupprime() {
@@ -770,15 +770,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classeNomCanonique;
-	public Couverture<String> classeNomCanoniqueCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomCanonique").o(classeNomCanonique);
+	public Wrap<String> classeNomCanoniqueWrap = new Wrap<String>().p(this).c(String.class).var("classeNomCanonique").o(classeNomCanonique);
 
 	/**	<br/>L'entité « classeNomCanonique »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeNomCanonique">Trouver l'entité classeNomCanonique dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classeNomCanonique">Trouver l'entité classeNomCanonique dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _classeNomCanonique(Couverture<String> c);
+	protected abstract void _classeNomCanonique(Wrap<String> c);
 
 	public String getClasseNomCanonique() {
 		return classeNomCanonique;
@@ -786,15 +786,15 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setClasseNomCanonique(String classeNomCanonique) {
 		this.classeNomCanonique = classeNomCanonique;
-		this.classeNomCanoniqueCouverture.dejaInitialise = true;
+		this.classeNomCanoniqueWrap.alreadyInitialized = true;
 	}
 	protected Cluster classeNomCanoniqueInit() {
-		if(!classeNomCanoniqueCouverture.dejaInitialise) {
-			_classeNomCanonique(classeNomCanoniqueCouverture);
+		if(!classeNomCanoniqueWrap.alreadyInitialized) {
+			_classeNomCanonique(classeNomCanoniqueWrap);
 			if(classeNomCanonique == null)
-				setClasseNomCanonique(classeNomCanoniqueCouverture.o);
+				setClasseNomCanonique(classeNomCanoniqueWrap.o);
 		}
-		classeNomCanoniqueCouverture.dejaInitialise(true);
+		classeNomCanoniqueWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -867,15 +867,15 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classeNomSimple;
-	public Couverture<String> classeNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomSimple").o(classeNomSimple);
+	public Wrap<String> classeNomSimpleWrap = new Wrap<String>().p(this).c(String.class).var("classeNomSimple").o(classeNomSimple);
 
 	/**	<br/>L'entité « classeNomSimple »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeNomSimple">Trouver l'entité classeNomSimple dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classeNomSimple">Trouver l'entité classeNomSimple dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _classeNomSimple(Couverture<String> c);
+	protected abstract void _classeNomSimple(Wrap<String> c);
 
 	public String getClasseNomSimple() {
 		return classeNomSimple;
@@ -883,15 +883,15 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setClasseNomSimple(String classeNomSimple) {
 		this.classeNomSimple = classeNomSimple;
-		this.classeNomSimpleCouverture.dejaInitialise = true;
+		this.classeNomSimpleWrap.alreadyInitialized = true;
 	}
 	protected Cluster classeNomSimpleInit() {
-		if(!classeNomSimpleCouverture.dejaInitialise) {
-			_classeNomSimple(classeNomSimpleCouverture);
+		if(!classeNomSimpleWrap.alreadyInitialized) {
+			_classeNomSimple(classeNomSimpleWrap);
 			if(classeNomSimple == null)
-				setClasseNomSimple(classeNomSimpleCouverture.o);
+				setClasseNomSimple(classeNomSimpleWrap.o);
 		}
-		classeNomSimpleCouverture.dejaInitialise(true);
+		classeNomSimpleWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -964,11 +964,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	protected List<String> classeNomsCanoniques = new java.util.ArrayList<java.lang.String>();
-	public Couverture<List<String>> classeNomsCanoniquesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeNomsCanoniques").o(classeNomsCanoniques);
+	public Wrap<List<String>> classeNomsCanoniquesWrap = new Wrap<List<String>>().p(this).c(List.class).var("classeNomsCanoniques").o(classeNomsCanoniques);
 
 	/**	<br/>L'entité « classeNomsCanoniques »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeNomsCanoniques">Trouver l'entité classeNomsCanoniques dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classeNomsCanoniques">Trouver l'entité classeNomsCanoniques dans Solr</a>
 	 * <br/>
 	 * @param classeNomsCanoniques est l'entité déjà construit. 
 	 **/
@@ -980,7 +980,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void setClasseNomsCanoniques(List<String> classeNomsCanoniques) {
 		this.classeNomsCanoniques = classeNomsCanoniques;
-		this.classeNomsCanoniquesCouverture.dejaInitialise = true;
+		this.classeNomsCanoniquesWrap.alreadyInitialized = true;
 	}
 	public Cluster addClasseNomsCanoniques(String...objets) {
 		for(String o : objets) {
@@ -1002,10 +1002,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	protected Cluster classeNomsCanoniquesInit() {
-		if(!classeNomsCanoniquesCouverture.dejaInitialise) {
+		if(!classeNomsCanoniquesWrap.alreadyInitialized) {
 			_classeNomsCanoniques(classeNomsCanoniques);
 		}
-		classeNomsCanoniquesCouverture.dejaInitialise(true);
+		classeNomsCanoniquesWrap.alreadyInitialized(true);
 		return (Cluster)this;
 	}
 
@@ -1071,21 +1071,21 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseCluster = false;
+	protected boolean alreadyInitializedCluster = false;
 
-	public Cluster initLoinCluster(RequeteSiteFrFR requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseCluster) {
-			dejaInitialiseCluster = true;
-			initLoinCluster();
+	public Cluster initDeepCluster(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedCluster) {
+			alreadyInitializedCluster = true;
+			initDeepCluster();
 		}
 		return (Cluster)this;
 	}
 
-	public void initLoinCluster() {
+	public void initDeepCluster() {
 		initCluster();
 	}
 
@@ -1103,39 +1103,39 @@ public abstract class ClusterGen<DEV> extends Object {
 		classeNomsCanoniquesInit();
 	}
 
-	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinCluster(requeteSite_);
+	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepCluster(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteCluster(RequeteSiteFrFR requeteSite_) {
+	public void siteRequestCluster(SiteRequestEnUS siteRequest_) {
 	}
 
-	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteCluster(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestCluster(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	public Object obtenirPourClasse(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirCluster(v);
+				o = obtainCluster(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirCluster(String var) {
+	public Object obtainCluster(String var) {
 		Cluster oCluster = (Cluster)this;
 		switch(var) {
 			case "requeteSite_":
@@ -1166,23 +1166,23 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerCluster(v, val);
+				o = attributeCluster(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerCluster(String var, Object val) {
+	public Object attributeCluster(String var, Object val) {
 		Cluster oCluster = (Cluster)this;
 		switch(var) {
 			default:
@@ -1194,7 +1194,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	// definir //
 	/////////////
 
-	public boolean definirPourClasse(String var, String val) {
+	public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
@@ -1203,7 +1203,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					o = definirCluster(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
@@ -1239,13 +1239,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	protected List<String> sauvegardesCluster = new ArrayList<String>();
 
 	/////////////
-	// peupler //
+	// populate //
 	/////////////
 
-	public void peuplerPourClasse(SolrDocument solrDocument) {
+	public void populateForClass(SolrDocument solrDocument) {
 		peuplerCluster(solrDocument);
 	}
-	public void peuplerCluster(SolrDocument solrDocument) {
+	public void populateCluster(SolrDocument solrDocument) {
 		Cluster oCluster = (Cluster)this;
 		sauvegardesCluster = (List<String>)solrDocument.get("sauvegardesCluster_stored_strings");
 		if(sauvegardesCluster != null) {
@@ -1301,44 +1301,44 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	/////////////
-	// indexer //
+	// index //
 	/////////////
 
-	public static void indexer() {
+	public static void index() {
 		try {
-			RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
-			requeteSite.initLoinRequeteSiteFrFR();
-			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
+			SiteRequestEnUS requeteSite = new SiteRequestEnUS();
+			requeteSite.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContexte = new SiteContextEnUS();
 			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
-			siteContexte.initLoinSiteContexteFrFR();
-			requeteSite.setSiteContexte_(siteContexte);
-			requeteSite.setConfigSite_(siteContexte.getConfigSite());
+			siteContexte.initDeepSiteContextEnUS();
+			siteRequest.setSiteContexte_(siteContexte);
+			siteRequest.setConfigSite_(siteContexte.getConfigSite());
 			SolrQuery rechercheSolr = new SolrQuery();
 			rechercheSolr.setQuery("*:*");
 			rechercheSolr.setRows(1);
-			rechercheSolr.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.cluster.Cluster"));
+			rechercheSolr.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
 			QueryResponse reponseRecherche = requeteSite.getSiteContexte_().getClientSolr().query(rechercheSolr);
 			if(reponseRecherche.getResults().size() > 0)
 				requeteSite.setDocumentSolr(reponseRecherche.getResults().get(0));
 			Cluster o = new Cluster();
 			o.requeteSiteCluster(requeteSite);
-			o.initLoinCluster(requeteSite);
-			o.indexerCluster();
+			o.initDeepCluster(siteRequest);
+			o.indexCluster();
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
 	}
 
 
-	public void indexerPourClasse() {
-		indexerCluster();
+	public void indexForClass() {
+		indexCluster();
 	}
 
-	public void indexerPourClasse(SolrInputDocument document) {
-		indexerCluster(document);
+	public void indexForClass(SolrInputDocument document) {
+		indexCluster(document);
 	}
 
-	public void indexerCluster(SolrClient clientSolr) {
+	public void indexCluster(SolrClient clientSolr) {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerCluster(document);
@@ -1349,11 +1349,11 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
-	public void indexerCluster() {
+	public void indexCluster() {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerCluster(document);
-			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
+			SolrClient clientSolr = siteRequest_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
 			clientSolr.commit();
 		} catch(Exception e) {
@@ -1361,7 +1361,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
-	public void indexerCluster(SolrInputDocument document) {
+	public void indexCluster(SolrInputDocument document) {
 		if(sauvegardesCluster != null)
 			document.addField("sauvegardesCluster_stored_strings", sauvegardesCluster);
 
@@ -1409,13 +1409,13 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void desindexerCluster() {
 		try {
-		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
-			requeteSite.initLoinRequeteSiteFrFR();
-			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
-			siteContexte.initLoinSiteContexteFrFR();
-			requeteSite.setSiteContexte_(siteContexte);
-			requeteSite.setConfigSite_(siteContexte.getConfigSite());
-			initLoinCluster(requeteSite);
+		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
+			requeteSite.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContexte = new SiteContextEnUS();
+			siteContexte.initDeepSiteContextEnUS();
+			siteRequest.setSiteContexte_(siteContexte);
+			siteRequest.setConfigSite_(siteContexte.getConfigSite());
+			initDeepCluster(siteRequest);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
 			clientSolr.commit();
@@ -1425,13 +1425,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	/////////////
-	// stocker //
+	// store //
 	/////////////
 
-	public void stockerPourClasse(SolrDocument solrDocument) {
-		stockerCluster(solrDocument);
+	public void storeForClass(SolrDocument solrDocument) {
+		storeCluster(solrDocument);
 	}
-	public void stockerCluster(SolrDocument solrDocument) {
+	public void storeCluster(SolrDocument solrDocument) {
 		Cluster oCluster = (Cluster)this;
 
 		Long pk = (Long)solrDocument.get("pk_stored_long");
