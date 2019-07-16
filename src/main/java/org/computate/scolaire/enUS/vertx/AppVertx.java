@@ -137,24 +137,24 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		JsonObject jdbcConfig = new JsonObject();
 		if (StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
 			jdbcConfig.put("url", siteConfig.getJdbcUrl());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcClassePilote()))
-			jdbcConfig.put("driver_class", siteConfig.getJdbcClassePilote());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcUtilisateur()))
-			jdbcConfig.put("user", siteConfig.getJdbcUtilisateur());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcMotDePasse()))
-			jdbcConfig.put("password", siteConfig.getJdbcMotDePasse());
-		if (siteConfig.getJdbcTailleMaxPiscine() != null)
-			jdbcConfig.put("max_pool_size", siteConfig.getJdbcTailleMaxPiscine());
-		if (siteConfig.getJdbcTailleInitialePiscine() != null)
-			jdbcConfig.put("initial_pool_size", siteConfig.getJdbcTailleInitialePiscine());
-		if (siteConfig.getJdbcTailleMinPiscine() != null)
-			jdbcConfig.put("min_pool_size", siteConfig.getJdbcTailleMinPiscine());
-		if (siteConfig.getJdbcMaxDeclarations() != null)
-			jdbcConfig.put("max_statements", siteConfig.getJdbcMaxDeclarations());
-		if (siteConfig.getJdbcMaxDeclarationsParConnexion() != null)
-			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxDeclarationsParConnexion());
-		if (siteConfig.getJdbcTempsInactiviteMax() != null)
-			jdbcConfig.put("max_idle_time", siteConfig.getJdbcTempsInactiviteMax());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcDriverClass()))
+			jdbcConfig.put("driver_class", siteConfig.getJdbcDriverClass());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcUsername()))
+			jdbcConfig.put("user", siteConfig.getJdbcUsername());
+		if (StringUtils.isNotEmpty(siteConfig.getJdbcPassword()))
+			jdbcConfig.put("password", siteConfig.getJdbcPassword());
+		if (siteConfig.getJdbcMaxPoolSize() != null)
+			jdbcConfig.put("max_pool_size", siteConfig.getJdbcMaxPoolSize());
+		if (siteConfig.getJdbcInitialPoolSize() != null)
+			jdbcConfig.put("initial_pool_size", siteConfig.getJdbcInitialPoolSize());
+		if (siteConfig.getJdbcMinPoolSize() != null)
+			jdbcConfig.put("min_pool_size", siteConfig.getJdbcMinPoolSize());
+		if (siteConfig.getJdbcMaxStatements() != null)
+			jdbcConfig.put("max_statements", siteConfig.getJdbcMaxStatements());
+		if (siteConfig.getJdbcMaxStatementsPerConnection() != null)
+			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxStatementsPerConnection());
+		if (siteConfig.getJdbcMaxIdleTime() != null)
+			jdbcConfig.put("max_idle_time", siteConfig.getJdbcMaxIdleTime());
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
 		siteContextEnUS.setClientSql(jdbcClient);
@@ -210,28 +210,33 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	private Future<Void> configurerOpenApi() {
-		ConfigSite configSite = siteContexteFrFR.getConfigSite();
+	/**	
+	 *	Configure the connection to the auth server and setup the routes based on the OpenAPI definition. 
+	 *	Setup a callback route when returning from the auth server after successful authentication. 
+	 *	Setup a logout route for logging out completely of the application. 
+	 *	Return a future that configures the authentication server and OpenAPI. 
+	 **/
+	private Future<Void> configureOpenApi() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Future<Void> future = Future.future();
-		Router routeur = Router.router(vertx);
+		Router router = Router.router(vertx);
 
-		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3.yaml", ar -> {
+		AppOpenAPI3RouterFactory.create(vertx, router, "openapi3.yaml", ar -> {
 			if (ar.succeeded()) {
-				AppOpenAPI3RouterFactory usineRouteur = ar.result();
-				usineRouteur.mountServicesFromExtensions();
-				siteContexteFrFR.setUsineRouteur(usineRouteur);
+				AppOpenAPI3RouterFactory routerFactory = ar.result();
+				routerFactory.mountServicesFromExtensions();
 
 				JsonObject keycloakJson = new JsonObject() {
 					{
-						put("realm", configSite.getAuthRoyaume());
-						put("resource", configSite.getAuthRessource());
-						put("auth-server-url", configSite.getAuthUrl());
-						put("ssl-required", configSite.getAuthSslRequis());
+						put("realm", siteConfig.getAuthRealm());
+						put("resource", siteConfig.getAuthResource());
+						put("auth-server-url", siteConfig.getAuthUrl());
+						put("ssl-required", siteConfig.getAuthSslRequired());
 						put("use-resource-role-mappings", false);
 						put("bearer-only", false);
 						put("enable-basic-auth", false);
 						put("expose-token", true);
-						put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()));
+						put("credentials", new JsonObject().put("secret", siteConfig.getAuthSecret()));
 						put("connection-pool-size", 20);
 						put("disable-trust-manager", false);
 						put("allow-any-hostname", false);
@@ -240,22 +245,21 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					}
 				};
 
-				String siteNomHote = configSite.getSiteNomHote();
-				Integer sitePort = configSite.getSitePort();
-				String siteUrlBase = configSite.getSiteUrlBase();
+				String siteNomHote = siteConfig.getSiteHostName();
+				Integer sitePort = siteConfig.getSitePort();
+				String siteUrlBase = siteConfig.getSiteBaseUrl();
 				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
-				routeur.route().handler(CookieHandler.create());
-				routeur.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+				router.route().handler(CookieHandler.create());
+				router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
 
-				routeur.route().handler(UserSessionHandler.create(authFournisseur));
+				router.route().handler(UserSessionHandler.create(authFournisseur));
 
-				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur,
-						siteUrlBase + "/callback");
+				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
 
-				gestionnaireAuth.setupCallback(routeur.get("/callback"));
+				gestionnaireAuth.setupCallback(router.get("/callback"));
 
-				routeur.get("/deconnexion").handler(rc -> {
+				router.get("/logout").handler(rc -> {
 					Session session = rc.session();
 					if (session != null) {
 						session.destroy();
@@ -264,117 +268,51 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					rc.reroute("/");
 				});
 
-				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
+				routerFactory.addSecurityHandler("openIdConnect", gestionnaireAuth);
 
-				usineRouteur.initRouter();
+				routerFactory.initRouter();
 
+				LOGGER.info(configureOpenApiSuccess);
 				future.complete();
 			} else {
-				LOGGER.error("Could not configure the api", ar.cause());
+				LOGGER.error(configureOpenApiError, ar.cause());
 				future.fail(ar.cause());
 			}
 		});
 		return future;
 	}
 
-	public AppVertx setupCallback(SiteContextEnUS siteContexte, String callbackPath) { 
-		OpenAPI3RouterFactory usineRouteur = siteContexte.getUsineRouteur();
-		OAuth2AuthHandler gestionnaireAuth = siteContexte.getGestionnaireAuth();
-		ConfigSite configSite = siteContexte.getConfigSite();
-		String siteNomHote = configSite.getSiteNomHote();
-		Integer sitePort = configSite.getSitePort();
-		String siteUrlBase = "https://" + siteNomHote + ":" + sitePort;
-		OAuth2Auth authFournisseur = siteContexte.getAuthFournisseur();
-
-		Route route = usineRouteur.getRouter().get(callbackPath);
-
-		if (callbackPath != null && !"".equals(callbackPath)) {
-			// no matter what path was provided we will make sure it is the correct one
-			route.path(callbackPath);
-		}
-
-		route.method(HttpMethod.GET);
-
-		route.handler(ctx -> {
-			// Handle the callback of the flow
-			final String code = ctx.request().getParam("code");
-
-			// code is a require value
-			if (code == null) {
-				ctx.fail(400);
-				return;
-			}
-
-			final String state = ctx.request().getParam("state");
-
-			final JsonObject config = new JsonObject().put("code", code);
-
-			if (siteUrlBase != null) {
-				config.put("redirect_uri", siteUrlBase + route.getPath());
-			}
-
-			// if (extraParams != null) {
-			// config.mergeIn(extraParams);
-			// }
-
-			authFournisseur.authenticate(config, res -> {
-				if (res.failed()) {
-					ctx.fail(res.cause());
-				} else {
-					ctx.setUser(res.result());
-					Session session = ctx.session();
-					if (session != null) {
-						// the user has upgraded from unauthenticated to authenticated
-						// session should be upgraded as recommended by owasp
-						session.regenerateId();
-						// we should redirect the UA so this link becomes invalid
-						ctx.response()
-								// disable all caching
-								.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
-								.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
-								// redirect (when there is no state, redirect to home
-								.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
-								.end("Redirecting to " + (state != null ? state : "/") + ".");
-					} else {
-						// there is no session object so we cannot keep state
-						ctx.reroute(state != null ? state : "/");
-					}
-				}
-			});
-		});
-
-		return this;
-	}
-
-	private <T> void  enregistrerService(ServiceBinder serviceBinder, T service) {
-		Class<T> c = (Class<T>)service.getClass();
-		MessageConsumer<JsonObject> calculInrApiConsumer = serviceBinder.register(c, service);
-	}
-
-	private Future<Void> configurerExecuteurTravailleurPartage() {
+	/**	
+	 *	Configure a shared worker executor for running blocking tasks in the background. 
+	 *	Return a future that configures the shared worker executor. 
+	 **/
+	private Future<Void> configureSharedWorkerExecutor() {
 		Future<Void> future = Future.future();
 
-		WorkerExecutor executeurTravailleur = vertx.createSharedWorkerExecutor("WorkerExecutor");
-		siteContexteFrFR.setExecuteurTravailleur(executeurTravailleur);
-//		siteContexteEnUS.setExecuteurTravailleur(executeurTravailleur);
+		WorkerExecutor workerExecutor = vertx.createSharedWorkerExecutor("WorkerExecutor");
+		siteContextEnUS.setWorkerExecutor(workerExecutor);
 		future.complete();
 		return future;
 	}
 
-	private Future<Void> configurerControlesSante() {
+	/**	
+	 *	Configure health checks for the status of the website and it's dependent services. 
+	 *	Return a future that configures the health checks. 
+	 **/
+	private Future<Void> configureHealthChecks() {
 		Future<Void> future = Future.future();
-		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
+		Router siteRouteur = siteContextEnUS.getRouterFactory().getRouter();
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
 
 		healthCheckHandler.register("database", 2000, a -> {
-			siteContexteFrFR.getClientSql().queryWithParams("select current_timestamp"
+			siteContextEnUS.getClientSql().queryWithParams("select current_timestamp"
 					, new JsonArray(Arrays.asList())
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
 					a.complete(Status.OK());
 				} else {
-					LOGGER.error("The vertx application is down. ", a.cause());
+					LOGGER.error(configureHealthChecksErrorDatabase, a.cause());
 					future.fail(a.cause());
 				}
 			});
@@ -383,15 +321,15 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			SolrQuery query = new SolrQuery();
 			query.setQuery("*:*");
 			try {
-				QueryResponse r = siteContexteFrFR.getClientSolr().query(query);
+				QueryResponse r = siteContextEnUS.getClientSolr().query(query);
 				if(r.getResults().size() > 0)
 					a.complete(Status.OK());
 				else {
-					LOGGER.error("The solr application is empty. ", a.cause());
+					LOGGER.error(configureHealthChecksEmptySolr, a.cause());
 					future.fail(a.cause());
 				}
 			} catch (SolrServerException | IOException e) {
-				LOGGER.error("The solr application is down. ", a.cause());
+				LOGGER.error(configureHealthChecksErrorSolr, a.cause());
 				future.fail(a.cause());
 			}
 		});
@@ -405,15 +343,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Future<Void> future = Future.future();
 
 		ClusterEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
-//		ClusterEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
 
 		EcoleEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
 
 		Router siteRouteur = siteContexteEnUS.getUsineRouteur().getRouter();
-		// siteContexte.setSiteRouteur_(siteRouteur);
-
-
-//		siteRouteur.route().order(-2).handler(siteContexteEnUS.getSiteTracingHandler()).failureHandler(siteContexteEnUS.getSiteTracingHandler());
 
 		StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
 		if("scolaire.computate.org".equals(configSite.getSiteNomHote())) {
@@ -425,14 +358,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		String siteNomHote = configSite.getSiteNomHote();
 		Integer sitePort = configSite.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		// options.setMaxWebsocketFrameSize(1000000);
 		if(new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(
 					new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
 			options.setSsl(true);
 		}
 		options.setPort(sitePort);
-//		options.setHost("localhost");
 
 		LOGGER.info(String.format("HTTP server starting: %s://%s:%s", "https", siteNomHote, sitePort));
 		vertx.createHttpServer(options).requestHandler(siteRouteur).listen(ar -> {

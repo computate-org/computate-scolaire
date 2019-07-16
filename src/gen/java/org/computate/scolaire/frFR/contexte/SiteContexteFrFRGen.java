@@ -6,7 +6,6 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
-import java.lang.Integer;
 import io.vertx.core.WorkerExecutor;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -15,10 +14,8 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import java.lang.String;
 import io.vertx.ext.sql.SQLClient;
 
 /**	
@@ -242,40 +239,6 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return (SiteContexteFrFR)this;
 	}
 
-	////////////////
-	// jdbcConfig //
-	////////////////
-
-	/**	L'entité « jdbcConfig »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut JsonObject(). 
-	 */
-	protected JsonObject jdbcConfig = new JsonObject();
-	public Couverture<JsonObject> jdbcConfigCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("jdbcConfig").o(jdbcConfig);
-
-	/**	<br/>L'entité « jdbcConfig »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut JsonObject(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcConfig">Trouver l'entité jdbcConfig dans Solr</a>
-	 * <br/>
-	 * @param jdbcConfig est l'entité déjà construit. 
-	 **/
-	protected abstract void _jdbcConfig(JsonObject o);
-
-	public JsonObject getJdbcConfig() {
-		return jdbcConfig;
-	}
-
-	public void setJdbcConfig(JsonObject jdbcConfig) {
-		this.jdbcConfig = jdbcConfig;
-		this.jdbcConfigCouverture.dejaInitialise = true;
-	}
-	protected SiteContexteFrFR jdbcConfigInit() {
-		if(!jdbcConfigCouverture.dejaInitialise) {
-			_jdbcConfig(jdbcConfig);
-		}
-		jdbcConfigCouverture.dejaInitialise(true);
-		return (SiteContexteFrFR)this;
-	}
-
 	///////////////
 	// clientSql //
 	///////////////
@@ -348,160 +311,6 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return (SiteContexteFrFR)this;
 	}
 
-	/////////////////////////
-	// clientSolrComputate //
-	/////////////////////////
-
-	/**	L'entité « clientSolrComputate »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected HttpSolrClient clientSolrComputate;
-	public Couverture<HttpSolrClient> clientSolrComputateCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);
-
-	/**	<br/>L'entité « clientSolrComputate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:clientSolrComputate">Trouver l'entité clientSolrComputate dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _clientSolrComputate(Couverture<HttpSolrClient> c);
-
-	public HttpSolrClient getClientSolrComputate() {
-		return clientSolrComputate;
-	}
-
-	public void setClientSolrComputate(HttpSolrClient clientSolrComputate) {
-		this.clientSolrComputate = clientSolrComputate;
-		this.clientSolrComputateCouverture.dejaInitialise = true;
-	}
-	protected SiteContexteFrFR clientSolrComputateInit() {
-		if(!clientSolrComputateCouverture.dejaInitialise) {
-			_clientSolrComputate(clientSolrComputateCouverture);
-			if(clientSolrComputate == null)
-				setClientSolrComputate(clientSolrComputateCouverture.o);
-		}
-		clientSolrComputateCouverture.dejaInitialise(true);
-		return (SiteContexteFrFR)this;
-	}
-
-	////////////////////////
-	// motDePasseCryptage //
-	////////////////////////
-
-	/**	L'entité « motDePasseCryptage »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String motDePasseCryptage;
-	public Couverture<String> motDePasseCryptageCouverture = new Couverture<String>().p(this).c(String.class).var("motDePasseCryptage").o(motDePasseCryptage);
-
-	/**	<br/>L'entité « motDePasseCryptage »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:motDePasseCryptage">Trouver l'entité motDePasseCryptage dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _motDePasseCryptage(Couverture<String> c);
-
-	public String getMotDePasseCryptage() {
-		return motDePasseCryptage;
-	}
-
-	public void setMotDePasseCryptage(String motDePasseCryptage) {
-		this.motDePasseCryptage = motDePasseCryptage;
-		this.motDePasseCryptageCouverture.dejaInitialise = true;
-	}
-	protected SiteContexteFrFR motDePasseCryptageInit() {
-		if(!motDePasseCryptageCouverture.dejaInitialise) {
-			_motDePasseCryptage(motDePasseCryptageCouverture);
-			if(motDePasseCryptage == null)
-				setMotDePasseCryptage(motDePasseCryptageCouverture.o);
-		}
-		motDePasseCryptageCouverture.dejaInitialise(true);
-		return (SiteContexteFrFR)this;
-	}
-
-	public String solrMotDePasseCryptage() {
-		return motDePasseCryptage;
-	}
-
-	public String strMotDePasseCryptage() {
-		return motDePasseCryptage == null ? "" : motDePasseCryptage;
-	}
-
-	public String nomAffichageMotDePasseCryptage() {
-		return null;
-	}
-
-	public String htmTooltipMotDePasseCryptage() {
-		return null;
-	}
-
-	public String htmMotDePasseCryptage() {
-		return motDePasseCryptage == null ? "" : StringEscapeUtils.escapeHtml4(strMotDePasseCryptage());
-	}
-
-	//////////////////////
-	// nombreExecuteurs //
-	//////////////////////
-
-	/**	L'entité « nombreExecuteurs »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Integer nombreExecuteurs;
-	public Couverture<Integer> nombreExecuteursCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
-
-	/**	<br/>L'entité « nombreExecuteurs »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:nombreExecuteurs">Trouver l'entité nombreExecuteurs dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _nombreExecuteurs(Couverture<Integer> c);
-
-	public Integer getNombreExecuteurs() {
-		return nombreExecuteurs;
-	}
-
-	public void setNombreExecuteurs(Integer nombreExecuteurs) {
-		this.nombreExecuteurs = nombreExecuteurs;
-		this.nombreExecuteursCouverture.dejaInitialise = true;
-	}
-	public SiteContexteFrFR setNombreExecuteurs(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.nombreExecuteurs = Integer.parseInt(o);
-		this.nombreExecuteursCouverture.dejaInitialise = true;
-		return (SiteContexteFrFR)this;
-	}
-	protected SiteContexteFrFR nombreExecuteursInit() {
-		if(!nombreExecuteursCouverture.dejaInitialise) {
-			_nombreExecuteurs(nombreExecuteursCouverture);
-			if(nombreExecuteurs == null)
-				setNombreExecuteurs(nombreExecuteursCouverture.o);
-		}
-		nombreExecuteursCouverture.dejaInitialise(true);
-		return (SiteContexteFrFR)this;
-	}
-
-	public Integer solrNombreExecuteurs() {
-		return nombreExecuteurs;
-	}
-
-	public String strNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
-	}
-
-	public String nomAffichageNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmTooltipNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : StringEscapeUtils.escapeHtml4(strNombreExecuteurs());
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -527,12 +336,8 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		authFournisseurInit();
 		executeurTravailleurInit();
 		configSiteInit();
-		jdbcConfigInit();
 		clientSqlInit();
 		clientSolrInit();
-		clientSolrComputateInit();
-		motDePasseCryptageInit();
-		nombreExecuteursInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -571,18 +376,10 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				return oSiteContexteFrFR.executeurTravailleur;
 			case "configSite":
 				return oSiteContexteFrFR.configSite;
-			case "jdbcConfig":
-				return oSiteContexteFrFR.jdbcConfig;
 			case "clientSql":
 				return oSiteContexteFrFR.clientSql;
 			case "clientSolr":
 				return oSiteContexteFrFR.clientSolr;
-			case "clientSolrComputate":
-				return oSiteContexteFrFR.clientSolrComputate;
-			case "motDePasseCryptage":
-				return oSiteContexteFrFR.motDePasseCryptage;
-			case "nombreExecuteurs":
-				return oSiteContexteFrFR.nombreExecuteurs;
 			default:
 				return null;
 		}

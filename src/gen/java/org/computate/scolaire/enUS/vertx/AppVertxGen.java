@@ -4,7 +4,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import io.vertx.core.AbstractVerticle;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
@@ -30,6 +30,20 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	public static final String configureClusterDataSuccess1 = "The shared cluster data was configured successfully. ";
 	public static final String configureClusterDataSuccess = configureClusterDataSuccess1;
 
+	public static final String configureOpenApiError1 = "Could not configure the auth server and API. ";
+	public static final String configureOpenApiError = configureOpenApiError1;
+	public static final String configureOpenApiSuccess1 = "The auth server and API was configured successfully. ";
+	public static final String configureOpenApiSuccess = configureOpenApiSuccess1;
+
+	public static final String configureHealthChecksErrorDatabase1 = "The database is not configured properly. ";
+	public static final String configureHealthChecksErrorDatabase = configureHealthChecksErrorDatabase1;
+	public static final String configureHealthChecksEmptySolr1 = "The Solr search engine is empty. ";
+	public static final String configureHealthChecksEmptySolr = configureHealthChecksEmptySolr1;
+	public static final String configureHealthChecksErrorSolr1 = "The Solr search engine is not configured properly. ";
+	public static final String configureHealthChecksErrorSolr = configureHealthChecksErrorSolr1;
+	public static final String configureHealthChecksErrorVertx1 = "The Vert.x application is not configured properly. ";
+	public static final String configureHealthChecksErrorVertx = configureHealthChecksErrorVertx1;
+
 	public static final String closeDataError1 = "Could not close the database client connection. ";
 	public static final String closeDataError = closeDataError1;
 	public static final String closeDataSuccess1 = "The database client connextion was closed. ";
@@ -43,7 +57,6 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	protected boolean alreadyInitializedAppVertx = false;
 
 	public AppVertx initDeepAppVertx(SiteRequestEnUS siteRequest_) {
-		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedAppVertx) {
 			alreadyInitializedAppVertx = true;
 			initDeepAppVertx();
@@ -62,35 +75,24 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		initDeepAppVertx(siteRequest_);
 	}
 
-	/////////////////
-	// siteRequest //
-	/////////////////
-
-	public void siteRequestAppVertx(SiteRequestEnUS siteRequest_) {
-	}
-
-	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestAppVertx(siteRequest_);
-	}
-
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	public Object obtenirPourClasse(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirAppVertx(v);
+				o = obtainAppVertx(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirAppVertx(String var) {
+	public Object obtainAppVertx(String var) {
 		AppVertx oAppVertx = (AppVertx)this;
 		switch(var) {
 			default:
@@ -99,23 +101,23 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerAppVertx(v, val);
+				o = attributeAppVertx(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerAppVertx(String var, Object val) {
+	public Object attributeAppVertx(String var, Object val) {
 		AppVertx oAppVertx = (AppVertx)this;
 		switch(var) {
 			default:
@@ -181,5 +183,5 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, closeDataError1, closeDataSuccess1 };
+	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, configureOpenApiError1, configureOpenApiSuccess1, configureHealthChecksErrorDatabase1, configureHealthChecksEmptySolr1, configureHealthChecksErrorSolr1, configureHealthChecksErrorVertx1, closeDataError1, closeDataSuccess1 };
 }

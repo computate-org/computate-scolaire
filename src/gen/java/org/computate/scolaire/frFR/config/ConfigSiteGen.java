@@ -1834,118 +1834,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
 	}
 
-	//////////////////////
-	// solrUrlComputate //
-	//////////////////////
-
-	/**	L'entité « solrUrlComputate »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String solrUrlComputate;
-	public Couverture<String> solrUrlComputateCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
-
-	/**	<br/>L'entité « solrUrlComputate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _solrUrlComputate(Couverture<String> c);
-
-	public String getSolrUrlComputate() {
-		return solrUrlComputate;
-	}
-
-	public void setSolrUrlComputate(String solrUrlComputate) {
-		this.solrUrlComputate = solrUrlComputate;
-		this.solrUrlComputateCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite solrUrlComputateInit() {
-		if(!solrUrlComputateCouverture.dejaInitialise) {
-			_solrUrlComputate(solrUrlComputateCouverture);
-			if(solrUrlComputate == null)
-				setSolrUrlComputate(solrUrlComputateCouverture.o);
-		}
-		solrUrlComputateCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrSolrUrlComputate() {
-		return solrUrlComputate;
-	}
-
-	public String strSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
-	}
-
-	public String nomAffichageSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmTooltipSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
-	}
-
-	/////////////////////////
-	// jetonIdentitePaypal //
-	/////////////////////////
-
-	/**	L'entité « jetonIdentitePaypal »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String jetonIdentitePaypal;
-	public Couverture<String> jetonIdentitePaypalCouverture = new Couverture<String>().p(this).c(String.class).var("jetonIdentitePaypal").o(jetonIdentitePaypal);
-
-	/**	<br/>L'entité « jetonIdentitePaypal »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jetonIdentitePaypal">Trouver l'entité jetonIdentitePaypal dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _jetonIdentitePaypal(Couverture<String> c);
-
-	public String getJetonIdentitePaypal() {
-		return jetonIdentitePaypal;
-	}
-
-	public void setJetonIdentitePaypal(String jetonIdentitePaypal) {
-		this.jetonIdentitePaypal = jetonIdentitePaypal;
-		this.jetonIdentitePaypalCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite jetonIdentitePaypalInit() {
-		if(!jetonIdentitePaypalCouverture.dejaInitialise) {
-			_jetonIdentitePaypal(jetonIdentitePaypalCouverture);
-			if(jetonIdentitePaypal == null)
-				setJetonIdentitePaypal(jetonIdentitePaypalCouverture.o);
-		}
-		jetonIdentitePaypalCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrJetonIdentitePaypal() {
-		return jetonIdentitePaypal;
-	}
-
-	public String strJetonIdentitePaypal() {
-		return jetonIdentitePaypal == null ? "" : jetonIdentitePaypal;
-	}
-
-	public String nomAffichageJetonIdentitePaypal() {
-		return null;
-	}
-
-	public String htmTooltipJetonIdentitePaypal() {
-		return null;
-	}
-
-	public String htmJetonIdentitePaypal() {
-		return jetonIdentitePaypal == null ? "" : StringEscapeUtils.escapeHtml4(strJetonIdentitePaypal());
-	}
-
 	////////////////////
 	// compteFacebook //
 	////////////////////
@@ -2056,62 +1944,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public String htmCompteTwitter() {
 		return compteTwitter == null ? "" : StringEscapeUtils.escapeHtml4(strCompteTwitter());
-	}
-
-	//////////////////////
-	// compteGooglePlus //
-	//////////////////////
-
-	/**	L'entité « compteGooglePlus »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String compteGooglePlus;
-	public Couverture<String> compteGooglePlusCouverture = new Couverture<String>().p(this).c(String.class).var("compteGooglePlus").o(compteGooglePlus);
-
-	/**	<br/>L'entité « compteGooglePlus »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteGooglePlus">Trouver l'entité compteGooglePlus dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _compteGooglePlus(Couverture<String> c);
-
-	public String getCompteGooglePlus() {
-		return compteGooglePlus;
-	}
-
-	public void setCompteGooglePlus(String compteGooglePlus) {
-		this.compteGooglePlus = compteGooglePlus;
-		this.compteGooglePlusCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite compteGooglePlusInit() {
-		if(!compteGooglePlusCouverture.dejaInitialise) {
-			_compteGooglePlus(compteGooglePlusCouverture);
-			if(compteGooglePlus == null)
-				setCompteGooglePlus(compteGooglePlusCouverture.o);
-		}
-		compteGooglePlusCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrCompteGooglePlus() {
-		return compteGooglePlus;
-	}
-
-	public String strCompteGooglePlus() {
-		return compteGooglePlus == null ? "" : compteGooglePlus;
-	}
-
-	public String nomAffichageCompteGooglePlus() {
-		return null;
-	}
-
-	public String htmTooltipCompteGooglePlus() {
-		return null;
-	}
-
-	public String htmCompteGooglePlus() {
-		return compteGooglePlus == null ? "" : StringEscapeUtils.escapeHtml4(strCompteGooglePlus());
 	}
 
 	/////////////////////
@@ -2226,62 +2058,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strCompteYoutube());
 	}
 
-	/////////////////////////////
-	// identifiantCanalYoutube //
-	/////////////////////////////
-
-	/**	L'entité « identifiantCanalYoutube »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String identifiantCanalYoutube;
-	public Couverture<String> identifiantCanalYoutubeCouverture = new Couverture<String>().p(this).c(String.class).var("identifiantCanalYoutube").o(identifiantCanalYoutube);
-
-	/**	<br/>L'entité « identifiantCanalYoutube »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:identifiantCanalYoutube">Trouver l'entité identifiantCanalYoutube dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _identifiantCanalYoutube(Couverture<String> c);
-
-	public String getIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube;
-	}
-
-	public void setIdentifiantCanalYoutube(String identifiantCanalYoutube) {
-		this.identifiantCanalYoutube = identifiantCanalYoutube;
-		this.identifiantCanalYoutubeCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite identifiantCanalYoutubeInit() {
-		if(!identifiantCanalYoutubeCouverture.dejaInitialise) {
-			_identifiantCanalYoutube(identifiantCanalYoutubeCouverture);
-			if(identifiantCanalYoutube == null)
-				setIdentifiantCanalYoutube(identifiantCanalYoutubeCouverture.o);
-		}
-		identifiantCanalYoutubeCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube;
-	}
-
-	public String strIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube == null ? "" : identifiantCanalYoutube;
-	}
-
-	public String nomAffichageIdentifiantCanalYoutube() {
-		return null;
-	}
-
-	public String htmTooltipIdentifiantCanalYoutube() {
-		return null;
-	}
-
-	public String htmIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strIdentifiantCanalYoutube());
-	}
-
 	/////////////////////
 	// comptePinterest //
 	/////////////////////
@@ -2336,62 +2112,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public String htmComptePinterest() {
 		return comptePinterest == null ? "" : StringEscapeUtils.escapeHtml4(strComptePinterest());
-	}
-
-	///////////////////////
-	// compteOpenclipart //
-	///////////////////////
-
-	/**	L'entité « compteOpenclipart »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String compteOpenclipart;
-	public Couverture<String> compteOpenclipartCouverture = new Couverture<String>().p(this).c(String.class).var("compteOpenclipart").o(compteOpenclipart);
-
-	/**	<br/>L'entité « compteOpenclipart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:compteOpenclipart">Trouver l'entité compteOpenclipart dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _compteOpenclipart(Couverture<String> c);
-
-	public String getCompteOpenclipart() {
-		return compteOpenclipart;
-	}
-
-	public void setCompteOpenclipart(String compteOpenclipart) {
-		this.compteOpenclipart = compteOpenclipart;
-		this.compteOpenclipartCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite compteOpenclipartInit() {
-		if(!compteOpenclipartCouverture.dejaInitialise) {
-			_compteOpenclipart(compteOpenclipartCouverture);
-			if(compteOpenclipart == null)
-				setCompteOpenclipart(compteOpenclipartCouverture.o);
-		}
-		compteOpenclipartCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrCompteOpenclipart() {
-		return compteOpenclipart;
-	}
-
-	public String strCompteOpenclipart() {
-		return compteOpenclipart == null ? "" : compteOpenclipart;
-	}
-
-	public String nomAffichageCompteOpenclipart() {
-		return null;
-	}
-
-	public String htmTooltipCompteOpenclipart() {
-		return null;
-	}
-
-	public String htmCompteOpenclipart() {
-		return compteOpenclipart == null ? "" : StringEscapeUtils.escapeHtml4(strCompteOpenclipart());
 	}
 
 	////////////////
@@ -3184,62 +2904,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiCheminBase == null ? "" : StringEscapeUtils.escapeHtml4(strApiCheminBase());
 	}
 
-	//////////////////////////
-	// vertxServiceAddresse //
-	//////////////////////////
-
-	/**	L'entité « vertxServiceAddresse »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String vertxServiceAddresse;
-	public Couverture<String> vertxServiceAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("vertxServiceAddresse").o(vertxServiceAddresse);
-
-	/**	<br/>L'entité « vertxServiceAddresse »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vertxServiceAddresse">Trouver l'entité vertxServiceAddresse dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _vertxServiceAddresse(Couverture<String> c);
-
-	public String getVertxServiceAddresse() {
-		return vertxServiceAddresse;
-	}
-
-	public void setVertxServiceAddresse(String vertxServiceAddresse) {
-		this.vertxServiceAddresse = vertxServiceAddresse;
-		this.vertxServiceAddresseCouverture.dejaInitialise = true;
-	}
-	protected ConfigSite vertxServiceAddresseInit() {
-		if(!vertxServiceAddresseCouverture.dejaInitialise) {
-			_vertxServiceAddresse(vertxServiceAddresseCouverture);
-			if(vertxServiceAddresse == null)
-				setVertxServiceAddresse(vertxServiceAddresseCouverture.o);
-		}
-		vertxServiceAddresseCouverture.dejaInitialise(true);
-		return (ConfigSite)this;
-	}
-
-	public String solrVertxServiceAddresse() {
-		return vertxServiceAddresse;
-	}
-
-	public String strVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : vertxServiceAddresse;
-	}
-
-	public String nomAffichageVertxServiceAddresse() {
-		return null;
-	}
-
-	public String htmTooltipVertxServiceAddresse() {
-		return null;
-	}
-
-	public String htmVertxServiceAddresse() {
-		return vertxServiceAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddresse());
-	}
-
 	/////////////////////
 	// statiqueUrlBase //
 	/////////////////////
@@ -3303,7 +2967,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	protected boolean dejaInitialiseConfigSite = false;
 
 	public ConfigSite initLoinConfigSite(RequeteSiteFrFR requeteSite_) {
-		setRequeteSite_(requeteSite_);
 		if(!dejaInitialiseConfigSite) {
 			dejaInitialiseConfigSite = true;
 			initLoinConfigSite();
@@ -3348,16 +3011,11 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		jdbcTempsInactiviteMaxInit();
 		jdbcUrlInit();
 		solrUrlInit();
-		solrUrlComputateInit();
-		jetonIdentitePaypalInit();
 		compteFacebookInit();
 		compteTwitterInit();
-		compteGooglePlusInit();
 		compteInstagramInit();
 		compteYoutubeInit();
-		identifiantCanalYoutubeInit();
 		comptePinterestInit();
-		compteOpenclipartInit();
 		compteMailInit();
 		roleAdminInit();
 		mailAdminInit();
@@ -3372,23 +3030,11 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		apiLicenceUrlInit();
 		apiNomHoteInit();
 		apiCheminBaseInit();
-		vertxServiceAddresseInit();
 		statiqueUrlBaseInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
 		initLoinConfigSite(requeteSite_);
-	}
-
-	/////////////////
-	// requeteSite //
-	/////////////////
-
-	public void requeteSiteConfigSite(RequeteSiteFrFR requeteSite_) {
-	}
-
-	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteConfigSite(requeteSite_);
 	}
 
 	/////////////
@@ -3475,26 +3121,16 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.jdbcUrl;
 			case "solrUrl":
 				return oConfigSite.solrUrl;
-			case "solrUrlComputate":
-				return oConfigSite.solrUrlComputate;
-			case "jetonIdentitePaypal":
-				return oConfigSite.jetonIdentitePaypal;
 			case "compteFacebook":
 				return oConfigSite.compteFacebook;
 			case "compteTwitter":
 				return oConfigSite.compteTwitter;
-			case "compteGooglePlus":
-				return oConfigSite.compteGooglePlus;
 			case "compteInstagram":
 				return oConfigSite.compteInstagram;
 			case "compteYoutube":
 				return oConfigSite.compteYoutube;
-			case "identifiantCanalYoutube":
-				return oConfigSite.identifiantCanalYoutube;
 			case "comptePinterest":
 				return oConfigSite.comptePinterest;
-			case "compteOpenclipart":
-				return oConfigSite.compteOpenclipart;
 			case "compteMail":
 				return oConfigSite.compteMail;
 			case "roleAdmin":
@@ -3523,8 +3159,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.apiNomHote;
 			case "apiCheminBase":
 				return oConfigSite.apiCheminBase;
-			case "vertxServiceAddresse":
-				return oConfigSite.vertxServiceAddresse;
 			case "statiqueUrlBase":
 				return oConfigSite.statiqueUrlBase;
 			default:

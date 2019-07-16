@@ -217,6 +217,24 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteConfig
 	 * r: configSite
 	 * r.enUS: siteConfig
+	 * r: getJdbcClassePilote
+	 * r.enUS: getJdbcDriverClass
+	 * r: getJdbcUtilisateur
+	 * r.enUS: getJdbcUsername
+	 * r: getJdbcMotDePasse
+	 * r.enUS: getJdbcPassword
+	 * r: getJdbcTailleMaxPiscine
+	 * r.enUS: getJdbcMaxPoolSize
+	 * r: getJdbcTailleInitialePiscine
+	 * r.enUS: getJdbcInitialPoolSize
+	 * r: getJdbcTailleMinPiscine
+	 * r.enUS: getJdbcMinPoolSize
+	 * r: getJdbcMaxDeclarationsParConnexion
+	 * r.enUS: getJdbcMaxStatementsPerConnection
+	 * r: getJdbcMaxDeclarations
+	 * r.enUS: getJdbcMaxStatements
+	 * r: getJdbcTempsInactiviteMax
+	 * r.enUS: getJdbcMaxIdleTime
 	 */
 	private Future<Void> configurerDonnees() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -322,6 +340,50 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		return future;
 	}
 
+	/**
+	 * Var.enUS: configureOpenApi
+	 * 
+	 * enUS: Configure the connection to the auth server and setup the routes based on the OpenAPI definition. 
+	 * enUS: Setup a callback route when returning from the auth server after successful authentication. 
+	 * enUS: Setup a logout route for logging out completely of the application. 
+	 * enUS: Return a future that configures the authentication server and OpenAPI. 
+	 * 
+	 * Val.Error.enUS:Could not configure the auth server and API. 
+	 * Val.Erreur.frFR:Impossible de configurer le serveur auth et le API.
+	 * Val.Success.enUS:The auth server and API was configured successfully. 
+	 * Val.Succes.frFR:Le serveur auth et le API ont été configurées avec succès. 
+	 * 
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: routeur
+	 * r.enUS: router
+	 * r: usineRouteur
+	 * r.enUS: routerFactory
+	 * r: UsineRouteur
+	 * r.enUS: RouterFactory
+	 * r: getAuthRoyaume
+	 * r.enUS: getAuthRealm
+	 * r: getAuthRessource
+	 * r.enUS: getAuthResource
+	 * r: getAuthSslRequis
+	 * r.enUS: getAuthSslRequired
+	 * r: getSiteNomHote
+	 * r.enUS: getSiteHostName
+	 * r: getSiteUrlBase
+	 * r.enUS: getSiteBaseUrl
+	 * r: /deconnexion
+	 * r.enUS: /logout
+	 * r: Erreur
+	 * r.enUS: Error
+	 * r: Succes
+	 * r.enUS: Success
+	 * r: configurerOpenApi
+	 * r.enUS: configureOpenApi
+	 */
 	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
@@ -331,7 +393,6 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			if (ar.succeeded()) {
 				AppOpenAPI3RouterFactory usineRouteur = ar.result();
 				usineRouteur.mountServicesFromExtensions();
-				siteContexteFrFR.setUsineRouteur(usineRouteur);
 
 				JsonObject keycloakJson = new JsonObject() {
 					{
@@ -362,8 +423,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 				routeur.route().handler(UserSessionHandler.create(authFournisseur));
 
-				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur,
-						siteUrlBase + "/callback");
+				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
 
 				gestionnaireAuth.setupCallback(routeur.get("/callback"));
 
@@ -380,107 +440,79 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 				usineRouteur.initRouter();
 
+				LOGGER.info(configurerOpenApiSucces);
 				future.complete();
 			} else {
-				LOGGER.error("Could not configure the api", ar.cause());
+				LOGGER.error(configurerOpenApiErreur, ar.cause());
 				future.fail(ar.cause());
 			}
 		});
 		return future;
 	}
 
-	public AppliVertx setupCallback(SiteContexteFrFR siteContexte, String callbackPath) { 
-		OpenAPI3RouterFactory usineRouteur = siteContexte.getUsineRouteur();
-		OAuth2AuthHandler gestionnaireAuth = siteContexte.getGestionnaireAuth();
-		ConfigSite configSite = siteContexte.getConfigSite();
-		String siteNomHote = configSite.getSiteNomHote();
-		Integer sitePort = configSite.getSitePort();
-		String siteUrlBase = "https://" + siteNomHote + ":" + sitePort;
-		OAuth2Auth authFournisseur = siteContexte.getAuthFournisseur();
-
-		Route route = usineRouteur.getRouter().get(callbackPath);
-
-		if (callbackPath != null && !"".equals(callbackPath)) {
-			// no matter what path was provided we will make sure it is the correct one
-			route.path(callbackPath);
-		}
-
-		route.method(HttpMethod.GET);
-
-		route.handler(ctx -> {
-			// Handle the callback of the flow
-			final String code = ctx.request().getParam("code");
-
-			// code is a require value
-			if (code == null) {
-				ctx.fail(400);
-				return;
-			}
-
-			final String state = ctx.request().getParam("state");
-
-			final JsonObject config = new JsonObject().put("code", code);
-
-			if (siteUrlBase != null) {
-				config.put("redirect_uri", siteUrlBase + route.getPath());
-			}
-
-			// if (extraParams != null) {
-			// config.mergeIn(extraParams);
-			// }
-
-			authFournisseur.authenticate(config, res -> {
-				if (res.failed()) {
-					ctx.fail(res.cause());
-				} else {
-					ctx.setUser(res.result());
-					Session session = ctx.session();
-					if (session != null) {
-						// the user has upgraded from unauthenticated to authenticated
-						// session should be upgraded as recommended by owasp
-						session.regenerateId();
-						// we should redirect the UA so this link becomes invalid
-						ctx.response()
-								// disable all caching
-								.putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
-								.putHeader("Pragma", "no-cache").putHeader(HttpHeaders.EXPIRES, "0")
-								// redirect (when there is no state, redirect to home
-								.putHeader(HttpHeaders.LOCATION, state != null ? state : "/").setStatusCode(302)
-								.end("Redirecting to " + (state != null ? state : "/") + ".");
-					} else {
-						// there is no session object so we cannot keep state
-						ctx.reroute(state != null ? state : "/");
-					}
-				}
-			});
-		});
-
-		return this;
-	}
-
-	private <T> void enregistrerService(ServiceBinder serviceBinder, T service) {
-		Class<T> c = (Class<T>)service.getClass();
-		MessageConsumer<JsonObject> calculInrApiConsumer = serviceBinder.register(c, service);
-	}
-
-//	private Future<Void> configurerExecuteurTravailleurPartage(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
+	/**
+	 * Var.enUS: configureSharedWorkerExecutor
+	 * 
+	 * enUS: Configure a shared worker executor for running blocking tasks in the background. 
+	 * enUS: Return a future that configures the shared worker executor. 
+	 * 
+	 * r: executeurTravailleur
+	 * r.enUS: workerExecutor
+	 * r: ExecuteurTravailleur
+	 * r.enUS: WorkerExecutor
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 */
 	private Future<Void> configurerExecuteurTravailleurPartage() {
 		Future<Void> future = Future.future();
 
 		WorkerExecutor executeurTravailleur = vertx.createSharedWorkerExecutor("WorkerExecutor");
 		siteContexteFrFR.setExecuteurTravailleur(executeurTravailleur);
-//		siteContexteEnUS.setExecuteurTravailleur(executeurTravailleur);
 		future.complete();
 		return future;
 	}
 
-//	private Future<Void> configurerControlesSante(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
+	/**
+	 * Var.enUS: configureHealthChecks
+	 * 
+	 * Val.ErrorDatabase.enUS:The database is not configured properly. 
+	 * Val.ErreurBaseDeDonnees.frFR:La base de données n'est pas configurée correctement. 
+	 * 
+	 * Val.EmptySolr.enUS:The Solr search engine is empty. 
+	 * Val.VideSolr.frFR:Le moteur de recherche Solr est vide. 
+	 * 
+	 * Val.ErrorSolr.enUS:The Solr search engine is not configured properly. 
+	 * Val.ErreurSolr.frFR:Le moteur de recherche Solr n'est pas configuré correctement. 
+	 * 
+	 * Val.ErrorVertx.enUS:The Vert.x application is not configured properly. 
+	 * Val.ErreurVertx.frFR:L'application Vert.x n'est pas configuré correctement. 
+	 * 
+	 * enUS: Configure health checks for the status of the website and it's dependent services. 
+	 * enUS: Return a future that configures the health checks. 
+	 * 
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: UsineRouteur
+	 * r.enUS: RouterFactory
+	 * r: gestionnaireControlesSante
+	 * r.enUS: healthCheckHandler
+	 * r: baseDeDonnees
+	 * r.enUS: database
+	 * r: configurerControlesSanteErreurBaseDeDonnees
+	 * r.enUS: configureHealthChecksErrorDatabase
+	 * r: configurerControlesSanteErreurSolr
+	 * r.enUS: configureHealthChecksErrorSolr
+	 * r: configurerControlesSanteVideSolr
+	 * r.enUS: configureHealthChecksEmptySolr
+	 * r: configurerControlesSanteErreurVertx
+	 * r.enUS: configureHealthChecksErrorVertx
+	 */
 	private Future<Void> configurerControlesSante() {
 		Future<Void> future = Future.future();
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
-		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
+		HealthCheckHandler gestionnaireControlesSante = HealthCheckHandler.create(vertx);
 
-		healthCheckHandler.register("database", 2000, a -> {
+		gestionnaireControlesSante.register("baseDeDonnees", 2000, a -> {
 			siteContexteFrFR.getClientSql().queryWithParams("select current_timestamp"
 					, new JsonArray(Arrays.asList())
 					, selectCAsync
@@ -488,12 +520,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				if(selectCAsync.succeeded()) {
 					a.complete(Status.OK());
 				} else {
-					LOGGER.error("The vertx application is down. ", a.cause());
+					LOGGER.error(configurerControlesSanteErreurBaseDeDonnees, a.cause());
 					future.fail(a.cause());
 				}
 			});
 		});
-		healthCheckHandler.register("solr", 2000, a -> {
+		gestionnaireControlesSante.register("solr", 2000, a -> {
 			SolrQuery query = new SolrQuery();
 			query.setQuery("*:*");
 			try {
@@ -501,15 +533,15 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				if(r.getResults().size() > 0)
 					a.complete(Status.OK());
 				else {
-					LOGGER.error("The solr application is empty. ", a.cause());
+					LOGGER.error(configurerControlesSanteVideSolr, a.cause());
 					future.fail(a.cause());
 				}
 			} catch (SolrServerException | IOException e) {
-				LOGGER.error("The solr application is down. ", a.cause());
+				LOGGER.error(configurerControlesSanteErreurSolr, a.cause());
 				future.fail(a.cause());
 			}
 		});
-		siteRouteur.get("/health").handler(healthCheckHandler);
+		siteRouteur.get("/health").handler(gestionnaireControlesSante);
 		future.complete();
 		return future;
 	}
@@ -518,21 +550,15 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: FrFR
 	 * r.enUS: EnUS
 	 */ 
-//	private Future<Void> demarrerServeur(SiteContexteFrFR siteContexteFrFR, SiteContexteEnUS siteContexteEnUS) {
 	private Future<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 
 		ClusterFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
-//		ClusterEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
 
 		EcoleFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
-		// siteContexte.setSiteRouteur_(siteRouteur);
-
-
-//		siteRouteur.route().order(-2).handler(siteContexteFrFR.getSiteTracingHandler()).failureHandler(siteContexteFrFR.getSiteTracingHandler());
 
 		StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
 		if("scolaire.computate.org".equals(configSite.getSiteNomHote())) {
@@ -544,14 +570,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		String siteNomHote = configSite.getSiteNomHote();
 		Integer sitePort = configSite.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		// options.setMaxWebsocketFrameSize(1000000);
 		if(new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(
 					new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
 			options.setSsl(true);
 		}
 		options.setPort(sitePort);
-//		options.setHost("localhost");
 
 		LOGGER.info(String.format("HTTP server starting: %s://%s:%s", "https", siteNomHote, sitePort));
 		vertx.createHttpServer(options).requestHandler(siteRouteur).listen(ar -> {

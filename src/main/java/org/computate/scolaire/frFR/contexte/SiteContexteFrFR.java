@@ -45,15 +45,27 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	protected void _vertx(Couverture<Vertx> c) {
 	}
 
+	/**
+	 * Var.enUS: routerFactory
+	 */
 	protected void _usineRouteur(Couverture<OpenAPI3RouterFactory> c) {
 	}
 
+	/**
+	 * Var.enUS: authHandler
+	 */
 	protected void _gestionnaireAuth(Couverture<OAuth2AuthHandler> c) {
 	}
 
+	/**
+	 * Var.enUS: authProvider
+	 */
 	protected void _authFournisseur(Couverture<OAuth2Auth> c) {
 	}
 
+	/**
+	 * Var.enUS: workerExecutor
+	 */
 	protected void _executeurTravailleur(Couverture<WorkerExecutor> c) {
 	}
 
@@ -61,33 +73,6 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * Var.enUS: siteConfig
 	 * Le config du site. **/
 	protected void _configSite(ConfigSite o) { 
-	}
-
-	/**
-	 * r: configSite
-	 * r.enUS: siteConfig
-	 */
-	protected void _jdbcConfig(JsonObject o) {
-		if(StringUtils.isNotEmpty(configSite.getJdbcUrl()))
-			o.put("url", configSite.getJdbcUrl());
-		if(StringUtils.isNotEmpty(configSite.getJdbcClassePilote()))
-			o.put("driver_class", configSite.getJdbcClassePilote());
-		if(StringUtils.isNotEmpty(configSite.getJdbcUtilisateur()))
-			o.put("user", configSite.getJdbcUtilisateur());
-		if(StringUtils.isNotEmpty(configSite.getJdbcMotDePasse()))
-			o.put("password", configSite.getJdbcMotDePasse());
-		if(configSite.getJdbcTailleMaxPiscine() != null)
-			o.put("max_pool_size", configSite.getJdbcTailleMaxPiscine());
-		if(configSite.getJdbcTailleInitialePiscine() != null)
-			o.put("initial_pool_size", configSite.getJdbcTailleInitialePiscine());
-		if(configSite.getJdbcTailleMinPiscine() != null)
-			o.put("min_pool_size", configSite.getJdbcTailleMinPiscine());
-		if(configSite.getJdbcMaxDeclarations() != null)
-			o.put("max_statements", configSite.getJdbcMaxDeclarations());
-		if(configSite.getJdbcMaxDeclarationsParConnexion() != null)
-			o.put("max_statements_per_connection", configSite.getJdbcMaxDeclarationsParConnexion());
-		if(configSite.getJdbcTempsInactiviteMax() != null)
-			o.put("max_idle_time", configSite.getJdbcTempsInactiviteMax());
 	}
 
 	/**	Le source de données du site. **/
@@ -120,36 +105,6 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 **/
 	protected void _clientSolr(Couverture<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(configSite.getSolrUrl()).build();
-		c.o(o);
-	}
-
-	/**	
-	 * r: configSite
-	 * r.enUS: siteConfig
-	 * Le client du moteur de recherche SOLR. **/
-	protected void _clientSolrComputate(Couverture<HttpSolrClient> c) {
-		String solrUrlComputate = configSite.getSolrUrlComputate();
-		if(StringUtils.isNotEmpty(solrUrlComputate)) {
-			HttpSolrClient o = new HttpSolrClient.Builder(solrUrlComputate).build();
-			c.o(o);
-		}
-	}
-
-	/**	
-	 * r: configSite
-	 * r.enUS: siteConfig
-	 * Le mot de passe de cryptage à utiliser pour tout cryptage. **/
-	protected void _motDePasseCryptage(Couverture<String> c) {
-		String o = configSite.getCryptageMotDePasse();
-		c.o(o);
-	}
-
-	/**	
-	 * r: configSite
-	 * r.enUS: siteConfig
-	 * Le nombre de fils pour executer des tâches daemon dans le site. **/
-	protected void _nombreExecuteurs(Couverture<Integer> c) {
-		Integer o = configSite.getNombreExecuteurs();
 		c.o(o);
 	}
 }

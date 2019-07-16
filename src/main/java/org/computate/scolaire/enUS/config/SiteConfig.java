@@ -15,8 +15,11 @@ import org.computate.scolaire.enUS.wrap.Wrap;
  **/
 public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 
-	protected void _configChemin(Wrap<String> c) {   
-		String o = System.getenv("configChemin");
+	/**	
+	 *	The path to the config file of the site. 
+	 **/
+	protected void _configPath(Wrap<String> c) {   
+		String o = System.getenv("configPath");
 		c.o(o);
 	}
 
@@ -25,8 +28,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	 **/
 	protected void _config(Wrap<INIConfiguration> c) {
 		Configurations configurations = new Configurations();
-		File configFile = new File(configChemin);
-		if(configChemin != null && configFile.exists()) {
+		File configFile = new File(configPath);
+		if(configPath != null && configFile.exists()) {
 			try {
 				INIConfiguration o = configurations.ini(configFile);
 				c.o(o);
@@ -36,505 +39,601 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		}
 	}
 
-	protected void _identifiantSite(Wrap<String> c) {
+	/**	
+	 *	The name of the principal group of settings of the config for this website. 
+	 **/
+	protected void _siteIdentifier(Wrap<String> c) {
 		String o;
 		if(config == null)
-			o = System.getenv("appliNom");
+			o = System.getenv("appName");
 		else
-			o = config.getString("appliNom");
+			o = config.getString("appName");
 
 		c.o(o);
 	}
 
-	protected void _prefixeEchappe(Wrap<String> c) {
-		String o = StringUtils.replace(identifiantSite, ".", "..") + ".";
+	/**	
+	 *	The already escaped prefix to find the properties of the site. 
+	 **/
+	protected void _prefixEscaped(Wrap<String> c) {
+		String o = StringUtils.replace(siteIdentifier, ".", "..") + ".";
 		c.o(o);
 	}
 
-	protected void _appliChemin(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var, StringUtils.substringBefore(configChemin, "/config/"));
-
-		c.o(o);
-	}
-
-	protected void _racineDocument(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
-	protected void _nomEntreprise(Wrap<String> c) {
+	/**	
+	 *	The path to the project of the site cloned from git. 
+	 **/
+	protected void _appPath(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var, StringUtils.substringBefore(configPath, "/config/"));
+
 		c.o(o);
 	}
 
-	protected void _nomDomaine(Wrap<String> c) {
+	/**	
+	 *	The path to the docroot for the project. 
+	 **/
+	protected void _docRoot(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _siteNomHote(Wrap<String> c) {
+	/**	
+	 *	The name of the company. 
+	 **/
+	protected void _companyName(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
+	/**	
+	 *	The domain name of the site. 
+	 **/
+	protected void _domainName(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 *	The host name of the site. 
+	 **/
+	protected void _siteHostName(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 *	The port of the site. 
+	 **/
 	protected void _sitePort(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var));
 		else
-			o = config.getInt(prefixeEchappe + c.var, 8080);
+			o = config.getInt(prefixEscaped + c.var, 8080);
 		c.o(o);
 	}
 
-	protected void _authRoyaume(Wrap<String> c) {
+	/**	
+	 *	The Keycloak realm of the site. 
+	 **/
+	protected void _authRealm(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
-	protected void _authRessource(Wrap<String> c) {
+	/**	
+	 *	The Keycloak client ID of the site. 
+	 **/
+	protected void _authResource(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
+	/**	
+	 *	The Keycloak client secret of the site. 
+	 **/
 	protected void _authSecret(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
-	protected void _authSslRequis(Wrap<String> c) {
+	/**	
+	 *	Whether SSL is required in Keycloak for the site. 
+	 **/
+	protected void _authSslRequired(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), "all");
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "all");
 		c.o(o);
 	}
 
-	protected void _sslJksChemin(Wrap<String> c) {
+	/**	
+	 *	The path to the Java keystore for the site. 
+	 **/
+	protected void _sslJksPath(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
-	protected void _sslJksMotDePasse(Wrap<String> c) {
+	/**	
+	 *	The password for the Java keystore for the site. 
+	 **/
+	protected void _sslJksPassword(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
+	/**	
+	 *	The URL to the Keycloak server. 
+	 **/
 	protected void _authUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
-	protected void _cryptageSel(Wrap<String> c) {
+	/**	
+	 *	The encryption salt to use for all database encryption. 
+	 **/
+	protected void _encryptionSalt(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _cryptageMotDePasse(Wrap<String> c) {
+	/**	
+	 *	The encryption password to use for all encryption of the database. 
+	 **/
+	protected void _encryptionPassword(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
+	/**	
+	 *	The base URL for the URLs of the site. 
+	 **/
 	protected void _siteBaseUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), "https://" + siteNomHote);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "https://" + siteHostName);
 		c.o(o);
 	}
 
-	protected void _siteNomAffichage(Wrap<String> c) {
+	/**	
+	 *	The display name of the site. 
+	 **/
+	protected void _siteDisplayName(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), identifiantSite);
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), siteIdentifier);
 		c.o(o);
 	}
 
-	protected void _jdbcClassePilote(Wrap<String> c) {
+	/**	
+	 *	The class name of the JDBC driver class for the database. 
+	 **/
+	protected void _jdbcDriverClass(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = StringUtils.defaultIfEmpty(System.getenv(c.var), "org.postgresql.Driver");
 		else
-			o = config.getString(prefixeEchappe + c.var, "org.postgresql.Driver");
+			o = config.getString(prefixEscaped + c.var, "org.postgresql.Driver");
 		c.o(o);
 	}
 
-	protected void _jdbcUtilisateur(Wrap<String> c) {
+	/**	
+	 *	The username for the database. 
+	 **/
+	protected void _jdbcUsername(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _jdbcMotDePasse(Wrap<String> c) {
+	/**	
+	 *	The password for the database. 
+	 **/
+	protected void _jdbcPassword(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _jdbcTailleMaxPiscine(Wrap<Integer> c) {
+	/**	
+	 *	The max pool size for the database. 
+	 **/
+	protected void _jdbcMaxPoolSize(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 15);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 15);
+			o = config.getInt(prefixEscaped + c.var, 15);
 		c.o(o);
 	}
 
-	protected void _jdbcTailleInitialePiscine(Wrap<Integer> c) {
+	/**	
+	 *	The max pool size for the database. 
+	 **/
+	protected void _jdbcInitialPoolSize(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 3);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 3);
+			o = config.getInt(prefixEscaped + c.var, 3);
 		c.o(o);
 	}
 
-	protected void _jdbcTailleMinPiscine(Wrap<Integer> c) {
+	/**	
+	 *	The max pool size for the database. 
+	 **/
+	protected void _jdbcMinPoolSize(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 0);
+			o = config.getInt(prefixEscaped + c.var, 0);
 		c.o(o);
 	}
 
-	protected void _jdbcMaxDeclarations(Wrap<Integer> c) {
+	/**	
+	 *	The max statements for the database. 
+	 **/
+	protected void _jdbcMaxStatements(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 0);
+			o = config.getInt(prefixEscaped + c.var, 0);
 		c.o(o);
 	}
 
-	protected void _jdbcMaxDeclarationsParConnexion(Wrap<Integer> c) {
+	/**	
+	 *	The max statements per connection for the database. 
+	 **/
+	protected void _jdbcMaxStatementsPerConnection(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 0);
+			o = config.getInt(prefixEscaped + c.var, 0);
 		c.o(o);
 	}
 
-	protected void _jdbcTempsInactiviteMax(Wrap<Integer> c) {
+	/**	
+	 *	The max idle time for the database. 
+	 **/
+	protected void _jdbcMaxIdleTime(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = NumberUtils.toInt(System.getenv(c.var), 0);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 0);
+			o = config.getInt(prefixEscaped + c.var, 0);
 		c.o(o);
 	}
 
+	/**	
+	 *	The JDBC URL to the database. 
+	 **/
 	protected void _jdbcUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
+	/**	
+	 *	The URL to the SOLR search engine. 
+	 **/
 	protected void _solrUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _solrUrlComputate(Wrap<String> c) {
+	/**	
+	 *	The Facebook account for the site. 
+	 **/
+	protected void _accountFacebook(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _jetonIdentitePaypal(Wrap<String> c) {
+	/**	
+	 *	The Twitter account for the site. 
+	 **/
+	protected void _accountTwitter(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _compteFacebook(Wrap<String> c) {
+	/**	
+	 *	The Instagram account for the site. 
+	 **/
+	protected void _accountInstagram(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _compteTwitter(Wrap<String> c) {
+	/**	
+	 *	The Youtube account for the site. 
+	 **/
+	protected void _accountYoutube(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _compteGooglePlus(Wrap<String> c) {
+	/**	
+	 *	The Pinterest account for the site. 
+	 **/
+	protected void _accountPinterest(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _compteInstagram(Wrap<String> c) {
+	/**	
+	 *	The Email account for the site. 
+	 **/
+	protected void _accountEmail(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _compteYoutube(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
-	protected void _identifiantCanalYoutube(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
-	protected void _comptePinterest(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
-	protected void _compteOpenclipart(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
-	protected void _compteMail(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = config.getString(prefixeEchappe + c.var);
-		c.o(o);
-	}
-
+	/**	
+	 *	The OpenID Connect role for an administrator. 
+	 **/
 	protected void _roleAdmin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _mailAdmin(Wrap<String> c) {
+	/**	
+	 *	The email address for the administrator of the site for the error reports. 
+	 **/
+	protected void _emailAdmin(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _nombreExecuteurs(Wrap<Integer> c) {
+	/**	
+	 *	The number of executors for executing background tasks in the site. 
+	 **/
+	protected void _numberExecutors(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
 			o = Integer.parseInt(System.getenv(c.var), 1);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 1);
+			o = config.getInt(prefixEscaped + c.var, 1);
 		c.o(o);
 	}
 
+	/**	
+	 *	The version of OpenAPI used with Vert.x which should probably be 3.0. 
+	 **/
 	protected void _openApiVersion(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "3.0.0");
+			o = config.getString(prefixEscaped + c.var, "3.0.0");
 		c.o(o);
 	}
 
+	/**	
+	 *	The description of your site API. 
+	 **/
 	protected void _apiDescription(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "2.0");
+			o = config.getString(prefixEscaped + c.var, "2.0");
 		c.o(o);
 	}
 
-	protected void _apiTitre(Wrap<String> c) {
+	/**	
+	 *	The title of your site API. 
+	 **/
+	protected void _apiTitle(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, siteNomAffichage);
+			o = config.getString(prefixEscaped + c.var, siteDisplayName);
 		c.o(o);
 	}
 
+	/**	
+	 *	The terms of service of your site API. 
+	 **/
 	protected void _apiTermsService(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "http://swagger.io/terms/");
+			o = config.getString(prefixEscaped + c.var, "http://swagger.io/terms/");
 		c.o(o);
 	}
 
+	/**	
+	 *	The version of your site API. 
+	 **/
 	protected void _apiVersion(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "1");
+			o = config.getString(prefixEscaped + c.var, "1");
 		c.o(o);
 	}
 
-	protected void _apiContactMail(Wrap<String> c) {
+	/**	
+	 *	The contact email of your site API. 
+	 **/
+	protected void _apiContactEmail(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var);
+			o = config.getString(prefixEscaped + c.var);
 		c.o(o);
 	}
 
-	protected void _apiLicenceNom(Wrap<String> c) {
+	/**	
+	 *	The open source license name of your site API. 
+	 **/
+	protected void _apiLicenseName(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "Apache 2.0");
+			o = config.getString(prefixEscaped + c.var, "Apache 2.0");
 		c.o(o);
 	}
 
-	protected void _apiLicenceUrl(Wrap<String> c) {
+	/**	
+	 *	The open source license URL of your site API. 
+	 **/
+	protected void _apiLicenseUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "http://www.apache.org/licenses/LICENSE-2.0.html");
+			o = config.getString(prefixEscaped + c.var, "http://www.apache.org/licenses/LICENSE-2.0.html");
 		c.o(o);
 	}
 
-	protected void _apiNomHote(Wrap<String> c) {
+	/**	
+	 *	The host name of your site API. 
+	 **/
+	protected void _apiHostName(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, siteNomHote);
+			o = config.getString(prefixEscaped + c.var, siteHostName);
 		c.o(o);
 	}
 
-	protected void _apiCheminBase(Wrap<String> c) {
+	/**	
+	 *	The base path of your site API. 
+	 **/
+	protected void _apiBasePath(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "/api/v" + apiVersion);
+			o = config.getString(prefixEscaped + c.var, "/api/v" + apiVersion);
 		c.o(o);
 	}
 
-	protected void _vertxServiceAddress(Wrap<String> c) {
+	/**	
+	 *	The base URL of your static files. 
+	 **/
+	protected void _staticBaseUrl(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
 		else
-			o = config.getString(prefixeEchappe + c.var, "address");
-		c.o(o);
-	}
-
-	protected void _statiqueUrlBase(Wrap<String> c) {
-		String o;
-		if(config == null)
-			o = System.getenv(c.var);
-		else
-			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), "/static");
+			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "/static");
 		c.o(o);
 	}
 }

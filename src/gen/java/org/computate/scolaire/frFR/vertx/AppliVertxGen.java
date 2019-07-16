@@ -29,6 +29,20 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 	public static final String configurerClusterSuccesDonnees1 = "Les données du cluster partagé ont été configurées avec succès. ";
 	public static final String configurerClusterSuccesDonnees = configurerClusterSuccesDonnees1;
 
+	public static final String configurerOpenApiErreur1 = "Impossible de configurer le serveur auth et le API.";
+	public static final String configurerOpenApiErreur = configurerOpenApiErreur1;
+	public static final String configurerOpenApiSucces1 = "Le serveur auth et le API ont été configurées avec succès. ";
+	public static final String configurerOpenApiSucces = configurerOpenApiSucces1;
+
+	public static final String configurerControlesSanteErreurBaseDeDonnees1 = "La base de données n'est pas configurée correctement. ";
+	public static final String configurerControlesSanteErreurBaseDeDonnees = configurerControlesSanteErreurBaseDeDonnees1;
+	public static final String configurerControlesSanteVideSolr1 = "Le moteur de recherche Solr est vide. ";
+	public static final String configurerControlesSanteVideSolr = configurerControlesSanteVideSolr1;
+	public static final String configurerControlesSanteErreurSolr1 = "Le moteur de recherche Solr n'est pas configuré correctement. ";
+	public static final String configurerControlesSanteErreurSolr = configurerControlesSanteErreurSolr1;
+	public static final String configurerControlesSanteErreurVertx1 = "L'application Vert.x n'est pas configuré correctement. ";
+	public static final String configurerControlesSanteErreurVertx = configurerControlesSanteErreurVertx1;
+
 	public static final String fermerDonneesErreur1 = "Impossible de fermer la connexion du client de base de données. ";
 	public static final String fermerDonneesErreur = fermerDonneesErreur1;
 	public static final String fermerDonneesSucces1 = "La connexion client de la base de données a été fermée.";
@@ -42,7 +56,6 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 	protected boolean dejaInitialiseAppliVertx = false;
 
 	public AppliVertx initLoinAppliVertx(RequeteSiteFrFR requeteSite_) {
-		setRequeteSite_(requeteSite_);
 		if(!dejaInitialiseAppliVertx) {
 			dejaInitialiseAppliVertx = true;
 			initLoinAppliVertx();
@@ -59,17 +72,6 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
 		initLoinAppliVertx(requeteSite_);
-	}
-
-	/////////////////
-	// requeteSite //
-	/////////////////
-
-	public void requeteSiteAppliVertx(RequeteSiteFrFR requeteSite_) {
-	}
-
-	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteAppliVertx(requeteSite_);
 	}
 
 	/////////////
@@ -180,5 +182,5 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, fermerDonneesErreur1, fermerDonneesSucces1 };
+	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, fermerDonneesErreur1, fermerDonneesSucces1 };
 }

@@ -6,7 +6,6 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
-import java.lang.Integer;
 import io.vertx.core.WorkerExecutor;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -15,10 +14,8 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import java.lang.String;
 import io.vertx.ext.sql.SQLClient;
 
 /**	
@@ -63,147 +60,147 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		return (SiteContextEnUS)this;
 	}
 
+	///////////////////
+	// routerFactory //
+	///////////////////
+
+	/**	L'entité « routerFactory »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected OpenAPI3RouterFactory routerFactory;
+	public Wrap<OpenAPI3RouterFactory> routerFactoryWrap = new Wrap<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("routerFactory").o(routerFactory);
+
+	/**	<br/>L'entité « routerFactory »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:routerFactory">Trouver l'entité routerFactory dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _routerFactory(Wrap<OpenAPI3RouterFactory> c);
+
+	public OpenAPI3RouterFactory getRouterFactory() {
+		return routerFactory;
+	}
+
+	public void setRouterFactory(OpenAPI3RouterFactory routerFactory) {
+		this.routerFactory = routerFactory;
+		this.routerFactoryWrap.alreadyInitialized = true;
+	}
+	protected SiteContextEnUS routerFactoryInit() {
+		if(!routerFactoryWrap.alreadyInitialized) {
+			_routerFactory(routerFactoryWrap);
+			if(routerFactory == null)
+				setRouterFactory(routerFactoryWrap.o);
+		}
+		routerFactoryWrap.alreadyInitialized(true);
+		return (SiteContextEnUS)this;
+	}
+
+	/////////////////
+	// authHandler //
+	/////////////////
+
+	/**	L'entité « authHandler »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected OAuth2AuthHandler authHandler;
+	public Wrap<OAuth2AuthHandler> authHandlerWrap = new Wrap<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("authHandler").o(authHandler);
+
+	/**	<br/>L'entité « authHandler »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authHandler">Trouver l'entité authHandler dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authHandler(Wrap<OAuth2AuthHandler> c);
+
+	public OAuth2AuthHandler getAuthHandler() {
+		return authHandler;
+	}
+
+	public void setAuthHandler(OAuth2AuthHandler authHandler) {
+		this.authHandler = authHandler;
+		this.authHandlerWrap.alreadyInitialized = true;
+	}
+	protected SiteContextEnUS authHandlerInit() {
+		if(!authHandlerWrap.alreadyInitialized) {
+			_authHandler(authHandlerWrap);
+			if(authHandler == null)
+				setAuthHandler(authHandlerWrap.o);
+		}
+		authHandlerWrap.alreadyInitialized(true);
+		return (SiteContextEnUS)this;
+	}
+
 	//////////////////
-	// usineRouteur //
+	// authProvider //
 	//////////////////
 
-	/**	L'entité « usineRouteur »
+	/**	L'entité « authProvider »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected OpenAPI3RouterFactory usineRouteur;
-	public Wrap<OpenAPI3RouterFactory> usineRouteurWrap = new Wrap<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("usineRouteur").o(usineRouteur);
+	protected OAuth2Auth authProvider;
+	public Wrap<OAuth2Auth> authProviderWrap = new Wrap<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authProvider").o(authProvider);
 
-	/**	<br/>L'entité « usineRouteur »
+	/**	<br/>L'entité « authProvider »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:usineRouteur">Trouver l'entité usineRouteur dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authProvider">Trouver l'entité authProvider dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _usineRouteur(Wrap<OpenAPI3RouterFactory> c);
+	protected abstract void _authProvider(Wrap<OAuth2Auth> c);
 
-	public OpenAPI3RouterFactory getUsineRouteur() {
-		return usineRouteur;
+	public OAuth2Auth getAuthProvider() {
+		return authProvider;
 	}
 
-	public void setUsineRouteur(OpenAPI3RouterFactory usineRouteur) {
-		this.usineRouteur = usineRouteur;
-		this.usineRouteurWrap.alreadyInitialized = true;
+	public void setAuthProvider(OAuth2Auth authProvider) {
+		this.authProvider = authProvider;
+		this.authProviderWrap.alreadyInitialized = true;
 	}
-	protected SiteContextEnUS usineRouteurInit() {
-		if(!usineRouteurWrap.alreadyInitialized) {
-			_usineRouteur(usineRouteurWrap);
-			if(usineRouteur == null)
-				setUsineRouteur(usineRouteurWrap.o);
+	protected SiteContextEnUS authProviderInit() {
+		if(!authProviderWrap.alreadyInitialized) {
+			_authProvider(authProviderWrap);
+			if(authProvider == null)
+				setAuthProvider(authProviderWrap.o);
 		}
-		usineRouteurWrap.alreadyInitialized(true);
+		authProviderWrap.alreadyInitialized(true);
 		return (SiteContextEnUS)this;
 	}
 
-	//////////////////////
-	// gestionnaireAuth //
-	//////////////////////
+	////////////////////
+	// workerExecutor //
+	////////////////////
 
-	/**	L'entité « gestionnaireAuth »
+	/**	L'entité « workerExecutor »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected OAuth2AuthHandler gestionnaireAuth;
-	public Wrap<OAuth2AuthHandler> gestionnaireAuthWrap = new Wrap<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("gestionnaireAuth").o(gestionnaireAuth);
+	protected WorkerExecutor workerExecutor;
+	public Wrap<WorkerExecutor> workerExecutorWrap = new Wrap<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("workerExecutor").o(workerExecutor);
 
-	/**	<br/>L'entité « gestionnaireAuth »
+	/**	<br/>L'entité « workerExecutor »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:gestionnaireAuth">Trouver l'entité gestionnaireAuth dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:workerExecutor">Trouver l'entité workerExecutor dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _gestionnaireAuth(Wrap<OAuth2AuthHandler> c);
+	protected abstract void _workerExecutor(Wrap<WorkerExecutor> c);
 
-	public OAuth2AuthHandler getGestionnaireAuth() {
-		return gestionnaireAuth;
+	public WorkerExecutor getWorkerExecutor() {
+		return workerExecutor;
 	}
 
-	public void setGestionnaireAuth(OAuth2AuthHandler gestionnaireAuth) {
-		this.gestionnaireAuth = gestionnaireAuth;
-		this.gestionnaireAuthWrap.alreadyInitialized = true;
+	public void setWorkerExecutor(WorkerExecutor workerExecutor) {
+		this.workerExecutor = workerExecutor;
+		this.workerExecutorWrap.alreadyInitialized = true;
 	}
-	protected SiteContextEnUS gestionnaireAuthInit() {
-		if(!gestionnaireAuthWrap.alreadyInitialized) {
-			_gestionnaireAuth(gestionnaireAuthWrap);
-			if(gestionnaireAuth == null)
-				setGestionnaireAuth(gestionnaireAuthWrap.o);
+	protected SiteContextEnUS workerExecutorInit() {
+		if(!workerExecutorWrap.alreadyInitialized) {
+			_workerExecutor(workerExecutorWrap);
+			if(workerExecutor == null)
+				setWorkerExecutor(workerExecutorWrap.o);
 		}
-		gestionnaireAuthWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	/////////////////////
-	// authFournisseur //
-	/////////////////////
-
-	/**	L'entité « authFournisseur »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected OAuth2Auth authFournisseur;
-	public Wrap<OAuth2Auth> authFournisseurWrap = new Wrap<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authFournisseur").o(authFournisseur);
-
-	/**	<br/>L'entité « authFournisseur »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authFournisseur">Trouver l'entité authFournisseur dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _authFournisseur(Wrap<OAuth2Auth> c);
-
-	public OAuth2Auth getAuthFournisseur() {
-		return authFournisseur;
-	}
-
-	public void setAuthFournisseur(OAuth2Auth authFournisseur) {
-		this.authFournisseur = authFournisseur;
-		this.authFournisseurWrap.alreadyInitialized = true;
-	}
-	protected SiteContextEnUS authFournisseurInit() {
-		if(!authFournisseurWrap.alreadyInitialized) {
-			_authFournisseur(authFournisseurWrap);
-			if(authFournisseur == null)
-				setAuthFournisseur(authFournisseurWrap.o);
-		}
-		authFournisseurWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	//////////////////////////
-	// executeurTravailleur //
-	//////////////////////////
-
-	/**	L'entité « executeurTravailleur »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected WorkerExecutor executeurTravailleur;
-	public Wrap<WorkerExecutor> executeurTravailleurWrap = new Wrap<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("executeurTravailleur").o(executeurTravailleur);
-
-	/**	<br/>L'entité « executeurTravailleur »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:executeurTravailleur">Trouver l'entité executeurTravailleur dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _executeurTravailleur(Wrap<WorkerExecutor> c);
-
-	public WorkerExecutor getExecuteurTravailleur() {
-		return executeurTravailleur;
-	}
-
-	public void setExecuteurTravailleur(WorkerExecutor executeurTravailleur) {
-		this.executeurTravailleur = executeurTravailleur;
-		this.executeurTravailleurWrap.alreadyInitialized = true;
-	}
-	protected SiteContextEnUS executeurTravailleurInit() {
-		if(!executeurTravailleurWrap.alreadyInitialized) {
-			_executeurTravailleur(executeurTravailleurWrap);
-			if(executeurTravailleur == null)
-				setExecuteurTravailleur(executeurTravailleurWrap.o);
-		}
-		executeurTravailleurWrap.alreadyInitialized(true);
+		workerExecutorWrap.alreadyInitialized(true);
 		return (SiteContextEnUS)this;
 	}
 
@@ -239,40 +236,6 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		}
 		siteConfig.initDeepForClass(null);
 		siteConfigWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	////////////////
-	// jdbcConfig //
-	////////////////
-
-	/**	L'entité « jdbcConfig »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut JsonObject(). 
-	 */
-	protected JsonObject jdbcConfig = new JsonObject();
-	public Wrap<JsonObject> jdbcConfigWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("jdbcConfig").o(jdbcConfig);
-
-	/**	<br/>L'entité « jdbcConfig »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut JsonObject(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcConfig">Trouver l'entité jdbcConfig dans Solr</a>
-	 * <br/>
-	 * @param jdbcConfig est l'entité déjà construit. 
-	 **/
-	protected abstract void _jdbcConfig(JsonObject o);
-
-	public JsonObject getJdbcConfig() {
-		return jdbcConfig;
-	}
-
-	public void setJdbcConfig(JsonObject jdbcConfig) {
-		this.jdbcConfig = jdbcConfig;
-		this.jdbcConfigWrap.alreadyInitialized = true;
-	}
-	protected SiteContextEnUS jdbcConfigInit() {
-		if(!jdbcConfigWrap.alreadyInitialized) {
-			_jdbcConfig(jdbcConfig);
-		}
-		jdbcConfigWrap.alreadyInitialized(true);
 		return (SiteContextEnUS)this;
 	}
 
@@ -348,160 +311,6 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		return (SiteContextEnUS)this;
 	}
 
-	/////////////////////////
-	// clientSolrComputate //
-	/////////////////////////
-
-	/**	L'entité « clientSolrComputate »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected HttpSolrClient clientSolrComputate;
-	public Wrap<HttpSolrClient> clientSolrComputateWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);
-
-	/**	<br/>L'entité « clientSolrComputate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:clientSolrComputate">Trouver l'entité clientSolrComputate dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _clientSolrComputate(Wrap<HttpSolrClient> c);
-
-	public HttpSolrClient getClientSolrComputate() {
-		return clientSolrComputate;
-	}
-
-	public void setClientSolrComputate(HttpSolrClient clientSolrComputate) {
-		this.clientSolrComputate = clientSolrComputate;
-		this.clientSolrComputateWrap.alreadyInitialized = true;
-	}
-	protected SiteContextEnUS clientSolrComputateInit() {
-		if(!clientSolrComputateWrap.alreadyInitialized) {
-			_clientSolrComputate(clientSolrComputateWrap);
-			if(clientSolrComputate == null)
-				setClientSolrComputate(clientSolrComputateWrap.o);
-		}
-		clientSolrComputateWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	////////////////////////
-	// motDePasseCryptage //
-	////////////////////////
-
-	/**	L'entité « motDePasseCryptage »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String motDePasseCryptage;
-	public Wrap<String> motDePasseCryptageWrap = new Wrap<String>().p(this).c(String.class).var("motDePasseCryptage").o(motDePasseCryptage);
-
-	/**	<br/>L'entité « motDePasseCryptage »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:motDePasseCryptage">Trouver l'entité motDePasseCryptage dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _motDePasseCryptage(Wrap<String> c);
-
-	public String getMotDePasseCryptage() {
-		return motDePasseCryptage;
-	}
-
-	public void setMotDePasseCryptage(String motDePasseCryptage) {
-		this.motDePasseCryptage = motDePasseCryptage;
-		this.motDePasseCryptageWrap.alreadyInitialized = true;
-	}
-	protected SiteContextEnUS motDePasseCryptageInit() {
-		if(!motDePasseCryptageWrap.alreadyInitialized) {
-			_motDePasseCryptage(motDePasseCryptageWrap);
-			if(motDePasseCryptage == null)
-				setMotDePasseCryptage(motDePasseCryptageWrap.o);
-		}
-		motDePasseCryptageWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	public String solrMotDePasseCryptage() {
-		return motDePasseCryptage;
-	}
-
-	public String strMotDePasseCryptage() {
-		return motDePasseCryptage == null ? "" : motDePasseCryptage;
-	}
-
-	public String nomAffichageMotDePasseCryptage() {
-		return null;
-	}
-
-	public String htmTooltipMotDePasseCryptage() {
-		return null;
-	}
-
-	public String htmMotDePasseCryptage() {
-		return motDePasseCryptage == null ? "" : StringEscapeUtils.escapeHtml4(strMotDePasseCryptage());
-	}
-
-	//////////////////////
-	// nombreExecuteurs //
-	//////////////////////
-
-	/**	L'entité « nombreExecuteurs »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Integer nombreExecuteurs;
-	public Wrap<Integer> nombreExecuteursWrap = new Wrap<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
-
-	/**	<br/>L'entité « nombreExecuteurs »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nombreExecuteurs">Trouver l'entité nombreExecuteurs dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _nombreExecuteurs(Wrap<Integer> c);
-
-	public Integer getNombreExecuteurs() {
-		return nombreExecuteurs;
-	}
-
-	public void setNombreExecuteurs(Integer nombreExecuteurs) {
-		this.nombreExecuteurs = nombreExecuteurs;
-		this.nombreExecuteursWrap.alreadyInitialized = true;
-	}
-	public SiteContextEnUS setNombreExecuteurs(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.nombreExecuteurs = Integer.parseInt(o);
-		this.nombreExecuteursWrap.alreadyInitialized = true;
-		return (SiteContextEnUS)this;
-	}
-	protected SiteContextEnUS nombreExecuteursInit() {
-		if(!nombreExecuteursWrap.alreadyInitialized) {
-			_nombreExecuteurs(nombreExecuteursWrap);
-			if(nombreExecuteurs == null)
-				setNombreExecuteurs(nombreExecuteursWrap.o);
-		}
-		nombreExecuteursWrap.alreadyInitialized(true);
-		return (SiteContextEnUS)this;
-	}
-
-	public Integer solrNombreExecuteurs() {
-		return nombreExecuteurs;
-	}
-
-	public String strNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
-	}
-
-	public String nomAffichageNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmTooltipNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : StringEscapeUtils.escapeHtml4(strNombreExecuteurs());
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -522,17 +331,13 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 
 	public void initSiteContextEnUS() {
 		vertxInit();
-		usineRouteurInit();
-		gestionnaireAuthInit();
-		authFournisseurInit();
-		executeurTravailleurInit();
+		routerFactoryInit();
+		authHandlerInit();
+		authProviderInit();
+		workerExecutorInit();
 		siteConfigInit();
-		jdbcConfigInit();
 		clientSqlInit();
 		clientSolrInit();
-		clientSolrComputateInit();
-		motDePasseCryptageInit();
-		nombreExecuteursInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -561,28 +366,20 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		switch(var) {
 			case "vertx":
 				return oSiteContextEnUS.vertx;
-			case "usineRouteur":
-				return oSiteContextEnUS.usineRouteur;
-			case "gestionnaireAuth":
-				return oSiteContextEnUS.gestionnaireAuth;
-			case "authFournisseur":
-				return oSiteContextEnUS.authFournisseur;
-			case "executeurTravailleur":
-				return oSiteContextEnUS.executeurTravailleur;
+			case "routerFactory":
+				return oSiteContextEnUS.routerFactory;
+			case "authHandler":
+				return oSiteContextEnUS.authHandler;
+			case "authProvider":
+				return oSiteContextEnUS.authProvider;
+			case "workerExecutor":
+				return oSiteContextEnUS.workerExecutor;
 			case "siteConfig":
 				return oSiteContextEnUS.siteConfig;
-			case "jdbcConfig":
-				return oSiteContextEnUS.jdbcConfig;
 			case "clientSql":
 				return oSiteContextEnUS.clientSql;
 			case "clientSolr":
 				return oSiteContextEnUS.clientSolr;
-			case "clientSolrComputate":
-				return oSiteContextEnUS.clientSolrComputate;
-			case "motDePasseCryptage":
-				return oSiteContextEnUS.motDePasseCryptage;
-			case "nombreExecuteurs":
-				return oSiteContextEnUS.nombreExecuteurs;
 			default:
 				return null;
 		}

@@ -54,42 +54,19 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 	protected void _vertx(Wrap<Vertx> c) {
 	}
 
-	protected void _usineRouteur(Wrap<OpenAPI3RouterFactory> c) {
+	protected void _routerFactory(Wrap<OpenAPI3RouterFactory> c) {
 	}
 
-	protected void _gestionnaireAuth(Wrap<OAuth2AuthHandler> c) {
+	protected void _authHandler(Wrap<OAuth2AuthHandler> c) {
 	}
 
-	protected void _authFournisseur(Wrap<OAuth2Auth> c) {
+	protected void _authProvider(Wrap<OAuth2Auth> c) {
 	}
 
-	protected void _executeurTravailleur(Wrap<WorkerExecutor> c) {
+	protected void _workerExecutor(Wrap<WorkerExecutor> c) {
 	}
 
 	protected void _siteConfig(SiteConfig o) { 
-	}
-
-	protected void _jdbcConfig(JsonObject o) {
-		if(StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
-			o.put("url", siteConfig.getJdbcUrl());
-		if(StringUtils.isNotEmpty(siteConfig.getJdbcClassePilote()))
-			o.put("driver_class", siteConfig.getJdbcClassePilote());
-		if(StringUtils.isNotEmpty(siteConfig.getJdbcUtilisateur()))
-			o.put("user", siteConfig.getJdbcUtilisateur());
-		if(StringUtils.isNotEmpty(siteConfig.getJdbcMotDePasse()))
-			o.put("password", siteConfig.getJdbcMotDePasse());
-		if(siteConfig.getJdbcTailleMaxPiscine() != null)
-			o.put("max_pool_size", siteConfig.getJdbcTailleMaxPiscine());
-		if(siteConfig.getJdbcTailleInitialePiscine() != null)
-			o.put("initial_pool_size", siteConfig.getJdbcTailleInitialePiscine());
-		if(siteConfig.getJdbcTailleMinPiscine() != null)
-			o.put("min_pool_size", siteConfig.getJdbcTailleMinPiscine());
-		if(siteConfig.getJdbcMaxDeclarations() != null)
-			o.put("max_statements", siteConfig.getJdbcMaxDeclarations());
-		if(siteConfig.getJdbcMaxDeclarationsParConnexion() != null)
-			o.put("max_statements_per_connection", siteConfig.getJdbcMaxDeclarationsParConnexion());
-		if(siteConfig.getJdbcTempsInactiviteMax() != null)
-			o.put("max_idle_time", siteConfig.getJdbcTempsInactiviteMax());
 	}
 
 	protected void _clientSql(Wrap<SQLClient> c) {
@@ -97,24 +74,6 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	protected void _clientSolr(Wrap<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(siteConfig.getSolrUrl()).build();
-		c.o(o);
-	}
-
-	protected void _clientSolrComputate(Wrap<HttpSolrClient> c) {
-		String solrUrlComputate = siteConfig.getSolrUrlComputate();
-		if(StringUtils.isNotEmpty(solrUrlComputate)) {
-			HttpSolrClient o = new HttpSolrClient.Builder(solrUrlComputate).build();
-			c.o(o);
-		}
-	}
-
-	protected void _motDePasseCryptage(Wrap<String> c) {
-		String o = siteConfig.getCryptageMotDePasse();
-		c.o(o);
-	}
-
-	protected void _nombreExecuteurs(Wrap<Integer> c) {
-		Integer o = siteConfig.getNombreExecuteurs();
 		c.o(o);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.commons.configuration2.INIConfiguration;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -20,60 +20,62 @@ import java.lang.Integer;
  **/
 public abstract class SiteConfigGen<DEV> extends Object {
 
-	//////////////////
-	// configChemin //
-	//////////////////
+	////////////////
+	// configPath //
+	////////////////
 
-	/**	L'entité « configChemin »
+	/**	L'entité « configPath »
+The path to the config file of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String configChemin;
-	public Wrap<String> configCheminWrap = new Wrap<String>().p(this).c(String.class).var("configChemin").o(configChemin);
+	protected String configPath;
+	public Wrap<String> configPathWrap = new Wrap<String>().p(this).c(String.class).var("configPath").o(configPath);
 
-	/**	<br/>L'entité « configChemin »
+	/**	<br/>L'entité « configPath »
+The path to the config file of the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configChemin">Trouver l'entité configChemin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configPath">Trouver l'entité configPath dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _configChemin(Wrap<String> c);
+	protected abstract void _configPath(Wrap<String> c);
 
-	public String getConfigChemin() {
-		return configChemin;
+	public String getConfigPath() {
+		return configPath;
 	}
 
-	public void setConfigChemin(String configChemin) {
-		this.configChemin = configChemin;
-		this.configCheminWrap.alreadyInitialized = true;
+	public void setConfigPath(String configPath) {
+		this.configPath = configPath;
+		this.configPathWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig configCheminInit() {
-		if(!configCheminWrap.alreadyInitialized) {
-			_configChemin(configCheminWrap);
-			if(configChemin == null)
-				setConfigChemin(configCheminWrap.o);
+	protected SiteConfig configPathInit() {
+		if(!configPathWrap.alreadyInitialized) {
+			_configPath(configPathWrap);
+			if(configPath == null)
+				setConfigPath(configPathWrap.o);
 		}
-		configCheminWrap.alreadyInitialized(true);
+		configPathWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrConfigChemin() {
-		return configChemin;
+	public String solrConfigPath() {
+		return configPath;
 	}
 
-	public String strConfigChemin() {
-		return configChemin == null ? "" : configChemin;
+	public String strConfigPath() {
+		return configPath == null ? "" : configPath;
 	}
 
-	public String nomAffichageConfigChemin() {
+	public String nomAffichageConfigPath() {
 		return null;
 	}
 
-	public String htmTooltipConfigChemin() {
+	public String htmTooltipConfigPath() {
 		return null;
 	}
 
-	public String htmConfigChemin() {
-		return configChemin == null ? "" : StringEscapeUtils.escapeHtml4(strConfigChemin());
+	public String htmConfigPath() {
+		return configPath == null ? "" : StringEscapeUtils.escapeHtml4(strConfigPath());
 	}
 
 	////////////
@@ -114,396 +116,410 @@ The INI Configuration Object for the config file.
 		return (SiteConfig)this;
 	}
 
-	/////////////////////
-	// identifiantSite //
-	/////////////////////
+	////////////////////
+	// siteIdentifier //
+	////////////////////
 
-	/**	L'entité « identifiantSite »
+	/**	L'entité « siteIdentifier »
+The name of the principal group of settings of the config for this website. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String identifiantSite;
-	public Wrap<String> identifiantSiteWrap = new Wrap<String>().p(this).c(String.class).var("identifiantSite").o(identifiantSite);
+	protected String siteIdentifier;
+	public Wrap<String> siteIdentifierWrap = new Wrap<String>().p(this).c(String.class).var("siteIdentifier").o(siteIdentifier);
 
-	/**	<br/>L'entité « identifiantSite »
+	/**	<br/>L'entité « siteIdentifier »
+The name of the principal group of settings of the config for this website. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:identifiantSite">Trouver l'entité identifiantSite dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteIdentifier">Trouver l'entité siteIdentifier dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _identifiantSite(Wrap<String> c);
+	protected abstract void _siteIdentifier(Wrap<String> c);
 
-	public String getIdentifiantSite() {
-		return identifiantSite;
+	public String getSiteIdentifier() {
+		return siteIdentifier;
 	}
 
-	public void setIdentifiantSite(String identifiantSite) {
-		this.identifiantSite = identifiantSite;
-		this.identifiantSiteWrap.alreadyInitialized = true;
+	public void setSiteIdentifier(String siteIdentifier) {
+		this.siteIdentifier = siteIdentifier;
+		this.siteIdentifierWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig identifiantSiteInit() {
-		if(!identifiantSiteWrap.alreadyInitialized) {
-			_identifiantSite(identifiantSiteWrap);
-			if(identifiantSite == null)
-				setIdentifiantSite(identifiantSiteWrap.o);
+	protected SiteConfig siteIdentifierInit() {
+		if(!siteIdentifierWrap.alreadyInitialized) {
+			_siteIdentifier(siteIdentifierWrap);
+			if(siteIdentifier == null)
+				setSiteIdentifier(siteIdentifierWrap.o);
 		}
-		identifiantSiteWrap.alreadyInitialized(true);
+		siteIdentifierWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrIdentifiantSite() {
-		return identifiantSite;
+	public String solrSiteIdentifier() {
+		return siteIdentifier;
 	}
 
-	public String strIdentifiantSite() {
-		return identifiantSite == null ? "" : identifiantSite;
+	public String strSiteIdentifier() {
+		return siteIdentifier == null ? "" : siteIdentifier;
 	}
 
-	public String nomAffichageIdentifiantSite() {
+	public String nomAffichageSiteIdentifier() {
 		return null;
 	}
 
-	public String htmTooltipIdentifiantSite() {
+	public String htmTooltipSiteIdentifier() {
 		return null;
 	}
 
-	public String htmIdentifiantSite() {
-		return identifiantSite == null ? "" : StringEscapeUtils.escapeHtml4(strIdentifiantSite());
-	}
-
-	////////////////////
-	// prefixeEchappe //
-	////////////////////
-
-	/**	L'entité « prefixeEchappe »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String prefixeEchappe;
-	public Wrap<String> prefixeEchappeWrap = new Wrap<String>().p(this).c(String.class).var("prefixeEchappe").o(prefixeEchappe);
-
-	/**	<br/>L'entité « prefixeEchappe »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:prefixeEchappe">Trouver l'entité prefixeEchappe dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _prefixeEchappe(Wrap<String> c);
-
-	public String getPrefixeEchappe() {
-		return prefixeEchappe;
-	}
-
-	public void setPrefixeEchappe(String prefixeEchappe) {
-		this.prefixeEchappe = prefixeEchappe;
-		this.prefixeEchappeWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig prefixeEchappeInit() {
-		if(!prefixeEchappeWrap.alreadyInitialized) {
-			_prefixeEchappe(prefixeEchappeWrap);
-			if(prefixeEchappe == null)
-				setPrefixeEchappe(prefixeEchappeWrap.o);
-		}
-		prefixeEchappeWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrPrefixeEchappe() {
-		return prefixeEchappe;
-	}
-
-	public String strPrefixeEchappe() {
-		return prefixeEchappe == null ? "" : prefixeEchappe;
-	}
-
-	public String nomAffichagePrefixeEchappe() {
-		return null;
-	}
-
-	public String htmTooltipPrefixeEchappe() {
-		return null;
-	}
-
-	public String htmPrefixeEchappe() {
-		return prefixeEchappe == null ? "" : StringEscapeUtils.escapeHtml4(strPrefixeEchappe());
-	}
-
-	/////////////////
-	// appliChemin //
-	/////////////////
-
-	/**	L'entité « appliChemin »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String appliChemin;
-	public Wrap<String> appliCheminWrap = new Wrap<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
-
-	/**	<br/>L'entité « appliChemin »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appliChemin">Trouver l'entité appliChemin dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _appliChemin(Wrap<String> c);
-
-	public String getAppliChemin() {
-		return appliChemin;
-	}
-
-	public void setAppliChemin(String appliChemin) {
-		this.appliChemin = appliChemin;
-		this.appliCheminWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig appliCheminInit() {
-		if(!appliCheminWrap.alreadyInitialized) {
-			_appliChemin(appliCheminWrap);
-			if(appliChemin == null)
-				setAppliChemin(appliCheminWrap.o);
-		}
-		appliCheminWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrAppliChemin() {
-		return appliChemin;
-	}
-
-	public String strAppliChemin() {
-		return appliChemin == null ? "" : appliChemin;
-	}
-
-	public String nomAffichageAppliChemin() {
-		return null;
-	}
-
-	public String htmTooltipAppliChemin() {
-		return null;
-	}
-
-	public String htmAppliChemin() {
-		return appliChemin == null ? "" : StringEscapeUtils.escapeHtml4(strAppliChemin());
-	}
-
-	////////////////////
-	// racineDocument //
-	////////////////////
-
-	/**	L'entité « racineDocument »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String racineDocument;
-	public Wrap<String> racineDocumentWrap = new Wrap<String>().p(this).c(String.class).var("racineDocument").o(racineDocument);
-
-	/**	<br/>L'entité « racineDocument »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:racineDocument">Trouver l'entité racineDocument dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _racineDocument(Wrap<String> c);
-
-	public String getRacineDocument() {
-		return racineDocument;
-	}
-
-	public void setRacineDocument(String racineDocument) {
-		this.racineDocument = racineDocument;
-		this.racineDocumentWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig racineDocumentInit() {
-		if(!racineDocumentWrap.alreadyInitialized) {
-			_racineDocument(racineDocumentWrap);
-			if(racineDocument == null)
-				setRacineDocument(racineDocumentWrap.o);
-		}
-		racineDocumentWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrRacineDocument() {
-		return racineDocument;
-	}
-
-	public String strRacineDocument() {
-		return racineDocument == null ? "" : racineDocument;
-	}
-
-	public String nomAffichageRacineDocument() {
-		return null;
-	}
-
-	public String htmTooltipRacineDocument() {
-		return null;
-	}
-
-	public String htmRacineDocument() {
-		return racineDocument == null ? "" : StringEscapeUtils.escapeHtml4(strRacineDocument());
+	public String htmSiteIdentifier() {
+		return siteIdentifier == null ? "" : StringEscapeUtils.escapeHtml4(strSiteIdentifier());
 	}
 
 	///////////////////
-	// nomEntreprise //
+	// prefixEscaped //
 	///////////////////
 
-	/**	L'entité « nomEntreprise »
+	/**	L'entité « prefixEscaped »
+The already escaped prefix to find the properties of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String nomEntreprise;
-	public Wrap<String> nomEntrepriseWrap = new Wrap<String>().p(this).c(String.class).var("nomEntreprise").o(nomEntreprise);
+	protected String prefixEscaped;
+	public Wrap<String> prefixEscapedWrap = new Wrap<String>().p(this).c(String.class).var("prefixEscaped").o(prefixEscaped);
 
-	/**	<br/>L'entité « nomEntreprise »
+	/**	<br/>L'entité « prefixEscaped »
+The already escaped prefix to find the properties of the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nomEntreprise">Trouver l'entité nomEntreprise dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:prefixEscaped">Trouver l'entité prefixEscaped dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nomEntreprise(Wrap<String> c);
+	protected abstract void _prefixEscaped(Wrap<String> c);
 
-	public String getNomEntreprise() {
-		return nomEntreprise;
+	public String getPrefixEscaped() {
+		return prefixEscaped;
 	}
 
-	public void setNomEntreprise(String nomEntreprise) {
-		this.nomEntreprise = nomEntreprise;
-		this.nomEntrepriseWrap.alreadyInitialized = true;
+	public void setPrefixEscaped(String prefixEscaped) {
+		this.prefixEscaped = prefixEscaped;
+		this.prefixEscapedWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig nomEntrepriseInit() {
-		if(!nomEntrepriseWrap.alreadyInitialized) {
-			_nomEntreprise(nomEntrepriseWrap);
-			if(nomEntreprise == null)
-				setNomEntreprise(nomEntrepriseWrap.o);
+	protected SiteConfig prefixEscapedInit() {
+		if(!prefixEscapedWrap.alreadyInitialized) {
+			_prefixEscaped(prefixEscapedWrap);
+			if(prefixEscaped == null)
+				setPrefixEscaped(prefixEscapedWrap.o);
 		}
-		nomEntrepriseWrap.alreadyInitialized(true);
+		prefixEscapedWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrNomEntreprise() {
-		return nomEntreprise;
+	public String solrPrefixEscaped() {
+		return prefixEscaped;
 	}
 
-	public String strNomEntreprise() {
-		return nomEntreprise == null ? "" : nomEntreprise;
+	public String strPrefixEscaped() {
+		return prefixEscaped == null ? "" : prefixEscaped;
 	}
 
-	public String nomAffichageNomEntreprise() {
+	public String nomAffichagePrefixEscaped() {
 		return null;
 	}
 
-	public String htmTooltipNomEntreprise() {
+	public String htmTooltipPrefixEscaped() {
 		return null;
 	}
 
-	public String htmNomEntreprise() {
-		return nomEntreprise == null ? "" : StringEscapeUtils.escapeHtml4(strNomEntreprise());
+	public String htmPrefixEscaped() {
+		return prefixEscaped == null ? "" : StringEscapeUtils.escapeHtml4(strPrefixEscaped());
 	}
 
-	////////////////
-	// nomDomaine //
-	////////////////
+	/////////////
+	// appPath //
+	/////////////
 
-	/**	L'entité « nomDomaine »
+	/**	L'entité « appPath »
+The path to the project of the site cloned from git. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String nomDomaine;
-	public Wrap<String> nomDomaineWrap = new Wrap<String>().p(this).c(String.class).var("nomDomaine").o(nomDomaine);
+	protected String appPath;
+	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
 
-	/**	<br/>L'entité « nomDomaine »
+	/**	<br/>L'entité « appPath »
+The path to the project of the site cloned from git. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nomDomaine">Trouver l'entité nomDomaine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appPath">Trouver l'entité appPath dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nomDomaine(Wrap<String> c);
+	protected abstract void _appPath(Wrap<String> c);
 
-	public String getNomDomaine() {
-		return nomDomaine;
+	public String getAppPath() {
+		return appPath;
 	}
 
-	public void setNomDomaine(String nomDomaine) {
-		this.nomDomaine = nomDomaine;
-		this.nomDomaineWrap.alreadyInitialized = true;
+	public void setAppPath(String appPath) {
+		this.appPath = appPath;
+		this.appPathWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig nomDomaineInit() {
-		if(!nomDomaineWrap.alreadyInitialized) {
-			_nomDomaine(nomDomaineWrap);
-			if(nomDomaine == null)
-				setNomDomaine(nomDomaineWrap.o);
+	protected SiteConfig appPathInit() {
+		if(!appPathWrap.alreadyInitialized) {
+			_appPath(appPathWrap);
+			if(appPath == null)
+				setAppPath(appPathWrap.o);
 		}
-		nomDomaineWrap.alreadyInitialized(true);
+		appPathWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrNomDomaine() {
-		return nomDomaine;
+	public String solrAppPath() {
+		return appPath;
 	}
 
-	public String strNomDomaine() {
-		return nomDomaine == null ? "" : nomDomaine;
+	public String strAppPath() {
+		return appPath == null ? "" : appPath;
 	}
 
-	public String nomAffichageNomDomaine() {
+	public String nomAffichageAppPath() {
 		return null;
 	}
 
-	public String htmTooltipNomDomaine() {
+	public String htmTooltipAppPath() {
 		return null;
 	}
 
-	public String htmNomDomaine() {
-		return nomDomaine == null ? "" : StringEscapeUtils.escapeHtml4(strNomDomaine());
+	public String htmAppPath() {
+		return appPath == null ? "" : StringEscapeUtils.escapeHtml4(strAppPath());
+	}
+
+	/////////////
+	// docRoot //
+	/////////////
+
+	/**	L'entité « docRoot »
+The path to the docroot for the project. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String docRoot;
+	public Wrap<String> docRootWrap = new Wrap<String>().p(this).c(String.class).var("docRoot").o(docRoot);
+
+	/**	<br/>L'entité « docRoot »
+The path to the docroot for the project. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:docRoot">Trouver l'entité docRoot dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _docRoot(Wrap<String> c);
+
+	public String getDocRoot() {
+		return docRoot;
+	}
+
+	public void setDocRoot(String docRoot) {
+		this.docRoot = docRoot;
+		this.docRootWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig docRootInit() {
+		if(!docRootWrap.alreadyInitialized) {
+			_docRoot(docRootWrap);
+			if(docRoot == null)
+				setDocRoot(docRootWrap.o);
+		}
+		docRootWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrDocRoot() {
+		return docRoot;
+	}
+
+	public String strDocRoot() {
+		return docRoot == null ? "" : docRoot;
+	}
+
+	public String nomAffichageDocRoot() {
+		return null;
+	}
+
+	public String htmTooltipDocRoot() {
+		return null;
+	}
+
+	public String htmDocRoot() {
+		return docRoot == null ? "" : StringEscapeUtils.escapeHtml4(strDocRoot());
 	}
 
 	/////////////////
-	// siteNomHote //
+	// companyName //
 	/////////////////
 
-	/**	L'entité « siteNomHote »
+	/**	L'entité « companyName »
+The name of the company. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String siteNomHote;
-	public Wrap<String> siteNomHoteWrap = new Wrap<String>().p(this).c(String.class).var("siteNomHote").o(siteNomHote);
+	protected String companyName;
+	public Wrap<String> companyNameWrap = new Wrap<String>().p(this).c(String.class).var("companyName").o(companyName);
 
-	/**	<br/>L'entité « siteNomHote »
+	/**	<br/>L'entité « companyName »
+The name of the company. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteNomHote">Trouver l'entité siteNomHote dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:companyName">Trouver l'entité companyName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteNomHote(Wrap<String> c);
+	protected abstract void _companyName(Wrap<String> c);
 
-	public String getSiteNomHote() {
-		return siteNomHote;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setSiteNomHote(String siteNomHote) {
-		this.siteNomHote = siteNomHote;
-		this.siteNomHoteWrap.alreadyInitialized = true;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+		this.companyNameWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig siteNomHoteInit() {
-		if(!siteNomHoteWrap.alreadyInitialized) {
-			_siteNomHote(siteNomHoteWrap);
-			if(siteNomHote == null)
-				setSiteNomHote(siteNomHoteWrap.o);
+	protected SiteConfig companyNameInit() {
+		if(!companyNameWrap.alreadyInitialized) {
+			_companyName(companyNameWrap);
+			if(companyName == null)
+				setCompanyName(companyNameWrap.o);
 		}
-		siteNomHoteWrap.alreadyInitialized(true);
+		companyNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrSiteNomHote() {
-		return siteNomHote;
+	public String solrCompanyName() {
+		return companyName;
 	}
 
-	public String strSiteNomHote() {
-		return siteNomHote == null ? "" : siteNomHote;
+	public String strCompanyName() {
+		return companyName == null ? "" : companyName;
 	}
 
-	public String nomAffichageSiteNomHote() {
+	public String nomAffichageCompanyName() {
 		return null;
 	}
 
-	public String htmTooltipSiteNomHote() {
+	public String htmTooltipCompanyName() {
 		return null;
 	}
 
-	public String htmSiteNomHote() {
-		return siteNomHote == null ? "" : StringEscapeUtils.escapeHtml4(strSiteNomHote());
+	public String htmCompanyName() {
+		return companyName == null ? "" : StringEscapeUtils.escapeHtml4(strCompanyName());
+	}
+
+	////////////////
+	// domainName //
+	////////////////
+
+	/**	L'entité « domainName »
+The domain name of the site. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String domainName;
+	public Wrap<String> domainNameWrap = new Wrap<String>().p(this).c(String.class).var("domainName").o(domainName);
+
+	/**	<br/>L'entité « domainName »
+The domain name of the site. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:domainName">Trouver l'entité domainName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _domainName(Wrap<String> c);
+
+	public String getDomainName() {
+		return domainName;
+	}
+
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
+		this.domainNameWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig domainNameInit() {
+		if(!domainNameWrap.alreadyInitialized) {
+			_domainName(domainNameWrap);
+			if(domainName == null)
+				setDomainName(domainNameWrap.o);
+		}
+		domainNameWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrDomainName() {
+		return domainName;
+	}
+
+	public String strDomainName() {
+		return domainName == null ? "" : domainName;
+	}
+
+	public String nomAffichageDomainName() {
+		return null;
+	}
+
+	public String htmTooltipDomainName() {
+		return null;
+	}
+
+	public String htmDomainName() {
+		return domainName == null ? "" : StringEscapeUtils.escapeHtml4(strDomainName());
+	}
+
+	//////////////////
+	// siteHostName //
+	//////////////////
+
+	/**	L'entité « siteHostName »
+The host name of the site. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String siteHostName;
+	public Wrap<String> siteHostNameWrap = new Wrap<String>().p(this).c(String.class).var("siteHostName").o(siteHostName);
+
+	/**	<br/>L'entité « siteHostName »
+The host name of the site. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteHostName">Trouver l'entité siteHostName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteHostName(Wrap<String> c);
+
+	public String getSiteHostName() {
+		return siteHostName;
+	}
+
+	public void setSiteHostName(String siteHostName) {
+		this.siteHostName = siteHostName;
+		this.siteHostNameWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig siteHostNameInit() {
+		if(!siteHostNameWrap.alreadyInitialized) {
+			_siteHostName(siteHostNameWrap);
+			if(siteHostName == null)
+				setSiteHostName(siteHostNameWrap.o);
+		}
+		siteHostNameWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrSiteHostName() {
+		return siteHostName;
+	}
+
+	public String strSiteHostName() {
+		return siteHostName == null ? "" : siteHostName;
+	}
+
+	public String nomAffichageSiteHostName() {
+		return null;
+	}
+
+	public String htmTooltipSiteHostName() {
+		return null;
+	}
+
+	public String htmSiteHostName() {
+		return siteHostName == null ? "" : StringEscapeUtils.escapeHtml4(strSiteHostName());
 	}
 
 	//////////////
@@ -511,12 +527,14 @@ The INI Configuration Object for the config file.
 	//////////////
 
 	/**	L'entité « sitePort »
+The port of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer sitePort;
 	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
 
 	/**	<br/>L'entité « sitePort »
+The port of the site. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sitePort">Trouver l'entité sitePort dans Solr</a>
 	 * <br/>
@@ -568,116 +586,120 @@ The INI Configuration Object for the config file.
 		return sitePort == null ? "" : StringEscapeUtils.escapeHtml4(strSitePort());
 	}
 
-	/////////////////
-	// authRoyaume //
-	/////////////////
+	///////////////
+	// authRealm //
+	///////////////
 
-	/**	L'entité « authRoyaume »
+	/**	L'entité « authRealm »
+The Keycloak realm of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String authRoyaume;
-	public Wrap<String> authRoyaumeWrap = new Wrap<String>().p(this).c(String.class).var("authRoyaume").o(authRoyaume);
+	protected String authRealm;
+	public Wrap<String> authRealmWrap = new Wrap<String>().p(this).c(String.class).var("authRealm").o(authRealm);
 
-	/**	<br/>L'entité « authRoyaume »
+	/**	<br/>L'entité « authRealm »
+The Keycloak realm of the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRoyaume">Trouver l'entité authRoyaume dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRealm">Trouver l'entité authRealm dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authRoyaume(Wrap<String> c);
+	protected abstract void _authRealm(Wrap<String> c);
 
-	public String getAuthRoyaume() {
-		return authRoyaume;
+	public String getAuthRealm() {
+		return authRealm;
 	}
 
-	public void setAuthRoyaume(String authRoyaume) {
-		this.authRoyaume = authRoyaume;
-		this.authRoyaumeWrap.alreadyInitialized = true;
+	public void setAuthRealm(String authRealm) {
+		this.authRealm = authRealm;
+		this.authRealmWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig authRoyaumeInit() {
-		if(!authRoyaumeWrap.alreadyInitialized) {
-			_authRoyaume(authRoyaumeWrap);
-			if(authRoyaume == null)
-				setAuthRoyaume(authRoyaumeWrap.o);
+	protected SiteConfig authRealmInit() {
+		if(!authRealmWrap.alreadyInitialized) {
+			_authRealm(authRealmWrap);
+			if(authRealm == null)
+				setAuthRealm(authRealmWrap.o);
 		}
-		authRoyaumeWrap.alreadyInitialized(true);
+		authRealmWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthRoyaume() {
-		return authRoyaume;
+	public String solrAuthRealm() {
+		return authRealm;
 	}
 
-	public String strAuthRoyaume() {
-		return authRoyaume == null ? "" : authRoyaume;
+	public String strAuthRealm() {
+		return authRealm == null ? "" : authRealm;
 	}
 
-	public String nomAffichageAuthRoyaume() {
+	public String nomAffichageAuthRealm() {
 		return null;
 	}
 
-	public String htmTooltipAuthRoyaume() {
+	public String htmTooltipAuthRealm() {
 		return null;
 	}
 
-	public String htmAuthRoyaume() {
-		return authRoyaume == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRoyaume());
+	public String htmAuthRealm() {
+		return authRealm == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRealm());
 	}
 
-	///////////////////
-	// authRessource //
-	///////////////////
+	//////////////////
+	// authResource //
+	//////////////////
 
-	/**	L'entité « authRessource »
+	/**	L'entité « authResource »
+The Keycloak client ID of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String authRessource;
-	public Wrap<String> authRessourceWrap = new Wrap<String>().p(this).c(String.class).var("authRessource").o(authRessource);
+	protected String authResource;
+	public Wrap<String> authResourceWrap = new Wrap<String>().p(this).c(String.class).var("authResource").o(authResource);
 
-	/**	<br/>L'entité « authRessource »
+	/**	<br/>L'entité « authResource »
+The Keycloak client ID of the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRessource">Trouver l'entité authRessource dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authResource">Trouver l'entité authResource dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authRessource(Wrap<String> c);
+	protected abstract void _authResource(Wrap<String> c);
 
-	public String getAuthRessource() {
-		return authRessource;
+	public String getAuthResource() {
+		return authResource;
 	}
 
-	public void setAuthRessource(String authRessource) {
-		this.authRessource = authRessource;
-		this.authRessourceWrap.alreadyInitialized = true;
+	public void setAuthResource(String authResource) {
+		this.authResource = authResource;
+		this.authResourceWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig authRessourceInit() {
-		if(!authRessourceWrap.alreadyInitialized) {
-			_authRessource(authRessourceWrap);
-			if(authRessource == null)
-				setAuthRessource(authRessourceWrap.o);
+	protected SiteConfig authResourceInit() {
+		if(!authResourceWrap.alreadyInitialized) {
+			_authResource(authResourceWrap);
+			if(authResource == null)
+				setAuthResource(authResourceWrap.o);
 		}
-		authRessourceWrap.alreadyInitialized(true);
+		authResourceWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthRessource() {
-		return authRessource;
+	public String solrAuthResource() {
+		return authResource;
 	}
 
-	public String strAuthRessource() {
-		return authRessource == null ? "" : authRessource;
+	public String strAuthResource() {
+		return authResource == null ? "" : authResource;
 	}
 
-	public String nomAffichageAuthRessource() {
+	public String nomAffichageAuthResource() {
 		return null;
 	}
 
-	public String htmTooltipAuthRessource() {
+	public String htmTooltipAuthResource() {
 		return null;
 	}
 
-	public String htmAuthRessource() {
-		return authRessource == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRessource());
+	public String htmAuthResource() {
+		return authResource == null ? "" : StringEscapeUtils.escapeHtml4(strAuthResource());
 	}
 
 	////////////////
@@ -685,12 +707,14 @@ The INI Configuration Object for the config file.
 	////////////////
 
 	/**	L'entité « authSecret »
+The Keycloak client secret of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSecret;
 	public Wrap<String> authSecretWrap = new Wrap<String>().p(this).c(String.class).var("authSecret").o(authSecret);
 
 	/**	<br/>L'entité « authSecret »
+The Keycloak client secret of the site. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSecret">Trouver l'entité authSecret dans Solr</a>
 	 * <br/>
@@ -736,172 +760,178 @@ The INI Configuration Object for the config file.
 		return authSecret == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSecret());
 	}
 
-	///////////////////
-	// authSslRequis //
-	///////////////////
+	/////////////////////
+	// authSslRequired //
+	/////////////////////
 
-	/**	L'entité « authSslRequis »
+	/**	L'entité « authSslRequired »
+Whether SSL is required in Keycloak for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String authSslRequis;
-	public Wrap<String> authSslRequisWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequis").o(authSslRequis);
+	protected String authSslRequired;
+	public Wrap<String> authSslRequiredWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequired").o(authSslRequired);
 
-	/**	<br/>L'entité « authSslRequis »
+	/**	<br/>L'entité « authSslRequired »
+Whether SSL is required in Keycloak for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSslRequis">Trouver l'entité authSslRequis dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSslRequired">Trouver l'entité authSslRequired dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authSslRequis(Wrap<String> c);
+	protected abstract void _authSslRequired(Wrap<String> c);
 
-	public String getAuthSslRequis() {
-		return authSslRequis;
+	public String getAuthSslRequired() {
+		return authSslRequired;
 	}
 
-	public void setAuthSslRequis(String authSslRequis) {
-		this.authSslRequis = authSslRequis;
-		this.authSslRequisWrap.alreadyInitialized = true;
+	public void setAuthSslRequired(String authSslRequired) {
+		this.authSslRequired = authSslRequired;
+		this.authSslRequiredWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig authSslRequisInit() {
-		if(!authSslRequisWrap.alreadyInitialized) {
-			_authSslRequis(authSslRequisWrap);
-			if(authSslRequis == null)
-				setAuthSslRequis(authSslRequisWrap.o);
+	protected SiteConfig authSslRequiredInit() {
+		if(!authSslRequiredWrap.alreadyInitialized) {
+			_authSslRequired(authSslRequiredWrap);
+			if(authSslRequired == null)
+				setAuthSslRequired(authSslRequiredWrap.o);
 		}
-		authSslRequisWrap.alreadyInitialized(true);
+		authSslRequiredWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthSslRequis() {
-		return authSslRequis;
+	public String solrAuthSslRequired() {
+		return authSslRequired;
 	}
 
-	public String strAuthSslRequis() {
-		return authSslRequis == null ? "" : authSslRequis;
+	public String strAuthSslRequired() {
+		return authSslRequired == null ? "" : authSslRequired;
 	}
 
-	public String nomAffichageAuthSslRequis() {
+	public String nomAffichageAuthSslRequired() {
 		return null;
 	}
 
-	public String htmTooltipAuthSslRequis() {
+	public String htmTooltipAuthSslRequired() {
 		return null;
 	}
 
-	public String htmAuthSslRequis() {
-		return authSslRequis == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSslRequis());
+	public String htmAuthSslRequired() {
+		return authSslRequired == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSslRequired());
 	}
 
-	//////////////////
-	// sslJksChemin //
-	//////////////////
+	////////////////
+	// sslJksPath //
+	////////////////
 
-	/**	L'entité « sslJksChemin »
+	/**	L'entité « sslJksPath »
+The path to the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String sslJksChemin;
-	public Wrap<String> sslJksCheminWrap = new Wrap<String>().p(this).c(String.class).var("sslJksChemin").o(sslJksChemin);
+	protected String sslJksPath;
+	public Wrap<String> sslJksPathWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPath").o(sslJksPath);
 
-	/**	<br/>L'entité « sslJksChemin »
+	/**	<br/>L'entité « sslJksPath »
+The path to the Java keystore for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksChemin">Trouver l'entité sslJksChemin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPath">Trouver l'entité sslJksPath dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sslJksChemin(Wrap<String> c);
+	protected abstract void _sslJksPath(Wrap<String> c);
 
-	public String getSslJksChemin() {
-		return sslJksChemin;
+	public String getSslJksPath() {
+		return sslJksPath;
 	}
 
-	public void setSslJksChemin(String sslJksChemin) {
-		this.sslJksChemin = sslJksChemin;
-		this.sslJksCheminWrap.alreadyInitialized = true;
+	public void setSslJksPath(String sslJksPath) {
+		this.sslJksPath = sslJksPath;
+		this.sslJksPathWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig sslJksCheminInit() {
-		if(!sslJksCheminWrap.alreadyInitialized) {
-			_sslJksChemin(sslJksCheminWrap);
-			if(sslJksChemin == null)
-				setSslJksChemin(sslJksCheminWrap.o);
+	protected SiteConfig sslJksPathInit() {
+		if(!sslJksPathWrap.alreadyInitialized) {
+			_sslJksPath(sslJksPathWrap);
+			if(sslJksPath == null)
+				setSslJksPath(sslJksPathWrap.o);
 		}
-		sslJksCheminWrap.alreadyInitialized(true);
+		sslJksPathWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrSslJksChemin() {
-		return sslJksChemin;
+	public String solrSslJksPath() {
+		return sslJksPath;
 	}
 
-	public String strSslJksChemin() {
-		return sslJksChemin == null ? "" : sslJksChemin;
+	public String strSslJksPath() {
+		return sslJksPath == null ? "" : sslJksPath;
 	}
 
-	public String nomAffichageSslJksChemin() {
+	public String nomAffichageSslJksPath() {
 		return null;
 	}
 
-	public String htmTooltipSslJksChemin() {
+	public String htmTooltipSslJksPath() {
 		return null;
 	}
 
-	public String htmSslJksChemin() {
-		return sslJksChemin == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksChemin());
+	public String htmSslJksPath() {
+		return sslJksPath == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksPath());
 	}
 
-	//////////////////////
-	// sslJksMotDePasse //
-	//////////////////////
+	////////////////////
+	// sslJksPassword //
+	////////////////////
 
-	/**	L'entité « sslJksMotDePasse »
+	/**	L'entité « sslJksPassword »
+The password for the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String sslJksMotDePasse;
-	public Wrap<String> sslJksMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("sslJksMotDePasse").o(sslJksMotDePasse);
+	protected String sslJksPassword;
+	public Wrap<String> sslJksPasswordWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPassword").o(sslJksPassword);
 
-	/**	<br/>L'entité « sslJksMotDePasse »
+	/**	<br/>L'entité « sslJksPassword »
+The password for the Java keystore for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksMotDePasse">Trouver l'entité sslJksMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPassword">Trouver l'entité sslJksPassword dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sslJksMotDePasse(Wrap<String> c);
+	protected abstract void _sslJksPassword(Wrap<String> c);
 
-	public String getSslJksMotDePasse() {
-		return sslJksMotDePasse;
+	public String getSslJksPassword() {
+		return sslJksPassword;
 	}
 
-	public void setSslJksMotDePasse(String sslJksMotDePasse) {
-		this.sslJksMotDePasse = sslJksMotDePasse;
-		this.sslJksMotDePasseWrap.alreadyInitialized = true;
+	public void setSslJksPassword(String sslJksPassword) {
+		this.sslJksPassword = sslJksPassword;
+		this.sslJksPasswordWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig sslJksMotDePasseInit() {
-		if(!sslJksMotDePasseWrap.alreadyInitialized) {
-			_sslJksMotDePasse(sslJksMotDePasseWrap);
-			if(sslJksMotDePasse == null)
-				setSslJksMotDePasse(sslJksMotDePasseWrap.o);
+	protected SiteConfig sslJksPasswordInit() {
+		if(!sslJksPasswordWrap.alreadyInitialized) {
+			_sslJksPassword(sslJksPasswordWrap);
+			if(sslJksPassword == null)
+				setSslJksPassword(sslJksPasswordWrap.o);
 		}
-		sslJksMotDePasseWrap.alreadyInitialized(true);
+		sslJksPasswordWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrSslJksMotDePasse() {
-		return sslJksMotDePasse;
+	public String solrSslJksPassword() {
+		return sslJksPassword;
 	}
 
-	public String strSslJksMotDePasse() {
-		return sslJksMotDePasse == null ? "" : sslJksMotDePasse;
+	public String strSslJksPassword() {
+		return sslJksPassword == null ? "" : sslJksPassword;
 	}
 
-	public String nomAffichageSslJksMotDePasse() {
+	public String nomAffichageSslJksPassword() {
 		return null;
 	}
 
-	public String htmTooltipSslJksMotDePasse() {
+	public String htmTooltipSslJksPassword() {
 		return null;
 	}
 
-	public String htmSslJksMotDePasse() {
-		return sslJksMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksMotDePasse());
+	public String htmSslJksPassword() {
+		return sslJksPassword == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksPassword());
 	}
 
 	/////////////
@@ -909,12 +939,14 @@ The INI Configuration Object for the config file.
 	/////////////
 
 	/**	L'entité « authUrl »
+The URL to the Keycloak server. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authUrl;
 	public Wrap<String> authUrlWrap = new Wrap<String>().p(this).c(String.class).var("authUrl").o(authUrl);
 
 	/**	<br/>L'entité « authUrl »
+The URL to the Keycloak server. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authUrl">Trouver l'entité authUrl dans Solr</a>
 	 * <br/>
@@ -960,116 +992,120 @@ The INI Configuration Object for the config file.
 		return authUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthUrl());
 	}
 
-	/////////////////
-	// cryptageSel //
-	/////////////////
+	////////////////////
+	// encryptionSalt //
+	////////////////////
 
-	/**	L'entité « cryptageSel »
+	/**	L'entité « encryptionSalt »
+The encryption salt to use for all database encryption. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String cryptageSel;
-	public Wrap<String> cryptageSelWrap = new Wrap<String>().p(this).c(String.class).var("cryptageSel").o(cryptageSel);
+	protected String encryptionSalt;
+	public Wrap<String> encryptionSaltWrap = new Wrap<String>().p(this).c(String.class).var("encryptionSalt").o(encryptionSalt);
 
-	/**	<br/>L'entité « cryptageSel »
+	/**	<br/>L'entité « encryptionSalt »
+The encryption salt to use for all database encryption. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cryptageSel">Trouver l'entité cryptageSel dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionSalt">Trouver l'entité encryptionSalt dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _cryptageSel(Wrap<String> c);
+	protected abstract void _encryptionSalt(Wrap<String> c);
 
-	public String getCryptageSel() {
-		return cryptageSel;
+	public String getEncryptionSalt() {
+		return encryptionSalt;
 	}
 
-	public void setCryptageSel(String cryptageSel) {
-		this.cryptageSel = cryptageSel;
-		this.cryptageSelWrap.alreadyInitialized = true;
+	public void setEncryptionSalt(String encryptionSalt) {
+		this.encryptionSalt = encryptionSalt;
+		this.encryptionSaltWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig cryptageSelInit() {
-		if(!cryptageSelWrap.alreadyInitialized) {
-			_cryptageSel(cryptageSelWrap);
-			if(cryptageSel == null)
-				setCryptageSel(cryptageSelWrap.o);
+	protected SiteConfig encryptionSaltInit() {
+		if(!encryptionSaltWrap.alreadyInitialized) {
+			_encryptionSalt(encryptionSaltWrap);
+			if(encryptionSalt == null)
+				setEncryptionSalt(encryptionSaltWrap.o);
 		}
-		cryptageSelWrap.alreadyInitialized(true);
+		encryptionSaltWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCryptageSel() {
-		return cryptageSel;
+	public String solrEncryptionSalt() {
+		return encryptionSalt;
 	}
 
-	public String strCryptageSel() {
-		return cryptageSel == null ? "" : cryptageSel;
+	public String strEncryptionSalt() {
+		return encryptionSalt == null ? "" : encryptionSalt;
 	}
 
-	public String nomAffichageCryptageSel() {
+	public String nomAffichageEncryptionSalt() {
 		return null;
 	}
 
-	public String htmTooltipCryptageSel() {
+	public String htmTooltipEncryptionSalt() {
 		return null;
 	}
 
-	public String htmCryptageSel() {
-		return cryptageSel == null ? "" : StringEscapeUtils.escapeHtml4(strCryptageSel());
+	public String htmEncryptionSalt() {
+		return encryptionSalt == null ? "" : StringEscapeUtils.escapeHtml4(strEncryptionSalt());
 	}
 
 	////////////////////////
-	// cryptageMotDePasse //
+	// encryptionPassword //
 	////////////////////////
 
-	/**	L'entité « cryptageMotDePasse »
+	/**	L'entité « encryptionPassword »
+The encryption password to use for all encryption of the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String cryptageMotDePasse;
-	public Wrap<String> cryptageMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
+	protected String encryptionPassword;
+	public Wrap<String> encryptionPasswordWrap = new Wrap<String>().p(this).c(String.class).var("encryptionPassword").o(encryptionPassword);
 
-	/**	<br/>L'entité « cryptageMotDePasse »
+	/**	<br/>L'entité « encryptionPassword »
+The encryption password to use for all encryption of the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cryptageMotDePasse">Trouver l'entité cryptageMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionPassword">Trouver l'entité encryptionPassword dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _cryptageMotDePasse(Wrap<String> c);
+	protected abstract void _encryptionPassword(Wrap<String> c);
 
-	public String getCryptageMotDePasse() {
-		return cryptageMotDePasse;
+	public String getEncryptionPassword() {
+		return encryptionPassword;
 	}
 
-	public void setCryptageMotDePasse(String cryptageMotDePasse) {
-		this.cryptageMotDePasse = cryptageMotDePasse;
-		this.cryptageMotDePasseWrap.alreadyInitialized = true;
+	public void setEncryptionPassword(String encryptionPassword) {
+		this.encryptionPassword = encryptionPassword;
+		this.encryptionPasswordWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig cryptageMotDePasseInit() {
-		if(!cryptageMotDePasseWrap.alreadyInitialized) {
-			_cryptageMotDePasse(cryptageMotDePasseWrap);
-			if(cryptageMotDePasse == null)
-				setCryptageMotDePasse(cryptageMotDePasseWrap.o);
+	protected SiteConfig encryptionPasswordInit() {
+		if(!encryptionPasswordWrap.alreadyInitialized) {
+			_encryptionPassword(encryptionPasswordWrap);
+			if(encryptionPassword == null)
+				setEncryptionPassword(encryptionPasswordWrap.o);
 		}
-		cryptageMotDePasseWrap.alreadyInitialized(true);
+		encryptionPasswordWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCryptageMotDePasse() {
-		return cryptageMotDePasse;
+	public String solrEncryptionPassword() {
+		return encryptionPassword;
 	}
 
-	public String strCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
+	public String strEncryptionPassword() {
+		return encryptionPassword == null ? "" : encryptionPassword;
 	}
 
-	public String nomAffichageCryptageMotDePasse() {
+	public String nomAffichageEncryptionPassword() {
 		return null;
 	}
 
-	public String htmTooltipCryptageMotDePasse() {
+	public String htmTooltipEncryptionPassword() {
 		return null;
 	}
 
-	public String htmCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strCryptageMotDePasse());
+	public String htmEncryptionPassword() {
+		return encryptionPassword == null ? "" : StringEscapeUtils.escapeHtml4(strEncryptionPassword());
 	}
 
 	/////////////////
@@ -1077,12 +1113,14 @@ The INI Configuration Object for the config file.
 	/////////////////
 
 	/**	L'entité « siteBaseUrl »
+The base URL for the URLs of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteBaseUrl;
 	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
 
 	/**	<br/>L'entité « siteBaseUrl »
+The base URL for the URLs of the site. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteBaseUrl">Trouver l'entité siteBaseUrl dans Solr</a>
 	 * <br/>
@@ -1128,600 +1166,620 @@ The INI Configuration Object for the config file.
 		return siteBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSiteBaseUrl());
 	}
 
-	//////////////////////
-	// siteNomAffichage //
-	//////////////////////
+	/////////////////////
+	// siteDisplayName //
+	/////////////////////
 
-	/**	L'entité « siteNomAffichage »
+	/**	L'entité « siteDisplayName »
+The display name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String siteNomAffichage;
-	public Wrap<String> siteNomAffichageWrap = new Wrap<String>().p(this).c(String.class).var("siteNomAffichage").o(siteNomAffichage);
+	protected String siteDisplayName;
+	public Wrap<String> siteDisplayNameWrap = new Wrap<String>().p(this).c(String.class).var("siteDisplayName").o(siteDisplayName);
 
-	/**	<br/>L'entité « siteNomAffichage »
+	/**	<br/>L'entité « siteDisplayName »
+The display name of the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteNomAffichage">Trouver l'entité siteNomAffichage dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteDisplayName">Trouver l'entité siteDisplayName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteNomAffichage(Wrap<String> c);
+	protected abstract void _siteDisplayName(Wrap<String> c);
 
-	public String getSiteNomAffichage() {
-		return siteNomAffichage;
+	public String getSiteDisplayName() {
+		return siteDisplayName;
 	}
 
-	public void setSiteNomAffichage(String siteNomAffichage) {
-		this.siteNomAffichage = siteNomAffichage;
-		this.siteNomAffichageWrap.alreadyInitialized = true;
+	public void setSiteDisplayName(String siteDisplayName) {
+		this.siteDisplayName = siteDisplayName;
+		this.siteDisplayNameWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig siteNomAffichageInit() {
-		if(!siteNomAffichageWrap.alreadyInitialized) {
-			_siteNomAffichage(siteNomAffichageWrap);
-			if(siteNomAffichage == null)
-				setSiteNomAffichage(siteNomAffichageWrap.o);
+	protected SiteConfig siteDisplayNameInit() {
+		if(!siteDisplayNameWrap.alreadyInitialized) {
+			_siteDisplayName(siteDisplayNameWrap);
+			if(siteDisplayName == null)
+				setSiteDisplayName(siteDisplayNameWrap.o);
 		}
-		siteNomAffichageWrap.alreadyInitialized(true);
+		siteDisplayNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrSiteNomAffichage() {
-		return siteNomAffichage;
+	public String solrSiteDisplayName() {
+		return siteDisplayName;
 	}
 
-	public String strSiteNomAffichage() {
-		return siteNomAffichage == null ? "" : siteNomAffichage;
+	public String strSiteDisplayName() {
+		return siteDisplayName == null ? "" : siteDisplayName;
 	}
 
-	public String nomAffichageSiteNomAffichage() {
+	public String nomAffichageSiteDisplayName() {
 		return null;
 	}
 
-	public String htmTooltipSiteNomAffichage() {
+	public String htmTooltipSiteDisplayName() {
 		return null;
 	}
 
-	public String htmSiteNomAffichage() {
-		return siteNomAffichage == null ? "" : StringEscapeUtils.escapeHtml4(strSiteNomAffichage());
-	}
-
-	//////////////////////
-	// jdbcClassePilote //
-	//////////////////////
-
-	/**	L'entité « jdbcClassePilote »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String jdbcClassePilote;
-	public Wrap<String> jdbcClassePiloteWrap = new Wrap<String>().p(this).c(String.class).var("jdbcClassePilote").o(jdbcClassePilote);
-
-	/**	<br/>L'entité « jdbcClassePilote »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcClassePilote">Trouver l'entité jdbcClassePilote dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _jdbcClassePilote(Wrap<String> c);
-
-	public String getJdbcClassePilote() {
-		return jdbcClassePilote;
-	}
-
-	public void setJdbcClassePilote(String jdbcClassePilote) {
-		this.jdbcClassePilote = jdbcClassePilote;
-		this.jdbcClassePiloteWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig jdbcClassePiloteInit() {
-		if(!jdbcClassePiloteWrap.alreadyInitialized) {
-			_jdbcClassePilote(jdbcClassePiloteWrap);
-			if(jdbcClassePilote == null)
-				setJdbcClassePilote(jdbcClassePiloteWrap.o);
-		}
-		jdbcClassePiloteWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrJdbcClassePilote() {
-		return jdbcClassePilote;
-	}
-
-	public String strJdbcClassePilote() {
-		return jdbcClassePilote == null ? "" : jdbcClassePilote;
-	}
-
-	public String nomAffichageJdbcClassePilote() {
-		return null;
-	}
-
-	public String htmTooltipJdbcClassePilote() {
-		return null;
-	}
-
-	public String htmJdbcClassePilote() {
-		return jdbcClassePilote == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcClassePilote());
+	public String htmSiteDisplayName() {
+		return siteDisplayName == null ? "" : StringEscapeUtils.escapeHtml4(strSiteDisplayName());
 	}
 
 	/////////////////////
-	// jdbcUtilisateur //
+	// jdbcDriverClass //
 	/////////////////////
 
-	/**	L'entité « jdbcUtilisateur »
+	/**	L'entité « jdbcDriverClass »
+The class name of the JDBC driver class for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String jdbcUtilisateur;
-	public Wrap<String> jdbcUtilisateurWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUtilisateur").o(jdbcUtilisateur);
+	protected String jdbcDriverClass;
+	public Wrap<String> jdbcDriverClassWrap = new Wrap<String>().p(this).c(String.class).var("jdbcDriverClass").o(jdbcDriverClass);
 
-	/**	<br/>L'entité « jdbcUtilisateur »
+	/**	<br/>L'entité « jdbcDriverClass »
+The class name of the JDBC driver class for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUtilisateur">Trouver l'entité jdbcUtilisateur dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcDriverClass">Trouver l'entité jdbcDriverClass dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcUtilisateur(Wrap<String> c);
+	protected abstract void _jdbcDriverClass(Wrap<String> c);
 
-	public String getJdbcUtilisateur() {
-		return jdbcUtilisateur;
+	public String getJdbcDriverClass() {
+		return jdbcDriverClass;
 	}
 
-	public void setJdbcUtilisateur(String jdbcUtilisateur) {
-		this.jdbcUtilisateur = jdbcUtilisateur;
-		this.jdbcUtilisateurWrap.alreadyInitialized = true;
+	public void setJdbcDriverClass(String jdbcDriverClass) {
+		this.jdbcDriverClass = jdbcDriverClass;
+		this.jdbcDriverClassWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig jdbcUtilisateurInit() {
-		if(!jdbcUtilisateurWrap.alreadyInitialized) {
-			_jdbcUtilisateur(jdbcUtilisateurWrap);
-			if(jdbcUtilisateur == null)
-				setJdbcUtilisateur(jdbcUtilisateurWrap.o);
+	protected SiteConfig jdbcDriverClassInit() {
+		if(!jdbcDriverClassWrap.alreadyInitialized) {
+			_jdbcDriverClass(jdbcDriverClassWrap);
+			if(jdbcDriverClass == null)
+				setJdbcDriverClass(jdbcDriverClassWrap.o);
 		}
-		jdbcUtilisateurWrap.alreadyInitialized(true);
+		jdbcDriverClassWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrJdbcUtilisateur() {
-		return jdbcUtilisateur;
+	public String solrJdbcDriverClass() {
+		return jdbcDriverClass;
 	}
 
-	public String strJdbcUtilisateur() {
-		return jdbcUtilisateur == null ? "" : jdbcUtilisateur;
+	public String strJdbcDriverClass() {
+		return jdbcDriverClass == null ? "" : jdbcDriverClass;
 	}
 
-	public String nomAffichageJdbcUtilisateur() {
+	public String nomAffichageJdbcDriverClass() {
 		return null;
 	}
 
-	public String htmTooltipJdbcUtilisateur() {
+	public String htmTooltipJdbcDriverClass() {
 		return null;
 	}
 
-	public String htmJdbcUtilisateur() {
-		return jdbcUtilisateur == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcUtilisateur());
+	public String htmJdbcDriverClass() {
+		return jdbcDriverClass == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcDriverClass());
 	}
 
-	////////////////////
-	// jdbcMotDePasse //
-	////////////////////
+	//////////////////
+	// jdbcUsername //
+	//////////////////
 
-	/**	L'entité « jdbcMotDePasse »
+	/**	L'entité « jdbcUsername »
+The username for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String jdbcMotDePasse;
-	public Wrap<String> jdbcMotDePasseWrap = new Wrap<String>().p(this).c(String.class).var("jdbcMotDePasse").o(jdbcMotDePasse);
+	protected String jdbcUsername;
+	public Wrap<String> jdbcUsernameWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUsername").o(jdbcUsername);
 
-	/**	<br/>L'entité « jdbcMotDePasse »
+	/**	<br/>L'entité « jdbcUsername »
+The username for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMotDePasse">Trouver l'entité jdbcMotDePasse dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUsername">Trouver l'entité jdbcUsername dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMotDePasse(Wrap<String> c);
+	protected abstract void _jdbcUsername(Wrap<String> c);
 
-	public String getJdbcMotDePasse() {
-		return jdbcMotDePasse;
+	public String getJdbcUsername() {
+		return jdbcUsername;
 	}
 
-	public void setJdbcMotDePasse(String jdbcMotDePasse) {
-		this.jdbcMotDePasse = jdbcMotDePasse;
-		this.jdbcMotDePasseWrap.alreadyInitialized = true;
+	public void setJdbcUsername(String jdbcUsername) {
+		this.jdbcUsername = jdbcUsername;
+		this.jdbcUsernameWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig jdbcMotDePasseInit() {
-		if(!jdbcMotDePasseWrap.alreadyInitialized) {
-			_jdbcMotDePasse(jdbcMotDePasseWrap);
-			if(jdbcMotDePasse == null)
-				setJdbcMotDePasse(jdbcMotDePasseWrap.o);
+	protected SiteConfig jdbcUsernameInit() {
+		if(!jdbcUsernameWrap.alreadyInitialized) {
+			_jdbcUsername(jdbcUsernameWrap);
+			if(jdbcUsername == null)
+				setJdbcUsername(jdbcUsernameWrap.o);
 		}
-		jdbcMotDePasseWrap.alreadyInitialized(true);
+		jdbcUsernameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrJdbcMotDePasse() {
-		return jdbcMotDePasse;
+	public String solrJdbcUsername() {
+		return jdbcUsername;
 	}
 
-	public String strJdbcMotDePasse() {
-		return jdbcMotDePasse == null ? "" : jdbcMotDePasse;
+	public String strJdbcUsername() {
+		return jdbcUsername == null ? "" : jdbcUsername;
 	}
 
-	public String nomAffichageJdbcMotDePasse() {
+	public String nomAffichageJdbcUsername() {
 		return null;
 	}
 
-	public String htmTooltipJdbcMotDePasse() {
+	public String htmTooltipJdbcUsername() {
 		return null;
 	}
 
-	public String htmJdbcMotDePasse() {
-		return jdbcMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMotDePasse());
+	public String htmJdbcUsername() {
+		return jdbcUsername == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcUsername());
 	}
 
-	//////////////////////////
-	// jdbcTailleMaxPiscine //
-	//////////////////////////
+	//////////////////
+	// jdbcPassword //
+	//////////////////
 
-	/**	L'entité « jdbcTailleMaxPiscine »
+	/**	L'entité « jdbcPassword »
+The password for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Integer jdbcTailleMaxPiscine;
-	public Wrap<Integer> jdbcTailleMaxPiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
+	protected String jdbcPassword;
+	public Wrap<String> jdbcPasswordWrap = new Wrap<String>().p(this).c(String.class).var("jdbcPassword").o(jdbcPassword);
 
-	/**	<br/>L'entité « jdbcTailleMaxPiscine »
+	/**	<br/>L'entité « jdbcPassword »
+The password for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleMaxPiscine">Trouver l'entité jdbcTailleMaxPiscine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcPassword">Trouver l'entité jdbcPassword dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTailleMaxPiscine(Wrap<Integer> c);
+	protected abstract void _jdbcPassword(Wrap<String> c);
 
-	public Integer getJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine;
+	public String getJdbcPassword() {
+		return jdbcPassword;
 	}
 
-	public void setJdbcTailleMaxPiscine(Integer jdbcTailleMaxPiscine) {
-		this.jdbcTailleMaxPiscine = jdbcTailleMaxPiscine;
-		this.jdbcTailleMaxPiscineWrap.alreadyInitialized = true;
+	public void setJdbcPassword(String jdbcPassword) {
+		this.jdbcPassword = jdbcPassword;
+		this.jdbcPasswordWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setJdbcTailleMaxPiscine(String o) {
+	protected SiteConfig jdbcPasswordInit() {
+		if(!jdbcPasswordWrap.alreadyInitialized) {
+			_jdbcPassword(jdbcPasswordWrap);
+			if(jdbcPassword == null)
+				setJdbcPassword(jdbcPasswordWrap.o);
+		}
+		jdbcPasswordWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrJdbcPassword() {
+		return jdbcPassword;
+	}
+
+	public String strJdbcPassword() {
+		return jdbcPassword == null ? "" : jdbcPassword;
+	}
+
+	public String nomAffichageJdbcPassword() {
+		return null;
+	}
+
+	public String htmTooltipJdbcPassword() {
+		return null;
+	}
+
+	public String htmJdbcPassword() {
+		return jdbcPassword == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcPassword());
+	}
+
+	/////////////////////
+	// jdbcMaxPoolSize //
+	/////////////////////
+
+	/**	L'entité « jdbcMaxPoolSize »
+The max pool size for the database. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Integer jdbcMaxPoolSize;
+	public Wrap<Integer> jdbcMaxPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxPoolSize").o(jdbcMaxPoolSize);
+
+	/**	<br/>L'entité « jdbcMaxPoolSize »
+The max pool size for the database. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxPoolSize">Trouver l'entité jdbcMaxPoolSize dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcMaxPoolSize(Wrap<Integer> c);
+
+	public Integer getJdbcMaxPoolSize() {
+		return jdbcMaxPoolSize;
+	}
+
+	public void setJdbcMaxPoolSize(Integer jdbcMaxPoolSize) {
+		this.jdbcMaxPoolSize = jdbcMaxPoolSize;
+		this.jdbcMaxPoolSizeWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setJdbcMaxPoolSize(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcTailleMaxPiscine = Integer.parseInt(o);
-		this.jdbcTailleMaxPiscineWrap.alreadyInitialized = true;
+			this.jdbcMaxPoolSize = Integer.parseInt(o);
+		this.jdbcMaxPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig jdbcTailleMaxPiscineInit() {
-		if(!jdbcTailleMaxPiscineWrap.alreadyInitialized) {
-			_jdbcTailleMaxPiscine(jdbcTailleMaxPiscineWrap);
-			if(jdbcTailleMaxPiscine == null)
-				setJdbcTailleMaxPiscine(jdbcTailleMaxPiscineWrap.o);
+	protected SiteConfig jdbcMaxPoolSizeInit() {
+		if(!jdbcMaxPoolSizeWrap.alreadyInitialized) {
+			_jdbcMaxPoolSize(jdbcMaxPoolSizeWrap);
+			if(jdbcMaxPoolSize == null)
+				setJdbcMaxPoolSize(jdbcMaxPoolSizeWrap.o);
 		}
-		jdbcTailleMaxPiscineWrap.alreadyInitialized(true);
+		jdbcMaxPoolSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine;
+	public Integer solrJdbcMaxPoolSize() {
+		return jdbcMaxPoolSize;
 	}
 
-	public String strJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine == null ? "" : jdbcTailleMaxPiscine.toString();
+	public String strJdbcMaxPoolSize() {
+		return jdbcMaxPoolSize == null ? "" : jdbcMaxPoolSize.toString();
 	}
 
-	public String nomAffichageJdbcTailleMaxPiscine() {
+	public String nomAffichageJdbcMaxPoolSize() {
 		return null;
 	}
 
-	public String htmTooltipJdbcTailleMaxPiscine() {
+	public String htmTooltipJdbcMaxPoolSize() {
 		return null;
 	}
 
-	public String htmJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleMaxPiscine());
-	}
-
-	///////////////////////////////
-	// jdbcTailleInitialePiscine //
-	///////////////////////////////
-
-	/**	L'entité « jdbcTailleInitialePiscine »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Integer jdbcTailleInitialePiscine;
-	public Wrap<Integer> jdbcTailleInitialePiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
-
-	/**	<br/>L'entité « jdbcTailleInitialePiscine »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleInitialePiscine">Trouver l'entité jdbcTailleInitialePiscine dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _jdbcTailleInitialePiscine(Wrap<Integer> c);
-
-	public Integer getJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine;
-	}
-
-	public void setJdbcTailleInitialePiscine(Integer jdbcTailleInitialePiscine) {
-		this.jdbcTailleInitialePiscine = jdbcTailleInitialePiscine;
-		this.jdbcTailleInitialePiscineWrap.alreadyInitialized = true;
-	}
-	public SiteConfig setJdbcTailleInitialePiscine(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcTailleInitialePiscine = Integer.parseInt(o);
-		this.jdbcTailleInitialePiscineWrap.alreadyInitialized = true;
-		return (SiteConfig)this;
-	}
-	protected SiteConfig jdbcTailleInitialePiscineInit() {
-		if(!jdbcTailleInitialePiscineWrap.alreadyInitialized) {
-			_jdbcTailleInitialePiscine(jdbcTailleInitialePiscineWrap);
-			if(jdbcTailleInitialePiscine == null)
-				setJdbcTailleInitialePiscine(jdbcTailleInitialePiscineWrap.o);
-		}
-		jdbcTailleInitialePiscineWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public Integer solrJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine;
-	}
-
-	public String strJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine == null ? "" : jdbcTailleInitialePiscine.toString();
-	}
-
-	public String nomAffichageJdbcTailleInitialePiscine() {
-		return null;
-	}
-
-	public String htmTooltipJdbcTailleInitialePiscine() {
-		return null;
-	}
-
-	public String htmJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleInitialePiscine());
-	}
-
-	//////////////////////////
-	// jdbcTailleMinPiscine //
-	//////////////////////////
-
-	/**	L'entité « jdbcTailleMinPiscine »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Integer jdbcTailleMinPiscine;
-	public Wrap<Integer> jdbcTailleMinPiscineWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
-
-	/**	<br/>L'entité « jdbcTailleMinPiscine »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTailleMinPiscine">Trouver l'entité jdbcTailleMinPiscine dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _jdbcTailleMinPiscine(Wrap<Integer> c);
-
-	public Integer getJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine;
-	}
-
-	public void setJdbcTailleMinPiscine(Integer jdbcTailleMinPiscine) {
-		this.jdbcTailleMinPiscine = jdbcTailleMinPiscine;
-		this.jdbcTailleMinPiscineWrap.alreadyInitialized = true;
-	}
-	public SiteConfig setJdbcTailleMinPiscine(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcTailleMinPiscine = Integer.parseInt(o);
-		this.jdbcTailleMinPiscineWrap.alreadyInitialized = true;
-		return (SiteConfig)this;
-	}
-	protected SiteConfig jdbcTailleMinPiscineInit() {
-		if(!jdbcTailleMinPiscineWrap.alreadyInitialized) {
-			_jdbcTailleMinPiscine(jdbcTailleMinPiscineWrap);
-			if(jdbcTailleMinPiscine == null)
-				setJdbcTailleMinPiscine(jdbcTailleMinPiscineWrap.o);
-		}
-		jdbcTailleMinPiscineWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public Integer solrJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine;
-	}
-
-	public String strJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine == null ? "" : jdbcTailleMinPiscine.toString();
-	}
-
-	public String nomAffichageJdbcTailleMinPiscine() {
-		return null;
-	}
-
-	public String htmTooltipJdbcTailleMinPiscine() {
-		return null;
-	}
-
-	public String htmJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleMinPiscine());
+	public String htmJdbcMaxPoolSize() {
+		return jdbcMaxPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxPoolSize());
 	}
 
 	/////////////////////////
-	// jdbcMaxDeclarations //
+	// jdbcInitialPoolSize //
 	/////////////////////////
 
-	/**	L'entité « jdbcMaxDeclarations »
+	/**	L'entité « jdbcInitialPoolSize »
+The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Integer jdbcMaxDeclarations;
-	public Wrap<Integer> jdbcMaxDeclarationsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
+	protected Integer jdbcInitialPoolSize;
+	public Wrap<Integer> jdbcInitialPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcInitialPoolSize").o(jdbcInitialPoolSize);
 
-	/**	<br/>L'entité « jdbcMaxDeclarations »
+	/**	<br/>L'entité « jdbcInitialPoolSize »
+The max pool size for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxDeclarations">Trouver l'entité jdbcMaxDeclarations dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcInitialPoolSize">Trouver l'entité jdbcInitialPoolSize dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMaxDeclarations(Wrap<Integer> c);
+	protected abstract void _jdbcInitialPoolSize(Wrap<Integer> c);
 
-	public Integer getJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations;
+	public Integer getJdbcInitialPoolSize() {
+		return jdbcInitialPoolSize;
 	}
 
-	public void setJdbcMaxDeclarations(Integer jdbcMaxDeclarations) {
-		this.jdbcMaxDeclarations = jdbcMaxDeclarations;
-		this.jdbcMaxDeclarationsWrap.alreadyInitialized = true;
+	public void setJdbcInitialPoolSize(Integer jdbcInitialPoolSize) {
+		this.jdbcInitialPoolSize = jdbcInitialPoolSize;
+		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setJdbcMaxDeclarations(String o) {
+	public SiteConfig setJdbcInitialPoolSize(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcMaxDeclarations = Integer.parseInt(o);
-		this.jdbcMaxDeclarationsWrap.alreadyInitialized = true;
+			this.jdbcInitialPoolSize = Integer.parseInt(o);
+		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig jdbcMaxDeclarationsInit() {
-		if(!jdbcMaxDeclarationsWrap.alreadyInitialized) {
-			_jdbcMaxDeclarations(jdbcMaxDeclarationsWrap);
-			if(jdbcMaxDeclarations == null)
-				setJdbcMaxDeclarations(jdbcMaxDeclarationsWrap.o);
+	protected SiteConfig jdbcInitialPoolSizeInit() {
+		if(!jdbcInitialPoolSizeWrap.alreadyInitialized) {
+			_jdbcInitialPoolSize(jdbcInitialPoolSizeWrap);
+			if(jdbcInitialPoolSize == null)
+				setJdbcInitialPoolSize(jdbcInitialPoolSizeWrap.o);
 		}
-		jdbcMaxDeclarationsWrap.alreadyInitialized(true);
+		jdbcInitialPoolSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations;
+	public Integer solrJdbcInitialPoolSize() {
+		return jdbcInitialPoolSize;
 	}
 
-	public String strJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations == null ? "" : jdbcMaxDeclarations.toString();
+	public String strJdbcInitialPoolSize() {
+		return jdbcInitialPoolSize == null ? "" : jdbcInitialPoolSize.toString();
 	}
 
-	public String nomAffichageJdbcMaxDeclarations() {
+	public String nomAffichageJdbcInitialPoolSize() {
 		return null;
 	}
 
-	public String htmTooltipJdbcMaxDeclarations() {
+	public String htmTooltipJdbcInitialPoolSize() {
 		return null;
 	}
 
-	public String htmJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxDeclarations());
+	public String htmJdbcInitialPoolSize() {
+		return jdbcInitialPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcInitialPoolSize());
 	}
 
-	/////////////////////////////////////
-	// jdbcMaxDeclarationsParConnexion //
-	/////////////////////////////////////
+	/////////////////////
+	// jdbcMinPoolSize //
+	/////////////////////
 
-	/**	L'entité « jdbcMaxDeclarationsParConnexion »
+	/**	L'entité « jdbcMinPoolSize »
+The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Integer jdbcMaxDeclarationsParConnexion;
-	public Wrap<Integer> jdbcMaxDeclarationsParConnexionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
+	protected Integer jdbcMinPoolSize;
+	public Wrap<Integer> jdbcMinPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMinPoolSize").o(jdbcMinPoolSize);
 
-	/**	<br/>L'entité « jdbcMaxDeclarationsParConnexion »
+	/**	<br/>L'entité « jdbcMinPoolSize »
+The max pool size for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxDeclarationsParConnexion">Trouver l'entité jdbcMaxDeclarationsParConnexion dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMinPoolSize">Trouver l'entité jdbcMinPoolSize dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcMaxDeclarationsParConnexion(Wrap<Integer> c);
+	protected abstract void _jdbcMinPoolSize(Wrap<Integer> c);
 
-	public Integer getJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion;
+	public Integer getJdbcMinPoolSize() {
+		return jdbcMinPoolSize;
 	}
 
-	public void setJdbcMaxDeclarationsParConnexion(Integer jdbcMaxDeclarationsParConnexion) {
-		this.jdbcMaxDeclarationsParConnexion = jdbcMaxDeclarationsParConnexion;
-		this.jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized = true;
+	public void setJdbcMinPoolSize(Integer jdbcMinPoolSize) {
+		this.jdbcMinPoolSize = jdbcMinPoolSize;
+		this.jdbcMinPoolSizeWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setJdbcMaxDeclarationsParConnexion(String o) {
+	public SiteConfig setJdbcMinPoolSize(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcMaxDeclarationsParConnexion = Integer.parseInt(o);
-		this.jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized = true;
+			this.jdbcMinPoolSize = Integer.parseInt(o);
+		this.jdbcMinPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig jdbcMaxDeclarationsParConnexionInit() {
-		if(!jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized) {
-			_jdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionWrap);
-			if(jdbcMaxDeclarationsParConnexion == null)
-				setJdbcMaxDeclarationsParConnexion(jdbcMaxDeclarationsParConnexionWrap.o);
+	protected SiteConfig jdbcMinPoolSizeInit() {
+		if(!jdbcMinPoolSizeWrap.alreadyInitialized) {
+			_jdbcMinPoolSize(jdbcMinPoolSizeWrap);
+			if(jdbcMinPoolSize == null)
+				setJdbcMinPoolSize(jdbcMinPoolSizeWrap.o);
 		}
-		jdbcMaxDeclarationsParConnexionWrap.alreadyInitialized(true);
+		jdbcMinPoolSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion;
+	public Integer solrJdbcMinPoolSize() {
+		return jdbcMinPoolSize;
 	}
 
-	public String strJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion == null ? "" : jdbcMaxDeclarationsParConnexion.toString();
+	public String strJdbcMinPoolSize() {
+		return jdbcMinPoolSize == null ? "" : jdbcMinPoolSize.toString();
 	}
 
-	public String nomAffichageJdbcMaxDeclarationsParConnexion() {
+	public String nomAffichageJdbcMinPoolSize() {
 		return null;
 	}
 
-	public String htmTooltipJdbcMaxDeclarationsParConnexion() {
+	public String htmTooltipJdbcMinPoolSize() {
 		return null;
 	}
 
-	public String htmJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxDeclarationsParConnexion());
+	public String htmJdbcMinPoolSize() {
+		return jdbcMinPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMinPoolSize());
 	}
 
-	////////////////////////////
-	// jdbcTempsInactiviteMax //
-	////////////////////////////
+	///////////////////////
+	// jdbcMaxStatements //
+	///////////////////////
 
-	/**	L'entité « jdbcTempsInactiviteMax »
+	/**	L'entité « jdbcMaxStatements »
+The max statements for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Integer jdbcTempsInactiviteMax;
-	public Wrap<Integer> jdbcTempsInactiviteMaxWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
+	protected Integer jdbcMaxStatements;
+	public Wrap<Integer> jdbcMaxStatementsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatements").o(jdbcMaxStatements);
 
-	/**	<br/>L'entité « jdbcTempsInactiviteMax »
+	/**	<br/>L'entité « jdbcMaxStatements »
+The max statements for the database. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcTempsInactiviteMax">Trouver l'entité jdbcTempsInactiviteMax dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatements">Trouver l'entité jdbcMaxStatements dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTempsInactiviteMax(Wrap<Integer> c);
+	protected abstract void _jdbcMaxStatements(Wrap<Integer> c);
 
-	public Integer getJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax;
+	public Integer getJdbcMaxStatements() {
+		return jdbcMaxStatements;
 	}
 
-	public void setJdbcTempsInactiviteMax(Integer jdbcTempsInactiviteMax) {
-		this.jdbcTempsInactiviteMax = jdbcTempsInactiviteMax;
-		this.jdbcTempsInactiviteMaxWrap.alreadyInitialized = true;
+	public void setJdbcMaxStatements(Integer jdbcMaxStatements) {
+		this.jdbcMaxStatements = jdbcMaxStatements;
+		this.jdbcMaxStatementsWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setJdbcTempsInactiviteMax(String o) {
+	public SiteConfig setJdbcMaxStatements(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.jdbcTempsInactiviteMax = Integer.parseInt(o);
-		this.jdbcTempsInactiviteMaxWrap.alreadyInitialized = true;
+			this.jdbcMaxStatements = Integer.parseInt(o);
+		this.jdbcMaxStatementsWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig jdbcTempsInactiviteMaxInit() {
-		if(!jdbcTempsInactiviteMaxWrap.alreadyInitialized) {
-			_jdbcTempsInactiviteMax(jdbcTempsInactiviteMaxWrap);
-			if(jdbcTempsInactiviteMax == null)
-				setJdbcTempsInactiviteMax(jdbcTempsInactiviteMaxWrap.o);
+	protected SiteConfig jdbcMaxStatementsInit() {
+		if(!jdbcMaxStatementsWrap.alreadyInitialized) {
+			_jdbcMaxStatements(jdbcMaxStatementsWrap);
+			if(jdbcMaxStatements == null)
+				setJdbcMaxStatements(jdbcMaxStatementsWrap.o);
 		}
-		jdbcTempsInactiviteMaxWrap.alreadyInitialized(true);
+		jdbcMaxStatementsWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax;
+	public Integer solrJdbcMaxStatements() {
+		return jdbcMaxStatements;
 	}
 
-	public String strJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax == null ? "" : jdbcTempsInactiviteMax.toString();
+	public String strJdbcMaxStatements() {
+		return jdbcMaxStatements == null ? "" : jdbcMaxStatements.toString();
 	}
 
-	public String nomAffichageJdbcTempsInactiviteMax() {
+	public String nomAffichageJdbcMaxStatements() {
 		return null;
 	}
 
-	public String htmTooltipJdbcTempsInactiviteMax() {
+	public String htmTooltipJdbcMaxStatements() {
 		return null;
 	}
 
-	public String htmJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTempsInactiviteMax());
+	public String htmJdbcMaxStatements() {
+		return jdbcMaxStatements == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxStatements());
+	}
+
+	////////////////////////////////////
+	// jdbcMaxStatementsPerConnection //
+	////////////////////////////////////
+
+	/**	L'entité « jdbcMaxStatementsPerConnection »
+The max statements per connection for the database. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Integer jdbcMaxStatementsPerConnection;
+	public Wrap<Integer> jdbcMaxStatementsPerConnectionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatementsPerConnection").o(jdbcMaxStatementsPerConnection);
+
+	/**	<br/>L'entité « jdbcMaxStatementsPerConnection »
+The max statements per connection for the database. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatementsPerConnection">Trouver l'entité jdbcMaxStatementsPerConnection dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcMaxStatementsPerConnection(Wrap<Integer> c);
+
+	public Integer getJdbcMaxStatementsPerConnection() {
+		return jdbcMaxStatementsPerConnection;
+	}
+
+	public void setJdbcMaxStatementsPerConnection(Integer jdbcMaxStatementsPerConnection) {
+		this.jdbcMaxStatementsPerConnection = jdbcMaxStatementsPerConnection;
+		this.jdbcMaxStatementsPerConnectionWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setJdbcMaxStatementsPerConnection(String o) {
+		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+			this.jdbcMaxStatementsPerConnection = Integer.parseInt(o);
+		this.jdbcMaxStatementsPerConnectionWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig jdbcMaxStatementsPerConnectionInit() {
+		if(!jdbcMaxStatementsPerConnectionWrap.alreadyInitialized) {
+			_jdbcMaxStatementsPerConnection(jdbcMaxStatementsPerConnectionWrap);
+			if(jdbcMaxStatementsPerConnection == null)
+				setJdbcMaxStatementsPerConnection(jdbcMaxStatementsPerConnectionWrap.o);
+		}
+		jdbcMaxStatementsPerConnectionWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Integer solrJdbcMaxStatementsPerConnection() {
+		return jdbcMaxStatementsPerConnection;
+	}
+
+	public String strJdbcMaxStatementsPerConnection() {
+		return jdbcMaxStatementsPerConnection == null ? "" : jdbcMaxStatementsPerConnection.toString();
+	}
+
+	public String nomAffichageJdbcMaxStatementsPerConnection() {
+		return null;
+	}
+
+	public String htmTooltipJdbcMaxStatementsPerConnection() {
+		return null;
+	}
+
+	public String htmJdbcMaxStatementsPerConnection() {
+		return jdbcMaxStatementsPerConnection == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxStatementsPerConnection());
+	}
+
+	/////////////////////
+	// jdbcMaxIdleTime //
+	/////////////////////
+
+	/**	L'entité « jdbcMaxIdleTime »
+The max idle time for the database. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Integer jdbcMaxIdleTime;
+	public Wrap<Integer> jdbcMaxIdleTimeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxIdleTime").o(jdbcMaxIdleTime);
+
+	/**	<br/>L'entité « jdbcMaxIdleTime »
+The max idle time for the database. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxIdleTime">Trouver l'entité jdbcMaxIdleTime dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcMaxIdleTime(Wrap<Integer> c);
+
+	public Integer getJdbcMaxIdleTime() {
+		return jdbcMaxIdleTime;
+	}
+
+	public void setJdbcMaxIdleTime(Integer jdbcMaxIdleTime) {
+		this.jdbcMaxIdleTime = jdbcMaxIdleTime;
+		this.jdbcMaxIdleTimeWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setJdbcMaxIdleTime(String o) {
+		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+			this.jdbcMaxIdleTime = Integer.parseInt(o);
+		this.jdbcMaxIdleTimeWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig jdbcMaxIdleTimeInit() {
+		if(!jdbcMaxIdleTimeWrap.alreadyInitialized) {
+			_jdbcMaxIdleTime(jdbcMaxIdleTimeWrap);
+			if(jdbcMaxIdleTime == null)
+				setJdbcMaxIdleTime(jdbcMaxIdleTimeWrap.o);
+		}
+		jdbcMaxIdleTimeWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Integer solrJdbcMaxIdleTime() {
+		return jdbcMaxIdleTime;
+	}
+
+	public String strJdbcMaxIdleTime() {
+		return jdbcMaxIdleTime == null ? "" : jdbcMaxIdleTime.toString();
+	}
+
+	public String nomAffichageJdbcMaxIdleTime() {
+		return null;
+	}
+
+	public String htmTooltipJdbcMaxIdleTime() {
+		return null;
+	}
+
+	public String htmJdbcMaxIdleTime() {
+		return jdbcMaxIdleTime == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxIdleTime());
 	}
 
 	/////////////
@@ -1729,12 +1787,14 @@ The INI Configuration Object for the config file.
 	/////////////
 
 	/**	L'entité « jdbcUrl »
+The JDBC URL to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUrl;
 	public Wrap<String> jdbcUrlWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
 
 	/**	<br/>L'entité « jdbcUrl »
+The JDBC URL to the database. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUrl">Trouver l'entité jdbcUrl dans Solr</a>
 	 * <br/>
@@ -1785,12 +1845,14 @@ The INI Configuration Object for the config file.
 	/////////////
 
 	/**	L'entité « solrUrl »
+The URL to the SOLR search engine. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrl;
 	public Wrap<String> solrUrlWrap = new Wrap<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
 
 	/**	<br/>L'entité « solrUrl »
+The URL to the SOLR search engine. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrl">Trouver l'entité solrUrl dans Solr</a>
 	 * <br/>
@@ -1836,620 +1898,352 @@ The INI Configuration Object for the config file.
 		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
 	}
 
-	//////////////////////
-	// solrUrlComputate //
-	//////////////////////
+	/////////////////////
+	// accountFacebook //
+	/////////////////////
 
-	/**	L'entité « solrUrlComputate »
+	/**	L'entité « accountFacebook »
+The Facebook account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String solrUrlComputate;
-	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
+	protected String accountFacebook;
+	public Wrap<String> accountFacebookWrap = new Wrap<String>().p(this).c(String.class).var("accountFacebook").o(accountFacebook);
 
-	/**	<br/>L'entité « solrUrlComputate »
+	/**	<br/>L'entité « accountFacebook »
+The Facebook account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountFacebook">Trouver l'entité accountFacebook dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _solrUrlComputate(Wrap<String> c);
+	protected abstract void _accountFacebook(Wrap<String> c);
 
-	public String getSolrUrlComputate() {
-		return solrUrlComputate;
+	public String getAccountFacebook() {
+		return accountFacebook;
 	}
 
-	public void setSolrUrlComputate(String solrUrlComputate) {
-		this.solrUrlComputate = solrUrlComputate;
-		this.solrUrlComputateWrap.alreadyInitialized = true;
+	public void setAccountFacebook(String accountFacebook) {
+		this.accountFacebook = accountFacebook;
+		this.accountFacebookWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig solrUrlComputateInit() {
-		if(!solrUrlComputateWrap.alreadyInitialized) {
-			_solrUrlComputate(solrUrlComputateWrap);
-			if(solrUrlComputate == null)
-				setSolrUrlComputate(solrUrlComputateWrap.o);
+	protected SiteConfig accountFacebookInit() {
+		if(!accountFacebookWrap.alreadyInitialized) {
+			_accountFacebook(accountFacebookWrap);
+			if(accountFacebook == null)
+				setAccountFacebook(accountFacebookWrap.o);
 		}
-		solrUrlComputateWrap.alreadyInitialized(true);
+		accountFacebookWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrSolrUrlComputate() {
-		return solrUrlComputate;
+	public String solrAccountFacebook() {
+		return accountFacebook;
 	}
 
-	public String strSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
+	public String strAccountFacebook() {
+		return accountFacebook == null ? "" : accountFacebook;
 	}
 
-	public String nomAffichageSolrUrlComputate() {
+	public String nomAffichageAccountFacebook() {
 		return null;
 	}
 
-	public String htmTooltipSolrUrlComputate() {
+	public String htmTooltipAccountFacebook() {
 		return null;
 	}
 
-	public String htmSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
-	}
-
-	/////////////////////////
-	// jetonIdentitePaypal //
-	/////////////////////////
-
-	/**	L'entité « jetonIdentitePaypal »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String jetonIdentitePaypal;
-	public Wrap<String> jetonIdentitePaypalWrap = new Wrap<String>().p(this).c(String.class).var("jetonIdentitePaypal").o(jetonIdentitePaypal);
-
-	/**	<br/>L'entité « jetonIdentitePaypal »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jetonIdentitePaypal">Trouver l'entité jetonIdentitePaypal dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _jetonIdentitePaypal(Wrap<String> c);
-
-	public String getJetonIdentitePaypal() {
-		return jetonIdentitePaypal;
-	}
-
-	public void setJetonIdentitePaypal(String jetonIdentitePaypal) {
-		this.jetonIdentitePaypal = jetonIdentitePaypal;
-		this.jetonIdentitePaypalWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig jetonIdentitePaypalInit() {
-		if(!jetonIdentitePaypalWrap.alreadyInitialized) {
-			_jetonIdentitePaypal(jetonIdentitePaypalWrap);
-			if(jetonIdentitePaypal == null)
-				setJetonIdentitePaypal(jetonIdentitePaypalWrap.o);
-		}
-		jetonIdentitePaypalWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrJetonIdentitePaypal() {
-		return jetonIdentitePaypal;
-	}
-
-	public String strJetonIdentitePaypal() {
-		return jetonIdentitePaypal == null ? "" : jetonIdentitePaypal;
-	}
-
-	public String nomAffichageJetonIdentitePaypal() {
-		return null;
-	}
-
-	public String htmTooltipJetonIdentitePaypal() {
-		return null;
-	}
-
-	public String htmJetonIdentitePaypal() {
-		return jetonIdentitePaypal == null ? "" : StringEscapeUtils.escapeHtml4(strJetonIdentitePaypal());
+	public String htmAccountFacebook() {
+		return accountFacebook == null ? "" : StringEscapeUtils.escapeHtml4(strAccountFacebook());
 	}
 
 	////////////////////
-	// compteFacebook //
+	// accountTwitter //
 	////////////////////
 
-	/**	L'entité « compteFacebook »
+	/**	L'entité « accountTwitter »
+The Twitter account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String compteFacebook;
-	public Wrap<String> compteFacebookWrap = new Wrap<String>().p(this).c(String.class).var("compteFacebook").o(compteFacebook);
+	protected String accountTwitter;
+	public Wrap<String> accountTwitterWrap = new Wrap<String>().p(this).c(String.class).var("accountTwitter").o(accountTwitter);
 
-	/**	<br/>L'entité « compteFacebook »
+	/**	<br/>L'entité « accountTwitter »
+The Twitter account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteFacebook">Trouver l'entité compteFacebook dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountTwitter">Trouver l'entité accountTwitter dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteFacebook(Wrap<String> c);
+	protected abstract void _accountTwitter(Wrap<String> c);
 
-	public String getCompteFacebook() {
-		return compteFacebook;
+	public String getAccountTwitter() {
+		return accountTwitter;
 	}
 
-	public void setCompteFacebook(String compteFacebook) {
-		this.compteFacebook = compteFacebook;
-		this.compteFacebookWrap.alreadyInitialized = true;
+	public void setAccountTwitter(String accountTwitter) {
+		this.accountTwitter = accountTwitter;
+		this.accountTwitterWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig compteFacebookInit() {
-		if(!compteFacebookWrap.alreadyInitialized) {
-			_compteFacebook(compteFacebookWrap);
-			if(compteFacebook == null)
-				setCompteFacebook(compteFacebookWrap.o);
+	protected SiteConfig accountTwitterInit() {
+		if(!accountTwitterWrap.alreadyInitialized) {
+			_accountTwitter(accountTwitterWrap);
+			if(accountTwitter == null)
+				setAccountTwitter(accountTwitterWrap.o);
 		}
-		compteFacebookWrap.alreadyInitialized(true);
+		accountTwitterWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCompteFacebook() {
-		return compteFacebook;
+	public String solrAccountTwitter() {
+		return accountTwitter;
 	}
 
-	public String strCompteFacebook() {
-		return compteFacebook == null ? "" : compteFacebook;
+	public String strAccountTwitter() {
+		return accountTwitter == null ? "" : accountTwitter;
 	}
 
-	public String nomAffichageCompteFacebook() {
+	public String nomAffichageAccountTwitter() {
 		return null;
 	}
 
-	public String htmTooltipCompteFacebook() {
+	public String htmTooltipAccountTwitter() {
 		return null;
 	}
 
-	public String htmCompteFacebook() {
-		return compteFacebook == null ? "" : StringEscapeUtils.escapeHtml4(strCompteFacebook());
-	}
-
-	///////////////////
-	// compteTwitter //
-	///////////////////
-
-	/**	L'entité « compteTwitter »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String compteTwitter;
-	public Wrap<String> compteTwitterWrap = new Wrap<String>().p(this).c(String.class).var("compteTwitter").o(compteTwitter);
-
-	/**	<br/>L'entité « compteTwitter »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteTwitter">Trouver l'entité compteTwitter dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _compteTwitter(Wrap<String> c);
-
-	public String getCompteTwitter() {
-		return compteTwitter;
-	}
-
-	public void setCompteTwitter(String compteTwitter) {
-		this.compteTwitter = compteTwitter;
-		this.compteTwitterWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig compteTwitterInit() {
-		if(!compteTwitterWrap.alreadyInitialized) {
-			_compteTwitter(compteTwitterWrap);
-			if(compteTwitter == null)
-				setCompteTwitter(compteTwitterWrap.o);
-		}
-		compteTwitterWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrCompteTwitter() {
-		return compteTwitter;
-	}
-
-	public String strCompteTwitter() {
-		return compteTwitter == null ? "" : compteTwitter;
-	}
-
-	public String nomAffichageCompteTwitter() {
-		return null;
-	}
-
-	public String htmTooltipCompteTwitter() {
-		return null;
-	}
-
-	public String htmCompteTwitter() {
-		return compteTwitter == null ? "" : StringEscapeUtils.escapeHtml4(strCompteTwitter());
+	public String htmAccountTwitter() {
+		return accountTwitter == null ? "" : StringEscapeUtils.escapeHtml4(strAccountTwitter());
 	}
 
 	//////////////////////
-	// compteGooglePlus //
+	// accountInstagram //
 	//////////////////////
 
-	/**	L'entité « compteGooglePlus »
+	/**	L'entité « accountInstagram »
+The Instagram account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String compteGooglePlus;
-	public Wrap<String> compteGooglePlusWrap = new Wrap<String>().p(this).c(String.class).var("compteGooglePlus").o(compteGooglePlus);
+	protected String accountInstagram;
+	public Wrap<String> accountInstagramWrap = new Wrap<String>().p(this).c(String.class).var("accountInstagram").o(accountInstagram);
 
-	/**	<br/>L'entité « compteGooglePlus »
+	/**	<br/>L'entité « accountInstagram »
+The Instagram account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteGooglePlus">Trouver l'entité compteGooglePlus dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountInstagram">Trouver l'entité accountInstagram dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteGooglePlus(Wrap<String> c);
+	protected abstract void _accountInstagram(Wrap<String> c);
 
-	public String getCompteGooglePlus() {
-		return compteGooglePlus;
+	public String getAccountInstagram() {
+		return accountInstagram;
 	}
 
-	public void setCompteGooglePlus(String compteGooglePlus) {
-		this.compteGooglePlus = compteGooglePlus;
-		this.compteGooglePlusWrap.alreadyInitialized = true;
+	public void setAccountInstagram(String accountInstagram) {
+		this.accountInstagram = accountInstagram;
+		this.accountInstagramWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig compteGooglePlusInit() {
-		if(!compteGooglePlusWrap.alreadyInitialized) {
-			_compteGooglePlus(compteGooglePlusWrap);
-			if(compteGooglePlus == null)
-				setCompteGooglePlus(compteGooglePlusWrap.o);
+	protected SiteConfig accountInstagramInit() {
+		if(!accountInstagramWrap.alreadyInitialized) {
+			_accountInstagram(accountInstagramWrap);
+			if(accountInstagram == null)
+				setAccountInstagram(accountInstagramWrap.o);
 		}
-		compteGooglePlusWrap.alreadyInitialized(true);
+		accountInstagramWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCompteGooglePlus() {
-		return compteGooglePlus;
+	public String solrAccountInstagram() {
+		return accountInstagram;
 	}
 
-	public String strCompteGooglePlus() {
-		return compteGooglePlus == null ? "" : compteGooglePlus;
+	public String strAccountInstagram() {
+		return accountInstagram == null ? "" : accountInstagram;
 	}
 
-	public String nomAffichageCompteGooglePlus() {
+	public String nomAffichageAccountInstagram() {
 		return null;
 	}
 
-	public String htmTooltipCompteGooglePlus() {
+	public String htmTooltipAccountInstagram() {
 		return null;
 	}
 
-	public String htmCompteGooglePlus() {
-		return compteGooglePlus == null ? "" : StringEscapeUtils.escapeHtml4(strCompteGooglePlus());
+	public String htmAccountInstagram() {
+		return accountInstagram == null ? "" : StringEscapeUtils.escapeHtml4(strAccountInstagram());
 	}
 
-	/////////////////////
-	// compteInstagram //
-	/////////////////////
+	////////////////////
+	// accountYoutube //
+	////////////////////
 
-	/**	L'entité « compteInstagram »
+	/**	L'entité « accountYoutube »
+The Youtube account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String compteInstagram;
-	public Wrap<String> compteInstagramWrap = new Wrap<String>().p(this).c(String.class).var("compteInstagram").o(compteInstagram);
+	protected String accountYoutube;
+	public Wrap<String> accountYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("accountYoutube").o(accountYoutube);
 
-	/**	<br/>L'entité « compteInstagram »
+	/**	<br/>L'entité « accountYoutube »
+The Youtube account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteInstagram">Trouver l'entité compteInstagram dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountYoutube">Trouver l'entité accountYoutube dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteInstagram(Wrap<String> c);
+	protected abstract void _accountYoutube(Wrap<String> c);
 
-	public String getCompteInstagram() {
-		return compteInstagram;
+	public String getAccountYoutube() {
+		return accountYoutube;
 	}
 
-	public void setCompteInstagram(String compteInstagram) {
-		this.compteInstagram = compteInstagram;
-		this.compteInstagramWrap.alreadyInitialized = true;
+	public void setAccountYoutube(String accountYoutube) {
+		this.accountYoutube = accountYoutube;
+		this.accountYoutubeWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig compteInstagramInit() {
-		if(!compteInstagramWrap.alreadyInitialized) {
-			_compteInstagram(compteInstagramWrap);
-			if(compteInstagram == null)
-				setCompteInstagram(compteInstagramWrap.o);
+	protected SiteConfig accountYoutubeInit() {
+		if(!accountYoutubeWrap.alreadyInitialized) {
+			_accountYoutube(accountYoutubeWrap);
+			if(accountYoutube == null)
+				setAccountYoutube(accountYoutubeWrap.o);
 		}
-		compteInstagramWrap.alreadyInitialized(true);
+		accountYoutubeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCompteInstagram() {
-		return compteInstagram;
+	public String solrAccountYoutube() {
+		return accountYoutube;
 	}
 
-	public String strCompteInstagram() {
-		return compteInstagram == null ? "" : compteInstagram;
+	public String strAccountYoutube() {
+		return accountYoutube == null ? "" : accountYoutube;
 	}
 
-	public String nomAffichageCompteInstagram() {
+	public String nomAffichageAccountYoutube() {
 		return null;
 	}
 
-	public String htmTooltipCompteInstagram() {
+	public String htmTooltipAccountYoutube() {
 		return null;
 	}
 
-	public String htmCompteInstagram() {
-		return compteInstagram == null ? "" : StringEscapeUtils.escapeHtml4(strCompteInstagram());
+	public String htmAccountYoutube() {
+		return accountYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strAccountYoutube());
 	}
 
-	///////////////////
-	// compteYoutube //
-	///////////////////
+	//////////////////////
+	// accountPinterest //
+	//////////////////////
 
-	/**	L'entité « compteYoutube »
+	/**	L'entité « accountPinterest »
+The Pinterest account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String compteYoutube;
-	public Wrap<String> compteYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("compteYoutube").o(compteYoutube);
+	protected String accountPinterest;
+	public Wrap<String> accountPinterestWrap = new Wrap<String>().p(this).c(String.class).var("accountPinterest").o(accountPinterest);
 
-	/**	<br/>L'entité « compteYoutube »
+	/**	<br/>L'entité « accountPinterest »
+The Pinterest account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteYoutube">Trouver l'entité compteYoutube dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountPinterest">Trouver l'entité accountPinterest dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _compteYoutube(Wrap<String> c);
+	protected abstract void _accountPinterest(Wrap<String> c);
 
-	public String getCompteYoutube() {
-		return compteYoutube;
+	public String getAccountPinterest() {
+		return accountPinterest;
 	}
 
-	public void setCompteYoutube(String compteYoutube) {
-		this.compteYoutube = compteYoutube;
-		this.compteYoutubeWrap.alreadyInitialized = true;
+	public void setAccountPinterest(String accountPinterest) {
+		this.accountPinterest = accountPinterest;
+		this.accountPinterestWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig compteYoutubeInit() {
-		if(!compteYoutubeWrap.alreadyInitialized) {
-			_compteYoutube(compteYoutubeWrap);
-			if(compteYoutube == null)
-				setCompteYoutube(compteYoutubeWrap.o);
+	protected SiteConfig accountPinterestInit() {
+		if(!accountPinterestWrap.alreadyInitialized) {
+			_accountPinterest(accountPinterestWrap);
+			if(accountPinterest == null)
+				setAccountPinterest(accountPinterestWrap.o);
 		}
-		compteYoutubeWrap.alreadyInitialized(true);
+		accountPinterestWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrCompteYoutube() {
-		return compteYoutube;
+	public String solrAccountPinterest() {
+		return accountPinterest;
 	}
 
-	public String strCompteYoutube() {
-		return compteYoutube == null ? "" : compteYoutube;
+	public String strAccountPinterest() {
+		return accountPinterest == null ? "" : accountPinterest;
 	}
 
-	public String nomAffichageCompteYoutube() {
+	public String nomAffichageAccountPinterest() {
 		return null;
 	}
 
-	public String htmTooltipCompteYoutube() {
+	public String htmTooltipAccountPinterest() {
 		return null;
 	}
 
-	public String htmCompteYoutube() {
-		return compteYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strCompteYoutube());
+	public String htmAccountPinterest() {
+		return accountPinterest == null ? "" : StringEscapeUtils.escapeHtml4(strAccountPinterest());
 	}
 
-	/////////////////////////////
-	// identifiantCanalYoutube //
-	/////////////////////////////
+	//////////////////
+	// accountEmail //
+	//////////////////
 
-	/**	L'entité « identifiantCanalYoutube »
+	/**	L'entité « accountEmail »
+The Email account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String identifiantCanalYoutube;
-	public Wrap<String> identifiantCanalYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("identifiantCanalYoutube").o(identifiantCanalYoutube);
+	protected String accountEmail;
+	public Wrap<String> accountEmailWrap = new Wrap<String>().p(this).c(String.class).var("accountEmail").o(accountEmail);
 
-	/**	<br/>L'entité « identifiantCanalYoutube »
+	/**	<br/>L'entité « accountEmail »
+The Email account for the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:identifiantCanalYoutube">Trouver l'entité identifiantCanalYoutube dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountEmail">Trouver l'entité accountEmail dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _identifiantCanalYoutube(Wrap<String> c);
+	protected abstract void _accountEmail(Wrap<String> c);
 
-	public String getIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube;
+	public String getAccountEmail() {
+		return accountEmail;
 	}
 
-	public void setIdentifiantCanalYoutube(String identifiantCanalYoutube) {
-		this.identifiantCanalYoutube = identifiantCanalYoutube;
-		this.identifiantCanalYoutubeWrap.alreadyInitialized = true;
+	public void setAccountEmail(String accountEmail) {
+		this.accountEmail = accountEmail;
+		this.accountEmailWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig identifiantCanalYoutubeInit() {
-		if(!identifiantCanalYoutubeWrap.alreadyInitialized) {
-			_identifiantCanalYoutube(identifiantCanalYoutubeWrap);
-			if(identifiantCanalYoutube == null)
-				setIdentifiantCanalYoutube(identifiantCanalYoutubeWrap.o);
+	protected SiteConfig accountEmailInit() {
+		if(!accountEmailWrap.alreadyInitialized) {
+			_accountEmail(accountEmailWrap);
+			if(accountEmail == null)
+				setAccountEmail(accountEmailWrap.o);
 		}
-		identifiantCanalYoutubeWrap.alreadyInitialized(true);
+		accountEmailWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube;
+	public String solrAccountEmail() {
+		return accountEmail;
 	}
 
-	public String strIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube == null ? "" : identifiantCanalYoutube;
+	public String strAccountEmail() {
+		return accountEmail == null ? "" : accountEmail;
 	}
 
-	public String nomAffichageIdentifiantCanalYoutube() {
+	public String nomAffichageAccountEmail() {
 		return null;
 	}
 
-	public String htmTooltipIdentifiantCanalYoutube() {
+	public String htmTooltipAccountEmail() {
 		return null;
 	}
 
-	public String htmIdentifiantCanalYoutube() {
-		return identifiantCanalYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strIdentifiantCanalYoutube());
-	}
-
-	/////////////////////
-	// comptePinterest //
-	/////////////////////
-
-	/**	L'entité « comptePinterest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String comptePinterest;
-	public Wrap<String> comptePinterestWrap = new Wrap<String>().p(this).c(String.class).var("comptePinterest").o(comptePinterest);
-
-	/**	<br/>L'entité « comptePinterest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:comptePinterest">Trouver l'entité comptePinterest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _comptePinterest(Wrap<String> c);
-
-	public String getComptePinterest() {
-		return comptePinterest;
-	}
-
-	public void setComptePinterest(String comptePinterest) {
-		this.comptePinterest = comptePinterest;
-		this.comptePinterestWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig comptePinterestInit() {
-		if(!comptePinterestWrap.alreadyInitialized) {
-			_comptePinterest(comptePinterestWrap);
-			if(comptePinterest == null)
-				setComptePinterest(comptePinterestWrap.o);
-		}
-		comptePinterestWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrComptePinterest() {
-		return comptePinterest;
-	}
-
-	public String strComptePinterest() {
-		return comptePinterest == null ? "" : comptePinterest;
-	}
-
-	public String nomAffichageComptePinterest() {
-		return null;
-	}
-
-	public String htmTooltipComptePinterest() {
-		return null;
-	}
-
-	public String htmComptePinterest() {
-		return comptePinterest == null ? "" : StringEscapeUtils.escapeHtml4(strComptePinterest());
-	}
-
-	///////////////////////
-	// compteOpenclipart //
-	///////////////////////
-
-	/**	L'entité « compteOpenclipart »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String compteOpenclipart;
-	public Wrap<String> compteOpenclipartWrap = new Wrap<String>().p(this).c(String.class).var("compteOpenclipart").o(compteOpenclipart);
-
-	/**	<br/>L'entité « compteOpenclipart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteOpenclipart">Trouver l'entité compteOpenclipart dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _compteOpenclipart(Wrap<String> c);
-
-	public String getCompteOpenclipart() {
-		return compteOpenclipart;
-	}
-
-	public void setCompteOpenclipart(String compteOpenclipart) {
-		this.compteOpenclipart = compteOpenclipart;
-		this.compteOpenclipartWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig compteOpenclipartInit() {
-		if(!compteOpenclipartWrap.alreadyInitialized) {
-			_compteOpenclipart(compteOpenclipartWrap);
-			if(compteOpenclipart == null)
-				setCompteOpenclipart(compteOpenclipartWrap.o);
-		}
-		compteOpenclipartWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrCompteOpenclipart() {
-		return compteOpenclipart;
-	}
-
-	public String strCompteOpenclipart() {
-		return compteOpenclipart == null ? "" : compteOpenclipart;
-	}
-
-	public String nomAffichageCompteOpenclipart() {
-		return null;
-	}
-
-	public String htmTooltipCompteOpenclipart() {
-		return null;
-	}
-
-	public String htmCompteOpenclipart() {
-		return compteOpenclipart == null ? "" : StringEscapeUtils.escapeHtml4(strCompteOpenclipart());
-	}
-
-	////////////////
-	// compteMail //
-	////////////////
-
-	/**	L'entité « compteMail »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String compteMail;
-	public Wrap<String> compteMailWrap = new Wrap<String>().p(this).c(String.class).var("compteMail").o(compteMail);
-
-	/**	<br/>L'entité « compteMail »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:compteMail">Trouver l'entité compteMail dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _compteMail(Wrap<String> c);
-
-	public String getCompteMail() {
-		return compteMail;
-	}
-
-	public void setCompteMail(String compteMail) {
-		this.compteMail = compteMail;
-		this.compteMailWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig compteMailInit() {
-		if(!compteMailWrap.alreadyInitialized) {
-			_compteMail(compteMailWrap);
-			if(compteMail == null)
-				setCompteMail(compteMailWrap.o);
-		}
-		compteMailWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrCompteMail() {
-		return compteMail;
-	}
-
-	public String strCompteMail() {
-		return compteMail == null ? "" : compteMail;
-	}
-
-	public String nomAffichageCompteMail() {
-		return null;
-	}
-
-	public String htmTooltipCompteMail() {
-		return null;
-	}
-
-	public String htmCompteMail() {
-		return compteMail == null ? "" : StringEscapeUtils.escapeHtml4(strCompteMail());
+	public String htmAccountEmail() {
+		return accountEmail == null ? "" : StringEscapeUtils.escapeHtml4(strAccountEmail());
 	}
 
 	///////////////
@@ -2457,12 +2251,14 @@ The INI Configuration Object for the config file.
 	///////////////
 
 	/**	L'entité « roleAdmin »
+The OpenID Connect role for an administrator. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String roleAdmin;
 	public Wrap<String> roleAdminWrap = new Wrap<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
 
 	/**	<br/>L'entité « roleAdmin »
+The OpenID Connect role for an administrator. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:roleAdmin">Trouver l'entité roleAdmin dans Solr</a>
 	 * <br/>
@@ -2508,122 +2304,126 @@ The INI Configuration Object for the config file.
 		return roleAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strRoleAdmin());
 	}
 
-	///////////////
-	// mailAdmin //
-	///////////////
+	////////////////
+	// emailAdmin //
+	////////////////
 
-	/**	L'entité « mailAdmin »
+	/**	L'entité « emailAdmin »
+The email address for the administrator of the site for the error reports. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String mailAdmin;
-	public Wrap<String> mailAdminWrap = new Wrap<String>().p(this).c(String.class).var("mailAdmin").o(mailAdmin);
+	protected String emailAdmin;
+	public Wrap<String> emailAdminWrap = new Wrap<String>().p(this).c(String.class).var("emailAdmin").o(emailAdmin);
 
-	/**	<br/>L'entité « mailAdmin »
+	/**	<br/>L'entité « emailAdmin »
+The email address for the administrator of the site for the error reports. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mailAdmin">Trouver l'entité mailAdmin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAdmin">Trouver l'entité emailAdmin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _mailAdmin(Wrap<String> c);
+	protected abstract void _emailAdmin(Wrap<String> c);
 
-	public String getMailAdmin() {
-		return mailAdmin;
+	public String getEmailAdmin() {
+		return emailAdmin;
 	}
 
-	public void setMailAdmin(String mailAdmin) {
-		this.mailAdmin = mailAdmin;
-		this.mailAdminWrap.alreadyInitialized = true;
+	public void setEmailAdmin(String emailAdmin) {
+		this.emailAdmin = emailAdmin;
+		this.emailAdminWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig mailAdminInit() {
-		if(!mailAdminWrap.alreadyInitialized) {
-			_mailAdmin(mailAdminWrap);
-			if(mailAdmin == null)
-				setMailAdmin(mailAdminWrap.o);
+	protected SiteConfig emailAdminInit() {
+		if(!emailAdminWrap.alreadyInitialized) {
+			_emailAdmin(emailAdminWrap);
+			if(emailAdmin == null)
+				setEmailAdmin(emailAdminWrap.o);
 		}
-		mailAdminWrap.alreadyInitialized(true);
+		emailAdminWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrMailAdmin() {
-		return mailAdmin;
+	public String solrEmailAdmin() {
+		return emailAdmin;
 	}
 
-	public String strMailAdmin() {
-		return mailAdmin == null ? "" : mailAdmin;
+	public String strEmailAdmin() {
+		return emailAdmin == null ? "" : emailAdmin;
 	}
 
-	public String nomAffichageMailAdmin() {
+	public String nomAffichageEmailAdmin() {
 		return null;
 	}
 
-	public String htmTooltipMailAdmin() {
+	public String htmTooltipEmailAdmin() {
 		return null;
 	}
 
-	public String htmMailAdmin() {
-		return mailAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strMailAdmin());
+	public String htmEmailAdmin() {
+		return emailAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strEmailAdmin());
 	}
 
-	//////////////////////
-	// nombreExecuteurs //
-	//////////////////////
+	/////////////////////
+	// numberExecutors //
+	/////////////////////
 
-	/**	L'entité « nombreExecuteurs »
+	/**	L'entité « numberExecutors »
+The number of executors for executing background tasks in the site. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Integer nombreExecuteurs;
-	public Wrap<Integer> nombreExecuteursWrap = new Wrap<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
+	protected Integer numberExecutors;
+	public Wrap<Integer> numberExecutorsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("numberExecutors").o(numberExecutors);
 
-	/**	<br/>L'entité « nombreExecuteurs »
+	/**	<br/>L'entité « numberExecutors »
+The number of executors for executing background tasks in the site. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:nombreExecuteurs">Trouver l'entité nombreExecuteurs dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:numberExecutors">Trouver l'entité numberExecutors dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _nombreExecuteurs(Wrap<Integer> c);
+	protected abstract void _numberExecutors(Wrap<Integer> c);
 
-	public Integer getNombreExecuteurs() {
-		return nombreExecuteurs;
+	public Integer getNumberExecutors() {
+		return numberExecutors;
 	}
 
-	public void setNombreExecuteurs(Integer nombreExecuteurs) {
-		this.nombreExecuteurs = nombreExecuteurs;
-		this.nombreExecuteursWrap.alreadyInitialized = true;
+	public void setNumberExecutors(Integer numberExecutors) {
+		this.numberExecutors = numberExecutors;
+		this.numberExecutorsWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setNombreExecuteurs(String o) {
+	public SiteConfig setNumberExecutors(String o) {
 		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.nombreExecuteurs = Integer.parseInt(o);
-		this.nombreExecuteursWrap.alreadyInitialized = true;
+			this.numberExecutors = Integer.parseInt(o);
+		this.numberExecutorsWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig nombreExecuteursInit() {
-		if(!nombreExecuteursWrap.alreadyInitialized) {
-			_nombreExecuteurs(nombreExecuteursWrap);
-			if(nombreExecuteurs == null)
-				setNombreExecuteurs(nombreExecuteursWrap.o);
+	protected SiteConfig numberExecutorsInit() {
+		if(!numberExecutorsWrap.alreadyInitialized) {
+			_numberExecutors(numberExecutorsWrap);
+			if(numberExecutors == null)
+				setNumberExecutors(numberExecutorsWrap.o);
 		}
-		nombreExecuteursWrap.alreadyInitialized(true);
+		numberExecutorsWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrNombreExecuteurs() {
-		return nombreExecuteurs;
+	public Integer solrNumberExecutors() {
+		return numberExecutors;
 	}
 
-	public String strNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
+	public String strNumberExecutors() {
+		return numberExecutors == null ? "" : numberExecutors.toString();
 	}
 
-	public String nomAffichageNombreExecuteurs() {
+	public String nomAffichageNumberExecutors() {
 		return null;
 	}
 
-	public String htmTooltipNombreExecuteurs() {
+	public String htmTooltipNumberExecutors() {
 		return null;
 	}
 
-	public String htmNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : StringEscapeUtils.escapeHtml4(strNombreExecuteurs());
+	public String htmNumberExecutors() {
+		return numberExecutors == null ? "" : StringEscapeUtils.escapeHtml4(strNumberExecutors());
 	}
 
 	////////////////////
@@ -2631,12 +2431,14 @@ The INI Configuration Object for the config file.
 	////////////////////
 
 	/**	L'entité « openApiVersion »
+The version of OpenAPI used with Vert.x which should probably be 3.0. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
+The version of OpenAPI used with Vert.x which should probably be 3.0. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:openApiVersion">Trouver l'entité openApiVersion dans Solr</a>
 	 * <br/>
@@ -2687,12 +2489,14 @@ The INI Configuration Object for the config file.
 	////////////////////
 
 	/**	L'entité « apiDescription »
+The description of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiDescription;
 	public Wrap<String> apiDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
 
 	/**	<br/>L'entité « apiDescription »
+The description of your site API. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiDescription">Trouver l'entité apiDescription dans Solr</a>
 	 * <br/>
@@ -2739,59 +2543,61 @@ The INI Configuration Object for the config file.
 	}
 
 	//////////////
-	// apiTitre //
+	// apiTitle //
 	//////////////
 
-	/**	L'entité « apiTitre »
+	/**	L'entité « apiTitle »
+The title of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String apiTitre;
-	public Wrap<String> apiTitreWrap = new Wrap<String>().p(this).c(String.class).var("apiTitre").o(apiTitre);
+	protected String apiTitle;
+	public Wrap<String> apiTitleWrap = new Wrap<String>().p(this).c(String.class).var("apiTitle").o(apiTitle);
 
-	/**	<br/>L'entité « apiTitre »
+	/**	<br/>L'entité « apiTitle »
+The title of your site API. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTitre">Trouver l'entité apiTitre dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTitle">Trouver l'entité apiTitle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _apiTitre(Wrap<String> c);
+	protected abstract void _apiTitle(Wrap<String> c);
 
-	public String getApiTitre() {
-		return apiTitre;
+	public String getApiTitle() {
+		return apiTitle;
 	}
 
-	public void setApiTitre(String apiTitre) {
-		this.apiTitre = apiTitre;
-		this.apiTitreWrap.alreadyInitialized = true;
+	public void setApiTitle(String apiTitle) {
+		this.apiTitle = apiTitle;
+		this.apiTitleWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig apiTitreInit() {
-		if(!apiTitreWrap.alreadyInitialized) {
-			_apiTitre(apiTitreWrap);
-			if(apiTitre == null)
-				setApiTitre(apiTitreWrap.o);
+	protected SiteConfig apiTitleInit() {
+		if(!apiTitleWrap.alreadyInitialized) {
+			_apiTitle(apiTitleWrap);
+			if(apiTitle == null)
+				setApiTitle(apiTitleWrap.o);
 		}
-		apiTitreWrap.alreadyInitialized(true);
+		apiTitleWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrApiTitre() {
-		return apiTitre;
+	public String solrApiTitle() {
+		return apiTitle;
 	}
 
-	public String strApiTitre() {
-		return apiTitre == null ? "" : apiTitre;
+	public String strApiTitle() {
+		return apiTitle == null ? "" : apiTitle;
 	}
 
-	public String nomAffichageApiTitre() {
+	public String nomAffichageApiTitle() {
 		return null;
 	}
 
-	public String htmTooltipApiTitre() {
+	public String htmTooltipApiTitle() {
 		return null;
 	}
 
-	public String htmApiTitre() {
-		return apiTitre == null ? "" : StringEscapeUtils.escapeHtml4(strApiTitre());
+	public String htmApiTitle() {
+		return apiTitle == null ? "" : StringEscapeUtils.escapeHtml4(strApiTitle());
 	}
 
 	/////////////////////
@@ -2799,12 +2605,14 @@ The INI Configuration Object for the config file.
 	/////////////////////
 
 	/**	L'entité « apiTermsService »
+The terms of service of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTermsService;
 	public Wrap<String> apiTermsServiceWrap = new Wrap<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
 
 	/**	<br/>L'entité « apiTermsService »
+The terms of service of your site API. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTermsService">Trouver l'entité apiTermsService dans Solr</a>
 	 * <br/>
@@ -2855,12 +2663,14 @@ The INI Configuration Object for the config file.
 	////////////////
 
 	/**	L'entité « apiVersion »
+The version of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
+The version of your site API. 
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiVersion">Trouver l'entité apiVersion dans Solr</a>
 	 * <br/>
@@ -2906,396 +2716,352 @@ The INI Configuration Object for the config file.
 		return apiVersion == null ? "" : StringEscapeUtils.escapeHtml4(strApiVersion());
 	}
 
-	////////////////////
-	// apiContactMail //
-	////////////////////
-
-	/**	L'entité « apiContactMail »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String apiContactMail;
-	public Wrap<String> apiContactMailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactMail").o(apiContactMail);
-
-	/**	<br/>L'entité « apiContactMail »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiContactMail">Trouver l'entité apiContactMail dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _apiContactMail(Wrap<String> c);
-
-	public String getApiContactMail() {
-		return apiContactMail;
-	}
-
-	public void setApiContactMail(String apiContactMail) {
-		this.apiContactMail = apiContactMail;
-		this.apiContactMailWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig apiContactMailInit() {
-		if(!apiContactMailWrap.alreadyInitialized) {
-			_apiContactMail(apiContactMailWrap);
-			if(apiContactMail == null)
-				setApiContactMail(apiContactMailWrap.o);
-		}
-		apiContactMailWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrApiContactMail() {
-		return apiContactMail;
-	}
-
-	public String strApiContactMail() {
-		return apiContactMail == null ? "" : apiContactMail;
-	}
-
-	public String nomAffichageApiContactMail() {
-		return null;
-	}
-
-	public String htmTooltipApiContactMail() {
-		return null;
-	}
-
-	public String htmApiContactMail() {
-		return apiContactMail == null ? "" : StringEscapeUtils.escapeHtml4(strApiContactMail());
-	}
-
-	///////////////////
-	// apiLicenceNom //
-	///////////////////
-
-	/**	L'entité « apiLicenceNom »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String apiLicenceNom;
-	public Wrap<String> apiLicenceNomWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenceNom").o(apiLicenceNom);
-
-	/**	<br/>L'entité « apiLicenceNom »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenceNom">Trouver l'entité apiLicenceNom dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _apiLicenceNom(Wrap<String> c);
-
-	public String getApiLicenceNom() {
-		return apiLicenceNom;
-	}
-
-	public void setApiLicenceNom(String apiLicenceNom) {
-		this.apiLicenceNom = apiLicenceNom;
-		this.apiLicenceNomWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig apiLicenceNomInit() {
-		if(!apiLicenceNomWrap.alreadyInitialized) {
-			_apiLicenceNom(apiLicenceNomWrap);
-			if(apiLicenceNom == null)
-				setApiLicenceNom(apiLicenceNomWrap.o);
-		}
-		apiLicenceNomWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrApiLicenceNom() {
-		return apiLicenceNom;
-	}
-
-	public String strApiLicenceNom() {
-		return apiLicenceNom == null ? "" : apiLicenceNom;
-	}
-
-	public String nomAffichageApiLicenceNom() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenceNom() {
-		return null;
-	}
-
-	public String htmApiLicenceNom() {
-		return apiLicenceNom == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenceNom());
-	}
-
-	///////////////////
-	// apiLicenceUrl //
-	///////////////////
-
-	/**	L'entité « apiLicenceUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String apiLicenceUrl;
-	public Wrap<String> apiLicenceUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenceUrl").o(apiLicenceUrl);
-
-	/**	<br/>L'entité « apiLicenceUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenceUrl">Trouver l'entité apiLicenceUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _apiLicenceUrl(Wrap<String> c);
-
-	public String getApiLicenceUrl() {
-		return apiLicenceUrl;
-	}
-
-	public void setApiLicenceUrl(String apiLicenceUrl) {
-		this.apiLicenceUrl = apiLicenceUrl;
-		this.apiLicenceUrlWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig apiLicenceUrlInit() {
-		if(!apiLicenceUrlWrap.alreadyInitialized) {
-			_apiLicenceUrl(apiLicenceUrlWrap);
-			if(apiLicenceUrl == null)
-				setApiLicenceUrl(apiLicenceUrlWrap.o);
-		}
-		apiLicenceUrlWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrApiLicenceUrl() {
-		return apiLicenceUrl;
-	}
-
-	public String strApiLicenceUrl() {
-		return apiLicenceUrl == null ? "" : apiLicenceUrl;
-	}
-
-	public String nomAffichageApiLicenceUrl() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenceUrl() {
-		return null;
-	}
-
-	public String htmApiLicenceUrl() {
-		return apiLicenceUrl == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenceUrl());
-	}
-
-	////////////////
-	// apiNomHote //
-	////////////////
-
-	/**	L'entité « apiNomHote »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String apiNomHote;
-	public Wrap<String> apiNomHoteWrap = new Wrap<String>().p(this).c(String.class).var("apiNomHote").o(apiNomHote);
-
-	/**	<br/>L'entité « apiNomHote »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiNomHote">Trouver l'entité apiNomHote dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _apiNomHote(Wrap<String> c);
-
-	public String getApiNomHote() {
-		return apiNomHote;
-	}
-
-	public void setApiNomHote(String apiNomHote) {
-		this.apiNomHote = apiNomHote;
-		this.apiNomHoteWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig apiNomHoteInit() {
-		if(!apiNomHoteWrap.alreadyInitialized) {
-			_apiNomHote(apiNomHoteWrap);
-			if(apiNomHote == null)
-				setApiNomHote(apiNomHoteWrap.o);
-		}
-		apiNomHoteWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrApiNomHote() {
-		return apiNomHote;
-	}
-
-	public String strApiNomHote() {
-		return apiNomHote == null ? "" : apiNomHote;
-	}
-
-	public String nomAffichageApiNomHote() {
-		return null;
-	}
-
-	public String htmTooltipApiNomHote() {
-		return null;
-	}
-
-	public String htmApiNomHote() {
-		return apiNomHote == null ? "" : StringEscapeUtils.escapeHtml4(strApiNomHote());
-	}
-
-	///////////////////
-	// apiCheminBase //
-	///////////////////
-
-	/**	L'entité « apiCheminBase »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String apiCheminBase;
-	public Wrap<String> apiCheminBaseWrap = new Wrap<String>().p(this).c(String.class).var("apiCheminBase").o(apiCheminBase);
-
-	/**	<br/>L'entité « apiCheminBase »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiCheminBase">Trouver l'entité apiCheminBase dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _apiCheminBase(Wrap<String> c);
-
-	public String getApiCheminBase() {
-		return apiCheminBase;
-	}
-
-	public void setApiCheminBase(String apiCheminBase) {
-		this.apiCheminBase = apiCheminBase;
-		this.apiCheminBaseWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig apiCheminBaseInit() {
-		if(!apiCheminBaseWrap.alreadyInitialized) {
-			_apiCheminBase(apiCheminBaseWrap);
-			if(apiCheminBase == null)
-				setApiCheminBase(apiCheminBaseWrap.o);
-		}
-		apiCheminBaseWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrApiCheminBase() {
-		return apiCheminBase;
-	}
-
-	public String strApiCheminBase() {
-		return apiCheminBase == null ? "" : apiCheminBase;
-	}
-
-	public String nomAffichageApiCheminBase() {
-		return null;
-	}
-
-	public String htmTooltipApiCheminBase() {
-		return null;
-	}
-
-	public String htmApiCheminBase() {
-		return apiCheminBase == null ? "" : StringEscapeUtils.escapeHtml4(strApiCheminBase());
-	}
-
-	/////////////////////////
-	// vertxServiceAddress //
-	/////////////////////////
-
-	/**	L'entité « vertxServiceAddress »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String vertxServiceAddress;
-	public Wrap<String> vertxServiceAddressWrap = new Wrap<String>().p(this).c(String.class).var("vertxServiceAddress").o(vertxServiceAddress);
-
-	/**	<br/>L'entité « vertxServiceAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:vertxServiceAddress">Trouver l'entité vertxServiceAddress dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _vertxServiceAddress(Wrap<String> c);
-
-	public String getVertxServiceAddress() {
-		return vertxServiceAddress;
-	}
-
-	public void setVertxServiceAddress(String vertxServiceAddress) {
-		this.vertxServiceAddress = vertxServiceAddress;
-		this.vertxServiceAddressWrap.alreadyInitialized = true;
-	}
-	protected SiteConfig vertxServiceAddressInit() {
-		if(!vertxServiceAddressWrap.alreadyInitialized) {
-			_vertxServiceAddress(vertxServiceAddressWrap);
-			if(vertxServiceAddress == null)
-				setVertxServiceAddress(vertxServiceAddressWrap.o);
-		}
-		vertxServiceAddressWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	public String solrVertxServiceAddress() {
-		return vertxServiceAddress;
-	}
-
-	public String strVertxServiceAddress() {
-		return vertxServiceAddress == null ? "" : vertxServiceAddress;
-	}
-
-	public String nomAffichageVertxServiceAddress() {
-		return null;
-	}
-
-	public String htmTooltipVertxServiceAddress() {
-		return null;
-	}
-
-	public String htmVertxServiceAddress() {
-		return vertxServiceAddress == null ? "" : StringEscapeUtils.escapeHtml4(strVertxServiceAddress());
-	}
-
 	/////////////////////
-	// statiqueUrlBase //
+	// apiContactEmail //
 	/////////////////////
 
-	/**	L'entité « statiqueUrlBase »
+	/**	L'entité « apiContactEmail »
+The contact email of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String statiqueUrlBase;
-	public Wrap<String> statiqueUrlBaseWrap = new Wrap<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
+	protected String apiContactEmail;
+	public Wrap<String> apiContactEmailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactEmail").o(apiContactEmail);
 
-	/**	<br/>L'entité « statiqueUrlBase »
+	/**	<br/>L'entité « apiContactEmail »
+The contact email of your site API. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:statiqueUrlBase">Trouver l'entité statiqueUrlBase dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiContactEmail">Trouver l'entité apiContactEmail dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _statiqueUrlBase(Wrap<String> c);
+	protected abstract void _apiContactEmail(Wrap<String> c);
 
-	public String getStatiqueUrlBase() {
-		return statiqueUrlBase;
+	public String getApiContactEmail() {
+		return apiContactEmail;
 	}
 
-	public void setStatiqueUrlBase(String statiqueUrlBase) {
-		this.statiqueUrlBase = statiqueUrlBase;
-		this.statiqueUrlBaseWrap.alreadyInitialized = true;
+	public void setApiContactEmail(String apiContactEmail) {
+		this.apiContactEmail = apiContactEmail;
+		this.apiContactEmailWrap.alreadyInitialized = true;
 	}
-	protected SiteConfig statiqueUrlBaseInit() {
-		if(!statiqueUrlBaseWrap.alreadyInitialized) {
-			_statiqueUrlBase(statiqueUrlBaseWrap);
-			if(statiqueUrlBase == null)
-				setStatiqueUrlBase(statiqueUrlBaseWrap.o);
+	protected SiteConfig apiContactEmailInit() {
+		if(!apiContactEmailWrap.alreadyInitialized) {
+			_apiContactEmail(apiContactEmailWrap);
+			if(apiContactEmail == null)
+				setApiContactEmail(apiContactEmailWrap.o);
 		}
-		statiqueUrlBaseWrap.alreadyInitialized(true);
+		apiContactEmailWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public String solrStatiqueUrlBase() {
-		return statiqueUrlBase;
+	public String solrApiContactEmail() {
+		return apiContactEmail;
 	}
 
-	public String strStatiqueUrlBase() {
-		return statiqueUrlBase == null ? "" : statiqueUrlBase;
+	public String strApiContactEmail() {
+		return apiContactEmail == null ? "" : apiContactEmail;
 	}
 
-	public String nomAffichageStatiqueUrlBase() {
+	public String nomAffichageApiContactEmail() {
 		return null;
 	}
 
-	public String htmTooltipStatiqueUrlBase() {
+	public String htmTooltipApiContactEmail() {
 		return null;
 	}
 
-	public String htmStatiqueUrlBase() {
-		return statiqueUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strStatiqueUrlBase());
+	public String htmApiContactEmail() {
+		return apiContactEmail == null ? "" : StringEscapeUtils.escapeHtml4(strApiContactEmail());
+	}
+
+	////////////////////
+	// apiLicenseName //
+	////////////////////
+
+	/**	L'entité « apiLicenseName »
+The open source license name of your site API. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String apiLicenseName;
+	public Wrap<String> apiLicenseNameWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseName").o(apiLicenseName);
+
+	/**	<br/>L'entité « apiLicenseName »
+The open source license name of your site API. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseName">Trouver l'entité apiLicenseName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _apiLicenseName(Wrap<String> c);
+
+	public String getApiLicenseName() {
+		return apiLicenseName;
+	}
+
+	public void setApiLicenseName(String apiLicenseName) {
+		this.apiLicenseName = apiLicenseName;
+		this.apiLicenseNameWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig apiLicenseNameInit() {
+		if(!apiLicenseNameWrap.alreadyInitialized) {
+			_apiLicenseName(apiLicenseNameWrap);
+			if(apiLicenseName == null)
+				setApiLicenseName(apiLicenseNameWrap.o);
+		}
+		apiLicenseNameWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrApiLicenseName() {
+		return apiLicenseName;
+	}
+
+	public String strApiLicenseName() {
+		return apiLicenseName == null ? "" : apiLicenseName;
+	}
+
+	public String nomAffichageApiLicenseName() {
+		return null;
+	}
+
+	public String htmTooltipApiLicenseName() {
+		return null;
+	}
+
+	public String htmApiLicenseName() {
+		return apiLicenseName == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenseName());
+	}
+
+	///////////////////
+	// apiLicenseUrl //
+	///////////////////
+
+	/**	L'entité « apiLicenseUrl »
+The open source license URL of your site API. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String apiLicenseUrl;
+	public Wrap<String> apiLicenseUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseUrl").o(apiLicenseUrl);
+
+	/**	<br/>L'entité « apiLicenseUrl »
+The open source license URL of your site API. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseUrl">Trouver l'entité apiLicenseUrl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _apiLicenseUrl(Wrap<String> c);
+
+	public String getApiLicenseUrl() {
+		return apiLicenseUrl;
+	}
+
+	public void setApiLicenseUrl(String apiLicenseUrl) {
+		this.apiLicenseUrl = apiLicenseUrl;
+		this.apiLicenseUrlWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig apiLicenseUrlInit() {
+		if(!apiLicenseUrlWrap.alreadyInitialized) {
+			_apiLicenseUrl(apiLicenseUrlWrap);
+			if(apiLicenseUrl == null)
+				setApiLicenseUrl(apiLicenseUrlWrap.o);
+		}
+		apiLicenseUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrApiLicenseUrl() {
+		return apiLicenseUrl;
+	}
+
+	public String strApiLicenseUrl() {
+		return apiLicenseUrl == null ? "" : apiLicenseUrl;
+	}
+
+	public String nomAffichageApiLicenseUrl() {
+		return null;
+	}
+
+	public String htmTooltipApiLicenseUrl() {
+		return null;
+	}
+
+	public String htmApiLicenseUrl() {
+		return apiLicenseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenseUrl());
+	}
+
+	/////////////////
+	// apiHostName //
+	/////////////////
+
+	/**	L'entité « apiHostName »
+The host name of your site API. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String apiHostName;
+	public Wrap<String> apiHostNameWrap = new Wrap<String>().p(this).c(String.class).var("apiHostName").o(apiHostName);
+
+	/**	<br/>L'entité « apiHostName »
+The host name of your site API. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiHostName">Trouver l'entité apiHostName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _apiHostName(Wrap<String> c);
+
+	public String getApiHostName() {
+		return apiHostName;
+	}
+
+	public void setApiHostName(String apiHostName) {
+		this.apiHostName = apiHostName;
+		this.apiHostNameWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig apiHostNameInit() {
+		if(!apiHostNameWrap.alreadyInitialized) {
+			_apiHostName(apiHostNameWrap);
+			if(apiHostName == null)
+				setApiHostName(apiHostNameWrap.o);
+		}
+		apiHostNameWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrApiHostName() {
+		return apiHostName;
+	}
+
+	public String strApiHostName() {
+		return apiHostName == null ? "" : apiHostName;
+	}
+
+	public String nomAffichageApiHostName() {
+		return null;
+	}
+
+	public String htmTooltipApiHostName() {
+		return null;
+	}
+
+	public String htmApiHostName() {
+		return apiHostName == null ? "" : StringEscapeUtils.escapeHtml4(strApiHostName());
+	}
+
+	/////////////////
+	// apiBasePath //
+	/////////////////
+
+	/**	L'entité « apiBasePath »
+The base path of your site API. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String apiBasePath;
+	public Wrap<String> apiBasePathWrap = new Wrap<String>().p(this).c(String.class).var("apiBasePath").o(apiBasePath);
+
+	/**	<br/>L'entité « apiBasePath »
+The base path of your site API. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiBasePath">Trouver l'entité apiBasePath dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _apiBasePath(Wrap<String> c);
+
+	public String getApiBasePath() {
+		return apiBasePath;
+	}
+
+	public void setApiBasePath(String apiBasePath) {
+		this.apiBasePath = apiBasePath;
+		this.apiBasePathWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig apiBasePathInit() {
+		if(!apiBasePathWrap.alreadyInitialized) {
+			_apiBasePath(apiBasePathWrap);
+			if(apiBasePath == null)
+				setApiBasePath(apiBasePathWrap.o);
+		}
+		apiBasePathWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrApiBasePath() {
+		return apiBasePath;
+	}
+
+	public String strApiBasePath() {
+		return apiBasePath == null ? "" : apiBasePath;
+	}
+
+	public String nomAffichageApiBasePath() {
+		return null;
+	}
+
+	public String htmTooltipApiBasePath() {
+		return null;
+	}
+
+	public String htmApiBasePath() {
+		return apiBasePath == null ? "" : StringEscapeUtils.escapeHtml4(strApiBasePath());
+	}
+
+	///////////////////
+	// staticBaseUrl //
+	///////////////////
+
+	/**	L'entité « staticBaseUrl »
+The base URL of your static files. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String staticBaseUrl;
+	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
+
+	/**	<br/>L'entité « staticBaseUrl »
+The base URL of your static files. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:staticBaseUrl">Trouver l'entité staticBaseUrl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _staticBaseUrl(Wrap<String> c);
+
+	public String getStaticBaseUrl() {
+		return staticBaseUrl;
+	}
+
+	public void setStaticBaseUrl(String staticBaseUrl) {
+		this.staticBaseUrl = staticBaseUrl;
+		this.staticBaseUrlWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig staticBaseUrlInit() {
+		if(!staticBaseUrlWrap.alreadyInitialized) {
+			_staticBaseUrl(staticBaseUrlWrap);
+			if(staticBaseUrl == null)
+				setStaticBaseUrl(staticBaseUrlWrap.o);
+		}
+		staticBaseUrlWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrStaticBaseUrl() {
+		return staticBaseUrl;
+	}
+
+	public String strStaticBaseUrl() {
+		return staticBaseUrl == null ? "" : staticBaseUrl;
+	}
+
+	public String nomAffichageStaticBaseUrl() {
+		return null;
+	}
+
+	public String htmTooltipStaticBaseUrl() {
+		return null;
+	}
+
+	public String htmStaticBaseUrl() {
+		return staticBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strStaticBaseUrl());
 	}
 
 	//////////////
@@ -3305,7 +3071,6 @@ The INI Configuration Object for the config file.
 	protected boolean alreadyInitializedSiteConfig = false;
 
 	public SiteConfig initDeepSiteConfig(SiteRequestEnUS siteRequest_) {
-		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedSiteConfig) {
 			alreadyInitializedSiteConfig = true;
 			initDeepSiteConfig();
@@ -3318,240 +3083,211 @@ The INI Configuration Object for the config file.
 	}
 
 	public void initSiteConfig() {
-		configCheminInit();
+		configPathInit();
 		configInit();
-		identifiantSiteInit();
-		prefixeEchappeInit();
-		appliCheminInit();
-		racineDocumentInit();
-		nomEntrepriseInit();
-		nomDomaineInit();
-		siteNomHoteInit();
+		siteIdentifierInit();
+		prefixEscapedInit();
+		appPathInit();
+		docRootInit();
+		companyNameInit();
+		domainNameInit();
+		siteHostNameInit();
 		sitePortInit();
-		authRoyaumeInit();
-		authRessourceInit();
+		authRealmInit();
+		authResourceInit();
 		authSecretInit();
-		authSslRequisInit();
-		sslJksCheminInit();
-		sslJksMotDePasseInit();
+		authSslRequiredInit();
+		sslJksPathInit();
+		sslJksPasswordInit();
 		authUrlInit();
-		cryptageSelInit();
-		cryptageMotDePasseInit();
+		encryptionSaltInit();
+		encryptionPasswordInit();
 		siteBaseUrlInit();
-		siteNomAffichageInit();
-		jdbcClassePiloteInit();
-		jdbcUtilisateurInit();
-		jdbcMotDePasseInit();
-		jdbcTailleMaxPiscineInit();
-		jdbcTailleInitialePiscineInit();
-		jdbcTailleMinPiscineInit();
-		jdbcMaxDeclarationsInit();
-		jdbcMaxDeclarationsParConnexionInit();
-		jdbcTempsInactiviteMaxInit();
+		siteDisplayNameInit();
+		jdbcDriverClassInit();
+		jdbcUsernameInit();
+		jdbcPasswordInit();
+		jdbcMaxPoolSizeInit();
+		jdbcInitialPoolSizeInit();
+		jdbcMinPoolSizeInit();
+		jdbcMaxStatementsInit();
+		jdbcMaxStatementsPerConnectionInit();
+		jdbcMaxIdleTimeInit();
 		jdbcUrlInit();
 		solrUrlInit();
-		solrUrlComputateInit();
-		jetonIdentitePaypalInit();
-		compteFacebookInit();
-		compteTwitterInit();
-		compteGooglePlusInit();
-		compteInstagramInit();
-		compteYoutubeInit();
-		identifiantCanalYoutubeInit();
-		comptePinterestInit();
-		compteOpenclipartInit();
-		compteMailInit();
+		accountFacebookInit();
+		accountTwitterInit();
+		accountInstagramInit();
+		accountYoutubeInit();
+		accountPinterestInit();
+		accountEmailInit();
 		roleAdminInit();
-		mailAdminInit();
-		nombreExecuteursInit();
+		emailAdminInit();
+		numberExecutorsInit();
 		openApiVersionInit();
 		apiDescriptionInit();
-		apiTitreInit();
+		apiTitleInit();
 		apiTermsServiceInit();
 		apiVersionInit();
-		apiContactMailInit();
-		apiLicenceNomInit();
-		apiLicenceUrlInit();
-		apiNomHoteInit();
-		apiCheminBaseInit();
-		vertxServiceAddressInit();
-		statiqueUrlBaseInit();
+		apiContactEmailInit();
+		apiLicenseNameInit();
+		apiLicenseUrlInit();
+		apiHostNameInit();
+		apiBasePathInit();
+		staticBaseUrlInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepSiteConfig(siteRequest_);
 	}
 
-	/////////////////
-	// siteRequest //
-	/////////////////
-
-	public void siteRequestSiteConfig(SiteRequestEnUS siteRequest_) {
-	}
-
-	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestSiteConfig(siteRequest_);
-	}
-
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	public Object obtenirPourClasse(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirSiteConfig(v);
+				o = obtainSiteConfig(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirSiteConfig(String var) {
+	public Object obtainSiteConfig(String var) {
 		SiteConfig oSiteConfig = (SiteConfig)this;
 		switch(var) {
-			case "configChemin":
-				return oSiteConfig.configChemin;
+			case "configPath":
+				return oSiteConfig.configPath;
 			case "config":
 				return oSiteConfig.config;
-			case "identifiantSite":
-				return oSiteConfig.identifiantSite;
-			case "prefixeEchappe":
-				return oSiteConfig.prefixeEchappe;
-			case "appliChemin":
-				return oSiteConfig.appliChemin;
-			case "racineDocument":
-				return oSiteConfig.racineDocument;
-			case "nomEntreprise":
-				return oSiteConfig.nomEntreprise;
-			case "nomDomaine":
-				return oSiteConfig.nomDomaine;
-			case "siteNomHote":
-				return oSiteConfig.siteNomHote;
+			case "siteIdentifier":
+				return oSiteConfig.siteIdentifier;
+			case "prefixEscaped":
+				return oSiteConfig.prefixEscaped;
+			case "appPath":
+				return oSiteConfig.appPath;
+			case "docRoot":
+				return oSiteConfig.docRoot;
+			case "companyName":
+				return oSiteConfig.companyName;
+			case "domainName":
+				return oSiteConfig.domainName;
+			case "siteHostName":
+				return oSiteConfig.siteHostName;
 			case "sitePort":
 				return oSiteConfig.sitePort;
-			case "authRoyaume":
-				return oSiteConfig.authRoyaume;
-			case "authRessource":
-				return oSiteConfig.authRessource;
+			case "authRealm":
+				return oSiteConfig.authRealm;
+			case "authResource":
+				return oSiteConfig.authResource;
 			case "authSecret":
 				return oSiteConfig.authSecret;
-			case "authSslRequis":
-				return oSiteConfig.authSslRequis;
-			case "sslJksChemin":
-				return oSiteConfig.sslJksChemin;
-			case "sslJksMotDePasse":
-				return oSiteConfig.sslJksMotDePasse;
+			case "authSslRequired":
+				return oSiteConfig.authSslRequired;
+			case "sslJksPath":
+				return oSiteConfig.sslJksPath;
+			case "sslJksPassword":
+				return oSiteConfig.sslJksPassword;
 			case "authUrl":
 				return oSiteConfig.authUrl;
-			case "cryptageSel":
-				return oSiteConfig.cryptageSel;
-			case "cryptageMotDePasse":
-				return oSiteConfig.cryptageMotDePasse;
+			case "encryptionSalt":
+				return oSiteConfig.encryptionSalt;
+			case "encryptionPassword":
+				return oSiteConfig.encryptionPassword;
 			case "siteBaseUrl":
 				return oSiteConfig.siteBaseUrl;
-			case "siteNomAffichage":
-				return oSiteConfig.siteNomAffichage;
-			case "jdbcClassePilote":
-				return oSiteConfig.jdbcClassePilote;
-			case "jdbcUtilisateur":
-				return oSiteConfig.jdbcUtilisateur;
-			case "jdbcMotDePasse":
-				return oSiteConfig.jdbcMotDePasse;
-			case "jdbcTailleMaxPiscine":
-				return oSiteConfig.jdbcTailleMaxPiscine;
-			case "jdbcTailleInitialePiscine":
-				return oSiteConfig.jdbcTailleInitialePiscine;
-			case "jdbcTailleMinPiscine":
-				return oSiteConfig.jdbcTailleMinPiscine;
-			case "jdbcMaxDeclarations":
-				return oSiteConfig.jdbcMaxDeclarations;
-			case "jdbcMaxDeclarationsParConnexion":
-				return oSiteConfig.jdbcMaxDeclarationsParConnexion;
-			case "jdbcTempsInactiviteMax":
-				return oSiteConfig.jdbcTempsInactiviteMax;
+			case "siteDisplayName":
+				return oSiteConfig.siteDisplayName;
+			case "jdbcDriverClass":
+				return oSiteConfig.jdbcDriverClass;
+			case "jdbcUsername":
+				return oSiteConfig.jdbcUsername;
+			case "jdbcPassword":
+				return oSiteConfig.jdbcPassword;
+			case "jdbcMaxPoolSize":
+				return oSiteConfig.jdbcMaxPoolSize;
+			case "jdbcInitialPoolSize":
+				return oSiteConfig.jdbcInitialPoolSize;
+			case "jdbcMinPoolSize":
+				return oSiteConfig.jdbcMinPoolSize;
+			case "jdbcMaxStatements":
+				return oSiteConfig.jdbcMaxStatements;
+			case "jdbcMaxStatementsPerConnection":
+				return oSiteConfig.jdbcMaxStatementsPerConnection;
+			case "jdbcMaxIdleTime":
+				return oSiteConfig.jdbcMaxIdleTime;
 			case "jdbcUrl":
 				return oSiteConfig.jdbcUrl;
 			case "solrUrl":
 				return oSiteConfig.solrUrl;
-			case "solrUrlComputate":
-				return oSiteConfig.solrUrlComputate;
-			case "jetonIdentitePaypal":
-				return oSiteConfig.jetonIdentitePaypal;
-			case "compteFacebook":
-				return oSiteConfig.compteFacebook;
-			case "compteTwitter":
-				return oSiteConfig.compteTwitter;
-			case "compteGooglePlus":
-				return oSiteConfig.compteGooglePlus;
-			case "compteInstagram":
-				return oSiteConfig.compteInstagram;
-			case "compteYoutube":
-				return oSiteConfig.compteYoutube;
-			case "identifiantCanalYoutube":
-				return oSiteConfig.identifiantCanalYoutube;
-			case "comptePinterest":
-				return oSiteConfig.comptePinterest;
-			case "compteOpenclipart":
-				return oSiteConfig.compteOpenclipart;
-			case "compteMail":
-				return oSiteConfig.compteMail;
+			case "accountFacebook":
+				return oSiteConfig.accountFacebook;
+			case "accountTwitter":
+				return oSiteConfig.accountTwitter;
+			case "accountInstagram":
+				return oSiteConfig.accountInstagram;
+			case "accountYoutube":
+				return oSiteConfig.accountYoutube;
+			case "accountPinterest":
+				return oSiteConfig.accountPinterest;
+			case "accountEmail":
+				return oSiteConfig.accountEmail;
 			case "roleAdmin":
 				return oSiteConfig.roleAdmin;
-			case "mailAdmin":
-				return oSiteConfig.mailAdmin;
-			case "nombreExecuteurs":
-				return oSiteConfig.nombreExecuteurs;
+			case "emailAdmin":
+				return oSiteConfig.emailAdmin;
+			case "numberExecutors":
+				return oSiteConfig.numberExecutors;
 			case "openApiVersion":
 				return oSiteConfig.openApiVersion;
 			case "apiDescription":
 				return oSiteConfig.apiDescription;
-			case "apiTitre":
-				return oSiteConfig.apiTitre;
+			case "apiTitle":
+				return oSiteConfig.apiTitle;
 			case "apiTermsService":
 				return oSiteConfig.apiTermsService;
 			case "apiVersion":
 				return oSiteConfig.apiVersion;
-			case "apiContactMail":
-				return oSiteConfig.apiContactMail;
-			case "apiLicenceNom":
-				return oSiteConfig.apiLicenceNom;
-			case "apiLicenceUrl":
-				return oSiteConfig.apiLicenceUrl;
-			case "apiNomHote":
-				return oSiteConfig.apiNomHote;
-			case "apiCheminBase":
-				return oSiteConfig.apiCheminBase;
-			case "vertxServiceAddress":
-				return oSiteConfig.vertxServiceAddress;
-			case "statiqueUrlBase":
-				return oSiteConfig.statiqueUrlBase;
+			case "apiContactEmail":
+				return oSiteConfig.apiContactEmail;
+			case "apiLicenseName":
+				return oSiteConfig.apiLicenseName;
+			case "apiLicenseUrl":
+				return oSiteConfig.apiLicenseUrl;
+			case "apiHostName":
+				return oSiteConfig.apiHostName;
+			case "apiBasePath":
+				return oSiteConfig.apiBasePath;
+			case "staticBaseUrl":
+				return oSiteConfig.staticBaseUrl;
 			default:
 				return null;
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerSiteConfig(v, val);
+				o = attributeSiteConfig(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerSiteConfig(String var, Object val) {
+	public Object attributeSiteConfig(String var, Object val) {
 		SiteConfig oSiteConfig = (SiteConfig)this;
 		switch(var) {
 			default:
