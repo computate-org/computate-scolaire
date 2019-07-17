@@ -1,15 +1,11 @@
-package org.computate.scolaire.frFR.xml;
+package org.computate.scolaire.enUS.xml;
 
-/**
- * NomCanonique.enUS: org.computate.scolaire.enUS.xml.UtilXml
- * enUS: Static methods for escaping XML. 
- */ 
-public class OutilXml {
-	
-	/**
-	 * Var.enUS: escape
-	 */
-	public static String echapper(String str) {
+/**	
+ *	Static methods for escaping XML. 
+ **/
+public class UtilXml {
+
+	public static String escape(String str) {
 		String o = str;
 		
 		if(str != null) { 
@@ -18,11 +14,8 @@ public class OutilXml {
 		
 		return o;
 	}
-	
-	/**
-	 * Var.enUS: escapeInApostrophes
-	 */
-	public static String echapperDansApostrophes(String str) {
+
+	public static String escapeInApostrophes(String str) {
 		String o = str;
 		
 		if(str != null) { 
@@ -31,11 +24,8 @@ public class OutilXml {
 		
 		return o;
 	}
-	
-	/**
-	 * Var.enUS: escapeInQuotes
-	 */
-	public static String echapperDansCitatations(String str) {
+
+	public static String escapeInQuotes(String str) {
 		String o = str;
 		
 		if(str != null) { 
@@ -44,11 +34,8 @@ public class OutilXml {
 		
 		return o;
 	}
-	
-	/**
-	 * Var.enUS: escapeAddQuotes
-	 */
-	public static String echapperAjouterCitations(String str) {
+
+	public static String escapeAddQuotes(String str) {
 		String o = str;
 		
 		if(str != null) { 

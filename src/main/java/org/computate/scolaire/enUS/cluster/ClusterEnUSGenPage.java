@@ -2,7 +2,7 @@ package org.computate.scolaire.enUS.cluster;
 
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.util.List;
-import org.computate.scolaire.frFR.page.parti.PagePart;
+import org.computate.scolaire.enUS.page.part.PagePart;
 import java.lang.Long;
 import java.lang.String;
 import java.time.ZonedDateTime;
@@ -103,7 +103,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+					e("span").f().sx(o.strCreated()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -111,7 +111,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
+					e("span").f().sx(o.strModified()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -124,7 +124,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+					e("span").f().sx(o.strCreated()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -132,7 +132,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
+					e("span").f().sx(o.strModified()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -145,7 +145,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+					e("span").f().sx(o.strCreated()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -153,7 +153,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
+					e("span").f().sx(o.strModified()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -166,7 +166,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("created").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+					e("span").f().sx(o.strCreated()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -174,7 +174,7 @@ public class ClusterEnUSGenPage extends ClusterEnUSGenPageGen<PageLayout> {
 					e("label").a("class", "").f().sx("modified").g("label");
 				} g("div");
 				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
+					e("span").f().sx(o.strModified()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page.parti;  
+package org.computate.scolaire.frFR.page.part;  
 
 
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -6,6 +6,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 
 /**
+ * NomCanonique.enUS: org.computate.scolaire.enUS.page.part.PagePart
  * MotCle: classeNomSimplePagePart
  */ 
 public abstract class PagePart extends PagePartGen<Cluster> {  
@@ -16,24 +17,16 @@ public abstract class PagePart extends PagePartGen<Cluster> {
 		
 	}
 
+	/**
+	 * Var.enUS: htmlBodyShort
+	 */
 	public void  htmlBodyCourt() {
 		
 	}
 
-	protected void _partiVar(Couverture<String> c) {}
+	protected void _partVar(Couverture<String> c) {}
 
-	public void  shAvantClasseJavaChamp() {
-	}
+	public void  htmlAvantPagePart() {}
 
-	public void  shAvantPageParti() {}
-
-	public void  shApresPageParti() {}
-
-	public void  shHtmlAvantPageParti() {}
-
-	public void  shHtmlApresPageParti() {}
-
-	public void  htmlAvantPageParti() {}
-
-	public void  htmlApresPageParti() {}
+	public void  htmlApresPagePart() {}
 }

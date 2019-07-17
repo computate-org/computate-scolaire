@@ -17,12 +17,12 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.page.parti.PagePart;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
 import java.time.Instant;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
@@ -93,7 +93,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
-	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.parti.PagePart>();
+	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »

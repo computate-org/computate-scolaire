@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page.parti;
+package org.computate.scolaire.frFR.page.part;
 
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -12,7 +12,7 @@ import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.parti.PagePart&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.part.PagePart&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class PagePartGen<DEV> extends Cluster {
@@ -29,7 +29,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 
 	/**	<br/>L'entité « page_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.parti.PagePart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:page_">Trouver l'entité page_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.part.PagePart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:page_">Trouver l'entité page_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -53,60 +53,60 @@ public abstract class PagePartGen<DEV> extends Cluster {
 		return (PagePart)this;
 	}
 
-	//////////////
-	// partiVar //
-	//////////////
+	/////////////
+	// partVar //
+	/////////////
 
-	/**	L'entité « partiVar »
+	/**	L'entité « partVar »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String partiVar;
-	public Couverture<String> partiVarCouverture = new Couverture<String>().p(this).c(String.class).var("partiVar").o(partiVar);
+	protected String partVar;
+	public Couverture<String> partVarCouverture = new Couverture<String>().p(this).c(String.class).var("partVar").o(partVar);
 
-	/**	<br/>L'entité « partiVar »
+	/**	<br/>L'entité « partVar »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.parti.PagePart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partiVar">Trouver l'entité partiVar dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.part.PagePart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partVar">Trouver l'entité partVar dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _partiVar(Couverture<String> c);
+	protected abstract void _partVar(Couverture<String> c);
 
-	public String getPartiVar() {
-		return partiVar;
+	public String getPartVar() {
+		return partVar;
 	}
 
-	public void setPartiVar(String partiVar) {
-		this.partiVar = partiVar;
-		this.partiVarCouverture.dejaInitialise = true;
+	public void setPartVar(String partVar) {
+		this.partVar = partVar;
+		this.partVarCouverture.dejaInitialise = true;
 	}
-	protected PagePart partiVarInit() {
-		if(!partiVarCouverture.dejaInitialise) {
-			_partiVar(partiVarCouverture);
-			if(partiVar == null)
-				setPartiVar(partiVarCouverture.o);
+	protected PagePart partVarInit() {
+		if(!partVarCouverture.dejaInitialise) {
+			_partVar(partVarCouverture);
+			if(partVar == null)
+				setPartVar(partVarCouverture.o);
 		}
-		partiVarCouverture.dejaInitialise(true);
+		partVarCouverture.dejaInitialise(true);
 		return (PagePart)this;
 	}
 
-	public String solrPartiVar() {
-		return partiVar;
+	public String solrPartVar() {
+		return partVar;
 	}
 
-	public String strPartiVar() {
-		return partiVar == null ? "" : partiVar;
+	public String strPartVar() {
+		return partVar == null ? "" : partVar;
 	}
 
-	public String nomAffichagePartiVar() {
+	public String nomAffichagePartVar() {
 		return null;
 	}
 
-	public String htmTooltipPartiVar() {
+	public String htmTooltipPartVar() {
 		return null;
 	}
 
-	public String htmPartiVar() {
-		return partiVar == null ? "" : StringEscapeUtils.escapeHtml4(strPartiVar());
+	public String htmPartVar() {
+		return partVar == null ? "" : StringEscapeUtils.escapeHtml4(strPartVar());
 	}
 
 	//////////////
@@ -131,7 +131,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 
 	public void initPagePart() {
 		page_Init();
-		partiVarInit();
+		partVarInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -172,8 +172,8 @@ public abstract class PagePartGen<DEV> extends Cluster {
 		switch(var) {
 			case "page_":
 				return oPagePart.page_;
-			case "partiVar":
-				return oPagePart.partiVar;
+			case "partVar":
+				return oPagePart.partVar;
 			default:
 				return super.obtenirCluster(var);
 		}

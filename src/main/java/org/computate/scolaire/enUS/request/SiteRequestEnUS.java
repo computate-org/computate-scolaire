@@ -27,6 +27,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.enUS.school.writer.AllWriter;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -38,37 +39,42 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 
 	private static final long serialVersionUID = -6737494107881513257L;
 
-	protected void _siteContexte_(Wrap<SiteContextEnUS> c) {
-		c.o(new SiteContexteEnUS());
+	/**	
+	 *	The site context with global site information. 
+	 **/
+	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
 
-	protected void _configSite_(Wrap<SiteConfig> c) {
-		ConfigSite o = siteContexte_.getConfigSite();
+	/**	
+	 *	The site configuration. 
+	 **/
+	protected void _siteConfig_(Wrap<SiteConfig> c) {
+		SiteConfig o = siteContext_.getSiteConfig();
 		c.o(o);
 	}
 
-	protected void _requeteSite_(Wrap<RequeteSiteFrFR> c) { 
+	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) { 
 		c.o(this);
 	}
 
 	protected void _vertx(Wrap<Vertx> c) {
-		if(siteContexte_ != null)
-			c.o(siteContexte_.getVertx());
+		if(siteContext_ != null)
+			c.o(siteContext_.getVertx());
 	}
 
-	protected void _objetJson(Wrap<JsonObject> c) {
+	protected void _jsonObject(Wrap<JsonObject> c) {
 	}
 
-	protected void _rechercheSolr(Wrap<SolrQuery> c) {
+	protected void _solrQuery(Wrap<SolrQuery> c) {
 	}
 
 	protected void _operationRequest(Wrap<OperationRequest> c) {
 	}
 
-	protected void _reponseRecherche(Wrap<QueryResponse> c) {
-		if(rechercheSolr != null) {
+	protected void _queryResponse(Wrap<QueryResponse> c) {
+		if(solrQuery != null) {
 			try {
-				QueryResponse o = siteContexte_.getClientSolr().query(rechercheSolr);
+				QueryResponse o = siteContext_.getSolrClient().query(solrQuery);
 				c.o(o);
 			} catch (SolrServerException | IOException e) {
 				ExceptionUtils.rethrow(e);
@@ -76,63 +82,62 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _resultatsRecherche(Wrap<SolrDocumentList> c) {
-		if(reponseRecherche != null) {
-			SolrDocumentList o = reponseRecherche.getResults();
+	protected void _searchResults(Wrap<SolrDocumentList> c) {
+		if(queryResponse != null) {
+			SolrDocumentList o = queryResponse.getResults();
 			c.o(o);
 		}
 	}
 
-	protected void _w(Wrap<ToutEcrivain> c) {
+	protected void _w(Wrap<AllWriter> c) {
 	}
 
-	protected void _utilisateurVertx(Wrap<JsonObject> c) {
-		if(operationRequete != null) {
-			JsonObject o = operationRequete.getUser();
+	protected void _userVertx(Wrap<JsonObject> c) {
+		if(operationRequest != null) {
+			JsonObject o = operationRequest.getUser();
 			c.o(o);
 		}
 
 	}
 
-	protected void _principalJson(Wrap<JsonObject> c) {
-		if(utilisateurVertx != null) {
-			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+	protected void _jsonPrincipal(Wrap<JsonObject> c) {
+		if(userVertx != null) {
+			JsonObject o = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 			c.o(o);
 		}
 	}
 
-	protected void _utilisateurId(Wrap<String> c) {
-		if(principalJson != null) {
-			String o = principalJson.getString("sub");
+	protected void _userId(Wrap<String> c) {
+		if(jsonPrincipal != null) {
+			String o = jsonPrincipal.getString("sub");
 			c.o(o);
 		}
 	}
 
-	protected void _utilisateurNom(Wrap<String> c) {
-		if(principalJson != null) {
-			String o = principalJson.getString("preferred_username");
+	protected void _userName(Wrap<String> c) {
+		if(jsonPrincipal != null) {
+			String o = jsonPrincipal.getString("preferred_username");
 			c.o(o);
 		}
 	}
 
-	protected void _utilisateurNomFamille(Wrap<String> c) {
-		if(principalJson != null) {
-			String o = principalJson.getString("family_name");
+	protected void _userLastName(Wrap<String> c) {
+		if(jsonPrincipal != null) {
+			String o = jsonPrincipal.getString("family_name");
 			c.o(o);
 		}
 	}
 
-	protected void _utilisateurPrenom(Wrap<String> c) { 
-		if(principalJson != null) {
-			String o = principalJson.getString("given_name");
-//			String o = KeycloakHelper.name(principalJson);
+	protected void _userFirstName(Wrap<String> c) { 
+		if(jsonPrincipal != null) {
+			String o = jsonPrincipal.getString("given_name");
 			c.o(o);
 		}
 	}
 
-	protected void _utilisateurNomComplet(Wrap<String> c) {
-		if(principalJson != null) {
-			String o = principalJson.getString("name");
+	protected void _userFullName(Wrap<String> c) {
+		if(jsonPrincipal != null) {
+			String o = jsonPrincipal.getString("name");
 			c.o(o);
 		}
 	}
@@ -166,7 +171,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _xmlPile(Stack<String> o) {}
+	protected void _xmlStack(Stack<String> o) {}
 
 	protected void _documentSolr(Wrap<SolrDocument> c) {  
 	}

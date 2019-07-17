@@ -43,6 +43,13 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 	public static final String configurerControlesSanteErreurVertx1 = "L'application Vert.x n'est pas configuré correctement. ";
 	public static final String configurerControlesSanteErreurVertx = configurerControlesSanteErreurVertx1;
 
+	public static final String demarrerServeurErreurServeur1 = "Le serveur n'est pas configurée correctement. ";
+	public static final String demarrerServeurErreurServeur = demarrerServeurErreurServeur1;
+	public static final String demarrerServeurSuccesServeur1 = "Le serveur HTTP est démarré : %s:%s";
+	public static final String demarrerServeurSuccesServeur = demarrerServeurSuccesServeur1;
+	public static final String demarrerServeurAvantServeur1 = "Le serveur HTTP est démarré : %s:%s";
+	public static final String demarrerServeurAvantServeur = demarrerServeurAvantServeur1;
+
 	public static final String fermerDonneesErreur1 = "Impossible de fermer la connexion du client de base de données. ";
 	public static final String fermerDonneesErreur = fermerDonneesErreur1;
 	public static final String fermerDonneesSucces1 = "La connexion client de la base de données a été fermée.";
@@ -182,5 +189,5 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, fermerDonneesErreur1, fermerDonneesSucces1 };
+	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, demarrerServeurErreurServeur1, demarrerServeurSuccesServeur1, demarrerServeurAvantServeur1, fermerDonneesErreur1, fermerDonneesSucces1 };
 }

@@ -18,7 +18,7 @@ import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.page.parti.PagePart;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;

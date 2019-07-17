@@ -2,7 +2,7 @@ package org.computate.scolaire.frFR.cluster;
 
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.util.List;
-import org.computate.scolaire.frFR.page.parti.PagePart;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import java.lang.Long;
 import java.lang.String;
 import java.time.ZonedDateTime;

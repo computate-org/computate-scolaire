@@ -99,6 +99,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 //	}
 
 	/**	
+	 * Var.enUS: solrClient
 	 * r: configSite
 	 * r.enUS: siteConfig
 	 * Le client du moteur de recherche SOLR. 

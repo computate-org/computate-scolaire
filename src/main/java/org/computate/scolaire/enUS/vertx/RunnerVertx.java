@@ -10,7 +10,10 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 
-public class CoureurVertx {
+/**	
+ *	A Java class to run the main Vert.x application as a main method. 
+ **/
+public class RunnerVertx {
 
 	public static void  run(Class<?> c) {
 		JsonObject zkConfig = new JsonObject();

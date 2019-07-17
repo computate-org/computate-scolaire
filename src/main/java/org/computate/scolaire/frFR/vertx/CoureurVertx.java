@@ -11,6 +11,10 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 
+/**
+ * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.RunnerVertx
+ * enUS: A Java class to run the main Vert.x application as a main method. 
+ */ 
 public class CoureurVertx {
 
 	public static void run(Class<?> c) {

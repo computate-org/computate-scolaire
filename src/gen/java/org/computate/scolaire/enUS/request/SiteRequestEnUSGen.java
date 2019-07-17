@@ -4,7 +4,7 @@ import org.apache.solr.common.SolrDocumentList;
 import java.security.MessageDigest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import javax.crypto.spec.SecretKeySpec;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.enUS.school.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import javax.crypto.Cipher;
 import java.util.Stack;
@@ -14,11 +14,11 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import java.lang.Long;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import org.apache.commons.text.StringEscapeUtils;
 import java.util.Objects;
@@ -36,111 +36,115 @@ import java.lang.Object;
  **/
 public abstract class SiteRequestEnUSGen<DEV> extends Object {
 
-	///////////////////
-	// siteContexte_ //
-	///////////////////
+	//////////////////
+	// siteContext_ //
+	//////////////////
 
-	/**	L'entité « siteContexte_ »
+	/**	L'entité « siteContext_ »
+The site context with global site information. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected SiteContextEnUS siteContexte_;
-	public Wrap<SiteContextEnUS> siteContexte_Wrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContexte_").o(siteContexte_);
+	protected SiteContextEnUS siteContext_;
+	public Wrap<SiteContextEnUS> siteContext_Wrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext_").o(siteContext_);
 
-	/**	<br/>L'entité « siteContexte_ »
+	/**	<br/>L'entité « siteContext_ »
+The site context with global site information. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteContexte_">Trouver l'entité siteContexte_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteContext_">Trouver l'entité siteContext_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _siteContexte_(Wrap<SiteContextEnUS> c);
+	protected abstract void _siteContext_(Wrap<SiteContextEnUS> c);
 
-	public SiteContextEnUS getSiteContexte_() {
-		return siteContexte_;
+	public SiteContextEnUS getSiteContext_() {
+		return siteContext_;
 	}
 
-	public void setSiteContexte_(SiteContextEnUS siteContexte_) {
-		this.siteContexte_ = siteContexte_;
-		this.siteContexte_Wrap.alreadyInitialized = true;
+	public void setSiteContext_(SiteContextEnUS siteContext_) {
+		this.siteContext_ = siteContext_;
+		this.siteContext_Wrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS siteContexte_Init() {
-		if(!siteContexte_Wrap.alreadyInitialized) {
-			_siteContexte_(siteContexte_Wrap);
-			if(siteContexte_ == null)
-				setSiteContexte_(siteContexte_Wrap.o);
+	protected SiteRequestEnUS siteContext_Init() {
+		if(!siteContext_Wrap.alreadyInitialized) {
+			_siteContext_(siteContext_Wrap);
+			if(siteContext_ == null)
+				setSiteContext_(siteContext_Wrap.o);
 		}
-		siteContexte_Wrap.alreadyInitialized(true);
+		siteContext_Wrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
 	/////////////////
-	// configSite_ //
+	// siteConfig_ //
 	/////////////////
 
-	/**	L'entité « configSite_ »
+	/**	L'entité « siteConfig_ »
+The site configuration. 
 	 *	 is defined as null before being initialized. 
 	 */
-	protected SiteConfig configSite_;
-	public Wrap<SiteConfig> configSite_Wrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("configSite_").o(configSite_);
+	protected SiteConfig siteConfig_;
+	public Wrap<SiteConfig> siteConfig_Wrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig_").o(siteConfig_);
 
-	/**	<br/>L'entité « configSite_ »
+	/**	<br/>L'entité « siteConfig_ »
+The site configuration. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configSite_">Trouver l'entité configSite_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteConfig_">Trouver l'entité siteConfig_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _configSite_(Wrap<SiteConfig> c);
+	protected abstract void _siteConfig_(Wrap<SiteConfig> c);
 
-	public SiteConfig getConfigSite_() {
-		return configSite_;
+	public SiteConfig getSiteConfig_() {
+		return siteConfig_;
 	}
 
-	public void setConfigSite_(SiteConfig configSite_) {
-		this.configSite_ = configSite_;
-		this.configSite_Wrap.alreadyInitialized = true;
+	public void setSiteConfig_(SiteConfig siteConfig_) {
+		this.siteConfig_ = siteConfig_;
+		this.siteConfig_Wrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS configSite_Init() {
-		if(!configSite_Wrap.alreadyInitialized) {
-			_configSite_(configSite_Wrap);
-			if(configSite_ == null)
-				setConfigSite_(configSite_Wrap.o);
+	protected SiteRequestEnUS siteConfig_Init() {
+		if(!siteConfig_Wrap.alreadyInitialized) {
+			_siteConfig_(siteConfig_Wrap);
+			if(siteConfig_ == null)
+				setSiteConfig_(siteConfig_Wrap.o);
 		}
-		configSite_Wrap.alreadyInitialized(true);
+		siteConfig_Wrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
 	//////////////////
-	// requeteSite_ //
+	// siteRequest_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected RequeteSiteFrFR requeteSite_;
-	public Wrap<RequeteSiteFrFR> requeteSite_Wrap = new Wrap<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
+	protected SiteRequestEnUS siteRequest_;
+	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/>L'entité « siteRequest_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteRequest_">Trouver l'entité siteRequest_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _requeteSite_(Wrap<RequeteSiteFrFR> c);
+	protected abstract void _siteRequest_(Wrap<SiteRequestEnUS> c);
 
-	public RequeteSiteFrFR getRequeteSite_() {
-		return requeteSite_;
+	public SiteRequestEnUS getSiteRequest_() {
+		return siteRequest_;
 	}
 
-	public void setRequeteSite_(RequeteSiteFrFR requeteSite_) {
-		this.requeteSite_ = requeteSite_;
-		this.requeteSite_Wrap.alreadyInitialized = true;
+	public void setSiteRequest_(SiteRequestEnUS siteRequest_) {
+		this.siteRequest_ = siteRequest_;
+		this.siteRequest_Wrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS requeteSite_Init() {
-		if(!requeteSite_Wrap.alreadyInitialized) {
-			_requeteSite_(requeteSite_Wrap);
-			if(requeteSite_ == null)
-				setRequeteSite_(requeteSite_Wrap.o);
+	protected SiteRequestEnUS siteRequest_Init() {
+		if(!siteRequest_Wrap.alreadyInitialized) {
+			_siteRequest_(siteRequest_Wrap);
+			if(siteRequest_ == null)
+				setSiteRequest_(siteRequest_Wrap.o);
 		}
-		requeteSite_Wrap.alreadyInitialized(true);
+		siteRequest_Wrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -180,75 +184,75 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 		return (SiteRequestEnUS)this;
 	}
 
-	///////////////
-	// objetJson //
-	///////////////
+	////////////////
+	// jsonObject //
+	////////////////
 
-	/**	L'entité « objetJson »
+	/**	L'entité « jsonObject »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected JsonObject objetJson;
-	public Wrap<JsonObject> objetJsonWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("objetJson").o(objetJson);
+	protected JsonObject jsonObject;
+	public Wrap<JsonObject> jsonObjectWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("jsonObject").o(jsonObject);
 
-	/**	<br/>L'entité « objetJson »
+	/**	<br/>L'entité « jsonObject »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objetJson">Trouver l'entité objetJson dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jsonObject">Trouver l'entité jsonObject dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _objetJson(Wrap<JsonObject> c);
+	protected abstract void _jsonObject(Wrap<JsonObject> c);
 
-	public JsonObject getObjetJson() {
-		return objetJson;
+	public JsonObject getJsonObject() {
+		return jsonObject;
 	}
 
-	public void setObjetJson(JsonObject objetJson) {
-		this.objetJson = objetJson;
-		this.objetJsonWrap.alreadyInitialized = true;
+	public void setJsonObject(JsonObject jsonObject) {
+		this.jsonObject = jsonObject;
+		this.jsonObjectWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS objetJsonInit() {
-		if(!objetJsonWrap.alreadyInitialized) {
-			_objetJson(objetJsonWrap);
-			if(objetJson == null)
-				setObjetJson(objetJsonWrap.o);
+	protected SiteRequestEnUS jsonObjectInit() {
+		if(!jsonObjectWrap.alreadyInitialized) {
+			_jsonObject(jsonObjectWrap);
+			if(jsonObject == null)
+				setJsonObject(jsonObjectWrap.o);
 		}
-		objetJsonWrap.alreadyInitialized(true);
+		jsonObjectWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	///////////////////
-	// rechercheSolr //
-	///////////////////
+	///////////////
+	// solrQuery //
+	///////////////
 
-	/**	L'entité « rechercheSolr »
+	/**	L'entité « solrQuery »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected SolrQuery rechercheSolr;
-	public Wrap<SolrQuery> rechercheSolrWrap = new Wrap<SolrQuery>().p(this).c(SolrQuery.class).var("rechercheSolr").o(rechercheSolr);
+	protected SolrQuery solrQuery;
+	public Wrap<SolrQuery> solrQueryWrap = new Wrap<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
 
-	/**	<br/>L'entité « rechercheSolr »
+	/**	<br/>L'entité « solrQuery »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:rechercheSolr">Trouver l'entité rechercheSolr dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrQuery">Trouver l'entité solrQuery dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _rechercheSolr(Wrap<SolrQuery> c);
+	protected abstract void _solrQuery(Wrap<SolrQuery> c);
 
-	public SolrQuery getRechercheSolr() {
-		return rechercheSolr;
+	public SolrQuery getSolrQuery() {
+		return solrQuery;
 	}
 
-	public void setRechercheSolr(SolrQuery rechercheSolr) {
-		this.rechercheSolr = rechercheSolr;
-		this.rechercheSolrWrap.alreadyInitialized = true;
+	public void setSolrQuery(SolrQuery solrQuery) {
+		this.solrQuery = solrQuery;
+		this.solrQueryWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS rechercheSolrInit() {
-		if(!rechercheSolrWrap.alreadyInitialized) {
-			_rechercheSolr(rechercheSolrWrap);
-			if(rechercheSolr == null)
-				setRechercheSolr(rechercheSolrWrap.o);
+	protected SiteRequestEnUS solrQueryInit() {
+		if(!solrQueryWrap.alreadyInitialized) {
+			_solrQuery(solrQueryWrap);
+			if(solrQuery == null)
+				setSolrQuery(solrQueryWrap.o);
 		}
-		rechercheSolrWrap.alreadyInitialized(true);
+		solrQueryWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -288,75 +292,75 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 		return (SiteRequestEnUS)this;
 	}
 
-	//////////////////////
-	// reponseRecherche //
-	//////////////////////
+	///////////////////
+	// queryResponse //
+	///////////////////
 
-	/**	L'entité « reponseRecherche »
+	/**	L'entité « queryResponse »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected QueryResponse reponseRecherche;
-	public Wrap<QueryResponse> reponseRechercheWrap = new Wrap<QueryResponse>().p(this).c(QueryResponse.class).var("reponseRecherche").o(reponseRecherche);
+	protected QueryResponse queryResponse;
+	public Wrap<QueryResponse> queryResponseWrap = new Wrap<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
 
-	/**	<br/>L'entité « reponseRecherche »
+	/**	<br/>L'entité « queryResponse »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:reponseRecherche">Trouver l'entité reponseRecherche dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:queryResponse">Trouver l'entité queryResponse dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _reponseRecherche(Wrap<QueryResponse> c);
+	protected abstract void _queryResponse(Wrap<QueryResponse> c);
 
-	public QueryResponse getReponseRecherche() {
-		return reponseRecherche;
+	public QueryResponse getQueryResponse() {
+		return queryResponse;
 	}
 
-	public void setReponseRecherche(QueryResponse reponseRecherche) {
-		this.reponseRecherche = reponseRecherche;
-		this.reponseRechercheWrap.alreadyInitialized = true;
+	public void setQueryResponse(QueryResponse queryResponse) {
+		this.queryResponse = queryResponse;
+		this.queryResponseWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS reponseRechercheInit() {
-		if(!reponseRechercheWrap.alreadyInitialized) {
-			_reponseRecherche(reponseRechercheWrap);
-			if(reponseRecherche == null)
-				setReponseRecherche(reponseRechercheWrap.o);
+	protected SiteRequestEnUS queryResponseInit() {
+		if(!queryResponseWrap.alreadyInitialized) {
+			_queryResponse(queryResponseWrap);
+			if(queryResponse == null)
+				setQueryResponse(queryResponseWrap.o);
 		}
-		reponseRechercheWrap.alreadyInitialized(true);
+		queryResponseWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	////////////////////////
-	// resultatsRecherche //
-	////////////////////////
+	///////////////////
+	// searchResults //
+	///////////////////
 
-	/**	L'entité « resultatsRecherche »
+	/**	L'entité « searchResults »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected SolrDocumentList resultatsRecherche;
-	public Wrap<SolrDocumentList> resultatsRechercheWrap = new Wrap<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("resultatsRecherche").o(resultatsRecherche);
+	protected SolrDocumentList searchResults;
+	public Wrap<SolrDocumentList> searchResultsWrap = new Wrap<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("searchResults").o(searchResults);
 
-	/**	<br/>L'entité « resultatsRecherche »
+	/**	<br/>L'entité « searchResults »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:resultatsRecherche">Trouver l'entité resultatsRecherche dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:searchResults">Trouver l'entité searchResults dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _resultatsRecherche(Wrap<SolrDocumentList> c);
+	protected abstract void _searchResults(Wrap<SolrDocumentList> c);
 
-	public SolrDocumentList getResultatsRecherche() {
-		return resultatsRecherche;
+	public SolrDocumentList getSearchResults() {
+		return searchResults;
 	}
 
-	public void setResultatsRecherche(SolrDocumentList resultatsRecherche) {
-		this.resultatsRecherche = resultatsRecherche;
-		this.resultatsRechercheWrap.alreadyInitialized = true;
+	public void setSearchResults(SolrDocumentList searchResults) {
+		this.searchResults = searchResults;
+		this.searchResultsWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS resultatsRechercheInit() {
-		if(!resultatsRechercheWrap.alreadyInitialized) {
-			_resultatsRecherche(resultatsRechercheWrap);
-			if(resultatsRecherche == null)
-				setResultatsRecherche(resultatsRechercheWrap.o);
+	protected SiteRequestEnUS searchResultsInit() {
+		if(!searchResultsWrap.alreadyInitialized) {
+			_searchResults(searchResultsWrap);
+			if(searchResults == null)
+				setSearchResults(searchResultsWrap.o);
 		}
-		resultatsRechercheWrap.alreadyInitialized(true);
+		searchResultsWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -367,8 +371,8 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 	/**	L'entité « w »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected ToutEcrivain w;
-	public Wrap<ToutEcrivain> wWrap = new Wrap<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
+	protected AllWriter w;
+	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
 
 	/**	<br/>L'entité « w »
 	 *  est défini comme null avant d'être initialisé. 
@@ -376,13 +380,13 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _w(Wrap<ToutEcrivain> c);
+	protected abstract void _w(Wrap<AllWriter> c);
 
-	public ToutEcrivain getW() {
+	public AllWriter getW() {
 		return w;
 	}
 
-	public void setW(ToutEcrivain w) {
+	public void setW(AllWriter w) {
 		this.w = w;
 		this.wWrap.alreadyInitialized = true;
 	}
@@ -393,361 +397,361 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 				setW(wWrap.o);
 		}
 		if(w != null)
-			w.initLoinPourClasse(requeteSite_);
+			w.initDeepForClass(siteRequest_);
 		wWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	//////////////////////
-	// utilisateurVertx //
-	//////////////////////
+	///////////////
+	// userVertx //
+	///////////////
 
-	/**	L'entité « utilisateurVertx »
+	/**	L'entité « userVertx »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected JsonObject utilisateurVertx;
-	public Wrap<JsonObject> utilisateurVertxWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("utilisateurVertx").o(utilisateurVertx);
+	protected JsonObject userVertx;
+	public Wrap<JsonObject> userVertxWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("userVertx").o(userVertx);
 
-	/**	<br/>L'entité « utilisateurVertx »
+	/**	<br/>L'entité « userVertx »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurVertx">Trouver l'entité utilisateurVertx dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userVertx">Trouver l'entité userVertx dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _utilisateurVertx(Wrap<JsonObject> c);
+	protected abstract void _userVertx(Wrap<JsonObject> c);
 
-	public JsonObject getUtilisateurVertx() {
-		return utilisateurVertx;
+	public JsonObject getUserVertx() {
+		return userVertx;
 	}
 
-	public void setUtilisateurVertx(JsonObject utilisateurVertx) {
-		this.utilisateurVertx = utilisateurVertx;
-		this.utilisateurVertxWrap.alreadyInitialized = true;
+	public void setUserVertx(JsonObject userVertx) {
+		this.userVertx = userVertx;
+		this.userVertxWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS utilisateurVertxInit() {
-		if(!utilisateurVertxWrap.alreadyInitialized) {
-			_utilisateurVertx(utilisateurVertxWrap);
-			if(utilisateurVertx == null)
-				setUtilisateurVertx(utilisateurVertxWrap.o);
+	protected SiteRequestEnUS userVertxInit() {
+		if(!userVertxWrap.alreadyInitialized) {
+			_userVertx(userVertxWrap);
+			if(userVertx == null)
+				setUserVertx(userVertxWrap.o);
 		}
-		utilisateurVertxWrap.alreadyInitialized(true);
+		userVertxWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
 	///////////////////
-	// principalJson //
+	// jsonPrincipal //
 	///////////////////
 
-	/**	L'entité « principalJson »
+	/**	L'entité « jsonPrincipal »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected JsonObject principalJson;
-	public Wrap<JsonObject> principalJsonWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("principalJson").o(principalJson);
+	protected JsonObject jsonPrincipal;
+	public Wrap<JsonObject> jsonPrincipalWrap = new Wrap<JsonObject>().p(this).c(JsonObject.class).var("jsonPrincipal").o(jsonPrincipal);
 
-	/**	<br/>L'entité « principalJson »
+	/**	<br/>L'entité « jsonPrincipal »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:principalJson">Trouver l'entité principalJson dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jsonPrincipal">Trouver l'entité jsonPrincipal dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _principalJson(Wrap<JsonObject> c);
+	protected abstract void _jsonPrincipal(Wrap<JsonObject> c);
 
-	public JsonObject getPrincipalJson() {
-		return principalJson;
+	public JsonObject getJsonPrincipal() {
+		return jsonPrincipal;
 	}
 
-	public void setPrincipalJson(JsonObject principalJson) {
-		this.principalJson = principalJson;
-		this.principalJsonWrap.alreadyInitialized = true;
+	public void setJsonPrincipal(JsonObject jsonPrincipal) {
+		this.jsonPrincipal = jsonPrincipal;
+		this.jsonPrincipalWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS principalJsonInit() {
-		if(!principalJsonWrap.alreadyInitialized) {
-			_principalJson(principalJsonWrap);
-			if(principalJson == null)
-				setPrincipalJson(principalJsonWrap.o);
+	protected SiteRequestEnUS jsonPrincipalInit() {
+		if(!jsonPrincipalWrap.alreadyInitialized) {
+			_jsonPrincipal(jsonPrincipalWrap);
+			if(jsonPrincipal == null)
+				setJsonPrincipal(jsonPrincipalWrap.o);
 		}
-		principalJsonWrap.alreadyInitialized(true);
+		jsonPrincipalWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
+	}
+
+	////////////
+	// userId //
+	////////////
+
+	/**	L'entité « userId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String userId;
+	public Wrap<String> userIdWrap = new Wrap<String>().p(this).c(String.class).var("userId").o(userId);
+
+	/**	<br/>L'entité « userId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userId">Trouver l'entité userId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userId(Wrap<String> c);
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+		this.userIdWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS userIdInit() {
+		if(!userIdWrap.alreadyInitialized) {
+			_userId(userIdWrap);
+			if(userId == null)
+				setUserId(userIdWrap.o);
+		}
+		userIdWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public String solrUserId() {
+		return userId;
+	}
+
+	public String strUserId() {
+		return userId == null ? "" : userId;
+	}
+
+	public String nomAffichageUserId() {
+		return null;
+	}
+
+	public String htmTooltipUserId() {
+		return null;
+	}
+
+	public String htmUserId() {
+		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
+	}
+
+	//////////////
+	// userName //
+	//////////////
+
+	/**	L'entité « userName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String userName;
+	public Wrap<String> userNameWrap = new Wrap<String>().p(this).c(String.class).var("userName").o(userName);
+
+	/**	<br/>L'entité « userName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userName">Trouver l'entité userName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userName(Wrap<String> c);
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+		this.userNameWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS userNameInit() {
+		if(!userNameWrap.alreadyInitialized) {
+			_userName(userNameWrap);
+			if(userName == null)
+				setUserName(userNameWrap.o);
+		}
+		userNameWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public String solrUserName() {
+		return userName;
+	}
+
+	public String strUserName() {
+		return userName == null ? "" : userName;
+	}
+
+	public String nomAffichageUserName() {
+		return null;
+	}
+
+	public String htmTooltipUserName() {
+		return null;
+	}
+
+	public String htmUserName() {
+		return userName == null ? "" : StringEscapeUtils.escapeHtml4(strUserName());
+	}
+
+	//////////////////
+	// userLastName //
+	//////////////////
+
+	/**	L'entité « userLastName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String userLastName;
+	public Wrap<String> userLastNameWrap = new Wrap<String>().p(this).c(String.class).var("userLastName").o(userLastName);
+
+	/**	<br/>L'entité « userLastName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userLastName">Trouver l'entité userLastName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _userLastName(Wrap<String> c);
+
+	public String getUserLastName() {
+		return userLastName;
+	}
+
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+		this.userLastNameWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS userLastNameInit() {
+		if(!userLastNameWrap.alreadyInitialized) {
+			_userLastName(userLastNameWrap);
+			if(userLastName == null)
+				setUserLastName(userLastNameWrap.o);
+		}
+		userLastNameWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public String solrUserLastName() {
+		return userLastName;
+	}
+
+	public String strUserLastName() {
+		return userLastName == null ? "" : userLastName;
+	}
+
+	public String nomAffichageUserLastName() {
+		return null;
+	}
+
+	public String htmTooltipUserLastName() {
+		return null;
+	}
+
+	public String htmUserLastName() {
+		return userLastName == null ? "" : StringEscapeUtils.escapeHtml4(strUserLastName());
 	}
 
 	///////////////////
-	// utilisateurId //
+	// userFirstName //
 	///////////////////
 
-	/**	L'entité « utilisateurId »
+	/**	L'entité « userFirstName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String utilisateurId;
-	public Wrap<String> utilisateurIdWrap = new Wrap<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
+	protected String userFirstName;
+	public Wrap<String> userFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("userFirstName").o(userFirstName);
 
-	/**	<br/>L'entité « utilisateurId »
+	/**	<br/>L'entité « userFirstName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurId">Trouver l'entité utilisateurId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userFirstName">Trouver l'entité userFirstName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _utilisateurId(Wrap<String> c);
+	protected abstract void _userFirstName(Wrap<String> c);
 
-	public String getUtilisateurId() {
-		return utilisateurId;
+	public String getUserFirstName() {
+		return userFirstName;
 	}
 
-	public void setUtilisateurId(String utilisateurId) {
-		this.utilisateurId = utilisateurId;
-		this.utilisateurIdWrap.alreadyInitialized = true;
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+		this.userFirstNameWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS utilisateurIdInit() {
-		if(!utilisateurIdWrap.alreadyInitialized) {
-			_utilisateurId(utilisateurIdWrap);
-			if(utilisateurId == null)
-				setUtilisateurId(utilisateurIdWrap.o);
+	protected SiteRequestEnUS userFirstNameInit() {
+		if(!userFirstNameWrap.alreadyInitialized) {
+			_userFirstName(userFirstNameWrap);
+			if(userFirstName == null)
+				setUserFirstName(userFirstNameWrap.o);
 		}
-		utilisateurIdWrap.alreadyInitialized(true);
+		userFirstNameWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	public String solrUtilisateurId() {
-		return utilisateurId;
+	public String solrUserFirstName() {
+		return userFirstName;
 	}
 
-	public String strUtilisateurId() {
-		return utilisateurId == null ? "" : utilisateurId;
+	public String strUserFirstName() {
+		return userFirstName == null ? "" : userFirstName;
 	}
 
-	public String nomAffichageUtilisateurId() {
+	public String nomAffichageUserFirstName() {
 		return null;
 	}
 
-	public String htmTooltipUtilisateurId() {
+	public String htmTooltipUserFirstName() {
 		return null;
 	}
 
-	public String htmUtilisateurId() {
-		return utilisateurId == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurId());
+	public String htmUserFirstName() {
+		return userFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFirstName());
 	}
 
-	////////////////////
-	// utilisateurNom //
-	////////////////////
+	//////////////////
+	// userFullName //
+	//////////////////
 
-	/**	L'entité « utilisateurNom »
+	/**	L'entité « userFullName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String utilisateurNom;
-	public Wrap<String> utilisateurNomWrap = new Wrap<String>().p(this).c(String.class).var("utilisateurNom").o(utilisateurNom);
+	protected String userFullName;
+	public Wrap<String> userFullNameWrap = new Wrap<String>().p(this).c(String.class).var("userFullName").o(userFullName);
 
-	/**	<br/>L'entité « utilisateurNom »
+	/**	<br/>L'entité « userFullName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurNom">Trouver l'entité utilisateurNom dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userFullName">Trouver l'entité userFullName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _utilisateurNom(Wrap<String> c);
+	protected abstract void _userFullName(Wrap<String> c);
 
-	public String getUtilisateurNom() {
-		return utilisateurNom;
+	public String getUserFullName() {
+		return userFullName;
 	}
 
-	public void setUtilisateurNom(String utilisateurNom) {
-		this.utilisateurNom = utilisateurNom;
-		this.utilisateurNomWrap.alreadyInitialized = true;
+	public void setUserFullName(String userFullName) {
+		this.userFullName = userFullName;
+		this.userFullNameWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS utilisateurNomInit() {
-		if(!utilisateurNomWrap.alreadyInitialized) {
-			_utilisateurNom(utilisateurNomWrap);
-			if(utilisateurNom == null)
-				setUtilisateurNom(utilisateurNomWrap.o);
+	protected SiteRequestEnUS userFullNameInit() {
+		if(!userFullNameWrap.alreadyInitialized) {
+			_userFullName(userFullNameWrap);
+			if(userFullName == null)
+				setUserFullName(userFullNameWrap.o);
 		}
-		utilisateurNomWrap.alreadyInitialized(true);
+		userFullNameWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	public String solrUtilisateurNom() {
-		return utilisateurNom;
+	public String solrUserFullName() {
+		return userFullName;
 	}
 
-	public String strUtilisateurNom() {
-		return utilisateurNom == null ? "" : utilisateurNom;
+	public String strUserFullName() {
+		return userFullName == null ? "" : userFullName;
 	}
 
-	public String nomAffichageUtilisateurNom() {
+	public String nomAffichageUserFullName() {
 		return null;
 	}
 
-	public String htmTooltipUtilisateurNom() {
+	public String htmTooltipUserFullName() {
 		return null;
 	}
 
-	public String htmUtilisateurNom() {
-		return utilisateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurNom());
-	}
-
-	///////////////////////////
-	// utilisateurNomFamille //
-	///////////////////////////
-
-	/**	L'entité « utilisateurNomFamille »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String utilisateurNomFamille;
-	public Wrap<String> utilisateurNomFamilleWrap = new Wrap<String>().p(this).c(String.class).var("utilisateurNomFamille").o(utilisateurNomFamille);
-
-	/**	<br/>L'entité « utilisateurNomFamille »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurNomFamille">Trouver l'entité utilisateurNomFamille dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _utilisateurNomFamille(Wrap<String> c);
-
-	public String getUtilisateurNomFamille() {
-		return utilisateurNomFamille;
-	}
-
-	public void setUtilisateurNomFamille(String utilisateurNomFamille) {
-		this.utilisateurNomFamille = utilisateurNomFamille;
-		this.utilisateurNomFamilleWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS utilisateurNomFamilleInit() {
-		if(!utilisateurNomFamilleWrap.alreadyInitialized) {
-			_utilisateurNomFamille(utilisateurNomFamilleWrap);
-			if(utilisateurNomFamille == null)
-				setUtilisateurNomFamille(utilisateurNomFamilleWrap.o);
-		}
-		utilisateurNomFamilleWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	public String solrUtilisateurNomFamille() {
-		return utilisateurNomFamille;
-	}
-
-	public String strUtilisateurNomFamille() {
-		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
-	}
-
-	public String nomAffichageUtilisateurNomFamille() {
-		return null;
-	}
-
-	public String htmTooltipUtilisateurNomFamille() {
-		return null;
-	}
-
-	public String htmUtilisateurNomFamille() {
-		return utilisateurNomFamille == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurNomFamille());
-	}
-
-	///////////////////////
-	// utilisateurPrenom //
-	///////////////////////
-
-	/**	L'entité « utilisateurPrenom »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String utilisateurPrenom;
-	public Wrap<String> utilisateurPrenomWrap = new Wrap<String>().p(this).c(String.class).var("utilisateurPrenom").o(utilisateurPrenom);
-
-	/**	<br/>L'entité « utilisateurPrenom »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurPrenom">Trouver l'entité utilisateurPrenom dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _utilisateurPrenom(Wrap<String> c);
-
-	public String getUtilisateurPrenom() {
-		return utilisateurPrenom;
-	}
-
-	public void setUtilisateurPrenom(String utilisateurPrenom) {
-		this.utilisateurPrenom = utilisateurPrenom;
-		this.utilisateurPrenomWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS utilisateurPrenomInit() {
-		if(!utilisateurPrenomWrap.alreadyInitialized) {
-			_utilisateurPrenom(utilisateurPrenomWrap);
-			if(utilisateurPrenom == null)
-				setUtilisateurPrenom(utilisateurPrenomWrap.o);
-		}
-		utilisateurPrenomWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	public String solrUtilisateurPrenom() {
-		return utilisateurPrenom;
-	}
-
-	public String strUtilisateurPrenom() {
-		return utilisateurPrenom == null ? "" : utilisateurPrenom;
-	}
-
-	public String nomAffichageUtilisateurPrenom() {
-		return null;
-	}
-
-	public String htmTooltipUtilisateurPrenom() {
-		return null;
-	}
-
-	public String htmUtilisateurPrenom() {
-		return utilisateurPrenom == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurPrenom());
-	}
-
-	///////////////////////////
-	// utilisateurNomComplet //
-	///////////////////////////
-
-	/**	L'entité « utilisateurNomComplet »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String utilisateurNomComplet;
-	public Wrap<String> utilisateurNomCompletWrap = new Wrap<String>().p(this).c(String.class).var("utilisateurNomComplet").o(utilisateurNomComplet);
-
-	/**	<br/>L'entité « utilisateurNomComplet »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:utilisateurNomComplet">Trouver l'entité utilisateurNomComplet dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _utilisateurNomComplet(Wrap<String> c);
-
-	public String getUtilisateurNomComplet() {
-		return utilisateurNomComplet;
-	}
-
-	public void setUtilisateurNomComplet(String utilisateurNomComplet) {
-		this.utilisateurNomComplet = utilisateurNomComplet;
-		this.utilisateurNomCompletWrap.alreadyInitialized = true;
-	}
-	protected SiteRequestEnUS utilisateurNomCompletInit() {
-		if(!utilisateurNomCompletWrap.alreadyInitialized) {
-			_utilisateurNomComplet(utilisateurNomCompletWrap);
-			if(utilisateurNomComplet == null)
-				setUtilisateurNomComplet(utilisateurNomCompletWrap.o);
-		}
-		utilisateurNomCompletWrap.alreadyInitialized(true);
-		return (SiteRequestEnUS)this;
-	}
-
-	public String solrUtilisateurNomComplet() {
-		return utilisateurNomComplet;
-	}
-
-	public String strUtilisateurNomComplet() {
-		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
-	}
-
-	public String nomAffichageUtilisateurNomComplet() {
-		return null;
-	}
-
-	public String htmTooltipUtilisateurNomComplet() {
-		return null;
-	}
-
-	public String htmUtilisateurNomComplet() {
-		return utilisateurNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurNomComplet());
+	public String htmUserFullName() {
+		return userFullName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFullName());
 	}
 
 	/////////////////////////////
@@ -892,42 +896,42 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 				setUtilisateurSite(utilisateurSiteWrap.o);
 		}
 		if(utilisateurSite != null)
-			utilisateurSite.initLoinPourClasse(requeteSite_);
+			utilisateurSite.initDeepForClass(siteRequest_);
 		utilisateurSiteWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
-	/////////////
-	// xmlPile //
-	/////////////
+	//////////////
+	// xmlStack //
+	//////////////
 
-	/**	L'entité « xmlPile »
+	/**	L'entité « xmlStack »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Stack<String>(). 
 	 */
-	protected Stack<String> xmlPile = new Stack<String>();
-	public Wrap<Stack<String>> xmlPileWrap = new Wrap<Stack<String>>().p(this).c(Stack.class).var("xmlPile").o(xmlPile);
+	protected Stack<String> xmlStack = new Stack<String>();
+	public Wrap<Stack<String>> xmlStackWrap = new Wrap<Stack<String>>().p(this).c(Stack.class).var("xmlStack").o(xmlStack);
 
-	/**	<br/>L'entité « xmlPile »
+	/**	<br/>L'entité « xmlStack »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut Stack<String>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:xmlPile">Trouver l'entité xmlPile dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:xmlStack">Trouver l'entité xmlStack dans Solr</a>
 	 * <br/>
-	 * @param xmlPile est l'entité déjà construit. 
+	 * @param xmlStack est l'entité déjà construit. 
 	 **/
-	protected abstract void _xmlPile(Stack<String> o);
+	protected abstract void _xmlStack(Stack<String> o);
 
-	public Stack<String> getXmlPile() {
-		return xmlPile;
+	public Stack<String> getXmlStack() {
+		return xmlStack;
 	}
 
-	public void setXmlPile(Stack<String> xmlPile) {
-		this.xmlPile = xmlPile;
-		this.xmlPileWrap.alreadyInitialized = true;
+	public void setXmlStack(Stack<String> xmlStack) {
+		this.xmlStack = xmlStack;
+		this.xmlStackWrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS xmlPileInit() {
-		if(!xmlPileWrap.alreadyInitialized) {
-			_xmlPile(xmlPile);
+	protected SiteRequestEnUS xmlStackInit() {
+		if(!xmlStackWrap.alreadyInitialized) {
+			_xmlStack(xmlStack);
 		}
-		xmlPileWrap.alreadyInitialized(true);
+		xmlStackWrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -1458,46 +1462,46 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 	}
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
 	protected boolean alreadyInitializedSiteRequestEnUS = false;
 
-	public SiteRequestEnUS initLoinSiteRequestEnUS( requeteSite_) {
-		setRequeteSite_(requeteSite_);
+	public SiteRequestEnUS initDeepSiteRequestEnUS(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedSiteRequestEnUS) {
 			alreadyInitializedSiteRequestEnUS = true;
-			initLoinSiteRequestEnUS();
+			initDeepSiteRequestEnUS();
 		}
 		return (SiteRequestEnUS)this;
 	}
 
-	public void initLoinSiteRequestEnUS() {
+	public void initDeepSiteRequestEnUS() {
 		initSiteRequestEnUS();
 	}
 
 	public void initSiteRequestEnUS() {
-		siteContexte_Init();
-		configSite_Init();
-		requeteSite_Init();
+		siteContext_Init();
+		siteConfig_Init();
+		siteRequest_Init();
 		vertxInit();
-		objetJsonInit();
-		rechercheSolrInit();
+		jsonObjectInit();
+		solrQueryInit();
 		operationRequestInit();
-		reponseRechercheInit();
-		resultatsRechercheInit();
+		queryResponseInit();
+		searchResultsInit();
 		wInit();
-		utilisateurVertxInit();
-		principalJsonInit();
-		utilisateurIdInit();
-		utilisateurNomInit();
-		utilisateurNomFamilleInit();
-		utilisateurPrenomInit();
-		utilisateurNomCompletInit();
+		userVertxInit();
+		jsonPrincipalInit();
+		userIdInit();
+		userNameInit();
+		userLastNameInit();
+		userFirstNameInit();
+		userFullNameInit();
 		utilisateurRolesRoyaumeInit();
 		utilisateurRessourceInit();
 		utilisateurSiteInit();
-		xmlPileInit();
+		xmlStackInit();
 		documentSolrInit();
 		pageAcheteInit();
 		pageAdminInit();
@@ -1512,87 +1516,87 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 		specCleSecreteInit();
 	}
 
-	public void initLoinPourClasse( requeteSite_) {
-		initLoinSiteRequestEnUS(requeteSite_);
+	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepSiteRequestEnUS(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteSiteRequestEnUS( requeteSite_) {
+	public void siteRequestSiteRequestEnUS(SiteRequestEnUS siteRequest_) {
 		if(w != null)
-			w.setRequeteSite_(requeteSite_);
+			w.setSiteRequest_(siteRequest_);
 		if(utilisateurSite != null)
-			utilisateurSite.setRequeteSite_(requeteSite_);
+			utilisateurSite.setSiteRequest_(siteRequest_);
 	}
 
-	public void requeteSitePourClasse( requeteSite_) {
-		requeteSiteSiteRequestEnUS(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestSiteRequestEnUS(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	public Object obtenirPourClasse(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirSiteRequestEnUS(v);
+				o = obtainSiteRequestEnUS(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirSiteRequestEnUS(String var) {
+	public Object obtainSiteRequestEnUS(String var) {
 		SiteRequestEnUS oSiteRequestEnUS = (SiteRequestEnUS)this;
 		switch(var) {
-			case "siteContexte_":
-				return oSiteRequestEnUS.siteContexte_;
-			case "configSite_":
-				return oSiteRequestEnUS.configSite_;
-			case "requeteSite_":
-				return oSiteRequestEnUS.requeteSite_;
+			case "siteContext_":
+				return oSiteRequestEnUS.siteContext_;
+			case "siteConfig_":
+				return oSiteRequestEnUS.siteConfig_;
+			case "siteRequest_":
+				return oSiteRequestEnUS.siteRequest_;
 			case "vertx":
 				return oSiteRequestEnUS.vertx;
-			case "objetJson":
-				return oSiteRequestEnUS.objetJson;
-			case "rechercheSolr":
-				return oSiteRequestEnUS.rechercheSolr;
+			case "jsonObject":
+				return oSiteRequestEnUS.jsonObject;
+			case "solrQuery":
+				return oSiteRequestEnUS.solrQuery;
 			case "operationRequest":
 				return oSiteRequestEnUS.operationRequest;
-			case "reponseRecherche":
-				return oSiteRequestEnUS.reponseRecherche;
-			case "resultatsRecherche":
-				return oSiteRequestEnUS.resultatsRecherche;
+			case "queryResponse":
+				return oSiteRequestEnUS.queryResponse;
+			case "searchResults":
+				return oSiteRequestEnUS.searchResults;
 			case "w":
 				return oSiteRequestEnUS.w;
-			case "utilisateurVertx":
-				return oSiteRequestEnUS.utilisateurVertx;
-			case "principalJson":
-				return oSiteRequestEnUS.principalJson;
-			case "utilisateurId":
-				return oSiteRequestEnUS.utilisateurId;
-			case "utilisateurNom":
-				return oSiteRequestEnUS.utilisateurNom;
-			case "utilisateurNomFamille":
-				return oSiteRequestEnUS.utilisateurNomFamille;
-			case "utilisateurPrenom":
-				return oSiteRequestEnUS.utilisateurPrenom;
-			case "utilisateurNomComplet":
-				return oSiteRequestEnUS.utilisateurNomComplet;
+			case "userVertx":
+				return oSiteRequestEnUS.userVertx;
+			case "jsonPrincipal":
+				return oSiteRequestEnUS.jsonPrincipal;
+			case "userId":
+				return oSiteRequestEnUS.userId;
+			case "userName":
+				return oSiteRequestEnUS.userName;
+			case "userLastName":
+				return oSiteRequestEnUS.userLastName;
+			case "userFirstName":
+				return oSiteRequestEnUS.userFirstName;
+			case "userFullName":
+				return oSiteRequestEnUS.userFullName;
 			case "utilisateurRolesRoyaume":
 				return oSiteRequestEnUS.utilisateurRolesRoyaume;
 			case "utilisateurRessource":
 				return oSiteRequestEnUS.utilisateurRessource;
 			case "utilisateurSite":
 				return oSiteRequestEnUS.utilisateurSite;
-			case "xmlPile":
-				return oSiteRequestEnUS.xmlPile;
+			case "xmlStack":
+				return oSiteRequestEnUS.xmlStack;
 			case "documentSolr":
 				return oSiteRequestEnUS.documentSolr;
 			case "pageAchete":
@@ -1623,23 +1627,23 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerSiteRequestEnUS(v, val);
+				o = attributeSiteRequestEnUS(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerSiteRequestEnUS(String var, Object val) {
+	public Object attributeSiteRequestEnUS(String var, Object val) {
 		SiteRequestEnUS oSiteRequestEnUS = (SiteRequestEnUS)this;
 		switch(var) {
 			default:
@@ -1651,7 +1655,7 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 	// definir //
 	/////////////
 
-	public boolean definirPourClasse(String var, String val) {
+	public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
@@ -1660,7 +1664,7 @@ public abstract class SiteRequestEnUSGen<DEV> extends Object {
 					o = definirSiteRequestEnUS(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}

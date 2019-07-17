@@ -338,40 +338,43 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return future;
 	}
 
-	private Future<Void> demarrerServeur() {
-		ConfigSite configSite = siteContexteEnUS.getConfigSite();
+	/**	
+	 *	Start the Vert.x server. 
+	 *	Démarrer le serveur Vert.x. 
+	 **/
+	private Future<Void> startServer() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Future<Void> future = Future.future();
 
-		ClusterEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
+		ClusterEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
-		EcoleEnUSGenApiService.enregistrerService(siteContexteEnUS, vertx);
+		SchoolEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
-		Router siteRouteur = siteContexteEnUS.getUsineRouteur().getRouter();
+		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 
 		StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
-		if("scolaire.computate.org".equals(configSite.getSiteNomHote())) {
+		if("scolaire-dev.computate.org".equals(siteConfig.getSiteHostName())) {
 			staticHandler.setAllowRootFileSystemAccess(true);
 			staticHandler.setWebRoot("/usr/local/src/computate-scolaire-static");
 		}
-		siteRouteur.route("/static/*").handler(staticHandler);
+		siteRouter.route("/static/*").handler(staticHandler);
 
-		String siteNomHote = configSite.getSiteNomHote();
-		Integer sitePort = configSite.getSitePort();
+		String siteNomHote = siteConfig.getSiteHostName();
+		Integer sitePort = siteConfig.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		if(new File(configSite.getSslJksChemin()).exists()) {
-			options.setKeyStoreOptions(
-					new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
+		if(new File(siteConfig.getSslJksPath()).exists()) {
+			options.setKeyStoreOptions(new JksOptions().setPath(siteConfig.getSslJksPath()).setPassword(siteConfig.getSslJksPassword()));
 			options.setSsl(true);
 		}
 		options.setPort(sitePort);
 
-		LOGGER.info(String.format("HTTP server starting: %s://%s:%s", "https", siteNomHote, sitePort));
-		vertx.createHttpServer(options).requestHandler(siteRouteur).listen(ar -> {
+		LOGGER.info(String.format(startServerBeforeServer, "https", siteNomHote, sitePort));
+		vertx.createHttpServer(options).requestHandler(siteRouter).listen(ar -> {
 			if (ar.succeeded()) {
-				LOGGER.info(String.format("HTTP server running: %s:%s", "*", sitePort));
+				LOGGER.info(String.format(startServerSuccessServer, "*", sitePort));
 				future.complete();
 			} else {
-				LOGGER.error("Could not start a HTTP server", ar.cause());
+				LOGGER.error(startServerErrorServer, ar.cause());
 				future.fail(ar.cause());
 			}
 		});
@@ -385,8 +388,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	@Override()
 	public void  stop(Future<Void> stopFuture) throws Exception, Exception {
-		Future<Void> etapesFutures = fermerDonnees();
-		etapesFutures.setHandler(stopFuture.completer());
+		Future<Void> futureSteps = closeData();
+		futureSteps.setHandler(stopFuture.completer());
 	}
 
 	/**	
@@ -394,7 +397,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Future<Void> closeData() {
 		Future<Void> future = Future.future();
-		SQLClient clientSql = siteContexteFrFR.getClientSql();
+		SQLClient clientSql = siteContextEnUS.getClientSql();
 
 		if(clientSql != null) {
 			clientSql.close(a -> {

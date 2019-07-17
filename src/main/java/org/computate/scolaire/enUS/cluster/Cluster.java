@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.enUS.school.writer.AllWriter;
 import org.computate.enUS.school.page.PageLayout;
+import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.xml.UtilXml;
 
 public class Cluster extends ClusterGen<Object> {
 
-	protected void _requeteSite_(Wrap<SiteRequestEnUS> c) {}
+	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {}
 
 	protected void _pageParts(List<PagePart> l) {
 	}
@@ -27,41 +30,41 @@ public class Cluster extends ClusterGen<Object> {
 			c.o(pk.toString());
 	}
 
-	protected void _cree(Wrap<ZonedDateTime> c) {}
+	protected void _created(Wrap<ZonedDateTime> c) {}
 
-	protected void _modifie(Wrap<ZonedDateTime> c) {}
+	protected void _modified(Wrap<ZonedDateTime> c) {}
 
-	protected void _archive(Wrap<Boolean> c) {
+	protected void _archived(Wrap<Boolean> c) {
 		c.o(false);
 	}
 
-	protected void _supprime(Wrap<Boolean> c) {
+	protected void _deleted(Wrap<Boolean> c) {
 		c.o(false);
 	}
 
-	protected void _classeNomCanonique(Wrap<String> c) {
+	protected void _classCanonicalName(Wrap<String> c) {
 		String o = getClass().getCanonicalName();
 		c.o(o);
 	}
 
-	protected void _classeNomSimple(Wrap<String> c) {
+	protected void _classSimpleName(Wrap<String> c) {
 		String o = getClass().getSimpleName();
 		c.o(o);
 	}
 
-	protected void _classeNomsCanoniques(List<String> l) { 
+	protected void _classCanonicalNames(List<String> l) { 
 		l.add(Cluster.class.getCanonicalName());
 	}
 
 	public Cluster e(String nomLocal) {
-		ToutEcrivain w = requeteSite_.getW();
-		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
+		AllWriter w = siteRequest_.getW();
+		String nomLocalParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
 
-		boolean eNoWrapParent = nomLocalParent == null || MiseEnPage.HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		boolean eNoWrapParent = nomLocalParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
+		String tabulations = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
+		String tabulationsEchappes = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		requeteSite_.getXmlPile().push(nomLocal);
+		siteRequest_.getXmlStack().push(nomLocal);
 		if(StringUtils.equals(nomLocal, "html"))
 			w.s("<!DOCTYPE html>\n");
 		if(!eNoWrapParent && !tabulationsEchappes.isEmpty()) {
@@ -74,30 +77,30 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	public Cluster a1(String nomAttribut, Object...objets) {
-		ToutEcrivain w = requeteSite_.getW();
+	public Cluster a1(String attributeName, Object...objects) {
+		AllWriter w = siteRequest_.getW();
 		w.s(" ");
-		w.s(nomAttribut);
+		w.s(attributeName);
 		w.s("=\"");
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapperDansCitatations(s));
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escapeInQuotes(s));
 			}
 		}
 		
 		return this;
 	}
 
-	public Cluster a(String nomAttribut, Object...objets) {
-		ToutEcrivain w = requeteSite_.getW();
+	public Cluster a(String attributeName, Object...objects) {
+		AllWriter w = siteRequest_.getW();
 		w.s(" ");
-		w.s(nomAttribut);
+		w.s(attributeName);
 		w.s("=\"");
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapperDansCitatations(s));
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escapeInQuotes(s));
 			}
 		}
 		w.s("\"");
@@ -106,24 +109,24 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	public Cluster a2() {
-		ToutEcrivain w = requeteSite_.getW();
+		AllWriter w = siteRequest_.getW();
 		w.s("\"");
 		
 		return this;
 	}
 
 	public Cluster f() {
-		ToutEcrivain w = requeteSite_.getW();
+		AllWriter w = siteRequest_.getW();
 		w.s(">");
 		
 		return this;
 	}
 
-	public Cluster s(Object...objets) {
-		ToutEcrivain w = requeteSite_.getW();
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
+	public Cluster s(Object...objects) {
+		AllWriter w = siteRequest_.getW();
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
 				w.s(s);
 			}
 		}
@@ -131,83 +134,83 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
-	public Cluster t(int nombreTabulations, Object...objets) {
-		for(int i = 0; i < nombreTabulations; i++)
+	public Cluster t(int numberTabs, Object...objects) {
+		for(int i = 0; i < numberTabs; i++)
 			s("\t");
-		s(objets);
+		s(objects);
 		return this;
 	}
 
-	public Cluster tl(int nombreTabulations, Object...objets) {
-		for(int i = 0; i < nombreTabulations; i++)
+	public Cluster tl(int numberTabs, Object...objects) {
+		for(int i = 0; i < numberTabs; i++)
 			s("\t");
-		s(objets);
+		s(objects);
 		s("\n");
 		return this;
 	}
 
-	public Cluster l(Object...objets) {
-		s(objets);
+	public Cluster l(Object...objects) {
+		s(objects);
 		s("\n");
 		return this;
 	}
 
-	public Cluster lx(Object...objets) {
-		s(objets);
+	public Cluster lx(Object...objects) {
+		s(objects);
 		sx("\n");
 		return this;
 	}
 
-	public Cluster sx(Object...objets) {
-		ToutEcrivain w = requeteSite_.getW();
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapper(s));
+	public Cluster sx(Object...objects) {
+		AllWriter w = siteRequest_.getW();
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escape(s));
 			}
 		}
 		
 		return this;
 	}
 
-	public Cluster tx(int nombreTabulations, Object...objets) {
-		for(int i = 0; i < nombreTabulations; i++)
+	public Cluster tx(int numberTabs, Object...objects) {
+		for(int i = 0; i < numberTabs; i++)
 			sx("\t");
-		sx(objets);
+		sx(objects);
 		return this;
 	}
 
-	public Cluster tlx(int nombreTabulations, Object...objets) {
-		for(int i = 0; i < nombreTabulations; i++)
+	public Cluster tlx(int numberTabs, Object...objects) {
+		for(int i = 0; i < numberTabs; i++)
 			sx("\t");
-		sx(objets);
+		sx(objects);
 		sx("\n");
 		return this;
 	}
 
 	public Cluster fg() {
-		ToutEcrivain w = requeteSite_.getW();
+		AllWriter w = siteRequest_.getW();
 		w.s("/>");
-		requeteSite_.getXmlPile().pop();
+		siteRequest_.getXmlStack().pop();
 		
 		return this;
 	}
 
-	public Cluster g(String nomLocal) {
-		ToutEcrivain w = requeteSite_.getW();
-		String nomLocalParent = requeteSite_.getXmlPile().peek();
-		boolean eNoWrap = nomLocalParent == null || MiseEnPage.HTML_ELEMENTS_NO_WRAP.contains(nomLocal);
+	public Cluster g(String localName) {
+		AllWriter w = siteRequest_.getW();
+		String localNameParent = siteRequest_.getXmlStack().peek();
+		boolean eNoWrap = localNameParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(localName);
 
-		requeteSite_.getXmlPile().pop();
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		siteRequest_.getXmlStack().pop();
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
+		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		if(!eNoWrap && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrap && !tabsEscaped.isEmpty()) {
 			w.l();
-			w.s(tabulations);
+			w.s(tabs);
 		}
 		w.s("</");
-		w.s(nomLocal);
+		w.s(localName);
 		w.s(">");
 		
 		return this;

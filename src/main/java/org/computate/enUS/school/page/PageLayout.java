@@ -16,6 +16,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 public class PageLayout extends PageLayoutGen<Object> {
@@ -504,7 +505,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return resultat;
 	}
 
-	public MiseEnPage e(String localName) {
+	public PageLayout e(String localName) {
 		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
 
 		boolean eNoWrapParent = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
@@ -524,7 +525,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage a1(String nomAttribut, Object...objets) {
+	public PageLayout a1(String nomAttribut, Object...objets) {
 		w.s(" ");
 		w.s(nomAttribut);
 		w.s("=\"");
@@ -538,7 +539,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage a(String attributeName, Object...objects) {
+	public PageLayout a(String attributeName, Object...objects) {
 		w.s(" ");
 		w.s(nomAttribut);
 		w.s("=\"");
@@ -553,19 +554,19 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage a2() {
+	public PageLayout a2() {
 		w.s("\"");
 		
 		return this;
 	}
 
-	public MiseEnPage f() {
+	public PageLayout f() {
 		w.s(">");
 		
 		return this;
 	}
 
-	public MiseEnPage all(Object...objects) {
+	public PageLayout all(Object...objects) {
 		for(Object objet : objets) {
 			if(objet != null) {
 				String s = objet.toString();
@@ -576,14 +577,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage t(int numberTabs, Object...objects) {
+	public PageLayout t(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			s("\t");
 		s(objets);
 		return this;
 	}
 
-	public MiseEnPage tabLine(int numberTabs, Object...objects) {
+	public PageLayout tabLine(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			s("\t");
 		s(objets);
@@ -591,19 +592,19 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage allLine(Object...objects) {
+	public PageLayout allLine(Object...objects) {
 		s(objets);
 		s("\n");
 		return this;
 	}
 
-	public MiseEnPage lx(Object...objets) {
+	public PageLayout lx(Object...objets) {
 		s(objets);
 		sx("\n");
 		return this;
 	}
 
-	public MiseEnPage allXml(Object...objects) {
+	public PageLayout allXml(Object...objects) {
 		for(Object objet : objets) {
 			if(objet != null) {
 				String s = objet.toString();
@@ -614,14 +615,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage allXml(int numberTabs, Object...objects) {
+	public PageLayout allXml(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
 		sx(objets);
 		return this;
 	}
 
-	public MiseEnPage tabLineXml(int numberTabs, Object...objects) {
+	public PageLayout tabLineXml(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
 		sx(objets);
@@ -629,14 +630,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public MiseEnPage fg() {
+	public PageLayout fg() {
 		w.s("/>");
 		requeteSite_.getXmlPile().pop();
 		
 		return this;
 	}
 
-	public MiseEnPage g(String localName) {
+	public PageLayout g(String localName) {
 		String nomLocalParent = requeteSite_.getXmlPile().peek();
 		boolean eNoWrap = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocal);
 

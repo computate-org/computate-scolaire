@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.enUS.school.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.WorkerExecutor;
 import java.util.Objects;
@@ -276,38 +276,38 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	}
 
 	////////////////
-	// clientSolr //
+	// solrClient //
 	////////////////
 
-	/**	L'entité « clientSolr »
+	/**	L'entité « solrClient »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected HttpSolrClient clientSolr;
-	public Wrap<HttpSolrClient> clientSolrWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolr").o(clientSolr);
+	protected HttpSolrClient solrClient;
+	public Wrap<HttpSolrClient> solrClientWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("solrClient").o(solrClient);
 
-	/**	<br/>L'entité « clientSolr »
+	/**	<br/>L'entité « solrClient »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:clientSolr">Trouver l'entité clientSolr dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrClient">Trouver l'entité solrClient dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _clientSolr(Wrap<HttpSolrClient> c);
+	protected abstract void _solrClient(Wrap<HttpSolrClient> c);
 
-	public HttpSolrClient getClientSolr() {
-		return clientSolr;
+	public HttpSolrClient getSolrClient() {
+		return solrClient;
 	}
 
-	public void setClientSolr(HttpSolrClient clientSolr) {
-		this.clientSolr = clientSolr;
-		this.clientSolrWrap.alreadyInitialized = true;
+	public void setSolrClient(HttpSolrClient solrClient) {
+		this.solrClient = solrClient;
+		this.solrClientWrap.alreadyInitialized = true;
 	}
-	protected SiteContextEnUS clientSolrInit() {
-		if(!clientSolrWrap.alreadyInitialized) {
-			_clientSolr(clientSolrWrap);
-			if(clientSolr == null)
-				setClientSolr(clientSolrWrap.o);
+	protected SiteContextEnUS solrClientInit() {
+		if(!solrClientWrap.alreadyInitialized) {
+			_solrClient(solrClientWrap);
+			if(solrClient == null)
+				setSolrClient(solrClientWrap.o);
 		}
-		clientSolrWrap.alreadyInitialized(true);
+		solrClientWrap.alreadyInitialized(true);
 		return (SiteContextEnUS)this;
 	}
 
@@ -337,7 +337,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		workerExecutorInit();
 		siteConfigInit();
 		clientSqlInit();
-		clientSolrInit();
+		solrClientInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -378,8 +378,8 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 				return oSiteContextEnUS.siteConfig;
 			case "clientSql":
 				return oSiteContextEnUS.clientSql;
-			case "clientSolr":
-				return oSiteContextEnUS.clientSolr;
+			case "solrClient":
+				return oSiteContextEnUS.solrClient;
 			default:
 				return null;
 		}

@@ -72,7 +72,7 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 	protected void _clientSql(Wrap<SQLClient> c) {
 	}
 
-	protected void _clientSolr(Wrap<HttpSolrClient> c) {
+	protected void _solrClient(Wrap<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(siteConfig.getSolrUrl()).build();
 		c.o(o);
 	}

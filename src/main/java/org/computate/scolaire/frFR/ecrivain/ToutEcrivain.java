@@ -20,10 +20,10 @@ import io.vertx.core.buffer.Buffer;
  * NomCanonique.enUS: org.computate.enUS.school.writer.AllWriter
  * MotCle: classeNomSimpleToutEcrivain
  **/
-public class ToutEcrivain extends ToutEcrivainGen<Object> {    
+public class ToutEcrivain extends ToutEcrivainGen<Object> {   
 
 	/**
-	 * 
+	 * Var.enUS: siteRequest_
 	 * {@inheritDoc}
 	 **/ 
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
@@ -40,7 +40,7 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
+	 * Param1.var.enUS: siteRequest_
 	 * r: initLoinPourClasse
 	 * r.enUS: initDeepForClass
 	 * r: requeteSite
@@ -57,7 +57,7 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
+	 * Param1.var.enUS: siteRequest_
 	 * r: initLoinPourClasse
 	 * r.enUS: initDeepForClass
 	 * r: requeteSite
@@ -75,8 +75,8 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
-	 * Param2.var.enUS: fichier
+	 * Param1.var.enUS: siteRequest_
+	 * Param2.var.enUS: file
 	 * r: Fichier
 	 * r.enUS: File
 	 * r: fichier
@@ -98,8 +98,8 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
-	 * Param2.var.enUS: fichier
+	 * Param1.var.enUS: siteRequest_
+	 * Param2.var.enUS: file
 	 * r: Fichier
 	 * r.enUS: File
 	 * r: fichier
@@ -122,8 +122,8 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
-	 * Param2.var.enUS: fichier
+	 * Param1.var.enUS: siteRequest_
+	 * Param2.var.enUS: buffer
 	 * r: Fichier
 	 * r.enUS: File
 	 * r: fichier
@@ -145,8 +145,8 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: create
-	 * Param1.var.enUS: siteRequest
-	 * Param2.var.enUS: fichier
+	 * Param1.var.enUS: siteRequest_
+	 * Param2.var.enUS: buffer
 	 * r: Fichier
 	 * r.enUS: File
 	 * r: fichier
@@ -168,7 +168,7 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: fichier
+	 * Var.enUS: file
 	 **/
 	protected void _fichier(Couverture<File> c) {
 	}
@@ -181,7 +181,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	 * r.enUS: stringWriter
 	 */
 	protected void _ecrivainString(Couverture<StringWriter> c) {
-//		if(fichier == null && reponseServeurHttp == null)
 		if(fichier == null && buffer == null)
 			c.o(new StringWriter());
 	}
@@ -191,13 +190,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	 **/
 	protected void _buffer(Couverture<Buffer> c) {
 	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: httpServerResponse
-//	 **/
-//	protected void _reponseServeurHttp(Couverture<HttpServerResponse> c) {
-//	}
 
 	/**
 	 * Var.enUS: printWriter
@@ -209,7 +201,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	 * r.enUS: httpServerResponse
 	 */
 	protected void _ecrivainImpression(Couverture<PrintWriter> c) {
-//		if(reponseServeurHttp == null && buffer == null) {
 		if(buffer == null) {
 			if(fichier == null)
 				c.o(new PrintWriter(ecrivainString));
@@ -274,6 +265,7 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: objects
 	 * r: objets
 	 * r.enUS: objects
 	 * r: objet
@@ -358,61 +350,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return o.toString();
 	}
 
-	public ToutEcrivain yamlStr(int tabNumber, Object...objets) {
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		for(Object objet : objets) {
-			if(objet != null) {
-				if(objet instanceof List) {
-					List<?> chaine = (List<?>)objet;
-					for(Object objet2 : chaine) {
-						if(objet2 != null && !StringUtils.isEmpty(objet2.toString()))
-							printWriter.append(objet2.toString());
-					}
-				}
-				else {
-					if(!StringUtils.isEmpty(objet.toString()))
-						printWriter.append(objet.toString());
-				}
-			}
-		}
-		String[] lines = StringUtils.splitPreserveAllTokens(stringWriter.toString(), "\n");
-		l(">+");
-		for(int i = 0; i < lines.length; i++) {
-			boolean last = i == (lines.length -1);
-			String line = lines[i];
-
-			String[] wrapLines = StringUtils.splitPreserveAllTokens(WordUtils.wrap(line, 70), "\n");
-			for(int j = 0; j < wrapLines.length; j++) {
-				boolean wrapLast = j == (wrapLines.length -1);
-				String wrapLine = wrapLines[j];
-				if(wrapLast)
-					t(tabNumber, wrapLine);
-				else
-					tl(tabNumber, wrapLine);
-			}
-
-			if(!last) {
-				tl(tabNumber);
-				if(StringUtils.isNotBlank(line))
-					tl(tabNumber);
-			}
-			else {
-				l();
-			}
-		}
-
-		try {
-			printWriter.flush();
-			stringWriter.flush();
-			printWriter.close();
-			stringWriter.close();
-		} catch (IOException e) {
-			ExceptionUtils.rethrow(e);
-		}
-		return this;
-	}
-
 	/**
 	 * r: ecrivainString
 	 * r.enUS: stringWriter
@@ -437,9 +374,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 				ExceptionUtils.rethrow(e);
 			}
 		}
-
-//		if(reponseServeurHttp != null)
-//			reponseServeurHttp.close();
 	}
 
 	/**
@@ -449,10 +383,10 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 	 * r.enUS: printWriter
 	 * r: reponseServeurHttp
 	 * r.enUS: httpServerResponse
+	 * r: fichier
+	 * r.enUS: file
 	 */
 	@Override public String toString() {
-//		if(reponseServeurHttp != null)
-//			return ecrivainString.toString();
 		if(buffer != null)
 			return ecrivainString.toString();
 		else if(fichier != null)

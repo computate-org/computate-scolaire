@@ -44,37 +44,62 @@ import io.vertx.ext.web.api.OperationRequest;
  * MotCle: classeNomSimpleRequeteSite
  * NomCanonique.enUS: org.computate.scolaire.enUS.request.SiteRequestEnUS
  */    
-public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Serializable {   
+public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Serializable {  
 	private static final long serialVersionUID = -6737494107881513257L;
 
 	/**
 	 * {@inheritDoc}
-	 * r: FrFR
-	 * r.enUS: EnUS
-	 * frFR: L'ecouteur de contexte du site pour obtenir des objets globals du contexte. 
+	 * Var.enUS: siteContext_
+	 * r: SiteContexteFrFR
+	 * r.enUS: SiteContextEnUS
+	 * 
+	 * enUS: The site context with global site information. 
+	 * frFR: Le contexte du site pour obtenir des objets globals du contexte. 
 	 **/    
 	protected void _siteContexte_(Couverture<SiteContexteFrFR> c) {
-		c.o(new SiteContexteFrFR());
 	}
 
-	/**	L'objet de configuration du site. **/
+	/**	
+	 * Var.enUS: siteConfig_
+	 * 
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: siteContexte_
+	 * r.enUS: siteContext_
+	 * 
+	 * enUS: The site configuration. 
+	 * frFR: L'objet de configuration du site. 
+	 * **/
 	protected void _configSite_(Couverture<ConfigSite> c) {
 		ConfigSite o = siteContexte_.getConfigSite();
 		c.o(o);
 	}
 
+	/**
+	 * Var.enUS: siteRequest_
+	 */
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) { 
 		c.o(this);
 	}
 
+	/**
+	 * r: siteContexte_
+	 * r.enUS: siteContext_
+	 */
 	protected void _vertx(Couverture<Vertx> c) {
 		if(siteContexte_ != null)
 			c.o(siteContexte_.getVertx());
 	}
 
+	/**
+	 * Var.enUS: jsonObject
+	 */
 	protected void _objetJson(Couverture<JsonObject> c) {
 	}
 
+	/**
+	 * Var.enUS: solrQuery
+	 */
 	protected void _rechercheSolr(Couverture<SolrQuery> c) {
 	}
 
@@ -84,6 +109,15 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _operationRequete(Couverture<OperationRequest> c) {
 	}
 
+	/**
+	 * Var.enUS: queryResponse
+	 * r: rechercheSolr
+	 * r.enUS: solrQuery
+	 * r: siteContexte_
+	 * r.enUS: siteContext_
+	 * r: getClientSolr
+	 * r.enUS: getSolrClient
+	 */
 	protected void _reponseRecherche(Couverture<QueryResponse> c) {
 		if(rechercheSolr != null) {
 			try {
@@ -95,6 +129,11 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
+	/**
+	 * Var.enUS: searchResults
+	 * r: reponseRecherche
+	 * r.enUS: queryResponse
+	 */
 	protected void _resultatsRecherche(Couverture<SolrDocumentList> c) {
 		if(reponseRecherche != null) {
 			SolrDocumentList o = reponseRecherche.getResults();
@@ -112,6 +151,11 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	protected void _w(Couverture<ToutEcrivain> c) {
 	}
 
+	/**
+	 * Var.enUS: userVertx
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 */
 	protected void _utilisateurVertx(Couverture<JsonObject> c) {
 		if(operationRequete != null) {
 			JsonObject o = operationRequete.getUser();
@@ -120,6 +164,11 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 
 	}
 
+	/**
+	 * Var.enUS: jsonPrincipal
+	 * r: utilisateurVertx
+	 * r.enUS: userVertx
+	 */
 	protected void _principalJson(Couverture<JsonObject> c) {
 		if(utilisateurVertx != null) {
 			JsonObject o = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
@@ -127,8 +176,13 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Le sujet d'acces Keycloak pour l'utilisateur. 
-	 \*	Aussi l'ID d'utilisateur cle primaire dans la base de donnees Keycloak. **/
+	/**	
+	 * Var.enUS: userId
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * Le sujet d'acces Keycloak pour l'utilisateur. 
+	 * Aussi l'ID d'utilisateur cle primaire dans la base de donnees Keycloak. 
+	 ***/
 	protected void _utilisateurId(Couverture<String> c) {
 		if(principalJson != null) {
 			String o = principalJson.getString("sub");
@@ -136,7 +190,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Le nom d'utilisateur prefere de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userName
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * Le nom d'utilisateur prefere de l'utilisateur. 
+	 * **/
 	protected void _utilisateurNom(Couverture<String> c) {
 		if(principalJson != null) {
 			String o = principalJson.getString("preferred_username");
@@ -144,7 +203,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Le nom de famille de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userLastName
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * Le nom de famille de l'utilisateur. 
+	 * **/
 	protected void _utilisateurNomFamille(Couverture<String> c) {
 		if(principalJson != null) {
 			String o = principalJson.getString("family_name");
@@ -152,16 +216,25 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Le prenom de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userFirstName
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * Le prenom de l'utilisateur. 
+	 * **/
 	protected void _utilisateurPrenom(Couverture<String> c) { 
 		if(principalJson != null) {
 			String o = principalJson.getString("given_name");
-//			String o = KeycloakHelper.name(principalJson);
 			c.o(o);
 		}
 	}
 
-	/**	Le nom complet de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userFullName
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * Le nom complet de l'utilisateur. 
+	 * **/
 	protected void _utilisateurNomComplet(Couverture<String> c) {
 		if(principalJson != null) {
 			String o = principalJson.getString("name");
@@ -201,6 +274,9 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
+	/**
+	 * Var.enUS: xmlStack
+	 */
 	protected void _xmlPile(Stack<String> o) {}
 //
 //	protected void _xmlElementParent(Couverture<String> c) {}

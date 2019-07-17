@@ -66,7 +66,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.enUS.school.writer.AllWriter;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
 
@@ -342,21 +342,21 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "cree":
+					case "created":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("created", jsonObject.getInstant(entiteVar), pk));
 						break;
-					case "modifie":
+					case "modified":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getInstant(entiteVar), pk));
 						break;
-					case "archive":
+					case "archived":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archive", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entiteVar), pk));
 						break;
-					case "supprime":
+					case "deleted":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("supprime", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					}
 				}

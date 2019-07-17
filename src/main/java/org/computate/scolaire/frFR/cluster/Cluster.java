@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;  
+package org.computate.scolaire.frFR.cluster;      
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,13 +10,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.page.MiseEnPage;
-import org.computate.scolaire.frFR.page.parti.PagePart;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**       
+/**      
+ * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Api: true
  * ApiUri: /api/cluster
  * Role: SiteAdmin
@@ -37,6 +38,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 public class Cluster extends ClusterGen<Object> { 
 
 	/**
+	 * Var.enUS: siteRequest_
 	 * {@inheritDoc}
 	 */       
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
@@ -70,6 +72,7 @@ public class Cluster extends ClusterGen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: created
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -84,6 +87,7 @@ public class Cluster extends ClusterGen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: modified
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -98,6 +102,7 @@ public class Cluster extends ClusterGen<Object> {
 	
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: archived
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -112,6 +117,7 @@ public class Cluster extends ClusterGen<Object> {
 	
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: deleted
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -125,6 +131,7 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**  
+	 * Var.enUS: classCanonicalName
 	 * Indexe: true
 	 * Stocke: true
 	 */       
@@ -134,6 +141,7 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Var.enUS: classSimpleName
 	 * Indexe: true
 	 * Stocke: true
 	 */          
@@ -144,32 +152,23 @@ public class Cluster extends ClusterGen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
 	 **/      
 	protected void _classeNomsCanoniques(List<String> l) { 
 		l.add(Cluster.class.getCanonicalName());
 	}
-//
-//	/**
-//	 * genInclure: true
-//	 */
-//	public Cluster e(String nomLocal) {
-//		if(page_ != null)
-//			page_.e(nomLocal);
-//		return page_;
-//	}
-//
-//	/**
-//	 * genInclure: true
-//	 */
-//	public Cluster a(String nomAttribut, Object...objets) {
-//		if(page_ != null)
-//			page_.a(nomAttribut, objets);
-//		return page_;
-//	}
 
 	/**
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
 	 */
 	public Cluster e(String nomLocal) {
 		ToutEcrivain w = requeteSite_.getW();
@@ -192,6 +191,22 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
+	/**
+	 * Param1.var.enUS: attributeName
+	 * Param2.var.enUS: objects
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: echapperDansCitatations
+	 * r.enUS: escapeInQuotes
+	 * r: nomAttribut
+	 * r.enUS: attributeName
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public Cluster a1(String nomAttribut, Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
 		w.s(" ");
@@ -208,6 +223,20 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**  
+	 * Param1.var.enUS: attributeName
+	 * Param2.var.enUS: objects
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: objet
+	 * r.enUS: object
+	 * r: nomAttribut
+	 * r.enUS: attributeName
+	 * r: echapperDansCitatations
+	 * r.enUS: escapeInQuotes
 	 */
 	public Cluster a(String nomAttribut, Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
@@ -225,6 +254,12 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
+	/**  
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 */
 	public Cluster a2() {
 		ToutEcrivain w = requeteSite_.getW();
 		w.s("\"");
@@ -233,6 +268,10 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/** 
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
 	 */
 	public Cluster f() {
 		ToutEcrivain w = requeteSite_.getW();
@@ -242,6 +281,13 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: objects
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster s(Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
@@ -256,6 +302,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: numberTabs
+	 * Param2.var.enUS: objects
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster t(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -265,6 +317,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: numberTabs
+	 * Param2.var.enUS: objects
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster tl(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -275,6 +333,9 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/** 
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster l(Object...objets) {
 		s(objets);
@@ -282,6 +343,11 @@ public class Cluster extends ClusterGen<Object> {
 		return this;
 	}
 
+	/** 
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public Cluster lx(Object...objets) {
 		s(objets);
 		sx("\n");
@@ -289,6 +355,17 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/** 
+	 * Param1.var.enUS: objects
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: objet
+	 * r.enUS: object
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: echapper
+	 * r.enUS: escape
 	 */
 	public Cluster sx(Object...objets) {
 		ToutEcrivain w = requeteSite_.getW();
@@ -303,6 +380,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: numberTabs
+	 * Param2.var.enUS: objects
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster tx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -312,6 +395,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: numberTabs
+	 * Param2.var.enUS: objects
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public Cluster tlx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -322,6 +411,12 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
 	 */
 	public Cluster fg() {
 		ToutEcrivain w = requeteSite_.getW();
@@ -332,6 +427,23 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**     
+	 * Param1.var.enUS: localName
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
+	 * r: nomLocalParent
+	 * r.enUS: localNameParent
+	 * r: tabulationsEchappes
+	 * r.enUS: tabsEscaped
+	 * r: tabulations
+	 * r.enUS: tabs
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: nomLocal
+	 * r.enUS: localName
 	 */
 	public Cluster g(String nomLocal) {
 		ToutEcrivain w = requeteSite_.getW();
