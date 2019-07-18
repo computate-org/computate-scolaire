@@ -1,8 +1,6 @@
 package org.computate.scolaire.frFR.utilisateur;
 
 import java.lang.String;
-import java.util.List;
-import java.lang.Long;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
@@ -26,6 +24,7 @@ import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -68,6 +67,10 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
+		c.o("/utilisateur");
+	}
+
+	@Override protected void _pageUriEnUS(Couverture<String> c) {
 		c.o("/utilisateur");
 	}
 

@@ -18,7 +18,7 @@ public abstract class PagePart extends PagePartGen<Cluster> {
 
 	protected void _partVar(Wrap<String> c) {}
 
-	public void  htmlAvantPagePart() {}
+	public void  htmlBeforePagePart() {}
 
-	public void  htmlApresPagePart() {}
+	public void  htmlAfterPagePart() {}
 }

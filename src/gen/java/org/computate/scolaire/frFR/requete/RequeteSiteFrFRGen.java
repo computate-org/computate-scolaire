@@ -967,67 +967,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
-	////////////////
-	// pageAchete //
-	////////////////
-
-	/**	L'entité « pageAchete »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean pageAchete;
-	public Couverture<Boolean> pageAcheteCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pageAchete").o(pageAchete);
-
-	/**	<br/>L'entité « pageAchete »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageAchete">Trouver l'entité pageAchete dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageAchete(Couverture<Boolean> c);
-
-	public Boolean getPageAchete() {
-		return pageAchete;
-	}
-
-	public void setPageAchete(Boolean pageAchete) {
-		this.pageAchete = pageAchete;
-		this.pageAcheteCouverture.dejaInitialise = true;
-	}
-	public RequeteSiteFrFR setPageAchete(String o) {
-		this.pageAchete = Boolean.parseBoolean(o);
-		this.pageAcheteCouverture.dejaInitialise = true;
-		return (RequeteSiteFrFR)this;
-	}
-	protected RequeteSiteFrFR pageAcheteInit() {
-		if(!pageAcheteCouverture.dejaInitialise) {
-			_pageAchete(pageAcheteCouverture);
-			if(pageAchete == null)
-				setPageAchete(pageAcheteCouverture.o);
-		}
-		pageAcheteCouverture.dejaInitialise(true);
-		return (RequeteSiteFrFR)this;
-	}
-
-	public Boolean solrPageAchete() {
-		return pageAchete;
-	}
-
-	public String strPageAchete() {
-		return pageAchete == null ? "" : pageAchete.toString();
-	}
-
-	public String nomAffichagePageAchete() {
-		return null;
-	}
-
-	public String htmTooltipPageAchete() {
-		return null;
-	}
-
-	public String htmPageAchete() {
-		return pageAchete == null ? "" : StringEscapeUtils.escapeHtml4(strPageAchete());
-	}
-
 	///////////////
 	// pageAdmin //
 	///////////////
@@ -1499,7 +1438,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		utilisateurSiteInit();
 		xmlPileInit();
 		documentSolrInit();
-		pageAcheteInit();
 		pageAdminInit();
 		requetePkInit();
 		connexionSqlInit();
@@ -1595,8 +1533,6 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.xmlPile;
 			case "documentSolr":
 				return oRequeteSiteFrFR.documentSolr;
-			case "pageAchete":
-				return oRequeteSiteFrFR.pageAchete;
 			case "pageAdmin":
 				return oRequeteSiteFrFR.pageAdmin;
 			case "requetePk":

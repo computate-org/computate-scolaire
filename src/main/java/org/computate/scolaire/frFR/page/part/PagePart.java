@@ -26,7 +26,13 @@ public abstract class PagePart extends PagePartGen<Cluster> {
 
 	protected void _partVar(Couverture<String> c) {}
 
+	/**
+	 * Var.enUS: htmlBeforePagePart
+	 */
 	public void  htmlAvantPagePart() {}
 
+	/**
+	 * Var.enUS: htmlAfterPagePart
+	 */
 	public void  htmlApresPagePart() {}
 }

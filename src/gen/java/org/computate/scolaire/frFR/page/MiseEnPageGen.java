@@ -1,6 +1,5 @@
 package org.computate.scolaire.frFR.page;
 
-import org.computate.scolaire.frFR.page.parti.PagePart;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -10,6 +9,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import java.time.Instant;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -37,7 +37,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	/**	L'entité « pageParts »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
-	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.parti.PagePart>();
+	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »
@@ -1932,172 +1932,60 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageAccueilUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageAccueilUri());
 	}
 
-	///////////////
-	// pageEcole //
-	///////////////
+	//////////////////
+	// pageEcoleUri //
+	//////////////////
 
-	/**	L'entité « pageEcole »
+	/**	L'entité « pageEcoleUri »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String pageEcole;
-	public Couverture<String> pageEcoleCouverture = new Couverture<String>().p(this).c(String.class).var("pageEcole").o(pageEcole);
+	protected String pageEcoleUri;
+	public Couverture<String> pageEcoleUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageEcoleUri").o(pageEcoleUri);
 
-	/**	<br/>L'entité « pageEcole »
+	/**	<br/>L'entité « pageEcoleUri »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageEcole">Trouver l'entité pageEcole dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageEcoleUri">Trouver l'entité pageEcoleUri dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _pageEcole(Couverture<String> c);
+	protected abstract void _pageEcoleUri(Couverture<String> c);
 
-	public String getPageEcole() {
-		return pageEcole;
+	public String getPageEcoleUri() {
+		return pageEcoleUri;
 	}
 
-	public void setPageEcole(String pageEcole) {
-		this.pageEcole = pageEcole;
-		this.pageEcoleCouverture.dejaInitialise = true;
+	public void setPageEcoleUri(String pageEcoleUri) {
+		this.pageEcoleUri = pageEcoleUri;
+		this.pageEcoleUriCouverture.dejaInitialise = true;
 	}
-	protected MiseEnPage pageEcoleInit() {
-		if(!pageEcoleCouverture.dejaInitialise) {
-			_pageEcole(pageEcoleCouverture);
-			if(pageEcole == null)
-				setPageEcole(pageEcoleCouverture.o);
+	protected MiseEnPage pageEcoleUriInit() {
+		if(!pageEcoleUriCouverture.dejaInitialise) {
+			_pageEcoleUri(pageEcoleUriCouverture);
+			if(pageEcoleUri == null)
+				setPageEcoleUri(pageEcoleUriCouverture.o);
 		}
-		pageEcoleCouverture.dejaInitialise(true);
+		pageEcoleUriCouverture.dejaInitialise(true);
 		return (MiseEnPage)this;
 	}
 
-	public String solrPageEcole() {
-		return pageEcole;
+	public String solrPageEcoleUri() {
+		return pageEcoleUri;
 	}
 
-	public String strPageEcole() {
-		return pageEcole == null ? "" : pageEcole;
+	public String strPageEcoleUri() {
+		return pageEcoleUri == null ? "" : pageEcoleUri;
 	}
 
-	public String nomAffichagePageEcole() {
+	public String nomAffichagePageEcoleUri() {
 		return null;
 	}
 
-	public String htmTooltipPageEcole() {
+	public String htmTooltipPageEcoleUri() {
 		return null;
 	}
 
-	public String htmPageEcole() {
-		return pageEcole == null ? "" : StringEscapeUtils.escapeHtml4(strPageEcole());
-	}
-
-	////////////////////
-	// pageAProposUri //
-	////////////////////
-
-	/**	L'entité « pageAProposUri »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageAProposUri;
-	public Couverture<String> pageAProposUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageAProposUri").o(pageAProposUri);
-
-	/**	<br/>L'entité « pageAProposUri »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageAProposUri">Trouver l'entité pageAProposUri dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageAProposUri(Couverture<String> c);
-
-	public String getPageAProposUri() {
-		return pageAProposUri;
-	}
-
-	public void setPageAProposUri(String pageAProposUri) {
-		this.pageAProposUri = pageAProposUri;
-		this.pageAProposUriCouverture.dejaInitialise = true;
-	}
-	protected MiseEnPage pageAProposUriInit() {
-		if(!pageAProposUriCouverture.dejaInitialise) {
-			_pageAProposUri(pageAProposUriCouverture);
-			if(pageAProposUri == null)
-				setPageAProposUri(pageAProposUriCouverture.o);
-		}
-		pageAProposUriCouverture.dejaInitialise(true);
-		return (MiseEnPage)this;
-	}
-
-	public String solrPageAProposUri() {
-		return pageAProposUri;
-	}
-
-	public String strPageAProposUri() {
-		return pageAProposUri == null ? "" : pageAProposUri;
-	}
-
-	public String nomAffichagePageAProposUri() {
-		return null;
-	}
-
-	public String htmTooltipPageAProposUri() {
-		return null;
-	}
-
-	public String htmPageAProposUri() {
-		return pageAProposUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageAProposUri());
-	}
-
-	////////////////
-	// pageFaqUri //
-	////////////////
-
-	/**	L'entité « pageFaqUri »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageFaqUri;
-	public Couverture<String> pageFaqUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageFaqUri").o(pageFaqUri);
-
-	/**	<br/>L'entité « pageFaqUri »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageFaqUri">Trouver l'entité pageFaqUri dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageFaqUri(Couverture<String> c);
-
-	public String getPageFaqUri() {
-		return pageFaqUri;
-	}
-
-	public void setPageFaqUri(String pageFaqUri) {
-		this.pageFaqUri = pageFaqUri;
-		this.pageFaqUriCouverture.dejaInitialise = true;
-	}
-	protected MiseEnPage pageFaqUriInit() {
-		if(!pageFaqUriCouverture.dejaInitialise) {
-			_pageFaqUri(pageFaqUriCouverture);
-			if(pageFaqUri == null)
-				setPageFaqUri(pageFaqUriCouverture.o);
-		}
-		pageFaqUriCouverture.dejaInitialise(true);
-		return (MiseEnPage)this;
-	}
-
-	public String solrPageFaqUri() {
-		return pageFaqUri;
-	}
-
-	public String strPageFaqUri() {
-		return pageFaqUri == null ? "" : pageFaqUri;
-	}
-
-	public String nomAffichagePageFaqUri() {
-		return null;
-	}
-
-	public String htmTooltipPageFaqUri() {
-		return null;
-	}
-
-	public String htmPageFaqUri() {
-		return pageFaqUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageFaqUri());
+	public String htmPageEcoleUri() {
+		return pageEcoleUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageEcoleUri());
 	}
 
 	////////////////////////
@@ -2266,9 +2154,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		pageMotsClesInit();
 		pageDescriptionInit();
 		pageAccueilUriInit();
-		pageEcoleInit();
-		pageAProposUriInit();
-		pageFaqUriInit();
+		pageEcoleUriInit();
 		pageUtilisateurUriInit();
 		pageDeconnexionUriInit();
 	}
@@ -2378,12 +2264,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.pageDescription;
 			case "pageAccueilUri":
 				return oMiseEnPage.pageAccueilUri;
-			case "pageEcole":
-				return oMiseEnPage.pageEcole;
-			case "pageAProposUri":
-				return oMiseEnPage.pageAProposUri;
-			case "pageFaqUri":
-				return oMiseEnPage.pageFaqUri;
+			case "pageEcoleUri":
+				return oMiseEnPage.pageEcoleUri;
 			case "pageUtilisateurUri":
 				return oMiseEnPage.pageUtilisateurUri;
 			case "pageDeconnexionUri":

@@ -20,7 +20,7 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _pageParts(List<PagePart> l) {
 	}
 
-	public void  avantPagePart(PagePart o, String var) {
+	public void  beforePagePart(PagePart o, String var) {
 	}
 
 	protected void _pk(Wrap<Long> c) {}

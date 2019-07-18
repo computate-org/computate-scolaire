@@ -1,9 +1,9 @@
-package org.computate.scolaire.frFR.utilisateur;
+package org.computate.scolaire.enUS.user;
 
-import org.computate.scolaire.frFR.config.ConfigSite;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import java.io.IOException;
 import java.util.Collections;
@@ -66,24 +66,24 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.enUS.school.writer.AllWriter;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSitePage;
 
 
 /**
  * Traduire: false
  **/
-public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFRGenApiService {
+public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(UtilisateurSiteFrFRGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteUserEnUSGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "UtilisateurSiteFrFRApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "SiteUserEnUSApiServiceImpl";
 
-	protected SiteContexteFrFR siteContexte;
+	protected SiteContextEnUS siteContexte;
 
-	public UtilisateurSiteFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
+	public SiteUserEnUSGenApiServiceImpl(SiteContextEnUS siteContexte) {
 		this.siteContexte = siteContexte;
-		UtilisateurSiteFrFRGenApiService service = UtilisateurSiteFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+		SiteUserEnUSGenApiService service = SiteUserEnUSGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// PATCH //
@@ -91,15 +91,15 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	@Override
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
-			sqlUtilisateurSite(requeteSite, a -> {
+			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourSiteUser(siteContexte, operationRequete, body);
+			sqlSiteUser(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurUtilisateurSite(requeteSite, b -> {
+					utilisateurSiteUser(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheUtilisateurSite(requeteSite, false, true, null, c -> {
+							rechercheSiteUser(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
-									listePATCHUtilisateurSite(listeUtilisateurSite, d -> {
+									ListeRecherche<SiteUser> listeSiteUser = c.result();
+									listePATCHSiteUser(listeSiteUser, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -111,91 +111,71 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+																erreurSiteUser(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+														erreurSiteUser(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+											erreurSiteUser(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+									erreurSiteUser(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+							erreurSiteUser(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+					erreurSiteUser(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurSiteUser(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void listePATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHSiteUser(ListeRecherche<SiteUser> listeSiteUser, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-		listeUtilisateurSite.getList().forEach(o -> {
+		listeSiteUser.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHUtilisateurSite(o).compose(
-					a -> definirPATCHUtilisateurSite(a).compose(
-						b -> indexerPATCHUtilisateurSite(b)
+				sqlPATCHSiteUser(o).compose(
+					a -> definirPATCHSiteUser(a).compose(
+						b -> indexerPATCHSiteUser(b)
 					)
 				)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHUtilisateurSite(listeUtilisateurSite, gestionnaireEvenements);
+				reponse200PATCHSiteUser(listeSiteUser, gestionnaireEvenements);
 			} else {
-				erreurUtilisateurSite(listeUtilisateurSite.getRequeteSite_(), gestionnaireEvenements, a);
+				erreurSiteUser(listeSiteUser.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<UtilisateurSite> sqlPATCHUtilisateurSite(UtilisateurSite o) {
-		Future<UtilisateurSite> future = Future.future();
+	public Future<SiteUser> sqlPATCHSiteUser(SiteUser o) {
+		Future<SiteUser> future = Future.future();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			JsonObject requeteJson = requeteSite.getObjetJson();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
-			UtilisateurSite o2 = new UtilisateurSite();
+			SiteUser o2 = new SiteUser();
 
-			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
+			patchSql.append(SiteContextEnUS.SQL_modifier);
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.user.SiteUser"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
-						break;
-					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
-						break;
-					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
-						break;
-					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
-						break;
 				}
 			}
 			connexionSql.queryWithParams(
@@ -213,14 +193,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public Future<UtilisateurSite> definirPATCHUtilisateurSite(UtilisateurSite o) {
-		Future<UtilisateurSite> future = Future.future();
+	public Future<SiteUser> definirPATCHSiteUser(SiteUser o) {
+		Future<SiteUser> future = Future.future();
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
+					SiteContextEnUS.SQL_definir
 					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
@@ -239,7 +219,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public Future<Void> indexerPATCHUtilisateurSite(UtilisateurSite o) {
+	public Future<Void> indexerPATCHSiteUser(SiteUser o) {
 		Future<Void> future = Future.future();
 		try {
 			o.initLoinPourClasse(o.getRequeteSite_());
@@ -251,11 +231,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void reponse200PATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHSiteUser(ListeRecherche<SiteUser> listeSiteUser, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
+			SiteRequestEnUS requeteSite = listeSiteUser.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeSiteUser.getRequeteSite_(), buffer);
 			requeteSite.setW(w);
 			buffer.appendString("{}");
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
@@ -264,87 +244,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	// RecherchePage //
-
-	@Override
-	public void recherchepageUtilisateurSiteId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		recherchepageUtilisateurSite(operationRequete, gestionnaireEvenements);
-	}
-
-	@Override
-	public void recherchepageUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
-			sqlUtilisateurSite(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurUtilisateurSite(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheUtilisateurSite(requeteSite, false, true, "/utilisateur", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
-									reponse200RecherchePageUtilisateurSite(listeUtilisateurSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
-													}
-												});
-											}
-										} else {
-											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200RecherchePageUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			UtilisateurSitePage page = new UtilisateurSitePage();
-			SolrDocument pageDocumentSolr = new SolrDocument();
-
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/utilisateur");
-			page.setPageDocumentSolr(pageDocumentSolr);
-			page.setW(w);
-			page.setListeUtilisateurSite(listeUtilisateurSite);
-			page.initLoinUtilisateurSitePage(requeteSite);
-			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	public String varIndexeUtilisateurSite(String entiteVar) {
+	public String varIndexeSiteUser(String entiteVar) {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -389,14 +289,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public String varRechercheUtilisateurSite(String entiteVar) {
+	public String varRechercheSiteUser(String entiteVar) {
 		switch(entiteVar) {
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
 	}
 
-	public String varSuggereUtilisateurSite(String entiteVar) {
+	public String varSuggereSiteUser(String entiteVar) {
 		switch(entiteVar) {
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
@@ -405,7 +305,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	// Partagé //
 
-	public void erreurUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
+	public void erreurSiteUser(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -442,7 +342,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void sqlUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlSiteUser(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
@@ -470,24 +370,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourUtilisateurSite(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
-		return genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, null);
+	public SiteRequestEnUS genererSiteRequestEnUSPourSiteUser(SiteContextEnUS siteContexte, OperationRequest operationRequete) {
+		return genererSiteRequestEnUSPourSiteUser(siteContexte, operationRequete, null);
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourUtilisateurSite(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
+	public SiteRequestEnUS genererSiteRequestEnUSPourSiteUser(SiteContextEnUS siteContexte, OperationRequest operationRequete, JsonObject body) {
 		Vertx vertx = siteContexte.getVertx();
-		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
+		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
 		requeteSite.setObjetJson(body);
 		requeteSite.setVertx(vertx);
 		requeteSite.setSiteContexte_(siteContexte);
 		requeteSite.setConfigSite_(siteContexte.getConfigSite());
 		requeteSite.setOperationRequete(operationRequete);
-		requeteSite.initLoinRequeteSiteFrFR(requeteSite);
+		requeteSite.initLoinSiteRequestEnUS(requeteSite);
 
 		return requeteSite;
 	}
 
-	public void utilisateurUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void utilisateurSiteUser(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -495,7 +395,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				gestionnaireEvenements.handle(Future.succeededFuture());
 			} else {
 				connexionSql.queryWithParams(
-						SiteContexteFrFR.SQL_selectC
+						SiteContextEnUS.SQL_selectC
 						, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
 						, selectCAsync
 				-> {
@@ -503,7 +403,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
 						if(utilisateurValeurs == null) {
 							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_creer
+									SiteContextEnUS.SQL_creer
 									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
 									, creerAsync
 							-> {
@@ -513,7 +413,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
-										SiteContexteFrFR.SQL_definir
+										SiteContextEnUS.SQL_definir
 										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 										, definirAsync
 								-> {
@@ -550,7 +450,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(
-									SiteContexteFrFR.SQL_definir
+									SiteContextEnUS.SQL_definir
 									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
 									, definirAsync
 							-> {
@@ -587,21 +487,21 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
+	public void rechercheSiteUser(SiteRequestEnUS requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<SiteUser>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+			ListeRecherche<SiteUser> listeRecherche = new ListeRecherche<SiteUser>();
 			listeRecherche.setPeupler(peupler);
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(UtilisateurSite.class);
+			listeRecherche.setC(SiteUser.class);
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
+			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
 			listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getUtilisateurId()));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
@@ -632,7 +532,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheUtilisateurSite(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheSiteUser(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -646,18 +546,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeUtilisateurSite(entiteVar);
+								varIndexe = varIndexeSiteUser(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeUtilisateurSite(entiteVar);
+								varIndexe = varIndexeSiteUser(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "fl":
 								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeUtilisateurSite(entiteVar);
+								varIndexe = varIndexeSiteUser(entiteVar);
 								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
@@ -681,13 +581,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void definirUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void definirSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
+					SiteContextEnUS.SQL_definir
 					, new JsonArray(Arrays.asList(pk, pk, pk))
 					, definirAsync
 			-> {
@@ -705,13 +605,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void attribuerUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void attribuerSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			SiteRequestEnUS requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			Long pk = o.getPk();
 			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_attribuer
+					SiteContextEnUS.SQL_attribuer
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
@@ -731,8 +631,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void indexerUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+	public void indexerSiteUser(SiteUser o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		SiteRequestEnUS requeteSite = o.getRequeteSite_();
 		try {
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();

@@ -16,8 +16,11 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.frFR.page.part.PagePart;
+import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.xml.UtilXml;
 
 public class PageLayout extends PageLayoutGen<Object> {
 
@@ -25,79 +28,79 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p");
 
-	public static DateTimeFormatter FORMATDateHeureCourt = DateTimeFormatter.ofPattern("MMM d yyyy h:mm a", Locale.US);
+	public static DateTimeFormatter FORMATDateTimeShort = DateTimeFormatter.ofPattern("MMM d yyyy h:mm a", Locale.US);
 
-	public static DateTimeFormatter FORMATDateCourt = DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US);
+	public static DateTimeFormatter FORMATDateShort = DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US);
 
-	public static DateTimeFormatter FORMATAffichage = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a", Locale.US);
+	public static DateTimeFormatter FORMATDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a", Locale.US);
 
 	protected void _pageParts(List<PagePart> l) {
 	}
 
-	public void  avantPagePart(PagePart o, String var) {
+	public void  beforePagePart(PagePart o, String var) {
 		o.setPage_(this);
 	}
 
-	protected void _requeteSite_(Wrap<SiteRequestEnUS> c) {
+	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {
 	}
 
-	protected void _statiqueUrlBase(Wrap<String> c) {
-		c.o(requeteSite_.getConfigSite_().getStatiqueUrlBase()); 
+	protected void _staticBaseUrl(Wrap<String> c) {
+		c.o(siteRequest_.getSiteConfig_().getStaticBaseUrl()); 
 	}
 
-	protected void _pageDocumentSolr(Wrap<SolrDocument> c) {
+	protected void _pageSolrDocument(Wrap<SolrDocument> c) {
 		
 	}
 
-	protected void __writer(Wrap<ToutEcrivain> c) {
-		c.o(requeteSite_.getW());
+	protected void _w(Wrap<AllWriter> c) {
+		c.o(siteRequest_.getW());
 	}
 
-	protected void _contexteIconeGroupe(Wrap<String> c) {
+	protected void _contextIconGroup(Wrap<String> c) {
 	}
 
-	protected void _contexteIconeNom(Wrap<String> c) {
+	protected void _contextIconName(Wrap<String> c) {
 	}
 
-	protected void _contexteIconeClassesCss(Wrap<String> c) {
-		if(contexteIconeGroupe != null && contexteIconeNom != null)
-			c.o("fa" + StringUtils.substring(contexteIconeGroupe, 0, 1) + " fa-" + contexteIconeNom + " ");
+	protected void _contextIconCssClasses(Wrap<String> c) {
+		if(contextIconGroup != null && contextIconName != null)
+			c.o("fa" + StringUtils.substring(contextIconGroup, 0, 1) + " fa-" + contextIconName + " ");
 	}
 
 	protected void _pageVisibleToBots(Wrap<Boolean> c) {
-		c.o(BooleanUtils.toBooleanDefaultIfNull((Boolean)pageDocumentSolr.get(c.var + "_stored_boolean"), false));
+		c.o(BooleanUtils.toBooleanDefaultIfNull((Boolean)pageSolrDocument.get(c.var + "_stored_boolean"), false));
 	}
 
 	protected void _pageH1(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
 	protected void _pageH2(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
 	protected void _pageH3(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
 	protected void __pageH1Short(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH1));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), pageH1));
 	}
 
 	protected void __pageH2Short(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH2));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), pageH2));
 	}
 
-	protected void __pageH2Short(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH2));
+	protected void __pageH3Short(Wrap<String> c) {
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), pageH2));
 	}
 
 	protected void _pageTitle(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_enUS_stored_string"), StringUtils.join(pageH1, pageH2)));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_enUS_stored_string"), StringUtils.join(pageH1, pageH2)));
 	}
 
 	protected void _pageUri(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_enUS_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_enUS_stored_string"), null));
 	}
 
 	protected void _pageUriFrFR(Wrap<String> c) {
@@ -112,89 +115,81 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _pageImageUri(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
 	protected void _pageImageUrl(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), "https://" + requeteSite_.getConfigSite_().getSiteNomHote() + pageImageUri));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), "https://" + siteRequest_.getSiteConfig_().getSiteHostName() + pageImageUri));
 	}
 
 	protected void _pageVideoId(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
 	protected void _pageVideoUrl(Wrap<String> c) {
 		if(pageVideoId != null) {
-			c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), "https://youtu.be/" + pageVideoId));
+			c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), "https://youtu.be/" + pageVideoId));
 		}
 	}
 
 	protected void _pageVideoUrlEmbed(Wrap<String> c) {
 		if(pageVideoId != null) {
-			c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), "https://www.youtube.com/embed/" + pageVideoId));
+			c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), "https://www.youtube.com/embed/" + pageVideoId));
 		}
 	}
 
-	protected void __pageImageWidth(Wrap<Integer> c) {
-		c.o((Integer)pageDocumentSolr.get(c.var + "_stored_int"));
+	protected void _pageImageWidth(Wrap<Integer> c) {
+		c.o((Integer)pageSolrDocument.get(c.var + "_stored_int"));
 	}
 
-	protected void __pageImageHeight(Wrap<Integer> c) {
-		c.o((Integer)pageDocumentSolr.get(c.var + "_stored_int"));
+	protected void _pageImageHeight(Wrap<Integer> c) {
+		c.o((Integer)pageSolrDocument.get(c.var + "_stored_int"));
 	}
 
-	protected void __pageImageContentType(Wrap<String> c) {
-		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
+	protected void _pageImageContentType(Wrap<String> c) {
+		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_stored_string"), null));
 	}
 
-	protected void __pageContentType(Wrap<String> c) {
+	protected void _pageContentType(Wrap<String> c) {
 		c.o("text/html;charset=UTF-8");
 	}
 
-	protected void __pageCreated(Wrap<LocalDateTime> c) {   
-		Date solrVal = (Date)pageDocumentSolr.get(c.var + "_stored_date");
+	protected void _pageCreated(Wrap<LocalDateTime> c) {   
+		Date solrVal = (Date)pageSolrDocument.get(c.var + "_stored_date");
 		if(solrVal != null)
 			c.o(solrVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 	}
 
-	protected void __pageModified(Wrap<LocalDateTime> c) {
-		Date solrVal = (Date)pageDocumentSolr.get(c.var + "_stored_date");
+	protected void _pageModified(Wrap<LocalDateTime> c) {
+		Date solrVal = (Date)pageSolrDocument.get(c.var + "_stored_date");
 		if(solrVal != null)
 			c.o(solrVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 		else
-			c.o(pageCree);
+			c.o(pageCreated);
 	}
 
-	protected void __pageKeywords(Wrap<String> c) {
+	protected void _pageKeywords(Wrap<String> c) {
 	}
 
 	protected void _pageDescription(Wrap<String> c) {
 	}
 
-	protected void __homePageUri(Wrap<String> c) {
+	protected void _pageHomeUri(Wrap<String> c) {
 		c.o("");
 	}
 
-	protected void __pageInrEntry(Wrap<String> c) {
+	protected void _pageSchoolUri(Wrap<String> c) {
 		c.o(" /school");
 	}
 
-	protected void __aboutPageUri(Wrap<String> c) {
-		c.o("/apropos");
+	protected void _pageUserUri(Wrap<String> c) {
+		c.o("/user");
 	}
 
-	protected void _pageFaqUri(Wrap<String> c) {
-		c.o("/faq");
-	}
-
-	protected void __userPageUri(Wrap<String> c) {
-		c.o("/utilisateur");
-	}
-
-	protected void __logoutPageUri(Wrap<String> c) {
+	protected void __pageLogoutUri(Wrap<String> c) {
 		try {
-			ConfigSite configSite = requeteSite_.getConfigSite_();
-			String o = configSite.getAuthUrl() + "/realms/" + configSite.getAuthRoyaume() + "/protocol/openid-connect/logout?redirect_uri=" + URLEncoder.encode(configSite.getSiteUrlBase() + "/deconnexion", "UTF-8");
+			SiteConfig siteConfig = siteRequest_.getSiteConfig_();
+			String o = siteConfig.getAuthUrl() + "/realms/" + siteConfig.getAuthRealm() + "/protocol/openid-connect/logout?redirect_uri=" + URLEncoder.encode(siteConfig.getSiteBaseUrl() + "/logout", "UTF-8");
 			c.o(o);
 		} catch (UnsupportedEncodingException e) {
 			ExceptionUtils.rethrow(e);
@@ -205,41 +200,41 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public void  htmlMeta() {
 		e("meta").a("charset", "UTF-8").fg();
 		e("meta").a("name", "viewport").a("content", "width=device-width, initial-scale=1").fg();
-		e("meta").a("name", "keywords").a("content", pageMotsCles).fg();
-		e("meta").a("property", "og:title").a("content", pageTitre).fg();
+		e("meta").a("name", "keywords").a("content", pageKeywords).fg();
+		e("meta").a("property", "og:title").a("content", pageTitle).fg();
 		e("meta").a("property", "og:description").a("content", pageDescription).fg();
 		e("meta").a("property", "og:url").a("content", pageUrl).fg();
-		e("meta").a("property", "og:site_name").a("content", requeteSite_.getConfigSite_().getNomDomaine()).fg();
+		e("meta").a("property", "og:site_name").a("content", siteRequest_.getSiteConfig_().getDomainName()).fg();
 		e("meta").a("property", "og:image").a("content", pageImageUrl).fg();
-		e("meta").a("property", "og:image:width").a("content", pageImageLargeur).fg();
-		e("meta").a("property", "og:image:height").a("content", pageImageHauteur).fg();
-		e("meta").a("property", "og:image:type").a("content", pageImageTypeContenu).fg();
-		e("meta").a("property", "og:image:alt").a("content", pageTitre).fg();
+		e("meta").a("property", "og:image:width").a("content", pageImageWidth).fg();
+		e("meta").a("property", "og:image:height").a("content", pageImageHeight).fg();
+		e("meta").a("property", "og:image:type").a("content", pageImageContentType).fg();
+		e("meta").a("property", "og:image:alt").a("content", pageTitle).fg();
 		e("meta").a("property", "og:type").a("content", "article").fg();
 		e("meta").a("name", "twitter:card").a("content", "summary_large_image").fg();
 		e("meta").a("name", "twitter:site").a("content", "@computateorg").fg();
 		e("meta").a("name", "twitter:creator").a("content", "@computateorg").fg();
-		e("meta").a("name", "twitter:title").a("content", pageTitre).fg();
+		e("meta").a("name", "twitter:title").a("content", pageTitle).fg();
 		e("meta").a("name", "twitter:description").a("content", pageDescription).fg();
 		e("meta").a("name", "twitter:image").a("content", pageImageUrl).fg();
 		e("meta").a("name", "description").a("content", pageDescription).fg();
 	}
 
 	@Override()
-	public void  htmlScriptsMiseEnPage() {
-		e("script").a("src", statiqueUrlBase, "/js/site.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/moment.min.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/jqDatePicker.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");
+	public void  htmlScriptsPageLayout() {
+		e("script").a("src", staticBaseUrl, "/js/site.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/jqDatePicker.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/jquery.serialize-object.js").f().g("script");
 	}
 
 	@Override()
-	public void  htmlScriptMiseEnPage() {
+	public void  htmlScriptPageLayout() {
 	}
 
 	@Override()
-	public void  htmlStylesMiseEnPage() {
+	public void  htmlStylesPageLayout() {
 		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
@@ -247,19 +242,19 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	@Override()
-	public void  htmlStyleMiseEnPage() {
+	public void  htmlStylePageLayout() {
 	}
 
 	@Override()
-	public void  htmlBodyMiseEnPage() {
+	public void  htmlBodyPageLayout() {
 	}
 
 	@Override()
-	public void  htmlMiseEnPage() {
+	public void  htmlPageLayout() {
 		e("html").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
 			e("head").f();
 				e("title").f();
-					sx(pageTitre);
+					sx(pageTitle);
 				g("title");
 				htmlScripts();
 				e("script").f().l("/*<![CDATA[*/");
@@ -492,7 +487,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateAffichage(Date date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATAffichage.format(date.toInstant());
+			resultat = FORMATDateHeureAffichage.format(date.toInstant());
 		}
 		return resultat;
 	}
@@ -500,7 +495,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateAffichage(LocalDateTime date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATAffichage.format(date);
+			resultat = FORMATDateHeureAffichage.format(date);
 		}
 		return resultat;
 	}
@@ -656,7 +651,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public void  htmlFormOptionsUtilisateurSite(UtilisateurSite o) {
+	public void  htmlFormOptionsUtilisateurSite(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("form").a("id", "voirArchiveForm").a("style", "display: inline-block; ").f();

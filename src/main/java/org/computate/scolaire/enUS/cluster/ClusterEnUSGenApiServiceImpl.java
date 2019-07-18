@@ -3,7 +3,7 @@ package org.computate.scolaire.enUS.cluster;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import java.io.IOException;
 import java.util.Collections;

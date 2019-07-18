@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import java.lang.Long;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -30,7 +29,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true">Trouver la classe voirSupprime dans Solr</a>
  * <br/>
  **/
 public abstract class UtilisateurSiteGen<DEV> extends Cluster {
@@ -134,127 +133,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmUtilisateurId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// calculInrPks //
-	//////////////////
-
-	/**	L'entité « calculInrPks »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	protected List<Long> calculInrPks = new java.util.ArrayList<java.lang.Long>();
-	public Couverture<List<Long>> calculInrPksCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("calculInrPks").o(calculInrPks);
-
-	/**	<br/>L'entité « calculInrPks »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:calculInrPks">Trouver l'entité calculInrPks dans Solr</a>
-	 * <br/>
-	 * @param calculInrPks est l'entité déjà construit. 
-	 **/
-	protected abstract void _calculInrPks(List<Long> l);
-
-	public List<Long> getCalculInrPks() {
-		return calculInrPks;
-	}
-
-	public void setCalculInrPks(List<Long> calculInrPks) {
-		this.calculInrPks = calculInrPks;
-		this.calculInrPksCouverture.dejaInitialise = true;
-	}
-	public UtilisateurSite addCalculInrPks(Long...objets) {
-		for(Long o : objets) {
-			addCalculInrPks(o);
-		}
-		return (UtilisateurSite)this;
-	}
-	public UtilisateurSite addCalculInrPks(Long o) {
-		if(o != null && !calculInrPks.contains(o))
-			this.calculInrPks.add(o);
-		return (UtilisateurSite)this;
-	}
-	public UtilisateurSite setCalculInrPks(JsonArray objets) {
-		calculInrPks.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addCalculInrPks(o);
-		}
-		return (UtilisateurSite)this;
-	}
-	public UtilisateurSite addCalculInrPks(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
-			Long p = Long.parseLong(o);
-			addCalculInrPks(p);
-		}
-		return (UtilisateurSite)this;
-	}
-	protected UtilisateurSite calculInrPksInit() {
-		if(!calculInrPksCouverture.dejaInitialise) {
-			_calculInrPks(calculInrPks);
-		}
-		calculInrPksCouverture.dejaInitialise(true);
-		return (UtilisateurSite)this;
-	}
-
-	public List<Long> solrCalculInrPks() {
-		return calculInrPks;
-	}
-
-	public String strCalculInrPks() {
-		return calculInrPks == null ? "" : calculInrPks.toString();
-	}
-
-	public String nomAffichageCalculInrPks() {
-		return null;
-	}
-
-	public String htmTooltipCalculInrPks() {
-		return null;
-	}
-
-	public String htmCalculInrPks() {
-		return calculInrPks == null ? "" : StringEscapeUtils.escapeHtml4(strCalculInrPks());
-	}
-
-	public void htmCalculInrPks(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchUtilisateurSite", strPk(), "CalculInrPks\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchUtilisateurSite", strPk(), "CalculInrPks() {");
-				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setCalculInrPks\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageCalculInrPks()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"calculInrPks\"");
-							r.s(" value=\"", htmCalculInrPks(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmCalculInrPks());
 			}
 			r.l("</div>");
 		}
@@ -1170,7 +1048,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public void initUtilisateurSite() {
 		utilisateurIdInit();
-		calculInrPksInit();
 		utilisateurNomInit();
 		utilisateurMailInit();
 		utilisateurPrenomInit();
@@ -1220,8 +1097,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		switch(var) {
 			case "utilisateurId":
 				return oUtilisateurSite.utilisateurId;
-			case "calculInrPks":
-				return oUtilisateurSite.calculInrPks;
 			case "utilisateurNom":
 				return oUtilisateurSite.utilisateurNom;
 			case "utilisateurMail":
@@ -1320,12 +1195,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					oUtilisateurSite.setUtilisateurId(utilisateurId);
 			}
 
-			if(sauvegardesUtilisateurSite.contains("calculInrPks")) {
-				List<Long> calculInrPks = (List<Long>)solrDocument.get("calculInrPks_stored_longs");
-				if(calculInrPks != null)
-					oUtilisateurSite.calculInrPks.addAll(calculInrPks);
-			}
-
 			if(sauvegardesUtilisateurSite.contains("utilisateurNom")) {
 				String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 				if(utilisateurNom != null)
@@ -1395,7 +1264,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
 			SolrQuery rechercheSolr = new SolrQuery();
@@ -1454,14 +1322,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			document.addField("utilisateurId_indexed_string", utilisateurId);
 			document.addField("utilisateurId_stored_string", utilisateurId);
 		}
-		if(calculInrPks != null) {
-			for(java.lang.Long o : calculInrPks) {
-				document.addField("calculInrPks_indexed_longs", o);
-			}
-			for(java.lang.Long o : calculInrPks) {
-				document.addField("calculInrPks_stored_longs", o);
-			}
-		}
 		if(utilisateurNom != null) {
 			document.addField("utilisateurNom_indexed_string", utilisateurNom);
 			document.addField("utilisateurNom_stored_string", utilisateurNom);
@@ -1508,10 +1368,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			requeteSite.initLoinRequeteSiteFrFR();
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
-			initLoinUtilisateurSite(siteContexte.getRequeteSite_());
+			initLoinUtilisateurSite(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
 			clientSolr.commit();
@@ -1533,10 +1392,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
 		if(utilisateurId != null)
 			oUtilisateurSite.setUtilisateurId(utilisateurId);
-
-		List<Long> calculInrPks = (List<Long>)solrDocument.get("calculInrPks_stored_longs");
-		if(calculInrPks != null)
-			oUtilisateurSite.calculInrPks.addAll(calculInrPks);
 
 		String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 		if(utilisateurNom != null)

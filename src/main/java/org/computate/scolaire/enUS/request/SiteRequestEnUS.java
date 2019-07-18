@@ -16,7 +16,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -28,6 +27,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -142,62 +142,58 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _utilisateurRolesRoyaume(List<String> o) {
-		if(configSite_ != null && principalJson != null) {
-			JsonArray roles = principalJson.getJsonObject("realm_access").getJsonArray("roles");
+	protected void _userRealmRoles(List<String> o) {
+		if(siteConfig_ != null && jsonPrincipal != null) {
+			JsonArray roles = jsonPrincipal.getJsonObject("realm_access").getJsonArray("roles");
 			if(roles != null) {
 				roles.stream().forEach(r -> {
-					addUtilisateurRolesRoyaume((String)r);
+					addUserRealmRoles((String)r);
 				});
 			}
 		}
 	}
 
-	protected void _utilisateurRessource(Wrap<JsonObject> c) {
-		if(configSite_ != null && principalJson != null) {
-			JsonObject ressource = principalJson.getJsonObject("resource_access").getJsonObject(requeteSite_.getConfigSite_().getAuthRessource());
+	protected void _userResource(Wrap<JsonObject> c) {
+		if(siteConfig_ != null && jsonPrincipal != null) {
+			JsonObject ressource = jsonPrincipal.getJsonObject("resource_access").getJsonObject(siteRequest_.getSiteConfig_().getAuthResource());
 			c.o(ressource);
 		}
 	}
 
-	protected void _utilisateurSite(Wrap<UtilisateurSite> c) { 
-		if(utilisateurId != null) {
-			UtilisateurSite o = new UtilisateurSite();
-			o.setUtilisateurNom(utilisateurNom);
-			o.setUtilisateurPrenom(utilisateurPrenom);
-			o.setUtilisateurNomFamille(utilisateurNomFamille);
-			o.setUtilisateurId(utilisateurId);
+	protected void _siteUser(Wrap<SiteUser> c) { 
+		if(userId != null) {
+			SiteUser o = new SiteUser();
+			o.setUserName(userName);
+			o.setUserFirstName(userFirstName);
+			o.setUserLastName(userLastName);
+			o.setUserId(userId);
 			c.o(o);
 		}
 	}
 
 	protected void _xmlStack(Stack<String> o) {}
 
-	protected void _documentSolr(Wrap<SolrDocument> c) {  
-	}
-
-	protected void _pageAchete(Wrap<Boolean> c) { 
-		c.o(false);
+	protected void _solrDocument(Wrap<SolrDocument> c) {  
 	}
 
 	protected void _pageAdmin(Wrap<Boolean> c) { 
 		c.o(false);
 	}
 
-	protected void _requetePk(Wrap<Long> c) {
-		if(operationRequete != null)
-			c.o(operationRequete.getParams().getLong("pk"));
+	protected void _requestPk(Wrap<Long> c) {
+		if(operationRequest != null)
+			c.o(operationRequest.getParams().getLong("pk"));
 	}
 
-	protected void _connexionSql(Wrap<SQLConnection> c) {
+	protected void _sqlConnection(Wrap<SQLConnection> c) {
 	}
 
-	protected void _cryptageMotDePasse(Wrap<String> c) {
-		c.o(configSite_.getCryptageMotDePasse());
+	protected void _encryptionPassword(Wrap<String> c) {
+		c.o(siteConfig_.getEncryptionPassword());
 	}
 
-	protected void _cryptageChiffreCrypter(Wrap<Cipher> c) {
-		if(!StringUtils.isEmpty(cryptageMotDePasse)) { 
+	protected void _encryptionCipher(Wrap<Cipher> c) {
+		if(!StringUtils.isEmpty(encryptionPassword)) { 
 			try {
 				c.o(Cipher.getInstance("AES"));
 			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
@@ -206,8 +202,8 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _cryptageChiffreDecrypter(Wrap<Cipher> c) {
-		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
+	protected void _decryptionCipher(Wrap<Cipher> c) {
+		if(!StringUtils.isEmpty(encryptionPassword)) {
 			try {
 				c.o(Cipher.getInstance("AES"));
 			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
@@ -216,8 +212,8 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _cryptageDigestMessage(Wrap<MessageDigest> c) {    
-		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
+	protected void _encryptionMessageDigest(Wrap<MessageDigest> c) {    
+		if(!StringUtils.isEmpty(encryptionPassword)) {
 			try {
 				c.o(MessageDigest.getInstance("SHA-1"));
 			} catch (NoSuchAlgorithmException e) {
@@ -226,80 +222,80 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
-	protected void _cryptageCle(Wrap<byte[]> c) {
-		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
+	protected void _encryptionKey(Wrap<byte[]> c) {
+		if(!StringUtils.isEmpty(encryptionPassword)) {
 			try {
-				c.o(Arrays.copyOf(cryptageDigestMessage.digest((cryptageMotDePasse).getBytes("UTF-8")), 16));
+				c.o(Arrays.copyOf(encryptionMessageDigest.digest((encryptionPassword).getBytes("UTF-8")), 16));
 			} catch (UnsupportedEncodingException e) {
 				ExceptionUtils.rethrow(e);
 			}
 		}
 	}
 
-	protected void _aleatoireSecurise(SecureRandom o) {}
+	protected void _secureRandom(SecureRandom o) {}
 
-	protected void _specCleSecrete(Wrap<SecretKeySpec> c) {
-		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
+	protected void _secretKeySpec(Wrap<SecretKeySpec> c) {
+		if(!StringUtils.isEmpty(encryptionPassword)) {
 			try {
-				SecretKeySpec specCleSecrete = new SecretKeySpec(cryptageCle, "AES");
-				cryptageChiffreCrypter.init(Cipher.ENCRYPT_MODE, specCleSecrete);
-				cryptageChiffreDecrypter.init(Cipher.DECRYPT_MODE, specCleSecrete);
-				c.o(specCleSecrete);
+				SecretKeySpec o = new SecretKeySpec(encryptionKey, "AES");
+				encryptionCipher.init(Cipher.ENCRYPT_MODE, o);
+				decryptionCipher.init(Cipher.DECRYPT_MODE, o);
+				c.o(o);
 			} catch (InvalidKeyException e) {
 				ExceptionUtils.rethrow(e);
 			}
 		}
 	}
 
-	public byte[] crypterOctets(String o) {
-		byte[] octetsNonCrypte = o.getBytes();
-		byte[] encryptedByte = null;
+	public byte[] encryptBytes(String o) {
+		byte[] bytesUnencrypted = o.getBytes();
+		byte[] bytesEncrypted = null;
 		try {
-			encryptedByte = cryptageChiffreCrypter.doFinal(octetsNonCrypte);
+			bytesEncrypted = encryptionCipher.doFinal(bytesUnencrypted);
 		} catch (IllegalBlockSizeException | BadPaddingException e) {
 			ExceptionUtils.rethrow(e);
 		}
-		return encryptedByte;
+		return bytesEncrypted;
 	}
 
-	public String decrypterOctets(byte[] octetsCrypte) {
-		String texteNonCrypte = null;
+	public String decryptBytes(byte[] bytesEncrypted) {
+		String textUnencrypted = null;
 		try {
-			byte[] decryptedByte = cryptageChiffreDecrypter.doFinal(octetsCrypte);
-			texteNonCrypte = new String(decryptedByte);
+			byte[] bytesUnencrypted = decryptionCipher.doFinal(bytesEncrypted);
+			textUnencrypted = new String(bytesUnencrypted);
 		} catch (IllegalBlockSizeException | BadPaddingException e) {
 			ExceptionUtils.rethrow(e);
 		}
-		return texteNonCrypte;
+		return textUnencrypted;
 	}
 
-	public String crypterStr(String o) {
-		String texteCrypte = null;     
-		if(cryptageChiffreDecrypter != null) {
-			byte[] octetsNonCrypte = o.getBytes();
+	public String encryptStr(String o) {
+		String textEncrypted = null;     
+		if(encryptionCipher != null) {
+			byte[] bytesUnencrypted = o.getBytes();
 			try {
-				byte[] encryptedByte = cryptageChiffreDecrypter.doFinal(octetsNonCrypte);
-				Base64.Encoder codeur = Base64.getEncoder();
-				texteCrypte = codeur.encodeToString(encryptedByte);
+				byte[] bytesEncrypted = encryptionCipher.doFinal(bytesUnencrypted);
+				Base64.Encoder encoder = Base64.getEncoder();
+				textEncrypted = encoder.encodeToString(bytesEncrypted);
 			} catch (IllegalBlockSizeException | BadPaddingException e) {
 				ExceptionUtils.rethrow(e);
 			}
 		}
-		return texteCrypte;
+		return textEncrypted;
 	}
 
-	public String decrypterStr(String o) {
-		String texteNonCrypte = null;
-		if(o != null && cryptageChiffreDecrypter != null) {
-			Base64.Decoder decodeur = Base64.getDecoder();
+	public String decryptStr(String o) {
+		String textUnencrypted = null;
+		if(o != null && decryptionCipher != null) {
+			Base64.Decoder decoder = Base64.getDecoder();
 			try {
-				byte[] octetsCrypte = decodeur.decode(o);
-				byte[] decryptedByte = cryptageChiffreDecrypter.doFinal(octetsCrypte);
-				texteNonCrypte = new String(decryptedByte);
+				byte[] bytesEncrypted = decoder.decode(o);
+				byte[] bytesUnencrypted = decryptionCipher.doFinal(bytesEncrypted);
+				textUnencrypted = new String(bytesUnencrypted);
 			} catch (IllegalBlockSizeException | BadPaddingException e) {
 				ExceptionUtils.rethrow(e);
 			}
 		}
-		return texteNonCrypte;
+		return textUnencrypted;
 	}
 }

@@ -1,17 +1,12 @@
 package org.computate.scolaire.frFR.utilisateur;     
 
-import java.time.ZonedDateTime;
-import java.util.List;
-
-
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /** 
  * MotCle: classeNomSimpleUtilisateurSite
  * Modele: true
- * NomCanonique.enUS: org.computate.enUS.education.school.School
+ * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUser
  * ApiUri: /api/utilisateur
  * ApiMethode: PATCH
  * ApiMethode: RecherchePage
@@ -34,32 +29,32 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
 
 	/**  
-	 * Var.enUS: _userId
+	 * Var.enUS: userId
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 2
 	 * Description.frFR: L'identifiant Keycloak pour cet utilisateur. 
 	 * NomAffichage.frFR: utilisateur ID
 	 * NomAffichage.enUS: user ID
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurId
+	 * r.enUS: UserId
 	 */  
 	protected void _utilisateurId(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurId();
 		c.o(o);
 	}
 
-	/**
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: CalculInr.utilisateurPk
-	 */   
-	protected void _calculInrPks(List<Long> l) {
-	}
-
 	/**	
-	 * Var.enUS: _userName
+	 * Var.enUS: userName
 	 * description.frFR: Le nom d'utilisateur pour se connecter au site. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurNom
+	 * r.enUS: UserName
 	 */
 	protected void _utilisateurNom(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNom();
@@ -67,19 +62,27 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	}
 
 	/**	
-	 * Var.enUS: _userEmail
+	 * Var.enUS: userEmail
 	 * description.frFR: Le mail pour recevoir des courriels. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurMail
+	 * r.enUS: UserEmail
 	 */ 
 	protected void _utilisateurMail(Couverture<String> c) {
 	}
 
 	/**	
-	 * Var.enUS: _userFirstName
+	 * Var.enUS: userFirstName
 	 * description.frFR: Le prénom pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurPrenom
+	 * r.enUS: UserFirstName
 	 */
 	protected void _utilisateurPrenom(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurPrenom();
@@ -87,10 +90,14 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	}
 
 	/**	
-	 * Var.enUS: _userLastName
+	 * Var.enUS: userLastName
 	 * description.frFR: Le nom de famille pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurNomFamille
+	 * r.enUS: UserLastName
 	 */ 
 	protected void _utilisateurNomFamille(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNomFamille();
@@ -98,22 +105,22 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	}
 
 	/**	
-	 * Var.enUS: _userFullName
+	 * Var.enUS: userFullName
 	 * description.frFR: Le prénom et nom de famille pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r: utilisateurPrenom
-	 * r.enUS: userFirstName
-	 * r: utilisateurNomFamille
-	 * r.enUS: userLastName
-	 */
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: UtilisateurNomComplet
+	 * r.enUS: UserFullName
+	 */ 
 	protected void _utilisateurNomComplet(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNomComplet();
 		c.o(o);
 	}
 
 	/**	
-	 * Var.enUS: _userSite
+	 * Var.enUS: userSite
 	 * description.frFR: L'URL du site Web pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true
@@ -122,7 +129,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	}
 
 	/**	
-	 * Var.enUS: _userReceiveEmails
+	 * Var.enUS: userReceiveEmails
 	 * description.frFR: Le nom de famille pour cet utilisateur. 
 	 * Indexe: true
 	 * Stocke: true

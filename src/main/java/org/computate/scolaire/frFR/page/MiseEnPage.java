@@ -36,6 +36,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p");
 
 	/**
+	 * Var.enUS: FORMATDateTimeShort
 	 * r: d MMM yyyy H'h'mm
 	 * r.enUS: MMM d yyyy h:mm a
 	 * r: Locale.FRANCE
@@ -44,6 +45,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public static DateTimeFormatter FORMATDateHeureCourt = DateTimeFormatter.ofPattern("d MMM yyyy H'h'mm", Locale.FRANCE);
 
 	/**
+	 * Var.enUS: FORMATDateShort
 	 * r: EEE d MMM yyyy
 	 * r.enUS: EEE MMM d yyyy
 	 * r: Locale.FRANCE
@@ -52,30 +54,40 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public static DateTimeFormatter FORMATDateCourt = DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE);
 
 	/**
+	 * Var.enUS: FORMATDateTimeDisplay
 	 * r: EEEE d MMMM yyyy H'h'mm
 	 * r.enUS: EEEE MMMM d yyyy h:mm a
 	 * r: Locale.FRANCE
 	 * r.enUS: Locale.US
 	 */
-	public static DateTimeFormatter FORMATAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm", Locale.FRANCE);
+	public static DateTimeFormatter FORMATDateHeureAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm", Locale.FRANCE);
 
 	protected void _pageParts(List<PagePart> l) {
 	}
 
+	/**
+	 * Var.enUS: beforePagePart
+	 */
 	public void avantPagePart(PagePart o, String var) {
 		o.setPage_(this);
 	}
 
 	/**
-	 * 
 	 * {@inheritDoc}
+	 * Var.enUS: siteRequest_
 	 **/ 
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
 	}
 
 	/**
-	 * 
 	 * {@inheritDoc}
+	 * Var.enUS: staticBaseUrl
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: StatiqueUrlBase
+	 * r.enUS: StaticBaseUrl
 	 **/ 
 	protected void _statiqueUrlBase(Couverture<String> c) {
 		c.o(requeteSite_.getConfigSite_().getStatiqueUrlBase()); 
@@ -83,38 +95,39 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: pageDocumentSolr
+	 * Var.enUS: pageSolrDocument
 	 **/
 	protected void _pageDocumentSolr(Couverture<SolrDocument> c) {
 		
 	}
 
 	/**
-	 * Var.enUS: _writer
 	 * frFR: L'écrivain pour écrirer le résultat du réponse. 
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: ecrivain
-	 * writer
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
 	 */ 
 	protected void _w(Couverture<ToutEcrivain> c) {
 		c.o(requeteSite_.getW());
 	}
 
 	/**
-	 * var.enUS: contextIconGroup
+	 * Var.enUS: contextIconGroup
 	 */
 	protected void _contexteIconeGroupe(Couverture<String> c) {
 	}
 
 	/**
-	 * var.enUS: contextIconName
+	 * Var.enUS: contextIconName
 	 */
 	protected void _contexteIconeNom(Couverture<String> c) {
 	}
 
 	/**
-	 * var.enUS: contextIconCssClasses
+	 * Var.enUS: contextIconCssClasses
+	 * r: contexteIconeGroupe
+	 * r.enUS: contextIconGroup
+	 * r: contexteIconeNom
+	 * r.enUS: contextIconName
 	 */
 	protected void _contexteIconeClassesCss(Couverture<String> c) {
 		if(contexteIconeGroupe != null && contexteIconeNom != null)
@@ -127,6 +140,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: Si true, les bots de Google, Bing, Yahoo peuvent trouver la page. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageVisibleAuxBots(Couverture<Boolean> c)  {
 		c.o(BooleanUtils.toBooleanDefaultIfNull((Boolean)pageDocumentSolr.get(c.var + "_stored_boolean"), false));
@@ -135,6 +150,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH1(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
@@ -143,6 +160,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH2(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
@@ -151,6 +170,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH3(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
@@ -158,6 +179,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: _pageH1Short
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH1Court(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH1));
@@ -165,13 +188,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: _pageH2Short
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH2Court(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH2));
 	}
 
 	/**
-	 * Var.enUS: _pageH2Short
+	 * Var.enUS: _pageH3Short
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageH3Court(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), pageH2));
@@ -183,6 +210,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Stocke: true
 	 * r: frFR
 	 * r.enUS: enUS
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageTitre(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_frFR_stored_string"), StringUtils.join(pageH1, pageH2)));
@@ -193,6 +222,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Stocke: true
 	 * r: frFR
 	 * r.enUS: enUS
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 * **/
 	protected void _pageUri(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_frFR_stored_string"), null));
@@ -217,14 +248,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'URL complet. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: configSite
-	 * siteConfig
-	 * r.enUS: nomHoteSite
-	 * siteHostName
-	 * r.enUS: requete
-	 * request
+	 * r: requeteSite_
+	 * r.enUS: siteRequest
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: nomHoteSite
+	 * r.enUS: siteHostName
+	 * r: requete
+	 * r.enUS: request
 	 * r: requeteServeur
 	 * r.enUS: serverRequest
 	 */ 
@@ -235,6 +266,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'URI courte vers l'image. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageImageUri(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
@@ -244,12 +277,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'URL complet vers l'image. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: configSite
-	 * siteConfig
-	 * r.enUS: nomHoteSite
-	 * siteHostName
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteNomHote
+	 * r.enUS: SiteHostName
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageImageUrl(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), "https://" + requeteSite_.getConfigSite_().getSiteNomHote() + pageImageUri));
@@ -259,12 +294,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'ID Youtube du video. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: configSite
-	 * siteConfig
-	 * r.enUS: nomHoteSite
-	 * siteHostName
+	 * r: requeteSite_
+	 * r.enUS: siteRequest
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: nomHoteSite
+	 * r.enUS: siteHostName
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageVideoId(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
@@ -274,12 +311,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'URL complet vers le video. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: configSite
-	 * siteConfig
-	 * r.enUS: nomHoteSite
-	 * siteHostName
+	 * r: requeteSite_
+	 * r.enUS: siteRequest
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: nomHoteSite
+	 * r.enUS: siteHostName
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageVideoUrl(Couverture<String> c)  {
 		if(pageVideoId != null) {
@@ -291,12 +330,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * frFR: l'URL embed vers le video. 
 	 * Indexe: true
 	 * Stocke: true
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: configSite
-	 * siteConfig
-	 * r.enUS: nomHoteSite
-	 * siteHostName
+	 * r: requeteSite_
+	 * r.enUS: siteRequest
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: nomHoteSite
+	 * r.enUS: siteHostName
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageVideoUrlEmbed(Couverture<String> c)  {
 		if(pageVideoId != null) {
@@ -305,37 +346,43 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: _pageImageWidth
+	 * Var.enUS: pageImageWidth
 	 * frFR: Le longeur de l'image. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageImageLargeur(Couverture<Integer> c)  {
 		c.o((Integer)pageDocumentSolr.get(c.var + "_stored_int"));
 	}
 
 	/**
-	 * Var.enUS: _pageImageHeight
+	 * Var.enUS: pageImageHeight
 	 * frFR: Le hauteur de l'image. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageImageHauteur(Couverture<Integer> c)  {
 		c.o((Integer)pageDocumentSolr.get(c.var + "_stored_int"));
 	}
 
 	/**
-	 * Var.enUS: _pageImageContentType
+	 * Var.enUS: pageImageContentType
 	 * frFR: Le type de contenu de l'image. 
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageImageTypeContenu(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_stored_string"), null));
 	}
 
 	/**
-	 * Var.enUS: _pageContentType
+	 * Var.enUS: pageContentType
 	 * frFR: Le type de contenu de la page. 
 	 * Indexe: true
 	 * Stocke: true
@@ -349,9 +396,11 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: _pageCreated
+	 * Var.enUS: pageCreated
 	 * Indexe: true
 	 * Stocke: true
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
 	 */
 	protected void _pageCree(Couverture<LocalDateTime> c)  {   
 		Date solrVal = (Date)pageDocumentSolr.get(c.var + "_stored_date");
@@ -360,9 +409,13 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: _pageModified
+	 * Var.enUS: pageModified
 	 * r.enUS: pageCree
 	 * PageCreated
+	 * r: pageDocumentSolr
+	 * r.enUS: pageSolrDocument
+	 * r: pageCree
+	 * r.enUS: pageCreated
 	 */
 	protected void _pageModifiee(Couverture<LocalDateTime> c)  {
 		Date solrVal = (Date)pageDocumentSolr.get(c.var + "_stored_date");
@@ -373,7 +426,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: _pageKeywords
+	 * Var.enUS: pageKeywords
 	 * Indexe: true
 	 * Stocke: true
 	 */
@@ -388,46 +441,43 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: _homePageUri
+	 * Var.enUS: pageHomeUri
 	 */
 	protected void _pageAccueilUri(Couverture<String> c)  {
 		c.o("");
 	}
 
 	/**
-	 * Var.enUS: _pageInrEntry
+	 * Var.enUS: pageSchoolUri
 	 * String.enUS: /school
 	 */
-	protected void _pageEcole(Couverture<String> c)  {
+	protected void _pageEcoleUri(Couverture<String> c)  {
 		c.o("/ecole");
 	}
 
 	/**
-	 * Var.enUS: _aboutPageUri
-	 * r.enUS: apropos
-	 * about
-	 */
-	protected void _pageAProposUri(Couverture<String> c)  {
-		c.o("/apropos");
-	}
-
-	protected void _pageFaqUri(Couverture<String> c)  {
-		c.o("/faq");
-	}
-
-	/**
-	 * Var.enUS: _userPageUri
-	 * r.enUS: utilisateur
-	 * user
+	 * Var.enUS: pageUserUri
+	 * r: utilisateur
+	 * r.enUS: user
 	 */
 	protected void _pageUtilisateurUri(Couverture<String> c)  {
 		c.o("/utilisateur");
 	}
 
 	/**
-	 * Var.enUS: _logoutPageUri
-	 * r.enUS: deconnexion
-	 * logout
+	 * Var.enUS: _pageLogoutUri
+	 * r: deconnexion
+	 * r.enUS: logout
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: AuthRoyaume
+	 * r.enUS: AuthRealm
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
 	 */
 	protected void _pageDeconnexionUri(Couverture<String> c)  {
 		try {
@@ -439,6 +489,24 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		}
 	}
 
+	/**
+	 * r: pageMotsCles
+	 * r.enUS: pageKeywords
+	 * r: pageTitre
+	 * r.enUS: pageTitle
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: NomDomaine
+	 * r.enUS: DomainName
+	 * r: pageImageLargeur
+	 * r.enUS: pageImageWidth
+	 * r: pageImageHauteur
+	 * r.enUS: pageImageHeight
+	 * r: pageImageTypeContenu
+	 * r.enUS: pageImageContentType
+	 */
 	@Override public void htmlMeta() {
 		e("meta").a("charset", "UTF-8").fg();
 		e("meta").a("name", "viewport").a("content", "width=device-width, initial-scale=1").fg();
@@ -462,6 +530,11 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("meta").a("name", "description").a("content", pageDescription).fg();
 	}
 
+	/**
+	 * Var.enUS: htmlScriptsPageLayout
+	 * r: statiqueUrlBase
+	 * r.enUS: staticBaseUrl
+	 */
 	@Override public void htmlScriptsMiseEnPage() {
 		e("script").a("src", statiqueUrlBase, "/js/site.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
@@ -470,9 +543,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");
 	}
 
+	/**
+	 * Var.enUS: htmlScriptPageLayout
+	 */
 	@Override public void htmlScriptMiseEnPage() {
 	}
 
+	/**
+	 * Var.enUS: htmlStylesPageLayout
+	 * r: statiqueUrlBase
+	 * r.enUS: staticBaseUrl
+	 */
 	@Override public void htmlStylesMiseEnPage() {
 		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
@@ -480,13 +561,22 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
 	}
 
+	/**
+	 * Var.enUS: htmlStylePageLayout
+	 */
 	@Override public void htmlStyleMiseEnPage() {
 	}
 
+	/**
+	 * Var.enUS: htmlBodyPageLayout
+	 */
 	@Override public void htmlBodyMiseEnPage() {
 	}
 
 	/**
+	 * Var.enUS: htmlPageLayout
+	 * r: pageTitre
+	 * r.enUS: pageTitle
 	 * r: Ce site est open-source.
 	 * r.enUS: This site is open source. 
 	 * r: Voir le code source ici. 
@@ -751,7 +841,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public String formaterDateAffichage(Date date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATAffichage.format(date.toInstant());
+			resultat = FORMATDateHeureAffichage.format(date.toInstant());
 		}
 		return resultat;
 	}
@@ -759,7 +849,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public String formaterDateAffichage(LocalDateTime date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATAffichage.format(date);
+			resultat = FORMATDateHeureAffichage.format(date);
 		}
 		return resultat;
 	}

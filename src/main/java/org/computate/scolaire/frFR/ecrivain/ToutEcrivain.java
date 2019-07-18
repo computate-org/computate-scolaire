@@ -266,8 +266,6 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 
 	/**
 	 * Param1.var.enUS: objects
-	 * r: objets
-	 * r.enUS: objects
 	 * r: objet
 	 * r.enUS: object
 	 * r: chaine
@@ -313,6 +311,11 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return this;
 	}
 
+	/**
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public ToutEcrivain string(Object...objets) {
 		s("\"");
 		for(Object objet : objets)
@@ -322,6 +325,11 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return this;
 	}
 
+	/**
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public String q(Object...objets) {
 		StringBuilder o = new StringBuilder();
 		o.append("\"");
@@ -332,6 +340,11 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return o.toString();
 	}
 
+	/**
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public String qjs(Object...objets) {
 		StringBuilder o = new StringBuilder();
 		o.append("\"");
@@ -342,12 +355,86 @@ public class ToutEcrivain extends ToutEcrivainGen<Object> {
 		return o.toString();
 	}
 
+	/**
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public String js(Object...objets) {
 		StringBuilder o = new StringBuilder();
 		for(Object objet : objets)
 			if(objet != null)
 				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
 		return o.toString();
+	}
+
+	/**
+	 * Param1.var.enUS: tabNumber
+	 * Param2.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 * r: nombreTabulations
+	 * r.enUS: tabNumber
+	 * r: ligne
+	 * r.enUS: line
+	 * r: dernier
+	 * r.enUS: last
+	 * r: envelopperLigne
+	 * r.enUS: wrapLine
+	 */
+	public ToutEcrivain yamlStr(int nombreTabulations, Object...objets) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		for(Object objet : objets) {
+			if(objet != null) {
+				if(objet instanceof List) {
+					List<?> chaine = (List<?>)objet;
+					for(Object objet2 : chaine) {
+						if(objet2 != null && !StringUtils.isEmpty(objet2.toString()))
+							printWriter.append(objet2.toString());
+					}
+				}
+				else {
+					if(!StringUtils.isEmpty(objet.toString()))
+						printWriter.append(objet.toString());
+				}
+			}
+		}
+		String[] lignes = StringUtils.splitPreserveAllTokens(stringWriter.toString(), "\n");
+		l(">+");
+		for(int i = 0; i < lignes.length; i++) {
+			boolean dernier = i == (lignes.length -1);
+			String ligne = lignes[i];
+
+			String[] envelopperLignes = StringUtils.splitPreserveAllTokens(WordUtils.wrap(ligne, 70), "\n");
+			for(int j = 0; j < envelopperLignes.length; j++) {
+				boolean wrapLast = j == (envelopperLignes.length -1);
+				String envelopperLigne = envelopperLignes[j];
+				if(wrapLast)
+					t(nombreTabulations, envelopperLigne);
+				else
+					tl(nombreTabulations, envelopperLigne);
+			}
+
+			if(!dernier) {
+				tl(nombreTabulations);
+				if(StringUtils.isNotBlank(ligne))
+					tl(nombreTabulations);
+			}
+			else {
+				l();
+			}
+		}
+
+		try {
+			printWriter.flush();
+			stringWriter.flush();
+			printWriter.close();
+			stringWriter.close();
+		} catch (IOException e) {
+			ExceptionUtils.rethrow(e);
+		}
+		return this;
 	}
 
 	/**

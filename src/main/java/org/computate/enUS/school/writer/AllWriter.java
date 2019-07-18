@@ -149,41 +149,96 @@ public class AllWriter extends AllWriterGen<Object> {
 		return this;
 	}
 
-	public AllWriter string(Object...objets) {
+	public AllWriter string(Object...objects) {
 		s("\"");
-		for(Object objet : objets)
-			if(objet != null)
-				s(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""));
+		for(Object object : objects)
+			if(object != null)
+				s(StringUtils.replace(StringUtils.replace(object.toString(), "\\", "\\\\"), "\"", "\\\""));
 		s("\"");
 		return this;
 	}
 
-	public String q(Object...objets) {
+	public String q(Object...objects) {
 		StringBuilder o = new StringBuilder();
 		o.append("\"");
-		for(Object objet : objets)
-			if(objet != null)
-				o.append(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""));
+		for(Object object : objects)
+			if(object != null)
+				o.append(StringUtils.replace(StringUtils.replace(object.toString(), "\\", "\\\\"), "\"", "\\\""));
 		o.append("\"");
 		return o.toString();
 	}
 
-	public String qjs(Object...objets) {
+	public String qjs(Object...objects) {
 		StringBuilder o = new StringBuilder();
 		o.append("\"");
-		for(Object objet : objets)
-			if(objet != null)
-				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
+		for(Object object : objects)
+			if(object != null)
+				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(object.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
 		o.append("\"");
 		return o.toString();
 	}
 
-	public String js(Object...objets) {
+	public String js(Object...objects) {
 		StringBuilder o = new StringBuilder();
-		for(Object objet : objets)
-			if(objet != null)
-				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(objet.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
+		for(Object object : objects)
+			if(object != null)
+				o.append(StringUtils.replace(StringUtils.replace(StringUtils.replace(object.toString(), "\\", "\\\\"), "\"", "\\\""), "\n", "\\n"));
 		return o.toString();
+	}
+
+	public AllWriter yamlStr(int tabNumber, Object...objects) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		for(Object object : objects) {
+			if(object != null) {
+				if(object instanceof List) {
+					List<?> chaine = (List<?>)object;
+					for(Object object2 : chaine) {
+						if(object2 != null && !StringUtils.isEmpty(object2.toString()))
+							printWriter.append(object2.toString());
+					}
+				}
+				else {
+					if(!StringUtils.isEmpty(object.toString()))
+						printWriter.append(object.toString());
+				}
+			}
+		}
+		String[] lines = StringUtils.splitPreserveAllTokens(stringWriter.toString(), "\n");
+		l(">+");
+		for(int i = 0; i < lines.length; i++) {
+			boolean last = i == (lines.length -1);
+			String line = lines[i];
+
+			String[] wrapLines = StringUtils.splitPreserveAllTokens(WordUtils.wrap(line, 70), "\n");
+			for(int j = 0; j < wrapLines.length; j++) {
+				boolean wrapLast = j == (wrapLines.length -1);
+				String wrapLine = wrapLines[j];
+				if(wrapLast)
+					t(tabNumber, wrapLine);
+				else
+					tl(tabNumber, wrapLine);
+			}
+
+			if(!last) {
+				tl(tabNumber);
+				if(StringUtils.isNotBlank(line))
+					tl(tabNumber);
+			}
+			else {
+				l();
+			}
+		}
+
+		try {
+			printWriter.flush();
+			stringWriter.flush();
+			printWriter.close();
+			stringWriter.close();
+		} catch (IOException e) {
+			ExceptionUtils.rethrow(e);
+		}
+		return this;
 	}
 
 	public void  flushClose() {

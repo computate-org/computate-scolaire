@@ -12,7 +12,7 @@ import java.lang.Boolean;
 import org.computate.enUS.school.page.PageLayout;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.enUS.user.SiteUser;
 import java.io.IOException;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;

@@ -18,7 +18,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -26,7 +25,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -242,7 +240,16 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Les rôles de la ressource de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userRealmRoles
+	 * r: configSite_
+	 * r.enUS: siteConfig_
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * r: addUtilisateurRolesRoyaume
+	 * r.enUS: addUserRealmRoles
+	 * frFR: Les rôles de la ressource de l'utilisateur. 
+	 * **/
 	protected void _utilisateurRolesRoyaume(List<String> o) {
 		if(configSite_ != null && principalJson != null) {
 			JsonArray roles = principalJson.getJsonObject("realm_access").getJsonArray("roles");
@@ -254,7 +261,20 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	Les rôles de la ressource de l'utilisateur. **/
+	/**	
+	 * Var.enUS: userResource
+	 * r: configSite_
+	 * r.enUS: siteConfig_
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: AuthRessource
+	 * r.enUS: AuthResource
+	 * frFR: Les rôles de la ressource de l'utilisateur. 
+	 * **/
 	protected void _utilisateurRessource(Couverture<JsonObject> c) {
 		if(configSite_ != null && principalJson != null) {
 			JsonObject ressource = principalJson.getJsonObject("resource_access").getJsonObject(requeteSite_.getConfigSite_().getAuthRessource());
@@ -262,7 +282,28 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 
-	/**	L'utilisateur de la requête. **/
+	/**	
+	 * Var.enUS: siteUser
+	 * r: UtilisateurSite
+	 * r.enUS: SiteUser
+	 * r: utilisateurId
+	 * r.enUS: userId
+	 * r: utilisateurPrenom
+	 * r.enUS: userFirstName
+	 * r: utilisateurNomFamille
+	 * r.enUS: userLastName
+	 * r: utilisateurNom
+	 * r.enUS: userName
+	 * r: UtilisateurId
+	 * r.enUS: UserId
+	 * r: UtilisateurPrenom
+	 * r.enUS: UserFirstName
+	 * r: UtilisateurNomFamille
+	 * r.enUS: UserLastName
+	 * r: UtilisateurNom
+	 * r.enUS: UserName
+	 * L'utilisateur de la requête. 
+	 * **/ 
 	protected void _utilisateurSite(Couverture<UtilisateurSite> c) { 
 		if(utilisateurId != null) {
 			UtilisateurSite o = new UtilisateurSite();
@@ -278,24 +319,25 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: xmlStack
 	 */
 	protected void _xmlPile(Stack<String> o) {}
-//
-//	protected void _xmlElementParent(Couverture<String> c) {}
-//
-//	protected void _xmlElement(Couverture<String> c) {}
 
+	/**
+	 * Var.enUS: solrDocument
+	 */
 	protected void _documentSolr(Couverture<SolrDocument> c) {  
 	}
 
-	/**	Si la page vu etait achete par l'utilisateur. **/
-	protected void _pageAchete(Couverture<Boolean> c) { 
-		c.o(false);
-	}
-
-	/**	Si la page vu etait achete par l'utilisateur. **/
+	/**	
+	 * frFR: Si la page vu etait achete par l'utilisateur. 
+	 * **/
 	protected void _pageAdmin(Couverture<Boolean> c) { 
 		c.o(false);
 	} 
 	
+	/**
+	 * Var.enUS: requestPk
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 */
 	protected void _requetePk(Couverture<Long> c) {
 		if(operationRequete != null)
 			c.o(operationRequete.getParams().getLong("pk"));
@@ -303,15 +345,29 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 * Var.enUS: sqlConnection
 	 **/
 	protected void _connexionSql(Couverture<SQLConnection> c) {
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: encryptionPassword
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: CryptageMotDePasse
+	 * r.enUS: EncryptionPassword
+	 **/
 	protected void _cryptageMotDePasse(Couverture<String> c) {
 		c.o(configSite_.getCryptageMotDePasse());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: encryptionCipher
+	 * r: cryptageMotDePasse
+	 * r.enUS: encryptionPassword
+	 **/
 	protected void _cryptageChiffreCrypter(Couverture<Cipher> c) {
 		if(!StringUtils.isEmpty(cryptageMotDePasse)) { 
 			try {
@@ -322,6 +378,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: decryptionCipher
+	 * r: cryptageMotDePasse
+	 * r.enUS: encryptionPassword
+	 **/
 	protected void _cryptageChiffreDecrypter(Couverture<Cipher> c) {
 		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
 			try {
@@ -332,6 +394,11 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 	
+	/**
+	 * Var.enUS: encryptionMessageDigest
+	 * r: cryptageMotDePasse
+	 * r.enUS: encryptionPassword
+	 */
 	protected void _cryptageDigestMessage(Couverture<MessageDigest> c) {    
 		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
 			try {
@@ -342,6 +409,13 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 	
+	/**
+	 * Var.enUS: encryptionKey
+	 * r: cryptageMotDePasse
+	 * r.enUS: encryptionPassword
+	 * r: cryptageDigestMessage
+	 * r.enUS: encryptionMessageDigest
+	 */
 	protected void _cryptageCle(Couverture<byte[]> c) {
 		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
 			try {
@@ -352,51 +426,99 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		}
 	}
 	
+	/**
+	 * Var.enUS: secureRandom
+	 */
 	protected void _aleatoireSecurise(SecureRandom o) {}  
 	
+	/**
+	 * Var.enUS: secretKeySpec
+	 * r: cryptageCle
+	 * r.enUS: encryptionKey
+	 * r: cryptageChiffreCrypter
+	 * r.enUS: encryptionCipher
+	 * r: cryptageChiffreDecrypter
+	 * r.enUS: decryptionCipher
+	 * r: cryptageMotDePasse
+	 * r.enUS: encryptionPassword
+	 */
 	protected void _specCleSecrete(Couverture<SecretKeySpec> c) {
 		if(!StringUtils.isEmpty(cryptageMotDePasse)) {
 			try {
-				SecretKeySpec specCleSecrete = new SecretKeySpec(cryptageCle, "AES");
-				cryptageChiffreCrypter.init(Cipher.ENCRYPT_MODE, specCleSecrete);
-				cryptageChiffreDecrypter.init(Cipher.DECRYPT_MODE, specCleSecrete);
-				c.o(specCleSecrete);
+				SecretKeySpec o = new SecretKeySpec(cryptageCle, "AES");
+				cryptageChiffreCrypter.init(Cipher.ENCRYPT_MODE, o);
+				cryptageChiffreDecrypter.init(Cipher.DECRYPT_MODE, o);
+				c.o(o);
 			} catch (InvalidKeyException e) {
 				ExceptionUtils.rethrow(e);
 			}
 		}
 	}
 	
+	/**
+	 * Var.enUS: encryptBytes
+	 * r: octetsNonCryptes
+	 * r.enUS: bytesUnencrypted
+	 * r: octetsCryptes
+	 * r.enUS: bytesEncrypted
+	 * r: cryptageChiffreCrypter
+	 * r.enUS: encryptionCipher
+	 */
 	public byte[] crypterOctets(String o) {
-		byte[] octetsNonCrypte = o.getBytes();
-		byte[] encryptedByte = null;
+		byte[] octetsNonCryptes = o.getBytes();
+		byte[] octetsCryptes = null;
 		try {
-			encryptedByte = cryptageChiffreCrypter.doFinal(octetsNonCrypte);
+			octetsCryptes = cryptageChiffreCrypter.doFinal(octetsNonCryptes);
 		} catch (IllegalBlockSizeException | BadPaddingException e) {
 			ExceptionUtils.rethrow(e);
 		}
-		return encryptedByte;
+		return octetsCryptes;
 	}
 	
-	public String decrypterOctets(byte[] octetsCrypte) {
+	/**
+	 * Var.enUS: decryptBytes
+	 * Param1.var.enUS: bytesEncrypted
+	 * r: texteNonCrypte
+	 * r.enUS: textUnencrypted
+	 * r: octetsCryptes
+	 * r.enUS: bytesEncrypted
+	 * r: octetsNonCryptes
+	 * r.enUS: bytesUnencrypted
+	 * r: cryptageChiffreDecrypter
+	 * r.enUS: decryptionCipher
+	 */
+	public String decrypterOctets(byte[] octetsCryptes) {
 		String texteNonCrypte = null;
 		try {
-			byte[] decryptedByte = cryptageChiffreDecrypter.doFinal(octetsCrypte);
-			texteNonCrypte = new String(decryptedByte);
+			byte[] octetsNonCryptes = cryptageChiffreDecrypter.doFinal(octetsCryptes);
+			texteNonCrypte = new String(octetsNonCryptes);
 		} catch (IllegalBlockSizeException | BadPaddingException e) {
 			ExceptionUtils.rethrow(e);
 		}
 		return texteNonCrypte;
 	}
 	
+	/**
+	 * Var.enUS: encryptStr
+	 * r: texteCrypte
+	 * r.enUS: textEncrypted
+	 * r: octetsNonCryptes
+	 * r.enUS: bytesUnencrypted
+	 * r: octetsCryptes
+	 * r.enUS: bytesEncrypted
+	 * r: cryptageChiffreCrypter
+	 * r.enUS: encryptionCipher
+	 * r: codeur
+	 * r.enUS: encoder
+	 */
 	public String crypterStr(String o) {
 		String texteCrypte = null;     
-		if(cryptageChiffreDecrypter != null) {
-			byte[] octetsNonCrypte = o.getBytes();
+		if(cryptageChiffreCrypter != null) {
+			byte[] octetsNonCryptes = o.getBytes();
 			try {
-				byte[] encryptedByte = cryptageChiffreDecrypter.doFinal(octetsNonCrypte);
+				byte[] bytesEncrypted = cryptageChiffreCrypter.doFinal(octetsNonCryptes);
 				Base64.Encoder codeur = Base64.getEncoder();
-				texteCrypte = codeur.encodeToString(encryptedByte);
+				texteCrypte = codeur.encodeToString(bytesEncrypted);
 			} catch (IllegalBlockSizeException | BadPaddingException e) {
 				ExceptionUtils.rethrow(e);
 			}
@@ -404,14 +526,29 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		return texteCrypte;
 	}
 	
+	/**
+	 * Var.enUS: decryptStr
+	 * r: texteNonCrypte
+	 * r.enUS: textUnencrypted
+	 * r: octetsCryptes
+	 * r.enUS: bytesEncrypted
+	 * r: octetsNonCryptes
+	 * r.enUS: bytesUnencrypted
+	 * r: octetsCryptes
+	 * r.enUS: bytesEncrypted
+	 * r: cryptageChiffreDecrypter
+	 * r.enUS: decryptionCipher
+	 * r: decodeur
+	 * r.enUS: decoder
+	 */
 	public String decrypterStr(String o) {
 		String texteNonCrypte = null;
 		if(o != null && cryptageChiffreDecrypter != null) {
 			Base64.Decoder decodeur = Base64.getDecoder();
 			try {
-				byte[] octetsCrypte = decodeur.decode(o);
-				byte[] decryptedByte = cryptageChiffreDecrypter.doFinal(octetsCrypte);
-				texteNonCrypte = new String(decryptedByte);
+				byte[] octetsCryptes = decodeur.decode(o);
+				byte[] octetsNonCryptes = cryptageChiffreDecrypter.doFinal(octetsCryptes);
+				texteNonCrypte = new String(octetsNonCryptes);
 			} catch (IllegalBlockSizeException | BadPaddingException e) {
 				ExceptionUtils.rethrow(e);
 			}

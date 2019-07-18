@@ -46,6 +46,9 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _pageParts(List<PagePart> l) {
 	}
 
+	/**
+	 * Var.enUS: beforePagePart
+	 */
 	public void avantPagePart(PagePart o, String var) {
 	}
 
