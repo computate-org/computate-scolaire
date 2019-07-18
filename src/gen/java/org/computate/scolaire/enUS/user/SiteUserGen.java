@@ -97,10 +97,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
 	}
 
-	public void htmUserId(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserId(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserId\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserId() {");
@@ -194,10 +194,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userName == null ? "" : StringEscapeUtils.escapeHtml4(strUserName());
 	}
 
-	public void htmUserName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserName() {");
@@ -291,10 +291,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userEmail == null ? "" : StringEscapeUtils.escapeHtml4(strUserEmail());
 	}
 
-	public void htmUserEmail(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserEmail(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserEmail\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserEmail() {");
@@ -388,10 +388,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFirstName());
 	}
 
-	public void htmUserFirstName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserFirstName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserFirstName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserFirstName() {");
@@ -485,10 +485,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userLastName == null ? "" : StringEscapeUtils.escapeHtml4(strUserLastName());
 	}
 
-	public void htmUserLastName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserLastName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserLastName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserLastName() {");
@@ -582,10 +582,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userFullName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFullName());
 	}
 
-	public void htmUserFullName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserFullName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserFullName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserFullName() {");
@@ -679,10 +679,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userSite == null ? "" : StringEscapeUtils.escapeHtml4(strUserSite());
 	}
 
-	public void htmUserSite(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserSite(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserSite\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserSite() {");
@@ -781,10 +781,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userReceiveEmails == null ? "" : StringEscapeUtils.escapeHtml4(strUserReceiveEmails());
 	}
 
-	public void htmUserReceiveEmails(ToutEcrivain r, Boolean patchDroits) {
+	public void htmUserReceiveEmails(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "UserReceiveEmails\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserReceiveEmails() {");
@@ -883,10 +883,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return seeArchived == null ? "" : StringEscapeUtils.escapeHtml4(strSeeArchived());
 	}
 
-	public void htmSeeArchived(ToutEcrivain r, Boolean patchDroits) {
+	public void htmSeeArchived(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "SeeArchived\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "SeeArchived() {");
@@ -985,10 +985,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return seeDeleted == null ? "" : StringEscapeUtils.escapeHtml4(strSeeDeleted());
 	}
 
-	public void htmSeeDeleted(ToutEcrivain r, Boolean patchDroits) {
+	public void htmSeeDeleted(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchSiteUser", strPk(), "SeeDeleted\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "SeeDeleted() {");
@@ -1182,7 +1182,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	/////////////
 
 	@Override public void populateForClass(SolrDocument solrDocument) {
-		peuplerSiteUser(solrDocument);
+		populateSiteUser(solrDocument);
 	}
 	public void populateSiteUser(SolrDocument solrDocument) {
 		SiteUser oSiteUser = (SiteUser)this;
@@ -1259,22 +1259,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public static void index() {
 		try {
-			SiteRequestEnUS requeteSite = new SiteRequestEnUS();
-			requeteSite.initDeepSiteRequestEnUS();
-			SiteContextEnUS siteContexte = new SiteContextEnUS();
-			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
-			siteContexte.initDeepSiteContextEnUS();
-			siteRequest.setSiteContexte_(siteContexte);
-			siteRequest.setConfigSite_(siteContexte.getConfigSite());
-			SolrQuery rechercheSolr = new SolrQuery();
-			rechercheSolr.setQuery("*:*");
-			rechercheSolr.setRows(1);
-			rechercheSolr.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
-			QueryResponse reponseRecherche = requeteSite.getSiteContexte_().getClientSolr().query(rechercheSolr);
-			if(reponseRecherche.getResults().size() > 0)
-				requeteSite.setDocumentSolr(reponseRecherche.getResults().get(0));
+			SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+			siteRequest.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContext = new SiteContextEnUS();
+			siteContext.getSiteConfig().setConfigPath("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
+			siteContext.initDeepSiteContextEnUS();
+			siteRequest.setSiteContext_(siteContext);
+			siteRequest.setSiteConfig_(siteContext.getSiteConfig());
+			SolrQuery solrQuery = new SolrQuery();
+			solrQuery.setQuery("*:*");
+			solrQuery.setRows(1);
+			solrQuery.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
+			QueryResponse queryResponse = siteRequest.getSiteContext_().getSolrClient().query(solrQuery);
+			if(queryResponse.getResults().size() > 0)
+				siteRequest.setSolrDocument(queryResponse.getResults().get(0));
 			SiteUser o = new SiteUser();
-			o.requeteSiteSiteUser(requeteSite);
+			o.siteRequestSiteUser(siteRequest);
 			o.initDeepSiteUser(siteRequest);
 			o.indexSiteUser();
 		} catch(Exception e) {
@@ -1294,7 +1294,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public void indexSiteUser(SolrClient clientSolr) {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
-			indexerSiteUser(document);
+			indexSiteUser(document);
 			clientSolr.add(document);
 			clientSolr.commit();
 		} catch(Exception e) {
@@ -1305,8 +1305,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public void indexSiteUser() {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
-			indexerSiteUser(document);
-			SolrClient clientSolr = siteRequest_.getSiteContexte_().getClientSolr();
+			indexSiteUser(document);
+			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
 			clientSolr.commit();
 		} catch(Exception e) {
@@ -1364,16 +1364,16 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public void desindexerSiteUser() {
 		try {
-		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
-			requeteSite.initDeepSiteRequestEnUS();
-			SiteContextEnUS siteContexte = new SiteContextEnUS();
-			siteContexte.initDeepSiteContextEnUS();
-			siteRequest.setSiteContexte_(siteContexte);
-			siteRequest.setConfigSite_(siteContexte.getConfigSite());
+		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+			siteRequest.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContext = new SiteContextEnUS();
+			siteContext.initDeepSiteContextEnUS();
+			siteRequest.setSiteContext_(siteContext);
+			siteRequest.setSiteConfig_(siteContext.getSiteConfig());
 			initDeepSiteUser(siteRequest);
-			SolrClient clientSolr = siteContexte.getClientSolr();
-			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			SolrClient solrClient = siteContext.getSolrClient();
+			solrClient.deleteById(id.toString());
+			solrClient.commit();
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;      
+package org.computate.scolaire.frFR.cluster;       
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +16,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**      
+/**       
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Api: true
  * ApiUri: /api/cluster
@@ -34,13 +34,13 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * PageRechercheEnUSPage: ClusterEnUSPage
  * MotCle: classeNomSimpleCluster
  * Modele: true
- */   
-public class Cluster extends ClusterGen<Object> { 
+ */      
+public class Cluster extends ClusterGen<Object> {  
 
 	/**
 	 * Var.enUS: siteRequest_
 	 * {@inheritDoc}
-	 */       
+	 */      
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
 
 	protected void _pageParts(List<PagePart> l) {
@@ -48,9 +48,9 @@ public class Cluster extends ClusterGen<Object> {
 
 	/**
 	 * Var.enUS: beforePagePart
-	 */
+	 */  
 	public void avantPagePart(PagePart o, String var) {
-	}
+	} 
 
 	/**
 	 * {@inheritDoc}

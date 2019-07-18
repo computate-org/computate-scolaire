@@ -87,7 +87,7 @@ public abstract class ClusterEnUSGenPageGen<DEV> extends PageLayout {
 				setCluster(clusterWrap.o);
 		}
 		if(cluster != null)
-			cluster.initDeepForClass(siteRequest_);
+			cluster.initDeepForClass(null);
 		clusterWrap.alreadyInitialized(true);
 		return (ClusterEnUSGenPage)this;
 	}
@@ -155,7 +155,6 @@ public abstract class ClusterEnUSGenPageGen<DEV> extends PageLayout {
 	protected boolean alreadyInitializedClusterEnUSGenPage = false;
 
 	public ClusterEnUSGenPage initDeepClusterEnUSGenPage(SiteRequestEnUS siteRequest_) {
-		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedClusterEnUSGenPage) {
 			alreadyInitializedClusterEnUSGenPage = true;
 			initDeepClusterEnUSGenPage();
@@ -175,19 +174,6 @@ public abstract class ClusterEnUSGenPageGen<DEV> extends PageLayout {
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepClusterEnUSGenPage(siteRequest_);
-	}
-
-	/////////////////
-	// siteRequest //
-	/////////////////
-
-	public void siteRequestClusterEnUSGenPage(SiteRequestEnUS siteRequest_) {
-		if(cluster != null)
-			cluster.setSiteRequest_(siteRequest_);
-	}
-
-	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestClusterEnUSGenPage(siteRequest_);
 	}
 
 	/////////////

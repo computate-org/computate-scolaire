@@ -506,6 +506,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureHealthChecksEmptySolr
 	 * r: configurerControlesSanteErreurVertx
 	 * r.enUS: configureHealthChecksErrorVertx
+	 * r: ClientSolr
+	 * r.enUS: SolrClient
 	 */
 	private Future<Void> configurerControlesSante() {
 		Future<Void> future = Future.future();

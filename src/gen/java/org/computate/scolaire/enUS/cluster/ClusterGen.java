@@ -123,7 +123,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			this.pageParts.add(o);
 		return (Cluster)this;
 	}
-	public abstract void avantPagePart(PagePart o, String entiteVar);
+	public abstract void beforePagePart(PagePart o, String entiteVar);
 	protected Cluster pagePartsInit() {
 		if(!pagePartsWrap.alreadyInitialized) {
 			_pageParts(pageParts);
@@ -194,10 +194,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
 	}
 
-	public void htmPk(ToutEcrivain r, Boolean patchDroits) {
+	public void htmPk(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Pk\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Pk() {");
@@ -291,10 +291,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return id == null ? "" : StringEscapeUtils.escapeHtml4(strId());
 	}
 
-	public void htmId(ToutEcrivain r, Boolean patchDroits) {
+	public void htmId(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Id\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Id() {");
@@ -404,10 +404,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return created == null ? "" : StringEscapeUtils.escapeHtml4(strCreated());
 	}
 
-	public void htmCreated(ToutEcrivain r, Boolean patchDroits) {
+	public void htmCreated(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Created\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Created() {");
@@ -517,10 +517,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return modified == null ? "" : StringEscapeUtils.escapeHtml4(strModified());
 	}
 
-	public void htmModified(ToutEcrivain r, Boolean patchDroits) {
+	public void htmModified(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Modified\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Modified() {");
@@ -619,10 +619,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return archived == null ? "" : StringEscapeUtils.escapeHtml4(strArchived());
 	}
 
-	public void htmArchived(ToutEcrivain r, Boolean patchDroits) {
+	public void htmArchived(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Archived\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Archived() {");
@@ -721,10 +721,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return deleted == null ? "" : StringEscapeUtils.escapeHtml4(strDeleted());
 	}
 
-	public void htmDeleted(ToutEcrivain r, Boolean patchDroits) {
+	public void htmDeleted(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "Deleted\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Deleted() {");
@@ -818,10 +818,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalName == null ? "" : StringEscapeUtils.escapeHtml4(strClassCanonicalName());
 	}
 
-	public void htmClassCanonicalName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmClassCanonicalName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "ClassCanonicalName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassCanonicalName() {");
@@ -915,10 +915,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classSimpleName == null ? "" : StringEscapeUtils.escapeHtml4(strClassSimpleName());
 	}
 
-	public void htmClassSimpleName(ToutEcrivain r, Boolean patchDroits) {
+	public void htmClassSimpleName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "ClassSimpleName\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassSimpleName() {");
@@ -1029,10 +1029,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalNames == null ? "" : StringEscapeUtils.escapeHtml4(strClassCanonicalNames());
 	}
 
-	public void htmClassCanonicalNames(ToutEcrivain r, Boolean patchDroits) {
+	public void htmClassCanonicalNames(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
 			r.s("<div id=\"patchCluster", strPk(), "ClassCanonicalNames\">");
-			if(patchDroits) {
+			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassCanonicalNames() {");
@@ -1243,7 +1243,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	/////////////
 
 	public void populateForClass(SolrDocument solrDocument) {
-		peuplerCluster(solrDocument);
+		populateCluster(solrDocument);
 	}
 	public void populateCluster(SolrDocument solrDocument) {
 		Cluster oCluster = (Cluster)this;
@@ -1306,22 +1306,22 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public static void index() {
 		try {
-			SiteRequestEnUS requeteSite = new SiteRequestEnUS();
-			requeteSite.initDeepSiteRequestEnUS();
-			SiteContextEnUS siteContexte = new SiteContextEnUS();
-			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
-			siteContexte.initDeepSiteContextEnUS();
-			siteRequest.setSiteContexte_(siteContexte);
-			siteRequest.setConfigSite_(siteContexte.getConfigSite());
-			SolrQuery rechercheSolr = new SolrQuery();
-			rechercheSolr.setQuery("*:*");
-			rechercheSolr.setRows(1);
-			rechercheSolr.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
-			QueryResponse reponseRecherche = requeteSite.getSiteContexte_().getClientSolr().query(rechercheSolr);
-			if(reponseRecherche.getResults().size() > 0)
-				requeteSite.setDocumentSolr(reponseRecherche.getResults().get(0));
+			SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+			siteRequest.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContext = new SiteContextEnUS();
+			siteContext.getSiteConfig().setConfigPath("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
+			siteContext.initDeepSiteContextEnUS();
+			siteRequest.setSiteContext_(siteContext);
+			siteRequest.setSiteConfig_(siteContext.getSiteConfig());
+			SolrQuery solrQuery = new SolrQuery();
+			solrQuery.setQuery("*:*");
+			solrQuery.setRows(1);
+			solrQuery.addFilterQuery("id:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
+			QueryResponse queryResponse = siteRequest.getSiteContext_().getSolrClient().query(solrQuery);
+			if(queryResponse.getResults().size() > 0)
+				siteRequest.setSolrDocument(queryResponse.getResults().get(0));
 			Cluster o = new Cluster();
-			o.requeteSiteCluster(requeteSite);
+			o.siteRequestCluster(siteRequest);
 			o.initDeepCluster(siteRequest);
 			o.indexCluster();
 		} catch(Exception e) {
@@ -1341,7 +1341,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void indexCluster(SolrClient clientSolr) {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
-			indexerCluster(document);
+			indexCluster(document);
 			clientSolr.add(document);
 			clientSolr.commit();
 		} catch(Exception e) {
@@ -1352,8 +1352,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void indexCluster() {
 		try {
 			SolrInputDocument document = new SolrInputDocument();
-			indexerCluster(document);
-			SolrClient clientSolr = siteRequest_.getSiteContexte_().getClientSolr();
+			indexCluster(document);
+			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
 			clientSolr.commit();
 		} catch(Exception e) {
@@ -1409,16 +1409,16 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void desindexerCluster() {
 		try {
-		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
-			requeteSite.initDeepSiteRequestEnUS();
-			SiteContextEnUS siteContexte = new SiteContextEnUS();
-			siteContexte.initDeepSiteContextEnUS();
-			siteRequest.setSiteContexte_(siteContexte);
-			siteRequest.setConfigSite_(siteContexte.getConfigSite());
+		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+			siteRequest.initDeepSiteRequestEnUS();
+			SiteContextEnUS siteContext = new SiteContextEnUS();
+			siteContext.initDeepSiteContextEnUS();
+			siteRequest.setSiteContext_(siteContext);
+			siteRequest.setSiteConfig_(siteContext.getSiteConfig());
 			initDeepCluster(siteRequest);
-			SolrClient clientSolr = siteContexte.getClientSolr();
-			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			SolrClient solrClient = siteContext.getSolrClient();
+			solrClient.deleteById(id.toString());
+			solrClient.commit();
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

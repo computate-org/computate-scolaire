@@ -321,7 +321,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			SolrQuery query = new SolrQuery();
 			query.setQuery("*:*");
 			try {
-				QueryResponse r = siteContextEnUS.getClientSolr().query(query);
+				QueryResponse r = siteContextEnUS.getSolrClient().query(query);
 				if(r.getResults().size() > 0)
 					a.complete(Status.OK());
 				else {

@@ -350,20 +350,20 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			case "cree":
 				return "cree_indexed_date";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
 			case "utilisateurNom":
