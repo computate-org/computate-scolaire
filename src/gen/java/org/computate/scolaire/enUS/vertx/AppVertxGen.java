@@ -7,7 +7,7 @@ import io.vertx.core.AbstractVerticle;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 
 /**	
@@ -133,7 +133,7 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -142,7 +142,7 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirAppVertx(v, val);
+					o = defineAppVertx(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -151,7 +151,7 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		}
 		return o != null;
 	}
-	public Object definirAppVertx(String var, String val) {
+	public Object defineAppVertx(String var, String val) {
 		switch(var) {
 			default:
 				return null;

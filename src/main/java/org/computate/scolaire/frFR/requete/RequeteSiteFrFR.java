@@ -540,7 +540,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * r.enUS: decryptionCipher
 	 * r: decodeur
 	 * r.enUS: decoder
-	 */
+	 */ 
 	public String decrypterStr(String o) {
 		String texteNonCrypte = null;
 		if(o != null && cryptageChiffreDecrypter != null) {

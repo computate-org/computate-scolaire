@@ -4,7 +4,7 @@ import org.apache.solr.common.SolrDocumentList;
 import java.security.MessageDigest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import javax.crypto.spec.SecretKeySpec;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import javax.crypto.Cipher;
 import java.util.Stack;

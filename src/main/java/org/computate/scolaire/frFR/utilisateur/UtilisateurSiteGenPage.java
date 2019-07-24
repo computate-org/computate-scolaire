@@ -82,7 +82,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 			c.o("regular");
 	}
 
-	@Override protected void _contexteIconeNom(Couverture<String> c) {
+	@Override protected void _contexteNom(Couverture<String> c) {
 			c.o("user");
 	}
 
@@ -295,7 +295,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
 		if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0) {
-			// contexteAucunNomTrouve : 
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -303,7 +302,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 				e("span").a("class", " ").f().sx("").g("span");
 			} g("h1");
 		} else if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
-			// contexteUnNom : 
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
@@ -313,7 +311,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 				UtilisateurSite o = listeUtilisateurSite.get(0);
 			}
 		} else {
-			// contexteNomPluriel : plusiers 
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -382,24 +379,24 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<MiseEnPage
 				{ e("div").a("class", "w3-container ").f();
 					UtilisateurSite o = new UtilisateurSite();
 
-					// FormFiltres PATCH
-					{ e("form").a("action", "/api/utilisateur").a("id", "patchUtilisateurSiteFormFiltres").f();
+					// FormulaireFiltres PATCH
+					{ e("form").a("action", "/api/utilisateur").a("id", "patchUtilisateurSiteFormulaireFiltres").f();
 						htmlFormRechercheUtilisateurSite(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-deep-purple ")
-						.a("onclick", "rechercheUtilisateurSite($('#patchUtilisateurSiteFormFiltres')); ")
+						.a("onclick", "rechercheUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres')); ")
 						.f().sx("Rechercher des null")
 					.g("button");
 
 
-					// FormValeurs PATCH
-					{ e("form").a("action", "/api/utilisateur").a("id", "patchUtilisateurSiteFormValeurs").f();
+					// FormulaireValeurs PATCH
+					{ e("form").a("action", "/api/utilisateur").a("id", "patchUtilisateurSiteFormulaireValeurs").f();
 						htmlFormPATCHUtilisateurSite(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-deep-purple ")
-						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormFiltres'), $('#patchUtilisateurSiteFormValeurs')); ")
+						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs')); ")
 						.f().sx("Modifier des null")
 					.g("button");
 

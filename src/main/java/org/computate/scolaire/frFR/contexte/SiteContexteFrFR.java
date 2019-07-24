@@ -96,7 +96,10 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	protected void _configSite(ConfigSite o) { 
 	}
 
-	/**	Le source de données du site. **/
+	/**	
+	 * Var.enUS: sqlClient
+	 * frFR: Le source de données du site. 
+	 * **/ 
 	protected void _clientSql(Couverture<SQLClient> c) {
 	}
 //
@@ -128,5 +131,19 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	protected void _clientSolr(Couverture<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(configSite.getSolrUrl()).build();
 		c.o(o);
+	}
+
+	/**	
+	 * Var.enUS: solrClientComputate
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * Le client du moteur de recherche SOLR pour le projet computate. 
+	 **/
+	protected void _clientSolrComputate(Couverture<HttpSolrClient> c) {
+		String solrUrlComputate = configSite.getSolrUrlComputate();
+		if(StringUtils.isNotEmpty(solrUrlComputate)) {
+			HttpSolrClient o = new HttpSolrClient.Builder(solrUrlComputate).build();
+			c.o(o);
+		}
 	}
 }

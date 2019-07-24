@@ -13,32 +13,30 @@ import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.ext.web.api.OperationResponse;
 
 /**
- * Traduire: false
+ * Translate: false
  * Gen: false
  **/
 @WebApiServiceGen
 @ProxyGen
 public interface ClusterEnUSGenApiService {
-	// Une méthode d'usine pour créer une instance et un proxy. 
-	static void enregistrerService(SiteContextEnUS siteContexte, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress("enUSCluster").register(ClusterEnUSGenApiService.class, new ClusterEnUSApiServiceImpl(siteContexte));
+	static void registerService(SiteContextEnUS siteContext, Vertx vertx) {
+		new ServiceBinder(vertx).setAddress("enUSCluster").register(ClusterEnUSGenApiService.class, new ClusterEnUSApiServiceImpl(siteContext));
+	}
+
+	static ClusterEnUSGenApiService create(SiteContextEnUS siteContext, Vertx vertx) {
+		return new ClusterEnUSApiServiceImpl(siteContext);
 	}
 
 	// Une méthode d'usine pour créer une instance et un proxy. 
-	static ClusterEnUSGenApiService creer(SiteContextEnUS siteContexte, Vertx vertx) {
-		return new ClusterEnUSApiServiceImpl(siteContexte);
+	static ClusterEnUSGenApiService createProxy(Vertx vertx, String address) {
+		return new ClusterEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
-	// Une méthode d'usine pour créer une instance et un proxy. 
-	static ClusterEnUSGenApiService creerProxy(Vertx vertx, String addresse) {
-		return new ClusterEnUSGenApiServiceVertxEBProxy(vertx, addresse);
-	}
-
-	public void rechercheenuspageClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void rechercheenuspageCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void deleteCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
+	public void rechercheenuspageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void rechercheenuspageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void rechercheCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void postCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void getCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void deleteCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

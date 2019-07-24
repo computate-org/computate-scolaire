@@ -28,7 +28,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mission.MissionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mission.MissionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageUri dans Solr</a>
  * <br/>
  **/
 public abstract class MissionScolaireGen<DEV> extends Cluster {
@@ -606,7 +606,6 @@ public abstract class MissionScolaireGen<DEV> extends Cluster {
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
 			SolrQuery rechercheSolr = new SolrQuery();
@@ -686,10 +685,9 @@ public abstract class MissionScolaireGen<DEV> extends Cluster {
 			requeteSite.initLoinRequeteSiteFrFR();
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
-			initLoinMissionScolaire(siteContexte.getRequeteSite_());
+			initLoinMissionScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
 			clientSolr.commit();

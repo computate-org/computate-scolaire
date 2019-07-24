@@ -24,7 +24,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageUri dans Solr</a>
  * <br/>
  **/
 public abstract class EcoleGen<DEV> extends Cluster {
@@ -49,6 +49,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public static final String Ecole_IconeNom = "fort-awesome";
 	public static final String EcoleFrFRPage_Uri = "/frFR/ecole";
 	public static final String EcoleFrFRPage_ImageUri = "/png/frFR/ecole-999.png";
+	public static final String EcoleEnUSPage_Uri = "/enUS/school";
+	public static final String EcoleEnUSPage_ImageUri = "/png/enUS/school-999.png";
 
 	//////////////
 	// ecoleCle //
@@ -1406,7 +1408,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.getConfigSite().setConfigChemin("/usr/local/src/computate-scolaire/config/computate-scolaire.config");
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
 			SolrQuery rechercheSolr = new SolrQuery();
@@ -1554,10 +1555,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			requeteSite.initLoinRequeteSiteFrFR();
 			SiteContexteFrFR siteContexte = new SiteContexteFrFR();
 			siteContexte.initLoinSiteContexteFrFR();
-			siteContexte.setRequeteSite_(requeteSite);
 			requeteSite.setSiteContexte_(siteContexte);
 			requeteSite.setConfigSite_(siteContexte.getConfigSite());
-			initLoinEcole(siteContexte.getRequeteSite_());
+			initLoinEcole(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
 			clientSolr.commit();

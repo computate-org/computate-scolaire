@@ -311,6 +311,42 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return (SiteContexteFrFR)this;
 	}
 
+	/////////////////////////
+	// clientSolrComputate //
+	/////////////////////////
+
+	/**	L'entité « clientSolrComputate »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected HttpSolrClient clientSolrComputate;
+	public Couverture<HttpSolrClient> clientSolrComputateCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);
+
+	/**	<br/>L'entité « clientSolrComputate »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:clientSolrComputate">Trouver l'entité clientSolrComputate dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _clientSolrComputate(Couverture<HttpSolrClient> c);
+
+	public HttpSolrClient getClientSolrComputate() {
+		return clientSolrComputate;
+	}
+
+	public void setClientSolrComputate(HttpSolrClient clientSolrComputate) {
+		this.clientSolrComputate = clientSolrComputate;
+		this.clientSolrComputateCouverture.dejaInitialise = true;
+	}
+	protected SiteContexteFrFR clientSolrComputateInit() {
+		if(!clientSolrComputateCouverture.dejaInitialise) {
+			_clientSolrComputate(clientSolrComputateCouverture);
+			if(clientSolrComputate == null)
+				setClientSolrComputate(clientSolrComputateCouverture.o);
+		}
+		clientSolrComputateCouverture.dejaInitialise(true);
+		return (SiteContexteFrFR)this;
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -338,6 +374,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		configSiteInit();
 		clientSqlInit();
 		clientSolrInit();
+		clientSolrComputateInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -380,6 +417,8 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				return oSiteContexteFrFR.clientSql;
 			case "clientSolr":
 				return oSiteContexteFrFR.clientSolr;
+			case "clientSolrComputate":
+				return oSiteContexteFrFR.clientSolrComputate;
 			default:
 				return null;
 		}

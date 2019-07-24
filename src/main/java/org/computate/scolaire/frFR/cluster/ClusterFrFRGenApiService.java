@@ -19,12 +19,10 @@ import io.vertx.ext.web.api.OperationResponse;
 @WebApiServiceGen
 @ProxyGen
 public interface ClusterFrFRGenApiService {
-	// Une méthode d'usine pour créer une instance et un proxy. 
 	static void enregistrerService(SiteContexteFrFR siteContexte, Vertx vertx) {
 		new ServiceBinder(vertx).setAddress("frFRCluster").register(ClusterFrFRGenApiService.class, new ClusterFrFRApiServiceImpl(siteContexte));
 	}
 
-	// Une méthode d'usine pour créer une instance et un proxy. 
 	static ClusterFrFRGenApiService creer(SiteContexteFrFR siteContexte, Vertx vertx) {
 		return new ClusterFrFRApiServiceImpl(siteContexte);
 	}

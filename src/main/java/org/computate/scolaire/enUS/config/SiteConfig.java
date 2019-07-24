@@ -398,6 +398,18 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	}
 
 	/**	
+	 *	The URL to the SOLR search engine for the computate project. 
+	 **/
+	protected void _solrUrlComputate(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	/**	
 	 *	The Facebook account for the site. 
 	 **/
 	protected void _accountFacebook(Wrap<String> c) {

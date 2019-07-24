@@ -23,8 +23,8 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;
 
-/**
- * NomCanonique.enUS: org.computate.enUS.school.page.PageLayout
+/** 
+ * NomCanonique.enUS: org.computate.scolaire.enUS.page.PageLayout
  * MotCle: classeNomSimpleMiseEnPage
  */  
 public class MiseEnPage extends MiseEnPageGen<Object> {  
@@ -702,24 +702,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					g("span");
 				g("a");
 			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAProposUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/png/computate.png").a("style", "height: 50px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("À propos");
-					g("span");
-				g("a");
-			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageFaqUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/ufo.svg").a("style", "height: 50px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("FAQ");
-					g("span");
-				g("a");
-			g("div");
 			if(requeteSite_.getUtilisateurId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
@@ -949,7 +931,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: all
 	 * Param1.var.enUS: objects
 	 * r.enUS: objet
 	 * object
@@ -985,7 +966,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: tabLine
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
 	 * r.enUS: nombreTabulations
@@ -1004,7 +984,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/** 
-	 * Var.enUS: allLine
 	 * Param1.var.enUS: objects
 	 * r.enUS: objets
 	 * objects
@@ -1024,7 +1003,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/** 
-	 * Var.enUS: allXml
 	 * Param1.var.enUS: objects
 	 * r.enUS: objet
 	 * object
@@ -1047,7 +1025,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: allXml
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
 	 * r.enUS: nombreTabulations
@@ -1065,7 +1042,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * Var.enUS: tabLineXml
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
 	 * r.enUS: nombreTabulations

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page.part;  
+package org.computate.scolaire.frFR.page.part;   
 
 
 import org.computate.scolaire.frFR.cluster.Cluster;

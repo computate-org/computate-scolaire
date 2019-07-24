@@ -69,11 +69,19 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 	protected void _siteConfig(SiteConfig o) { 
 	}
 
-	protected void _clientSql(Wrap<SQLClient> c) {
+	protected void _sqlClient(Wrap<SQLClient> c) {
 	}
 
 	protected void _solrClient(Wrap<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(siteConfig.getSolrUrl()).build();
 		c.o(o);
+	}
+
+	protected void _solrClientComputate(Wrap<HttpSolrClient> c) {
+		String solrUrlComputate = siteConfig.getSolrUrlComputate();
+		if(StringUtils.isNotEmpty(solrUrlComputate)) {
+			HttpSolrClient o = new HttpSolrClient.Builder(solrUrlComputate).build();
+			c.o(o);
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecrivain;   
+package org.computate.scolaire.frFR.ecrivain;    
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ import io.vertx.core.buffer.Buffer;
 
 
 /**  
- * NomCanonique.enUS: org.computate.enUS.school.writer.AllWriter
+ * NomCanonique.enUS: org.computate.scolaire.enUS.writer.AllWriter
  * MotCle: classeNomSimpleToutEcrivain
  **/
 public class ToutEcrivain extends ToutEcrivainGen<Object> {   

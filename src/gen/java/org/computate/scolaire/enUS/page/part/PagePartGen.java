@@ -3,11 +3,11 @@ package org.computate.scolaire.enUS.page.part;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.enUS.school.page.PageLayout;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 

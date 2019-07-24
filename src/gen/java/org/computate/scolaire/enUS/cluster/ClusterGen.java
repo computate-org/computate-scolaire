@@ -4,7 +4,7 @@ import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
@@ -1191,7 +1191,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -1200,7 +1200,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirCluster(v, val);
+					o = defineCluster(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -1209,23 +1209,23 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object definirCluster(String var, String val) {
+	public Object defineCluster(String var, String val) {
 		switch(var) {
 			case "created":
 				setCreated(val);
-				sauvegardesCluster.add(var);
+				savesCluster.add(var);
 				return val;
 			case "modified":
 				setModified(val);
-				sauvegardesCluster.add(var);
+				savesCluster.add(var);
 				return val;
 			case "archived":
 				setArchived(val);
-				sauvegardesCluster.add(var);
+				savesCluster.add(var);
 				return val;
 			case "deleted":
 				setDeleted(val);
-				sauvegardesCluster.add(var);
+				savesCluster.add(var);
 				return val;
 			default:
 				return null;
@@ -1233,10 +1233,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	/////////////////
-	// sauvegardes //
+	// saves //
 	/////////////////
 
-	protected List<String> sauvegardesCluster = new ArrayList<String>();
+	protected List<String> savesCluster = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -1247,8 +1247,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	public void populateCluster(SolrDocument solrDocument) {
 		Cluster oCluster = (Cluster)this;
-		sauvegardesCluster = (List<String>)solrDocument.get("sauvegardesCluster_stored_strings");
-		if(sauvegardesCluster != null) {
+		savesCluster = (List<String>)solrDocument.get("savesCluster_stored_strings");
+		if(savesCluster != null) {
 
 			Long pk = (Long)solrDocument.get("pk_stored_long");
 			oCluster.setPk(pk);
@@ -1256,43 +1256,43 @@ public abstract class ClusterGen<DEV> extends Object {
 			String id = (String)solrDocument.get("id");
 			oCluster.setId(id);
 
-			if(sauvegardesCluster.contains("created")) {
+			if(savesCluster.contains("created")) {
 				Date created = (Date)solrDocument.get("created_stored_date");
 				if(created != null)
 					oCluster.setCreated(created);
 			}
 
-			if(sauvegardesCluster.contains("modified")) {
+			if(savesCluster.contains("modified")) {
 				Date modified = (Date)solrDocument.get("modified_stored_date");
 				if(modified != null)
 					oCluster.setModified(modified);
 			}
 
-			if(sauvegardesCluster.contains("archived")) {
+			if(savesCluster.contains("archived")) {
 				Boolean archived = (Boolean)solrDocument.get("archived_stored_boolean");
 				if(archived != null)
 					oCluster.setArchived(archived);
 			}
 
-			if(sauvegardesCluster.contains("deleted")) {
+			if(savesCluster.contains("deleted")) {
 				Boolean deleted = (Boolean)solrDocument.get("deleted_stored_boolean");
 				if(deleted != null)
 					oCluster.setDeleted(deleted);
 			}
 
-			if(sauvegardesCluster.contains("classCanonicalName")) {
+			if(savesCluster.contains("classCanonicalName")) {
 				String classCanonicalName = (String)solrDocument.get("classCanonicalName_stored_string");
 				if(classCanonicalName != null)
 					oCluster.setClassCanonicalName(classCanonicalName);
 			}
 
-			if(sauvegardesCluster.contains("classSimpleName")) {
+			if(savesCluster.contains("classSimpleName")) {
 				String classSimpleName = (String)solrDocument.get("classSimpleName_stored_string");
 				if(classSimpleName != null)
 					oCluster.setClassSimpleName(classSimpleName);
 			}
 
-			if(sauvegardesCluster.contains("classCanonicalNames")) {
+			if(savesCluster.contains("classCanonicalNames")) {
 				List<String> classCanonicalNames = (List<String>)solrDocument.get("classCanonicalNames_stored_strings");
 				if(classCanonicalNames != null)
 					oCluster.classCanonicalNames.addAll(classCanonicalNames);
@@ -1362,8 +1362,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public void indexCluster(SolrInputDocument document) {
-		if(sauvegardesCluster != null)
-			document.addField("sauvegardesCluster_stored_strings", sauvegardesCluster);
+		if(savesCluster != null)
+			document.addField("savesCluster_stored_strings", savesCluster);
 
 		if(pk != null) {
 			document.addField("pk_indexed_long", pk);
@@ -1407,7 +1407,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
-	public void desindexerCluster() {
+	public void unindexCluster() {
 		try {
 		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 			siteRequest.initDeepSiteRequestEnUS();

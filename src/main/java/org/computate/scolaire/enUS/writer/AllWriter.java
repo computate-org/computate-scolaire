@@ -1,4 +1,4 @@
-package org.computate.enUS.school.writer;
+package org.computate.scolaire.enUS.writer;
 
 import java.io.File;
 import java.io.FileNotFoundException;

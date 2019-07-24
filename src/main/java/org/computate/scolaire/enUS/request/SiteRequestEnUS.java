@@ -26,7 +26,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;

@@ -1,10 +1,10 @@
 package org.computate.scolaire.enUS.cluster;
 
 import java.util.Objects;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
-import org.computate.enUS.school.writer.AllWriter;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -93,7 +93,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	@Override public boolean defineForClass(String var, String val) {
@@ -102,7 +102,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirClusterEnUSPage(v, val);
+					o = defineClusterEnUSPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -111,10 +111,10 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		}
 		return o != null;
 	}
-	public Object definirClusterEnUSPage(String var, String val) {
+	public Object defineClusterEnUSPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirClusterEnUSGenPage(var, val);
+				return super.defineClusterEnUSGenPage(var, val);
 		}
 	}
 

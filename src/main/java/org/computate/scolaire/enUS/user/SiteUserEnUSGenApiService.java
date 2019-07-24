@@ -13,26 +13,24 @@ import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.ext.web.api.OperationResponse;
 
 /**
- * Traduire: false
+ * Translate: false
  * Gen: false
  **/
 @WebApiServiceGen
 @ProxyGen
 public interface SiteUserEnUSGenApiService {
-	// Une méthode d'usine pour créer une instance et un proxy. 
-	static void enregistrerService(SiteContextEnUS siteContexte, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress("enUSSiteUser").register(SiteUserEnUSGenApiService.class, new SiteUserEnUSApiServiceImpl(siteContexte));
+	static void registerService(SiteContextEnUS siteContext, Vertx vertx) {
+		new ServiceBinder(vertx).setAddress("enUSSiteUser").register(SiteUserEnUSGenApiService.class, new SiteUserEnUSApiServiceImpl(siteContext));
+	}
+
+	static SiteUserEnUSGenApiService create(SiteContextEnUS siteContext, Vertx vertx) {
+		return new SiteUserEnUSApiServiceImpl(siteContext);
 	}
 
 	// Une méthode d'usine pour créer une instance et un proxy. 
-	static SiteUserEnUSGenApiService creer(SiteContextEnUS siteContexte, Vertx vertx) {
-		return new SiteUserEnUSApiServiceImpl(siteContexte);
+	static SiteUserEnUSGenApiService createProxy(Vertx vertx, String address) {
+		return new SiteUserEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
-	// Une méthode d'usine pour créer une instance et un proxy. 
-	static SiteUserEnUSGenApiService creerProxy(Vertx vertx, String addresse) {
-		return new SiteUserEnUSGenApiServiceVertxEBProxy(vertx, addresse);
-	}
-
-	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
+	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

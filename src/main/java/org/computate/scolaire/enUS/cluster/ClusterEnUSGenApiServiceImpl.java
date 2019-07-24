@@ -65,14 +65,14 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
-import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
 
 
 /**
- * Traduire: false
+ * Translate: false
  **/
 public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
@@ -80,146 +80,146 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 	protected static final String SERVICE_ADDRESS = "ClusterEnUSApiServiceImpl";
 
-	protected SiteContextEnUS siteContexte;
+	protected SiteContextEnUS siteContext;
 
-	public ClusterEnUSGenApiServiceImpl(SiteContextEnUS siteContexte) {
-		this.siteContexte = siteContexte;
-		ClusterEnUSGenApiService service = ClusterEnUSGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+	public ClusterEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
+		this.siteContext = siteContext;
+		ClusterEnUSGenApiService service = ClusterEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// RechercheEnUSPage //
 
 	@Override
-	public void rechercheenuspageClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		rechercheenuspageCluster(operationRequete, gestionnaireEvenements);
+	public void rechercheenuspageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		rechercheenuspageCluster(operationRequest, eventHandler);
 	}
 
 	@Override
-	public void rechercheenuspageCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheenuspageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
-			sqlCluster(requeteSite, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
-					utilisateurCluster(requeteSite, b -> {
+					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/enUS/cluster", c -> {
+							aSearchCluster(siteRequest, false, true, "/enUS/cluster", c -> {
 								if(c.succeeded()) {
-									ListeRecherche<Cluster> listeCluster = c.result();
-									reponse200RechercheEnUSPageCluster(listeCluster, d -> {
+									SearchList<Cluster> listCluster = c.result();
+									response200RechercheEnUSPageCluster(listCluster, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
 											} else {
-												connexionSql.commit(e -> {
+												sqlConnection.commit(e -> {
 													if(e.succeeded()) {
-														connexionSql.close(f -> {
+														sqlConnection.close(f -> {
 															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurCluster(requeteSite, gestionnaireEvenements, f);
+																errorCluster(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														erreurCluster(requeteSite, gestionnaireEvenements, e);
+														errorCluster(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									errorCluster(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200RechercheEnUSPageCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200RechercheEnUSPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
 			ClusterEnUSPage page = new ClusterEnUSPage();
-			SolrDocument pageDocumentSolr = new SolrDocument();
+			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/enUS/cluster");
-			page.setPageDocumentSolr(pageDocumentSolr);
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/cluster");
+			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
-			page.setListeCluster(listeCluster);
-			page.initLoinClusterEnUSPage(requeteSite);
+			page.setListCluster(listCluster);
+			page.initDeepClusterEnUSPage(siteRequest);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	// Recherche //
 
 	@Override
-	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
-			rechercheCluster(requeteSite, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			aSearchCluster(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<Cluster> listeCluster = a.result();
-					reponse200RechercheCluster(listeCluster, b -> {
+					SearchList<Cluster> listCluster = a.result();
+					response200RechercheCluster(listCluster, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200RechercheCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
-			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
-			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
-			Long millisTransmission = reponseRecherche.getElapsedTime();
-			Long numCommence = reponseRecherche.getResults().getStart();
-			Long numTrouve = reponseRecherche.getResults().getNumFound();
-			Integer numRetourne = reponseRecherche.getResults().size();
-			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
-			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
-			Exception exceptionRecherche = reponseRecherche.getException();
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			QueryResponse responseSearch = listCluster.getQueryResponse();
+			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
 
 			w.l("{");
-			w.tl(1, "\"numCommence\": ", numCommence);
-			w.tl(1, ", \"numTrouve\": ", numTrouve);
-			w.tl(1, ", \"numRetourne\": ", numRetourne);
-			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
-			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
-			w.tl(1, ", \"liste\": [");
-			for(int i = 0; i < listeCluster.size(); i++) {
-				Cluster o = listeCluster.getList().get(i);
-				Object entiteValeur;
-				Integer entiteNumero = 0;
+			w.tl(1, "\"startNum\": ", startNum);
+			w.tl(1, ", \"foundNum\": ", foundNum);
+			w.tl(1, ", \"returnedNum\": ", returnedNum);
+			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
+			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
+			w.tl(1, ", \"list\": [");
+			for(int i = 0; i < listCluster.size(); i++) {
+				Cluster o = listCluster.getList().get(i);
+				Object entityValue;
+				Integer entityNumber = 0;
 
 				w.t(2);
 				if(i > 0)
@@ -229,232 +229,232 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				w.tl(2, "}");
 			}
 			w.tl(1, "]");
-			if(exceptionRecherche != null) {
-				w.tl(1, ", \"exceptionRecherche\": ", w.q(exceptionRecherche.getMessage()));
+			if(exceptionSearch != null) {
+				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
 			}
 			w.l("}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	// POST //
 
 	@Override
-	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void postCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, body);
-			sqlCluster(requeteSite, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
+			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
-					creerPOSTCluster(requeteSite, b -> {
+					createPOSTCluster(siteRequest, b -> {
 						if(b.succeeded()) {
 							Cluster cluster = b.result();
 							sqlPOSTCluster(cluster, c -> {
 								if(c.succeeded()) {
-									definirCluster(cluster, d -> {
+									defineCluster(cluster, d -> {
 										if(d.succeeded()) {
-											attribuerCluster(cluster, e -> {
+											attributeCluster(cluster, e -> {
 												if(e.succeeded()) {
-													indexerCluster(cluster, f -> {
+													indexCluster(cluster, f -> {
 														if(f.succeeded()) {
-															reponse200POSTCluster(cluster, g -> {
+															response200POSTCluster(cluster, g -> {
 																if(f.succeeded()) {
-																	SQLConnection connexionSql = requeteSite.getConnexionSql();
-																	connexionSql.commit(h -> {
+																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
+																	sqlConnection.commit(h -> {
 																		if(a.succeeded()) {
-																			connexionSql.close(i -> {
+																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
+																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					erreurCluster(requeteSite, gestionnaireEvenements, i);
+																					errorCluster(siteRequest, eventHandler, i);
 																				}
 																			});
 																		} else {
-																			erreurCluster(requeteSite, gestionnaireEvenements, h);
+																			errorCluster(siteRequest, eventHandler, h);
 																		}
 																	});
 																} else {
-																	erreurCluster(requeteSite, gestionnaireEvenements, g);
+																	errorCluster(siteRequest, eventHandler, g);
 																}
 															});
 														} else {
-															erreurCluster(requeteSite, gestionnaireEvenements, f);
+															errorCluster(siteRequest, eventHandler, f);
 														}
 													});
 												} else {
-													erreurCluster(requeteSite, gestionnaireEvenements, e);
+													errorCluster(siteRequest, eventHandler, e);
 												}
 											});
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									errorCluster(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void creerPOSTCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
+	public void createPOSTCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
 		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
 
-			connexionSql.queryWithParams(
-					SiteContextEnUS.SQL_creer
-					, new JsonArray(Arrays.asList(Cluster.class.getCanonicalName(), utilisateurId))
-					, creerAsync
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_create
+					, new JsonArray(Arrays.asList(Cluster.class.getCanonicalName(), userId))
+					, createAsync
 			-> {
-				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-				Long pk = creerLigne.getLong(0);
+				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = createLine.getLong(0);
 				Cluster o = new Cluster();
 				o.setPk(pk);
-				o.initLoinCluster(requeteSite);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
+				o.initDeepCluster(siteRequest);
+				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			JsonObject jsonObject = requeteSite.getObjetJson();
+			JsonObject jsonObject = siteRequest.getJsonObject();
 			StringBuilder postSql = new StringBuilder();
 			List<Object> postSqlParams = new ArrayList<Object>();
 
 			if(jsonObject != null) {
-				Set<String> entiteVars = jsonObject.fieldNames();
-				for(String entiteVar : entiteVars) {
-					switch(entiteVar) {
+				Set<String> entityVars = jsonObject.fieldNames();
+				for(String entityVar : entityVars) {
+					switch(entityVar) {
 					case "created":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("created", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("created", jsonObject.getInstant(entityVar), pk));
 						break;
 					case "modified":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getInstant(entityVar), pk));
 						break;
 					case "archived":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "deleted":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
 			}
-			connexionSql.queryWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				eventHandler.handle(Future.succeededFuture());
 			});
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			AllWriter w = AllWriter.create(o.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	// PATCH //
 
 	@Override
-	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, body);
-			sqlCluster(requeteSite, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
+			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
-					utilisateurCluster(requeteSite, b -> {
+					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, null, c -> {
+							aSearchCluster(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
-									ListeRecherche<Cluster> listeCluster = c.result();
-									listePATCHCluster(listeCluster, d -> {
+									SearchList<Cluster> listCluster = c.result();
+									listPATCHCluster(listCluster, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
 											} else {
-												connexionSql.commit(e -> {
+												sqlConnection.commit(e -> {
 													if(e.succeeded()) {
-														connexionSql.close(f -> {
+														sqlConnection.close(f -> {
 															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurCluster(requeteSite, gestionnaireEvenements, f);
+																errorCluster(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														erreurCluster(requeteSite, gestionnaireEvenements, e);
+														errorCluster(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									errorCluster(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void listePATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listPATCHCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		listeCluster.getList().forEach(o -> {
+		listCluster.getList().forEach(o -> {
 			futures.add(
 				sqlPATCHCluster(o).compose(
-					a -> definirPATCHCluster(a).compose(
-						b -> indexerPATCHCluster(b)
+					a -> definePATCHCluster(a).compose(
+						b -> indexPATCHCluster(b)
 					)
 				)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHCluster(listeCluster, gestionnaireEvenements);
+				response200PATCHCluster(listCluster, eventHandler);
 			} else {
-				erreurCluster(listeCluster.getRequeteSite_(), gestionnaireEvenements, a);
+				errorCluster(listCluster.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
@@ -462,27 +462,27 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public Future<Cluster> sqlPATCHCluster(Cluster o) {
 		Future<Cluster> future = Future.future();
 		try {
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			JsonObject requeteJson = requeteSite.getObjetJson();
+			JsonObject requestJson = siteRequest.getJsonObject();
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
-			Set<String> methodeNoms = requeteJson.fieldNames();
+			Set<String> methodNames = requestJson.fieldNames();
 			Cluster o2 = new Cluster();
 
-			patchSql.append(SiteContextEnUS.SQL_modifier);
+			patchSql.append(SiteContextEnUS.SQL_modify);
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
-			for(String methodeNom : methodeNoms) {
-				switch(methodeNom) {
+			for(String methodName : methodNames) {
+				switch(methodName) {
 				}
 			}
-			connexionSql.queryWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
+				o2.setSiteRequest_(o.getSiteRequest_());
 				o2.setPk(pk);
 				future.complete(o2);
 			});
@@ -492,24 +492,24 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public Future<Cluster> definirPATCHCluster(Cluster o) {
+	public Future<Cluster> definePATCHCluster(Cluster o) {
 		Future<Cluster> future = Future.future();
 		try {
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContextEnUS.SQL_definir
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_define
 					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
+					, defineAsync
 			-> {
-				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+				if(defineAsync.succeeded()) {
+					for(JsonArray definition : defineAsync.result().getResults()) {
+						o.defineForClass(definition.getString(0), definition.getString(1));
 					}
 					future.complete(o);
 				} else {
-			future.fail(definirAsync.cause());
+			future.fail(defineAsync.cause());
 				}
 			});
 			return future;
@@ -518,11 +518,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public Future<Void> indexerPATCHCluster(Cluster o) {
+	public Future<Void> indexPATCHCluster(Cluster o) {
 		Future<Void> future = Future.future();
 		try {
-			o.initLoinPourClasse(o.getRequeteSite_());
-			o.indexerPourClasse();
+			o.initDeepForClass(o.getSiteRequest_());
+			o.indexForClass();
 				future.complete();
 			return future;
 		} catch(Exception e) {
@@ -530,525 +530,525 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void reponse200PATCHCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200PATCHCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
 			buffer.appendString("{}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	// GET //
 
 	@Override
-	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void getCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
-			rechercheCluster(requeteSite, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			aSearchCluster(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<Cluster> listeCluster = a.result();
-					reponse200GETCluster(listeCluster, b -> {
+					SearchList<Cluster> listCluster = a.result();
+					response200GETCluster(listCluster, b -> {
 						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200GETCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200GETCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
 
-			if(listeCluster.size() > 0) {
-				SolrDocument documentSolr = documentsSolr.get(0);
-				Cluster o = listeCluster.get(0);
-				Object entiteValeur;
-				Integer entiteNumero = 0;
+			if(listCluster.size() > 0) {
+				SolrDocument solrDocument = solrDocuments.get(0);
+				Cluster o = listCluster.get(0);
+				Object entityValue;
+				Integer entityNumber = 0;
 
 				w.l("{");
 
 				w.l("}");
 			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	// DELETE //
 
 	@Override
-	public void deleteCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void deleteCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = genererSiteRequestEnUSPourCluster(siteContexte, operationRequete);
-			sqlCluster(requeteSite, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			sqlCluster(siteRequest, a -> {
 				if(a.succeeded()) {
-					rechercheCluster(requeteSite, false, true, null, b -> {
+					aSearchCluster(siteRequest, false, true, null, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<Cluster> listeCluster = b.result();
-							supprimerDELETECluster(requeteSite, c -> {
+							SearchList<Cluster> listCluster = b.result();
+							deleteDELETECluster(siteRequest, c -> {
 								if(c.succeeded()) {
-									reponse200DELETECluster(requeteSite, d -> {
+									response200DELETECluster(siteRequest, d -> {
 										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
 											} else {
-												connexionSql.commit(e -> {
+												sqlConnection.commit(e -> {
 													if(e.succeeded()) {
-														connexionSql.close(f -> {
+														sqlConnection.close(f -> {
 															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurCluster(requeteSite, gestionnaireEvenements, f);
+																errorCluster(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														erreurCluster(requeteSite, gestionnaireEvenements, e);
+														errorCluster(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
+											errorCluster(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
+									errorCluster(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
+							errorCluster(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
+					errorCluster(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void supprimerDELETECluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void deleteDELETECluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			Long pk = requeteSite.getRequetePk();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+			Long pk = siteRequest.getRequestPk();
 
-			connexionSql.queryWithParams(
-					SiteContextEnUS.SQL_supprimer
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
-					, supprimerAsync
+					, deleteAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				eventHandler.handle(Future.succeededFuture());
 			});
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200DELETECluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void response200DELETECluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
-			requeteSite.setW(w);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			AllWriter w = AllWriter.create(siteRequest, buffer);
+			siteRequest.setW(w);
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public String varIndexeCluster(String entiteVar) {
-		switch(entiteVar) {
+	public String varIndexedCluster(String entityVar) {
+		switch(entityVar) {
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
+			case "created":
+				return "created_indexed_date";
+			case "modified":
+				return "modified_indexed_date";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "cree":
-				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
+			case "archived":
+				return "archived_indexed_boolean";
+			case "deleted":
+				return "deleted_indexed_boolean";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
-	public String varRechercheCluster(String entiteVar) {
-		switch(entiteVar) {
+	public String varSearchCluster(String entityVar) {
+		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
-	public String varSuggereCluster(String entiteVar) {
-		switch(entiteVar) {
+	public String varSuggereCluster(String entityVar) {
+		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
 	// Partagé //
 
-	public void erreurCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
-		Throwable e = resultatAsync.cause();
+	public void errorCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
+		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
-		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
+		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 			Buffer.buffer().appendString(
 				new JsonObject() {{
-					put("erreur", new JsonObject() {{
+					put("error", new JsonObject() {{
 					put("message", e.getMessage());
 					}});
 				}}.encodePrettily()
 			)
 			, new CaseInsensitiveHeaders()
 		);
-		if(requeteSite != null) {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			if(connexionSql != null) {
-				connexionSql.rollback(a -> {
+		if(siteRequest != null) {
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			if(sqlConnection != null) {
+				sqlConnection.rollback(a -> {
 					if(a.succeeded()) {
-						connexionSql.close(b -> {
+						sqlConnection.close(b -> {
 							if(a.succeeded()) {
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								eventHandler.handle(Future.succeededFuture(responseOperation));
 							} else {
-								gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+								eventHandler.handle(Future.succeededFuture(responseOperation));
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+						eventHandler.handle(Future.succeededFuture(responseOperation));
 					}
 				});
 			} else {
-				gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+				eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
 		} else {
-			gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
+			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}
 	}
 
-	public void sqlCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
+			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
 
-			if(clientSql == null) {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+			if(sqlClient == null) {
+				eventHandler.handle(Future.succeededFuture());
 			} else {
-				clientSql.getConnection(sqlAsync -> {
+				sqlClient.getConnection(sqlAsync -> {
 					if(sqlAsync.succeeded()) {
-						SQLConnection connexionSql = sqlAsync.result();
-						connexionSql.setAutoCommit(false, a -> {
+						SQLConnection sqlConnection = sqlAsync.result();
+						sqlConnection.setAutoCommit(false, a -> {
 							if(a.succeeded()) {
-								requeteSite.setConnexionSql(connexionSql);
-								gestionnaireEvenements.handle(Future.succeededFuture());
+								siteRequest.setSqlConnection(sqlConnection);
+								eventHandler.handle(Future.succeededFuture());
 							} else {
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+								eventHandler.handle(Future.failedFuture(a.cause()));
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public SiteRequestEnUS genererSiteRequestEnUSPourCluster(SiteContextEnUS siteContexte, OperationRequest operationRequete) {
-		return genererSiteRequestEnUSPourCluster(siteContexte, operationRequete, null);
+	public SiteRequestEnUS generateSiteRequestEnUSForCluster(SiteContextEnUS siteContext, OperationRequest operationRequest) {
+		return generateSiteRequestEnUSForCluster(siteContext, operationRequest, null);
 	}
 
-	public SiteRequestEnUS genererSiteRequestEnUSPourCluster(SiteContextEnUS siteContexte, OperationRequest operationRequete, JsonObject body) {
-		Vertx vertx = siteContexte.getVertx();
-		SiteRequestEnUS requeteSite = new SiteRequestEnUS();
-		requeteSite.setObjetJson(body);
-		requeteSite.setVertx(vertx);
-		requeteSite.setSiteContexte_(siteContexte);
-		requeteSite.setConfigSite_(siteContexte.getConfigSite());
-		requeteSite.setOperationRequete(operationRequete);
-		requeteSite.initLoinSiteRequestEnUS(requeteSite);
+	public SiteRequestEnUS generateSiteRequestEnUSForCluster(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
+		Vertx vertx = siteContext.getVertx();
+		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+		siteRequest.setJsonObject(body);
+		siteRequest.setVertx(vertx);
+		siteRequest.setSiteContext_(siteContext);
+		siteRequest.setSiteConfig_(siteContext.getSiteConfig());
+		siteRequest.setOperationRequest(operationRequest);
+		siteRequest.initDeepSiteRequestEnUS(siteRequest);
 
-		return requeteSite;
+		return siteRequest;
 	}
 
-	public void utilisateurCluster(SiteRequestEnUS requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void userCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			String utilisateurId = requeteSite.getUtilisateurId();
-			if(utilisateurId == null) {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+			if(userId == null) {
+				eventHandler.handle(Future.succeededFuture());
 			} else {
-				connexionSql.queryWithParams(
+				sqlConnection.queryWithParams(
 						SiteContextEnUS.SQL_selectC
-						, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
+						, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
 						, selectCAsync
 				-> {
 					if(selectCAsync.succeeded()) {
-						JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-						if(utilisateurValeurs == null) {
-							connexionSql.queryWithParams(
-									SiteContextEnUS.SQL_creer
-									, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-									, creerAsync
+						JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
+						if(userValues == null) {
+							sqlConnection.queryWithParams(
+									SiteContextEnUS.SQL_create
+									, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
+									, createAsync
 							-> {
-								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-								Long pkUtilisateur = creerLigne.getLong(0);
-								UtilisateurSite utilisateurSite = new UtilisateurSite();
-								utilisateurSite.setPk(pkUtilisateur);
+								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+								Long pkUser = createLine.getLong(0);
+								SiteUser siteUser = new SiteUser();
+								siteUser.setPk(pkUser);
 
-								connexionSql.queryWithParams(
-										SiteContextEnUS.SQL_definir
-										, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-										, definirAsync
+								sqlConnection.queryWithParams(
+										SiteContextEnUS.SQL_define
+										, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
+										, defineAsync
 								-> {
-									if(definirAsync.succeeded()) {
+									if(defineAsync.succeeded()) {
 										try {
-											for(JsonArray definition : definirAsync.result().getResults()) {
-												utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+											for(JsonArray definition : defineAsync.result().getResults()) {
+												siteUser.defineForClass(definition.getString(0), definition.getString(1));
 											}
-											JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-											JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-											utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-											utilisateurSite.initLoinPourClasse(requeteSite);
-											utilisateurSite.indexerPourClasse();
-											requeteSite.setUtilisateurSite(utilisateurSite);
-											requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-											requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-											requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-											requeteSite.setUtilisateurId(principalJson.getString("sub"));
-											gestionnaireEvenements.handle(Future.succeededFuture());
+											JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+											JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+											siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
+											siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
+											siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
+											siteUser.setUserId(jsonPrincipal.getString("sub"));
+											siteUser.initDeepForClass(siteRequest);
+											siteUser.indexForClass();
+											siteRequest.setSiteUser(siteUser);
+											siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+											siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+											siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+											siteRequest.setUserId(jsonPrincipal.getString("sub"));
+											eventHandler.handle(Future.succeededFuture());
 										} catch(Exception e) {
-											gestionnaireEvenements.handle(Future.failedFuture(e));
+											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 									}
 								});
 							});
 						} else {
-							Long pkUtilisateur = utilisateurValeurs.getLong(0);
-							UtilisateurSite utilisateurSite = new UtilisateurSite();
-							utilisateurSite.setPk(pkUtilisateur);
+							Long pkUser = userValues.getLong(0);
+							SiteUser siteUser = new SiteUser();
+							siteUser.setPk(pkUser);
 
-							connexionSql.queryWithParams(
-									SiteContextEnUS.SQL_definir
-									, new JsonArray(Arrays.asList(pkUtilisateur, pkUtilisateur, pkUtilisateur))
-									, definirAsync
+							sqlConnection.queryWithParams(
+									SiteContextEnUS.SQL_define
+									, new JsonArray(Arrays.asList(pkUser, pkUser, pkUser))
+									, defineAsync
 							-> {
-								if(definirAsync.succeeded()) {
-									for(JsonArray definition : definirAsync.result().getResults()) {
-										utilisateurSite.definirPourClasse(definition.getString(0), definition.getString(1));
+								if(defineAsync.succeeded()) {
+									for(JsonArray definition : defineAsync.result().getResults()) {
+										siteUser.defineForClass(definition.getString(0), definition.getString(1));
 									}
-									JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-									JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-									utilisateurSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									utilisateurSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									utilisateurSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									utilisateurSite.setUtilisateurId(principalJson.getString("sub"));
-									utilisateurSite.initLoinPourClasse(requeteSite);
-									utilisateurSite.indexerPourClasse();
-									requeteSite.setUtilisateurSite(utilisateurSite);
-									requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-									requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-									requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-									requeteSite.setUtilisateurId(principalJson.getString("sub"));
-									gestionnaireEvenements.handle(Future.succeededFuture());
+									JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+									JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+									siteUser.setUserName(jsonPrincipal.getString("preferred_username"));
+									siteUser.setUserFirstName(jsonPrincipal.getString("given_name"));
+									siteUser.setUserLastName(jsonPrincipal.getString("family_name"));
+									siteUser.setUserId(jsonPrincipal.getString("sub"));
+									siteUser.initDeepForClass(siteRequest);
+									siteUser.indexForClass();
+									siteRequest.setSiteUser(siteUser);
+									siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+									siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+									siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+									siteRequest.setUserId(jsonPrincipal.getString("sub"));
+									eventHandler.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void rechercheCluster(SiteRequestEnUS requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<Cluster> listeRecherche = new ListeRecherche<Cluster>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(Cluster.class);
-			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
-			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
-			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
-			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
-				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
-				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+			OperationRequest operationRequest = siteRequest.getOperationRequest();
+			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+			SearchList<Cluster> listSearch = new SearchList<Cluster>();
+			listSearch.setPopulate(populate);
+			listSearch.setStore(store);
+			listSearch.setQuery("*:*");
+			listSearch.setC(Cluster.class);
+			if(entityList != null)
+			listSearch.setFields(entityList);
+			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
+			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
+			SiteUser siteUser = siteRequest.getSiteUser();
+			if(siteUser != null && !siteUser.getSeeDeleted())
+				listSearch.addFilterQuery("deleted_indexed_boolean:false");
+			if(siteUser != null && !siteUser.getSeeArchived())
+				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
 			String pageUri = null;
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
+			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				pageUri = classApiUriMethod + "/" + id;
+				listSearch.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
 			}
 
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer rechercheDebut = null;
-				Integer rechercheNum = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+				String entityVar = null;
+				String valueIndexed = null;
+				String varIndexed = null;
+				String valueSort = null;
+				Integer aSearchStart = null;
+				Integer aSearchNum = null;
+				String paramName = paramRequest.getKey();
+				Object paramValuesObject = paramRequest.getValue();
+				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
 
 				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
 							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheCluster(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
-								if(!"*".equals(entiteVar)) {
-									listeRecherche.setHighlight(true);
-									listeRecherche.setHighlightSnippets(3);
-									listeRecherche.addHighlightField(varIndexe);
-									listeRecherche.setParam("hl.encoder", "html");
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								varIndexed = "*".equals(entityVar) ? entityVar : varSearchCluster(entityVar);
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+								if(!"*".equals(entityVar)) {
+									listSearch.setHighlight(true);
+									listSearch.setHighlightSnippets(3);
+									listSearch.addHighlightField(varIndexed);
+									listSearch.setParam("hl.encoder", "html");
 								}
 								break;
 							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeCluster(entiteVar);
-								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								varIndexed = varIndexedCluster(entityVar);
+								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeCluster(entiteVar);
-								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+								varIndexed = varIndexedCluster(entityVar);
+								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeCluster(entiteVar);
-								listeRecherche.addField(varIndexe);
+								entityVar = StringUtils.trim((String)paramObject);
+								varIndexed = varIndexedCluster(entityVar);
+								listSearch.addField(varIndexed);
 								break;
 							case "start":
-								rechercheDebut = (Integer)paramObjet;
-								listeRecherche.setStart(rechercheDebut);
+								aSearchStart = (Integer)paramObject;
+								listSearch.setStart(aSearchStart);
 								break;
 							case "rows":
-								rechercheNum = (Integer)paramObjet;
-								listeRecherche.setRows(rechercheNum);
+								aSearchNum = (Integer)paramObject;
+								listSearch.setRows(aSearchNum);
 								break;
 						}
 					}
 				} catch(Exception e) {
-					gestionnaireEvenements.handle(Future.failedFuture(e));
+					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			listeRecherche.initLoinPourClasse(requeteSite);
-			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
+			listSearch.initDeepForClass(siteRequest);
+			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void definirCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void defineCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContextEnUS.SQL_definir
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_define
 					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
+					, defineAsync
 			-> {
-				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+				if(defineAsync.succeeded()) {
+					for(JsonArray definition : defineAsync.result().getResults()) {
+						o.defineForClass(definition.getString(0), definition.getString(1));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
+					eventHandler.handle(Future.succeededFuture());
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
 			});
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void attribuerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void attributeCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContextEnUS.SQL_attribuer
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_attribute
 					, new JsonArray(Arrays.asList(pk, pk))
-					, attribuerAsync
+					, attributeAsync
 			-> {
-				if(attribuerAsync.succeeded()) {
-					if(attribuerAsync.result() != null) {
-						for(JsonArray definition : attribuerAsync.result().getResults()) {
-							o.attribuerPourClasse(definition.getString(0), definition.getString(1));
+				if(attributeAsync.succeeded()) {
+					if(attributeAsync.result() != null) {
+						for(JsonArray definition : attributeAsync.result().getResults()) {
+							o.attributeForClass(definition.getString(0), definition.getString(1));
 						}
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
+					eventHandler.handle(Future.succeededFuture());
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+					eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 				}
 			});
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
-	public void indexerCluster(Cluster o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		SiteRequestEnUS requeteSite = o.getRequeteSite_();
+	public void indexCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
-			o.initLoinPourClasse(requeteSite);
-			o.indexerPourClasse();
-			gestionnaireEvenements.handle(Future.succeededFuture());
+			o.initDeepForClass(siteRequest);
+			o.indexForClass();
+			eventHandler.handle(Future.succeededFuture());
 		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 }

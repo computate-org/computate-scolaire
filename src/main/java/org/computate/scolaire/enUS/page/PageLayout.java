@@ -1,4 +1,4 @@
-package org.computate.enUS.school.page;
+package org.computate.scolaire.enUS.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -16,7 +16,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.enUS.school.writer.AllWriter;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
@@ -358,24 +358,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 					g("span");
 				g("a");
 			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAProposUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/png/computate.png").a("style", "height: 50px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("À propos");
-					g("span");
-				g("a");
-			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageFaqUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/ufo.svg").a("style", "height: 50px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("FAQ");
-					g("span");
-				g("a");
-			g("div");
 			if(requeteSite_.getUtilisateurId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
@@ -561,7 +543,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public PageLayout all(Object...objects) {
+	public PageLayout s(Object...objects) {
 		for(Object objet : objets) {
 			if(objet != null) {
 				String s = objet.toString();
@@ -579,7 +561,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public PageLayout tabLine(int numberTabs, Object...objects) {
+	public PageLayout tl(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			s("\t");
 		s(objets);
@@ -587,7 +569,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public PageLayout allLine(Object...objects) {
+	public PageLayout l(Object...objects) {
 		s(objets);
 		s("\n");
 		return this;
@@ -599,7 +581,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public PageLayout allXml(Object...objects) {
+	public PageLayout sx(Object...objects) {
 		for(Object objet : objets) {
 			if(objet != null) {
 				String s = objet.toString();
@@ -610,14 +592,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 		return this;
 	}
 
-	public PageLayout allXml(int numberTabs, Object...objects) {
+	public PageLayout tx(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
 		sx(objets);
 		return this;
 	}
 
-	public PageLayout tabLineXml(int numberTabs, Object...objects) {
+	public PageLayout tlx(int numberTabs, Object...objects) {
 		for(int i = 0; i < nombreTabulations; i++)
 			sx("\t");
 		sx(objets);

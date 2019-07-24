@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mission;     
+package org.computate.scolaire.frFR.mission;      
 
 import java.text.Normalizer;
 import java.util.List;

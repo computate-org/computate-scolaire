@@ -1834,6 +1834,62 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
 	}
 
+	//////////////////////
+	// solrUrlComputate //
+	//////////////////////
+
+	/**	L'entité « solrUrlComputate »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String solrUrlComputate;
+	public Couverture<String> solrUrlComputateCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
+
+	/**	<br/>L'entité « solrUrlComputate »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _solrUrlComputate(Couverture<String> c);
+
+	public String getSolrUrlComputate() {
+		return solrUrlComputate;
+	}
+
+	public void setSolrUrlComputate(String solrUrlComputate) {
+		this.solrUrlComputate = solrUrlComputate;
+		this.solrUrlComputateCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite solrUrlComputateInit() {
+		if(!solrUrlComputateCouverture.dejaInitialise) {
+			_solrUrlComputate(solrUrlComputateCouverture);
+			if(solrUrlComputate == null)
+				setSolrUrlComputate(solrUrlComputateCouverture.o);
+		}
+		solrUrlComputateCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrSolrUrlComputate() {
+		return solrUrlComputate;
+	}
+
+	public String strSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : solrUrlComputate;
+	}
+
+	public String nomAffichageSolrUrlComputate() {
+		return null;
+	}
+
+	public String htmTooltipSolrUrlComputate() {
+		return null;
+	}
+
+	public String htmSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
+	}
+
 	////////////////////
 	// compteFacebook //
 	////////////////////
@@ -3011,6 +3067,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		jdbcTempsInactiviteMaxInit();
 		jdbcUrlInit();
 		solrUrlInit();
+		solrUrlComputateInit();
 		compteFacebookInit();
 		compteTwitterInit();
 		compteInstagramInit();
@@ -3121,6 +3178,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.jdbcUrl;
 			case "solrUrl":
 				return oConfigSite.solrUrl;
+			case "solrUrlComputate":
+				return oConfigSite.solrUrlComputate;
 			case "compteFacebook":
 				return oConfigSite.compteFacebook;
 			case "compteTwitter":

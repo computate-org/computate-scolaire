@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.recherche;
+package org.computate.scolaire.frFR.recherche; 
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -21,6 +21,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**
+ * NomCanonique.enUS: org.computate.scolaire.enUS.search.SearchList
  * MotCle: classeNomSimpleListeRecherche
  */
 public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
@@ -33,13 +34,22 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		
 	}
 
+	/**
+	 * Var.enUS: siteRequest_
+	 */
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
 	}
 
+	/**
+	 * Var.enUS: store
+	 */
 	protected void _stocker(Couverture<Boolean> c) {
 		c.o(false);
 	}
 
+	/**
+	 * Var.enUS: populate
+	 */
 	protected void _peupler(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -56,6 +66,12 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 
 	/**
 	 * {@inheritDoc}
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: SiteContexte
+	 * r.enUS: SiteContext
+	 * r: ClientSolr
+	 * r.enUS: SolrClient
 	 **/
 	protected void _queryResponse(Couverture<QueryResponse> c) {
 		try {
@@ -75,6 +91,20 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		c.o(o);
 	}
 
+	/**
+	 * r: peuplerPourClasse
+	 * r.enUS: populateForClass
+	 * r: stockerPourClasse
+	 * r.enUS: populateForClass
+	 * r: initLoinPourClasse
+	 * r.enUS: initDeepForClass
+	 * r: peupler
+	 * r.enUS: populate
+	 * r: stocker
+	 * r.enUS: store
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 */
 	protected void _list(List<DEV> l) {
 		for(SolrDocument solrDocument : solrDocumentList) {
 			try {

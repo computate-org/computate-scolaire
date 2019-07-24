@@ -185,7 +185,6 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
 		if(listeCluster == null || listeCluster.size() == 0) {
-			// contexteAucunNomTrouve : 
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -193,7 +192,6 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 				e("span").a("class", " ").f().sx("").g("span");
 			} g("h1");
 		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
-			// contexteUnNom : 
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
@@ -203,7 +201,6 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 				Cluster o = listeCluster.get(0);
 			}
 		} else {
-			// contexteNomPluriel : plusiers 
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -298,24 +295,24 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
 
-					// FormFiltres PATCH
-					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormFiltres").f();
+					// FormulaireFiltres PATCH
+					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormulaireFiltres").f();
 						htmlFormRechercheCluster(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
-						.a("onclick", "rechercheCluster($('#patchClusterFormFiltres')); ")
+						.a("onclick", "rechercheCluster($('#patchClusterFormulaireFiltres')); ")
 						.f().sx("Rechercher des null")
 					.g("button");
 
 
-					// FormValeurs PATCH
-					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormValeurs").f();
+					// FormulaireValeurs PATCH
+					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormulaireValeurs").f();
 						htmlFormPATCHCluster(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
-						.a("onclick", "patchCluster($('#patchClusterFormFiltres'), $('#patchClusterFormValeurs')); ")
+						.a("onclick", "patchCluster($('#patchClusterFormulaireFiltres'), $('#patchClusterFormulaireValeurs')); ")
 						.f().sx("Modifier des null")
 					.g("button");
 

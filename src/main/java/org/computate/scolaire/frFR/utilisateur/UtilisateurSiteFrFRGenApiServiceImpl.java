@@ -346,28 +346,24 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public String varIndexeUtilisateurSite(String entiteVar) {
 		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
 			case "cree":
 				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
 			case "modifie":
 				return "modifie_indexed_date";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "pk":
+				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
-			case "utilisateurId":
-				return "utilisateurId_indexed_string";
-			case "utilisateurNom":
-				return "utilisateurNom_indexed_string";
 			case "utilisateurMail":
 				return "utilisateurMail_indexed_string";
 			case "utilisateurPrenom":
@@ -384,6 +380,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "voirArchive_indexed_boolean";
 			case "voirSupprime":
 				return "voirSupprime_indexed_boolean";
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
+			case "utilisateurNom":
+				return "utilisateurNom_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

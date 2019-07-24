@@ -2,7 +2,7 @@ package org.computate.scolaire.enUS.page.part;
 
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.enUS.school.page.PageLayout;
+import org.computate.scolaire.enUS.page.PageLayout;
 
 public abstract class PagePart extends PagePartGen<Cluster> {
 

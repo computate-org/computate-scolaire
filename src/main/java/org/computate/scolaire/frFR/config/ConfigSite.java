@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.config;   
+package org.computate.scolaire.frFR.config;    
 
 import java.io.File;
 import java.io.Serializable;
@@ -537,6 +537,21 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	 * r.enUS: prefixEscaped
 	 * **/
 	protected void _solrUrl(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * frFR: L'URL vers le moteur de recherche SOLR pour le projet computate. 
+	 * enUS: The URL to the SOLR search engine for the computate project. 
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 * **/
+	protected void _solrUrlComputate(Couverture<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);

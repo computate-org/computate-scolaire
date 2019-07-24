@@ -6,7 +6,6 @@ import java.lang.Integer;
 import java.lang.String;
 import java.lang.Double;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
-import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -16,6 +15,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -73,6 +73,10 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 		c.o("/frFR/ecole");
 	}
 
+	@Override protected void _pageUriEnUS(Couverture<String> c) {
+		c.o("/enUS/school");
+	}
+
 	@Override protected void _pageImageUri(Couverture<String> c) {
 			c.o("/png/frFR/ecole-999.png");
 	}
@@ -81,7 +85,7 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 			c.o("regular");
 	}
 
-	@Override protected void _contexteIconeNom(Couverture<String> c) {
+	@Override protected void _contexteNom(Couverture<String> c) {
 			c.o("fort-awesome");
 	}
 
@@ -334,7 +338,6 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
 		if(listeEcole == null || listeEcole.size() == 0) {
-			// contexteAucunNomTrouve : aucune école trouvée
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -342,7 +345,6 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 				e("span").a("class", " ").f().sx("aucune école trouvée").g("span");
 			} g("h1");
 		} else if(listeEcole != null && listeEcole.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
-			// contexteUnNom : une école
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
@@ -352,7 +354,6 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 				Ecole o = listeEcole.get(0);
 			}
 		} else {
-			// contexteNomPluriel : plusiers écoles
 
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
@@ -439,24 +440,24 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 				{ e("div").a("class", "w3-container ").f();
 					Ecole o = new Ecole();
 
-					// FormFiltres PATCH
-					{ e("form").a("action", "/api/ecole").a("id", "patchEcoleFormFiltres").f();
+					// FormulaireFiltres PATCH
+					{ e("form").a("action", "/api/ecole").a("id", "patchEcoleFormulaireFiltres").f();
 						htmlFormRechercheEcole(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-						.a("onclick", "rechercheEcole($('#patchEcoleFormFiltres')); ")
+						.a("onclick", "rechercheEcole($('#patchEcoleFormulaireFiltres')); ")
 						.f().sx("Rechercher des une école")
 					.g("button");
 
 
-					// FormValeurs PATCH
-					{ e("form").a("action", "/api/ecole").a("id", "patchEcoleFormValeurs").f();
+					// FormulaireValeurs PATCH
+					{ e("form").a("action", "/api/ecole").a("id", "patchEcoleFormulaireValeurs").f();
 						htmlFormPATCHEcole(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-						.a("onclick", "patchEcole($('#patchEcoleFormFiltres'), $('#patchEcoleFormValeurs')); ")
+						.a("onclick", "patchEcole($('#patchEcoleFormulaireFiltres'), $('#patchEcoleFormulaireValeurs')); ")
 						.f().sx("Modifier des écoles")
 					.g("button");
 

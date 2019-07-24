@@ -8,7 +8,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
@@ -1898,6 +1898,64 @@ The URL to the SOLR search engine.
 		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
 	}
 
+	//////////////////////
+	// solrUrlComputate //
+	//////////////////////
+
+	/**	L'entité « solrUrlComputate »
+The URL to the SOLR search engine for the computate project. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String solrUrlComputate;
+	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
+
+	/**	<br/>L'entité « solrUrlComputate »
+The URL to the SOLR search engine for the computate project. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _solrUrlComputate(Wrap<String> c);
+
+	public String getSolrUrlComputate() {
+		return solrUrlComputate;
+	}
+
+	public void setSolrUrlComputate(String solrUrlComputate) {
+		this.solrUrlComputate = solrUrlComputate;
+		this.solrUrlComputateWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig solrUrlComputateInit() {
+		if(!solrUrlComputateWrap.alreadyInitialized) {
+			_solrUrlComputate(solrUrlComputateWrap);
+			if(solrUrlComputate == null)
+				setSolrUrlComputate(solrUrlComputateWrap.o);
+		}
+		solrUrlComputateWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrSolrUrlComputate() {
+		return solrUrlComputate;
+	}
+
+	public String strSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : solrUrlComputate;
+	}
+
+	public String nomAffichageSolrUrlComputate() {
+		return null;
+	}
+
+	public String htmTooltipSolrUrlComputate() {
+		return null;
+	}
+
+	public String htmSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
+	}
+
 	/////////////////////
 	// accountFacebook //
 	/////////////////////
@@ -3115,6 +3173,7 @@ The base URL of your static files.
 		jdbcMaxIdleTimeInit();
 		jdbcUrlInit();
 		solrUrlInit();
+		solrUrlComputateInit();
 		accountFacebookInit();
 		accountTwitterInit();
 		accountInstagramInit();
@@ -3225,6 +3284,8 @@ The base URL of your static files.
 				return oSiteConfig.jdbcUrl;
 			case "solrUrl":
 				return oSiteConfig.solrUrl;
+			case "solrUrlComputate":
+				return oSiteConfig.solrUrlComputate;
 			case "accountFacebook":
 				return oSiteConfig.accountFacebook;
 			case "accountTwitter":

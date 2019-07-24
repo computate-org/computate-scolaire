@@ -35,24 +35,24 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * MotCle: classeNomSimpleCluster
  * Modele: true
  */      
-public class Cluster extends ClusterGen<Object> {  
+public class Cluster extends ClusterGen<Object> {   
 
 	/**
 	 * Var.enUS: siteRequest_
 	 * {@inheritDoc}
-	 */      
+	 */         
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
 
 	protected void _pageParts(List<PagePart> l) {
 	}
 
-	/**
+	/** 
 	 * Var.enUS: beforePagePart
 	 */  
 	public void avantPagePart(PagePart o, String var) {
-	} 
+	}  
 
-	/**
+	/** 
 	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
@@ -61,7 +61,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
 	 * NomAffichage.enUS: primary key
-	 */                          
+	 */                                        
 	protected void _pk(Couverture<Long> c) {}
 
 	/**
@@ -116,7 +116,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	protected void _archive(Couverture<Boolean> c) {
 		c.o(false);
-	}
+	}     
 	
 	/**
 	 * {@inheritDoc}
