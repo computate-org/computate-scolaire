@@ -67,7 +67,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSitePage;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRPage;
 
 
 /**
@@ -84,6 +84,86 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public UtilisateurSiteFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
 		UtilisateurSiteFrFRGenApiService service = UtilisateurSiteFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+	}
+
+	// RechercheFrFRPage //
+
+	@Override
+	public void recherchefrfrpageUtilisateurSiteId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		recherchefrfrpageUtilisateurSite(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void recherchefrfrpageUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
+			sqlUtilisateurSite(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurUtilisateurSite(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheUtilisateurSite(requeteSite, false, true, "/frFR/utilisateur", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
+									reponse200RechercheFrFRPageUtilisateurSite(listeUtilisateurSite, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+													}
+												});
+											}
+										} else {
+											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200RechercheFrFRPageUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
+			UtilisateurSiteFrFRPage page = new UtilisateurSiteFrFRPage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/utilisateur");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			page.setListeUtilisateurSite(listeUtilisateurSite);
+			page.initLoinUtilisateurSiteFrFRPage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
 	}
 
 	// PATCH //
@@ -264,106 +344,30 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	// RecherchePage //
-
-	@Override
-	public void recherchepageUtilisateurSiteId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		recherchepageUtilisateurSite(operationRequete, gestionnaireEvenements);
-	}
-
-	@Override
-	public void recherchepageUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
-			sqlUtilisateurSite(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurUtilisateurSite(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheUtilisateurSite(requeteSite, false, true, "/utilisateur", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
-									reponse200RecherchePageUtilisateurSite(listeUtilisateurSite, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurUtilisateurSite(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
-													}
-												});
-											}
-										} else {
-											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurUtilisateurSite(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurUtilisateurSite(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200RecherchePageUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			UtilisateurSitePage page = new UtilisateurSitePage();
-			SolrDocument pageDocumentSolr = new SolrDocument();
-
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/utilisateur");
-			page.setPageDocumentSolr(pageDocumentSolr);
-			page.setW(w);
-			page.setListeUtilisateurSite(listeUtilisateurSite);
-			page.initLoinUtilisateurSitePage(requeteSite);
-			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
 	public String varIndexeUtilisateurSite(String entiteVar) {
 		switch(entiteVar) {
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "modifie":
+				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
+			case "utilisateurId":
+				return "utilisateurId_indexed_string";
+			case "utilisateurNom":
+				return "utilisateurNom_indexed_string";
 			case "utilisateurMail":
 				return "utilisateurMail_indexed_string";
 			case "utilisateurPrenom":
@@ -380,10 +384,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "voirArchive_indexed_boolean";
 			case "voirSupprime":
 				return "voirSupprime_indexed_boolean";
-			case "utilisateurId":
-				return "utilisateurId_indexed_string";
-			case "utilisateurNom":
-				return "utilisateurNom_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

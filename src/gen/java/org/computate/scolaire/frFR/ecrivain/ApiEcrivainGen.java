@@ -2298,10 +2298,6 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 			wCorpsRequetes.setRequeteSite_(requeteSite_);
 		if(wSchemas != null)
 			wSchemas.setRequeteSite_(requeteSite_);
-		if(siteContexte != null)
-			siteContexte.setRequeteSite_(requeteSite_);
-		if(configSite != null)
-			configSite.setRequeteSite_(requeteSite_);
 		if(wRequeteEnTete != null)
 			wRequeteEnTete.setRequeteSite_(requeteSite_);
 		if(wRequeteDescription != null)

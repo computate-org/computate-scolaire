@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;       
+package org.computate.scolaire.frFR.cluster;        
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -164,6 +164,21 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: localName
+	 * r: nomLocal
+	 * r.enUS: localName
+	 * r: xmlPile
+	 * r.enUS: xmlStack
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: tabulation
+	 * r.enUS: tab
+	 * r: Echappes
+	 * r.enUS: Escaped
+	 * r: ecrivain
+	 * r.enUS: writer
+	 * r: requeteSite
+	 * r.enUS: siteRequest
 	 * r: ToutEcrivain
 	 * r.enUS: AllWriter
 	 * r: requeteSite_
@@ -447,7 +462,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * r.enUS: PageLayout
 	 * r: nomLocal
 	 * r.enUS: localName
-	 */
+	 */ 
 	public Cluster g(String nomLocal) {
 		ToutEcrivain w = requeteSite_.getW();
 		String nomLocalParent = requeteSite_.getXmlPile().peek();

@@ -68,7 +68,6 @@ import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRPage;
-import org.computate.scolaire.frFR.ecole.EcoleEnUSPage;
 
 
 /**
@@ -496,6 +495,30 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 				w.l("{");
 
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
+
+				entiteValeur = o.getClasseNomCanonique();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
+
 				entiteValeur = o.getClasseNomSimple();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
@@ -514,30 +537,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					}
 					w.l("]");
 				}
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				entiteValeur = o.getEcoleCle();
 				if(entiteValeur != null)
@@ -750,24 +749,24 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public String varIndexeEcole(String entiteVar) {
 		switch(entiteVar) {
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "modifie":
+				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "enfantCles":

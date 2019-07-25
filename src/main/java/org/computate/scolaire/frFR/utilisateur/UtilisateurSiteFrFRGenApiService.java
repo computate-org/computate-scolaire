@@ -32,7 +32,7 @@ public interface UtilisateurSiteFrFRGenApiService {
 		return new UtilisateurSiteFrFRGenApiServiceVertxEBProxy(vertx, addresse);
 	}
 
+	public void recherchefrfrpageUtilisateurSiteId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
+	public void recherchefrfrpageUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void recherchepageUtilisateurSiteId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
-	public void recherchepageUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements);
 }

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecrivain; 
+package org.computate.scolaire.frFR.ecrivain;  
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +20,21 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.vertx.AppliSwagger2;
 
 /**
- * NomCanonique.enUS: org.computate.enUS.school.writer.ApiWriter
- */  
+ * NomCanonique.enUS: org.computate.scolaire.enUS.writer.ApiWriter
+ */   
 public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<ApiEcrivain> {
 
 	/**
-	 * 
 	 * {@inheritDoc}
+	 * Var.enUS: siteRequest_
 	 **/
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: classSolrDocument
+	 */
 	protected void _classeDocumentSolr(Couverture<SolrDocument> c) {
 	}
 
@@ -50,11 +54,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	/**
 	 * {@inheritDoc}
 	 **/
-	protected void _appSwagger2(Couverture<AppliSwagger2> c) {
+	protected void _appSwagger2(Couverture<AppliSwagger2> c) { 
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classUris
 	 **/
 	protected void _classeUris(Couverture<List<String>> c) {
 	}
@@ -69,6 +74,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * r: openApiVersionNumero
+	 * r.enUS: openApiVersionNumber
 	 **/
 	protected void _tabsSchema(Couverture<Integer> c) {
 		if(openApiVersionNumero == 2)
@@ -97,7 +104,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: AllWriter
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 **/
+	 **/ 
 	protected void _wChemins(Couverture<ToutEcrivain> c) {
 	}
 
@@ -131,6 +138,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * Var.enUS: siteContext
 	 * r: SiteContexte
 	 * r.enUS: SiteContext
+	 * r: requeteSite
+	 * r.enUS: siteRequest
 	 **/
 	protected void _siteContexte(Couverture<SiteContexteFrFR> c) {
 		c.o(requeteSite_.getSiteContexte_());
@@ -141,6 +150,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * Var.enUS: siteConfig
 	 * r: ConfigSite
 	 * r.enUS: SiteConfig
+	 * r: requeteSite
+	 * r.enUS: siteRequest
 	 **/
 	protected void _configSite(Couverture<ConfigSite> c) {
 		c.o(requeteSite_.getConfigSite_());
@@ -155,7 +166,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: create
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 **/
+	 **/ 
 	protected void _wRequeteEnTete(Couverture<ToutEcrivain> c) {
 		c.o(ToutEcrivain.creer(requeteSite_, "  "));
 	}
@@ -246,17 +257,19 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ecrivains
+	 * Var.enUS: writers
 	 * r: ToutEcrivain
 	 * r.enUS: AllWriter
 	 * r: creer
 	 * r.enUS: create
 	 * r: requeteSite
 	 * r.enUS: siteRequest
+	 * r: TousEcrivains
+	 * r.enUS: AllWriters
 	 **/
 	protected void _ecrivains(Couverture<TousEcrivains> c) {
 		c.o(TousEcrivains.creer(requeteSite_));
-	}
+	} 
 
 	/**
 	 * {@inheritDoc}
@@ -317,6 +330,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: classCheminAbsolu
 	 * r: frFR
 	 * r.enUS: enUS
+	 * r: classeCheminAbsolu
+	 * r.enUS: classAbsolutePath
 	 **/
 	protected void _classeCheminAbsolu(Couverture<String> c) {
 		c.o((String)classeDocumentSolr.get("classeCheminAbsolu_frFR_stored_string"));
@@ -338,7 +353,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: classApiUriMethodMethod
+	 * Var.enUS: classApiMethodMethod
 	 * r: Methode
 	 * r.enUS: Method
 	 * r: classeDocumentSolr
@@ -467,6 +482,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: classSolrDocument
 	 * r: classeMotsClesTrouves
 	 * r.enUS: classKeywordsFound
+	 * r: classeMotsCles
+	 * r.enUS: classKeywords
 	 **/
 	protected void _classeMotsCles(Couverture<List<String>> c) {
 		List<String> o = (List<String>)classeDocumentSolr.get("classeMotsCles_stored_strings");
@@ -521,8 +538,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * Var.enUS: classPageSimpleName
 	 * r: classePageNomSimple
 	 * r.enUS: classSolrDocument
-	 * r: frFR
-	 * r.enUS: enUS
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
 	 **/
 	protected void _classePageNomSimple(Couverture<String> c) {
 		c.o((String)classeDocumentSolr.get("classePageNomSimple" + classeApiMethode + "_stored_string"));
@@ -530,6 +549,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: languageName
 	 * r: frFR
 	 * r.enUS: enUS
 	 * r: classePageLangueNom
@@ -663,6 +683,34 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	/**
 	 * Var.enUS: initEntity
 	 * Param1.var.enUS: entitySolrDocument
+	 * r: EntiteDocumentSolr
+	 * r.enUS: EntitySolrDocument
+	 * r: entiteDocumentSolr
+	 * r.enUS: entitySolrDocument
+	 * r: entiteVarApi
+	 * r.enUS: entityVarApi
+	 * r: entiteVar
+	 * r.enUS: entityVar
+	 * r: entiteMotsClesTrouves
+	 * r.enUS: entityKeywordsFound
+	 * r: entiteMotsCles
+	 * r.enUS: entityKeywords
+	 * r: entiteNomCanoniqueGenerique
+	 * r.enUS: entityCanonicalNameGeneric
+	 * r: entiteNomCanonique
+	 * r.enUS: entityCanonicalName
+	 * r: entiteListeTypeJson
+	 * r.enUS: entityListJsonType
+	 * r: entiteTypeJson
+	 * r.enUS: entityJsonType
+	 * r: entiteFormatJson
+	 * r.enUS: entityJsonFormat
+	 * r: entiteOptionsVar
+	 * r.enUS: entityOptionsVar
+	 * r: entiteOptionsDescription
+	 * r.enUS: entityOptionsDescription
+	 * r: entiteDescription
+	 * r.enUS: entityDescription
 	 */
 	public void initEntite(SolrDocument entiteDocumentSolr) {
 		setEntiteDocumentSolr(entiteDocumentSolr);
@@ -684,6 +732,18 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * Var.enUS: writeEntityHeaders
+	 * r: entiteMotsCles
+	 * r.enUS: entityKeywords
+	 * r: wRequeteEnTete
+	 * r.enUS: wRequestHeaders
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: entiteDescription
+	 * r.enUS: entityDescription
+	 * r: entiteTypeJson
+	 * r.enUS: entityJsonType
+	 * r: entiteVarApi
+	 * r.enUS: entityVarApi
 	 */
 	public void ecrireEntiteEnTete() throws Exception {
 
@@ -697,11 +757,121 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		}
 	}
 
+	/**
+	 * Var.enUS: writeEntityDescription
+	 * Param1.var.enUS: numberTabs
+	 * r: ecrireEntiteDescription
+	 * r.enUS: writeEntityDescription
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: requete
+	 * r.enUS: request
+	 * r: reponse
+	 * r.enUS: response
+	 * r: wRequeteDescription
+	 * r.enUS: wRequestDescription
+	 * r: wReponseDescription
+	 * r.enUS: wResponseDescription
+	 */
 	public void ecrireEntiteDescription(Integer nombreTabulations) throws Exception {
 		ecrireEntiteDescription(nombreTabulations, wRequeteDescription, "requete");
 		ecrireEntiteDescription(nombreTabulations, wReponseDescription, "reponse");
 	}
 
+	/**
+	 * Var.enUS: writeEntityDescription
+	 * Param1.var.enUS: numberTabs
+	 * Param3.var.enUS: apiRequestOrResponse
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: wDescription
+	 * r.enUS: wDescription
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: apiRequeteOuReponse
+	 * r.enUS: apiRequestOrResponse
+	 * r: entiteNomAffichage
+	 * r.enUS: entityDisplayName
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: entiteOptionnel
+	 * r.enUS: entityOptional
+	 * r: entiteLongeurMin
+	 * r.enUS: entityMinLength
+	 * r: entiteLongeurMax
+	 * r.enUS: entityMaxLength
+	 * r: entiteMin
+	 * r.enUS: entityMin
+	 * r: entiteMax
+	 * r.enUS: entityMax
+	 * r: rechercheEntitesLignes
+	 * r.enUS: searchEntitiesLines
+	 * r: rechercheEntitesResultats
+	 * r.enUS: searchEntitiesResults
+	 * r: rechercheEntites
+	 * r.enUS: searchEntities
+	 * r: siteContexte
+	 * r.enUS: siteContext
+	 * r: ClientSolrComputate
+	 * r.enUS: SolrClientComputate
+	 * r: entiteDocumentSolr
+	 * r.enUS: entitySolrDocument
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: AppliChemin
+	 * r.enUS: AppPath
+	 * r: ecrireEntiteDescription
+	 * r.enUS: writeEntityDescription
+	 * 
+	 * r: entiteOptionsVarAncien
+	 * r.enUS: entityOptionsVarOld
+	 * r: entiteOptionsVar
+	 * r.enUS: entityOptionsVar
+	 * r: entiteOptionsDescriptionAncien
+	 * r.enUS: entityOptionsDescriptionOld
+	 * r: entiteOptionsDescription
+	 * r.enUS: entityOptionsDescription
+	 * r: entiteDescriptionAncien
+	 * r.enUS: entityDescriptionOld
+	 * r: entiteDescription
+	 * r.enUS: entityDescription
+	 * r: entiteTypeJsonAncien
+	 * r.enUS: entityJsonTypeOld
+	 * r: entiteTypeJson
+	 * r.enUS: entityJsonType
+	 * r: entiteFormatJsonAncien
+	 * r.enUS: entityJsonFormatOld
+	 * r: entiteFormatJson
+	 * r.enUS: entityJsonFormat
+	 * r: entiteListeTypeJsonAncien
+	 * r.enUS: entityListJsonTypeOld
+	 * r: entiteListeTypeJson
+	 * r.enUS: entityListJsonType
+	 * r: entiteNomCanoniqueGeneriqueAncien
+	 * r.enUS: entityCanonicalNameGenericOld
+	 * r: entiteNomCanoniqueGenerique
+	 * r.enUS: entityCanonicalNameGeneric
+	 * r: entiteNomCanoniqueAncien
+	 * r.enUS: entityCanonicalNameOld
+	 * r: entiteNomCanonique
+	 * r.enUS: entityCanonicalName
+	 * r: entiteMotsClesTrouvesAncien
+	 * r.enUS: entityKeywordsFoundOld
+	 * r: entiteMotsClesTrouves
+	 * r.enUS: entityKeywordsFound
+	 * r: entiteMotsCles
+	 * r.enUS: entityKeywords
+	 * r: entiteVarApiAncien
+	 * r.enUS: entityVarApiOld
+	 * r: entiteVarAncien
+	 * r.enUS: entityVarOld
+	 * r: entiteVar
+	 * r.enUS: entityVar
+	 * r: creer
+	 * r.enUS: create
+	 */
 	public void ecrireEntiteDescription(Integer nombreTabulations, ToutEcrivain w, String apiRequeteOuReponse) throws Exception {
 		nombreTabulations = nombreTabulations == null ? 0 : nombreTabulations;
 		
@@ -811,138 +981,145 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		}
 	}
 
+	/**
+	 * Var.enUS: writeEntitySchema
+	 * Param1.var.enUS: numberTabs
+	 * r: ecrireEntiteSchema
+	 * r.enUS: writeEntitySchema
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: requete
+	 * r.enUS: request
+	 * r: reponse
+	 * r.enUS: response
+	 * r: wRequeteSchema
+	 * r.enUS: wRequestSchema
+	 * r: wReponseSchema
+	 * r.enUS: wResponseSchema
+	 */
 	public void ecrireEntiteSchema(Integer nombreTabulations) throws Exception {
 		ecrireEntiteSchema(nombreTabulations, wRequeteSchema, "requete");
 		ecrireEntiteSchema(nombreTabulations, wReponseSchema, "reponse");
 	}
 
 	/**
-	 * r: classePageNomCanoniqueMethode
-	 * r.enUS: classPageCanonicalNameMethod
-	 * r: classePageNomSimpleMethode
-	 * r.enUS: classPageSimpleNameMethod
+	 * Var.enUS: writeEntitySchema
+	 * Param1.var.enUS: numberTabs
+	 * Param3.var.enUS: apiRequestOrResponse
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: apiRequeteOuReponse
+	 * r.enUS: apiRequestOrResponse
+	 * r: entiteTypeJson
+	 * r.enUS: entityJsonType
+	 * r: entiteVarApi
+	 * r.enUS: entityVarApi
+	 * r: entiteOptionsVar
+	 * r.enUS: entityOptionsVar
+	 * r: entiteOptionsDescription
+	 * r.enUS: entityOptionsDescription
+	 * r: entiteListeTypeJson
+	 * r.enUS: entityListJsonType
+	 * r: entiteDescription
+	 * r.enUS: entityDescription
+	 * r: entiteFormatJson
+	 * r.enUS: entityJsonFormat
 	 */
 	public void ecrireEntiteSchema(Integer nombreTabulations, ToutEcrivain w, String apiRequeteOuReponse) throws Exception {
 		nombreTabulations = nombreTabulations == null ? (classeApiMethode.contains("Recherche") && "reponse".equals(apiRequeteOuReponse) ? 1 : 0) : nombreTabulations;
-		if(
-				entiteTypeJson != null
-//				entiteMotsCles.contains("apiModeleEntite")
-//				|| entiteMotsCles.contains(classeApiMethode + "." + apiRequeteOuReponse)
-				) {
-//		if(classeMotsClesTrouves && entiteMotsClesTrouves && (
-//				entiteMotsCles.contains("apiModeleEntite")
-//				|| entiteMotsCles.contains(classeApiMethode + "." + apiRequeteOuReponse)
-//				)) {
-//			if(entiteMotsClesTrouves && entiteMotsCles.contains("apiModel")) {
-//				SolrQuery searchEntities = new SolrQuery();
-//				searchEntities.setQuery("*:*");
-//				searchEntities.setRows(1000000);
-//				searchEntities.addFilterQuery("appliChemin_indexed_string:" + ClientUtils.escapeQueryChars(configSite.getAppliChemin()));
-//
-//				if(StringUtils.isBlank(entiteNomCanoniqueGenerique))
-//					searchEntities.addFilterQuery("classeNomCanonique_frFR_indexed_string:" + ClientUtils.escapeQueryChars(entiteNomCanonique));
-//				else
-//					searchEntities.addFilterQuery("classNomCanonique_frFR_indexed_string:" + ClientUtils.escapeQueryChars(entiteNomCanoniqueGenerique));
-//
-//				searchEntities.addFilterQuery("entiteMotsCles_indexed_strings:" + ClientUtils.escapeQueryChars("apiModelEntity"));
-//				searchEntities.addFilterQuery("partEstEntite_indexed_boolean:true");
-//				searchEntities.addSort("partNumero_indexed_int", ORDER.asc);
-//				QueryResponse searchEntitiesResponse = siteContexte.getClientSolrComputate().query(searchEntities);
-//				SolrDocumentList searchEntitiesResults = searchEntitiesResponse.getResults();
-//				Integer searchEntitiesLignes = searchEntities.getRows();
-//
-//				if(searchEntitiesResults.size() > 0) {
-//					if(entiteNomCanoniqueGenerique == null) {
-//						w.tl(6 + nombreTabulations, "type: object");
-//						w.tl(6 + nombreTabulations, "properties:");
-//					}
-//					else {
-//						w.tl(6 + nombreTabulations, "type: array");
-//						w.tl(6 + nombreTabulations, "items:");
-//						w.tl(7 + nombreTabulations, "type: object");
-//						w.tl(7 + nombreTabulations, "properties:");
-//					}
-//					for(Long k = searchEntitiesResults.getStart(); k < searchEntitiesResults.getNumFound(); k+=searchEntitiesLignes) {
-//						for(Integer l = 0; l < searchEntitiesResults.size(); l++) {
-//							SolrDocument entiteDocumentSolr = searchEntitiesResults.get(l);
-//							String entiteVarAncien = entiteVar;
-//							String entiteVarApiAncien = entiteVarApi;
-//							Boolean entiteMotsClesTrouvesAncien = entiteMotsClesTrouves;
-//							List<String> entiteMotsClesAncien = entiteMotsCles;
-//							String entiteCanonicalNameGenericAncien = entiteNomCanoniqueGenerique;
-//							String entiteCanonicalNameAncien = entiteNomCanonique;
-//							String entiteListeJsonTypeAncien = entiteListeTypeJson;
-//							String entiteJsonTypeAncien = entiteTypeJson;
-//							String entiteJsonFormatAncien = entiteFormatJson;
-//							List<String> entiteOptionsVarAncien = entiteOptionsVar;
-//							List<String> entiteOptionsValueurAncien = entiteOptionsDescription;
-//							String entiteDescriptionAncien = entiteDescription;
-//
-//							entiteVar = (String)entiteDocumentSolr.get("entiteVar_enUS_stored_string");
-//							entiteVarApi = StringUtils.defaultIfBlank((String)entiteDocumentSolr.get("entiteVarApi_stored_string"), entiteVar);
-//							entiteMotsClesTrouves = BooleanUtils.isTrue((Boolean)entiteDocumentSolr.get("entiteMotsClesTrouves_stored_boolean"));
-//							entiteMotsCles = (List<String>)entiteDocumentSolr.get("entiteMotsCles_stored_strings");
-//							entiteNomCanoniqueGenerique = (String)entiteDocumentSolr.get("entiteNomCanoniqueGenerique_enUS_stored_string");
-//							entiteNomCanonique = (String)entiteDocumentSolr.get("entiteNomCanonique_enUS_stored_string");
-//							entiteListeTypeJson = (String)entiteDocumentSolr.get("entiteListeTypeJson_stored_string");
-//							entiteTypeJson = (String)entiteDocumentSolr.get("entiteTypeJson_stored_string");
-//							entiteFormatJson = (String)entiteDocumentSolr.get("entiteFormatJson_stored_string");
-//							entiteOptionsVar = (List<String>)entiteDocumentSolr.get("entiteOptionsVar_stored_strings");
-//							entiteOptionsDescription = (List<String>)entiteDocumentSolr.get("entiteOptionsDescription_stored_strings");
-//							entiteDescription = (String)entiteDocumentSolr.get("entiteDescription_stored_string");
-//
-//							if(entiteNomCanoniqueGenerique == null) {
-//								ecrireEntiteSchema(nombreTabulations + 3, w, apiRequeteOuReponse);
-//							}
-//							else {
-//								ecrireEntiteSchema(nombreTabulations + 5, w, apiRequeteOuReponse);
-//							}
-//
-//							entiteVar = entiteVarAncien;
-//							entiteVarApi = entiteVarApiAncien;
-//							entiteMotsClesTrouves = entiteMotsClesTrouvesAncien;
-//							entiteMotsCles = entiteMotsClesAncien;
-//							entiteNomCanoniqueGenerique = entiteCanonicalNameGenericAncien;
-//							entiteNomCanonique = entiteCanonicalNameAncien;
-//							entiteListeTypeJson = entiteListeJsonTypeAncien;
-//							entiteTypeJson = entiteJsonTypeAncien;
-//							entiteFormatJson = entiteJsonFormatAncien;
-//							entiteOptionsVar = entiteOptionsVarAncien;
-//							entiteOptionsDescription = entiteOptionsValueurAncien;
-//							entiteDescription = entiteDescriptionAncien;
-//						}
-//					}
-//				}
-//			}
-//			else {
-
-				w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
-				w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
-				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
-					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
+		if(entiteTypeJson != null) {
+			w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
+			w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+			if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+				w.tl(5 + tabsSchema + nombreTabulations, "enum:");
+				for(String entiteOptionVar : entiteOptionsVar) {
+					w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+					
+				}
+			}
+			if(entiteListeTypeJson != null) {
+				w.tl(5 + tabsSchema + nombreTabulations, "items:");
+				w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+				if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+					w.tl(6 + tabsSchema + nombreTabulations, "enum:");
 					for(String entiteOptionVar : entiteOptionsVar) {
-						w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
-						
+						w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
 					}
 				}
-				if(entiteListeTypeJson != null) {
-					w.tl(5 + tabsSchema + nombreTabulations, "items:");
-					w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
-					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
-						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
-						for(String entiteOptionVar : entiteOptionsVar) {
-							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
-						}
-					}
-				}
-				if(StringUtils.isNotBlank(entiteDescription))
-					w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
-				if(entiteFormatJson != null)
-					w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
-//			}
+			}
+			if(StringUtils.isNotBlank(entiteDescription))
+				w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+			if(entiteFormatJson != null)
+				w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
 		}
 	}
 
+	/**
+	 * Var.enUS: writeApi
+	 * r: classeUris
+	 * r.enUS: classUris
+	 * r: classeApiMethodeMethode
+	 * r.enUS: classApiMethodMethod
+	 * r: classeApiUriMethode
+	 * r.enUS: classApiUriMethod
+	 * r: wChemins
+	 * r.enUS: wPaths
+	 * r: langueNom
+	 * r.enUS: languageName
+	 * r: classeNomSimple
+	 * r.enUS: classSimpleName
+	 * r: classeRolesTrouves
+	 * r.enUS: classRolesFound
+	 * r: classeRoles
+	 * r.enUS: classRoles
+	 * r: classeApiTag
+	 * r.enUS: classApiTag
+	 * r: openApiVersionNumero
+	 * r.enUS: openApiVersionNumber
+	 * r: classeApiTypeMedia200Methode
+	 * r.enUS: classApiMediaType200Method
+	 * r: wRequeteEnTete
+	 * r.enUS: wRequestHeaders
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: "Recherche"
+	 * r.enUS: "Search"
+	 * r: strRequeteDescription
+	 * r.enUS: strRequestDescription
+	 * r: wRequeteDescription
+	 * r.enUS: wRequestDescription
+	 * r: strReponseDescription
+	 * r.enUS: strResponseDescription
+	 * r: wReponseDescription
+	 * r.enUS: wResponseDescription
+	 * r: tabsReponses
+	 * r.enUS: tabsResponses
+	 * r: wCorpsRequetes
+	 * r.enUS: wRequestBodies
+	 * r: classeEtendBase
+	 * r.enUS: classExtendsBase
+	 * r: wRequeteSchema
+	 * r.enUS: wRequestSchema
+	 * r: wReponseSchema
+	 * r.enUS: wResponseSchema
+	 * 
+	 * r: classeSuperApiOperationIdMethodeRequete
+	 * r.enUS: classSuperApiOperationIdMethodRequest
+	 * r: classeSuperApiOperationIdMethodeReponse
+	 * r.enUS: classSuperApiOperationIdMethodResponse
+	 * r: classeApiOperationIdMethodeRequete
+	 * r.enUS: classApiOperationIdMethodRequest
+	 * r: classeApiOperationIdMethodeReponse
+	 * r.enUS: classApiOperationIdMethodResponse
+	 * r: classeApiOperationIdMethode
+	 * r.enUS: classApiOperationIdMethod
+	 * r: Vide
+	 * r.enUS: Empty
+	 * r: ApiMethode
+	 * r.enUS: ApiMethod
+	 */
 	public void ecrireApi() throws Exception {
 
 			if(!classeUris.contains(classeApiUriMethode)) {
@@ -1185,13 +1362,25 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * 
+	 * r: classeApiUriMethode
+	 * r.enUS: classApiUriMethod
+	 * r: ClasseApiUriMethode
+	 * r.enUS: ClassApiUriMethod
 	 **/
 	@Override public int compareTo(ApiEcrivain o) {
 		return ObjectUtils.compare(classeApiUriMethode, o.getClasseApiUriMethode());
 	}
 
+	/**
+	 * r: classeNomSimple
+	 * r.enUS: classSimpleName
+	 * r: frFR
+	 * r.enUS: enUS
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 */
 	@Override
 	public String toString() {
 		return (String)classeDocumentSolr.get("classeNomSimple_frFR_stored_string") + " " + classeApiMethode;

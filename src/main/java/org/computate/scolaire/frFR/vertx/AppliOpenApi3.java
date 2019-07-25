@@ -1,11 +1,11 @@
-package org.computate.scolaire.frFR.vertx; 
+package org.computate.scolaire.frFR.vertx;  
 
 
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 /**
- * NomCanonique.enUS: org.computate.enUS.school.vertx.AppOpenApi3
+ * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppOpenApi3
  */
 public class AppliOpenApi3 extends AppliOpenApi3Gen<AppliSwagger2> {  
 
@@ -18,7 +18,21 @@ public class AppliOpenApi3 extends AppliOpenApi3Gen<AppliSwagger2> {
 	 * r.enUS: initDeep
 	 * r: ecrire
 	 * r.enUS: write
-	 */
+	 * r: AppliOpenApi3
+	 * r.enUS: AppOpenApi3
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: SiteContexteFrFR
+	 * r.enUS: SiteContextEnUS
+	 * r: siteContexte
+	 * r.enUS: siteContext
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: SiteContexte
+	 * r.enUS: SiteContext
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 */ 
 	public static void main(String[] args) {
 		AppliOpenApi3 api = new AppliOpenApi3();
 		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();

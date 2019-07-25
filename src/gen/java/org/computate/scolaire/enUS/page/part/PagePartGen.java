@@ -205,7 +205,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	@Override public boolean defineForClass(String var, String val) {
@@ -214,7 +214,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirPagePart(v, val);
+					o = definePagePart(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -223,10 +223,10 @@ public abstract class PagePartGen<DEV> extends Cluster {
 		}
 		return o != null;
 	}
-	public Object definirPagePart(String var, String val) {
+	public Object definePagePart(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirCluster(var, val);
+				return super.defineCluster(var, val);
 		}
 	}
 

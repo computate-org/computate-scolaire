@@ -10,7 +10,7 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-config/computate-scolaire.config
+config/*.config
 .vertx
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)

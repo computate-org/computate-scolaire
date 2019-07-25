@@ -32,5 +32,7 @@ public interface SiteUserEnUSGenApiService {
 		return new SiteUserEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
+	public void rechercheenuspageUtilisateurSiteId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void rechercheenuspageUtilisateurSite(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

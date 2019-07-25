@@ -58,6 +58,18 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
 	 * enUS: A SQL query for creating a database table "c" to store any type of object in the application. 
+	 * r: nom_canonique
+	 * r.enUS: canonical_name
+	 * r: ajour
+	 * r.enUS: current
+	 * r: nom_canonique
+	 * r.enUS: canonical_name
+	 * r: cree
+	 * r.enUS: created
+	 * r: modifie
+	 * r.enUS: modified
+	 * r: id_utilisateur
+	 * r.enUS: user_id
 	 */
 	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, ajour boolean, nom_canonique text, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), id_utilisateur text); ";
 
@@ -65,6 +77,14 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * enUS: A SQL query for creating a unique index on the "c" table based on the pk, canonical_name, and user_id fields for faster lookup. 
 	 * r: nom_canonique
 	 * r.enUS: canonical_name
+	 * r: ajour
+	 * r.enUS: current
+	 * r: nom_canonique
+	 * r.enUS: canonical_name
+	 * r: cree
+	 * r.enUS: created
+	 * r: modifie
+	 * r.enUS: modified
 	 * r: id_utilisateur
 	 * r.enUS: user_id
 	 * r: utilisateur
@@ -93,6 +113,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: created
 	 * r: modifie
 	 * r.enUS: modified
+	 * r: valeur
+	 * r.enUS: value
+	 * r: chemin
+	 * r.enUS: path
 	 */
 	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, chemin text, valeur text, actuel boolean, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), pk_c bigint, foreign key(pk_c) references c(pk)); ";
 
@@ -235,6 +259,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: getJdbcMaxStatements
 	 * r: getJdbcTempsInactiviteMax
 	 * r.enUS: getJdbcMaxIdleTime
+	 * r: ClientSql
+	 * r.enUS: SqlClient
 	 */
 	private Future<Void> configurerDonnees() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -325,7 +351,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				AsyncMap<Object, Object> donneesCluster = res.result();
 				donneesCluster.put("configSite", configSite, resPut -> {
 					if (resPut.succeeded()) {
-						LOGGER.error(configurerClusterSuccesDonnees);
+						LOGGER.info(configurerClusterSuccesDonnees);
 						future.complete();
 					} else {
 						LOGGER.error(configurerClusterErreurDonnees, res.cause());
@@ -393,6 +419,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			if (ar.succeeded()) {
 				AppOpenAPI3RouterFactory usineRouteur = ar.result();
 				usineRouteur.mountServicesFromExtensions();
+				siteContexteFrFR.setUsineRouteur(usineRouteur);
 
 				JsonObject keycloakJson = new JsonObject() {
 					{
@@ -508,6 +535,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureHealthChecksErrorVertx
 	 * r: ClientSolr
 	 * r.enUS: SolrClient
+	 * r: ClientSql
+	 * r.enUS: SqlClient
 	 */
 	private Future<Void> configurerControlesSante() {
 		Future<Void> future = Future.future();
@@ -668,6 +697,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: closeDataSuccess
 	 * r: siteContexteFrFR
 	 * r.enUS: siteContextEnUS
+	 * r: ClientSql
+	 * r.enUS: SqlClient
 	 * 
 	 * enUS: Return a future to close the database client connection. 
 	 */        

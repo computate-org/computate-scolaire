@@ -85,7 +85,7 @@ public class EcoleFrFRGenPage extends EcoleFrFRGenPageGen<ClusterFrFRPage> {
 			c.o("regular");
 	}
 
-	@Override protected void _contexteNom(Couverture<String> c) {
+	@Override protected void _contexteIconeNom(Couverture<String> c) {
 			c.o("fort-awesome");
 	}
 

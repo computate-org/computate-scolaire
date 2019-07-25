@@ -3,20 +3,19 @@ package org.computate.scolaire.enUS.vertx;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.eventbus.MessageConsumer;
-import io.vertx.core.http.HttpHeaders;
-import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -33,10 +32,8 @@ import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
-import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
@@ -44,7 +41,6 @@ import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
-import io.vertx.serviceproxy.ServiceBinder;
 
 /**	
  *	A Java class to start the Vert.x application as a main method. 
@@ -54,7 +50,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	/**	
 	 *	A SQL query for creating a database table "c" to store any type of object in the application. 
 	 **/
-	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, ajour boolean, nom_canonique text, cree timestamp with time zone default now(), modifie timestamp with time zone default now(), id_utilisateur text); ";
+	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, current boolean, canonical_name text, created timestamp with time zone default now(), modified timestamp with time zone default now(), user_id text); ";
 
 	/**	
 	 *	A SQL query for creating a unique index on the "c" table based on the pk, canonical_name, and user_id fields for faster lookup. 
@@ -69,7 +65,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	/**	
 	 *	A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
 	 **/
-	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, chemin text, valeur text, current boolean, created timestamp with time zone default now(), modified timestamp with time zone default now(), pk_c bigint, foreign key(pk_c) references c(pk)); ";
+	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, path text, value text, current boolean, created timestamp with time zone default now(), modified timestamp with time zone default now(), pk_c bigint, foreign key(pk_c) references c(pk)); ";
 
 	/**	
 	 *	Concatenate all of the SQL together to execute when the server starts. 
@@ -157,7 +153,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			jdbcConfig.put("max_idle_time", siteConfig.getJdbcMaxIdleTime());
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
-		siteContextEnUS.setClientSql(jdbcClient);
+		siteContextEnUS.setSqlClient(jdbcClient);
 
 		jdbcClient.getConnection(a -> {
 			if (a.failed()) {
@@ -195,7 +191,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				AsyncMap<Object, Object> clusterData = res.result();
 				clusterData.put("siteConfig", siteConfig, resPut -> {
 					if (resPut.succeeded()) {
-						LOGGER.error(configureClusterDataSuccess);
+						LOGGER.info(configureClusterDataSuccess);
 						future.complete();
 					} else {
 						LOGGER.error(configureClusterDataError, res.cause());
@@ -225,6 +221,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			if (ar.succeeded()) {
 				AppOpenAPI3RouterFactory routerFactory = ar.result();
 				routerFactory.mountServicesFromExtensions();
+				siteContextEnUS.setRouterFactory(routerFactory);
 
 				JsonObject keycloakJson = new JsonObject() {
 					{
@@ -305,7 +302,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
 
 		healthCheckHandler.register("database", 2000, a -> {
-			siteContextEnUS.getClientSql().queryWithParams("select current_timestamp"
+			siteContextEnUS.getSqlClient().queryWithParams("select current_timestamp"
 					, new JsonArray(Arrays.asList())
 					, selectCAsync
 			-> {
@@ -397,7 +394,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Future<Void> closeData() {
 		Future<Void> future = Future.future();
-		SQLClient clientSql = siteContextEnUS.getClientSql();
+		SQLClient clientSql = siteContextEnUS.getSqlClient();
 
 		if(clientSql != null) {
 			clientSql.close(a -> {

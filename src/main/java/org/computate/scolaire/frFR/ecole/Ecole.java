@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;    
+package org.computate.scolaire.frFR.ecole;        
 
 import java.text.Normalizer;
 import java.util.List;
@@ -24,7 +24,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * PageRechercheEnUSPage: EcoleEnUSPage
  * PageSuperRechercheFrFRPage: ClusterFrFRPage
  * PageSuperRechercheEnUSPage: ClusterEnUSPage
- * NomCanonique.enUS: org.computate.enUS.education.school.School
+ * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * UnNom.frFR: une école
  * UnNom.enUS: a school
  * Couleur: pink

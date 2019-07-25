@@ -450,7 +450,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -459,7 +459,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirSiteContextEnUS(v, val);
+					o = defineSiteContextEnUS(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -468,7 +468,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object definirSiteContextEnUS(String var, String val) {
+	public Object defineSiteContextEnUS(String var, String val) {
 		switch(var) {
 			default:
 				return null;

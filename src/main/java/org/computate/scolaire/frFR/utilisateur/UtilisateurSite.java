@@ -4,29 +4,32 @@ import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 
 /** 
- * MotCle: classeNomSimpleUtilisateurSite
- * Modele: true
  * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUser
- * ApiUri: /api/utilisateur
+ * Api: true
+ * MotCle: classeNomSimpleUtilisateurSite
+ * ApiMethode: RechercheFrFRPage
+ * ApiMethode: RechercheEnUSPage
  * ApiMethode: PATCH
- * ApiMethode: RecherchePage
- * ApiMotCleRecherchePage: page
- * ApiMotCleRecherchePage: page
- * ApiUriRecherchePage: /utilisateur
- * ApiUriRecherchePage: /user
- * PageRecherchePage: UtilisateurSitePage
- * UnNomMinuscule.frFR: un utilisateur
- * UnNomMinuscule.enUS: a user
- * Couleur: deep-purple
- * IconeGroupe: regular
- * IconeNom: user
- * 
- * Role.frFR: SiteAdmin
+ * ApiUriRechercheFrFRPage: /frFR/utilisateur
+ * ApiUriRechercheEnUSPage: /enUS/user
+ * PageRechercheFrFRPage: UtilisateurSiteFrFRPage
+ * PageRechercheEnUSPage: UtilisateurSiteEnUSPage
+ * PageSuperRechercheFrFRPage: ClusterFrFRPage
+ * PageSuperRechercheEnUSPage: ClusterEnUSPage
+ * ApiUri: /api/site/utilisateur
+ * Role: SiteAdmin
  * Filtre: utilisateurId
- * ApiTag.enUS: SiteUser
- * ApiTag.frFR: UtilisateurSite
- */     
-public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
+ * Sauvegarde: true
+ * 
+ * UnNom.frFR: un utilisateur du site
+ * UnNom.enUS: a site user
+ * NomPluriel.frFR: utilisateurs du site
+ * Couleur: green
+ * IconeGroupe: regular
+ * IconeNom: book
+ * Indexe: true
+ */    
+public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
 
 	/**  
 	 * Var.enUS: userId

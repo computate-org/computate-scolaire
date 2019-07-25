@@ -23,15 +23,17 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**
- * NomCanonique.enUS: AppSwagger2
+ * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppSwagger2
  */
-public class AppliSwagger2 extends AppliSwagger2Gen<Object> { 
+public class AppliSwagger2 extends AppliSwagger2Gen<Object> {       
 
 	/**
 	 * r: initLoin
 	 * r.enUS: initDeep
 	 * r: ecrire
 	 * r.enUS: write
+	 * r: AppliSwagger2
+	 * r.enUS: AppSwagger2
 	 */
 	public static void main(String[] args) {
 		AppliSwagger2 api = new AppliSwagger2();
@@ -46,18 +48,20 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	}
 
 	/**
+	 * {@inheritDoc}
 	 * Var.enUS: siteContext
 	 */
-	protected void _siteContexte(SiteContexteFrFR o) {
+	protected void _siteContexte(SiteContexteFrFR o) { 
 	}
 
 	/**
+	 * {@inheritDoc}
 	 * Var.enUS: siteConfig
 	 * r: siteContexte
 	 * r.enUS: siteContext
 	 * r: ConfigSite
 	 * r.enUS: SiteConfig
-	 */
+	 */   
 	protected void _configSite(Couverture<ConfigSite> c) {
 		c.o(siteContexte.getConfigSite());
 	}
@@ -69,13 +73,17 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: siteConfig
 	 * r: AppliChemin
 	 * r.enUS: AppPath
-	 **/
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 **/ 
 	protected void _appliChemin(Couverture<String> c) {
 		c.o(configSite.getAppliChemin());
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * r: configSite
+	 * r.enUS: siteConfig
 	 **/
 	protected void _openApiVersion(Couverture<String> c) {
 		c.o(configSite.getOpenApiVersion());
@@ -91,6 +99,8 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * r: openApiVersionNumero
+	 * r.enUS: openApiVersionNumber
 	 **/
 	protected void _tabsSchema(Couverture<Integer> c) {
 		if(openApiVersionNumero == 2)
@@ -101,6 +111,8 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 
 	/**
 	 * {@inheritDoc}
+	 * r: configSite
+	 * r.enUS: siteConfig
 	 **/
 	protected void _apiVersion(Couverture<String> c) {
 		c.o(configSite.getApiVersion());
@@ -182,19 +194,66 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 		c.o(ToutEcrivain.creer(requeteSite_, "  "));
 	}
 
+	/**
+	 * Var.enUS: classApiMethods
+	 */
 	List<String> classeApiMethodes;
+
+	/**
+	 * Var.enUS: classUris
+	 */
 	List<String> classeUris;
+
+	/**
+	 * Var.enUS: apiWriters
+	 */
 	List<ApiEcrivain> apiEcrivains;
+
+	/**
+	 * Var.enUS: classApiTag
+	 */
 	String classeApiTag;
+
+	/**
+	 * Var.enUS: classApiUri
+	 */
 	String classeApiUri;
+
+	/**
+	 * Var.enUS: classSimpleName
+	 */
 	String classeNomSimple;
+
+	/**
+	 * Var.enUS: classAbsolutePath
+	 */
 	String classeCheminAbsolu;
+
+	/**
+	 * Var.enUS: classIsBase
+	 */
 	Boolean classeEstBase;
+
+	/**
+	 * Var.enUS: classKeywordsFound
+	 */
 	Boolean classeMotsClesTrouves;
+
+	/**
+	 * Var.enUS: classKeywords
+	 */
 	List<String> classeMotsCles;
 
 	/**
 	 * Var.enUS: writeOpenApi
+	 * r: ecrireInfo
+	 * r.enUS: writeInfo
+	 * r: ecrireApi
+	 * r.enUS: writeApi
+	 * r: wChemins
+	 * r.enUS: wPaths
+	 * r: wCorpsRequetes
+	 * r.enUS: wRequestBodies
 	 */
 	public void ecrireOpenApi() {
 
@@ -208,6 +267,21 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 		w.flushClose();
 	}
 
+	/**
+	 * Var.enUS: writeInfo
+	 * r: openApiVersionNumero
+	 * r.enUS: openApiVersionNumber
+	 * r: wChemins
+	 * r.enUS: wPaths
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * r: ApiNomHote
+	 * r.enUS: ApiHostName
+	 * r: ApiTitre
+	 * r.enUS: ApiTitle
+	 */
 	public void ecrireInfo() {
 
 		if(openApiVersionNumero == 2)
@@ -232,6 +306,91 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 		}
 	}
 
+	/**
+	 * Var.enUS: writeApi
+	 * r: openApiVersionNumero
+	 * r.enUS: openApiVersionNumber
+	 * r: wChemins
+	 * r.enUS: wPaths
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: wCorpsRequetes
+	 * r.enUS: wRequestBodies
+	 * r: rechercheClassesLignes
+	 * r.enUS: searchClassesLines
+	 * r: rechercheClasses
+	 * r.enUS: searchClasses
+	 * r: siteContexte
+	 * r.enUS: siteContext
+	 * r: ClientSolrComputate
+	 * r.enUS: SolrClientComputate
+	 * r: appliChemin
+	 * r.enUS: appPath
+	 * r: classeApiTag
+	 * r.enUS: classApiTag
+	 * r: classeApiUri
+	 * r.enUS: classApiUri
+	 * r: classeEstBase
+	 * r.enUS: classIsBase
+	 * r: classeApiMethodes
+	 * r.enUS: classApiMethods
+	 * r: classeUris
+	 * r.enUS: classUris
+	 * r: apiEcrivains
+	 * r.enUS: apiWriters
+	 * r: ApiEcrivain
+	 * r.enUS: ApiWriter
+	 * r: apiEcrivain
+	 * r.enUS: apiWriter
+	 * r: AuthRoyaume
+	 * r.enUS: AuthRealm
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: classeNomSimple
+	 * r.enUS: classSimpleName
+	 * r: ClasseDocumentSolr
+	 * r.enUS: ClassSolrDocument
+	 * r: ClasseApiMethode
+	 * r.enUS: ClassApiMethod
+	 * r: WChemins
+	 * r.enUS: WPaths
+	 * r: WCorpsRequetes
+	 * r.enUS: WRequestBodies
+	 * r: ClasseUris
+	 * r.enUS: ClassUris
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: initLoin
+	 * r.enUS: initDeep
+	 * r: classeCheminAbsolu
+	 * r.enUS: classAbsolutePath
+	 * r: classeMotsClesTrouves
+	 * r.enUS: classKeywordsFound
+	 * r: classeMotsCles
+	 * r.enUS: classKeywords
+	 * r: rechercheEntitesResultats
+	 * r.enUS: searchEntitesResults
+	 * r: rechercheEntitesReponse
+	 * r.enUS: searchEntitesResponse
+	 * r: rechercheEntitesLignes
+	 * r.enUS: searchEntitesLines
+	 * r: rechercheEntites
+	 * r.enUS: searchEntites
+	 * r: initEntite
+	 * r.enUS: initEntity
+	 * r: ecrireEntiteEnTete
+	 * r.enUS: writeEntityHeaders
+	 * r: ecrireEntiteSchema
+	 * r.enUS: writeEntitySchema
+	 * r: WReponseDescription
+	 * r.enUS: WResponseDescription
+	 * r: getEcrivains
+	 * r.enUS: getWriters
+	 * r: ecrireApi
+	 * r.enUS: writeApi
+	 * r: AppliChemin
+	 * r.enUS: AppPath
+	 */
 	public void ecrireApi() {
 		try {
 			wChemins.tl(0, "paths:");

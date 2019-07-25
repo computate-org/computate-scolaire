@@ -2301,7 +2301,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -2310,7 +2310,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirPageLayout(v, val);
+					o = definePageLayout(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -2319,7 +2319,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object definirPageLayout(String var, String val) {
+	public Object definePageLayout(String var, String val) {
 		switch(var) {
 			default:
 				return null;

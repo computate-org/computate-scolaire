@@ -67,7 +67,8 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSitePage;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRPage;
+import org.computate.scolaire.enUS.user.UtilisateurSiteEnUSPage;
 
 
 /**
@@ -84,6 +85,86 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public SiteUserEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
 		SiteUserEnUSGenApiService service = SiteUserEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
+	}
+
+	// RechercheEnUSPage //
+
+	@Override
+	public void rechercheenuspageUtilisateurSiteId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		rechercheenuspageUtilisateurSite(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void rechercheenuspageUtilisateurSite(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
+			sqlSiteUser(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSiteUser(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSiteUser(siteRequest, false, true, "/enUS/user", c -> {
+								if(c.succeeded()) {
+									SearchList<SiteUser> listSiteUser = c.result();
+									response200RechercheEnUSPageSiteUser(listSiteUser, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSiteUser(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														errorSiteUser(siteRequest, eventHandler, e);
+													}
+												});
+											}
+										} else {
+											errorSiteUser(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSiteUser(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSiteUser(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSiteUser(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSiteUser(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200RechercheEnUSPageSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+			AllWriter w = AllWriter.create(listSiteUser.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			UtilisateurSiteEnUSPage page = new UtilisateurSiteEnUSPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/user");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			page.setListSiteUser(listSiteUser);
+			page.initDeepUtilisateurSiteEnUSPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
 	}
 
 	// PATCH //
@@ -246,24 +327,24 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public String varIndexedSiteUser(String entityVar) {
 		switch(entityVar) {
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "created":
+				return "created_indexed_date";
+			case "modified":
+				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			case "userId":
 				return "userId_indexed_string";
 			case "userName":

@@ -225,6 +225,30 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					w.s(", ");
 				w.l("{");
 
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
+
+				entiteValeur = o.getClasseNomCanonique();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
+
 				entiteValeur = o.getClasseNomSimple();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
@@ -243,30 +267,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					}
 					w.l("]");
 				}
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				w.tl(2, "}");
 			}
@@ -646,6 +646,30 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 				w.l("{");
 
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
+
+				entiteValeur = o.getClasseNomCanonique();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
+
 				entiteValeur = o.getClasseNomSimple();
 				if(entiteValeur != null)
 					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
@@ -664,30 +688,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					}
 					w.l("]");
 				}
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
 
 				w.l("}");
 			}
@@ -782,24 +782,24 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public String varIndexeCluster(String entiteVar) {
 		switch(entiteVar) {
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "modifie":
+				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

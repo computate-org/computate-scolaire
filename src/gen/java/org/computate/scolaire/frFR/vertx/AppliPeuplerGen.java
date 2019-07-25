@@ -35,7 +35,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _requeteSite_(Couverture<RequeteSiteFrFR> c) throws Exception;
+	protected abstract void _requeteSite_(Couverture<RequeteSiteFrFR> c) throws Exception, Exception;
 
 	public RequeteSiteFrFR getRequeteSite_() {
 		return requeteSite_;
@@ -71,7 +71,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 * <br/>
 	 * @param siteContexte est l'entité déjà construit. 
 	 **/
-	protected abstract void _siteContexte(SiteContexteFrFR o) throws Exception;
+	protected abstract void _siteContexte(SiteContexteFrFR o) throws Exception, Exception;
 
 	public SiteContexteFrFR getSiteContexte() {
 		return siteContexte;
@@ -106,7 +106,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _configSite(Couverture<ConfigSite> c) throws Exception;
+	protected abstract void _configSite(Couverture<ConfigSite> c) throws Exception, Exception;
 
 	public ConfigSite getConfigSite() {
 		return configSite;
@@ -162,10 +162,6 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	/////////////////
 
 	public void requeteSiteAppliPeupler(RequeteSiteFrFR requeteSite_) {
-		if(siteContexte != null)
-			siteContexte.setRequeteSite_(requeteSite_);
-		if(configSite != null)
-			configSite.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {

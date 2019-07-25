@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mission;      
+package org.computate.scolaire.frFR.mission;       
 
 import java.text.Normalizer;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 /**
  * Modele: true
- * NomCanonique.enUS: org.computate.enUS.education.mission.Mission
+ * NomCanonique.enUS: org.computate.scolaire.enUS.mission.Mission
  * ApiUri: /api/mission
  * ApiMethode: Recherche
  * ApiMethode: POST

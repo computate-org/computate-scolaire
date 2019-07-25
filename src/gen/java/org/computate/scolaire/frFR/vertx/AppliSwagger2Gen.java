@@ -711,10 +711,6 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	/////////////////
 
 	public void requeteSiteAppliSwagger2(RequeteSiteFrFR requeteSite_) {
-		if(siteContexte != null)
-			siteContexte.setRequeteSite_(requeteSite_);
-		if(configSite != null)
-			configSite.setRequeteSite_(requeteSite_);
 		if(w != null)
 			w.setRequeteSite_(requeteSite_);
 		if(wChemins != null)

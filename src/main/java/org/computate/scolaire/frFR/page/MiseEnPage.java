@@ -27,7 +27,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * NomCanonique.enUS: org.computate.scolaire.enUS.page.PageLayout
  * MotCle: classeNomSimpleMiseEnPage
  */  
-public class MiseEnPage extends MiseEnPageGen<Object> {  
+public class MiseEnPage extends MiseEnPageGen<Object> {   
 
 	/**
 	 * Var.enUS: HTML_CLOSED_ELEMENTS
@@ -678,62 +678,62 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: logout
 	 */
 	public void menu()  {
-		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
-					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
-						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
-					g("a");
-					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
-						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
-					g("a");
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("Langue");
-					g("span");
-				g("span");
-			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("Accueil");
-					g("span");
-				g("a");
-			g("div");
-			if(requeteSite_.getUtilisateurId() == null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx("Connexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-			if(requeteSite_.getUtilisateurId() != null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx(requeteSite_.getUtilisateurNom());
-						g("span");
-					g("a");
-				g("div");
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx("Déconnexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-		g("div");
+//		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+//			e("div").a("class", "site-bar-item w3-bar-item ").f();
+//				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
+//					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
+//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
+//					g("a");
+//					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
+//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
+//					g("a");
+//					e("br").fg();
+//					e("span").a("class", "site-menu-item").f();
+//						sx("Langue");
+//					g("span");
+//				g("span");
+//			g("div");
+//			e("div").a("class", "site-bar-item w3-bar-item ").f();
+//				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
+//	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
+//					e("br").fg();
+//					e("span").a("class", "site-menu-item").f();
+//						sx("Accueil");
+//					g("span");
+//				g("a");
+//			g("div");
+//			if(requeteSite_.getUtilisateurId() == null) {
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx("Connexion");
+//						g("span");
+//					g("a");
+//				g("div");
+//			}
+//			if(requeteSite_.getUtilisateurId() != null) {
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx(requeteSite_.getUtilisateurNom());
+//						g("span");
+//					g("a");
+//				g("div");
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx("Déconnexion");
+//						g("span");
+//					g("a");
+//				g("div");
+//			}
+//		g("div");
 	}
 
 	/**
@@ -804,6 +804,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		} g("div");
 	}
 
+	/**
+	 * r: FORMATDateHeureCourt
+	 * r.enUS: FORMATDateTimeShort
+	 */
 	public String formaterDateHeureCourt(Date date) {
 		String resultat = "";
 		if(date != null) {
@@ -812,6 +816,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return resultat;
 	}
 
+	/**
+	 * r: FORMATDateCourt
+	 * r.enUS: FORMATDateShort
+	 */
 	public String formaterDateCourt(Date date) {
 		String resultat = "";
 		if(date != null) {
@@ -820,6 +828,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return resultat;
 	}
 
+	/**
+	 * r: FORMATDateHeureAffichage
+	 * r.enUS: FORMATDateTimeDisplay
+	 */
 	public String formaterDateAffichage(Date date) {
 		String resultat = "";
 		if(date != null) {
@@ -828,6 +840,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return resultat;
 	}
 
+	/**
+	 * r: FORMATDateHeureAffichage
+	 * r.enUS: FORMATDateTimeDisplay
+	 */
 	public String formaterDateAffichage(LocalDateTime date) {
 		String resultat = "";
 		if(date != null) {
@@ -838,18 +854,27 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Param1.var.enUS: localName
-	 * r.enUS: nomLocal
-	 * localName
-	 * r.enUS: xmlPile
-	 * xmlStack
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: tabulation
-	 * tab
-	 * r.enUS: Echappes
-	 * Escaped
-	 * r.enUS: ecrivain
-	 * writer
+	 * r: nomLocal
+	 * r.enUS: localName
+	 * r: xmlPile
+	 * r.enUS: xmlStack
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: tabulation
+	 * r.enUS: tab
+	 * r: Echappes
+	 * r.enUS: Escaped
+	 * r: ecrivain
+	 * r.enUS: writer
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
 	 */
 	public MiseEnPage e(String nomLocal) {
 		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
@@ -871,6 +896,22 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return this;
 	}
 
+	/**
+	 * Param1.var.enUS: attributeName
+	 * Param2.var.enUS: objects
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: echapperDansCitatations
+	 * r.enUS: escapeInQuotes
+	 * r: nomAttribut
+	 * r.enUS: attributeName
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public MiseEnPage a1(String nomAttribut, Object...objets) {
 		w.s(" ");
 		w.s(nomAttribut);
@@ -888,16 +929,18 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**  
 	 * Param1.var.enUS: attributeName
 	 * Param2.var.enUS: objects
-	 * r.enUS: nomAttribut
-	 * attributeName
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: ecrivain
-	 * writer
-	 * r.enUS: echapperXmlDansCitations
-	 * escapeXmlInQuotes
-	 * r.enUS: OutilEchapper
-	 * EscapeTool
+	 * r: ToutEcrivain
+	 * r.enUS: AllWriter
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: objet
+	 * r.enUS: object
+	 * r: nomAttribut
+	 * r.enUS: attributeName
+	 * r: echapperDansCitatations
+	 * r.enUS: escapeInQuotes
 	 */
 	public MiseEnPage a(String nomAttribut, Object...objets) {
 		w.s(" ");
@@ -914,6 +957,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return this;
 	}
 
+	/**  
+	 */
 	public MiseEnPage a2() {
 		w.s("\"");
 		
@@ -921,8 +966,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/** 
-	 * r.enUS: ecrivain
-	 * writer
 	 */
 	public MiseEnPage f() {
 		w.s(">");
@@ -932,10 +975,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Param1.var.enUS: objects
-	 * r.enUS: objet
-	 * object
-	 * r.enUS: ecrivain
-	 * writer
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage s(Object...objets) {
 		for(Object objet : objets) {
@@ -951,12 +992,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
-	 * r.enUS: nombreTabulations
-	 * numberTabs
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: tout
-	 * all
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage t(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -968,12 +1007,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
-	 * r.enUS: nombreTabulations
-	 * numberTabs
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: tout
-	 * all
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage tl(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -985,10 +1022,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/** 
 	 * Param1.var.enUS: objects
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: tout
-	 * all
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage l(Object...objets) {
 		s(objets);
@@ -996,6 +1031,11 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return this;
 	}
 
+	/** 
+	 * Param1.var.enUS: objects
+	 * r: objet
+	 * r.enUS: object
+	 */
 	public MiseEnPage lx(Object...objets) {
 		s(objets);
 		sx("\n");
@@ -1004,14 +1044,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/** 
 	 * Param1.var.enUS: objects
-	 * r.enUS: objet
-	 * object
-	 * r.enUS: ecrivain
-	 * writer
-	 * r.enUS: OutilEchapper
-	 * EscapeTool
-	 * r.enUS: echapperXml
-	 * escapeXml
+	 * r: objet
+	 * r.enUS: object
+	 * r: OutilXml
+	 * r.enUS: UtilXml
+	 * r: echapper
+	 * r.enUS: escape
 	 */
 	public MiseEnPage sx(Object...objets) {
 		for(Object objet : objets) {
@@ -1027,12 +1065,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
-	 * r.enUS: nombreTabulations
-	 * numberTabs
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: tout
-	 * all
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage tx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -1044,12 +1080,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	/**
 	 * Param1.var.enUS: numberTabs
 	 * Param2.var.enUS: objects
-	 * r.enUS: nombreTabulations
-	 * numberTabs
-	 * r.enUS: objets
-	 * objects
-	 * r.enUS: tout
-	 * all
+	 * r: nombreTabulations
+	 * r.enUS: numberTabs
+	 * r: objet
+	 * r.enUS: object
 	 */
 	public MiseEnPage tlx(int nombreTabulations, Object...objets) {
 		for(int i = 0; i < nombreTabulations; i++)
@@ -1060,12 +1094,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
-	 * r.enUS: ecrivain
-	 * writer
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: xmlPile
-	 * xmlStack
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
 	 */
 	public MiseEnPage fg() {
 		w.s("/>");
@@ -1076,20 +1108,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**    
 	 * Param1.var.enUS: localName
-	 * r.enUS: nomLocal
-	 * localName
-	 * r.enUS: nomLocalParent
-	 * parentLocalName
-	 * r.enUS: requeteSite_
-	 * siteRequest
-	 * r.enUS: xmlPile
-	 * xmlStack
-	 * r.enUS: tabulations
-	 * tabs
-	 * r.enUS: Echappes
-	 * Escaped
-	 * r.enUS: ecrivain
-	 * writer
+	 * r: requeteSite_
+	 * r.enUS: siteRequest_
+	 * r: getXmlPile
+	 * r.enUS: getXmlStack
+	 * r: nomLocalParent
+	 * r.enUS: localNameParent
+	 * r: tabulationsEchappes
+	 * r.enUS: tabsEscaped
+	 * r: tabulations
+	 * r.enUS: tabs
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: nomLocal
+	 * r.enUS: localName
 	 */
 	public MiseEnPage g(String nomLocal) {
 		String nomLocalParent = requeteSite_.getXmlPile().peek();
@@ -1110,6 +1142,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		return this;
 	}
 
+	/**
+	 * r: VoirArchive
+	 * r.enUS: SeeArchived
+	 * r: VoirSupprime
+	 * r.enUS: SeeDeleted
+	 */
 	public void htmlFormOptionsUtilisateurSite(UtilisateurSite o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();

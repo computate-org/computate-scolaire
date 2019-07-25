@@ -56,23 +56,23 @@ public class Cluster extends ClusterGen<Object> {
 		l.add(Cluster.class.getCanonicalName());
 	}
 
-	public Cluster e(String nomLocal) {
+	public Cluster e(String localName) {
 		AllWriter w = siteRequest_.getW();
-		String nomLocalParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
+		String localNameParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
 
-		boolean eNoWrapParent = nomLocalParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
-		String tabulations = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
+		boolean eNoWrapParent = localNameParent == null || PageLayout.HTML_ELEMENTS_NO_WRAP.contains(localNameParent);
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
+		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		siteRequest_.getXmlStack().push(nomLocal);
-		if(StringUtils.equals(nomLocal, "html"))
+		siteRequest_.getXmlStack().push(localName);
+		if(StringUtils.equals(localName, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrapParent && !tabsEscaped.isEmpty()) {
 			w.l();
-			w.s(tabulations);
+			w.s(tabs);
 		}
 		w.s("<");
-		w.s(nomLocal);
+		w.s(localName);
 		
 		return this;
 	}

@@ -677,24 +677,24 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 	public String varIndexedCluster(String entityVar) {
 		switch(entityVar) {
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
 			case "pk":
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "created":
+				return "created_indexed_date";
+			case "modified":
+				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

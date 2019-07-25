@@ -35,11 +35,27 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class SiteUserGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SiteUser.class);
 
-	public static final String SiteUser_Couleur = "deep-purple";
+	public static final String SiteUser_UnNom = "a site user";
+	public static final String SiteUser_Ce = "this ";
+	public static final String SiteUser_CeNom = "this site user";
+	public static final String SiteUser_Un = "an ";
+	public static final String SiteUser_LeNom = "the site user";
+	public static final String SiteUser_NomSingulier = "site user";
+	public static final String SiteUser_NomPluriel = "site users";
+	public static final String SiteUser_NomActuel = "current site user";
+	public static final String SiteUser_TousNom = "the site users";
+	public static final String SiteUser_RechercherTousNomPar = "search site users by ";
+	public static final String SiteUser_LesNoms = "the site users";
+	public static final String SiteUser_AucunNomTrouve = "no site user found";
+	public static final String SiteUser_NomVar = "siteUser";
+	public static final String SiteUser_DeNom = "of site user";
+	public static final String SiteUser_Couleur = "green";
 	public static final String SiteUser_IconeGroupe = "regular";
-	public static final String SiteUser_IconeNom = "user";
-	public static final String UtilisateurSitePage_Uri = "/utilisateur";
-	public static final String UtilisateurSitePage_ImageUri = "/png/utilisateur-999.png";
+	public static final String SiteUser_IconeNom = "book";
+	public static final String UtilisateurSiteFrFRPage_Uri = "/frFR/utilisateur";
+	public static final String UtilisateurSiteFrFRPage_ImageUri = "/png/frFR/utilisateur-999.png";
+	public static final String UtilisateurSiteEnUSPage_Uri = "/enUS/user";
+	public static final String UtilisateurSiteEnUSPage_ImageUri = "/png/enUS/user-999.png";
 
 	////////////
 	// userId //
@@ -105,7 +121,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -202,7 +218,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -299,7 +315,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserEmail() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -396,7 +412,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserFirstName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -493,7 +509,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserLastName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -590,7 +606,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserFullName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -687,7 +703,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserSite() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -789,7 +805,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "UserReceiveEmails() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -891,7 +907,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "SeeArchived() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -993,7 +1009,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchSiteUser", strPk(), "SeeDeleted() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");

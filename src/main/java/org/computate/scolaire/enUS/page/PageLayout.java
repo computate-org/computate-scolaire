@@ -334,62 +334,62 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public void  menu() {
-		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
-					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
-						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
-					g("a");
-					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
-						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
-					g("a");
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("Langue");
-					g("span");
-				g("span");
-			g("div");
-			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-					e("br").fg();
-					e("span").a("class", "site-menu-item").f();
-						sx("Accueil");
-					g("span");
-				g("a");
-			g("div");
-			if(requeteSite_.getUtilisateurId() == null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx("Connexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-			if(requeteSite_.getUtilisateurId() != null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx(requeteSite_.getUtilisateurNom());
-						g("span");
-					g("a");
-				g("div");
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
-						e("span").a("class", "site-menu-item").f();
-							sx("Déconnexion");
-						g("span");
-					g("a");
-				g("div");
-			}
-		g("div");
+//		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+//			e("div").a("class", "site-bar-item w3-bar-item ").f();
+//				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
+//					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
+//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
+//					g("a");
+//					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
+//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
+//					g("a");
+//					e("br").fg();
+//					e("span").a("class", "site-menu-item").f();
+//						sx("Langue");
+//					g("span");
+//				g("span");
+//			g("div");
+//			e("div").a("class", "site-bar-item w3-bar-item ").f();
+//				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
+//	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
+//					e("br").fg();
+//					e("span").a("class", "site-menu-item").f();
+//						sx("Accueil");
+//					g("span");
+//				g("a");
+//			g("div");
+//			if(requeteSite_.getUtilisateurId() == null) {
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx("Connexion");
+//						g("span");
+//					g("a");
+//				g("div");
+//			}
+//			if(requeteSite_.getUtilisateurId() != null) {
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx(requeteSite_.getUtilisateurNom());
+//						g("span");
+//					g("a");
+//				g("div");
+//				e("div").a("class", "site-bar-item w3-bar-item ").f();
+//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
+//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
+//						e("br").fg();
+//						e("span").a("class", "site-menu-item").f();
+//							sx("Déconnexion");
+//						g("span");
+//					g("a");
+//				g("div");
+//			}
+//		g("div");
 	}
 
 	public void  abondonnezPas() {
@@ -453,7 +453,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateHeureCourt(Date date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATDateHeureCourt.format(date.toInstant().atZone(ZoneId.systemDefault()));
+			resultat = FORMATDateTimeShort.format(date.toInstant().atZone(ZoneId.systemDefault()));
 		}
 		return resultat;
 	}
@@ -461,7 +461,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateCourt(Date date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATDateCourt.format(date.toInstant().atZone(ZoneId.systemDefault()));
+			resultat = FORMATDateShort.format(date.toInstant().atZone(ZoneId.systemDefault()));
 		}
 		return resultat;
 	}
@@ -469,7 +469,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateAffichage(Date date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATDateHeureAffichage.format(date.toInstant());
+			resultat = FORMATDateTimeDisplay.format(date.toInstant());
 		}
 		return resultat;
 	}
@@ -477,39 +477,39 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public String formaterDateAffichage(LocalDateTime date) {
 		String resultat = "";
 		if(date != null) {
-			resultat = FORMATDateHeureAffichage.format(date);
+			resultat = FORMATDateTimeDisplay.format(date);
 		}
 		return resultat;
 	}
 
 	public PageLayout e(String localName) {
-		String nomLocalParent = requeteSite_.getXmlPile().isEmpty() ? null : requeteSite_.getXmlPile().peek();
+		String localNameParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();
 
-		boolean eNoWrapParent = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocalParent);
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		boolean eNoWrapParent = localNameParent == null || HTML_ELEMENTS_NO_WRAP.contains(localNameParent);
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
+		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		requeteSite_.getXmlPile().push(nomLocal);
-		if(StringUtils.equals(nomLocal, "html"))
+		siteRequest_.getXmlStack().push(localName);
+		if(StringUtils.equals(localName, "html"))
 			w.s("<!DOCTYPE html>\n");
-		if(!eNoWrapParent && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrapParent && !tabsEscaped.isEmpty()) {
 			w.l();
-			w.s(tabulations);
+			w.s(tabs);
 		}
 		w.s("<");
-		w.s(nomLocal);
+		w.s(localName);
 		
 		return this;
 	}
 
-	public PageLayout a1(String nomAttribut, Object...objets) {
+	public PageLayout a1(String attributeName, Object...objects) {
 		w.s(" ");
-		w.s(nomAttribut);
+		w.s(attributeName);
 		w.s("=\"");
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapperDansCitatations(s));
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escapeInQuotes(s));
 			}
 		}
 		
@@ -518,12 +518,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public PageLayout a(String attributeName, Object...objects) {
 		w.s(" ");
-		w.s(nomAttribut);
+		w.s(attributeName);
 		w.s("=\"");
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapperDansCitatations(s));
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escapeInQuotes(s));
 			}
 		}
 		w.s("\"");
@@ -544,9 +544,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public PageLayout s(Object...objects) {
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
 				w.s(s);
 			}
 		}
@@ -555,37 +555,37 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public PageLayout t(int numberTabs, Object...objects) {
-		for(int i = 0; i < nombreTabulations; i++)
+		for(int i = 0; i < numberTabs; i++)
 			s("\t");
-		s(objets);
+		s(objects);
 		return this;
 	}
 
 	public PageLayout tl(int numberTabs, Object...objects) {
-		for(int i = 0; i < nombreTabulations; i++)
+		for(int i = 0; i < numberTabs; i++)
 			s("\t");
-		s(objets);
+		s(objects);
 		s("\n");
 		return this;
 	}
 
 	public PageLayout l(Object...objects) {
-		s(objets);
+		s(objects);
 		s("\n");
 		return this;
 	}
 
-	public PageLayout lx(Object...objets) {
-		s(objets);
+	public PageLayout lx(Object...objects) {
+		s(objects);
 		sx("\n");
 		return this;
 	}
 
 	public PageLayout sx(Object...objects) {
-		for(Object objet : objets) {
-			if(objet != null) {
-				String s = objet.toString();
-				w.s(OutilXml.echapper(s));
+		for(Object object : objects) {
+			if(object != null) {
+				String s = object.toString();
+				w.s(UtilXml.escape(s));
 			}
 		}
 		
@@ -593,41 +593,41 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public PageLayout tx(int numberTabs, Object...objects) {
-		for(int i = 0; i < nombreTabulations; i++)
+		for(int i = 0; i < numberTabs; i++)
 			sx("\t");
-		sx(objets);
+		sx(objects);
 		return this;
 	}
 
 	public PageLayout tlx(int numberTabs, Object...objects) {
-		for(int i = 0; i < nombreTabulations; i++)
+		for(int i = 0; i < numberTabs; i++)
 			sx("\t");
-		sx(objets);
+		sx(objects);
 		sx("\n");
 		return this;
 	}
 
 	public PageLayout fg() {
 		w.s("/>");
-		requeteSite_.getXmlPile().pop();
+		siteRequest_.getXmlStack().pop();
 		
 		return this;
 	}
 
 	public PageLayout g(String localName) {
-		String nomLocalParent = requeteSite_.getXmlPile().peek();
-		boolean eNoWrap = nomLocalParent == null || HTML_ELEMENTS_NO_WRAP.contains(nomLocal);
+		String localNameParent = siteRequest_.getXmlStack().peek();
+		boolean eNoWrap = localNameParent == null || HTML_ELEMENTS_NO_WRAP.contains(localName);
 
-		requeteSite_.getXmlPile().pop();
-		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
-		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
+		siteRequest_.getXmlStack().pop();
+		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
+		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		if(!eNoWrap && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrap && !tabsEscaped.isEmpty()) {
 			w.l();
-			w.s(tabulations);
+			w.s(tabs);
 		}
 		w.s("</");
-		w.s(nomLocal);
+		w.s(localName);
 		w.s(">");
 		
 		return this;
@@ -647,12 +647,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 					e("input")
 						.a("type", "checkbox")
 						.a("value", "true")
-						.a("class", "setVoirArchive")
-						.a("name", "setVoirArchive")
+						.a("class", "setSeeArchived")
+						.a("name", "setSeeArchived")
 						.a("id", "Page_voirArchive")
 						.a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirArchiveForm')); ")
 						;
-						if(o.getVoirArchive() != null && o.getVoirArchive())
+						if(o.getSeeArchived() != null && o.getSeeArchived())
 							a("checked", "checked");
 					fg();
 
@@ -673,11 +673,11 @@ public class PageLayout extends PageLayoutGen<Object> {
 					e("input");
 						a("type", "checkbox");
 						a("value", "true");
-						a("class", "setVoirSupprime");
-						a("name", "setVoirSupprime");
+						a("class", "setSeeDeleted");
+						a("name", "setSeeDeleted");
 						a("id", "Page_voirSupprime");
 						a("onchange", "patchUtilisateurSite($('#UtilisateurSiteForm'), $('#voirSupprimeForm')); ");
-						if(o.getVoirSupprime() != null && o.getVoirSupprime())
+						if(o.getSeeDeleted() != null && o.getSeeDeleted())
 							a("checked", "checked");
 					fg();
 

@@ -35,11 +35,28 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilisateurSite.class);
 
-	public static final String UtilisateurSite_Couleur = "deep-purple";
+	public static final String UtilisateurSite_UnNom = "un utilisateur du site";
+	public static final String UtilisateurSite_Ce = "ce ";
+	public static final String UtilisateurSite_CeNom = "cet utilisateur du site";
+	public static final String UtilisateurSite_Un = "un ";
+	public static final String UtilisateurSite_LeNom = "l'utilisateur du site";
+	public static final String UtilisateurSite_NomSingulier = "utilisateur du site";
+	public static final String UtilisateurSite_NomPluriel = "utilisateurs du site";
+	public static final String UtilisateurSite_NomActuel = "utilisateur du site actuel";
+	public static final String UtilisateurSite_TousNom = "tous les utilisateurs du site";
+	public static final String UtilisateurSite_RechercherTousNomPar = "rechercher utilisateurs du site par ";
+	public static final String UtilisateurSite_RechercherTousNom = "rechercher utilisateurs du site";
+	public static final String UtilisateurSite_LesNoms = "les utilisateurs du site";
+	public static final String UtilisateurSite_AucunNomTrouve = "aucun utilisateur du site trouvé";
+	public static final String UtilisateurSite_NomVar = "utilisateurDuSite";
+	public static final String UtilisateurSite_DeNom = "d'utilisateur du site";
+	public static final String UtilisateurSite_Couleur = "green";
 	public static final String UtilisateurSite_IconeGroupe = "regular";
-	public static final String UtilisateurSite_IconeNom = "user";
-	public static final String UtilisateurSitePage_Uri = "/utilisateur";
-	public static final String UtilisateurSitePage_ImageUri = "/png/utilisateur-999.png";
+	public static final String UtilisateurSite_IconeNom = "book";
+	public static final String UtilisateurSiteFrFRPage_Uri = "/frFR/utilisateur";
+	public static final String UtilisateurSiteFrFRPage_ImageUri = "/png/frFR/utilisateur-999.png";
+	public static final String UtilisateurSiteEnUSPage_Uri = "/enUS/user";
+	public static final String UtilisateurSiteEnUSPage_ImageUri = "/png/enUS/user-999.png";
 
 	///////////////////
 	// utilisateurId //
@@ -105,7 +122,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -202,7 +219,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -299,7 +316,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurMail() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -396,7 +413,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurPrenom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -493,7 +510,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNomFamille() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -590,7 +607,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNomComplet() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -687,7 +704,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurSite() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -789,7 +806,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurRecevoirCourriels() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -891,7 +908,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "VoirArchive() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -993,7 +1010,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "VoirSupprime() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
