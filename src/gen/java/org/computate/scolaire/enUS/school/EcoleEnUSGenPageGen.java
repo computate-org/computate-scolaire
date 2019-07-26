@@ -52,7 +52,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 				setListSchool(listSchoolWrap.o);
 		}
 		if(listSchool != null)
-			listSchool.initDeepForClass(null);
+			listSchool.initDeepForClass(siteRequest_);
 		listSchoolWrap.alreadyInitialized(true);
 		return (EcoleEnUSGenPage)this;
 	}
@@ -90,7 +90,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 				setSchool(schoolWrap.o);
 		}
 		if(school != null)
-			school.initDeepForClass(null);
+			school.initDeepForClass(siteRequest_);
 		schoolWrap.alreadyInitialized(true);
 		return (EcoleEnUSGenPage)this;
 	}
@@ -158,6 +158,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	protected boolean alreadyInitializedEcoleEnUSGenPage = false;
 
 	public EcoleEnUSGenPage initDeepEcoleEnUSGenPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedEcoleEnUSGenPage) {
 			alreadyInitializedEcoleEnUSGenPage = true;
 			initDeepEcoleEnUSGenPage();
@@ -178,6 +179,22 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepEcoleEnUSGenPage(siteRequest_);
+	}
+
+	/////////////////
+	// siteRequest //
+	/////////////////
+
+	public void siteRequestEcoleEnUSGenPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterEnUSPage(siteRequest_);
+		if(listSchool != null)
+			listSchool.setSiteRequest_(siteRequest_);
+		if(school != null)
+			school.setSiteRequest_(siteRequest_);
+	}
+
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestEcoleEnUSGenPage(siteRequest_);
 	}
 
 	/////////////

@@ -217,7 +217,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Future<Void> future = Future.future();
 		Router router = Router.router(vertx);
 
-		AppOpenAPI3RouterFactory.create(vertx, router, "openapi3.yaml", ar -> {
+		AppOpenAPI3RouterFactory.create(vertx, router, "openapi3-enUS.yaml", ar -> {
 			if (ar.succeeded()) {
 				AppOpenAPI3RouterFactory routerFactory = ar.result();
 				routerFactory.mountServicesFromExtensions();

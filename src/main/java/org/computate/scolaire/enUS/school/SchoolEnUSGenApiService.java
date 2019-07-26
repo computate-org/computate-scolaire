@@ -38,4 +38,5 @@ public interface SchoolEnUSGenApiService {
 	public void postEcole(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void getEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void deleteEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void rechercheEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

@@ -35,13 +35,13 @@ public class AppliOpenApi3 extends AppliOpenApi3Gen<AppliSwagger2> {
 	 */ 
 	public static void main(String[] args) {
 		AppliOpenApi3 api = new AppliOpenApi3();
-		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
-		requeteSite.initLoinRequeteSiteFrFR();
 		SiteContexteFrFR siteContexte = new SiteContexteFrFR();
-		siteContexte.initLoinSiteContexteFrFR(requeteSite);
-		api.initLoinAppliOpenApi3(requeteSite);
+		siteContexte.initLoinSiteContexteFrFR(null);
+		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
 		requeteSite.setSiteContexte_(siteContexte);
 		requeteSite.setConfigSite_(siteContexte.getConfigSite());
+		requeteSite.initLoinRequeteSiteFrFR();
+		api.initLoinAppliOpenApi3(requeteSite);
 		api.ecrireOpenApi();
 	}
 }

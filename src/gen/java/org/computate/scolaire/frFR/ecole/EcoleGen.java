@@ -1,24 +1,31 @@
 package org.computate.scolaire.frFR.ecole;
 
 import java.lang.Double;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.computate.scolaire.frFR.cluster.Cluster;
+import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import java.lang.Long;
+import io.vertx.core.json.JsonObject;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
+import io.vertx.core.logging.Logger;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import java.util.Set;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import java.lang.Long;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
+import io.vertx.ext.sql.SQLConnection;
+import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -28,6 +35,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * <br/>
  **/
 public abstract class EcoleGen<DEV> extends Cluster {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Ecole.class);
 
 	public static final String Ecole_UnNom = "une école";
 	public static final String Ecole_Ce = "cette ";
@@ -114,6 +122,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
 	}
 
+	public void htmEcoleCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleCle\"");
+							r.s(" value=\"", htmEcoleCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleCle());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// enfantCles //
 	////////////////
@@ -192,6 +241,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmEnfantCles() {
 		return enfantCles == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantCles());
+	}
+
+	public void htmEnfantCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EnfantCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EnfantCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnfantCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enfantCles\"");
+							r.s(" value=\"", htmEnfantCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnfantCles());
+			}
+			r.l("</div>");
+		}
 	}
 
 	//////////////
@@ -274,6 +364,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return blocCles == null ? "" : StringEscapeUtils.escapeHtml4(strBlocCles());
 	}
 
+	public void htmBlocCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "BlocCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "BlocCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocCles\"");
+							r.s(" value=\"", htmBlocCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocCles());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////
 	// groupeAgeCles //
 	///////////////////
@@ -352,6 +483,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmGroupeAgeCles() {
 		return groupeAgeCles == null ? "" : StringEscapeUtils.escapeHtml4(strGroupeAgeCles());
+	}
+
+	public void htmGroupeAgeCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "GroupeAgeCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "GroupeAgeCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setGroupeAgeCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageGroupeAgeCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"groupeAgeCles\"");
+							r.s(" value=\"", htmGroupeAgeCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmGroupeAgeCles());
+			}
+			r.l("</div>");
+		}
 	}
 
 	/////////////////
@@ -434,6 +606,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return sessionCles == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCles());
 	}
 
+	public void htmSessionCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "SessionCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "SessionCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionCles\"");
+							r.s(" value=\"", htmSessionCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionCles());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// saisonCles //
 	////////////////
@@ -512,6 +725,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmSaisonCles() {
 		return saisonCles == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCles());
+	}
+
+	public void htmSaisonCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "SaisonCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "SaisonCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSaisonCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"saisonCles\"");
+							r.s(" value=\"", htmSaisonCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSaisonCles());
+			}
+			r.l("</div>");
+		}
 	}
 
 	///////////////
@@ -594,6 +848,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return anneeCles == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCles());
 	}
 
+	public void htmAnneeCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "AnneeCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "AnneeCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setAnneeCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"anneeCles\"");
+							r.s(" value=\"", htmAnneeCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmAnneeCles());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////////
 	// scolaireTri //
 	/////////////////
@@ -654,6 +949,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmScolaireTri() {
 		return scolaireTri == null ? "" : StringEscapeUtils.escapeHtml4(strScolaireTri());
+	}
+
+	public void htmScolaireTri(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "ScolaireTri\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "ScolaireTri() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setScolaireTri\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageScolaireTri()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"scolaireTri\"");
+							r.s(" value=\"", htmScolaireTri(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmScolaireTri());
+			}
+			r.l("</div>");
+		}
 	}
 
 	//////////////
@@ -718,6 +1054,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleTri());
 	}
 
+	public void htmEcoleTri(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleTri\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleTri() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleTri\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleTri()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleTri\"");
+							r.s(" value=\"", htmEcoleTri(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleTri());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////
 	// ecoleNom //
 	//////////////
@@ -772,6 +1149,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmEcoleNom() {
 		return ecoleNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNom());
+	}
+
+	public void htmEcoleNom(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleNom\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleNom() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNom\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNom()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNom\"");
+							r.s(" value=\"", htmEcoleNom(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNom());
+			}
+			r.l("</div>");
+		}
 	}
 
 	//////////////////////////
@@ -830,6 +1248,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
 	}
 
+	public void htmEcoleNumeroTelephone(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleNumeroTelephone\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleNumeroTelephone() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNumeroTelephone\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNumeroTelephone()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNumeroTelephone\"");
+							r.s(" value=\"", htmEcoleNumeroTelephone(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNumeroTelephone());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////////////
 	// ecoleAdministrateurNom //
 	////////////////////////////
@@ -886,6 +1345,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleAdministrateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAdministrateurNom());
 	}
 
+	public void htmEcoleAdministrateurNom(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleAdministrateurNom\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleAdministrateurNom() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleAdministrateurNom\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAdministrateurNom()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleAdministrateurNom\"");
+							r.s(" value=\"", htmEcoleAdministrateurNom(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleAdministrateurNom());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////
 	// ecoleAddresse //
 	///////////////////
@@ -940,6 +1440,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmEcoleAddresse() {
 		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
+	}
+
+	public void htmEcoleAddresse(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleAddresse\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleAddresse() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleAddresse\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAddresse()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleAddresse\"");
+							r.s(" value=\"", htmEcoleAddresse(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleAddresse());
+			}
+			r.l("</div>");
+		}
 	}
 
 	///////////////////////
@@ -1004,6 +1545,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return objetSuggerePoids == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggerePoids());
 	}
 
+	public void htmObjetSuggerePoids(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "ObjetSuggerePoids\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "ObjetSuggerePoids() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetSuggerePoids\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggerePoids()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetSuggerePoids\"");
+							r.s(" value=\"", htmObjetSuggerePoids(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetSuggerePoids());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////////
 	// objetSuggere //
 	//////////////////
@@ -1058,6 +1640,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmObjetSuggere() {
 		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
+	}
+
+	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "ObjetSuggere\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "ObjetSuggere() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetSuggere\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetSuggere\"");
+							r.s(" value=\"", htmObjetSuggere(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetSuggere());
+			}
+			r.l("</div>");
+		}
 	}
 
 	///////////////////
@@ -1116,6 +1739,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomCourt());
 	}
 
+	public void htmEcoleNomCourt(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleNomCourt\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleNomCourt() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNomCourt\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNomCourt()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNomCourt\"");
+							r.s(" value=\"", htmEcoleNomCourt(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNomCourt());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////
 	// ecoleId //
 	/////////////
@@ -1172,6 +1836,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleId == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleId());
 	}
 
+	public void htmEcoleId(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleId\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleId() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleId\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleId()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleId\"");
+							r.s(" value=\"", htmEcoleId(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleId());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////
 	// pageUri //
 	/////////////
@@ -1226,6 +1931,47 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String htmPageUri() {
 		return pageUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUri());
+	}
+
+	public void htmPageUri(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "PageUri\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "PageUri() {");
+				r.l("			$.ajax({");
+				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPageUri\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUri()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"pageUri\"");
+							r.s(" value=\"", htmPageUri(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPageUri());
+			}
+			r.l("</div>");
+		}
 	}
 
 	//////////////
@@ -1392,9 +2138,149 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 	public Object definirEcole(String var, String val) {
 		switch(var) {
+			case "ecoleNom":
+				setEcoleNom(val);
+				sauvegardesEcole.add(var);
+				return val;
+			case "ecoleNumeroTelephone":
+				setEcoleNumeroTelephone(val);
+				sauvegardesEcole.add(var);
+				return val;
+			case "ecoleAdministrateurNom":
+				setEcoleAdministrateurNom(val);
+				sauvegardesEcole.add(var);
+				return val;
+			case "ecoleAddresse":
+				setEcoleAddresse(val);
+				sauvegardesEcole.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
+	}
+
+	/////////////////
+	// sauvegardes //
+	/////////////////
+
+	protected List<String> sauvegardesEcole = new ArrayList<String>();
+
+	/////////////
+	// peupler //
+	/////////////
+
+	@Override public void peuplerPourClasse(SolrDocument solrDocument) {
+		peuplerEcole(solrDocument);
+	}
+	public void peuplerEcole(SolrDocument solrDocument) {
+		Ecole oEcole = (Ecole)this;
+		sauvegardesEcole = (List<String>)solrDocument.get("sauvegardesEcole_stored_strings");
+		if(sauvegardesEcole != null) {
+
+			if(sauvegardesEcole.contains("ecoleCle")) {
+				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
+				if(ecoleCle != null)
+					oEcole.setEcoleCle(ecoleCle);
+			}
+
+			if(sauvegardesEcole.contains("enfantCles")) {
+				List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
+				if(enfantCles != null)
+					oEcole.enfantCles.addAll(enfantCles);
+			}
+
+			if(sauvegardesEcole.contains("blocCles")) {
+				List<Long> blocCles = (List<Long>)solrDocument.get("blocCles_stored_longs");
+				if(blocCles != null)
+					oEcole.blocCles.addAll(blocCles);
+			}
+
+			if(sauvegardesEcole.contains("groupeAgeCles")) {
+				List<Long> groupeAgeCles = (List<Long>)solrDocument.get("groupeAgeCles_stored_longs");
+				if(groupeAgeCles != null)
+					oEcole.groupeAgeCles.addAll(groupeAgeCles);
+			}
+
+			if(sauvegardesEcole.contains("sessionCles")) {
+				List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
+				if(sessionCles != null)
+					oEcole.sessionCles.addAll(sessionCles);
+			}
+
+			if(sauvegardesEcole.contains("saisonCles")) {
+				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
+				if(saisonCles != null)
+					oEcole.saisonCles.addAll(saisonCles);
+			}
+
+			if(sauvegardesEcole.contains("anneeCles")) {
+				List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
+				if(anneeCles != null)
+					oEcole.anneeCles.addAll(anneeCles);
+			}
+
+			if(sauvegardesEcole.contains("scolaireTri")) {
+				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
+				if(scolaireTri != null)
+					oEcole.setScolaireTri(scolaireTri);
+			}
+
+			if(sauvegardesEcole.contains("ecoleTri")) {
+				Integer ecoleTri = (Integer)solrDocument.get("ecoleTri_stored_int");
+				if(ecoleTri != null)
+					oEcole.setEcoleTri(ecoleTri);
+			}
+
+			if(sauvegardesEcole.contains("ecoleNom")) {
+				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
+				if(ecoleNom != null)
+					oEcole.setEcoleNom(ecoleNom);
+			}
+
+			if(sauvegardesEcole.contains("ecoleNumeroTelephone")) {
+				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
+				if(ecoleNumeroTelephone != null)
+					oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardesEcole.contains("ecoleAdministrateurNom")) {
+				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
+				if(ecoleAdministrateurNom != null)
+					oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
+			}
+
+			if(sauvegardesEcole.contains("ecoleAddresse")) {
+				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+				if(ecoleAddresse != null)
+					oEcole.setEcoleAddresse(ecoleAddresse);
+			}
+
+			if(sauvegardesEcole.contains("objetSuggere")) {
+				String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
+				if(objetSuggere != null)
+					oEcole.setObjetSuggere(objetSuggere);
+			}
+
+			if(sauvegardesEcole.contains("ecoleNomCourt")) {
+				String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
+				if(ecoleNomCourt != null)
+					oEcole.setEcoleNomCourt(ecoleNomCourt);
+			}
+
+			if(sauvegardesEcole.contains("ecoleId")) {
+				String ecoleId = (String)solrDocument.get("ecoleId_stored_string");
+				if(ecoleId != null)
+					oEcole.setEcoleId(ecoleId);
+			}
+
+			if(sauvegardesEcole.contains("pageUri")) {
+				String pageUri = (String)solrDocument.get("pageUri_stored_string");
+				if(pageUri != null)
+					oEcole.setPageUri(pageUri);
+			}
+		}
+
+		super.peuplerCluster(solrDocument);
 	}
 
 	/////////////
@@ -1459,6 +2345,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void indexerEcole(SolrInputDocument document) {
+		if(sauvegardesEcole != null)
+			document.addField("sauvegardesEcole_stored_strings", sauvegardesEcole);
+
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
@@ -1534,6 +2423,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleAddresse != null) {
 			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
 			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
+		}
+		if(objetSuggere != null) {
+			document.addField("objetSuggere_suggested_string", objetSuggere);
+			document.addField("objetSuggere_indexed_string", objetSuggere);
 		}
 		if(ecoleNomCourt != null) {
 			document.addField("ecoleNomCourt_stored_string", ecoleNomCourt);
@@ -1628,6 +2521,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleAddresse != null)
 			oEcole.setEcoleAddresse(ecoleAddresse);
 
+		String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
+		if(objetSuggere != null)
+			oEcole.setObjetSuggere(objetSuggere);
+
 		String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 		if(ecoleNomCourt != null)
 			oEcole.setEcoleNomCourt(ecoleNomCourt);
@@ -1659,7 +2556,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash(super.hashCode(), ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse);
 	}
 
 	////////////
@@ -1672,7 +2569,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(!(o instanceof Ecole))
 			return false;
 		Ecole that = (Ecole)o;
-		return super.equals(o);
+		return super.equals(o)
+				&& Objects.equals( ecoleNom, that.ecoleNom )
+				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
+				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
+				&& Objects.equals( ecoleAddresse, that.ecoleAddresse );
 	}
 
 	//////////////
@@ -1683,6 +2584,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("Ecole {");
+		sb.append( "ecoleNom: \"" ).append(ecoleNom).append( "\"" );
+		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
+		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
+		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

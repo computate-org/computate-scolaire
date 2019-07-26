@@ -23,6 +23,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	protected boolean alreadyInitializedClusterEnUSPage = false;
 
 	public ClusterEnUSPage initDeepClusterEnUSPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedClusterEnUSPage) {
 			alreadyInitializedClusterEnUSPage = true;
 			initDeepClusterEnUSPage();
@@ -40,6 +41,18 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepClusterEnUSPage(siteRequest_);
+	}
+
+	/////////////////
+	// siteRequest //
+	/////////////////
+
+	public void siteRequestClusterEnUSPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterEnUSGenPage(siteRequest_);
+	}
+
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestClusterEnUSPage(siteRequest_);
 	}
 
 	/////////////

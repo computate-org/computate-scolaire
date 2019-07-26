@@ -256,6 +256,46 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.ecole.Ecole"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setCree":
+						o2.setCree(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						break;
+					case "setModifie":
+						o2.setModifie(requeteJson.getInstant(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						break;
+					case "setArchive":
+						o2.setArchive(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						break;
+					case "setSupprime":
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						break;
+					case "setEcoleNom":
+						o2.setEcoleNom(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNom", o2.getEcoleNom(), pk));
+						break;
+					case "setEcoleNumeroTelephone":
+						o2.setEcoleNumeroTelephone(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.getEcoleNumeroTelephone(), pk));
+						break;
+					case "setEcoleAdministrateurNom":
+						o2.setEcoleAdministrateurNom(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.getEcoleAdministrateurNom(), pk));
+						break;
+					case "setEcoleAddresse":
+						o2.setEcoleAddresse(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.getEcoleAddresse(), pk));
+						break;
 				}
 			}
 			connexionSql.queryWithParams(
@@ -427,6 +467,22 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "ecoleNom":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleNumeroTelephone":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleAdministrateurNom":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
+						break;
+					case "ecoleAddresse":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -747,6 +803,239 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
+	// Recherche //
+
+	@Override
+	public void rechercheEcole(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEcole(siteContexte, operationRequete);
+			rechercheEcole(requeteSite, false, true, null, a -> {
+				if(a.succeeded()) {
+					ListeRecherche<Ecole> listeEcole = a.result();
+					reponse200RechercheEcole(listeEcole, b -> {
+						if(b.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+						} else {
+							erreurEcole(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurEcole(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurEcole(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200RechercheEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeEcole.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
+			QueryResponse reponseRecherche = listeEcole.getQueryResponse();
+			SolrDocumentList documentsSolr = listeEcole.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			w.l("{");
+			w.tl(1, "\"numCommence\": ", numCommence);
+			w.tl(1, ", \"numTrouve\": ", numTrouve);
+			w.tl(1, ", \"numRetourne\": ", numRetourne);
+			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
+			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
+			w.tl(1, ", \"liste\": [");
+			for(int i = 0; i < listeEcole.size(); i++) {
+				Ecole o = listeEcole.getList().get(i);
+				Object entiteValeur;
+				Integer entiteNumero = 0;
+
+				w.t(2);
+				if(i > 0)
+					w.s(", ");
+				w.l("{");
+
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
+
+				entiteValeur = o.getClasseNomCanonique();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getClasseNomSimple();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
+
+				{
+					List<String> entiteValeurs = o.getClasseNomsCanoniques();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"classeNomsCanoniques\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entiteValeur));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
+				entiteValeur = o.getEcoleCle();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleCle\": ", entiteValeur);
+
+				{
+					List<Long> entiteValeurs = o.getEnfantCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"enfantCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entiteValeurs = o.getBlocCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"blocCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entiteValeurs = o.getGroupeAgeCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"groupeAgeCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entiteValeurs = o.getSessionCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"sessionCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entiteValeurs = o.getSaisonCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"saisonCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entiteValeurs = o.getAnneeCles();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"anneeCles\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entiteValeur).toString());
+					}
+					w.l("]");
+				}
+
+				entiteValeur = o.getScolaireTri();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"scolaireTri\": ", entiteValeur);
+
+				entiteValeur = o.getEcoleTri();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleTri\": ", entiteValeur);
+
+				entiteValeur = o.getEcoleNom();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNom\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleNumeroTelephone();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleAdministrateurNom();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleAdministrateurNom\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleAddresse();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleAddresse\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleNomCourt();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getEcoleId();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleId\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getPageUri();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entiteValeur));
+
+				w.tl(2, "}");
+			}
+			w.tl(1, "]");
+			if(exceptionRecherche != null) {
+				w.tl(1, ", \"exceptionRecherche\": ", w.q(exceptionRecherche.getMessage()));
+			}
+			w.l("}");
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	public String varIndexeEcole(String entiteVar) {
 		switch(entiteVar) {
 			case "pk":
@@ -793,6 +1082,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "ecoleAdministrateurNom_indexed_string";
 			case "ecoleAddresse":
 				return "ecoleAddresse_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
 			case "pageUri":
 				return "pageUri_indexed_string";
 			default:
@@ -809,6 +1100,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public String varSuggereEcole(String entiteVar) {
 		switch(entiteVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

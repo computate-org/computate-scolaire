@@ -9,14 +9,18 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/** 
+/**  
+ * Modele: true
  * Api: true
+ * Indexe: true
+ * Sauvegarde: true
  * ApiMethode: RechercheFrFRPage
  * ApiMethode: RechercheEnUSPage
  * ApiMethode: PATCH
  * ApiMethode: POST
  * ApiMethode: GET
  * ApiMethode: DELETE
+ * ApiMethode: Recherche
  * ApiUri: /api/ecole
  * ApiUriRechercheFrFRPage: /frFR/ecole
  * ApiUriRechercheEnUSPage: /enUS/school
@@ -31,26 +35,27 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeGroupe: regular
  * IconeNom: fort-awesome
  * 
- * Role.frFR: SiteAdmin
+ * Role: SiteAdmin
  * ApiTag.enUS: School
  * ApiTag.frFR: EcoleScolaire
- */    
+ */        
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
-	 * Var.enUS: contactInfo
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */     
+	 */        
 	protected void _ecoleCle(Couverture<Long> c) {
 		c.o(pk);
 	}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -61,6 +66,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _enfantCles(List<Long> o) {}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -71,6 +77,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _blocCles(List<Long> o) {}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -81,6 +88,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _groupeAgeCles(List<Long> o) {}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -91,6 +99,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _sessionCles(List<Long> o) {}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -101,6 +110,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _saisonCles(List<Long> o) {}
 	
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -111,6 +121,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	protected void _anneeCles(List<Long> o) {}
 
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -123,6 +134,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -135,6 +147,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
@@ -148,6 +162,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
@@ -156,11 +172,13 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.enUS: phone number
 	 * Description.frFR: Numéro de téléphone de l'école. 
 	 * Description.enUS: Telephone number of the school. 
-	 */  
+	 */         
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
@@ -168,11 +186,13 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */                  
+	 */                 
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
@@ -187,6 +207,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 	
 	/**
+	 * {@inheritDoc}
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
@@ -197,7 +218,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 	
 	/**  
-	 * suggere: true
+	 * {@inheritDoc}
+	 * Suggere: true
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
@@ -208,6 +230,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
 	 * Stocke: true
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -219,6 +242,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**   
+	 * {@inheritDoc}
 	 * Stocke: true
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -241,6 +265,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	}
 
 	/**	la version plus courte de l'URL qui commence avec « / » 
+	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
 	 * r: frFR

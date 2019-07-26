@@ -105,70 +105,70 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	protected void _classApiTag(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiTag_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiTag_stored_string"));
 	}
 
 	protected void _classExtendsBase(Wrap<Boolean> c) {
-		c.o((Boolean)classSolrDocument.get("classExtendsBase_stored_boolean"));
+		c.o((Boolean)classSolrDocument.get("classeEtendBase_stored_boolean"));
 	}
 
 	protected void _classIsBase(Wrap<Boolean> c) {
-		c.o((Boolean)classSolrDocument.get("classIsBase_stored_boolean"));
+		c.o((Boolean)classSolrDocument.get("classeEstBase_stored_boolean"));
 	}
 
 	protected void _classSimpleName(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classSimpleName_enUS_stored_string"));
+		c.o((String)classSolrDocument.get("classeNomSimple_enUS_stored_string"));
 	}
 
 	protected void _classAbsolutePath(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classCheminAbsolu_enUS_stored_string"));
+		c.o((String)classSolrDocument.get("classeCheminAbsolu_enUS_stored_string"));
 	}
 
 	protected void _classApiUriMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiUri" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiUri" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _classApiMethodMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiMethod" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiMethode" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _classApiMediaType200Method(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiMediaType200" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiTypeMedia200" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiOperationId" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethodRequest(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiOperationId" + classApiMethod + "Request_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Requete_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethodResponse(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classApiOperationId" + classApiMethod + "Response_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Reponse_stored_string"));
 	}
 
 	protected void _classSuperApiOperationIdMethodRequest(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classSuperApiOperationId" + classApiMethod + "Request_stored_string"));
+		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Requete_stored_string"));
 	}
 
 	protected void _classSuperApiOperationIdMethodResponse(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classSuperApiOperationId" + classApiMethod + "Response_stored_string"));
+		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Reponse_stored_string"));
 	}
 
 	protected void _classKeywordsFound(Wrap<Boolean> c) {
-		c.o((Boolean)classSolrDocument.get("classKeywordsFound_stored_boolean"));
+		c.o((Boolean)classSolrDocument.get("classeMotsClesTrouves_stored_boolean"));
 	}
 
 	protected void _classKeywords(Wrap<List<String>> c) {
-		List<String> o = (List<String>)classSolrDocument.get("classKeywords_stored_strings");
+		List<String> o = (List<String>)classSolrDocument.get("classeMotsCles_stored_strings");
 		if(o == null)
 			o = new ArrayList<>();
 		c.o(o);
 	}
 
 	protected void _classRolesFound(Wrap<Boolean> c) {
-		c.o((Boolean)classSolrDocument.get("classRolesFound_stored_boolean"));
+		c.o((Boolean)classSolrDocument.get("classeRolesTrouves_stored_boolean"));
 	}
 
 	protected void _classRoles(Wrap<List<String>> c) {
@@ -179,11 +179,11 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	protected void _classPageLanguageName(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classPageLanguageName" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classePageLangueNom" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _classPageSimpleName(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classSolrDocument" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classePageNomSimple" + classApiMethod + "_stored_string"));
 	}
 
 	protected void _languageName(Wrap<String> c) {
@@ -243,20 +243,20 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 
 	public void  initEntity(SolrDocument entitySolrDocument) {
 		setEntitySolrDocument(entitySolrDocument);
-		entityVar = (String)entitySolrDocument.get("entityVar_frFR_stored_string");
-		entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entityVarApi_stored_string"), entityVar);
-		entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entityKeywordsFound_stored_boolean"));
-		entityKeywords = (List<String>)entitySolrDocument.get("entityKeywords_stored_strings");
+		entityVar = (String)entitySolrDocument.get("entiteVar_frFR_stored_string");
+		entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
+		entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
+		entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
 		if(entityKeywords == null)
 			entityKeywords = new ArrayList<>();
-		entityCanonicalNameGeneric = (String)entitySolrDocument.get("entityCanonicalNameGeneric_frFR_stored_string");
-		entityCanonicalName = (String)entitySolrDocument.get("entityCanonicalName_frFR_stored_string");
-		entityListJsonType = (String)entitySolrDocument.get("entityListJsonType_stored_string");
-		entityJsonType = (String)entitySolrDocument.get("entityJsonType_stored_string");
-		entityJsonFormat = (String)entitySolrDocument.get("entityJsonFormat_stored_string");
-		entityOptionsVar = (List<String>)entitySolrDocument.get("entityOptionsVar_stored_strings");
-		entityOptionsDescription = (List<String>)entitySolrDocument.get("entityOptionsDescription_stored_strings");
-		entityDescription = (String)entitySolrDocument.get("entityDescription_stored_string");
+		entityCanonicalNameGeneric = (String)entitySolrDocument.get("entiteNomCanoniqueGenerique_frFR_stored_string");
+		entityCanonicalName = (String)entitySolrDocument.get("entiteNomCanonique_frFR_stored_string");
+		entityListJsonType = (String)entitySolrDocument.get("entiteListeTypeJson_stored_string");
+		entityJsonType = (String)entitySolrDocument.get("entiteTypeJson_stored_string");
+		entityJsonFormat = (String)entitySolrDocument.get("entiteFormatJson_stored_string");
+		entityOptionsVar = (List<String>)entitySolrDocument.get("entiteOptionsVar_stored_strings");
+		entityOptionsDescription = (List<String>)entitySolrDocument.get("entiteOptionsDescription_stored_strings");
+		entityDescription = (String)entitySolrDocument.get("entiteDescription_stored_string");
 	}
 
 	public void  writeEntityHeaders() throws Exception, Exception {
@@ -311,16 +311,16 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				SolrQuery searchEntities = new SolrQuery();
 				searchEntities.setQuery("*:*");
 				searchEntities.setRows(1000000);
-				searchEntities.addFilterQuery("appPath_indexed_string:" + ClientUtils.escapeQueryChars(siteConfig.getAppPath()));
+				searchEntities.addFilterQuery("appliChemin_indexed_string:" + ClientUtils.escapeQueryChars(siteConfig.getAppPath()));
 
 				if(StringUtils.isBlank(entityCanonicalNameGeneric))
-					searchEntities.addFilterQuery("classCanonicalName_enUS_indexed_string:" + ClientUtils.escapeQueryChars(entityCanonicalName));
+					searchEntities.addFilterQuery("classeNomCanonique_enUS_indexed_string:" + ClientUtils.escapeQueryChars(entityCanonicalName));
 				else
-					searchEntities.addFilterQuery("classCanonicalName_enUS_indexed_string:" + ClientUtils.escapeQueryChars(entityCanonicalNameGeneric));
+					searchEntities.addFilterQuery("classeNomCanonique_enUS_indexed_string:" + ClientUtils.escapeQueryChars(entityCanonicalNameGeneric));
 
-				searchEntities.addFilterQuery("entityKeywords_indexed_strings:" + ClientUtils.escapeQueryChars("apiModelEntity"));
-				searchEntities.addFilterQuery("partIsEntity_indexed_boolean:true");
-				searchEntities.addSort("partNumber_indexed_int", ORDER.asc);
+				searchEntities.addFilterQuery("entiteMotsCles_indexed_strings:" + ClientUtils.escapeQueryChars("apiModelEntity"));
+				searchEntities.addFilterQuery("partEstEntite_indexed_boolean:true");
+				searchEntities.addSort("partNumero_indexed_int", ORDER.asc);
 				QueryResponse searchEntitiesReponse = siteContext.getSolrClientComputate().query(searchEntities);
 				SolrDocumentList searchEntitiesResults = searchEntitiesReponse.getResults();
 				Integer searchEntitiesLines = searchEntities.getRows();
@@ -342,20 +342,20 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 							List<String> entityOptionsDescriptionOld = entityOptionsDescription;
 							String entityDescriptionOld = entityDescription;
 							
-							entityVar = (String)entitySolrDocument.get("entityVar_enUS_stored_string");
-							entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entityVarApi_stored_string"), entityVar);
-							entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entityKeywordsFound_stored_boolean"));
-							entityKeywords = (List<String>)entitySolrDocument.get("entityKeywords_stored_strings");
+							entityVar = (String)entitySolrDocument.get("entiteVar_enUS_stored_string");
+							entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
+							entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
+							entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
 							if(entityKeywords == null)
 								entityKeywords = new ArrayList<>();
-							entityCanonicalNameGeneric = (String)entitySolrDocument.get("entityCanonicalNameGeneric_enUS_stored_string");
-							entityCanonicalName = (String)entitySolrDocument.get("entityCanonicalName_enUS_stored_string");
-							entityListJsonType = (String)entitySolrDocument.get("entityListJsonType_stored_string");
-							entityJsonType = (String)entitySolrDocument.get("entityJsonType_stored_string");
-							entityJsonFormat = (String)entitySolrDocument.get("entityJsonFormat_stored_string");
-							entityOptionsVar = (List<String>)entitySolrDocument.get("entityOptionsVar_stored_strings");
-							entityOptionsDescription = (List<String>)entitySolrDocument.get("entityOptionsDescription_stored_strings");
-							entityDescription = (String)entitySolrDocument.get("entityDescription_stored_string");
+							entityCanonicalNameGeneric = (String)entitySolrDocument.get("entiteNomCanoniqueGenerique_enUS_stored_string");
+							entityCanonicalName = (String)entitySolrDocument.get("entiteNomCanonique_enUS_stored_string");
+							entityListJsonType = (String)entitySolrDocument.get("entiteListeTypeJson_stored_string");
+							entityJsonType = (String)entitySolrDocument.get("entiteTypeJson_stored_string");
+							entityJsonFormat = (String)entitySolrDocument.get("entiteFormatJson_stored_string");
+							entityOptionsVar = (List<String>)entitySolrDocument.get("entiteOptionsVar_stored_strings");
+							entityOptionsDescription = (List<String>)entitySolrDocument.get("entiteOptionsDescription_stored_strings");
+							entityDescription = (String)entitySolrDocument.get("entiteDescription_stored_string");
 	
 							writeEntityDescription(numberTabs + 3, w, apiRequestOrResponse);
 //							if(entiteCanonicalNameGeneric == null) {
@@ -391,7 +391,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	public void  writeEntitySchema(Integer numberTabs, AllWriter w, String apiRequestOrResponse) throws Exception, Exception {
-		numberTabs = numberTabs == null ? (classApiMethod.contains("Recherche") && "reponse".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
+		numberTabs = numberTabs == null ? (classApiMethod.contains("Recherche") && "response".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
 		if(entityJsonType != null) {
 			w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
 			w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
@@ -460,7 +460,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: string");
 			}
-			else if(classApiMethod.contains("Search")) {
+			else if(classApiMethod.contains("Recherche")) {
 				wPaths.tl(4, "- in: query");
 				wPaths.tl(5, "name: q");
 				wPaths.tl(5, "description: ''");
@@ -520,7 +520,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(4, "content:");
 				wPaths.tl(5, "application/json:");
 				wPaths.tl(6, "schema:");
-				wPaths.tl(7, "$ref: '#/components/requestBodies/", classApiOperationIdMethodRequest, "'");
+				wPaths.tl(7, "$ref: '#/components/schemas/", classApiOperationIdMethodRequest, "'");
 			}
 		}
 		else {
@@ -645,7 +645,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodResponse, "\"");
 				}
 	
-				if(classApiMethod.contains("Search")) {
+				if(classApiMethod.contains("Recherche")) {
 					wSchemas.tl(tabsSchema + 2, "- type: array");
 					wSchemas.tl(tabsSchema + 3, "items:");
 					wSchemas.tl(tabsSchema + 4, "type: object");

@@ -222,6 +222,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	@Override()
 	public void  htmlScriptsPageLayout() {
+		e("script").a("src", staticBaseUrl, "/js/jquery-1.12.4.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/site.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
@@ -293,13 +294,13 @@ public class PageLayout extends PageLayoutGen<Object> {
 	
 								htmlBody();
 	
-								abondonnezPas();
+//								abondonnezPas();
 	
-								partagerPage();
+//								partagerPage();
 
 								e("footer").a("class", "w3-center w3-black w3-padding-48 ").f();
 									e("div").a("class", "w3-xxlarge ").f();
-										sx("Ce site est open source. ");
+										sx("This site is open source.  ");
 									g("div");
 								g("footer");
 							g("div");
@@ -314,11 +315,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-xlarge ").f();
 									sx("Let's get connected. ");
 								g("h6");
-								e("div").a("style", "").f();
-									e("a").a("data-ajax", "false").a("href", "https://www.facebook.com/Trail-Blaze-Hunting-Consultants-LLC-179217055464922/").f();
-//											e("img").a("class", "grow-30 ").a("style", "display: inline-block; width: 50px; height: 50px; margin: 0 10px;").a("src", "https://www.computate.org/svg/facebook.svg").fg();
-									g("a");
-								g("div");
 								e("h6").f();
 									e("a").a("href", "#top").f();
 										sx("Up to the top. ");

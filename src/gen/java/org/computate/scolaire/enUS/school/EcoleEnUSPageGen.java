@@ -23,6 +23,7 @@ public abstract class EcoleEnUSPageGen<DEV> extends EcoleEnUSGenPage {
 	protected boolean alreadyInitializedEcoleEnUSPage = false;
 
 	public EcoleEnUSPage initDeepEcoleEnUSPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
 		if(!alreadyInitializedEcoleEnUSPage) {
 			alreadyInitializedEcoleEnUSPage = true;
 			initDeepEcoleEnUSPage();
@@ -40,6 +41,18 @@ public abstract class EcoleEnUSPageGen<DEV> extends EcoleEnUSGenPage {
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
 		initDeepEcoleEnUSPage(siteRequest_);
+	}
+
+	/////////////////
+	// siteRequest //
+	/////////////////
+
+	public void siteRequestEcoleEnUSPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestEcoleEnUSGenPage(siteRequest_);
+	}
+
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestEcoleEnUSPage(siteRequest_);
 	}
 
 	/////////////
@@ -152,6 +165,54 @@ public abstract class EcoleEnUSPageGen<DEV> extends EcoleEnUSGenPage {
 	}
 
 	public void htmlBodyEcoleEnUSPage() {
+	}
+
+	//////////
+	// html //
+	//////////
+
+	@Override public void html() {
+		htmlEcoleEnUSPage();
+		super.html();
+	}
+
+	public void htmlEcoleEnUSPage() {
+	}
+
+	//////////////
+	// htmlMeta //
+	//////////////
+
+	@Override public void htmlMeta() {
+		htmlMetaEcoleEnUSPage();
+		super.htmlMeta();
+	}
+
+	public void htmlMetaEcoleEnUSPage() {
+	}
+
+	////////////////
+	// htmlStyles //
+	////////////////
+
+	@Override public void htmlStyles() {
+		htmlStylesEcoleEnUSPage();
+		super.htmlStyles();
+	}
+
+	public void htmlStylesEcoleEnUSPage() {
+	}
+
+	///////////////
+	// htmlStyle //
+	///////////////
+
+	@Override public void htmlStyle() {
+		htmlStyleEcoleEnUSPage();
+		super.htmlStyle();
+	}
+
+	public void htmlStyleEcoleEnUSPage() {
 	}
 
 	//////////////

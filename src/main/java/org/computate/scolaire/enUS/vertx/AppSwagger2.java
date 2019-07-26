@@ -62,7 +62,7 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 	}
 
 	protected void _openApiYamlPath(Wrap<String> c) {
-		c.o(appPath + "/src/main/resources/" + ("2.0".equals(apiVersion) ? "swagger2" : "openapi3") + ".yaml");
+		c.o(appPath + "/src/main/resources/" + ("2.0".equals(apiVersion) ? "swagger2" : "openapi3") + "-enUS.yaml");
 	}
 
 	protected void _openApiYamlFile(Wrap<File> c) {
@@ -169,7 +169,7 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 			SolrQuery searchClasses = new SolrQuery();
 			searchClasses.setQuery("*:*");
 			searchClasses.setRows(1000000);
-			searchClasses.addFilterQuery("appPath_indexed_string:" + ClientUtils.escapeQueryChars(appPath));
+			searchClasses.addFilterQuery("appliChemin_indexed_string:" + ClientUtils.escapeQueryChars(appPath));
 			searchClasses.addFilterQuery("classeApi_indexed_boolean:true");
 			searchClasses.addFilterQuery("partEstClasse_indexed_boolean:true");
 			searchClasses.addSort("partNumero_indexed_int", ORDER.asc);
@@ -180,20 +180,20 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 				for(Integer j = 0; j < searchClassesResultats.size(); j++) {
 					SolrDocument classSolrDocument = searchClassesResultats.get(j);
 
-					classApiTag = StringUtils.defaultIfBlank((String)classSolrDocument.get("classApiTag_stored_string"), classSimpleName + " API");
-					classApiUri = (String)classSolrDocument.get("classApiUri_stored_string");
-					classIsBase = (Boolean)classSolrDocument.get("classEstBase_stored_boolean");
+					classApiTag = StringUtils.defaultIfBlank((String)classSolrDocument.get("classeApiTag_stored_string"), classSimpleName + " API");
+					classApiUri = (String)classSolrDocument.get("classeApiUri_stored_string");
+					classIsBase = (Boolean)classSolrDocument.get("classeEstBase_stored_boolean");
 
-					classApiMethods = (List<String>)classSolrDocument.get("classApiMethods_stored_strings");
+					classApiMethods = (List<String>)classSolrDocument.get("classeApiMethodes_stored_strings");
 					classUris = new ArrayList<>();
 					if(classApiMethods == null)
 						classApiMethods = new ArrayList<>();
 					apiWriters = new ArrayList<>();
 
-					for(String classeApiMethode : classApiMethods) {
+					for(String classApiMethode : classApiMethods) {
 						ApiWriter apiWriter = new ApiWriter();
 						apiWriter.setClassSolrDocument(classSolrDocument);
-						apiWriter.setClassApiMethod(classeApiMethode);
+						apiWriter.setClassApiMethod(classApiMethode);
 						apiWriter.setWPaths(wPaths);
 						apiWriter.setWRequestBodies(wRequestBodies);
 						apiWriter.setWSchemas(wSchemas);
@@ -206,16 +206,16 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 					Collections.sort(apiWriters);
 
 					classSimpleName = (String)classSolrDocument.get("classSimpleName_enUS_stored_string");
-					classAbsolutePath = (String)classSolrDocument.get("classAbsolutePath_stored_string");
+					classAbsolutePath = (String)classSolrDocument.get("classeCheminAbsolu_stored_string");
 
-					classKeywordsFound = BooleanUtils.isTrue((Boolean)classSolrDocument.get("classKeywordsFound_stored_boolean"));
-					classKeywords = (List<String>)classSolrDocument.get("classKeywords_stored_strings");
+					classKeywordsFound = BooleanUtils.isTrue((Boolean)classSolrDocument.get("classeMotsClesTrouves_stored_boolean"));
+					classKeywords = (List<String>)classSolrDocument.get("classeMotsCles_stored_strings");
 
 					SolrQuery searchEntites = new SolrQuery();
 					searchEntites.setQuery("*:*");
 					searchEntites.setRows(1000000);
-					searchEntites.addFilterQuery("appPath_indexed_string:" + ClientUtils.escapeQueryChars(siteConfig.getAppPath()));
-					searchEntites.addFilterQuery("classAbsolutePath_indexed_string:" + ClientUtils.escapeQueryChars(classAbsolutePath));
+					searchEntites.addFilterQuery("appliChemin_indexed_string:" + ClientUtils.escapeQueryChars(siteConfig.getAppPath()));
+					searchEntites.addFilterQuery("classeCheminAbsolu_indexed_string:" + ClientUtils.escapeQueryChars(classAbsolutePath));
 					searchEntites.addFilterQuery("partEstEntite_indexed_boolean:true");
 					searchEntites.addSort("partNumero_indexed_int", ORDER.asc);
 					QueryResponse searchEntitesResponse = siteContext.getSolrClientComputate().query(searchEntites);

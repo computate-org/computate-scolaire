@@ -13,13 +13,13 @@ public class AppOpenApi3 extends AppOpenApi3Gen<AppSwagger2> {
 
 	public static void  main(String[] args) {
 		AppOpenApi3 api = new AppOpenApi3();
-		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
-		siteRequest.initDeepSiteRequestEnUS();
 		SiteContextEnUS siteContext = new SiteContextEnUS();
-		siteContext.initDeepSiteContextEnUS(siteRequest);
-		api.initDeepAppOpenApi3(siteRequest);
+		siteContext.initDeepSiteContextEnUS(null);
+		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 		siteRequest.setSiteContext_(siteContext);
 		siteRequest.setSiteConfig_(siteContext.getSiteConfig());
+		siteRequest.initDeepSiteRequestEnUS();
+		api.initDeepAppOpenApi3(siteRequest);
 		api.writeOpenApi();
 	}
 }

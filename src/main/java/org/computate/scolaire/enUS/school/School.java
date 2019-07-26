@@ -8,7 +8,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 
 public class School extends SchoolGen<Cluster> {
 
-	protected void _contactInfo(Wrap<Long> c) {
+	protected void _ecoleCle(Wrap<Long> c) {
 		c.o(pk);
 	}
 

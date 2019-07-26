@@ -123,9 +123,11 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * Var.enUS: openApiYamlPath
 	 * r: appliChemin
 	 * r.enUS: appPath
+	 * r: -frFR.yaml
+	 * r.enUS: -enUS.yaml
 	 **/
 	protected void _openApiYamlChemin(Couverture<String> c) {
-		c.o(appliChemin + "/src/main/resources/" + ("2.0".equals(apiVersion) ? "swagger2" : "openapi3") + ".yaml");
+		c.o(appliChemin + "/src/main/resources/" + ("2.0".equals(apiVersion) ? "swagger2" : "openapi3") + "-frFR.yaml");
 	}
 
 	/**
@@ -390,6 +392,40 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: writeApi
 	 * r: AppliChemin
 	 * r.enUS: AppPath
+	 * r: appliChemin
+	 * r.enUS: appPath
+	 * r: partEstClasse
+	 * r.enUS: partIsClass
+	 * r: partNumero
+	 * r.enUS: partNumber
+	 * 
+	 * r: classeApi
+	 * r.enUS: classApi
+	 * 
+	 * r: appPath_
+	 * r.enUS: appliChemin_
+	 * r: classApiTag_
+	 * r.enUS: classeApiTag_
+	 * r: classApi_
+	 * r.enUS: classeApi_
+	 * r: partIsClass_
+	 * r.enUS: partEstClasse_
+	 * r: partNumber_
+	 * r.enUS: partNumero_
+	 * r: classApiUri_
+	 * r.enUS: classeApiUri_
+	 * r: classIsBase_
+	 * r.enUS: classeEstBase_
+	 * r: classApiMethods_
+	 * r.enUS: classeApiMethodes_
+	 * r: classeSimpleName_
+	 * r.enUS: classeNomSimple_
+	 * r: classAbsolutePath_
+	 * r.enUS: classeCheminAbsolu_
+	 * r: classKeywordsFound_
+	 * r.enUS: classeMotsClesTrouves_
+	 * r: classKeywords_
+	 * r.enUS: classeMotsCles_
 	 */
 	public void ecrireApi() {
 		try {
@@ -432,7 +468,7 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 
 					classeApiTag = StringUtils.defaultIfBlank((String)classeDocumentSolr.get("classApiTag_stored_string"), classeNomSimple + " API");
 					classeApiUri = (String)classeDocumentSolr.get("classeApiUri_stored_string");
-					classeEstBase = (Boolean)classeDocumentSolr.get("classEstBase_stored_boolean");
+					classeEstBase = (Boolean)classeDocumentSolr.get("classeEstBase_stored_boolean");
 
 					classeApiMethodes = (List<String>)classeDocumentSolr.get("classeApiMethodes_stored_strings");
 					classeUris = new ArrayList<>();

@@ -52,7 +52,6 @@ input[type=text], input[type=radio], input[type=checkbox], textarea {
 }
 .site-section-all { padding-bottom: 1000px; }
 .site-section-above {  position: relative; z-index: 1; background-color: white; background-repeat: repeat; }
-/*.site-section-primaire { position: relative; z-index: 1; min-height: 100%; background-image: url(/svg/stars.svg); background-repeat: no-repeat; center center cover; }*/
 .site-section-primary {  min-height: 100%; }
 .site-section-contact { z-index: 0; position: fixed; right: 0; bottom: 0; left: 0; height: 1600px; padding-top: 1200px; text-align: center; }
 @media (max-width:992px){ .site-section-contact { padding-top: 1300px; }}

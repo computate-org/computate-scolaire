@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;        
+package org.computate.scolaire.frFR.cluster;            
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -116,7 +116,7 @@ public class Cluster extends ClusterGen<Object> {
 	 */
 	protected void _archive(Couverture<Boolean> c) {
 		c.o(false);
-	}     
+	}          
 	
 	/**
 	 * {@inheritDoc}
@@ -128,7 +128,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Description.enUS: deleted. 
 	 * NomAffichage.frFR: supprimé
 	 * NomAffichage.enUS: deleted
-	 */ 
+	 */    
 	protected void _supprime(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -147,7 +147,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Var.enUS: classSimpleName
 	 * Indexe: true
 	 * Stocke: true
-	 */          
+	 */              
 	protected void _classeNomSimple(Couverture<String> c) {
 		String o = getClass().getSimpleName();
 		c.o(o);

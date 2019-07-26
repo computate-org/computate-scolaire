@@ -68,6 +68,7 @@ import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRPage;
+import org.computate.scolaire.enUS.school.EcoleEnUSPage;
 
 
 /**
@@ -256,6 +257,46 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.school.School"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						o2.setCreated(requestJson.getInstant(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						break;
+					case "setModified":
+						o2.setModified(requestJson.getInstant(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						break;
+					case "setArchived":
+						o2.setArchived(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						break;
+					case "setDeleted":
+						o2.setDeleted(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						break;
+					case "setEcoleNom":
+						o2.setEcoleNom(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNom", o2.getEcoleNom(), pk));
+						break;
+					case "setEcoleNumeroTelephone":
+						o2.setEcoleNumeroTelephone(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.getEcoleNumeroTelephone(), pk));
+						break;
+					case "setEcoleAdministrateurNom":
+						o2.setEcoleAdministrateurNom(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.getEcoleAdministrateurNom(), pk));
+						break;
+					case "setEcoleAddresse":
+						o2.setEcoleAddresse(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.getEcoleAddresse(), pk));
+						break;
 				}
 			}
 			sqlConnection.queryWithParams(
@@ -427,6 +468,22 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "ecoleNom":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entityVar), pk));
+						break;
+					case "ecoleNumeroTelephone":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entityVar), pk));
+						break;
+					case "ecoleAdministrateurNom":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entityVar), pk));
+						break;
+					case "ecoleAddresse":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -494,6 +551,167 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				Integer entityNumber = 0;
 
 				w.l("{");
+
+				entityValue = o.getPk();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
+
+				entityValue = o.getCreated();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
+
+				entityValue = o.getModified();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
+
+				entityValue = o.getArchived();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
+
+				entityValue = o.getDeleted();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
+
+				entityValue = o.getClassCanonicalName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
+
+				entityValue = o.getClassSimpleName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
+
+				{
+					List<String> entityValues = o.getClassCanonicalNames();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"classCanonicalNames\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entityValue));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
+				entityValue = o.getEcoleCle();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleCle\": ", entityValue);
+
+				{
+					List<Long> entityValues = o.getEnfantCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"enfantCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getBlocCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"blocCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getGroupeAgeCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"groupeAgeCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getSessionCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"sessionCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getSaisonCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"saisonCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getAnneeCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"anneeCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				entityValue = o.getScolaireTri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"scolaireTri\": ", entityValue);
+
+				entityValue = o.getEcoleTri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleTri\": ", entityValue);
+
+				entityValue = o.getEcoleNom();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNom\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleNumeroTelephone();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleAdministrateurNom();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAdministrateurNom\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleAddresse();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAddresse\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleNomCourt();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleId();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleId\": ", w.qjs(entityValue));
+
+				entityValue = o.getPageUri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entityValue));
 
 				w.l("}");
 			}
@@ -586,6 +804,239 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
+	// Recherche //
+
+	@Override
+	public void rechercheEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+			aSearchSchool(siteRequest, false, true, null, a -> {
+				if(a.succeeded()) {
+					SearchList<School> listSchool = a.result();
+					response200RechercheSchool(listSchool, b -> {
+						if(b.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(b.result()));
+						} else {
+							errorSchool(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200RechercheSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			QueryResponse responseSearch = listSchool.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchool.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			w.l("{");
+			w.tl(1, "\"startNum\": ", startNum);
+			w.tl(1, ", \"foundNum\": ", foundNum);
+			w.tl(1, ", \"returnedNum\": ", returnedNum);
+			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
+			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
+			w.tl(1, ", \"list\": [");
+			for(int i = 0; i < listSchool.size(); i++) {
+				School o = listSchool.getList().get(i);
+				Object entityValue;
+				Integer entityNumber = 0;
+
+				w.t(2);
+				if(i > 0)
+					w.s(", ");
+				w.l("{");
+
+				entityValue = o.getPk();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
+
+				entityValue = o.getCreated();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
+
+				entityValue = o.getModified();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
+
+				entityValue = o.getArchived();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
+
+				entityValue = o.getDeleted();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
+
+				entityValue = o.getClassCanonicalName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
+
+				entityValue = o.getClassSimpleName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
+
+				{
+					List<String> entityValues = o.getClassCanonicalNames();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"classCanonicalNames\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entityValue));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
+				entityValue = o.getEcoleCle();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleCle\": ", entityValue);
+
+				{
+					List<Long> entityValues = o.getEnfantCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"enfantCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getBlocCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"blocCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getGroupeAgeCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"groupeAgeCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getSessionCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"sessionCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getSaisonCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"saisonCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				{
+					List<Long> entityValues = o.getAnneeCles();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"anneeCles\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s(((Long)entityValue).toString());
+					}
+					w.l("]");
+				}
+
+				entityValue = o.getScolaireTri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"scolaireTri\": ", entityValue);
+
+				entityValue = o.getEcoleTri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleTri\": ", entityValue);
+
+				entityValue = o.getEcoleNom();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNom\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleNumeroTelephone();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleAdministrateurNom();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAdministrateurNom\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleAddresse();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAddresse\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleNomCourt();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.qjs(entityValue));
+
+				entityValue = o.getEcoleId();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleId\": ", w.qjs(entityValue));
+
+				entityValue = o.getPageUri();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entityValue));
+
+				w.tl(2, "}");
+			}
+			w.tl(1, "]");
+			if(exceptionSearch != null) {
+				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
+			}
+			w.l("}");
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public String varIndexedSchool(String entityVar) {
 		switch(entityVar) {
 			case "pk":
@@ -606,8 +1057,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "contactInfo":
-				return "contactInfo_indexed_long";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
 			case "enfantCles":
 				return "enfantCles_indexed_longs";
 			case "blocCles":
@@ -632,6 +1083,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "ecoleAdministrateurNom_indexed_string";
 			case "ecoleAddresse":
 				return "ecoleAddresse_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
 			case "pageUri":
 				return "pageUri_indexed_string";
 			default:
@@ -648,6 +1101,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public String varSuggereSchool(String entityVar) {
 		switch(entityVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -849,14 +1304,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			listSearch.setC(School.class);
 			if(entityList != null)
 			listSearch.setFields(entityList);
-			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
-			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.school.School"));
-			SiteUser siteUser = siteRequest.getSiteUser();
-			if(siteUser != null && !siteUser.getSeeDeleted())
-				listSearch.addFilterQuery("deleted_indexed_boolean:false");
-			if(siteUser != null && !siteUser.getSeeArchived())
-				listSearch.addFilterQuery("archived_indexed_boolean:false");
+			listSearch.addFilterQuery("classCanonicalName_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.school.School"));
 
 			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

@@ -409,13 +409,15 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: Success
 	 * r: configurerOpenApi
 	 * r.enUS: configureOpenApi
+	 * r: openapi3-frFR.yaml
+	 * r.enUS: openapi3-enUS.yaml
 	 */
 	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
 		Router routeur = Router.router(vertx);
 
-		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3.yaml", ar -> {
+		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3-frFR.yaml", ar -> {
 			if (ar.succeeded()) {
 				AppOpenAPI3RouterFactory usineRouteur = ar.result();
 				usineRouteur.mountServicesFromExtensions();
