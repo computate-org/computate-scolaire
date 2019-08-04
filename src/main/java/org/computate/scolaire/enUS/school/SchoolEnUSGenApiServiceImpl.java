@@ -67,8 +67,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.frFR.ecole.EcoleFrFRPage;
-import org.computate.scolaire.enUS.school.EcoleEnUSPage;
+import org.computate.scolaire.enUS.school.SchoolPage;
 
 
 /**
@@ -87,44 +86,53 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		SchoolEnUSGenApiService service = SchoolEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
-	// RechercheEnUSPage //
+	// POST //
 
 	@Override
-	public void rechercheenuspageEcoleId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		rechercheenuspageEcole(operationRequest, eventHandler);
-	}
-
-	@Override
-	public void rechercheenuspageEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void postSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
 			sqlSchool(siteRequest, a -> {
 				if(a.succeeded()) {
-					userSchool(siteRequest, b -> {
+					createPOSTSchool(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchool(siteRequest, false, true, "/enUS/school", c -> {
+							School school = b.result();
+							sqlPOSTSchool(school, c -> {
 								if(c.succeeded()) {
-									SearchList<School> listSchool = c.result();
-									response200RechercheEnUSPageSchool(listSchool, d -> {
+									defineSchool(school, d -> {
 										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														errorSchool(siteRequest, eventHandler, e);
-													}
-												});
-											}
+											attributeSchool(school, e -> {
+												if(e.succeeded()) {
+													indexSchool(school, f -> {
+														if(f.succeeded()) {
+															response200POSTSchool(school, g -> {
+																if(f.succeeded()) {
+																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
+																	sqlConnection.commit(h -> {
+																		if(a.succeeded()) {
+																			sqlConnection.close(i -> {
+																				if(a.succeeded()) {
+																					eventHandler.handle(Future.succeededFuture(g.result()));
+																				} else {
+																					errorSchool(siteRequest, eventHandler, i);
+																				}
+																			});
+																		} else {
+																			errorSchool(siteRequest, eventHandler, h);
+																		}
+																	});
+																} else {
+																	errorSchool(siteRequest, eventHandler, g);
+																}
+															});
+														} else {
+															errorSchool(siteRequest, eventHandler, f);
+														}
+													});
+												} else {
+													errorSchool(siteRequest, eventHandler, e);
+												}
+											});
 										} else {
 											errorSchool(siteRequest, eventHandler, d);
 										}
@@ -146,22 +154,79 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200RechercheEnUSPageSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void createPOSTSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<School>> eventHandler) {
+		try {
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+
+			sqlConnection.queryWithParams(
+					SiteContextEnUS.SQL_create
+					, new JsonArray(Arrays.asList(School.class.getCanonicalName(), userId))
+					, createAsync
+			-> {
+				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Long pk = createLine.getLong(0);
+				School o = new School();
+				o.setPk(pk);
+				o.initDeepSchool(siteRequest);
+				eventHandler.handle(Future.succeededFuture(o));
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlPOSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			StringBuilder postSql = new StringBuilder();
+			List<Object> postSqlParams = new ArrayList<Object>();
+
+			if(jsonObject != null) {
+				Set<String> entityVars = jsonObject.fieldNames();
+				for(String entityVar : entityVars) {
+					switch(entityVar) {
+					case "schoolName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolPhoneNumber":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolPhoneNumber", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAdministratorName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
+						break;
+					case "schoolAddress":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
+					}
+				}
+			}
+			sqlConnection.queryWithParams(
+					postSql.toString()
+					, new JsonArray(postSqlParams)
+					, postAsync
+			-> {
+				eventHandler.handle(Future.succeededFuture());
+			});
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void response200POSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
+			SiteRequestEnUS siteRequest = o.getSiteRequest_();
+			AllWriter w = AllWriter.create(o.getSiteRequest_(), buffer);
 			siteRequest.setW(w);
-			EcoleEnUSPage page = new EcoleEnUSPage();
-			SolrDocument pageSolrDocument = new SolrDocument();
-
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/school");
-			page.setPageSolrDocument(pageSolrDocument);
-			page.setW(w);
-			page.setListSchool(listSchool);
-			page.initDeepEcoleEnUSPage(siteRequest);
-			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -170,7 +235,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	// PATCH //
 
 	@Override
-	public void patchEcole(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
 			sqlSchool(siteRequest, a -> {
@@ -277,25 +342,25 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						patchSql.append(SiteContextEnUS.SQL_setD);
 						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
 						break;
-					case "setEcoleNom":
-						o2.setEcoleNom(requestJson.getString(methodName));
+					case "setSchoolName":
+						o2.setSchoolName(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("ecoleNom", o2.getEcoleNom(), pk));
+						patchSqlParams.addAll(Arrays.asList("schoolName", o2.getSchoolName(), pk));
 						break;
-					case "setEcoleNumeroTelephone":
-						o2.setEcoleNumeroTelephone(requestJson.getString(methodName));
+					case "setSchoolPhoneNumber":
+						o2.setSchoolPhoneNumber(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.getEcoleNumeroTelephone(), pk));
+						patchSqlParams.addAll(Arrays.asList("schoolPhoneNumber", o2.getSchoolPhoneNumber(), pk));
 						break;
-					case "setEcoleAdministrateurNom":
-						o2.setEcoleAdministrateurNom(requestJson.getString(methodName));
+					case "setSchoolAdministratorName":
+						o2.setSchoolAdministratorName(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.getEcoleAdministrateurNom(), pk));
+						patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.getSchoolAdministratorName(), pk));
 						break;
-					case "setEcoleAddresse":
-						o2.setEcoleAddresse(requestJson.getString(methodName));
+					case "setSchoolAddress":
+						o2.setSchoolAddress(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.getEcoleAddresse(), pk));
+						patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.getSchoolAddress(), pk));
 						break;
 				}
 			}
@@ -365,156 +430,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	// POST //
-
-	@Override
-	public void postEcole(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
-			sqlSchool(siteRequest, a -> {
-				if(a.succeeded()) {
-					createPOSTSchool(siteRequest, b -> {
-						if(b.succeeded()) {
-							School school = b.result();
-							sqlPOSTSchool(school, c -> {
-								if(c.succeeded()) {
-									defineSchool(school, d -> {
-										if(d.succeeded()) {
-											attributeSchool(school, e -> {
-												if(e.succeeded()) {
-													indexSchool(school, f -> {
-														if(f.succeeded()) {
-															response200POSTSchool(school, g -> {
-																if(f.succeeded()) {
-																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
-																	sqlConnection.commit(h -> {
-																		if(a.succeeded()) {
-																			sqlConnection.close(i -> {
-																				if(a.succeeded()) {
-																					eventHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					errorSchool(siteRequest, eventHandler, i);
-																				}
-																			});
-																		} else {
-																			errorSchool(siteRequest, eventHandler, h);
-																		}
-																	});
-																} else {
-																	errorSchool(siteRequest, eventHandler, g);
-																}
-															});
-														} else {
-															errorSchool(siteRequest, eventHandler, f);
-														}
-													});
-												} else {
-													errorSchool(siteRequest, eventHandler, e);
-												}
-											});
-										} else {
-											errorSchool(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorSchool(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchool(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorSchool(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorSchool(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void createPOSTSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<School>> eventHandler) {
-		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(School.class.getCanonicalName(), userId))
-					, createAsync
-			-> {
-				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
-				Long pk = createLine.getLong(0);
-				School o = new School();
-				o.setPk(pk);
-				o.initDeepSchool(siteRequest);
-				eventHandler.handle(Future.succeededFuture(o));
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void sqlPOSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
-
-			if(jsonObject != null) {
-				Set<String> entityVars = jsonObject.fieldNames();
-				for(String entityVar : entityVars) {
-					switch(entityVar) {
-					case "ecoleNom":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entityVar), pk));
-						break;
-					case "ecoleNumeroTelephone":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", jsonObject.getString(entityVar), pk));
-						break;
-					case "ecoleAdministrateurNom":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entityVar), pk));
-						break;
-					case "ecoleAddresse":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entityVar), pk));
-						break;
-					}
-				}
-			}
-			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				eventHandler.handle(Future.succeededFuture());
-			});
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	public void response200POSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			AllWriter w = AllWriter.create(o.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	// GET //
 
 	@Override
-	public void getEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void getSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 			aSearchSchool(siteRequest, false, true, null, a -> {
@@ -595,14 +514,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					w.l("]");
 				}
 
-				entityValue = o.getEcoleCle();
+				entityValue = o.getSchoolKey();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleCle\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolKey\": ", entityValue);
 
 				{
-					List<Long> entityValues = o.getEnfantCles();
+					List<Long> entityValues = o.getChildKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"enfantCles\": [");
+					w.s("\"childKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -613,9 +532,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getBlocCles();
+					List<Long> entityValues = o.getBlockKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"blocCles\": [");
+					w.s("\"blockKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -626,9 +545,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getGroupeAgeCles();
+					List<Long> entityValues = o.getAgeGroupKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"groupeAgeCles\": [");
+					w.s("\"ageGroupKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -639,9 +558,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getSessionCles();
+					List<Long> entityValues = o.getSessionKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"sessionCles\": [");
+					w.s("\"sessionKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -652,9 +571,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getSaisonCles();
+					List<Long> entityValues = o.getSeasonKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"saisonCles\": [");
+					w.s("\"seasonKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -665,9 +584,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getAnneeCles();
+					List<Long> entityValues = o.getYearKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"anneeCles\": [");
+					w.s("\"yearKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -677,37 +596,37 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					w.l("]");
 				}
 
-				entityValue = o.getScolaireTri();
+				entityValue = o.getEducationSort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"scolaireTri\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"educationSort\": ", entityValue);
 
-				entityValue = o.getEcoleTri();
+				entityValue = o.getSchoolSort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleTri\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolSort\": ", entityValue);
 
-				entityValue = o.getEcoleNom();
+				entityValue = o.getSchoolName();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNom\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolName\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleNumeroTelephone();
+				entityValue = o.getSchoolPhoneNumber();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolPhoneNumber\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleAdministrateurNom();
+				entityValue = o.getSchoolAdministratorName();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAdministrateurNom\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAdministratorName\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleAddresse();
+				entityValue = o.getSchoolAddress();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAddresse\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAddress\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleNomCourt();
+				entityValue = o.getSchoolNameShort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolNameShort\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleId();
+				entityValue = o.getSchoolId();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleId\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolId\": ", w.qjs(entityValue));
 
 				entityValue = o.getPageUri();
 				if(entityValue != null)
@@ -724,7 +643,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	// DELETE //
 
 	@Override
-	public void deleteEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 			sqlSchool(siteRequest, a -> {
@@ -804,16 +723,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	// Recherche //
+	// Search //
 
 	@Override
-	public void rechercheEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 			aSearchSchool(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
 					SearchList<School> listSchool = a.result();
-					response200RechercheSchool(listSchool, b -> {
+					response200SearchSchool(listSchool, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
@@ -829,7 +748,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200RechercheSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
@@ -906,14 +825,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					w.l("]");
 				}
 
-				entityValue = o.getEcoleCle();
+				entityValue = o.getSchoolKey();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleCle\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolKey\": ", entityValue);
 
 				{
-					List<Long> entityValues = o.getEnfantCles();
+					List<Long> entityValues = o.getChildKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"enfantCles\": [");
+					w.s("\"childKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -924,9 +843,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getBlocCles();
+					List<Long> entityValues = o.getBlockKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"blocCles\": [");
+					w.s("\"blockKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -937,9 +856,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getGroupeAgeCles();
+					List<Long> entityValues = o.getAgeGroupKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"groupeAgeCles\": [");
+					w.s("\"ageGroupKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -950,9 +869,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getSessionCles();
+					List<Long> entityValues = o.getSessionKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"sessionCles\": [");
+					w.s("\"sessionKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -963,9 +882,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getSaisonCles();
+					List<Long> entityValues = o.getSeasonKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"saisonCles\": [");
+					w.s("\"seasonKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -976,9 +895,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				}
 
 				{
-					List<Long> entityValues = o.getAnneeCles();
+					List<Long> entityValues = o.getYearKeys();
 					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"anneeCles\": [");
+					w.s("\"yearKeys\": [");
 					for(int k = 0; k < entityValues.size(); k++) {
 						entityValue = entityValues.get(k);
 						if(k > 0)
@@ -988,37 +907,37 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					w.l("]");
 				}
 
-				entityValue = o.getScolaireTri();
+				entityValue = o.getEducationSort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"scolaireTri\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"educationSort\": ", entityValue);
 
-				entityValue = o.getEcoleTri();
+				entityValue = o.getSchoolSort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleTri\": ", entityValue);
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolSort\": ", entityValue);
 
-				entityValue = o.getEcoleNom();
+				entityValue = o.getSchoolName();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNom\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolName\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleNumeroTelephone();
+				entityValue = o.getSchoolPhoneNumber();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolPhoneNumber\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleAdministrateurNom();
+				entityValue = o.getSchoolAdministratorName();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAdministrateurNom\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAdministratorName\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleAddresse();
+				entityValue = o.getSchoolAddress();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleAddresse\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAddress\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleNomCourt();
+				entityValue = o.getSchoolNameShort();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleNomCourt\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolNameShort\": ", w.qjs(entityValue));
 
-				entityValue = o.getEcoleId();
+				entityValue = o.getSchoolId();
 				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"ecoleId\": ", w.qjs(entityValue));
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolId\": ", w.qjs(entityValue));
 
 				entityValue = o.getPageUri();
 				if(entityValue != null)
@@ -1032,6 +951,86 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			}
 			w.l("}");
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// SearchPage //
+
+	@Override
+	public void searchpageSchoolId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageSchool(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void searchpageSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+			sqlSchool(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchool(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchool(siteRequest, false, true, "/enUS/school", c -> {
+								if(c.succeeded()) {
+									SearchList<School> listSchool = c.result();
+									response200SearchPageSchool(listSchool, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchool(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														errorSchool(siteRequest, eventHandler, e);
+													}
+												});
+											}
+										} else {
+											errorSchool(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchool(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchool(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchool(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchool(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200SearchPageSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			SchoolPage page = new SchoolPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/school");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			page.setListSchool(listSchool);
+			page.initDeepSchoolPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1057,34 +1056,34 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "enfantCles":
-				return "enfantCles_indexed_longs";
-			case "blocCles":
-				return "blocCles_indexed_longs";
-			case "groupeAgeCles":
-				return "groupeAgeCles_indexed_longs";
-			case "sessionCles":
-				return "sessionCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
-			case "anneeCles":
-				return "anneeCles_indexed_longs";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "ecoleNom":
-				return "ecoleNom_indexed_string";
-			case "ecoleNumeroTelephone":
-				return "ecoleNumeroTelephone_indexed_string";
-			case "ecoleAdministrateurNom":
-				return "ecoleAdministrateurNom_indexed_string";
-			case "ecoleAddresse":
-				return "ecoleAddresse_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "childKeys":
+				return "childKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "ageGroupKeys":
+				return "ageGroupKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
 			case "pageUri":
 				return "pageUri_indexed_string";
 			default:
@@ -1101,8 +1100,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public String varSuggereSchool(String entityVar) {
 		switch(entityVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
+			case "objectSuggest":
+				return "objectSuggest_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1304,7 +1303,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			listSearch.setC(School.class);
 			if(entityList != null)
 			listSearch.setFields(entityList);
-			listSearch.addFilterQuery("classCanonicalName_indexed_string:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.school.School"));
+			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
+			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.school.School"));
+			SiteUser siteUser = siteRequest.getSiteUser();
+			if(siteUser != null && !siteUser.getSeeDeleted())
+				listSearch.addFilterQuery("deleted_indexed_boolean:false");
+			if(siteUser != null && !siteUser.getSeeArchived())
+				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
 			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

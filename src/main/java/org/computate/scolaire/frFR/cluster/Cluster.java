@@ -16,25 +16,43 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**       
+/**         
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
+ * Modele: true
  * Api: true
- * ApiUri: /api/cluster
- * Role: SiteAdmin
- * ApiMethode: RechercheFrFRPage
- * ApiMethode: RechercheEnUSPage
- * ApiMethode: Recherche
+ * Indexe: true
+ * 
+ * ApiTag.frFR: Cluster
+ * ApiUri.frFR: /frFR/api/cluster
+ * 
+ * ApiTag.enUS: Cluster
+ * ApiUri.enUS: /enUS/api/cluster
+ * 
  * ApiMethode: POST
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
- * ApiUriRechercheFrFRPage: /frFR/cluster
- * ApiUriRechercheEnUSPage: /enUS/cluster
- * PageRechercheFrFRPage: ClusterFrFRPage
- * PageRechercheEnUSPage: ClusterEnUSPage
+ * ApiMethode.frFR: Recherche
+ * ApiMethode.enUS: Search
+ * 
+ * ApiMethode.frFR: PageRecherche
+ * PagePageRecherche.frFR: ClusterPage
+ * ApiUriPageRecherche.frFR: /frFR/cluster
+ * 
+ * ApiMethode.enUS: SearchPage
+ * PageSearchPage.enUS: ClusterPage
+ * ApiUriSearchPage.enUS: /enUS/cluster
+ * 
+ * UnNom.frFR: un cluster
+ * UnNom.enUS: a cluster
+ * Couleur: green
+ * IconeGroupe: regular
+ * IconeNom: fort-awesome
  * MotCle: classeNomSimpleCluster
- * Modele: true
- */      
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
+ */           
 public class Cluster extends ClusterGen<Object> {   
 
 	/**

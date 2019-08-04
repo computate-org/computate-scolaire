@@ -3,5 +3,5 @@ package org.computate.scolaire.frFR.ecole;
 /**
  * Traduire: false
  **/
-public class EcoleFrFRPage extends EcoleFrFRPageGen<EcoleFrFRGenPage> {
+public class EcolePage extends EcolePageGen<EcoleGenPage> {
 }

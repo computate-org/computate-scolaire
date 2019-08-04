@@ -53,10 +53,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static final String UtilisateurSite_Couleur = "green";
 	public static final String UtilisateurSite_IconeGroupe = "regular";
 	public static final String UtilisateurSite_IconeNom = "book";
-	public static final String UtilisateurSiteFrFRPage_Uri = "/frFR/utilisateur";
-	public static final String UtilisateurSiteFrFRPage_ImageUri = "/png/frFR/utilisateur-999.png";
-	public static final String UtilisateurSiteEnUSPage_Uri = "/enUS/user";
-	public static final String UtilisateurSiteEnUSPage_ImageUri = "/png/enUS/user-999.png";
 
 	///////////////////
 	// utilisateurId //
@@ -122,7 +118,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -219,7 +215,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -316,7 +312,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurMail() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -413,7 +409,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurPrenom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -510,7 +506,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNomFamille() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -607,7 +603,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurNomComplet() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -704,7 +700,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurSite() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -806,7 +802,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "UtilisateurRecevoirCourriels() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -908,7 +904,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "VoirArchive() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1010,7 +1006,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchUtilisateurSite", strPk(), "VoirSupprime() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/site/utilisateur?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");

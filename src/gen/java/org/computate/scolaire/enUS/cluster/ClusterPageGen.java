@@ -5,54 +5,54 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.ClusterGenPage;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.cluster.ClusterEnUSGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.apache.commons.lang3.StringUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.ClusterEnUSPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.ClusterPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
+public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	protected boolean alreadyInitializedClusterEnUSPage = false;
+	protected boolean alreadyInitializedClusterPage = false;
 
-	public ClusterEnUSPage initDeepClusterEnUSPage(SiteRequestEnUS siteRequest_) {
+	public ClusterPage initDeepClusterPage(SiteRequestEnUS siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		if(!alreadyInitializedClusterEnUSPage) {
-			alreadyInitializedClusterEnUSPage = true;
-			initDeepClusterEnUSPage();
+		if(!alreadyInitializedClusterPage) {
+			alreadyInitializedClusterPage = true;
+			initDeepClusterPage();
 		}
-		return (ClusterEnUSPage)this;
+		return (ClusterPage)this;
 	}
 
-	public void initDeepClusterEnUSPage() {
-		super.initDeepClusterEnUSGenPage(siteRequest_);
-		initClusterEnUSPage();
+	public void initDeepClusterPage() {
+		super.initDeepClusterGenPage(siteRequest_);
+		initClusterPage();
 	}
 
-	public void initClusterEnUSPage() {
+	public void initClusterPage() {
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
-		initDeepClusterEnUSPage(siteRequest_);
+		initDeepClusterPage(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestClusterEnUSPage(SiteRequestEnUS siteRequest_) {
-			super.siteRequestClusterEnUSGenPage(siteRequest_);
+	public void siteRequestClusterPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestClusterEnUSPage(siteRequest_);
+		siteRequestClusterPage(siteRequest_);
 	}
 
 	/////////////
@@ -64,7 +64,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainClusterEnUSPage(v);
+				o = obtainClusterPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
@@ -72,11 +72,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		}
 		return o;
 	}
-	public Object obtainClusterEnUSPage(String var) {
-		ClusterEnUSPage oClusterEnUSPage = (ClusterEnUSPage)this;
+	public Object obtainClusterPage(String var) {
+		ClusterPage oClusterPage = (ClusterPage)this;
 		switch(var) {
 			default:
-				return super.obtainClusterEnUSGenPage(var);
+				return super.obtainClusterGenPage(var);
 		}
 	}
 
@@ -89,7 +89,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attributeClusterEnUSPage(v, val);
+				o = attributeClusterPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attributeForClass(v, val);
@@ -97,11 +97,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		}
 		return o != null;
 	}
-	public Object attributeClusterEnUSPage(String var, Object val) {
-		ClusterEnUSPage oClusterEnUSPage = (ClusterEnUSPage)this;
+	public Object attributeClusterPage(String var, Object val) {
+		ClusterPage oClusterPage = (ClusterPage)this;
 		switch(var) {
 			default:
-				return super.attributeClusterEnUSGenPage(var, val);
+				return super.attributeClusterGenPage(var, val);
 		}
 	}
 
@@ -115,7 +115,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = defineClusterEnUSPage(v, val);
+					o = defineClusterPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -124,10 +124,10 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 		}
 		return o != null;
 	}
-	public Object defineClusterEnUSPage(String var, String val) {
+	public Object defineClusterPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineClusterEnUSGenPage(var, val);
+				return super.defineClusterGenPage(var, val);
 		}
 	}
 
@@ -136,11 +136,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsClusterEnUSPage();
+		htmlScriptsClusterPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsClusterEnUSPage() {
+	public void htmlScriptsClusterPage() {
 	}
 
 	////////////////
@@ -148,11 +148,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptClusterEnUSPage();
+		htmlScriptClusterPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptClusterEnUSPage() {
+	public void htmlScriptClusterPage() {
 	}
 
 	//////////////
@@ -160,11 +160,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyClusterEnUSPage();
+		htmlBodyClusterPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyClusterEnUSPage() {
+	public void htmlBodyClusterPage() {
 	}
 
 	//////////
@@ -172,11 +172,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	//////////
 
 	@Override public void html() {
-		htmlClusterEnUSPage();
+		htmlClusterPage();
 		super.html();
 	}
 
-	public void htmlClusterEnUSPage() {
+	public void htmlClusterPage() {
 	}
 
 	//////////////
@@ -184,11 +184,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaClusterEnUSPage();
+		htmlMetaClusterPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaClusterEnUSPage() {
+	public void htmlMetaClusterPage() {
 	}
 
 	////////////////
@@ -196,11 +196,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesClusterEnUSPage();
+		htmlStylesClusterPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesClusterEnUSPage() {
+	public void htmlStylesClusterPage() {
 	}
 
 	///////////////
@@ -208,11 +208,11 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleClusterEnUSPage();
+		htmlStyleClusterPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleClusterEnUSPage() {
+	public void htmlStyleClusterPage() {
 	}
 
 	//////////////
@@ -230,9 +230,9 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof ClusterEnUSPage))
+		if(!(o instanceof ClusterPage))
 			return false;
-		ClusterEnUSPage that = (ClusterEnUSPage)o;
+		ClusterPage that = (ClusterPage)o;
 		return super.equals(o);
 	}
 
@@ -243,7 +243,7 @@ public abstract class ClusterEnUSPageGen<DEV> extends ClusterEnUSGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("ClusterEnUSPage {");
+		sb.append("ClusterPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

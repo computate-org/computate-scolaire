@@ -105,7 +105,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	protected void _classApiTag(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiTag_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiTag_enUS_stored_string"));
 	}
 
 	protected void _classExtendsBase(Wrap<Boolean> c) {
@@ -125,35 +125,35 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	protected void _classApiUriMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiUri" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiUri" + classApiMethod + "_enUS_stored_string"));
 	}
 
 	protected void _classApiMethodMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiMethode" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiMethode" + classApiMethod + "_enUS_stored_string"));
 	}
 
 	protected void _classApiMediaType200Method(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiTypeMedia200" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiTypeMedia200" + classApiMethod + "_enUS_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethod(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "_enUS_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethodRequest(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Requete_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Requete_enUS_stored_string"));
 	}
 
 	protected void _classApiOperationIdMethodResponse(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Reponse_stored_string"));
+		c.o((String)classSolrDocument.get("classeApiOperationId" + classApiMethod + "Reponse_enUS_stored_string"));
 	}
 
 	protected void _classSuperApiOperationIdMethodRequest(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Requete_stored_string"));
+		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Requete_enUS_stored_string"));
 	}
 
 	protected void _classSuperApiOperationIdMethodResponse(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Reponse_stored_string"));
+		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Reponse_enUS_stored_string"));
 	}
 
 	protected void _classKeywordsFound(Wrap<Boolean> c) {
@@ -178,20 +178,15 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		c.o(o);
 	}
 
-	protected void _classPageLanguageName(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classePageLangueNom" + classApiMethod + "_stored_string"));
-	}
-
-	protected void _classPageSimpleName(Wrap<String> c) {
-		c.o((String)classSolrDocument.get("classePageNomSimple" + classApiMethod + "_stored_string"));
+	protected void _classRolesLanguage(Wrap<List<String>> c) {
+		List<String> o = (List<String>)classSolrDocument.get("classeRolesLangue_stored_strings");
+		if(o == null)
+			o = new ArrayList<>();
+		c.o(o);
 	}
 
 	protected void _languageName(Wrap<String> c) {
-		String o = "enUS";
-		if(classPageLanguageName != null) {
-			o = classPageLanguageName;
-		}
-		c.o(o);
+		c.o("enUS");
 	}
 
 	protected void _entitySolrDocument(Wrap<SolrDocument> c) {
@@ -243,14 +238,14 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 
 	public void  initEntity(SolrDocument entitySolrDocument) {
 		setEntitySolrDocument(entitySolrDocument);
-		entityVar = (String)entitySolrDocument.get("entiteVar_frFR_stored_string");
+		entityVar = (String)entitySolrDocument.get("entiteVar_enUS_stored_string");
 		entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
 		entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
 		entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
 		if(entityKeywords == null)
 			entityKeywords = new ArrayList<>();
-		entityCanonicalNameGeneric = (String)entitySolrDocument.get("entiteNomCanoniqueGenerique_frFR_stored_string");
-		entityCanonicalName = (String)entitySolrDocument.get("entiteNomCanonique_frFR_stored_string");
+		entityCanonicalNameGeneric = (String)entitySolrDocument.get("entiteNomCanoniqueGenerique_enUS_stored_string");
+		entityCanonicalName = (String)entitySolrDocument.get("entiteNomCanonique_enUS_stored_string");
 		entityListJsonType = (String)entitySolrDocument.get("entiteListeTypeJson_stored_string");
 		entityJsonType = (String)entitySolrDocument.get("entiteTypeJson_stored_string");
 		entityJsonFormat = (String)entitySolrDocument.get("entiteFormatJson_stored_string");
@@ -433,8 +428,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			if(classRolesFound) {
 				wPaths.tl(3, "security:");
 				wPaths.tl(4, "- openIdConnect:");
-				for(String classeRole : classRoles)
-					wPaths.tl(5, "- ", classeRole);
+				for(int i = 0; i < classRoles.size(); i++) {
+					if("frFR".equals(classRolesLanguage.get(i)))
+						wPaths.tl(5, "- ", classRoles.get(i));
+				}
 			}
 	
 			wPaths.t(3, "description: ").yamlStr(4, "");

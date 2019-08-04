@@ -9,14 +9,13 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterFrFRGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
+public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 
 	//////////////////
 	// listeCluster //
@@ -30,7 +29,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 
 	/**	<br/>L'entité « listeCluster »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeCluster">Trouver l'entité listeCluster dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeCluster">Trouver l'entité listeCluster dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -44,7 +43,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		this.listeCluster = listeCluster;
 		this.listeClusterCouverture.dejaInitialise = true;
 	}
-	protected ClusterFrFRGenPage listeClusterInit() {
+	protected ClusterGenPage listeClusterInit() {
 		if(!listeClusterCouverture.dejaInitialise) {
 			_listeCluster(listeClusterCouverture);
 			if(listeCluster == null)
@@ -53,7 +52,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		if(listeCluster != null)
 			listeCluster.initLoinPourClasse(requeteSite_);
 		listeClusterCouverture.dejaInitialise(true);
-		return (ClusterFrFRGenPage)this;
+		return (ClusterGenPage)this;
 	}
 
 	/////////////
@@ -68,7 +67,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 
 	/**	<br/>L'entité « cluster »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cluster">Trouver l'entité cluster dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cluster">Trouver l'entité cluster dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -82,7 +81,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		this.cluster = cluster;
 		this.clusterCouverture.dejaInitialise = true;
 	}
-	protected ClusterFrFRGenPage clusterInit() {
+	protected ClusterGenPage clusterInit() {
 		if(!clusterCouverture.dejaInitialise) {
 			_cluster(clusterCouverture);
 			if(cluster == null)
@@ -91,100 +90,43 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		if(cluster != null)
 			cluster.initLoinPourClasse(requeteSite_);
 		clusterCouverture.dejaInitialise(true);
-		return (ClusterFrFRGenPage)this;
-	}
-
-	////////////////////
-	// pageUriCluster //
-	////////////////////
-
-	/**	L'entité « pageUriCluster »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriCluster;
-	public Couverture<String> pageUriClusterCouverture = new Couverture<String>().p(this).c(String.class).var("pageUriCluster").o(pageUriCluster);
-
-	/**	<br/>L'entité « pageUriCluster »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.ClusterFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUriCluster">Trouver l'entité pageUriCluster dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriCluster(Couverture<String> c);
-
-	public String getPageUriCluster() {
-		return pageUriCluster;
-	}
-
-	public void setPageUriCluster(String pageUriCluster) {
-		this.pageUriCluster = pageUriCluster;
-		this.pageUriClusterCouverture.dejaInitialise = true;
-	}
-	protected ClusterFrFRGenPage pageUriClusterInit() {
-		if(!pageUriClusterCouverture.dejaInitialise) {
-			_pageUriCluster(pageUriClusterCouverture);
-			if(pageUriCluster == null)
-				setPageUriCluster(pageUriClusterCouverture.o);
-		}
-		pageUriClusterCouverture.dejaInitialise(true);
-		return (ClusterFrFRGenPage)this;
-	}
-
-	public String solrPageUriCluster() {
-		return pageUriCluster;
-	}
-
-	public String strPageUriCluster() {
-		return pageUriCluster == null ? "" : pageUriCluster;
-	}
-
-	public String nomAffichagePageUriCluster() {
-		return null;
-	}
-
-	public String htmTooltipPageUriCluster() {
-		return null;
-	}
-
-	public String htmPageUriCluster() {
-		return pageUriCluster == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriCluster());
+		return (ClusterGenPage)this;
 	}
 
 	//////////////
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseClusterFrFRGenPage = false;
+	protected boolean dejaInitialiseClusterGenPage = false;
 
-	public ClusterFrFRGenPage initLoinClusterFrFRGenPage(RequeteSiteFrFR requeteSite_) {
+	public ClusterGenPage initLoinClusterGenPage(RequeteSiteFrFR requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseClusterFrFRGenPage) {
-			dejaInitialiseClusterFrFRGenPage = true;
-			initLoinClusterFrFRGenPage();
+		if(!dejaInitialiseClusterGenPage) {
+			dejaInitialiseClusterGenPage = true;
+			initLoinClusterGenPage();
 		}
-		return (ClusterFrFRGenPage)this;
+		return (ClusterGenPage)this;
 	}
 
-	public void initLoinClusterFrFRGenPage() {
+	public void initLoinClusterGenPage() {
 		super.initLoinMiseEnPage(requeteSite_);
-		initClusterFrFRGenPage();
+		initClusterGenPage();
 	}
 
-	public void initClusterFrFRGenPage() {
+	public void initClusterGenPage() {
 		listeClusterInit();
 		clusterInit();
-		pageUriClusterInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinClusterFrFRGenPage(requeteSite_);
+		initLoinClusterGenPage(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteClusterFrFRGenPage(RequeteSiteFrFR requeteSite_) {
+	public void requeteSiteClusterGenPage(RequeteSiteFrFR requeteSite_) {
 			super.requeteSiteMiseEnPage(requeteSite_);
 		if(listeCluster != null)
 			listeCluster.setRequeteSite_(requeteSite_);
@@ -193,7 +135,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteClusterFrFRGenPage(requeteSite_);
+		requeteSiteClusterGenPage(requeteSite_);
 	}
 
 	/////////////
@@ -205,7 +147,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirClusterFrFRGenPage(v);
+				o = obtenirClusterGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -213,15 +155,13 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o;
 	}
-	public Object obtenirClusterFrFRGenPage(String var) {
-		ClusterFrFRGenPage oClusterFrFRGenPage = (ClusterFrFRGenPage)this;
+	public Object obtenirClusterGenPage(String var) {
+		ClusterGenPage oClusterGenPage = (ClusterGenPage)this;
 		switch(var) {
 			case "listeCluster":
-				return oClusterFrFRGenPage.listeCluster;
+				return oClusterGenPage.listeCluster;
 			case "cluster":
-				return oClusterFrFRGenPage.cluster;
-			case "pageUriCluster":
-				return oClusterFrFRGenPage.pageUriCluster;
+				return oClusterGenPage.cluster;
 			default:
 				return super.obtenirMiseEnPage(var);
 		}
@@ -236,7 +176,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerClusterFrFRGenPage(v, val);
+				o = attribuerClusterGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -244,8 +184,8 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o != null;
 	}
-	public Object attribuerClusterFrFRGenPage(String var, Object val) {
-		ClusterFrFRGenPage oClusterFrFRGenPage = (ClusterFrFRGenPage)this;
+	public Object attribuerClusterGenPage(String var, Object val) {
+		ClusterGenPage oClusterGenPage = (ClusterGenPage)this;
 		switch(var) {
 			default:
 				return super.attribuerMiseEnPage(var, val);
@@ -262,7 +202,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirClusterFrFRGenPage(v, val);
+					o = definirClusterGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -271,7 +211,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o != null;
 	}
-	public Object definirClusterFrFRGenPage(String var, String val) {
+	public Object definirClusterGenPage(String var, String val) {
 		switch(var) {
 			default:
 				return super.definirMiseEnPage(var, val);
@@ -283,11 +223,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsClusterFrFRGenPage();
+		htmlScriptsClusterGenPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsClusterFrFRGenPage() {
+	public void htmlScriptsClusterGenPage() {
 	}
 
 	////////////////
@@ -295,11 +235,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptClusterFrFRGenPage();
+		htmlScriptClusterGenPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptClusterFrFRGenPage() {
+	public void htmlScriptClusterGenPage() {
 	}
 
 	//////////////
@@ -307,11 +247,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyClusterFrFRGenPage();
+		htmlBodyClusterGenPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyClusterFrFRGenPage() {
+	public void htmlBodyClusterGenPage() {
 	}
 
 	//////////
@@ -319,11 +259,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	//////////
 
 	@Override public void html() {
-		htmlClusterFrFRGenPage();
+		htmlClusterGenPage();
 		super.html();
 	}
 
-	public void htmlClusterFrFRGenPage() {
+	public void htmlClusterGenPage() {
 	}
 
 	//////////////
@@ -331,11 +271,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaClusterFrFRGenPage();
+		htmlMetaClusterGenPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaClusterFrFRGenPage() {
+	public void htmlMetaClusterGenPage() {
 	}
 
 	////////////////
@@ -343,11 +283,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesClusterFrFRGenPage();
+		htmlStylesClusterGenPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesClusterFrFRGenPage() {
+	public void htmlStylesClusterGenPage() {
 	}
 
 	///////////////
@@ -355,11 +295,11 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleClusterFrFRGenPage();
+		htmlStyleClusterGenPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleClusterFrFRGenPage() {
+	public void htmlStyleClusterGenPage() {
 	}
 
 	//////////////
@@ -377,9 +317,9 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof ClusterFrFRGenPage))
+		if(!(o instanceof ClusterGenPage))
 			return false;
-		ClusterFrFRGenPage that = (ClusterFrFRGenPage)o;
+		ClusterGenPage that = (ClusterGenPage)o;
 		return super.equals(o);
 	}
 
@@ -390,7 +330,7 @@ public abstract class ClusterFrFRGenPageGen<DEV> extends MiseEnPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("ClusterFrFRGenPage {");
+		sb.append("ClusterGenPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

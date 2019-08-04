@@ -1,9 +1,6 @@
 package org.computate.scolaire.enUS.user;
 
-import java.lang.String;
-import java.lang.Boolean;
-import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
-import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -32,7 +29,7 @@ import java.util.List;
 /**
  * Translate: false
  **/
-public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<ClusterEnUSPage> {
+public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	/**
 	 * {@inheritDoc}
@@ -69,15 +66,11 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enUS/user");
-	}
-
-	@Override protected void _pageUriFrFR(Wrap<String> c) {
-		c.o("/frFR/utilisateur");
+		c.o("/enUS/api/user");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enUS/user-999.png");
+			c.o("/png/enUS/api/user-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -88,20 +81,16 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 			c.o("book");
 	}
 
-	@Override public void initDeepUtilisateurSiteEnUSGenPage() {
-		initUtilisateurSiteEnUSGenPage();
+	@Override public void initDeepSiteUserGenPage() {
+		initSiteUserGenPage();
 		super.initDeepPageLayout();
 	}
 
-	@Override public void htmlScriptsUtilisateurSiteEnUSGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/UtilisateurSiteEnUSPage.js").f().g("script");
+	@Override public void htmlScriptsSiteUserGenPage() {
+		e("script").a("src", staticBaseUrl, "/js/SiteUserPage.js").f().g("script");
 	}
 
-	protected void _pageUriSiteUser(Wrap<String> c) {
-			c.o("/enUS/user");
-	}
-
-	@Override public void htmlScriptUtilisateurSiteEnUSGenPage() {
+	@Override public void htmlScriptSiteUserGenPage() {
 	}
 
 	public void htmlFormPageSiteUser(SiteUser o) {
@@ -292,7 +281,7 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 		} g("div");
 	}
 
-	@Override public void htmlBodyUtilisateurSiteEnUSGenPage() {
+	@Override public void htmlBodySiteUserGenPage() {
 
 		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		JsonObject params = operationRequest.getParams();
@@ -330,7 +319,7 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 						SiteUser o = listSiteUser.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enUS/user/" + o.getPk();
+						String uri = "/enUS/api/user/" + o.getPk();
 						{ e("tr").f();
 						} g("tr");
 					}
@@ -344,7 +333,7 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "SiteUserForm").a("style", "display: inline-block; ").f();
+					{ e("form").a("action", "").a("id", "SiteUserForm").a("style", "display: inline-block; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valuePk")
@@ -360,45 +349,45 @@ public class UtilisateurSiteEnUSGenPage extends UtilisateurSiteEnUSGenPageGen<Cl
 
 			} g("div");
 		}
-		htmlBodyFormsUtilisateurSiteEnUSGenPage();
+		htmlBodyFormsSiteUserGenPage();
 	}
 
-	public void htmlBodyFormsUtilisateurSiteEnUSGenPage() {
+	public void htmlBodyFormsSiteUserGenPage() {
 		e("div").f();
 
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchUtilisateurSiteModale').show(); ")
+			.a("onclick", "$('#patchSiteUserModale').show(); ")
 			.f().sx("Modify the site users")
 		.g("button");
-		{ e("div").a("id", "patchUtilisateurSiteModal").a("class", "w3-modal ").f();
+		{ e("div").a("id", "patchSiteUserModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModal').hide(); ").f().sx("×").g("span");
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSiteUserModal').hide(); ").f().sx("×").g("span");
 					e("h2").a("class", "").f().sx("Modify the site users").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SiteUser o = new SiteUser();
 
 					// FormFilters PATCH
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "patchUtilisateurSiteFormFilters").f();
+					{ e("form").a("action", "").a("id", "patchSiteUserFormFilters").f();
 						htmlFormSearchSiteUser(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "aSearchSiteUser($('#patchUtilisateurSiteFormFilters')); ")
+						.a("onclick", "aSearchSiteUser($('#patchSiteUserFormFilters')); ")
 						.f().sx("Search the a site user")
 					.g("button");
 
 
 					// FormValues PATCH
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "patchUtilisateurSiteFormValues").f();
+					{ e("form").a("action", "").a("id", "patchSiteUserFormValues").f();
 						htmlFormPATCHSiteUser(o);
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormFilters'), $('#patchUtilisateurSiteFormValues')); ")
+						.a("onclick", "patchSiteUser($('#patchSiteUserFormFilters'), $('#patchSiteUserFormValues')); ")
 						.f().sx("Modify the site users")
 					.g("button");
 

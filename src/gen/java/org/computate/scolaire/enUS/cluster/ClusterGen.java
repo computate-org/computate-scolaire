@@ -45,10 +45,23 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class ClusterGen<DEV> extends Object {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
 
-	public static final String ClusterFrFRPage_Uri = "/frFR/cluster";
-	public static final String ClusterFrFRPage_ImageUri = "/png/frFR/cluster-999.png";
-	public static final String ClusterEnUSPage_Uri = "/enUS/cluster";
-	public static final String ClusterEnUSPage_ImageUri = "/png/enUS/cluster-999.png";
+	public static final String Cluster_UnNom = "a cluster";
+	public static final String Cluster_Ce = "this ";
+	public static final String Cluster_CeNom = "this cluster";
+	public static final String Cluster_Un = "an ";
+	public static final String Cluster_LeNom = "the cluster";
+	public static final String Cluster_NomSingulier = "cluster";
+	public static final String Cluster_NomPluriel = "clusters";
+	public static final String Cluster_NomActuel = "current cluster";
+	public static final String Cluster_TousNom = "the clusters";
+	public static final String Cluster_RechercherTousNomPar = "search clusters by ";
+	public static final String Cluster_LesNoms = "the clusters";
+	public static final String Cluster_AucunNomTrouve = "no cluster found";
+	public static final String Cluster_NomVar = "cluster";
+	public static final String Cluster_DeNom = "of cluster";
+	public static final String Cluster_Couleur = "green";
+	public static final String Cluster_IconeGroupe = "regular";
+	public static final String Cluster_IconeNom = "fort-awesome";
 
 	//////////////////
 	// siteRequest_ //
@@ -202,7 +215,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Pk() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -299,7 +312,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Id() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -412,7 +425,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Created() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -525,7 +538,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Modified() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -627,7 +640,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Archived() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -729,7 +742,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Deleted() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -826,7 +839,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassCanonicalName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -923,7 +936,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassSimpleName() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1037,7 +1050,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClassCanonicalNames() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");

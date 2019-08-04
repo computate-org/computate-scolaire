@@ -180,11 +180,11 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 				for(Integer j = 0; j < searchClassesResultats.size(); j++) {
 					SolrDocument classSolrDocument = searchClassesResultats.get(j);
 
-					classApiTag = StringUtils.defaultIfBlank((String)classSolrDocument.get("classeApiTag_stored_string"), classSimpleName + " API");
-					classApiUri = (String)classSolrDocument.get("classeApiUri_stored_string");
+					classApiTag = StringUtils.defaultIfBlank((String)classSolrDocument.get("classeApiTag_enUS_stored_string"), classSimpleName + " API");
+					classApiUri = (String)classSolrDocument.get("classeApiUri_enUS_stored_string");
 					classIsBase = (Boolean)classSolrDocument.get("classeEstBase_stored_boolean");
 
-					classApiMethods = (List<String>)classSolrDocument.get("classeApiMethodes_stored_strings");
+					classApiMethods = (List<String>)classSolrDocument.get("classeApiMethodes_enUS_stored_strings");
 					classUris = new ArrayList<>();
 					if(classApiMethods == null)
 						classApiMethods = new ArrayList<>();

@@ -6,18 +6,17 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage {
+public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 
 	//////////////////////////
 	// listeUtilisateurSite //
@@ -31,7 +30,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 
 	/**	<br/>L'entité « listeUtilisateurSite »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeUtilisateurSite">Trouver l'entité listeUtilisateurSite dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeUtilisateurSite">Trouver l'entité listeUtilisateurSite dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -45,7 +44,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		this.listeUtilisateurSite = listeUtilisateurSite;
 		this.listeUtilisateurSiteCouverture.dejaInitialise = true;
 	}
-	protected UtilisateurSiteFrFRGenPage listeUtilisateurSiteInit() {
+	protected UtilisateurSiteGenPage listeUtilisateurSiteInit() {
 		if(!listeUtilisateurSiteCouverture.dejaInitialise) {
 			_listeUtilisateurSite(listeUtilisateurSiteCouverture);
 			if(listeUtilisateurSite == null)
@@ -54,7 +53,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		if(listeUtilisateurSite != null)
 			listeUtilisateurSite.initLoinPourClasse(requeteSite_);
 		listeUtilisateurSiteCouverture.dejaInitialise(true);
-		return (UtilisateurSiteFrFRGenPage)this;
+		return (UtilisateurSiteGenPage)this;
 	}
 
 	/////////////////////
@@ -69,7 +68,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 
 	/**	<br/>L'entité « utilisateurSite »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurSite">Trouver l'entité utilisateurSite dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurSite">Trouver l'entité utilisateurSite dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +82,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		this.utilisateurSite = utilisateurSite;
 		this.utilisateurSiteCouverture.dejaInitialise = true;
 	}
-	protected UtilisateurSiteFrFRGenPage utilisateurSiteInit() {
+	protected UtilisateurSiteGenPage utilisateurSiteInit() {
 		if(!utilisateurSiteCouverture.dejaInitialise) {
 			_utilisateurSite(utilisateurSiteCouverture);
 			if(utilisateurSite == null)
@@ -92,101 +91,44 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		if(utilisateurSite != null)
 			utilisateurSite.initLoinPourClasse(requeteSite_);
 		utilisateurSiteCouverture.dejaInitialise(true);
-		return (UtilisateurSiteFrFRGenPage)this;
-	}
-
-	////////////////////////////
-	// pageUriUtilisateurSite //
-	////////////////////////////
-
-	/**	L'entité « pageUriUtilisateurSite »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriUtilisateurSite;
-	public Couverture<String> pageUriUtilisateurSiteCouverture = new Couverture<String>().p(this).c(String.class).var("pageUriUtilisateurSite").o(pageUriUtilisateurSite);
-
-	/**	<br/>L'entité « pageUriUtilisateurSite »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUriUtilisateurSite">Trouver l'entité pageUriUtilisateurSite dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriUtilisateurSite(Couverture<String> c);
-
-	public String getPageUriUtilisateurSite() {
-		return pageUriUtilisateurSite;
-	}
-
-	public void setPageUriUtilisateurSite(String pageUriUtilisateurSite) {
-		this.pageUriUtilisateurSite = pageUriUtilisateurSite;
-		this.pageUriUtilisateurSiteCouverture.dejaInitialise = true;
-	}
-	protected UtilisateurSiteFrFRGenPage pageUriUtilisateurSiteInit() {
-		if(!pageUriUtilisateurSiteCouverture.dejaInitialise) {
-			_pageUriUtilisateurSite(pageUriUtilisateurSiteCouverture);
-			if(pageUriUtilisateurSite == null)
-				setPageUriUtilisateurSite(pageUriUtilisateurSiteCouverture.o);
-		}
-		pageUriUtilisateurSiteCouverture.dejaInitialise(true);
-		return (UtilisateurSiteFrFRGenPage)this;
-	}
-
-	public String solrPageUriUtilisateurSite() {
-		return pageUriUtilisateurSite;
-	}
-
-	public String strPageUriUtilisateurSite() {
-		return pageUriUtilisateurSite == null ? "" : pageUriUtilisateurSite;
-	}
-
-	public String nomAffichagePageUriUtilisateurSite() {
-		return null;
-	}
-
-	public String htmTooltipPageUriUtilisateurSite() {
-		return null;
-	}
-
-	public String htmPageUriUtilisateurSite() {
-		return pageUriUtilisateurSite == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriUtilisateurSite());
+		return (UtilisateurSiteGenPage)this;
 	}
 
 	//////////////
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseUtilisateurSiteFrFRGenPage = false;
+	protected boolean dejaInitialiseUtilisateurSiteGenPage = false;
 
-	public UtilisateurSiteFrFRGenPage initLoinUtilisateurSiteFrFRGenPage(RequeteSiteFrFR requeteSite_) {
+	public UtilisateurSiteGenPage initLoinUtilisateurSiteGenPage(RequeteSiteFrFR requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseUtilisateurSiteFrFRGenPage) {
-			dejaInitialiseUtilisateurSiteFrFRGenPage = true;
-			initLoinUtilisateurSiteFrFRGenPage();
+		if(!dejaInitialiseUtilisateurSiteGenPage) {
+			dejaInitialiseUtilisateurSiteGenPage = true;
+			initLoinUtilisateurSiteGenPage();
 		}
-		return (UtilisateurSiteFrFRGenPage)this;
+		return (UtilisateurSiteGenPage)this;
 	}
 
-	public void initLoinUtilisateurSiteFrFRGenPage() {
-		super.initLoinClusterFrFRPage(requeteSite_);
-		initUtilisateurSiteFrFRGenPage();
+	public void initLoinUtilisateurSiteGenPage() {
+		super.initLoinClusterPage(requeteSite_);
+		initUtilisateurSiteGenPage();
 	}
 
-	public void initUtilisateurSiteFrFRGenPage() {
+	public void initUtilisateurSiteGenPage() {
 		listeUtilisateurSiteInit();
 		utilisateurSiteInit();
-		pageUriUtilisateurSiteInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinUtilisateurSiteFrFRGenPage(requeteSite_);
+		initLoinUtilisateurSiteGenPage(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteUtilisateurSiteFrFRGenPage(RequeteSiteFrFR requeteSite_) {
-			super.requeteSiteClusterFrFRPage(requeteSite_);
+	public void requeteSiteUtilisateurSiteGenPage(RequeteSiteFrFR requeteSite_) {
+			super.requeteSiteClusterPage(requeteSite_);
 		if(listeUtilisateurSite != null)
 			listeUtilisateurSite.setRequeteSite_(requeteSite_);
 		if(utilisateurSite != null)
@@ -194,7 +136,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteUtilisateurSiteFrFRGenPage(requeteSite_);
+		requeteSiteUtilisateurSiteGenPage(requeteSite_);
 	}
 
 	/////////////
@@ -206,7 +148,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirUtilisateurSiteFrFRGenPage(v);
+				o = obtenirUtilisateurSiteGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -214,17 +156,15 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		}
 		return o;
 	}
-	public Object obtenirUtilisateurSiteFrFRGenPage(String var) {
-		UtilisateurSiteFrFRGenPage oUtilisateurSiteFrFRGenPage = (UtilisateurSiteFrFRGenPage)this;
+	public Object obtenirUtilisateurSiteGenPage(String var) {
+		UtilisateurSiteGenPage oUtilisateurSiteGenPage = (UtilisateurSiteGenPage)this;
 		switch(var) {
 			case "listeUtilisateurSite":
-				return oUtilisateurSiteFrFRGenPage.listeUtilisateurSite;
+				return oUtilisateurSiteGenPage.listeUtilisateurSite;
 			case "utilisateurSite":
-				return oUtilisateurSiteFrFRGenPage.utilisateurSite;
-			case "pageUriUtilisateurSite":
-				return oUtilisateurSiteFrFRGenPage.pageUriUtilisateurSite;
+				return oUtilisateurSiteGenPage.utilisateurSite;
 			default:
-				return super.obtenirClusterFrFRPage(var);
+				return super.obtenirClusterPage(var);
 		}
 	}
 
@@ -237,7 +177,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerUtilisateurSiteFrFRGenPage(v, val);
+				o = attribuerUtilisateurSiteGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -245,11 +185,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		}
 		return o != null;
 	}
-	public Object attribuerUtilisateurSiteFrFRGenPage(String var, Object val) {
-		UtilisateurSiteFrFRGenPage oUtilisateurSiteFrFRGenPage = (UtilisateurSiteFrFRGenPage)this;
+	public Object attribuerUtilisateurSiteGenPage(String var, Object val) {
+		UtilisateurSiteGenPage oUtilisateurSiteGenPage = (UtilisateurSiteGenPage)this;
 		switch(var) {
 			default:
-				return super.attribuerClusterFrFRPage(var, val);
+				return super.attribuerClusterPage(var, val);
 		}
 	}
 
@@ -263,7 +203,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirUtilisateurSiteFrFRGenPage(v, val);
+					o = definirUtilisateurSiteGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -272,10 +212,10 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 		}
 		return o != null;
 	}
-	public Object definirUtilisateurSiteFrFRGenPage(String var, String val) {
+	public Object definirUtilisateurSiteGenPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirClusterFrFRPage(var, val);
+				return super.definirClusterPage(var, val);
 		}
 	}
 
@@ -284,11 +224,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsUtilisateurSiteFrFRGenPage();
+		htmlScriptsUtilisateurSiteGenPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsUtilisateurSiteFrFRGenPage() {
+	public void htmlScriptsUtilisateurSiteGenPage() {
 	}
 
 	////////////////
@@ -296,11 +236,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptUtilisateurSiteFrFRGenPage();
+		htmlScriptUtilisateurSiteGenPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptUtilisateurSiteFrFRGenPage() {
+	public void htmlScriptUtilisateurSiteGenPage() {
 	}
 
 	//////////////
@@ -308,11 +248,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyUtilisateurSiteFrFRGenPage();
+		htmlBodyUtilisateurSiteGenPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyUtilisateurSiteFrFRGenPage() {
+	public void htmlBodyUtilisateurSiteGenPage() {
 		if(utilisateurSite != null)
 			utilisateurSite.htmlBody();
 	}
@@ -322,11 +262,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	//////////
 
 	@Override public void html() {
-		htmlUtilisateurSiteFrFRGenPage();
+		htmlUtilisateurSiteGenPage();
 		super.html();
 	}
 
-	public void htmlUtilisateurSiteFrFRGenPage() {
+	public void htmlUtilisateurSiteGenPage() {
 	}
 
 	//////////////
@@ -334,11 +274,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaUtilisateurSiteFrFRGenPage();
+		htmlMetaUtilisateurSiteGenPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaUtilisateurSiteFrFRGenPage() {
+	public void htmlMetaUtilisateurSiteGenPage() {
 	}
 
 	////////////////
@@ -346,11 +286,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesUtilisateurSiteFrFRGenPage();
+		htmlStylesUtilisateurSiteGenPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesUtilisateurSiteFrFRGenPage() {
+	public void htmlStylesUtilisateurSiteGenPage() {
 	}
 
 	///////////////
@@ -358,11 +298,11 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleUtilisateurSiteFrFRGenPage();
+		htmlStyleUtilisateurSiteGenPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleUtilisateurSiteFrFRGenPage() {
+	public void htmlStyleUtilisateurSiteGenPage() {
 	}
 
 	//////////////
@@ -380,9 +320,9 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof UtilisateurSiteFrFRGenPage))
+		if(!(o instanceof UtilisateurSiteGenPage))
 			return false;
-		UtilisateurSiteFrFRGenPage that = (UtilisateurSiteFrFRGenPage)o;
+		UtilisateurSiteGenPage that = (UtilisateurSiteGenPage)o;
 		return super.equals(o);
 	}
 
@@ -393,7 +333,7 @@ public abstract class UtilisateurSiteFrFRGenPageGen<DEV> extends ClusterFrFRPage
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("UtilisateurSiteFrFRGenPage {");
+		sb.append("UtilisateurSiteGenPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -32,11 +32,11 @@ public interface ClusterEnUSGenApiService {
 		return new ClusterEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
-	public void rechercheenuspageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void rechercheenuspageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void rechercheCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void postCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void getCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void deleteCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchpageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchpageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

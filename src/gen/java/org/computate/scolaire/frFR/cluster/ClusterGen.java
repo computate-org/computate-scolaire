@@ -45,10 +45,24 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class ClusterGen<DEV> extends Object {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
 
-	public static final String ClusterFrFRPage_Uri = "/frFR/cluster";
-	public static final String ClusterFrFRPage_ImageUri = "/png/frFR/cluster-999.png";
-	public static final String ClusterEnUSPage_Uri = "/enUS/cluster";
-	public static final String ClusterEnUSPage_ImageUri = "/png/enUS/cluster-999.png";
+	public static final String Cluster_UnNom = "un cluster";
+	public static final String Cluster_Ce = "ce ";
+	public static final String Cluster_CeNom = "ce cluster";
+	public static final String Cluster_Un = "un ";
+	public static final String Cluster_LeNom = "le cluster";
+	public static final String Cluster_NomSingulier = "cluster";
+	public static final String Cluster_NomPluriel = "clusters";
+	public static final String Cluster_NomActuel = "cluster actuel";
+	public static final String Cluster_TousNom = "tous les clusters";
+	public static final String Cluster_RechercherTousNomPar = "rechercher clusters par ";
+	public static final String Cluster_RechercherTousNom = "rechercher clusters";
+	public static final String Cluster_LesNoms = "les clusters";
+	public static final String Cluster_AucunNomTrouve = "aucun cluster trouvé";
+	public static final String Cluster_NomVar = "cluster";
+	public static final String Cluster_DeNom = "de cluster";
+	public static final String Cluster_Couleur = "green";
+	public static final String Cluster_IconeGroupe = "regular";
+	public static final String Cluster_IconeNom = "fort-awesome";
 
 	//////////////////
 	// requeteSite_ //
@@ -202,7 +216,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Pk() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -299,7 +313,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Id() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -412,7 +426,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Cree() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -525,7 +539,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Modifie() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -627,7 +641,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Archive() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -729,7 +743,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "Supprime() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -826,7 +840,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClasseNomCanonique() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -923,7 +937,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClasseNomSimple() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1037,7 +1051,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchCluster", strPk(), "ClasseNomsCanoniques() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/cluster?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");

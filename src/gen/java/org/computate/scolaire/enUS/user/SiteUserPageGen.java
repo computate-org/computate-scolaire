@@ -4,42 +4,55 @@ import java.util.Objects;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.user.UtilisateurSiteEnUSGenPage;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.apache.commons.lang3.StringUtils;
+import org.computate.scolaire.enUS.user.SiteUserGenPage;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.UtilisateurSiteEnUSPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnUSGenPage {
+public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	protected boolean alreadyInitializedUtilisateurSiteEnUSPage = false;
+	protected boolean alreadyInitializedSiteUserPage = false;
 
-	public UtilisateurSiteEnUSPage initDeepUtilisateurSiteEnUSPage(SiteRequestEnUS siteRequest_) {
-		if(!alreadyInitializedUtilisateurSiteEnUSPage) {
-			alreadyInitializedUtilisateurSiteEnUSPage = true;
-			initDeepUtilisateurSiteEnUSPage();
+	public SiteUserPage initDeepSiteUserPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedSiteUserPage) {
+			alreadyInitializedSiteUserPage = true;
+			initDeepSiteUserPage();
 		}
-		return (UtilisateurSiteEnUSPage)this;
+		return (SiteUserPage)this;
 	}
 
-	public void initDeepUtilisateurSiteEnUSPage() {
-		super.initDeepUtilisateurSiteEnUSGenPage(siteRequest_);
-		initUtilisateurSiteEnUSPage();
+	public void initDeepSiteUserPage() {
+		super.initDeepSiteUserGenPage(siteRequest_);
+		initSiteUserPage();
 	}
 
-	public void initUtilisateurSiteEnUSPage() {
+	public void initSiteUserPage() {
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
-		initDeepUtilisateurSiteEnUSPage(siteRequest_);
+		initDeepSiteUserPage(siteRequest_);
+	}
+
+	/////////////////
+	// siteRequest //
+	/////////////////
+
+	public void siteRequestSiteUserPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestSiteUserGenPage(siteRequest_);
+	}
+
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestSiteUserPage(siteRequest_);
 	}
 
 	/////////////
@@ -51,7 +64,7 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainUtilisateurSiteEnUSPage(v);
+				o = obtainSiteUserPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
@@ -59,11 +72,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		}
 		return o;
 	}
-	public Object obtainUtilisateurSiteEnUSPage(String var) {
-		UtilisateurSiteEnUSPage oUtilisateurSiteEnUSPage = (UtilisateurSiteEnUSPage)this;
+	public Object obtainSiteUserPage(String var) {
+		SiteUserPage oSiteUserPage = (SiteUserPage)this;
 		switch(var) {
 			default:
-				return super.obtainUtilisateurSiteEnUSGenPage(var);
+				return super.obtainSiteUserGenPage(var);
 		}
 	}
 
@@ -76,7 +89,7 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attributeUtilisateurSiteEnUSPage(v, val);
+				o = attributeSiteUserPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attributeForClass(v, val);
@@ -84,11 +97,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		}
 		return o != null;
 	}
-	public Object attributeUtilisateurSiteEnUSPage(String var, Object val) {
-		UtilisateurSiteEnUSPage oUtilisateurSiteEnUSPage = (UtilisateurSiteEnUSPage)this;
+	public Object attributeSiteUserPage(String var, Object val) {
+		SiteUserPage oSiteUserPage = (SiteUserPage)this;
 		switch(var) {
 			default:
-				return super.attributeUtilisateurSiteEnUSGenPage(var, val);
+				return super.attributeSiteUserGenPage(var, val);
 		}
 	}
 
@@ -102,7 +115,7 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = defineUtilisateurSiteEnUSPage(v, val);
+					o = defineSiteUserPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -111,10 +124,10 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 		}
 		return o != null;
 	}
-	public Object defineUtilisateurSiteEnUSPage(String var, String val) {
+	public Object defineSiteUserPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineUtilisateurSiteEnUSGenPage(var, val);
+				return super.defineSiteUserGenPage(var, val);
 		}
 	}
 
@@ -123,11 +136,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsUtilisateurSiteEnUSPage();
+		htmlScriptsSiteUserPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsUtilisateurSiteEnUSPage() {
+	public void htmlScriptsSiteUserPage() {
 	}
 
 	////////////////
@@ -135,11 +148,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptUtilisateurSiteEnUSPage();
+		htmlScriptSiteUserPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptUtilisateurSiteEnUSPage() {
+	public void htmlScriptSiteUserPage() {
 	}
 
 	//////////////
@@ -147,11 +160,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyUtilisateurSiteEnUSPage();
+		htmlBodySiteUserPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyUtilisateurSiteEnUSPage() {
+	public void htmlBodySiteUserPage() {
 	}
 
 	//////////
@@ -159,11 +172,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	//////////
 
 	@Override public void html() {
-		htmlUtilisateurSiteEnUSPage();
+		htmlSiteUserPage();
 		super.html();
 	}
 
-	public void htmlUtilisateurSiteEnUSPage() {
+	public void htmlSiteUserPage() {
 	}
 
 	//////////////
@@ -171,11 +184,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaUtilisateurSiteEnUSPage();
+		htmlMetaSiteUserPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaUtilisateurSiteEnUSPage() {
+	public void htmlMetaSiteUserPage() {
 	}
 
 	////////////////
@@ -183,11 +196,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesUtilisateurSiteEnUSPage();
+		htmlStylesSiteUserPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesUtilisateurSiteEnUSPage() {
+	public void htmlStylesSiteUserPage() {
 	}
 
 	///////////////
@@ -195,11 +208,11 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleUtilisateurSiteEnUSPage();
+		htmlStyleSiteUserPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleUtilisateurSiteEnUSPage() {
+	public void htmlStyleSiteUserPage() {
 	}
 
 	//////////////
@@ -217,9 +230,9 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof UtilisateurSiteEnUSPage))
+		if(!(o instanceof SiteUserPage))
 			return false;
-		UtilisateurSiteEnUSPage that = (UtilisateurSiteEnUSPage)o;
+		SiteUserPage that = (SiteUserPage)o;
 		return super.equals(o);
 	}
 
@@ -230,7 +243,7 @@ public abstract class UtilisateurSiteEnUSPageGen<DEV> extends UtilisateurSiteEnU
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("UtilisateurSiteEnUSPage {");
+		sb.append("SiteUserPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

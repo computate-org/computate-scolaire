@@ -2012,116 +2012,79 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeRoles == null ? "" : StringEscapeUtils.escapeHtml4(strClasseRoles());
 	}
 
-	/////////////////////////
-	// classePageLangueNom //
-	/////////////////////////
+	///////////////////////
+	// classeRolesLangue //
+	///////////////////////
 
-	/**	L'entité « classePageLangueNom »
+	/**	L'entité « classeRolesLangue »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String classePageLangueNom;
-	public Couverture<String> classePageLangueNomCouverture = new Couverture<String>().p(this).c(String.class).var("classePageLangueNom").o(classePageLangueNom);
+	protected List<String> classeRolesLangue;
+	public Couverture<List<String>> classeRolesLangueCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeRolesLangue").o(classeRolesLangue);
 
-	/**	<br/>L'entité « classePageLangueNom »
+	/**	<br/>L'entité « classeRolesLangue »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classePageLangueNom">Trouver l'entité classePageLangueNom dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeRolesLangue">Trouver l'entité classeRolesLangue dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _classePageLangueNom(Couverture<String> c);
+	protected abstract void _classeRolesLangue(Couverture<List<String>> c);
 
-	public String getClassePageLangueNom() {
-		return classePageLangueNom;
+	public List<String> getClasseRolesLangue() {
+		return classeRolesLangue;
 	}
 
-	public void setClassePageLangueNom(String classePageLangueNom) {
-		this.classePageLangueNom = classePageLangueNom;
-		this.classePageLangueNomCouverture.dejaInitialise = true;
+	public void setClasseRolesLangue(List<String> classeRolesLangue) {
+		this.classeRolesLangue = classeRolesLangue;
+		this.classeRolesLangueCouverture.dejaInitialise = true;
 	}
-	protected ApiEcrivain classePageLangueNomInit() {
-		if(!classePageLangueNomCouverture.dejaInitialise) {
-			_classePageLangueNom(classePageLangueNomCouverture);
-			if(classePageLangueNom == null)
-				setClassePageLangueNom(classePageLangueNomCouverture.o);
+	public ApiEcrivain addClasseRolesLangue(String...objets) {
+		for(String o : objets) {
+			addClasseRolesLangue(o);
 		}
-		classePageLangueNomCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+	public ApiEcrivain addClasseRolesLangue(String o) {
+		if(o != null && !classeRolesLangue.contains(o))
+			this.classeRolesLangue.add(o);
+		return (ApiEcrivain)this;
+	}
+	public ApiEcrivain setClasseRolesLangue(JsonArray objets) {
+		classeRolesLangue.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addClasseRolesLangue(o);
+		}
+		return (ApiEcrivain)this;
+	}
+	protected ApiEcrivain classeRolesLangueInit() {
+		if(!classeRolesLangueCouverture.dejaInitialise) {
+			_classeRolesLangue(classeRolesLangueCouverture);
+			if(classeRolesLangue == null)
+				setClasseRolesLangue(classeRolesLangueCouverture.o);
+		}
+		classeRolesLangueCouverture.dejaInitialise(true);
 		return (ApiEcrivain)this;
 	}
 
-	public String solrClassePageLangueNom() {
-		return classePageLangueNom;
+	public List<String> solrClasseRolesLangue() {
+		return classeRolesLangue;
 	}
 
-	public String strClassePageLangueNom() {
-		return classePageLangueNom == null ? "" : classePageLangueNom;
+	public String strClasseRolesLangue() {
+		return classeRolesLangue == null ? "" : classeRolesLangue.toString();
 	}
 
-	public String nomAffichageClassePageLangueNom() {
+	public String nomAffichageClasseRolesLangue() {
 		return null;
 	}
 
-	public String htmTooltipClassePageLangueNom() {
+	public String htmTooltipClasseRolesLangue() {
 		return null;
 	}
 
-	public String htmClassePageLangueNom() {
-		return classePageLangueNom == null ? "" : StringEscapeUtils.escapeHtml4(strClassePageLangueNom());
-	}
-
-	/////////////////////////
-	// classePageNomSimple //
-	/////////////////////////
-
-	/**	L'entité « classePageNomSimple »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String classePageNomSimple;
-	public Couverture<String> classePageNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classePageNomSimple").o(classePageNomSimple);
-
-	/**	<br/>L'entité « classePageNomSimple »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classePageNomSimple">Trouver l'entité classePageNomSimple dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _classePageNomSimple(Couverture<String> c);
-
-	public String getClassePageNomSimple() {
-		return classePageNomSimple;
-	}
-
-	public void setClassePageNomSimple(String classePageNomSimple) {
-		this.classePageNomSimple = classePageNomSimple;
-		this.classePageNomSimpleCouverture.dejaInitialise = true;
-	}
-	protected ApiEcrivain classePageNomSimpleInit() {
-		if(!classePageNomSimpleCouverture.dejaInitialise) {
-			_classePageNomSimple(classePageNomSimpleCouverture);
-			if(classePageNomSimple == null)
-				setClassePageNomSimple(classePageNomSimpleCouverture.o);
-		}
-		classePageNomSimpleCouverture.dejaInitialise(true);
-		return (ApiEcrivain)this;
-	}
-
-	public String solrClassePageNomSimple() {
-		return classePageNomSimple;
-	}
-
-	public String strClassePageNomSimple() {
-		return classePageNomSimple == null ? "" : classePageNomSimple;
-	}
-
-	public String nomAffichageClassePageNomSimple() {
-		return null;
-	}
-
-	public String htmTooltipClassePageNomSimple() {
-		return null;
-	}
-
-	public String htmClassePageNomSimple() {
-		return classePageNomSimple == null ? "" : StringEscapeUtils.escapeHtml4(strClassePageNomSimple());
+	public String htmClasseRolesLangue() {
+		return classeRolesLangue == null ? "" : StringEscapeUtils.escapeHtml4(strClasseRolesLangue());
 	}
 
 	///////////////
@@ -2275,8 +2238,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classeMotsClesInit();
 		classeRolesTrouvesInit();
 		classeRolesInit();
-		classePageLangueNomInit();
-		classePageNomSimpleInit();
+		classeRolesLangueInit();
 		langueNomInit();
 		entiteDocumentSolrInit();
 	}
@@ -2418,10 +2380,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeRolesTrouves;
 			case "classeRoles":
 				return oApiEcrivain.classeRoles;
-			case "classePageLangueNom":
-				return oApiEcrivain.classePageLangueNom;
-			case "classePageNomSimple":
-				return oApiEcrivain.classePageNomSimple;
+			case "classeRolesLangue":
+				return oApiEcrivain.classeRolesLangue;
 			case "langueNom":
 				return oApiEcrivain.langueNom;
 			case "entiteDocumentSolr":

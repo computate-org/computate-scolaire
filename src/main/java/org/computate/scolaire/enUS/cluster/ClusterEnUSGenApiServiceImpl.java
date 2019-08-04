@@ -67,8 +67,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
-import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
 
 
 /**
@@ -85,158 +84,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	public ClusterEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
 		ClusterEnUSGenApiService service = ClusterEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
-	}
-
-	// RechercheEnUSPage //
-
-	@Override
-	public void rechercheenuspageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		rechercheenuspageCluster(operationRequest, eventHandler);
-	}
-
-	@Override
-	public void rechercheenuspageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			sqlCluster(siteRequest, a -> {
-				if(a.succeeded()) {
-					userCluster(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, "/enUS/cluster", c -> {
-								if(c.succeeded()) {
-									SearchList<Cluster> listCluster = c.result();
-									response200RechercheEnUSPageCluster(listCluster, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorCluster(siteRequest, eventHandler, f);
-															}
-														});
-													} else {
-														errorCluster(siteRequest, eventHandler, e);
-													}
-												});
-											}
-										} else {
-											errorCluster(siteRequest, eventHandler, d);
-										}
-									});
-								} else {
-									errorCluster(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorCluster(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorCluster(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void response200RechercheEnUSPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			ClusterEnUSPage page = new ClusterEnUSPage();
-			SolrDocument pageSolrDocument = new SolrDocument();
-
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/cluster");
-			page.setPageSolrDocument(pageSolrDocument);
-			page.setW(w);
-			page.setListCluster(listCluster);
-			page.initDeepClusterEnUSPage(siteRequest);
-			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
-	// Recherche //
-
-	@Override
-	public void rechercheCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			aSearchCluster(siteRequest, false, true, null, a -> {
-				if(a.succeeded()) {
-					SearchList<Cluster> listCluster = a.result();
-					response200RechercheCluster(listCluster, b -> {
-						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
-						} else {
-							errorCluster(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorCluster(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
-		}
-	}
-
-	public void response200RechercheCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			QueryResponse responseSearch = listCluster.getQueryResponse();
-			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
-			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
-			Long transmissionInMillis = responseSearch.getElapsedTime();
-			Long startNum = responseSearch.getResults().getStart();
-			Long foundNum = responseSearch.getResults().getNumFound();
-			Integer returnedNum = responseSearch.getResults().size();
-			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
-			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
-			Exception exceptionSearch = responseSearch.getException();
-
-			w.l("{");
-			w.tl(1, "\"startNum\": ", startNum);
-			w.tl(1, ", \"foundNum\": ", foundNum);
-			w.tl(1, ", \"returnedNum\": ", returnedNum);
-			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
-			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
-			w.tl(1, ", \"list\": [");
-			for(int i = 0; i < listCluster.size(); i++) {
-				Cluster o = listCluster.getList().get(i);
-				Object entityValue;
-				Integer entityNumber = 0;
-
-				w.t(2);
-				if(i > 0)
-					w.s(", ");
-				w.l("{");
-
-				w.tl(2, "}");
-			}
-			w.tl(1, "]");
-			if(exceptionSearch != null) {
-				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
-			}
-			w.l("}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
 	}
 
 	// POST //
@@ -475,6 +322,26 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						o2.setCreated(requestJson.getInstant(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						break;
+					case "setModified":
+						o2.setModified(requestJson.getInstant(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						break;
+					case "setArchived":
+						o2.setArchived(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						break;
+					case "setDeleted":
+						o2.setDeleted(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						break;
 				}
 			}
 			sqlConnection.queryWithParams(
@@ -584,6 +451,49 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 				w.l("{");
 
+				entityValue = o.getPk();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
+
+				entityValue = o.getCreated();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
+
+				entityValue = o.getModified();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
+
+				entityValue = o.getArchived();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
+
+				entityValue = o.getDeleted();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
+
+				entityValue = o.getClassCanonicalName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
+
+				entityValue = o.getClassSimpleName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
+
+				{
+					List<String> entityValues = o.getClassCanonicalNames();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"classCanonicalNames\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entityValue));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
 				w.l("}");
 			}
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
@@ -670,6 +580,201 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			AllWriter w = AllWriter.create(siteRequest, buffer);
 			siteRequest.setW(w);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// Search //
+
+	@Override
+	public void searchCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			aSearchCluster(siteRequest, false, true, null, a -> {
+				if(a.succeeded()) {
+					SearchList<Cluster> listCluster = a.result();
+					response200SearchCluster(listCluster, b -> {
+						if(b.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(b.result()));
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorCluster(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200SearchCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			QueryResponse responseSearch = listCluster.getQueryResponse();
+			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			w.l("{");
+			w.tl(1, "\"startNum\": ", startNum);
+			w.tl(1, ", \"foundNum\": ", foundNum);
+			w.tl(1, ", \"returnedNum\": ", returnedNum);
+			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
+			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
+			w.tl(1, ", \"list\": [");
+			for(int i = 0; i < listCluster.size(); i++) {
+				Cluster o = listCluster.getList().get(i);
+				Object entityValue;
+				Integer entityNumber = 0;
+
+				w.t(2);
+				if(i > 0)
+					w.s(", ");
+				w.l("{");
+
+				entityValue = o.getPk();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
+
+				entityValue = o.getCreated();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
+
+				entityValue = o.getModified();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
+
+				entityValue = o.getArchived();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
+
+				entityValue = o.getDeleted();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
+
+				entityValue = o.getClassCanonicalName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
+
+				entityValue = o.getClassSimpleName();
+				if(entityValue != null)
+					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
+
+				{
+					List<String> entityValues = o.getClassCanonicalNames();
+					w.t(3, entityNumber++ == 0 ? "" : ", ");
+					w.s("\"classCanonicalNames\": [");
+					for(int k = 0; k < entityValues.size(); k++) {
+						entityValue = entityValues.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entityValue));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
+				w.tl(2, "}");
+			}
+			w.tl(1, "]");
+			if(exceptionSearch != null) {
+				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
+			}
+			w.l("}");
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// SearchPage //
+
+	@Override
+	public void searchpageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageCluster(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void searchpageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
+			sqlCluster(siteRequest, a -> {
+				if(a.succeeded()) {
+					userCluster(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchCluster(siteRequest, false, true, "/enUS/cluster", c -> {
+								if(c.succeeded()) {
+									SearchList<Cluster> listCluster = c.result();
+									response200SearchPageCluster(listCluster, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorCluster(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														errorCluster(siteRequest, eventHandler, e);
+													}
+												});
+											}
+										} else {
+											errorCluster(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorCluster(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorCluster(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200SearchPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
+			siteRequest.setW(w);
+			ClusterPage page = new ClusterPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/cluster");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			page.setListCluster(listCluster);
+			page.initDeepClusterPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

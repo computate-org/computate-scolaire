@@ -1,16 +1,8 @@
 package org.computate.scolaire.frFR.cluster;
 
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.util.List;
-import org.computate.scolaire.frFR.page.part.PagePart;
-import java.lang.Long;
-import java.lang.String;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.lang.Boolean;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import java.io.IOException;
@@ -20,6 +12,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.core.json.JsonArray;
@@ -27,12 +22,13 @@ import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
+import java.util.List;
 
 
 /**
  * Traduire: false
  **/
-public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
+public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 	/**
 	 * {@inheritDoc}
@@ -48,9 +44,9 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 
 	@Override protected void _pageH1(Couverture<String> c) {
 		if(cluster != null)
-			c.o("");
+			c.o("un cluster");
 		else if(listeCluster == null || listeCluster.size() == 0)
-			c.o("");
+			c.o("aucun cluster trouvé");
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
@@ -65,35 +61,35 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		if(cluster != null)
 			c.o("");
 		else if(listeCluster == null || listeCluster.size() == 0)
-			c.o("");
+			c.o("aucun cluster trouvé");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
 		c.o("/frFR/cluster");
 	}
 
-	@Override protected void _pageUriEnUS(Couverture<String> c) {
-		c.o("/enUS/cluster");
-	}
-
 	@Override protected void _pageImageUri(Couverture<String> c) {
 			c.o("/png/frFR/cluster-999.png");
 	}
 
-	@Override public void initLoinClusterFrFRGenPage() {
-		initClusterFrFRGenPage();
+	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
+			c.o("regular");
+	}
+
+	@Override protected void _contexteIconeNom(Couverture<String> c) {
+			c.o("fort-awesome");
+	}
+
+	@Override public void initLoinClusterGenPage() {
+		initClusterGenPage();
 		super.initLoinMiseEnPage();
 	}
 
-	@Override public void htmlScriptsClusterFrFRGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/ClusterFrFRPage.js").f().g("script");
+	@Override public void htmlScriptsClusterGenPage() {
+		e("script").a("src", statiqueUrlBase, "/js/ClusterPage.js").f().g("script");
 	}
 
-	protected void _pageUriCluster(Couverture<String> c) {
-			c.o("/frFR/cluster");
-	}
-
-	@Override public void htmlScriptClusterFrFRGenPage() {
+	@Override public void htmlScriptClusterGenPage() {
 	}
 
 	public void htmlFormPageCluster(Cluster o) {
@@ -180,7 +176,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodyClusterFrFRGenPage() {
+	@Override public void htmlBodyClusterGenPage() {
 
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
@@ -189,14 +185,14 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("").g("span");
+				e("span").a("class", " ").f().sx("aucun cluster trouvé").g("span");
 			} g("h1");
 		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("").g("span");
+					e("span").a("class", " ").f().sx("un cluster").g("span");
 				} g("h1");
 				Cluster o = listeCluster.get(0);
 			}
@@ -205,7 +201,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			{ e("h1").f();
 				if(contexteIconeClassesCss != null)
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("").g("span");
+				e("span").a("class", " ").f().sx("clusters").g("span");
 			} g("h1");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
@@ -232,7 +228,7 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "/api/cluster").a("id", "ClusterForm").a("style", "display: inline-block; ").f();
+					{ e("form").a("action", "").a("id", "ClusterForm").a("style", "display: inline-block; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")
@@ -245,35 +241,35 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 
 			} g("div");
 		}
-		htmlBodyFormsClusterFrFRGenPage();
+		htmlBodyFormsClusterGenPage();
 	}
 
-	public void htmlBodyFormsClusterFrFRGenPage() {
+	public void htmlBodyFormsClusterGenPage() {
 		e("div").f();
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 			.a("onclick", "$('#postClusterModale').show(); ")
-			.f().sx("Créer null")
+			.f().sx("Créer un cluster")
 		.g("button");
 		{ e("div").a("id", "postClusterModale").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3- ").f();
+				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Créer null").g("h2");
+					e("h2").a("class", "").f().sx("Créer un cluster").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
 
 					// Form POST
-					{ e("form").a("action", "/api/cluster").a("id", "postClusterForm").f();
+					{ e("form").a("action", "").a("id", "postClusterForm").f();
 						htmlFormPOSTCluster(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "postCluster($('#postClusterForm')); ")
-						.f().sx("Créer null")
+						.f().sx("Créer un cluster")
 					.g("button");
 
 				} g("div");
@@ -282,38 +278,38 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 			.a("onclick", "$('#patchClusterModale').show(); ")
-			.f().sx("Modifier des null")
+			.f().sx("Modifier des clusters")
 		.g("button");
 		{ e("div").a("id", "patchClusterModale").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3- ").f();
+				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modifier des null").g("h2");
+					e("h2").a("class", "").f().sx("Modifier des clusters").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
 
 					// FormulaireFiltres PATCH
-					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormulaireFiltres").f();
+					{ e("form").a("action", "").a("id", "patchClusterFormulaireFiltres").f();
 						htmlFormRechercheCluster(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "rechercheCluster($('#patchClusterFormulaireFiltres')); ")
-						.f().sx("Rechercher des null")
+						.f().sx("Rechercher des un cluster")
 					.g("button");
 
 
 					// FormulaireValeurs PATCH
-					{ e("form").a("action", "/api/cluster").a("id", "patchClusterFormulaireValeurs").f();
+					{ e("form").a("action", "").a("id", "patchClusterFormulaireValeurs").f();
 						htmlFormPATCHCluster(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "patchCluster($('#patchClusterFormulaireFiltres'), $('#patchClusterFormulaireValeurs')); ")
-						.f().sx("Modifier des null")
+						.f().sx("Modifier des clusters")
 					.g("button");
 
 				} g("div");
@@ -322,27 +318,27 @@ public class ClusterFrFRGenPage extends ClusterFrFRGenPageGen<MiseEnPage> {
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 			.a("onclick", "$('#deleteClusterModale').show(); ")
-			.f().sx("Supprimer des null")
+			.f().sx("Supprimer des clusters")
 		.g("button");
 		{ e("div").a("id", "deleteClusterModale").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3- ").f();
+				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Supprimer des null").g("h2");
+					e("h2").a("class", "").f().sx("Supprimer des clusters").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
 
 					// Form DELETE
-					{ e("form").a("action", "/api/cluster").a("id", "deleteClusterForm").f();
+					{ e("form").a("action", "").a("id", "deleteClusterForm").f();
 						htmlFormPATCHCluster(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- ")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "deleteCluster(); ")
-						.f().sx("Supprimer des null")
+						.f().sx("Supprimer des clusters")
 					.g("button");
 
 				} g("div");

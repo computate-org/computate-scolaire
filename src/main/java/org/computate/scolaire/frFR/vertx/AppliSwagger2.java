@@ -426,6 +426,8 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: classeMotsClesTrouves_
 	 * r: classKeywords_
 	 * r.enUS: classeMotsCles_
+	 * r: _frFR_
+	 * r.enUS: _enUS_
 	 */
 	public void ecrireApi() {
 		try {
@@ -466,11 +468,11 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 				for(Integer j = 0; j < rechercheClassesResultats.size(); j++) {
 					SolrDocument classeDocumentSolr = rechercheClassesResultats.get(j);
 
-					classeApiTag = StringUtils.defaultIfBlank((String)classeDocumentSolr.get("classApiTag_stored_string"), classeNomSimple + " API");
-					classeApiUri = (String)classeDocumentSolr.get("classeApiUri_stored_string");
+					classeApiTag = StringUtils.defaultIfBlank((String)classeDocumentSolr.get("classApiTag_frFR_stored_string"), classeNomSimple + " API");
+					classeApiUri = (String)classeDocumentSolr.get("classeApiUri_frFR_stored_string");
 					classeEstBase = (Boolean)classeDocumentSolr.get("classeEstBase_stored_boolean");
 
-					classeApiMethodes = (List<String>)classeDocumentSolr.get("classeApiMethodes_stored_strings");
+					classeApiMethodes = (List<String>)classeDocumentSolr.get("classeApiMethodes_frFR_stored_strings");
 					classeUris = new ArrayList<>();
 					if(classeApiMethodes == null)
 						classeApiMethodes = new ArrayList<>();

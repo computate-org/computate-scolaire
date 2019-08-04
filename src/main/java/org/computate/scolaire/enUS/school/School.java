@@ -8,57 +8,57 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 
 public class School extends SchoolGen<Cluster> {
 
-	protected void _ecoleCle(Wrap<Long> c) {
+	protected void _schoolKey(Wrap<Long> c) {
 		c.o(pk);
 	}
 
-	protected void _enfantCles(List<Long> o) {}
+	protected void _childKeys(List<Long> o) {}
 
-	protected void _blocCles(List<Long> o) {}
+	protected void _blockKeys(List<Long> o) {}
 
-	protected void _groupeAgeCles(List<Long> o) {}
+	protected void _ageGroupKeys(List<Long> o) {}
 
-	protected void _sessionCles(List<Long> o) {}
+	protected void _sessionKeys(List<Long> o) {}
 
-	protected void _saisonCles(List<Long> o) {}
+	protected void _seasonKeys(List<Long> o) {}
 
-	protected void _anneeCles(List<Long> o) {}
+	protected void _yearKeys(List<Long> o) {}
 
-	protected void _scolaireTri(Wrap<Integer> c) {
+	protected void _educationSort(Wrap<Integer> c) {
 		c.o(1);
 	}
 
-	protected void _ecoleTri(Wrap<Integer> c) {
+	protected void _schoolSort(Wrap<Integer> c) {
 		c.o(1);
 	}
 
-	protected void _ecoleNom(Wrap<String> c) {
+	protected void _schoolName(Wrap<String> c) {
 	}
 
-	protected void _ecoleNumeroTelephone(Wrap<String> c) {
+	protected void _schoolPhoneNumber(Wrap<String> c) {
 	}
 
-	protected void _ecoleAdministrateurNom(Wrap<String> c) {
+	protected void _schoolAdministratorName(Wrap<String> c) {
 	}
 
-	protected void _ecoleAddresse(Wrap<String> c) {
+	protected void _schoolAddress(Wrap<String> c) {
 	}
 
-	protected void _objetSuggerePoids(Wrap<Double> c) {
+	protected void _objectSuggestWeight(Wrap<Double> c) {
 		c.o(1D);
 	}
 
-	protected void _objetSuggere(Wrap<String> c) { 
-		c.o(ecoleNom);
+	protected void _objectSuggest(Wrap<String> c) { 
+		c.o(schoolName);
 	}
 
-	protected void _ecoleNomCourt(Wrap<String> c) {
-		c.o(ecoleNom);
+	protected void _schoolNameShort(Wrap<String> c) {
+		c.o(schoolName);
 	}
 
-	protected void _ecoleId(Wrap<String> c) {
-		if(ecoleNom != null) {
-			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);
+	protected void _schoolId(Wrap<String> c) {
+		if(schoolName != null) {
+			String s = Normalizer.normalize(schoolName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -72,8 +72,8 @@ public class School extends SchoolGen<Cluster> {
 	}
 
 	protected void _pageUri(Wrap<String> c) {
-		if(ecoleId != null) {
-			String o = "/ecole/" + ecoleId;
+		if(schoolId != null) {
+			String o = "/ecole/" + schoolId;
 			c.o(o);
 		}
 	}

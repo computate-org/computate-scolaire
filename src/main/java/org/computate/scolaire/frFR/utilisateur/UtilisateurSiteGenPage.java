@@ -1,8 +1,6 @@
 package org.computate.scolaire.frFR.utilisateur;
 
-import java.lang.String;
-import java.lang.Boolean;
-import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -31,7 +29,7 @@ import java.util.List;
 /**
  * Traduire: false
  **/
-public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<ClusterFrFRPage> {
+public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPage> {
 
 	/**
 	 * {@inheritDoc}
@@ -68,15 +66,11 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/utilisateur");
-	}
-
-	@Override protected void _pageUriEnUS(Couverture<String> c) {
-		c.o("/enUS/user");
+		c.o("/frFR/api/utilisateur");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/utilisateur-999.png");
+			c.o("/png/frFR/api/utilisateur-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -87,20 +81,16 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 			c.o("book");
 	}
 
-	@Override public void initLoinUtilisateurSiteFrFRGenPage() {
-		initUtilisateurSiteFrFRGenPage();
+	@Override public void initLoinUtilisateurSiteGenPage() {
+		initUtilisateurSiteGenPage();
 		super.initLoinMiseEnPage();
 	}
 
-	@Override public void htmlScriptsUtilisateurSiteFrFRGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
+	@Override public void htmlScriptsUtilisateurSiteGenPage() {
+		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSitePage.js").f().g("script");
 	}
 
-	protected void _pageUriUtilisateurSite(Couverture<String> c) {
-			c.o("/frFR/utilisateur");
-	}
-
-	@Override public void htmlScriptUtilisateurSiteFrFRGenPage() {
+	@Override public void htmlScriptUtilisateurSiteGenPage() {
 	}
 
 	public void htmlFormPageUtilisateurSite(UtilisateurSite o) {
@@ -291,7 +281,7 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 		} g("div");
 	}
 
-	@Override public void htmlBodyUtilisateurSiteFrFRGenPage() {
+	@Override public void htmlBodyUtilisateurSiteGenPage() {
 
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
@@ -329,7 +319,7 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 						UtilisateurSite o = listeUtilisateurSite.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/utilisateur/" + o.getPk();
+						String uri = "/frFR/api/utilisateur/" + o.getPk();
 						{ e("tr").f();
 						} g("tr");
 					}
@@ -343,7 +333,7 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; ").f();
+					{ e("form").a("action", "").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")
@@ -359,10 +349,10 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 
 			} g("div");
 		}
-		htmlBodyFormsUtilisateurSiteFrFRGenPage();
+		htmlBodyFormsUtilisateurSiteGenPage();
 	}
 
-	public void htmlBodyFormsUtilisateurSiteFrFRGenPage() {
+	public void htmlBodyFormsUtilisateurSiteGenPage() {
 		e("div").f();
 
 
@@ -381,7 +371,7 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 					UtilisateurSite o = new UtilisateurSite();
 
 					// FormulaireFiltres PATCH
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "patchUtilisateurSiteFormulaireFiltres").f();
+					{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireFiltres").f();
 						htmlFormRechercheUtilisateurSite(o);
 					} g("form");
 					e("button")
@@ -392,7 +382,7 @@ public class UtilisateurSiteFrFRGenPage extends UtilisateurSiteFrFRGenPageGen<Cl
 
 
 					// FormulaireValeurs PATCH
-					{ e("form").a("action", "/api/site/utilisateur").a("id", "patchUtilisateurSiteFormulaireValeurs").f();
+					{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").f();
 						htmlFormPATCHUtilisateurSite(o);
 					} g("form");
 					e("button")

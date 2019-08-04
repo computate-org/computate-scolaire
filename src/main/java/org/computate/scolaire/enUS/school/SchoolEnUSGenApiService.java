@@ -32,11 +32,11 @@ public interface SchoolEnUSGenApiService {
 		return new SchoolEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
-	public void rechercheenuspageEcoleId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void rechercheenuspageEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void patchEcole(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void postEcole(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void getEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void deleteEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void rechercheEcole(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void postSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void patchSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void getSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void deleteSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchpageSchoolId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void searchpageSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

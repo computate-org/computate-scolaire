@@ -1,23 +1,22 @@
 package org.computate.scolaire.enUS.school;
 
 import java.util.Objects;
-import org.computate.scolaire.enUS.cluster.ClusterEnUSPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.school.School;
 import org.apache.commons.text.StringEscapeUtils;
-import java.lang.String;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.apache.commons.lang3.StringUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.EcoleEnUSGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
+public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 
 	////////////////
 	// listSchool //
@@ -31,7 +30,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 
 	/**	<br/>L'entité « listSchool »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.EcoleEnUSGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchool">Trouver l'entité listSchool dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchool">Trouver l'entité listSchool dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -45,7 +44,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		this.listSchool = listSchool;
 		this.listSchoolWrap.alreadyInitialized = true;
 	}
-	protected EcoleEnUSGenPage listSchoolInit() {
+	protected SchoolGenPage listSchoolInit() {
 		if(!listSchoolWrap.alreadyInitialized) {
 			_listSchool(listSchoolWrap);
 			if(listSchool == null)
@@ -54,7 +53,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		if(listSchool != null)
 			listSchool.initDeepForClass(siteRequest_);
 		listSchoolWrap.alreadyInitialized(true);
-		return (EcoleEnUSGenPage)this;
+		return (SchoolGenPage)this;
 	}
 
 	////////////
@@ -69,7 +68,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 
 	/**	<br/>L'entité « school »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.EcoleEnUSGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school">Trouver l'entité school dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school">Trouver l'entité school dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +82,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		this.school = school;
 		this.schoolWrap.alreadyInitialized = true;
 	}
-	protected EcoleEnUSGenPage schoolInit() {
+	protected SchoolGenPage schoolInit() {
 		if(!schoolWrap.alreadyInitialized) {
 			_school(schoolWrap);
 			if(school == null)
@@ -92,101 +91,44 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		if(school != null)
 			school.initDeepForClass(siteRequest_);
 		schoolWrap.alreadyInitialized(true);
-		return (EcoleEnUSGenPage)this;
-	}
-
-	///////////////////
-	// pageUriSchool //
-	///////////////////
-
-	/**	L'entité « pageUriSchool »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriSchool;
-	public Wrap<String> pageUriSchoolWrap = new Wrap<String>().p(this).c(String.class).var("pageUriSchool").o(pageUriSchool);
-
-	/**	<br/>L'entité « pageUriSchool »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.EcoleEnUSGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUriSchool">Trouver l'entité pageUriSchool dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriSchool(Wrap<String> c);
-
-	public String getPageUriSchool() {
-		return pageUriSchool;
-	}
-
-	public void setPageUriSchool(String pageUriSchool) {
-		this.pageUriSchool = pageUriSchool;
-		this.pageUriSchoolWrap.alreadyInitialized = true;
-	}
-	protected EcoleEnUSGenPage pageUriSchoolInit() {
-		if(!pageUriSchoolWrap.alreadyInitialized) {
-			_pageUriSchool(pageUriSchoolWrap);
-			if(pageUriSchool == null)
-				setPageUriSchool(pageUriSchoolWrap.o);
-		}
-		pageUriSchoolWrap.alreadyInitialized(true);
-		return (EcoleEnUSGenPage)this;
-	}
-
-	public String solrPageUriSchool() {
-		return pageUriSchool;
-	}
-
-	public String strPageUriSchool() {
-		return pageUriSchool == null ? "" : pageUriSchool;
-	}
-
-	public String nomAffichagePageUriSchool() {
-		return null;
-	}
-
-	public String htmTooltipPageUriSchool() {
-		return null;
-	}
-
-	public String htmPageUriSchool() {
-		return pageUriSchool == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriSchool());
+		return (SchoolGenPage)this;
 	}
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	protected boolean alreadyInitializedEcoleEnUSGenPage = false;
+	protected boolean alreadyInitializedSchoolGenPage = false;
 
-	public EcoleEnUSGenPage initDeepEcoleEnUSGenPage(SiteRequestEnUS siteRequest_) {
+	public SchoolGenPage initDeepSchoolGenPage(SiteRequestEnUS siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		if(!alreadyInitializedEcoleEnUSGenPage) {
-			alreadyInitializedEcoleEnUSGenPage = true;
-			initDeepEcoleEnUSGenPage();
+		if(!alreadyInitializedSchoolGenPage) {
+			alreadyInitializedSchoolGenPage = true;
+			initDeepSchoolGenPage();
 		}
-		return (EcoleEnUSGenPage)this;
+		return (SchoolGenPage)this;
 	}
 
-	public void initDeepEcoleEnUSGenPage() {
-		super.initDeepClusterEnUSPage(siteRequest_);
-		initEcoleEnUSGenPage();
+	public void initDeepSchoolGenPage() {
+		super.initDeepClusterPage(siteRequest_);
+		initSchoolGenPage();
 	}
 
-	public void initEcoleEnUSGenPage() {
+	public void initSchoolGenPage() {
 		listSchoolInit();
 		schoolInit();
-		pageUriSchoolInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
-		initDeepEcoleEnUSGenPage(siteRequest_);
+		initDeepSchoolGenPage(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestEcoleEnUSGenPage(SiteRequestEnUS siteRequest_) {
-			super.siteRequestClusterEnUSPage(siteRequest_);
+	public void siteRequestSchoolGenPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterPage(siteRequest_);
 		if(listSchool != null)
 			listSchool.setSiteRequest_(siteRequest_);
 		if(school != null)
@@ -194,7 +136,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestEcoleEnUSGenPage(siteRequest_);
+		siteRequestSchoolGenPage(siteRequest_);
 	}
 
 	/////////////
@@ -206,7 +148,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainEcoleEnUSGenPage(v);
+				o = obtainSchoolGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
@@ -214,17 +156,15 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		}
 		return o;
 	}
-	public Object obtainEcoleEnUSGenPage(String var) {
-		EcoleEnUSGenPage oEcoleEnUSGenPage = (EcoleEnUSGenPage)this;
+	public Object obtainSchoolGenPage(String var) {
+		SchoolGenPage oSchoolGenPage = (SchoolGenPage)this;
 		switch(var) {
 			case "listSchool":
-				return oEcoleEnUSGenPage.listSchool;
+				return oSchoolGenPage.listSchool;
 			case "school":
-				return oEcoleEnUSGenPage.school;
-			case "pageUriSchool":
-				return oEcoleEnUSGenPage.pageUriSchool;
+				return oSchoolGenPage.school;
 			default:
-				return super.obtainClusterEnUSPage(var);
+				return super.obtainClusterPage(var);
 		}
 	}
 
@@ -237,7 +177,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attributeEcoleEnUSGenPage(v, val);
+				o = attributeSchoolGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attributeForClass(v, val);
@@ -245,11 +185,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		}
 		return o != null;
 	}
-	public Object attributeEcoleEnUSGenPage(String var, Object val) {
-		EcoleEnUSGenPage oEcoleEnUSGenPage = (EcoleEnUSGenPage)this;
+	public Object attributeSchoolGenPage(String var, Object val) {
+		SchoolGenPage oSchoolGenPage = (SchoolGenPage)this;
 		switch(var) {
 			default:
-				return super.attributeClusterEnUSPage(var, val);
+				return super.attributeClusterPage(var, val);
 		}
 	}
 
@@ -263,7 +203,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = defineEcoleEnUSGenPage(v, val);
+					o = defineSchoolGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -272,10 +212,10 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 		}
 		return o != null;
 	}
-	public Object defineEcoleEnUSGenPage(String var, String val) {
+	public Object defineSchoolGenPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineClusterEnUSPage(var, val);
+				return super.defineClusterPage(var, val);
 		}
 	}
 
@@ -284,11 +224,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsEcoleEnUSGenPage();
+		htmlScriptsSchoolGenPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsEcoleEnUSGenPage() {
+	public void htmlScriptsSchoolGenPage() {
 	}
 
 	////////////////
@@ -296,11 +236,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptEcoleEnUSGenPage();
+		htmlScriptSchoolGenPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptEcoleEnUSGenPage() {
+	public void htmlScriptSchoolGenPage() {
 	}
 
 	//////////////
@@ -308,11 +248,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyEcoleEnUSGenPage();
+		htmlBodySchoolGenPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyEcoleEnUSGenPage() {
+	public void htmlBodySchoolGenPage() {
 		if(school != null)
 			school.htmlBody();
 	}
@@ -322,11 +262,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	//////////
 
 	@Override public void html() {
-		htmlEcoleEnUSGenPage();
+		htmlSchoolGenPage();
 		super.html();
 	}
 
-	public void htmlEcoleEnUSGenPage() {
+	public void htmlSchoolGenPage() {
 	}
 
 	//////////////
@@ -334,11 +274,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaEcoleEnUSGenPage();
+		htmlMetaSchoolGenPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaEcoleEnUSGenPage() {
+	public void htmlMetaSchoolGenPage() {
 	}
 
 	////////////////
@@ -346,11 +286,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesEcoleEnUSGenPage();
+		htmlStylesSchoolGenPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesEcoleEnUSGenPage() {
+	public void htmlStylesSchoolGenPage() {
 	}
 
 	///////////////
@@ -358,11 +298,11 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleEcoleEnUSGenPage();
+		htmlStyleSchoolGenPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleEcoleEnUSGenPage() {
+	public void htmlStyleSchoolGenPage() {
 	}
 
 	//////////////
@@ -380,9 +320,9 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof EcoleEnUSGenPage))
+		if(!(o instanceof SchoolGenPage))
 			return false;
-		EcoleEnUSGenPage that = (EcoleEnUSGenPage)o;
+		SchoolGenPage that = (SchoolGenPage)o;
 		return super.equals(o);
 	}
 
@@ -393,7 +333,7 @@ public abstract class EcoleEnUSGenPageGen<DEV> extends ClusterEnUSPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("EcoleEnUSGenPage {");
+		sb.append("SchoolGenPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

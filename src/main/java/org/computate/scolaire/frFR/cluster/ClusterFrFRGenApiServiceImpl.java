@@ -67,7 +67,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.cluster.ClusterFrFRPage;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
 
 
 /**
@@ -84,201 +84,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	public ClusterFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
 		ClusterFrFRGenApiService service = ClusterFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
-	}
-
-	// RechercheFrFRPage //
-
-	@Override
-	public void recherchefrfrpageClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		recherchefrfrpageCluster(operationRequete, gestionnaireEvenements);
-	}
-
-	@Override
-	public void recherchefrfrpageCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
-			sqlCluster(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurCluster(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/frFR/cluster", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<Cluster> listeCluster = c.result();
-									reponse200RechercheFrFRPageCluster(listeCluster, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurCluster(requeteSite, gestionnaireEvenements, f);
-															}
-														});
-													} else {
-														erreurCluster(requeteSite, gestionnaireEvenements, e);
-													}
-												});
-											}
-										} else {
-											erreurCluster(requeteSite, gestionnaireEvenements, d);
-										}
-									});
-								} else {
-									erreurCluster(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200RechercheFrFRPageCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			ClusterFrFRPage page = new ClusterFrFRPage();
-			SolrDocument pageDocumentSolr = new SolrDocument();
-
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/cluster");
-			page.setPageDocumentSolr(pageDocumentSolr);
-			page.setW(w);
-			page.setListeCluster(listeCluster);
-			page.initLoinClusterFrFRPage(requeteSite);
-			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
-	}
-
-	// Recherche //
-
-	@Override
-	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
-			rechercheCluster(requeteSite, false, true, null, a -> {
-				if(a.succeeded()) {
-					ListeRecherche<Cluster> listeCluster = a.result();
-					reponse200RechercheCluster(listeCluster, b -> {
-						if(b.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
-						} else {
-							erreurCluster(requeteSite, gestionnaireEvenements, b);
-						}
-					});
-				} else {
-					erreurCluster(requeteSite, gestionnaireEvenements, a);
-				}
-			});
-		} catch(Exception e) {
-			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
-		}
-	}
-
-	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		try {
-			Buffer buffer = Buffer.buffer();
-			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
-			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
-			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
-			Long millisTransmission = reponseRecherche.getElapsedTime();
-			Long numCommence = reponseRecherche.getResults().getStart();
-			Long numTrouve = reponseRecherche.getResults().getNumFound();
-			Integer numRetourne = reponseRecherche.getResults().size();
-			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
-			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
-			Exception exceptionRecherche = reponseRecherche.getException();
-
-			w.l("{");
-			w.tl(1, "\"numCommence\": ", numCommence);
-			w.tl(1, ", \"numTrouve\": ", numTrouve);
-			w.tl(1, ", \"numRetourne\": ", numRetourne);
-			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
-			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
-			w.tl(1, ", \"liste\": [");
-			for(int i = 0; i < listeCluster.size(); i++) {
-				Cluster o = listeCluster.getList().get(i);
-				Object entiteValeur;
-				Integer entiteNumero = 0;
-
-				w.t(2);
-				if(i > 0)
-					w.s(", ");
-				w.l("{");
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomSimple();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
-
-				{
-					List<String> entiteValeurs = o.getClasseNomsCanoniques();
-					w.t(3, entiteNumero++ == 0 ? "" : ", ");
-					w.s("\"classeNomsCanoniques\": [");
-					for(int k = 0; k < entiteValeurs.size(); k++) {
-						entiteValeur = entiteValeurs.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entiteValeur));
-						w.s("\"");
-					}
-					w.l("]");
-				}
-
-				w.tl(2, "}");
-			}
-			w.tl(1, "]");
-			if(exceptionRecherche != null) {
-				w.tl(1, ", \"exceptionRecherche\": ", w.q(exceptionRecherche.getMessage()));
-			}
-			w.l("}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
-		} catch(Exception e) {
-			gestionnaireEvenements.handle(Future.failedFuture(e));
-		}
 	}
 
 	// POST //
@@ -775,6 +580,201 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
 			requeteSite.setW(w);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// Recherche //
+
+	@Override
+	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			rechercheCluster(requeteSite, false, true, null, a -> {
+				if(a.succeeded()) {
+					ListeRecherche<Cluster> listeCluster = a.result();
+					reponse200RechercheCluster(listeCluster, b -> {
+						if(b.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200RechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
+			QueryResponse reponseRecherche = listeCluster.getQueryResponse();
+			SolrDocumentList documentsSolr = listeCluster.getSolrDocumentList();
+			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
+			Long millisTransmission = reponseRecherche.getElapsedTime();
+			Long numCommence = reponseRecherche.getResults().getStart();
+			Long numTrouve = reponseRecherche.getResults().getNumFound();
+			Integer numRetourne = reponseRecherche.getResults().size();
+			String tempsRecherche = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisRecherche), TimeUnit.MILLISECONDS.toMillis(millisRecherche) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millisRecherche)));
+			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
+			Exception exceptionRecherche = reponseRecherche.getException();
+
+			w.l("{");
+			w.tl(1, "\"numCommence\": ", numCommence);
+			w.tl(1, ", \"numTrouve\": ", numTrouve);
+			w.tl(1, ", \"numRetourne\": ", numRetourne);
+			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
+			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
+			w.tl(1, ", \"liste\": [");
+			for(int i = 0; i < listeCluster.size(); i++) {
+				Cluster o = listeCluster.getList().get(i);
+				Object entiteValeur;
+				Integer entiteNumero = 0;
+
+				w.t(2);
+				if(i > 0)
+					w.s(", ");
+				w.l("{");
+
+				entiteValeur = o.getPk();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
+
+				entiteValeur = o.getCree();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getModifie();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getArchive();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
+
+				entiteValeur = o.getSupprime();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
+
+				entiteValeur = o.getClasseNomCanonique();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
+
+				entiteValeur = o.getClasseNomSimple();
+				if(entiteValeur != null)
+					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
+
+				{
+					List<String> entiteValeurs = o.getClasseNomsCanoniques();
+					w.t(3, entiteNumero++ == 0 ? "" : ", ");
+					w.s("\"classeNomsCanoniques\": [");
+					for(int k = 0; k < entiteValeurs.size(); k++) {
+						entiteValeur = entiteValeurs.get(k);
+						if(k > 0)
+							w.s(", ");
+						w.s("\"");
+						w.s(((String)entiteValeur));
+						w.s("\"");
+					}
+					w.l("]");
+				}
+
+				w.tl(2, "}");
+			}
+			w.tl(1, "]");
+			if(exceptionRecherche != null) {
+				w.tl(1, ", \"exceptionRecherche\": ", w.q(exceptionRecherche.getMessage()));
+			}
+			w.l("}");
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// PageRecherche //
+
+	@Override
+	public void pagerechercheClusterId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		pagerechercheCluster(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void pagerechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+			sqlCluster(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurCluster(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheCluster(requeteSite, false, true, "/frFR/cluster", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<Cluster> listeCluster = c.result();
+									reponse200PageRechercheCluster(listeCluster, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurCluster(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														erreurCluster(requeteSite, gestionnaireEvenements, e);
+													}
+												});
+											}
+										} else {
+											erreurCluster(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurCluster(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurCluster(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200PageRechercheCluster(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Buffer buffer = Buffer.buffer();
+			RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
+			ToutEcrivain w = ToutEcrivain.creer(listeCluster.getRequeteSite_(), buffer);
+			requeteSite.setW(w);
+			ClusterPage page = new ClusterPage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/cluster");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			page.setListeCluster(listeCluster);
+			page.initLoinClusterPage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

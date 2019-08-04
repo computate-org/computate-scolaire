@@ -3,21 +3,20 @@ package org.computate.scolaire.frFR.ecole;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleScolaireGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
+public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 
 	////////////////
 	// listeEcole //
@@ -31,7 +30,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 
 	/**	<br/>L'entité « listeEcole »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleScolaireGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeEcole">Trouver l'entité listeEcole dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeEcole">Trouver l'entité listeEcole dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -45,7 +44,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		this.listeEcole = listeEcole;
 		this.listeEcoleCouverture.dejaInitialise = true;
 	}
-	protected EcoleScolaireGenPage listeEcoleInit() {
+	protected EcoleGenPage listeEcoleInit() {
 		if(!listeEcoleCouverture.dejaInitialise) {
 			_listeEcole(listeEcoleCouverture);
 			if(listeEcole == null)
@@ -54,7 +53,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		if(listeEcole != null)
 			listeEcole.initLoinPourClasse(requeteSite_);
 		listeEcoleCouverture.dejaInitialise(true);
-		return (EcoleScolaireGenPage)this;
+		return (EcoleGenPage)this;
 	}
 
 	///////////
@@ -69,7 +68,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 
 	/**	<br/>L'entité « ecole »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleScolaireGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole">Trouver l'entité ecole dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole">Trouver l'entité ecole dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +82,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		this.ecole = ecole;
 		this.ecoleCouverture.dejaInitialise = true;
 	}
-	protected EcoleScolaireGenPage ecoleInit() {
+	protected EcoleGenPage ecoleInit() {
 		if(!ecoleCouverture.dejaInitialise) {
 			_ecole(ecoleCouverture);
 			if(ecole == null)
@@ -92,101 +91,44 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		if(ecole != null)
 			ecole.initLoinPourClasse(requeteSite_);
 		ecoleCouverture.dejaInitialise(true);
-		return (EcoleScolaireGenPage)this;
-	}
-
-	//////////////////
-	// pageUriEcole //
-	//////////////////
-
-	/**	L'entité « pageUriEcole »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriEcole;
-	public Couverture<String> pageUriEcoleCouverture = new Couverture<String>().p(this).c(String.class).var("pageUriEcole").o(pageUriEcole);
-
-	/**	<br/>L'entité « pageUriEcole »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleScolaireGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUriEcole">Trouver l'entité pageUriEcole dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriEcole(Couverture<String> c);
-
-	public String getPageUriEcole() {
-		return pageUriEcole;
-	}
-
-	public void setPageUriEcole(String pageUriEcole) {
-		this.pageUriEcole = pageUriEcole;
-		this.pageUriEcoleCouverture.dejaInitialise = true;
-	}
-	protected EcoleScolaireGenPage pageUriEcoleInit() {
-		if(!pageUriEcoleCouverture.dejaInitialise) {
-			_pageUriEcole(pageUriEcoleCouverture);
-			if(pageUriEcole == null)
-				setPageUriEcole(pageUriEcoleCouverture.o);
-		}
-		pageUriEcoleCouverture.dejaInitialise(true);
-		return (EcoleScolaireGenPage)this;
-	}
-
-	public String solrPageUriEcole() {
-		return pageUriEcole;
-	}
-
-	public String strPageUriEcole() {
-		return pageUriEcole == null ? "" : pageUriEcole;
-	}
-
-	public String nomAffichagePageUriEcole() {
-		return null;
-	}
-
-	public String htmTooltipPageUriEcole() {
-		return null;
-	}
-
-	public String htmPageUriEcole() {
-		return pageUriEcole == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriEcole());
+		return (EcoleGenPage)this;
 	}
 
 	//////////////
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseEcoleScolaireGenPage = false;
+	protected boolean dejaInitialiseEcoleGenPage = false;
 
-	public EcoleScolaireGenPage initLoinEcoleScolaireGenPage(RequeteSiteFrFR requeteSite_) {
+	public EcoleGenPage initLoinEcoleGenPage(RequeteSiteFrFR requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseEcoleScolaireGenPage) {
-			dejaInitialiseEcoleScolaireGenPage = true;
-			initLoinEcoleScolaireGenPage();
+		if(!dejaInitialiseEcoleGenPage) {
+			dejaInitialiseEcoleGenPage = true;
+			initLoinEcoleGenPage();
 		}
-		return (EcoleScolaireGenPage)this;
+		return (EcoleGenPage)this;
 	}
 
-	public void initLoinEcoleScolaireGenPage() {
-		super.initLoinMiseEnPage(requeteSite_);
-		initEcoleScolaireGenPage();
+	public void initLoinEcoleGenPage() {
+		super.initLoinClusterPage(requeteSite_);
+		initEcoleGenPage();
 	}
 
-	public void initEcoleScolaireGenPage() {
+	public void initEcoleGenPage() {
 		listeEcoleInit();
 		ecoleInit();
-		pageUriEcoleInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinEcoleScolaireGenPage(requeteSite_);
+		initLoinEcoleGenPage(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteEcoleScolaireGenPage(RequeteSiteFrFR requeteSite_) {
-			super.requeteSiteMiseEnPage(requeteSite_);
+	public void requeteSiteEcoleGenPage(RequeteSiteFrFR requeteSite_) {
+			super.requeteSiteClusterPage(requeteSite_);
 		if(listeEcole != null)
 			listeEcole.setRequeteSite_(requeteSite_);
 		if(ecole != null)
@@ -194,7 +136,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteEcoleScolaireGenPage(requeteSite_);
+		requeteSiteEcoleGenPage(requeteSite_);
 	}
 
 	/////////////
@@ -206,7 +148,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirEcoleScolaireGenPage(v);
+				o = obtenirEcoleGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -214,17 +156,15 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o;
 	}
-	public Object obtenirEcoleScolaireGenPage(String var) {
-		EcoleScolaireGenPage oEcoleScolaireGenPage = (EcoleScolaireGenPage)this;
+	public Object obtenirEcoleGenPage(String var) {
+		EcoleGenPage oEcoleGenPage = (EcoleGenPage)this;
 		switch(var) {
 			case "listeEcole":
-				return oEcoleScolaireGenPage.listeEcole;
+				return oEcoleGenPage.listeEcole;
 			case "ecole":
-				return oEcoleScolaireGenPage.ecole;
-			case "pageUriEcole":
-				return oEcoleScolaireGenPage.pageUriEcole;
+				return oEcoleGenPage.ecole;
 			default:
-				return super.obtenirMiseEnPage(var);
+				return super.obtenirClusterPage(var);
 		}
 	}
 
@@ -237,7 +177,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerEcoleScolaireGenPage(v, val);
+				o = attribuerEcoleGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -245,11 +185,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o != null;
 	}
-	public Object attribuerEcoleScolaireGenPage(String var, Object val) {
-		EcoleScolaireGenPage oEcoleScolaireGenPage = (EcoleScolaireGenPage)this;
+	public Object attribuerEcoleGenPage(String var, Object val) {
+		EcoleGenPage oEcoleGenPage = (EcoleGenPage)this;
 		switch(var) {
 			default:
-				return super.attribuerMiseEnPage(var, val);
+				return super.attribuerClusterPage(var, val);
 		}
 	}
 
@@ -263,7 +203,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirEcoleScolaireGenPage(v, val);
+					o = definirEcoleGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -272,10 +212,10 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 		}
 		return o != null;
 	}
-	public Object definirEcoleScolaireGenPage(String var, String val) {
+	public Object definirEcoleGenPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirMiseEnPage(var, val);
+				return super.definirClusterPage(var, val);
 		}
 	}
 
@@ -284,11 +224,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsEcoleScolaireGenPage();
+		htmlScriptsEcoleGenPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsEcoleScolaireGenPage() {
+	public void htmlScriptsEcoleGenPage() {
 	}
 
 	////////////////
@@ -296,11 +236,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptEcoleScolaireGenPage();
+		htmlScriptEcoleGenPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptEcoleScolaireGenPage() {
+	public void htmlScriptEcoleGenPage() {
 	}
 
 	//////////////
@@ -308,11 +248,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyEcoleScolaireGenPage();
+		htmlBodyEcoleGenPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyEcoleScolaireGenPage() {
+	public void htmlBodyEcoleGenPage() {
 		if(ecole != null)
 			ecole.htmlBody();
 	}
@@ -322,11 +262,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	//////////
 
 	@Override public void html() {
-		htmlEcoleScolaireGenPage();
+		htmlEcoleGenPage();
 		super.html();
 	}
 
-	public void htmlEcoleScolaireGenPage() {
+	public void htmlEcoleGenPage() {
 	}
 
 	//////////////
@@ -334,11 +274,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaEcoleScolaireGenPage();
+		htmlMetaEcoleGenPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaEcoleScolaireGenPage() {
+	public void htmlMetaEcoleGenPage() {
 	}
 
 	////////////////
@@ -346,11 +286,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesEcoleScolaireGenPage();
+		htmlStylesEcoleGenPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesEcoleScolaireGenPage() {
+	public void htmlStylesEcoleGenPage() {
 	}
 
 	///////////////
@@ -358,11 +298,11 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleEcoleScolaireGenPage();
+		htmlStyleEcoleGenPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleEcoleScolaireGenPage() {
+	public void htmlStyleEcoleGenPage() {
 	}
 
 	//////////////
@@ -380,9 +320,9 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof EcoleScolaireGenPage))
+		if(!(o instanceof EcoleGenPage))
 			return false;
-		EcoleScolaireGenPage that = (EcoleScolaireGenPage)o;
+		EcoleGenPage that = (EcoleGenPage)o;
 		return super.equals(o);
 	}
 
@@ -393,7 +333,7 @@ public abstract class EcoleScolaireGenPageGen<DEV> extends MiseEnPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("EcoleScolaireGenPage {");
+		sb.append("EcoleGenPage {");
 		sb.append(" }");
 		return sb.toString();
 	}

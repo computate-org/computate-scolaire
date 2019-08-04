@@ -5,19 +5,32 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 /** 
  * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUser
+ * 
+ * Modele: true
  * Api: true
- * MotCle: classeNomSimpleUtilisateurSite
- * ApiMethode: RechercheFrFRPage
- * ApiMethode: RechercheEnUSPage
+ * Indexe: true
+ * 
+ * ApiTag.frFR: Utilisateur
+ * ApiUri.frFR: /frFR/api/utilisateur
+ * 
+ * ApiTag.enUS: User
+ * ApiUri.enUS: /enUS/api/user
+ * 
  * ApiMethode: PATCH
- * ApiUriRechercheFrFRPage: /frFR/utilisateur
- * ApiUriRechercheEnUSPage: /enUS/user
- * PageRechercheFrFRPage: UtilisateurSiteFrFRPage
- * PageRechercheEnUSPage: UtilisateurSiteEnUSPage
- * PageSuperRechercheFrFRPage: ClusterFrFRPage
- * PageSuperRechercheEnUSPage: ClusterEnUSPage
- * ApiUri: /api/site/utilisateur
- * Role: SiteAdmin
+ * 
+ * ApiMethode.frFR: PageRecherche
+ * PagePageRecherche: UtilisateurSitePage
+ * PageSuperPageRecherche: ClusterPage
+ * ApiUriPageRecherche: /frFR/utilisateur
+ * 
+ * ApiMethode.enUS: SearchPage
+ * PageSearchPage: SiteUserPage
+ * PageSuperSearchPage: ClusterPage
+ * ApiUriSearchPage: /enUS/user
+ * 
+ * MotCle: classeNomSimpleUtilisateurSite
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
  * Filtre: utilisateurId
  * Sauvegarde: true
  * 
@@ -27,8 +40,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: green
  * IconeGroupe: regular
  * IconeNom: book
- * Indexe: true
- */    
+ */      
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
 
 	/**  

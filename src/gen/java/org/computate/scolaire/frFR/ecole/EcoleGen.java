@@ -55,10 +55,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public static final String Ecole_Couleur = "pink";
 	public static final String Ecole_IconeGroupe = "regular";
 	public static final String Ecole_IconeNom = "fort-awesome";
-	public static final String EcoleFrFRPage_Uri = "/frFR/ecole";
-	public static final String EcoleFrFRPage_ImageUri = "/png/frFR/ecole-999.png";
-	public static final String EcoleEnUSPage_Uri = "/enUS/school";
-	public static final String EcoleEnUSPage_ImageUri = "/png/enUS/school-999.png";
 
 	//////////////
 	// ecoleCle //
@@ -130,7 +126,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleCle() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -251,7 +247,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EnfantCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -372,7 +368,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "BlocCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -493,7 +489,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "GroupeAgeCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -614,7 +610,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "SessionCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -735,7 +731,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "SaisonCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -856,7 +852,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "AnneeCles() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -959,7 +955,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "ScolaireTri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1062,7 +1058,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleTri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1159,7 +1155,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1256,7 +1252,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleNumeroTelephone() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1353,7 +1349,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleAdministrateurNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1450,7 +1446,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleAddresse() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1553,7 +1549,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "ObjetSuggerePoids() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1650,7 +1646,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "ObjetSuggere() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1747,7 +1743,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleNomCourt() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1844,7 +1840,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "EcoleId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -1941,7 +1937,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchEcole", strPk(), "PageUri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/ecole?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
