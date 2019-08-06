@@ -210,7 +210,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "name of the school")
-					.a("class", "valeurSchoolName w3-input w3-border ")
+					.a("class", "valueSchoolName w3-input w3-border ")
 					.a("name", "schoolName")
 					.a("id", "POST_schoolName")
 					.a("value", o.strSchoolName())
@@ -223,7 +223,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "phone number")
-					.a("class", "valeurSchoolPhoneNumber w3-input w3-border ")
+					.a("class", "valueSchoolPhoneNumber w3-input w3-border ")
 					.a("name", "schoolPhoneNumber")
 					.a("id", "POST_schoolPhoneNumber")
 					.a("value", o.strSchoolPhoneNumber())
@@ -236,7 +236,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "administrator of the school")
-					.a("class", "valeurSchoolAdministratorName w3-input w3-border ")
+					.a("class", "valueSchoolAdministratorName w3-input w3-border ")
 					.a("name", "schoolAdministratorName")
 					.a("id", "POST_schoolAdministratorName")
 					.a("value", o.strSchoolAdministratorName())
@@ -250,7 +250,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 				e("textarea")
 					.a("placeholder", "Address")
-					.a("class", "valeurSchoolAddress w3-input w3-border ")
+					.a("class", "valueSchoolAddress w3-input w3-border ")
 					.a("name", "schoolAddress")
 					.a("id", "POST_schoolAddress")
 				.f().sx(o.strSchoolAddress()).g("textarea");
@@ -360,7 +360,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "name of the school")
-					.a("class", "valeurSchoolName w3-input w3-border ")
+					.a("class", "valueSchoolName w3-input w3-border ")
 					.a("name", "schoolName")
 					.a("id", "Recherche_schoolName")
 					.a("value", o.strSchoolName())
@@ -373,7 +373,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "phone number")
-					.a("class", "valeurSchoolPhoneNumber w3-input w3-border ")
+					.a("class", "valueSchoolPhoneNumber w3-input w3-border ")
 					.a("name", "schoolPhoneNumber")
 					.a("id", "Recherche_schoolPhoneNumber")
 					.a("value", o.strSchoolPhoneNumber())
@@ -386,7 +386,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "administrator of the school")
-					.a("class", "valeurSchoolAdministratorName w3-input w3-border ")
+					.a("class", "valueSchoolAdministratorName w3-input w3-border ")
 					.a("name", "schoolAdministratorName")
 					.a("id", "Recherche_schoolAdministratorName")
 					.a("value", o.strSchoolAdministratorName())
@@ -400,7 +400,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 				e("textarea")
 					.a("placeholder", "Address")
-					.a("class", "valeurSchoolAddress w3-input w3-border ")
+					.a("class", "valueSchoolAddress w3-input w3-border ")
 					.a("name", "schoolAddress")
 					.a("id", "Recherche_schoolAddress")
 				.f().sx(o.strSchoolAddress()).g("textarea");
@@ -504,7 +504,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#postSchoolModale').show(); ")
+			.a("onclick", "$('#postSchoolModal').show(); ")
 			.f().sx("Create a school")
 		.g("button");
 		{ e("div").a("id", "postSchoolModal").a("class", "w3-modal ").f();
@@ -533,7 +533,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#patchSchoolModale').show(); ")
+			.a("onclick", "$('#patchSchoolModal').show(); ")
 			.f().sx("Modify the schools")
 		.g("button");
 		{ e("div").a("id", "patchSchoolModal").a("class", "w3-modal ").f();
@@ -573,7 +573,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#deleteSchoolModale').show(); ")
+			.a("onclick", "$('#deleteSchoolModal').show(); ")
 			.f().sx("Delete the schools")
 		.g("button");
 		{ e("div").a("id", "deleteSchoolModal").a("class", "w3-modal ").f();

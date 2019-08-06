@@ -1038,6 +1038,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: entityJsonFormat
 	 * r: reponse
 	 * r.enUS: response
+	 * r: "Recherche"
+	 * r.enUS: "Search"
 	 */
 	public void ecrireEntiteSchema(Integer nombreTabulations, ToutEcrivain w, String apiRequeteOuReponse) throws Exception {
 		nombreTabulations = nombreTabulations == null ? (classeApiMethode.contains("Recherche") && "reponse".equals(apiRequeteOuReponse) ? 1 : 0) : nombreTabulations;
@@ -1131,6 +1133,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: Empty
 	 * r: ApiMethode
 	 * r.enUS: ApiMethod
+	 * r: "Recherche"
+	 * r.enUS: "Search"
 	 */
 	public void ecrireApi() throws Exception {
 

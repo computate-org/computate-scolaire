@@ -52,7 +52,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */           
+ */          
 public class Cluster extends ClusterGen<Object> {   
 
 	/**

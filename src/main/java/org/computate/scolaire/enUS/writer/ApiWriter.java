@@ -386,7 +386,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	}
 
 	public void  writeEntitySchema(Integer numberTabs, AllWriter w, String apiRequestOrResponse) throws Exception, Exception {
-		numberTabs = numberTabs == null ? (classApiMethod.contains("Recherche") && "response".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
+		numberTabs = numberTabs == null ? (classApiMethod.contains("Search") && "response".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
 		if(entityJsonType != null) {
 			w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
 			w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
@@ -457,7 +457,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: string");
 			}
-			else if(classApiMethod.contains("Recherche")) {
+			else if(classApiMethod.contains("Search")) {
 				wPaths.tl(4, "- in: query");
 				wPaths.tl(5, "name: q");
 				wPaths.tl(5, "description: ''");
@@ -642,7 +642,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodResponse, "\"");
 				}
 	
-				if(classApiMethod.contains("Recherche")) {
+				if(classApiMethod.contains("Search")) {
 					wSchemas.tl(tabsSchema + 2, "- type: array");
 					wSchemas.tl(tabsSchema + 3, "items:");
 					wSchemas.tl(tabsSchema + 4, "type: object");
