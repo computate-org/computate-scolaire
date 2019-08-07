@@ -602,7 +602,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
-			listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getUtilisateurId()));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");

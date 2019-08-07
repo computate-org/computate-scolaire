@@ -10,6 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -64,6 +65,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long ecoleCle;
+	@JsonIgnore
 	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
 
 	/**	<br/>L'entité « ecoleCle »
@@ -167,6 +169,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> enfantCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> enfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("enfantCles").o(enfantCles);
 
 	/**	<br/>L'entité « enfantCles »
@@ -288,6 +291,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> blocCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> blocClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("blocCles").o(blocCles);
 
 	/**	<br/>L'entité « blocCles »
@@ -409,6 +413,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> groupeAgeCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> groupeAgeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("groupeAgeCles").o(groupeAgeCles);
 
 	/**	<br/>L'entité « groupeAgeCles »
@@ -530,6 +535,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> sessionCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
 
 	/**	<br/>L'entité « sessionCles »
@@ -651,6 +657,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> saisonCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> saisonClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCles").o(saisonCles);
 
 	/**	<br/>L'entité « saisonCles »
@@ -772,6 +779,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> anneeCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Couverture<List<Long>> anneeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("anneeCles").o(anneeCles);
 
 	/**	<br/>L'entité « anneeCles »
@@ -893,6 +901,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer scolaireTri;
+	@JsonIgnore
 	public Couverture<Integer> scolaireTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("scolaireTri").o(scolaireTri);
 
 	/**	<br/>L'entité « scolaireTri »
@@ -996,6 +1005,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer ecoleTri;
+	@JsonIgnore
 	public Couverture<Integer> ecoleTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ecoleTri").o(ecoleTri);
 
 	/**	<br/>L'entité « ecoleTri »
@@ -1099,6 +1109,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleNom;
+	@JsonIgnore
 	public Couverture<String> ecoleNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNom").o(ecoleNom);
 
 	/**	<br/>L'entité « ecoleNom »
@@ -1196,6 +1207,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleNumeroTelephone;
+	@JsonIgnore
 	public Couverture<String> ecoleNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
 
 	/**	<br/>L'entité « ecoleNumeroTelephone »
@@ -1293,6 +1305,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleAdministrateurNom;
+	@JsonIgnore
 	public Couverture<String> ecoleAdministrateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAdministrateurNom").o(ecoleAdministrateurNom);
 
 	/**	<br/>L'entité « ecoleAdministrateurNom »
@@ -1390,6 +1403,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleAddresse;
+	@JsonIgnore
 	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
 
 	/**	<br/>L'entité « ecoleAddresse »
@@ -1487,6 +1501,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Double objetSuggerePoids;
+	@JsonIgnore
 	public Couverture<Double> objetSuggerePoidsCouverture = new Couverture<Double>().p(this).c(Double.class).var("objetSuggerePoids").o(objetSuggerePoids);
 
 	/**	<br/>L'entité « objetSuggerePoids »
@@ -1590,6 +1605,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String objetSuggere;
+	@JsonIgnore
 	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
 
 	/**	<br/>L'entité « objetSuggere »
@@ -1687,6 +1703,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleNomCourt;
+	@JsonIgnore
 	public Couverture<String> ecoleNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomCourt").o(ecoleNomCourt);
 
 	/**	<br/>L'entité « ecoleNomCourt »
@@ -1784,6 +1801,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleId;
+	@JsonIgnore
 	public Couverture<String> ecoleIdCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleId").o(ecoleId);
 
 	/**	<br/>L'entité « ecoleId »
@@ -1881,6 +1899,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUri;
+	@JsonIgnore
 	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
 	/**	<br/>L'entité « pageUri »
@@ -2421,7 +2440,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
 		}
 		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested_string", objetSuggere);
+			document.addField("objetSuggere_suggested", objetSuggere);
 			document.addField("objetSuggere_indexed_string", objetSuggere);
 		}
 		if(ecoleNomCourt != null) {

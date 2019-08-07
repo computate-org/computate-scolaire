@@ -86,7 +86,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	}
 
 	@Override public void htmlScriptsClusterGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/ClusterPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/ClusterPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptClusterGenPage() {
@@ -250,7 +250,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#postClusterModale').show(); ")
+			.a("onclick", "$('#postClusterModal').show(); ")
 			.f().sx("Create a cluster")
 		.g("button");
 		{ e("div").a("id", "postClusterModal").a("class", "w3-modal ").f();
@@ -279,7 +279,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchClusterModale').show(); ")
+			.a("onclick", "$('#patchClusterModal').show(); ")
 			.f().sx("Modify the clusters")
 		.g("button");
 		{ e("div").a("id", "patchClusterModal").a("class", "w3-modal ").f();
@@ -319,7 +319,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#deleteClusterModale').show(); ")
+			.a("onclick", "$('#deleteClusterModal').show(); ")
 			.f().sx("Delete the clusters")
 		.g("button");
 		{ e("div").a("id", "deleteClusterModal").a("class", "w3-modal ").f();

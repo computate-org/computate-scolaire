@@ -12,6 +12,7 @@ import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.xml.UtilXml;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Cluster extends ClusterGen<Object> {
 

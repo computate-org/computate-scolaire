@@ -4,6 +4,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.Cluster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;

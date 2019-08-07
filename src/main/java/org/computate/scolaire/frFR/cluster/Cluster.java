@@ -14,9 +14,11 @@ import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.xml.OutilXml;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-/**         
+
+/**      
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Modele: true
  * Api: true
@@ -52,12 +54,13 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */          
+ */         
 public class Cluster extends ClusterGen<Object> {   
 
 	/**
-	 * Var.enUS: siteRequest_
 	 * {@inheritDoc}
+	 * Var.enUS: siteRequest_
+	 * Ignorer: true
 	 */         
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
 

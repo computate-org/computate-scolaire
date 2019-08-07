@@ -5,6 +5,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;

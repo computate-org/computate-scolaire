@@ -10,6 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -63,6 +64,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long schoolKey;
+	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
 
 	/**	<br/>L'entité « schoolKey »
@@ -166,6 +168,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> childKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> childKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childKeys").o(childKeys);
 
 	/**	<br/>L'entité « childKeys »
@@ -287,6 +290,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
 
 	/**	<br/>L'entité « blockKeys »
@@ -408,6 +412,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> ageGroupKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> ageGroupKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageGroupKeys").o(ageGroupKeys);
 
 	/**	<br/>L'entité « ageGroupKeys »
@@ -529,6 +534,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
 
 	/**	<br/>L'entité « sessionKeys »
@@ -650,6 +656,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> seasonKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> seasonKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("seasonKeys").o(seasonKeys);
 
 	/**	<br/>L'entité « seasonKeys »
@@ -771,6 +778,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
 	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
 
 	/**	<br/>L'entité « yearKeys »
@@ -892,6 +900,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer educationSort;
+	@JsonIgnore
 	public Wrap<Integer> educationSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("educationSort").o(educationSort);
 
 	/**	<br/>L'entité « educationSort »
@@ -995,6 +1004,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer schoolSort;
+	@JsonIgnore
 	public Wrap<Integer> schoolSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolSort").o(schoolSort);
 
 	/**	<br/>L'entité « schoolSort »
@@ -1098,6 +1108,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolName;
+	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
 
 	/**	<br/>L'entité « schoolName »
@@ -1195,6 +1206,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolPhoneNumber;
+	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
 
 	/**	<br/>L'entité « schoolPhoneNumber »
@@ -1292,6 +1304,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolAdministratorName;
+	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
 
 	/**	<br/>L'entité « schoolAdministratorName »
@@ -1389,6 +1402,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolAddress;
+	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
 
 	/**	<br/>L'entité « schoolAddress »
@@ -1486,6 +1500,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Double objectSuggestWeight;
+	@JsonIgnore
 	public Wrap<Double> objectSuggestWeightWrap = new Wrap<Double>().p(this).c(Double.class).var("objectSuggestWeight").o(objectSuggestWeight);
 
 	/**	<br/>L'entité « objectSuggestWeight »
@@ -1589,6 +1604,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String objectSuggest;
+	@JsonIgnore
 	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
 
 	/**	<br/>L'entité « objectSuggest »
@@ -1686,6 +1702,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolNameShort;
+	@JsonIgnore
 	public Wrap<String> schoolNameShortWrap = new Wrap<String>().p(this).c(String.class).var("schoolNameShort").o(schoolNameShort);
 
 	/**	<br/>L'entité « schoolNameShort »
@@ -1783,6 +1800,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String schoolId;
+	@JsonIgnore
 	public Wrap<String> schoolIdWrap = new Wrap<String>().p(this).c(String.class).var("schoolId").o(schoolId);
 
 	/**	<br/>L'entité « schoolId »
@@ -1880,6 +1898,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUri;
+	@JsonIgnore
 	public Wrap<String> pageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
 	/**	<br/>L'entité « pageUri »
@@ -2420,7 +2439,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolAddress_stored_string", schoolAddress);
 		}
 		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested_string", objectSuggest);
+			document.addField("objectSuggest_suggested", objectSuggest);
 			document.addField("objectSuggest_indexed_string", objectSuggest);
 		}
 		if(schoolNameShort != null) {

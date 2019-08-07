@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.vertx;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,12 +12,16 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
+
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -355,6 +360,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			staticHandler.setWebRoot("/usr/local/src/computate-scolaire-static");
 		}
 		siteRouter.route("/static/*").handler(staticHandler);
+
+		SimpleModule module = new SimpleModule();
+		module.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer());
+		Json.mapper.registerModule(module);
 
 		String siteNomHote = siteConfig.getSiteHostName();
 		Integer sitePort = siteConfig.getSitePort();

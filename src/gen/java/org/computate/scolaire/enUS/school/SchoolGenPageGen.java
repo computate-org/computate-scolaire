@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.school.School;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SearchList<School> listSchool;
+	@JsonIgnore
 	public Wrap<SearchList<School>> listSchoolWrap = new Wrap<SearchList<School>>().p(this).c(SearchList.class).var("listSchool").o(listSchool);
 
 	/**	<br/>L'entité « listSchool »
@@ -64,6 +66,7 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected School school;
+	@JsonIgnore
 	public Wrap<School> schoolWrap = new Wrap<School>().p(this).c(School.class).var("school").o(school);
 
 	/**	<br/>L'entité « school »

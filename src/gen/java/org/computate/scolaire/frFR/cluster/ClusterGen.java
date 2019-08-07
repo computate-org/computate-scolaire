@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -39,7 +40,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe classCanonicalNames dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe classSimpleName dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -71,7 +72,9 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « requeteSite_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonIgnore
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -108,6 +111,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
+	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »
@@ -154,6 +158,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long pk;
+	@JsonIgnore
 	public Couverture<Long> pkCouverture = new Couverture<Long>().p(this).c(Long.class).var("pk").o(pk);
 
 	/**	<br/>L'entité « pk »
@@ -257,6 +262,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String id;
+	@JsonIgnore
 	public Couverture<String> idCouverture = new Couverture<String>().p(this).c(String.class).var("id").o(id);
 
 	/**	<br/>L'entité « id »
@@ -354,6 +360,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime cree;
+	@JsonIgnore
 	public Couverture<ZonedDateTime> creeCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
 
 	/**	<br/>L'entité « cree »
@@ -467,6 +474,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime modifie;
+	@JsonIgnore
 	public Couverture<ZonedDateTime> modifieCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modifie").o(modifie);
 
 	/**	<br/>L'entité « modifie »
@@ -580,6 +588,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean archive;
+	@JsonIgnore
 	public Couverture<Boolean> archiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("archive").o(archive);
 
 	/**	<br/>L'entité « archive »
@@ -682,6 +691,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean supprime;
+	@JsonIgnore
 	public Couverture<Boolean> supprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("supprime").o(supprime);
 
 	/**	<br/>L'entité « supprime »
@@ -784,6 +794,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classeNomCanonique;
+	@JsonIgnore
 	public Couverture<String> classeNomCanoniqueCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomCanonique").o(classeNomCanonique);
 
 	/**	<br/>L'entité « classeNomCanonique »
@@ -881,6 +892,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classeNomSimple;
+	@JsonIgnore
 	public Couverture<String> classeNomSimpleCouverture = new Couverture<String>().p(this).c(String.class).var("classeNomSimple").o(classeNomSimple);
 
 	/**	<br/>L'entité « classeNomSimple »
@@ -978,6 +990,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	protected List<String> classeNomsCanoniques = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
 	public Couverture<List<String>> classeNomsCanoniquesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeNomsCanoniques").o(classeNomsCanoniques);
 
 	/**	<br/>L'entité « classeNomsCanoniques »

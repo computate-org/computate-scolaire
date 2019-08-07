@@ -87,7 +87,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	}
 
 	@Override public void htmlScriptsEcoleGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/EcolePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptEcoleGenPage() {

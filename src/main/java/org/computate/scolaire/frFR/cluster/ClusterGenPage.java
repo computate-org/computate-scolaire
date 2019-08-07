@@ -86,7 +86,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override public void htmlScriptsClusterGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/ClusterPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/ClusterPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptClusterGenPage() {

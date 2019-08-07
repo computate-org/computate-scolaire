@@ -18,6 +18,7 @@ import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Locale;
 import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -38,6 +39,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.enUS.page.part.PagePart>();
+	@JsonIgnore
 	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »
@@ -84,6 +86,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -120,6 +123,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String staticBaseUrl;
+	@JsonIgnore
 	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
 
 	/**	<br/>L'entité « staticBaseUrl »
@@ -176,6 +180,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SolrDocument pageSolrDocument;
+	@JsonIgnore
 	public Wrap<SolrDocument> pageSolrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("pageSolrDocument").o(pageSolrDocument);
 
 	/**	<br/>L'entité « pageSolrDocument »
@@ -212,6 +217,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected AllWriter w;
+	@JsonIgnore
 	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
 
 	/**	<br/>L'entité « w »
@@ -250,6 +256,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String contextIconGroup;
+	@JsonIgnore
 	public Wrap<String> contextIconGroupWrap = new Wrap<String>().p(this).c(String.class).var("contextIconGroup").o(contextIconGroup);
 
 	/**	<br/>L'entité « contextIconGroup »
@@ -306,6 +313,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String contextIconName;
+	@JsonIgnore
 	public Wrap<String> contextIconNameWrap = new Wrap<String>().p(this).c(String.class).var("contextIconName").o(contextIconName);
 
 	/**	<br/>L'entité « contextIconName »
@@ -362,6 +370,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String contextIconCssClasses;
+	@JsonIgnore
 	public Wrap<String> contextIconCssClassesWrap = new Wrap<String>().p(this).c(String.class).var("contextIconCssClasses").o(contextIconCssClasses);
 
 	/**	<br/>L'entité « contextIconCssClasses »
@@ -418,6 +427,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean pageVisibleToBots;
+	@JsonIgnore
 	public Wrap<Boolean> pageVisibleToBotsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("pageVisibleToBots").o(pageVisibleToBots);
 
 	/**	<br/>L'entité « pageVisibleToBots »
@@ -479,6 +489,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageH1;
+	@JsonIgnore
 	public Wrap<String> pageH1Wrap = new Wrap<String>().p(this).c(String.class).var("pageH1").o(pageH1);
 
 	/**	<br/>L'entité « pageH1 »
@@ -535,6 +546,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageH2;
+	@JsonIgnore
 	public Wrap<String> pageH2Wrap = new Wrap<String>().p(this).c(String.class).var("pageH2").o(pageH2);
 
 	/**	<br/>L'entité « pageH2 »
@@ -591,6 +603,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageH3;
+	@JsonIgnore
 	public Wrap<String> pageH3Wrap = new Wrap<String>().p(this).c(String.class).var("pageH3").o(pageH3);
 
 	/**	<br/>L'entité « pageH3 »
@@ -647,6 +660,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String _pageH1Short;
+	@JsonIgnore
 	public Wrap<String> _pageH1ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH1Short").o(_pageH1Short);
 
 	/**	<br/>L'entité « _pageH1Short »
@@ -703,6 +717,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String _pageH2Short;
+	@JsonIgnore
 	public Wrap<String> _pageH2ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH2Short").o(_pageH2Short);
 
 	/**	<br/>L'entité « _pageH2Short »
@@ -759,6 +774,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String _pageH3Short;
+	@JsonIgnore
 	public Wrap<String> _pageH3ShortWrap = new Wrap<String>().p(this).c(String.class).var("_pageH3Short").o(_pageH3Short);
 
 	/**	<br/>L'entité « _pageH3Short »
@@ -815,6 +831,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageTitle;
+	@JsonIgnore
 	public Wrap<String> pageTitleWrap = new Wrap<String>().p(this).c(String.class).var("pageTitle").o(pageTitle);
 
 	/**	<br/>L'entité « pageTitle »
@@ -871,6 +888,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUri;
+	@JsonIgnore
 	public Wrap<String> pageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
 	/**	<br/>L'entité « pageUri »
@@ -927,6 +945,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUriFrFR;
+	@JsonIgnore
 	public Wrap<String> pageUriFrFRWrap = new Wrap<String>().p(this).c(String.class).var("pageUriFrFR").o(pageUriFrFR);
 
 	/**	<br/>L'entité « pageUriFrFR »
@@ -983,6 +1002,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	protected List<String> pageUris = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
 	public Wrap<List<String>> pageUrisWrap = new Wrap<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
 
 	/**	<br/>L'entité « pageUris »
@@ -1056,6 +1076,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUrl;
+	@JsonIgnore
 	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
 
 	/**	<br/>L'entité « pageUrl »
@@ -1112,6 +1133,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageImageUri;
+	@JsonIgnore
 	public Wrap<String> pageImageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageImageUri").o(pageImageUri);
 
 	/**	<br/>L'entité « pageImageUri »
@@ -1168,6 +1190,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageImageUrl;
+	@JsonIgnore
 	public Wrap<String> pageImageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageImageUrl").o(pageImageUrl);
 
 	/**	<br/>L'entité « pageImageUrl »
@@ -1224,6 +1247,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageVideoId;
+	@JsonIgnore
 	public Wrap<String> pageVideoIdWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoId").o(pageVideoId);
 
 	/**	<br/>L'entité « pageVideoId »
@@ -1280,6 +1304,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageVideoUrl;
+	@JsonIgnore
 	public Wrap<String> pageVideoUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoUrl").o(pageVideoUrl);
 
 	/**	<br/>L'entité « pageVideoUrl »
@@ -1336,6 +1361,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageVideoUrlEmbed;
+	@JsonIgnore
 	public Wrap<String> pageVideoUrlEmbedWrap = new Wrap<String>().p(this).c(String.class).var("pageVideoUrlEmbed").o(pageVideoUrlEmbed);
 
 	/**	<br/>L'entité « pageVideoUrlEmbed »
@@ -1392,6 +1418,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer pageImageWidth;
+	@JsonIgnore
 	public Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageWidth").o(pageImageWidth);
 
 	/**	<br/>L'entité « pageImageWidth »
@@ -1454,6 +1481,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer pageImageHeight;
+	@JsonIgnore
 	public Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().p(this).c(Integer.class).var("pageImageHeight").o(pageImageHeight);
 
 	/**	<br/>L'entité « pageImageHeight »
@@ -1516,6 +1544,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageImageContentType;
+	@JsonIgnore
 	public Wrap<String> pageImageContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("pageImageContentType").o(pageImageContentType);
 
 	/**	<br/>L'entité « pageImageContentType »
@@ -1572,6 +1601,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageContentType;
+	@JsonIgnore
 	public Wrap<String> pageContentTypeWrap = new Wrap<String>().p(this).c(String.class).var("pageContentType").o(pageContentType);
 
 	/**	<br/>L'entité « pageContentType »
@@ -1628,6 +1658,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected LocalDateTime pageCreated;
+	@JsonIgnore
 	public Wrap<LocalDateTime> pageCreatedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCreated").o(pageCreated);
 
 	/**	<br/>L'entité « pageCreated »
@@ -1700,6 +1731,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected LocalDateTime pageModified;
+	@JsonIgnore
 	public Wrap<LocalDateTime> pageModifiedWrap = new Wrap<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModified").o(pageModified);
 
 	/**	<br/>L'entité « pageModified »
@@ -1772,6 +1804,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageKeywords;
+	@JsonIgnore
 	public Wrap<String> pageKeywordsWrap = new Wrap<String>().p(this).c(String.class).var("pageKeywords").o(pageKeywords);
 
 	/**	<br/>L'entité « pageKeywords »
@@ -1828,6 +1861,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageDescription;
+	@JsonIgnore
 	public Wrap<String> pageDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("pageDescription").o(pageDescription);
 
 	/**	<br/>L'entité « pageDescription »
@@ -1884,6 +1918,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageHomeUri;
+	@JsonIgnore
 	public Wrap<String> pageHomeUriWrap = new Wrap<String>().p(this).c(String.class).var("pageHomeUri").o(pageHomeUri);
 
 	/**	<br/>L'entité « pageHomeUri »
@@ -1940,6 +1975,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageSchoolUri;
+	@JsonIgnore
 	public Wrap<String> pageSchoolUriWrap = new Wrap<String>().p(this).c(String.class).var("pageSchoolUri").o(pageSchoolUri);
 
 	/**	<br/>L'entité « pageSchoolUri »
@@ -1996,6 +2032,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUserUri;
+	@JsonIgnore
 	public Wrap<String> pageUserUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUserUri").o(pageUserUri);
 
 	/**	<br/>L'entité « pageUserUri »
@@ -2052,6 +2089,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String _pageLogoutUri;
+	@JsonIgnore
 	public Wrap<String> _pageLogoutUriWrap = new Wrap<String>().p(this).c(String.class).var("_pageLogoutUri").o(_pageLogoutUri);
 
 	/**	<br/>L'entité « _pageLogoutUri »

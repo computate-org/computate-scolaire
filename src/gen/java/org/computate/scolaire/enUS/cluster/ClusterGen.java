@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -70,7 +71,9 @@ public abstract class ClusterGen<DEV> extends Object {
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonIgnore
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -107,6 +110,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.enUS.page.part.PagePart>();
+	@JsonIgnore
 	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
 	/**	<br/>L'entité « pageParts »
@@ -153,6 +157,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long pk;
+	@JsonIgnore
 	public Wrap<Long> pkWrap = new Wrap<Long>().p(this).c(Long.class).var("pk").o(pk);
 
 	/**	<br/>L'entité « pk »
@@ -256,6 +261,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String id;
+	@JsonIgnore
 	public Wrap<String> idWrap = new Wrap<String>().p(this).c(String.class).var("id").o(id);
 
 	/**	<br/>L'entité « id »
@@ -353,6 +359,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime created;
+	@JsonIgnore
 	public Wrap<ZonedDateTime> createdWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("created").o(created);
 
 	/**	<br/>L'entité « created »
@@ -466,6 +473,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ZonedDateTime modified;
+	@JsonIgnore
 	public Wrap<ZonedDateTime> modifiedWrap = new Wrap<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("modified").o(modified);
 
 	/**	<br/>L'entité « modified »
@@ -579,6 +587,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean archived;
+	@JsonIgnore
 	public Wrap<Boolean> archivedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("archived").o(archived);
 
 	/**	<br/>L'entité « archived »
@@ -681,6 +690,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean deleted;
+	@JsonIgnore
 	public Wrap<Boolean> deletedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("deleted").o(deleted);
 
 	/**	<br/>L'entité « deleted »
@@ -783,6 +793,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classCanonicalName;
+	@JsonIgnore
 	public Wrap<String> classCanonicalNameWrap = new Wrap<String>().p(this).c(String.class).var("classCanonicalName").o(classCanonicalName);
 
 	/**	<br/>L'entité « classCanonicalName »
@@ -880,6 +891,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String classSimpleName;
+	@JsonIgnore
 	public Wrap<String> classSimpleNameWrap = new Wrap<String>().p(this).c(String.class).var("classSimpleName").o(classSimpleName);
 
 	/**	<br/>L'entité « classSimpleName »
@@ -977,6 +989,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	protected List<String> classCanonicalNames = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
 	public Wrap<List<String>> classCanonicalNamesWrap = new Wrap<List<String>>().p(this).c(List.class).var("classCanonicalNames").o(classCanonicalNames);
 
 	/**	<br/>L'entité « classCanonicalNames »

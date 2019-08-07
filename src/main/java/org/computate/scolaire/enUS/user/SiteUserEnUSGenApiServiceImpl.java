@@ -602,7 +602,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
-			listSearch.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getUserId()));
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");

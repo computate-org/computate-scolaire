@@ -222,11 +222,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200POSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			AllWriter w = AllWriter.create(o.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -419,12 +417,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200PATCHSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			buffer.appendString("{}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -457,184 +452,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200GETSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
 			SolrDocumentList solrDocuments = listSchool.getSolrDocumentList();
 
-			if(listSchool.size() > 0) {
-				SolrDocument solrDocument = solrDocuments.get(0);
-				School o = listSchool.get(0);
-				Object entityValue;
-				Integer entityNumber = 0;
-
-				w.l("{");
-
-				entityValue = o.getPk();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
-
-				entityValue = o.getCreated();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
-
-				entityValue = o.getModified();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
-
-				entityValue = o.getArchived();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
-
-				entityValue = o.getDeleted();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
-
-				entityValue = o.getClassCanonicalName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
-
-				entityValue = o.getClassSimpleName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
-
-				{
-					List<String> entityValues = o.getClassCanonicalNames();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"classCanonicalNames\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entityValue));
-						w.s("\"");
-					}
-					w.l("]");
-				}
-
-				entityValue = o.getSchoolKey();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolKey\": ", entityValue);
-
-				{
-					List<Long> entityValues = o.getChildKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"childKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getBlockKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"blockKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getAgeGroupKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"ageGroupKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getSessionKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"sessionKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getSeasonKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"seasonKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getYearKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"yearKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				entityValue = o.getEducationSort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"educationSort\": ", entityValue);
-
-				entityValue = o.getSchoolSort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolSort\": ", entityValue);
-
-				entityValue = o.getSchoolName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolName\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolPhoneNumber();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolPhoneNumber\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolAdministratorName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAdministratorName\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolAddress();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAddress\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolNameShort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolNameShort\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolId();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolId\": ", w.qjs(entityValue));
-
-				entityValue = o.getPageUri();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entityValue));
-
-				w.l("}");
-			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = JsonObject.mapFrom(listSchool.get(0));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -714,10 +536,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200DELETESchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(siteRequest, buffer);
-			siteRequest.setW(w);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -750,10 +570,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200SearchSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
 			QueryResponse responseSearch = listSchool.getQueryResponse();
 			SolrDocumentList solrDocuments = listSchool.getSolrDocumentList();
 			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
@@ -765,192 +582,21 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
 			Exception exceptionSearch = responseSearch.getException();
 
-			w.l("{");
-			w.tl(1, "\"startNum\": ", startNum);
-			w.tl(1, ", \"foundNum\": ", foundNum);
-			w.tl(1, ", \"returnedNum\": ", returnedNum);
-			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
-			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
-			w.tl(1, ", \"list\": [");
-			for(int i = 0; i < listSchool.size(); i++) {
-				School o = listSchool.getList().get(i);
-				Object entityValue;
-				Integer entityNumber = 0;
-
-				w.t(2);
-				if(i > 0)
-					w.s(", ");
-				w.l("{");
-
-				entityValue = o.getPk();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pk\": ", entityValue);
-
-				entityValue = o.getCreated();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"created\": ", w.qjs(entityValue));
-
-				entityValue = o.getModified();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"modified\": ", w.qjs(entityValue));
-
-				entityValue = o.getArchived();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"archived\": ", entityValue);
-
-				entityValue = o.getDeleted();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"deleted\": ", entityValue);
-
-				entityValue = o.getClassCanonicalName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classCanonicalName\": ", w.qjs(entityValue));
-
-				entityValue = o.getClassSimpleName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"classSimpleName\": ", w.qjs(entityValue));
-
-				{
-					List<String> entityValues = o.getClassCanonicalNames();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"classCanonicalNames\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entityValue));
-						w.s("\"");
-					}
-					w.l("]");
-				}
-
-				entityValue = o.getSchoolKey();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolKey\": ", entityValue);
-
-				{
-					List<Long> entityValues = o.getChildKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"childKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getBlockKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"blockKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getAgeGroupKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"ageGroupKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getSessionKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"sessionKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getSeasonKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"seasonKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				{
-					List<Long> entityValues = o.getYearKeys();
-					w.t(3, entityNumber++ == 0 ? "" : ", ");
-					w.s("\"yearKeys\": [");
-					for(int k = 0; k < entityValues.size(); k++) {
-						entityValue = entityValues.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s(((Long)entityValue).toString());
-					}
-					w.l("]");
-				}
-
-				entityValue = o.getEducationSort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"educationSort\": ", entityValue);
-
-				entityValue = o.getSchoolSort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolSort\": ", entityValue);
-
-				entityValue = o.getSchoolName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolName\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolPhoneNumber();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolPhoneNumber\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolAdministratorName();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAdministratorName\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolAddress();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolAddress\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolNameShort();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolNameShort\": ", w.qjs(entityValue));
-
-				entityValue = o.getSchoolId();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"schoolId\": ", w.qjs(entityValue));
-
-				entityValue = o.getPageUri();
-				if(entityValue != null)
-					w.tl(3, entityNumber++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entityValue));
-
-				w.tl(2, "}");
-			}
-			w.tl(1, "]");
+			JsonObject json = new JsonObject();
+			json.put("startNum", startNum);
+			json.put("foundNum", foundNum);
+			json.put("returnedNum", returnedNum);
+			json.put("searchTime", searchTime);
+			json.put("transmissionTime", transmissionTime);
+			JsonArray l = new JsonArray();
+			listSchool.getList().stream().forEach(o -> {
+				l.add(JsonObject.mapFrom(o));
+			});
+			json.put("list", l);
 			if(exceptionSearch != null) {
-				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
+				json.put("exceptionSearch", exceptionSearch.getMessage());
 			}
-			w.l("}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1017,10 +663,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void response200SearchPageSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
 			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
 			SchoolPage page = new SchoolPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 

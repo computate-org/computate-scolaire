@@ -87,7 +87,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override public void htmlScriptsSiteUserGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/SiteUserPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptSiteUserGenPage() {
@@ -358,7 +358,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchSiteUserModale').show(); ")
+			.a("onclick", "$('#patchSiteUserModal').show(); ")
 			.f().sx("Modify the site users")
 		.g("button");
 		{ e("div").a("id", "patchSiteUserModal").a("class", "w3-modal ").f();

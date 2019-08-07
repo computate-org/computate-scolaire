@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.utilisateur;       
+package org.computate.scolaire.frFR.utilisateur;        
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;

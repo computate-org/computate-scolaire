@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;        
+package org.computate.scolaire.frFR.ecole;     
 
 import java.text.Normalizer;
 import java.util.List;
@@ -47,7 +47,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */           
+ */     
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -304,6 +304,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: enUS
 	 * r: ecoleId
 	 * r.enUS: schoolId
+	 * r: /ecole/
+	 * r.enUS: /school/
 	 * **/
 	protected void _pageUri(Couverture<String> c)  {
 		if(ecoleId != null) {
@@ -314,6 +316,21 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	public void htmlBody() {
 		super.htmlBody();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: _classCanonicalNames
+	 * Indexe: true
+	 * Stocke: true
+	 * r: Ecole
+	 * r.enUS: School
+	 * r: classeNomsCanoniques
+	 * r.enUS: classCanonicalNames
+	 **/      
+	@Override protected void _classeNomsCanoniques(List<String> l) {
+		l.add(Ecole.class.getCanonicalName());
+		super._classeNomsCanoniques(l);
 	}
 }
 

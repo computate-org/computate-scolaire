@@ -87,7 +87,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	@Override public void htmlScriptsUtilisateurSiteGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSitePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptUtilisateurSiteGenPage() {

@@ -73,12 +73,18 @@ public class School extends SchoolGen<Cluster> {
 
 	protected void _pageUri(Wrap<String> c) {
 		if(schoolId != null) {
-			String o = "/ecole/" + schoolId;
+			String o = "/school/" + schoolId;
 			c.o(o);
 		}
 	}
 
 	public void  htmlBody() {
 		super.htmlBody();
+	}
+
+	@Override()
+	protected void  _classCanonicalNames(List<String> l) {
+		l.add(School.class.getCanonicalName());
+		super._classCanonicalNames(l);
 	}
 }

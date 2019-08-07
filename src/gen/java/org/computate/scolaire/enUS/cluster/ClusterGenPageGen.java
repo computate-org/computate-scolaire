@@ -6,6 +6,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.search.SearchList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.enUS.page.PageLayout;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -25,6 +26,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SearchList<Cluster> listCluster;
+	@JsonIgnore
 	public Wrap<SearchList<Cluster>> listClusterWrap = new Wrap<SearchList<Cluster>>().p(this).c(SearchList.class).var("listCluster").o(listCluster);
 
 	/**	<br/>L'entité « listCluster »
@@ -63,6 +65,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Cluster cluster;
+	@JsonIgnore
 	public Wrap<Cluster> clusterWrap = new Wrap<Cluster>().p(this).c(Cluster.class).var("cluster").o(cluster);
 
 	/**	<br/>L'entité « cluster »

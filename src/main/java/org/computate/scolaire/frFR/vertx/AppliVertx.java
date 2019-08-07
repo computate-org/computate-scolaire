@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.vertx;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +14,10 @@ import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
+import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -22,6 +26,7 @@ import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -639,6 +644,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			gestionnaireStatic.setWebRoot("/usr/local/src/computate-scolaire-static");
 		}
 		siteRouteur.route("/static/*").handler(gestionnaireStatic);
+
+		SimpleModule module = new SimpleModule();
+		module.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer());
+		Json.mapper.registerModule(module);
 
 		String siteNomHote = configSite.getSiteNomHote();
 		Integer sitePort = configSite.getSitePort();

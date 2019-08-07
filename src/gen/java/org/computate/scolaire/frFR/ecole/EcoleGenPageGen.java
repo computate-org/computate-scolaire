@@ -4,6 +4,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.Cluster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecole.Ecole;
@@ -26,6 +27,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ListeRecherche<Ecole> listeEcole;
+	@JsonIgnore
 	public Couverture<ListeRecherche<Ecole>> listeEcoleCouverture = new Couverture<ListeRecherche<Ecole>>().p(this).c(ListeRecherche.class).var("listeEcole").o(listeEcole);
 
 	/**	<br/>L'entité « listeEcole »
@@ -64,6 +66,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Ecole ecole;
+	@JsonIgnore
 	public Couverture<Ecole> ecoleCouverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole").o(ecole);
 
 	/**	<br/>L'entité « ecole »
