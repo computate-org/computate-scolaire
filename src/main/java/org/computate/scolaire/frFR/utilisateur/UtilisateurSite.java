@@ -3,7 +3,7 @@ package org.computate.scolaire.frFR.utilisateur;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 
-/** 
+/**  
  * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUser
  * 
  * Modele: true
@@ -19,14 +19,14 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiMethode: PATCH
  * 
  * ApiMethode.frFR: PageRecherche
- * PagePageRecherche: UtilisateurSitePage
- * PageSuperPageRecherche: ClusterPage
- * ApiUriPageRecherche: /frFR/utilisateur
+ * PagePageRecherche.frFR: UtilisateurSitePage
+ * PageSuperPageRecherche.frFR: ClusterPage
+ * ApiUriPageRecherche.frFR: /frFR/utilisateur
  * 
  * ApiMethode.enUS: SearchPage
- * PageSearchPage: SiteUserPage
- * PageSuperSearchPage: ClusterPage
- * ApiUriSearchPage: /enUS/user
+ * PageSearchPage.enUS: SiteUserPage
+ * PageSuperSearchPage.enUS: ClusterPage
+ * ApiUriSearchPage.enUS: /enUS/user
  * 
  * MotCle: classeNomSimpleUtilisateurSite
  * Role.frFR: SiteAdmin
@@ -40,7 +40,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: green
  * IconeGroupe: regular
  * IconeNom: book
- */      
+ */     
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
 
 	/**  

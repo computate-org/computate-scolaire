@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.school.SchoolPage;
 
 
 /**
@@ -689,18 +688,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
 			case "classCanonicalName":
 				return "classCanonicalName_indexed_string";
 			case "classSimpleName":
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "modified":
+				return "modified_indexed_date";
+			case "archived":
+				return "archived_indexed_boolean";
+			case "deleted":
+				return "deleted_indexed_boolean";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "childKeys":

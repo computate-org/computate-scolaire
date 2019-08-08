@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.enUS.cluster.ClusterPage;
 
 
 /**
@@ -320,16 +319,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.cluster.Cluster"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
-						break;
-					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
-						break;
 					case "setCree":
 						o2.setCree(requeteJson.getInstant(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setD);
@@ -339,6 +328,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						o2.setModifie(requeteJson.getInstant(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setD);
 						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						break;
+					case "setArchive":
+						o2.setArchive(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						break;
+					case "setSupprime":
+						o2.setSupprime(requeteJson.getBoolean(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						break;
 				}
 			}
@@ -667,20 +666,20 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "modifie":
+				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

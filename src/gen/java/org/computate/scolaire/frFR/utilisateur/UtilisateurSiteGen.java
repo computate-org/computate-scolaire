@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -62,6 +63,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurId;
+	@JsonIgnore
 	public Couverture<String> utilisateurIdCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
 
 	/**	<br/>L'entité « utilisateurId »
@@ -159,6 +161,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNom;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNom").o(utilisateurNom);
 
 	/**	<br/>L'entité « utilisateurNom »
@@ -256,6 +259,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurMail;
+	@JsonIgnore
 	public Couverture<String> utilisateurMailCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurMail").o(utilisateurMail);
 
 	/**	<br/>L'entité « utilisateurMail »
@@ -353,6 +357,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurPrenom;
+	@JsonIgnore
 	public Couverture<String> utilisateurPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurPrenom").o(utilisateurPrenom);
 
 	/**	<br/>L'entité « utilisateurPrenom »
@@ -450,6 +455,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNomFamille;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomFamilleCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomFamille").o(utilisateurNomFamille);
 
 	/**	<br/>L'entité « utilisateurNomFamille »
@@ -547,6 +553,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNomComplet;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomComplet").o(utilisateurNomComplet);
 
 	/**	<br/>L'entité « utilisateurNomComplet »
@@ -644,6 +651,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurSite;
+	@JsonIgnore
 	public Couverture<String> utilisateurSiteCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurSite").o(utilisateurSite);
 
 	/**	<br/>L'entité « utilisateurSite »
@@ -741,6 +749,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean utilisateurRecevoirCourriels;
+	@JsonIgnore
 	public Couverture<Boolean> utilisateurRecevoirCourrielsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("utilisateurRecevoirCourriels").o(utilisateurRecevoirCourriels);
 
 	/**	<br/>L'entité « utilisateurRecevoirCourriels »
@@ -843,6 +852,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean voirArchive;
+	@JsonIgnore
 	public Couverture<Boolean> voirArchiveCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("voirArchive").o(voirArchive);
 
 	/**	<br/>L'entité « voirArchive »
@@ -945,6 +955,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean voirSupprime;
+	@JsonIgnore
 	public Couverture<Boolean> voirSupprimeCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("voirSupprime").o(voirSupprime);
 
 	/**	<br/>L'entité « voirSupprime »

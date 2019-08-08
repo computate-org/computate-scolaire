@@ -937,63 +937,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return pageUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUri());
 	}
 
-	/////////////////
-	// pageUriFrFR //
-	/////////////////
-
-	/**	L'entité « pageUriFrFR »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriFrFR;
-	@JsonIgnore
-	public Wrap<String> pageUriFrFRWrap = new Wrap<String>().p(this).c(String.class).var("pageUriFrFR").o(pageUriFrFR);
-
-	/**	<br/>L'entité « pageUriFrFR »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUriFrFR">Trouver l'entité pageUriFrFR dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriFrFR(Wrap<String> c);
-
-	public String getPageUriFrFR() {
-		return pageUriFrFR;
-	}
-
-	public void setPageUriFrFR(String pageUriFrFR) {
-		this.pageUriFrFR = pageUriFrFR;
-		this.pageUriFrFRWrap.alreadyInitialized = true;
-	}
-	protected PageLayout pageUriFrFRInit() {
-		if(!pageUriFrFRWrap.alreadyInitialized) {
-			_pageUriFrFR(pageUriFrFRWrap);
-			if(pageUriFrFR == null)
-				setPageUriFrFR(pageUriFrFRWrap.o);
-		}
-		pageUriFrFRWrap.alreadyInitialized(true);
-		return (PageLayout)this;
-	}
-
-	public String solrPageUriFrFR() {
-		return pageUriFrFR;
-	}
-
-	public String strPageUriFrFR() {
-		return pageUriFrFR == null ? "" : pageUriFrFR;
-	}
-
-	public String nomAffichagePageUriFrFR() {
-		return null;
-	}
-
-	public String htmTooltipPageUriFrFR() {
-		return null;
-	}
-
-	public String htmPageUriFrFR() {
-		return pageUriFrFR == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriFrFR());
-	}
-
 	//////////////
 	// pageUris //
 	//////////////
@@ -2081,61 +2024,61 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return pageUserUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUserUri());
 	}
 
-	////////////////////
-	// _pageLogoutUri //
-	////////////////////
+	///////////////////
+	// pageLogoutUri //
+	///////////////////
 
-	/**	L'entité « _pageLogoutUri »
+	/**	L'entité « pageLogoutUri »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String _pageLogoutUri;
+	protected String pageLogoutUri;
 	@JsonIgnore
-	public Wrap<String> _pageLogoutUriWrap = new Wrap<String>().p(this).c(String.class).var("_pageLogoutUri").o(_pageLogoutUri);
+	public Wrap<String> pageLogoutUriWrap = new Wrap<String>().p(this).c(String.class).var("pageLogoutUri").o(pageLogoutUri);
 
-	/**	<br/>L'entité « _pageLogoutUri »
+	/**	<br/>L'entité « pageLogoutUri »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:_pageLogoutUri">Trouver l'entité _pageLogoutUri dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageLogoutUri">Trouver l'entité pageLogoutUri dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void __pageLogoutUri(Wrap<String> c);
+	protected abstract void _pageLogoutUri(Wrap<String> c);
 
-	public String get_pageLogoutUri() {
-		return _pageLogoutUri;
+	public String getPageLogoutUri() {
+		return pageLogoutUri;
 	}
 
-	public void set_pageLogoutUri(String _pageLogoutUri) {
-		this._pageLogoutUri = _pageLogoutUri;
-		this._pageLogoutUriWrap.alreadyInitialized = true;
+	public void setPageLogoutUri(String pageLogoutUri) {
+		this.pageLogoutUri = pageLogoutUri;
+		this.pageLogoutUriWrap.alreadyInitialized = true;
 	}
-	protected PageLayout _pageLogoutUriInit() {
-		if(!_pageLogoutUriWrap.alreadyInitialized) {
-			__pageLogoutUri(_pageLogoutUriWrap);
-			if(_pageLogoutUri == null)
-				set_pageLogoutUri(_pageLogoutUriWrap.o);
+	protected PageLayout pageLogoutUriInit() {
+		if(!pageLogoutUriWrap.alreadyInitialized) {
+			_pageLogoutUri(pageLogoutUriWrap);
+			if(pageLogoutUri == null)
+				setPageLogoutUri(pageLogoutUriWrap.o);
 		}
-		_pageLogoutUriWrap.alreadyInitialized(true);
+		pageLogoutUriWrap.alreadyInitialized(true);
 		return (PageLayout)this;
 	}
 
-	public String solr_pageLogoutUri() {
-		return _pageLogoutUri;
+	public String solrPageLogoutUri() {
+		return pageLogoutUri;
 	}
 
-	public String str_pageLogoutUri() {
-		return _pageLogoutUri == null ? "" : _pageLogoutUri;
+	public String strPageLogoutUri() {
+		return pageLogoutUri == null ? "" : pageLogoutUri;
 	}
 
-	public String nomAffichage_pageLogoutUri() {
+	public String nomAffichagePageLogoutUri() {
 		return null;
 	}
 
-	public String htmTooltip_pageLogoutUri() {
+	public String htmTooltipPageLogoutUri() {
 		return null;
 	}
 
-	public String htm_pageLogoutUri() {
-		return _pageLogoutUri == null ? "" : StringEscapeUtils.escapeHtml4(str_pageLogoutUri());
+	public String htmPageLogoutUri() {
+		return pageLogoutUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageLogoutUri());
 	}
 
 	//////////////
@@ -2175,7 +2118,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		_pageH3ShortInit();
 		pageTitleInit();
 		pageUriInit();
-		pageUriFrFRInit();
 		pageUrisInit();
 		pageUrlInit();
 		pageImageUriInit();
@@ -2194,7 +2136,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		pageHomeUriInit();
 		pageSchoolUriInit();
 		pageUserUriInit();
-		_pageLogoutUriInit();
+		pageLogoutUriInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2268,8 +2210,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pageTitle;
 			case "pageUri":
 				return oPageLayout.pageUri;
-			case "pageUriFrFR":
-				return oPageLayout.pageUriFrFR;
 			case "pageUris":
 				return oPageLayout.pageUris;
 			case "pageUrl":
@@ -2306,8 +2246,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pageSchoolUri;
 			case "pageUserUri":
 				return oPageLayout.pageUserUri;
-			case "_pageLogoutUri":
-				return oPageLayout._pageLogoutUri;
+			case "pageLogoutUri":
+				return oPageLayout.pageLogoutUri;
 			default:
 				return null;
 		}

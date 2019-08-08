@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.cluster.ClusterPage;
 
 
 /**
@@ -320,16 +319,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
-					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
-						break;
-					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
-						break;
 					case "setCreated":
 						o2.setCreated(requestJson.getInstant(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
@@ -339,6 +328,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						o2.setModified(requestJson.getInstant(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setD);
 						patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						break;
+					case "setArchived":
+						o2.setArchived(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						break;
+					case "setDeleted":
+						o2.setDeleted(requestJson.getBoolean(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setD);
+						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
 						break;
 				}
 			}
@@ -667,20 +666,20 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				return "pk_indexed_long";
 			case "id":
 				return "id_indexed_string";
+			case "created":
+				return "created_indexed_date";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "modified":
+				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

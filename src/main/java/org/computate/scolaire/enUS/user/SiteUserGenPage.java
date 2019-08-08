@@ -66,11 +66,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enUS/api/user");
+		c.o("/enUS/user");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enUS/api/user-999.png");
+			c.o("/png/enUS/user-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -319,7 +319,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 						SiteUser o = listSiteUser.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enUS/api/user/" + o.getPk();
+						String uri = "/enUS/user/" + o.getPk();
 						{ e("tr").f();
 						} g("tr");
 					}

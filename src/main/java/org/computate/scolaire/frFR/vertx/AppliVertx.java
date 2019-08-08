@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -15,16 +14,13 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
 import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiService;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.eventbus.MessageConsumer;
-import io.vertx.core.http.HttpHeaders;
-import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
@@ -42,10 +38,8 @@ import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
-import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
-import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
@@ -53,7 +47,6 @@ import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
-import io.vertx.serviceproxy.ServiceBinder;
 
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppVertx
@@ -625,6 +618,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: ClusterEnUSGenApiService
 	 * r: EcoleFrFRGenApiService
 	 * r.enUS: SchoolEnUSGenApiService
+	 * r: UtilisateurSiteFrFRGenApiService
+	 * r.enUS: SiteUserEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */
@@ -635,6 +630,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		ClusterFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		EcoleFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+
+		UtilisateurSiteFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

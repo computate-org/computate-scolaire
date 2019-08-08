@@ -937,63 +937,6 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUri());
 	}
 
-	/////////////////
-	// pageUriEnUS //
-	/////////////////
-
-	/**	L'entité « pageUriEnUS »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUriEnUS;
-	@JsonIgnore
-	public Couverture<String> pageUriEnUSCouverture = new Couverture<String>().p(this).c(String.class).var("pageUriEnUS").o(pageUriEnUS);
-
-	/**	<br/>L'entité « pageUriEnUS »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUriEnUS">Trouver l'entité pageUriEnUS dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUriEnUS(Couverture<String> c);
-
-	public String getPageUriEnUS() {
-		return pageUriEnUS;
-	}
-
-	public void setPageUriEnUS(String pageUriEnUS) {
-		this.pageUriEnUS = pageUriEnUS;
-		this.pageUriEnUSCouverture.dejaInitialise = true;
-	}
-	protected MiseEnPage pageUriEnUSInit() {
-		if(!pageUriEnUSCouverture.dejaInitialise) {
-			_pageUriEnUS(pageUriEnUSCouverture);
-			if(pageUriEnUS == null)
-				setPageUriEnUS(pageUriEnUSCouverture.o);
-		}
-		pageUriEnUSCouverture.dejaInitialise(true);
-		return (MiseEnPage)this;
-	}
-
-	public String solrPageUriEnUS() {
-		return pageUriEnUS;
-	}
-
-	public String strPageUriEnUS() {
-		return pageUriEnUS == null ? "" : pageUriEnUS;
-	}
-
-	public String nomAffichagePageUriEnUS() {
-		return null;
-	}
-
-	public String htmTooltipPageUriEnUS() {
-		return null;
-	}
-
-	public String htmPageUriEnUS() {
-		return pageUriEnUS == null ? "" : StringEscapeUtils.escapeHtml4(strPageUriEnUS());
-	}
-
 	//////////////
 	// pageUris //
 	//////////////
@@ -2175,7 +2118,6 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		pageH3CourtInit();
 		pageTitreInit();
 		pageUriInit();
-		pageUriEnUSInit();
 		pageUrisInit();
 		pageUrlInit();
 		pageImageUriInit();
@@ -2268,8 +2210,6 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				return oMiseEnPage.pageTitre;
 			case "pageUri":
 				return oMiseEnPage.pageUri;
-			case "pageUriEnUS":
-				return oMiseEnPage.pageUriEnUS;
 			case "pageUris":
 				return oMiseEnPage.pageUris;
 			case "pageUrl":

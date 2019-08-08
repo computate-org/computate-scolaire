@@ -69,7 +69,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: Locale.FRANCE
 	 * r.enUS: Locale.US
 	 */
-	public static DateTimeFormatter FORMATDateHeureZoneeAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm VV", Locale.FRANCE);
+	public static DateTimeFormatter FORMATDateHeureZoneeAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm zz VV", Locale.FRANCE);
 
 	protected void _pageParts(List<PagePart> l) {
 	}
@@ -236,12 +236,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * **/
 	protected void _pageUri(Couverture<String> c)  {
 		c.o(StringUtils.defaultIfBlank((String)pageDocumentSolr.get(c.var + "_frFR_stored_string"), null));
-	}
-
-	/**
-	 * Var.enUS: pageUriFrFR
-	 */
-	protected void _pageUriEnUS(Couverture<String> c) {
 	}
 
 	/**	Tous les URIs ensemble pour toutes les langues dans cette liste. 
@@ -458,23 +452,25 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: pageSchoolUri
-	 * String.enUS: /school
+	 * String.enUS: /enUS/school
 	 */
 	protected void _pageEcoleUri(Couverture<String> c)  {
-		c.o("/ecole");
+		c.o("/frFR/ecole");
 	}
 
 	/**
 	 * Var.enUS: pageUserUri
 	 * r: utilisateur
 	 * r.enUS: user
+	 * r: frFR
+	 * r.enUS: enUS
 	 */
 	protected void _pageUtilisateurUri(Couverture<String> c)  {
-		c.o("/utilisateur");
+		c.o("/frFR/utilisateur");
 	}
 
 	/**
-	 * Var.enUS: _pageLogoutUri
+	 * Var.enUS: pageLogoutUri
 	 * r: deconnexion
 	 * r.enUS: logout
 	 * r: configSite
@@ -569,6 +565,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
+		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
 
 	/**
@@ -634,10 +631,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							e("div").a("class", "w3-content ").f();
 	
 								htmlBody();
-	
-//								abondonnezPas();
-	
-//								partagerPage();
 
 								e("footer").a("class", "w3-center w3-black w3-padding-48 ").f();
 									e("div").a("class", "w3-xxlarge ").f();
@@ -681,83 +674,65 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: login
 	 * r: se déconnecter
 	 * r.enUS: logout
+	 * r: statiqueUrlBase
+	 * r.enUS: staticBaseUrl
+	 * r: pageAccueilUri
+	 * r.enUS: pageHomeUri
+	 * r: pageUtilisateurUri
+	 * r.enUS: pageUserUri
+	 * r: UtilisateurId
+	 * r.enUS: UserId
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: UtilisateurNom
+	 * r.enUS: UserName
+	 * r: pageDeconnexionUri
+	 * r.enUS: pageLogoutUri
 	 */
 	public void menu()  {
-//		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
-//			e("div").a("class", "site-bar-item w3-bar-item ").f();
-//				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
-//					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
-//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
-//					g("a");
-//					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
-//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
-//					g("a");
-//					e("br").fg();
-//					e("span").a("class", "site-menu-item").f();
-//						sx("Langue");
-//					g("span");
-//				g("span");
-//			g("div");
-//			e("div").a("class", "site-bar-item w3-bar-item ").f();
-//				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
-//	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-//					e("br").fg();
-//					e("span").a("class", "site-menu-item").f();
-//						sx("Accueil");
-//					g("span");
-//				g("a");
-//			g("div");
-//			if(requeteSite_.getUtilisateurId() == null) {
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx("Connexion");
-//						g("span");
-//					g("a");
-//				g("div");
-//			}
-//			if(requeteSite_.getUtilisateurId() != null) {
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx(requeteSite_.getUtilisateurNom());
-//						g("span");
-//					g("a");
-//				g("div");
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx("Déconnexion");
-//						g("span");
-//					g("a");
-//				g("div");
-//			}
-//		g("div");
-	}
-
-	/**
-	 * r: N'abandonnez pas vos idées. Vous pouvez faire des choses compliquées ! 
-	 * r.enUS: Don't give up on your dreams. You can do hard things! 
-	 * @throws Exception
-	 */
-	public void abondonnezPas() {
-		{ e("div").a("class", "site-abondonnezPas-div ").f();
-			{ e("fieldset").a("class", "site-abondonnezPas-fieldset ").f();
-				{ e("legend").f();
-					e("h3").f().sx("N'abandonnez pas vos idées. Vous pouvez faire des choses compliquées ! ").g("h3");
-				} g("legend");
-				{ e("h4").f();
-					e("img").a("class", "w3-image ").a("src", "/svg/computate-keys.svg").fg();
-				} g("h4");
-			} g("fieldset");
-		} g("div");
-	}
+		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
+	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
+					e("br").fg();
+					e("span").a("class", "site-menu-item").f();
+						sx("Accueil");
+					g("span");
+				g("a");
+			g("div");
+			if(requeteSite_.getUtilisateurId() == null) {
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx("Connexion");
+						g("span");
+					g("a");
+				g("div");
+			}
+			if(requeteSite_.getUtilisateurId() != null) {
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
+	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx(requeteSite_.getUtilisateurNom());
+						g("span");
+					g("a");
+				g("div");
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
+	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx("Déconnexion");
+						g("span");
+					g("a");
+				g("div");
+			}
+		g("div");
+	} 
 
 	/**  
 	 * var.enUS: sharePage

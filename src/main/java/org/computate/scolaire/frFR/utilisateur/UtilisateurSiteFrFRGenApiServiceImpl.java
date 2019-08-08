@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.utilisateur.UtilisateurSitePage;
 
 
 /**
@@ -253,12 +252,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public void reponse200PATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			buffer.appendString("{}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -279,7 +275,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheUtilisateurSite(requeteSite, false, true, "/frFR/api/utilisateur", c -> {
+							rechercheUtilisateurSite(requeteSite, false, true, "/frFR/utilisateur", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
 									reponse200PageRechercheUtilisateurSite(listeUtilisateurSite, d -> {
@@ -325,14 +321,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public void reponse200PageRechercheUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
 			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
 			UtilisateurSitePage page = new UtilisateurSitePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/api/utilisateur");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/utilisateur");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeUtilisateurSite(listeUtilisateurSite);
@@ -352,18 +347,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
 			case "classeNomCanonique":
 				return "classeNomCanonique_indexed_string";
 			case "classeNomSimple":
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "modifie":
+				return "modifie_indexed_date";
+			case "archive":
+				return "archive_indexed_boolean";
+			case "supprime":
+				return "supprime_indexed_boolean";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
 			case "utilisateurNom":

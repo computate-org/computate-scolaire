@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SearchList<SiteUser> listSiteUser;
+	@JsonIgnore
 	public Wrap<SearchList<SiteUser>> listSiteUserWrap = new Wrap<SearchList<SiteUser>>().p(this).c(SearchList.class).var("listSiteUser").o(listSiteUser);
 
 	/**	<br/>L'entité « listSiteUser »
@@ -64,6 +66,7 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteUser siteUser;
+	@JsonIgnore
 	public Wrap<SiteUser> siteUserWrap = new Wrap<SiteUser>().p(this).c(SiteUser.class).var("siteUser").o(siteUser);
 
 	/**	<br/>L'entité « siteUser »

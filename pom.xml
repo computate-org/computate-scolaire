@@ -8,7 +8,7 @@
 	<artifactId>computate-scolaire</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>computate-scolaire</name>
-	<description>Cardiac health application</description>
+	<description>Pour gérer des écoles. </description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

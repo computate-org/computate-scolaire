@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.ecole.EcolePage;
 
 
 /**
@@ -689,18 +688,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
 			case "classeNomCanonique":
 				return "classeNomCanonique_indexed_string";
 			case "classeNomSimple":
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "modifie":
+				return "modifie_indexed_date";
+			case "archive":
+				return "archive_indexed_boolean";
+			case "supprime":
+				return "supprime_indexed_boolean";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "enfantCles":

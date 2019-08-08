@@ -96,94 +96,166 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	public void htmlFormPageEcole(Ecole o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("crée").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strCree()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("modifié").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strModifie()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("action", "").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
-					e("label").a("for", "Page_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								e("label").a("for", "Page_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
 
-					e("input")
-						.a("type", "text")
-						.a("placeholder", "nom de l'école")
-						.a("title", "Nom de l'école. ")
-						.a("class", "setEcoleNom w3-input w3-border ")
-						.a("name", "setEcoleNom")
-						.a("id", "Page_ecoleNom")
-						.a("onclick", "removeGlow($(this)); ")
-						.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleNomForm')); ")
-						.a("value", o.strEcoleNom())
-					.fg();
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "nom de l'école")
+										.a("title", "Nom de l'école. ")
+										.a("class", "setEcoleNom w3-input w3-border ")
+										.a("name", "setEcoleNom")
+										.a("id", "Page_ecoleNom")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleNomForm')); ")
+										.a("value", o.strEcoleNom())
+									.fg();
 
-				} g("form");
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+									.a("onclick", "removeGlow($(this)); patchEcole($('#EcoleForm'), $('#ecoleNomForm')); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("action", "").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
-					e("label").a("for", "Page_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								e("label").a("for", "Page_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
 
-					e("input")
-						.a("type", "text")
-						.a("placeholder", "numéro de téléphone")
-						.a("title", "Numéro de téléphone de l'école. ")
-						.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
-						.a("name", "setEcoleNumeroTelephone")
-						.a("id", "Page_ecoleNumeroTelephone")
-						.a("onclick", "removeGlow($(this)); ")
-						.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleNumeroTelephoneForm')); ")
-						.a("value", o.strEcoleNumeroTelephone())
-					.fg();
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "numéro de téléphone")
+										.a("title", "Numéro de téléphone de l'école. ")
+										.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+										.a("name", "setEcoleNumeroTelephone")
+										.a("id", "Page_ecoleNumeroTelephone")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleNumeroTelephoneForm')); ")
+										.a("value", o.strEcoleNumeroTelephone())
+									.fg();
 
-				} g("form");
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+									.a("onclick", "removeGlow($(this)); patchEcole($('#EcoleForm'), $('#ecoleNumeroTelephoneForm')); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("action", "").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
-					e("label").a("for", "Page_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								e("label").a("for", "Page_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
 
-					e("input")
-						.a("type", "text")
-						.a("placeholder", "administrateur de l'école")
-						.a("title", "Description.enUS: ")
-						.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
-						.a("name", "setEcoleAdministrateurNom")
-						.a("id", "Page_ecoleAdministrateurNom")
-						.a("onclick", "removeGlow($(this)); ")
-						.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleAdministrateurNomForm')); ")
-						.a("value", o.strEcoleAdministrateurNom())
-					.fg();
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "administrateur de l'école")
+										.a("title", "Description.enUS: ")
+										.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
+										.a("name", "setEcoleAdministrateurNom")
+										.a("id", "Page_ecoleAdministrateurNom")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleAdministrateurNomForm')); ")
+										.a("value", o.strEcoleAdministrateurNom())
+									.fg();
 
-				} g("form");
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+									.a("onclick", "removeGlow($(this)); patchEcole($('#EcoleForm'), $('#ecoleAdministrateurNomForm')); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("form").a("action", "").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
-					e("label").a("for", "Page_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								e("label").a("for", "Page_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
 
-					e("textarea")
-						.a("placeholder", "addresse")
-						.a("title", "Description.enUS: ")
-						.a("class", "setEcoleAddresse w3-input w3-border ")
-						.a("name", "setEcoleAddresse")
-						.a("id", "Page_ecoleAddresse")
-						.a("onclick", "removeGlow($(this)); ")
-						.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleAddresseForm')); ")
-					.f().sx(o.strEcoleAddresse()).g("textarea");
+									e("textarea")
+										.a("placeholder", "addresse")
+										.a("title", "Description.enUS: ")
+										.a("class", "setEcoleAddresse w3-input w3-border ")
+										.a("name", "setEcoleAddresse")
+										.a("id", "Page_ecoleAddresse")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchEcole($('#EcoleForm'), $('#ecoleAddresseForm')); ")
+									.f().sx(o.strEcoleAddresse()).g("textarea");
 
-				} g("form");
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+									.a("onclick", "removeGlow($(this)); patchEcole($('#EcoleForm'), $('#ecoleAddresseForm')); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -191,78 +263,126 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	public void htmlFormPOSTEcole(Ecole o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("crée").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strCree()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("modifié").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strModifie()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "POST_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "POST_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "nom de l'école")
-					.a("title", "Nom de l'école. ")
-					.a("class", "valueEcoleNom w3-input w3-border ")
-					.a("name", "ecoleNom")
-					.a("id", "POST_ecoleNom")
-					.a("value", o.strEcoleNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "nom de l'école")
+									.a("title", "Nom de l'école. ")
+									.a("class", "valueEcoleNom w3-input w3-border ")
+									.a("name", "ecoleNom")
+									.a("id", "POST_ecoleNom")
+									.a("value", o.strEcoleNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "POST_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "POST_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "numéro de téléphone")
-					.a("title", "Numéro de téléphone de l'école. ")
-					.a("class", "valueEcoleNumeroTelephone w3-input w3-border ")
-					.a("name", "ecoleNumeroTelephone")
-					.a("id", "POST_ecoleNumeroTelephone")
-					.a("value", o.strEcoleNumeroTelephone())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "numéro de téléphone")
+									.a("title", "Numéro de téléphone de l'école. ")
+									.a("class", "valueEcoleNumeroTelephone w3-input w3-border ")
+									.a("name", "ecoleNumeroTelephone")
+									.a("id", "POST_ecoleNumeroTelephone")
+									.a("value", o.strEcoleNumeroTelephone())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "POST_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "POST_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "administrateur de l'école")
-					.a("title", "Description.enUS: ")
-					.a("class", "valueEcoleAdministrateurNom w3-input w3-border ")
-					.a("name", "ecoleAdministrateurNom")
-					.a("id", "POST_ecoleAdministrateurNom")
-					.a("value", o.strEcoleAdministrateurNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "administrateur de l'école")
+									.a("title", "Description.enUS: ")
+									.a("class", "valueEcoleAdministrateurNom w3-input w3-border ")
+									.a("name", "ecoleAdministrateurNom")
+									.a("id", "POST_ecoleAdministrateurNom")
+									.a("value", o.strEcoleAdministrateurNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "POST_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "POST_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("textarea")
-					.a("placeholder", "addresse")
-					.a("title", "Description.enUS: ")
-					.a("class", "valueEcoleAddresse w3-input w3-border ")
-					.a("name", "ecoleAddresse")
-					.a("id", "POST_ecoleAddresse")
-				.f().sx(o.strEcoleAddresse()).g("textarea");
+								e("textarea")
+									.a("placeholder", "addresse")
+									.a("title", "Description.enUS: ")
+									.a("class", "valueEcoleAddresse w3-input w3-border ")
+									.a("name", "ecoleAddresse")
+									.a("id", "POST_ecoleAddresse")
+								.f().sx(o.strEcoleAddresse()).g("textarea");
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -270,78 +390,126 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	public void htmlFormPATCHEcole(Ecole o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("crée").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strCree()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("modifié").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strModifie()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "PATCH_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "PATCH_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "nom de l'école")
-					.a("title", "Nom de l'école. ")
-					.a("class", "setEcoleNom w3-input w3-border ")
-					.a("name", "setEcoleNom")
-					.a("id", "PATCH_ecoleNom")
-					.a("value", o.strEcoleNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "nom de l'école")
+									.a("title", "Nom de l'école. ")
+									.a("class", "setEcoleNom w3-input w3-border ")
+									.a("name", "setEcoleNom")
+									.a("id", "PATCH_ecoleNom")
+									.a("value", o.strEcoleNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "PATCH_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "PATCH_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "numéro de téléphone")
-					.a("title", "Numéro de téléphone de l'école. ")
-					.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
-					.a("name", "setEcoleNumeroTelephone")
-					.a("id", "PATCH_ecoleNumeroTelephone")
-					.a("value", o.strEcoleNumeroTelephone())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "numéro de téléphone")
+									.a("title", "Numéro de téléphone de l'école. ")
+									.a("class", "setEcoleNumeroTelephone w3-input w3-border ")
+									.a("name", "setEcoleNumeroTelephone")
+									.a("id", "PATCH_ecoleNumeroTelephone")
+									.a("value", o.strEcoleNumeroTelephone())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "PATCH_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "PATCH_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "administrateur de l'école")
-					.a("title", "Description.enUS: ")
-					.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
-					.a("name", "setEcoleAdministrateurNom")
-					.a("id", "PATCH_ecoleAdministrateurNom")
-					.a("value", o.strEcoleAdministrateurNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "administrateur de l'école")
+									.a("title", "Description.enUS: ")
+									.a("class", "setEcoleAdministrateurNom w3-input w3-border ")
+									.a("name", "setEcoleAdministrateurNom")
+									.a("id", "PATCH_ecoleAdministrateurNom")
+									.a("value", o.strEcoleAdministrateurNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "PATCH_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "PATCH_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("textarea")
-					.a("placeholder", "addresse")
-					.a("title", "Description.enUS: ")
-					.a("class", "setEcoleAddresse w3-input w3-border ")
-					.a("name", "setEcoleAddresse")
-					.a("id", "PATCH_ecoleAddresse")
-				.f().sx(o.strEcoleAddresse()).g("textarea");
+								e("textarea")
+									.a("placeholder", "addresse")
+									.a("title", "Description.enUS: ")
+									.a("class", "setEcoleAddresse w3-input w3-border ")
+									.a("name", "setEcoleAddresse")
+									.a("id", "PATCH_ecoleAddresse")
+								.f().sx(o.strEcoleAddresse()).g("textarea");
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -349,78 +517,126 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	public void htmlFormRechercheEcole(Ecole o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("crée").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strCree()).g("span");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("label").a("class", "").f().sx("modifié").g("label");
 				} g("div");
-				{ e("div").a("class", "").f();
+				{ e("div").a("class", "w3-rest ").f();
 					e("span").f().sx(o.strModifie()).g("span");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "Recherche_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Recherche_ecoleNom").a("class", "").f().sx("nom de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "nom de l'école")
-					.a("title", "Nom de l'école. ")
-					.a("class", "valueEcoleNom w3-input w3-border ")
-					.a("name", "ecoleNom")
-					.a("id", "Recherche_ecoleNom")
-					.a("value", o.strEcoleNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "nom de l'école")
+									.a("title", "Nom de l'école. ")
+									.a("class", "valueEcoleNom w3-input w3-border ")
+									.a("name", "ecoleNom")
+									.a("id", "Recherche_ecoleNom")
+									.a("value", o.strEcoleNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "Recherche_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleNumeroTelephoneForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Recherche_ecoleNumeroTelephone").a("class", "").f().sx("numéro de téléphone").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "numéro de téléphone")
-					.a("title", "Numéro de téléphone de l'école. ")
-					.a("class", "valueEcoleNumeroTelephone w3-input w3-border ")
-					.a("name", "ecoleNumeroTelephone")
-					.a("id", "Recherche_ecoleNumeroTelephone")
-					.a("value", o.strEcoleNumeroTelephone())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "numéro de téléphone")
+									.a("title", "Numéro de téléphone de l'école. ")
+									.a("class", "valueEcoleNumeroTelephone w3-input w3-border ")
+									.a("name", "ecoleNumeroTelephone")
+									.a("id", "Recherche_ecoleNumeroTelephone")
+									.a("value", o.strEcoleNumeroTelephone())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "Recherche_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAdministrateurNomForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Recherche_ecoleAdministrateurNom").a("class", "").f().sx("administrateur de l'école").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "administrateur de l'école")
-					.a("title", "Description.enUS: ")
-					.a("class", "valueEcoleAdministrateurNom w3-input w3-border ")
-					.a("name", "ecoleAdministrateurNom")
-					.a("id", "Recherche_ecoleAdministrateurNom")
-					.a("value", o.strEcoleAdministrateurNom())
-				.fg();
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "administrateur de l'école")
+									.a("title", "Description.enUS: ")
+									.a("class", "valueEcoleAdministrateurNom w3-input w3-border ")
+									.a("name", "ecoleAdministrateurNom")
+									.a("id", "Recherche_ecoleAdministrateurNom")
+									.a("value", o.strEcoleAdministrateurNom())
+								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				e("label").a("for", "Recherche_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "ecoleAddresseForm").a("style", "display: inline-block; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Recherche_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-				e("textarea")
-					.a("placeholder", "addresse")
-					.a("title", "Description.enUS: ")
-					.a("class", "valueEcoleAddresse w3-input w3-border ")
-					.a("name", "ecoleAddresse")
-					.a("id", "Recherche_ecoleAddresse")
-				.f().sx(o.strEcoleAddresse()).g("textarea");
+								e("textarea")
+									.a("placeholder", "addresse")
+									.a("title", "Description.enUS: ")
+									.a("class", "valueEcoleAddresse w3-input w3-border ")
+									.a("name", "ecoleAddresse")
+									.a("id", "Recherche_ecoleAddresse")
+								.f().sx(o.strEcoleAddresse()).g("textarea");
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
 			} g("div");
 		} g("div");
 	}

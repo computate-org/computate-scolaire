@@ -34,7 +34,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static DateTimeFormatter FORMATDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a", Locale.US);
 
-	public static DateTimeFormatter FORMATZonedDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a VV", Locale.US);
+	public static DateTimeFormatter FORMATZonedDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a zz VV", Locale.US);
 
 	protected void _pageParts(List<PagePart> l) {
 	}
@@ -103,9 +103,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	protected void _pageUri(Wrap<String> c) {
 		c.o(StringUtils.defaultIfBlank((String)pageSolrDocument.get(c.var + "_enUS_stored_string"), null));
-	}
-
-	protected void _pageUriFrFR(Wrap<String> c) {
 	}
 
 	protected void _pageUris(List<String> l) {
@@ -181,14 +178,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _pageSchoolUri(Wrap<String> c) {
-		c.o(" /school");
+		c.o(" /enUS/school");
 	}
 
 	protected void _pageUserUri(Wrap<String> c) {
-		c.o("/user");
+		c.o("/enUS/user");
 	}
 
-	protected void __pageLogoutUri(Wrap<String> c) {
+	protected void _pageLogoutUri(Wrap<String> c) {
 		try {
 			SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 			String o = siteConfig.getAuthUrl() + "/realms/" + siteConfig.getAuthRealm() + "/protocol/openid-connect/logout?redirect_uri=" + URLEncoder.encode(siteConfig.getSiteBaseUrl() + "/logout", "UTF-8");
@@ -242,6 +239,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
+		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
 
 	@Override()
@@ -295,10 +293,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 							e("div").a("class", "w3-content ").f();
 	
 								htmlBody();
-	
-//								abondonnezPas();
-	
-//								partagerPage();
 
 								e("footer").a("class", "w3-center w3-black w3-padding-48 ").f();
 									e("div").a("class", "w3-xxlarge ").f();
@@ -332,75 +326,48 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	public void  menu() {
-//		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
-//			e("div").a("class", "site-bar-item w3-bar-item ").f();
-//				e("span").a("class", "header-icon-a grow-30 w3-center ").f();
-//					e("a").a("class", "w3-hover-opacity").a("title", "English").a("href", pageUriEnUS).f();
-//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-US.svg").a("style", "height: 50px; ").fg();
-//					g("a");
-//					e("a").a("class", "w3-hover-opacity").a("title", "français").a("href", pageUri).f();
-//						e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/flag-FR.svg").a("style", "height: 50px; ").fg();
-//					g("a");
-//					e("br").fg();
-//					e("span").a("class", "site-menu-item").f();
-//						sx("Langue");
-//					g("span");
-//				g("span");
-//			g("div");
-//			e("div").a("class", "site-bar-item w3-bar-item ").f();
-//				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
-//	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-//					e("br").fg();
-//					e("span").a("class", "site-menu-item").f();
-//						sx("Accueil");
-//					g("span");
-//				g("a");
-//			g("div");
-//			if(requeteSite_.getUtilisateurId() == null) {
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx("Connexion");
-//						g("span");
-//					g("a");
-//				g("div");
-//			}
-//			if(requeteSite_.getUtilisateurId() != null) {
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx(requeteSite_.getUtilisateurNom());
-//						g("span");
-//					g("a");
-//				g("div");
-//				e("div").a("class", "site-bar-item w3-bar-item ").f();
-//					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
-//	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-//						e("br").fg();
-//						e("span").a("class", "site-menu-item").f();
-//							sx("Déconnexion");
-//						g("span");
-//					g("a");
-//				g("div");
-//			}
-//		g("div");
-	}
-
-	public void  abondonnezPas() {
-		{ e("div").a("class", "site-abondonnezPas-div ").f();
-			{ e("fieldset").a("class", "site-abondonnezPas-fieldset ").f();
-				{ e("legend").f();
-					e("h3").f().sx("Don't give up on your dreams. You can do hard things! ").g("h3");
-				} g("legend");
-				{ e("h4").f();
-					e("img").a("class", "w3-image ").a("src", "/svg/computate-keys.svg").fg();
-				} g("h4");
-			} g("fieldset");
-		} g("div");
+		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
+			e("div").a("class", "site-bar-item w3-bar-item ").f();
+				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageHomeUri).f();
+	//				e("img").a("alt", "").a("src", staticBaseUrl, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
+					e("br").fg();
+					e("span").a("class", "site-menu-item").f();
+						sx("Accueil");
+					g("span");
+				g("a");
+			g("div");
+			if(siteRequest_.getUserId() == null) {
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUserUri).f(); 
+	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx("Connexion");
+						g("span");
+					g("a");
+				g("div");
+			}
+			if(siteRequest_.getUserId() != null) {
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUserUri).f(); 
+	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx(siteRequest_.getUserName());
+						g("span");
+					g("a");
+				g("div");
+				e("div").a("class", "site-bar-item w3-bar-item ").f();
+					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageLogoutUri).f();
+	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
+						e("br").fg();
+						e("span").a("class", "site-menu-item").f();
+							sx("Déconnexion");
+						g("span");
+					g("a");
+				g("div");
+			}
+		g("div");
 	}
 
 	public void  partagerPage() {

@@ -17,9 +17,14 @@ import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
  */ 
 public class CoureurVertx {
 
+	/**
+	 * r: zookeeperNomHote
+	 * r.enUS: zookeeperHostName
+	 */
 	public static void run(Class<?> c) {
 		JsonObject zkConfig = new JsonObject();
-		zkConfig.put("zookeeperHosts", "localhost:10281");
+		String zookeeperHosts = System.getenv("zookeeperNomHote") + ":" + System.getenv("zookeeperPort");
+		zkConfig.put("zookeeperHosts", zookeeperHosts);
 		zkConfig.put("sessionTimeout", 20000);
 		zkConfig.put("connectTimeout", 3000);
 		zkConfig.put("rootPath", "io.vertx");
@@ -37,7 +42,6 @@ public class CoureurVertx {
 				.setEventBusOptions(new EventBusOptions().setClusterPublicHost("whatever").setClusterPublicPort(1234));
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		optionsVertx.setClustered(true);
-		// also somehow: java -jar my-fat.jar vertx.cacheDirBase=/tmp/vertx-cache
 
 		run(c, optionsVertx, null);
 	}
@@ -45,7 +49,6 @@ public class CoureurVertx {
 	public static void run(Class<?> c, VertxOptions options, DeploymentOptions deploymentOptions) {
 		String verticleID = c.getName();
 
-		System.setProperty("vertx.cwd", "/");
 		Consumer<Vertx> runner = vertx -> {
 			if (deploymentOptions != null) {
 				vertx.deployVerticle(verticleID, deploymentOptions);

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -61,6 +62,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userId;
+	@JsonIgnore
 	public Wrap<String> userIdWrap = new Wrap<String>().p(this).c(String.class).var("userId").o(userId);
 
 	/**	<br/>L'entité « userId »
@@ -158,6 +160,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userName;
+	@JsonIgnore
 	public Wrap<String> userNameWrap = new Wrap<String>().p(this).c(String.class).var("userName").o(userName);
 
 	/**	<br/>L'entité « userName »
@@ -255,6 +258,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userEmail;
+	@JsonIgnore
 	public Wrap<String> userEmailWrap = new Wrap<String>().p(this).c(String.class).var("userEmail").o(userEmail);
 
 	/**	<br/>L'entité « userEmail »
@@ -352,6 +356,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userFirstName;
+	@JsonIgnore
 	public Wrap<String> userFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("userFirstName").o(userFirstName);
 
 	/**	<br/>L'entité « userFirstName »
@@ -449,6 +454,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userLastName;
+	@JsonIgnore
 	public Wrap<String> userLastNameWrap = new Wrap<String>().p(this).c(String.class).var("userLastName").o(userLastName);
 
 	/**	<br/>L'entité « userLastName »
@@ -546,6 +552,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userFullName;
+	@JsonIgnore
 	public Wrap<String> userFullNameWrap = new Wrap<String>().p(this).c(String.class).var("userFullName").o(userFullName);
 
 	/**	<br/>L'entité « userFullName »
@@ -643,6 +650,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String userSite;
+	@JsonIgnore
 	public Wrap<String> userSiteWrap = new Wrap<String>().p(this).c(String.class).var("userSite").o(userSite);
 
 	/**	<br/>L'entité « userSite »
@@ -740,6 +748,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean userReceiveEmails;
+	@JsonIgnore
 	public Wrap<Boolean> userReceiveEmailsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("userReceiveEmails").o(userReceiveEmails);
 
 	/**	<br/>L'entité « userReceiveEmails »
@@ -842,6 +851,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean seeArchived;
+	@JsonIgnore
 	public Wrap<Boolean> seeArchivedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seeArchived").o(seeArchived);
 
 	/**	<br/>L'entité « seeArchived »
@@ -944,6 +954,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean seeDeleted;
+	@JsonIgnore
 	public Wrap<Boolean> seeDeletedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seeDeleted").o(seeDeleted);
 
 	/**	<br/>L'entité « seeDeleted »

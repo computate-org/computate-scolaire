@@ -4,6 +4,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.Cluster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -26,6 +27,7 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ListeRecherche<UtilisateurSite> listeUtilisateurSite;
+	@JsonIgnore
 	public Couverture<ListeRecherche<UtilisateurSite>> listeUtilisateurSiteCouverture = new Couverture<ListeRecherche<UtilisateurSite>>().p(this).c(ListeRecherche.class).var("listeUtilisateurSite").o(listeUtilisateurSite);
 
 	/**	<br/>L'entité « listeUtilisateurSite »
@@ -64,6 +66,7 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected UtilisateurSite utilisateurSite;
+	@JsonIgnore
 	public Couverture<UtilisateurSite> utilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite").o(utilisateurSite);
 
 	/**	<br/>L'entité « utilisateurSite »

@@ -67,7 +67,6 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.user.SiteUserPage;
 
 
 /**
@@ -253,12 +252,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public void response200PATCHSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
-			AllWriter w = AllWriter.create(listSiteUser.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			buffer.appendString("{}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -279,7 +275,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSiteUser(siteRequest, false, true, "/enUS/api/user", c -> {
+							aSearchSiteUser(siteRequest, false, true, "/enUS/user", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
 									response200SearchPageSiteUser(listSiteUser, d -> {
@@ -325,14 +321,13 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public void response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
 			AllWriter w = AllWriter.create(listSiteUser.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
 			SiteUserPage page = new SiteUserPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/api/user");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/user");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSiteUser(listSiteUser);
@@ -352,18 +347,18 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
 			case "classCanonicalName":
 				return "classCanonicalName_indexed_string";
 			case "classSimpleName":
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "modified":
+				return "modified_indexed_date";
+			case "archived":
+				return "archived_indexed_boolean";
+			case "deleted":
+				return "deleted_indexed_boolean";
 			case "userId":
 				return "userId_indexed_string";
 			case "userName":

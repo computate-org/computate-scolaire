@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;            
+package org.computate.scolaire.frFR.cluster;               
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
