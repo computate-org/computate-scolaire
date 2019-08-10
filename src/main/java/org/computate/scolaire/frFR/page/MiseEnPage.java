@@ -33,7 +33,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: HTML_CLOSED_ELEMENTS
 	 */
 	public static List<String> HTML_ELEMENTS_FERMES = Arrays.asList("area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr");
-	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p");
+	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p", "textarea");
 
 	/**
 	 * Var.enUS: FORMATDateTimeShort
@@ -539,14 +539,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: htmlScriptsPageLayout
 	 * r: statiqueUrlBase
 	 * r.enUS: staticBaseUrl
+	 * r: frFR
+	 * r.enUS: enUS
 	 */
 	@Override public void htmlScriptsMiseEnPage() {
 		e("script").a("src", statiqueUrlBase, "/js/jquery-1.12.4.min.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/site.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/site-frFR.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/moment.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");
+		e("script").a("src", "https://kit.fontawesome.com/59d19567d5.js").f().g("script");
 	}
 
 	/**
@@ -559,13 +562,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: htmlStylesPageLayout
 	 * r: statiqueUrlBase
 	 * r.enUS: staticBaseUrl
+	 * r: frFR
+	 * r.enUS: enUS
 	 */
 	@Override public void htmlStylesMiseEnPage() {
 		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
+		e("link").a("rel", "stylesheet").a("href", "/static/css/site-frFR.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
-		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
+//		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
 
 	/**
@@ -632,7 +637,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	
 								htmlBody();
 
-								e("footer").a("class", "w3-center w3-black w3-padding-48 ").f();
+								e("footer").a("class", "w3-center w3-black w3-padding-48 w3-margin-top ").f();
 									e("div").a("class", "w3-xxlarge ").f();
 										sx("Ce site est open source. ");
 									g("div");

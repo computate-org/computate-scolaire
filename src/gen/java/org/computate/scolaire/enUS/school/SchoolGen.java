@@ -53,8 +53,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public static final String School_NomVar = "school";
 	public static final String School_DeNom = "of school";
 	public static final String School_Couleur = "pink";
-	public static final String School_IconeGroupe = "regular";
-	public static final String School_IconeNom = "fort-awesome";
+	public static final String School_IconeGroupe = "duotone";
+	public static final String School_IconeNom = "school";
 
 	///////////////
 	// schoolKey //
@@ -1440,7 +1440,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSchoolAddress() {
-		return "Address";
+		return "address";
 	}
 
 	public String htmTooltipSchoolAddress() {
@@ -1988,6 +1988,104 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////
+	// pageH1 //
+	////////////
+
+	/**	L'entité « pageH1 »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String pageH1;
+	@JsonIgnore
+	public Wrap<String> pageH1Wrap = new Wrap<String>().p(this).c(String.class).var("pageH1").o(pageH1);
+
+	/**	<br/>L'entité « pageH1 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageH1">Trouver l'entité pageH1 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageH1(Wrap<String> c);
+
+	public String getPageH1() {
+		return pageH1;
+	}
+
+	public void setPageH1(String pageH1) {
+		this.pageH1 = pageH1;
+		this.pageH1Wrap.alreadyInitialized = true;
+	}
+	protected School pageH1Init() {
+		if(!pageH1Wrap.alreadyInitialized) {
+			_pageH1(pageH1Wrap);
+			if(pageH1 == null)
+				setPageH1(pageH1Wrap.o);
+		}
+		pageH1Wrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public String solrPageH1() {
+		return pageH1;
+	}
+
+	public String strPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String nomAffichagePageH1() {
+		return null;
+	}
+
+	public String htmTooltipPageH1() {
+		return null;
+	}
+
+	public String htmPageH1() {
+		return pageH1 == null ? "" : StringEscapeUtils.escapeHtml4(strPageH1());
+	}
+
+	public void htmPageH1(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchool", strPk(), "PageH1\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchool", strPk(), "PageH1() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPageH1\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageH1()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"pageH1\"");
+							r.s(" value=\"", htmPageH1(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPageH1());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2027,6 +2125,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolNameShortInit();
 		schoolIdInit();
 		pageUriInit();
+		pageH1Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2101,6 +2200,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolId;
 			case "pageUri":
 				return oSchool.pageUri;
+			case "pageH1":
+				return oSchool.pageH1;
 			default:
 				return super.obtainCluster(var);
 		}

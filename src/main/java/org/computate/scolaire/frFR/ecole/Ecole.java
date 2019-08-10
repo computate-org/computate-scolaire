@@ -42,12 +42,9 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * UnNom.frFR: une école
  * UnNom.enUS: a school
  * Couleur: pink
- * IconeGroupe: regular
- * IconeNom: fort-awesome
- * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
- */             
+ * IconeGroupe: duotone
+ * IconeNom: school
+ */                 
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -221,7 +218,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * HtmlColonne: 4
 	 * Multiligne: true
 	 * NomAffichage.frFR: addresse
-	 * NomAffichage.enUS: Address
+	 * NomAffichage.enUS: address
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 */
@@ -306,12 +303,22 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: schoolId
 	 * r: /ecole/
 	 * r.enUS: /school/
-	 * **/
+	 * **/  
 	protected void _pageUri(Couverture<String> c)  {
 		if(ecoleId != null) {
 			String o = "/ecole/" + ecoleId;
 			c.o(o);
 		}
+	}
+
+	/**
+	 * r: ecoleNom
+	 * r.enUS: schoolName
+	 * r: École : 
+	 * r.enUS: School: 
+	 */ 
+	protected void _pageH1(Couverture<String> c)  {
+		c.o("École : " + ecoleNom);
 	}
 
 	public void htmlBody() {

@@ -26,7 +26,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static List<String> HTML_CLOSED_ELEMENTS = Arrays.asList("area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr");
 
-	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p");
+	public static List<String> HTML_ELEMENTS_NO_WRAP = Arrays.asList("script", "span", "a", "b", "i", "u", "title", "use", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "p", "textarea");
 
 	public static DateTimeFormatter FORMATDateTimeShort = DateTimeFormatter.ofPattern("MMM d yyyy h:mm a", Locale.US);
 
@@ -222,11 +222,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 	@Override()
 	public void  htmlScriptsPageLayout() {
 		e("script").a("src", staticBaseUrl, "/js/jquery-1.12.4.min.js").f().g("script");
-		e("script").a("src", staticBaseUrl, "/js/site.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/site-enUS.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jquery.serialize-object.js").f().g("script");
+		e("script").a("src", "https://kit.fontawesome.com/59d19567d5.js").f().g("script");
 	}
 
 	@Override()
@@ -236,10 +237,10 @@ public class PageLayout extends PageLayoutGen<Object> {
 	@Override()
 	public void  htmlStylesPageLayout() {
 		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/site.css").fg();
+		e("link").a("rel", "stylesheet").a("href", "/static/css/site-enUS.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
-		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
+//		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
 
 	@Override()
@@ -294,7 +295,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	
 								htmlBody();
 
-								e("footer").a("class", "w3-center w3-black w3-padding-48 ").f();
+								e("footer").a("class", "w3-center w3-black w3-padding-48 w3-margin-top ").f();
 									e("div").a("class", "w3-xxlarge ").f();
 										sx("This site is open source.  ");
 									g("div");

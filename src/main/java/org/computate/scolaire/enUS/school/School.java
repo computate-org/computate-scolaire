@@ -78,6 +78,10 @@ public class School extends SchoolGen<Cluster> {
 		}
 	}
 
+	protected void _pageH1(Wrap<String> c) {
+		c.o("School: " + schoolName);
+	}
+
 	public void  htmlBody() {
 		super.htmlBody();
 	}

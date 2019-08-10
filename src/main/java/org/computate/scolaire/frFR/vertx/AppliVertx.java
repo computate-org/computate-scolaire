@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -620,6 +621,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolEnUSGenApiService
 	 * r: UtilisateurSiteFrFRGenApiService
 	 * r.enUS: SiteUserEnUSGenApiService
+	 * r: AnneeScolaireFrFRGenApiService
+	 * r.enUS: SchoolYearEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */
@@ -628,10 +631,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		Future<Void> future = Future.future();
 
 		ClusterFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
-
 		EcoleFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
-
 		UtilisateurSiteFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		AnneeScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

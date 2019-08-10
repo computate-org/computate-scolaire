@@ -15,6 +15,7 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
+import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
@@ -350,10 +351,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Future<Void> future = Future.future();
 
 		ClusterEnUSGenApiService.registerService(siteContextEnUS, vertx);
-
 		SchoolEnUSGenApiService.registerService(siteContextEnUS, vertx);
-
 		SiteUserEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolYearEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
 		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 
