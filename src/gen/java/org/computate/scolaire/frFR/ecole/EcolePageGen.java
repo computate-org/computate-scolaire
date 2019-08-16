@@ -33,14 +33,13 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	}
 
 	public void initLoinEcolePage() {
-		super.initLoinEcoleGenPage(requeteSite_);
 		initEcolePage();
 	}
 
 	public void initEcolePage() {
 	}
 
-	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
+	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
 		initLoinEcolePage(requeteSite_);
 	}
 
@@ -49,7 +48,6 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	/////////////////
 
 	public void requeteSiteEcolePage(RequeteSiteFrFR requeteSite_) {
-			super.requeteSiteEcoleGenPage(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -60,7 +58,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	// obtenir //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	public Object obtenirPourClasse(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -77,7 +75,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 		EcolePage oEcolePage = (EcolePage)this;
 		switch(var) {
 			default:
-				return super.obtenirEcoleGenPage(var);
+				return null;
 		}
 	}
 
@@ -85,7 +83,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	// attribuer //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	public boolean attribuerPourClasse(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -102,7 +100,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 		EcolePage oEcolePage = (EcolePage)this;
 		switch(var) {
 			default:
-				return super.attribuerEcoleGenPage(var, val);
+				return null;
 		}
 	}
 
@@ -110,7 +108,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	// definir //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	public boolean definirPourClasse(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
@@ -128,92 +126,8 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	public Object definirEcolePage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirEcoleGenPage(var, val);
+				return null;
 		}
-	}
-
-	/////////////////
-	// htmlScripts //
-	/////////////////
-
-	@Override public void htmlScripts() {
-		htmlScriptsEcolePage();
-		super.htmlScripts();
-	}
-
-	public void htmlScriptsEcolePage() {
-	}
-
-	////////////////
-	// htmlScript //
-	////////////////
-
-	@Override public void htmlScript() {
-		htmlScriptEcolePage();
-		super.htmlScript();
-	}
-
-	public void htmlScriptEcolePage() {
-	}
-
-	//////////////
-	// htmlBody //
-	//////////////
-
-	@Override public void htmlBody() {
-		htmlBodyEcolePage();
-		super.htmlBody();
-	}
-
-	public void htmlBodyEcolePage() {
-	}
-
-	//////////
-	// html //
-	//////////
-
-	@Override public void html() {
-		htmlEcolePage();
-		super.html();
-	}
-
-	public void htmlEcolePage() {
-	}
-
-	//////////////
-	// htmlMeta //
-	//////////////
-
-	@Override public void htmlMeta() {
-		htmlMetaEcolePage();
-		super.htmlMeta();
-	}
-
-	public void htmlMetaEcolePage() {
-	}
-
-	////////////////
-	// htmlStyles //
-	////////////////
-
-	@Override public void htmlStyles() {
-		htmlStylesEcolePage();
-		super.htmlStyles();
-	}
-
-	public void htmlStylesEcolePage() {
-	}
-
-	///////////////
-	// htmlStyle //
-	///////////////
-
-	@Override public void htmlStyle() {
-		htmlStyleEcolePage();
-		super.htmlStyle();
-	}
-
-	public void htmlStyleEcolePage() {
 	}
 
 	//////////////
@@ -221,7 +135,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash();
 	}
 
 	////////////
@@ -234,7 +148,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 		if(!(o instanceof EcolePage))
 			return false;
 		EcolePage that = (EcolePage)o;
-		return super.equals(o);
+		return true;
 	}
 
 	//////////////
@@ -243,7 +157,6 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString() + "\n");
 		sb.append("EcolePage {");
 		sb.append(" }");
 		return sb.toString();

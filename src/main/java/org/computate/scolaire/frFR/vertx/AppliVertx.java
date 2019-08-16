@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.vertx;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
+import org.computate.scolaire.frFR.java.LocalDateSerializer;
 import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiService;
 
@@ -286,6 +288,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			jdbcConfig.put("max_statements_per_connection", configSite.getJdbcMaxDeclarationsParConnexion());
 		if (configSite.getJdbcTempsInactiviteMax() != null)
 			jdbcConfig.put("max_idle_time", configSite.getJdbcTempsInactiviteMax());
+		jdbcConfig.put("castUUID", true);
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
 		siteContexteFrFR.setClientSql(jdbcClient);
@@ -646,6 +649,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 		SimpleModule module = new SimpleModule();
 		module.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer());
+		module.addSerializer(LocalDate.class, new LocalDateSerializer());
 		Json.mapper.registerModule(module);
 
 		String siteNomHote = configSite.getSiteNomHote();

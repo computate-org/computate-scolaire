@@ -54,6 +54,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public static DateTimeFormatter FORMATDateCourt = DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE);
 
 	/**
+	 * Var.enUS: FORMATDateDisplay
+	 * r: EEEE d MMMM yyyy
+	 * r.enUS: EEEE MMMM d yyyy
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */
+	public static DateTimeFormatter FORMATDateAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRANCE);
+
+	/**
 	 * Var.enUS: FORMATDateTimeDisplay
 	 * r: EEEE d MMMM yyyy H'h'mm
 	 * r.enUS: EEEE MMMM d yyyy h:mm a

@@ -167,7 +167,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				Long pk = creerLigne.getLong(0);
 				AnneeScolaire o = new AnneeScolaire();
 				o.setPk(pk);
-				o.initLoinAnneeScolaire(requeteSite);
+				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -188,10 +188,22 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "ecoleCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", jsonObject.getLong(entiteVar)));
+						break;
+					case "anneeDebut":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("anneeDebut", jsonObject.getString(entiteVar), pk));
+						break;
+					case "anneeFin":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("anneeFin", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -343,9 +355,34 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						}
 						break;
+					case "setEcoleCle":
+						o2.setEcoleCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
+										break;
+					case "setAnneeDebut":
+						o2.setAnneeDebut(requeteJson.getString(methodeNom));
+						if(o2.getAnneeDebut() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "anneeDebut"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("anneeDebut", o2.getAnneeDebut(), pk));
+						}
+						break;
+					case "setAnneeFin":
+						o2.setAnneeFin(requeteJson.getString(methodeNom));
+						if(o2.getAnneeFin() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "anneeFin"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.getAnneeFin(), pk));
+						}
+						break;
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
@@ -372,12 +409,17 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						o.initLoinAnneeScolaire(requeteSite);
+						future.complete(o);
+					} catch(Exception e) {
+						future.fail(e);
 					}
-					future.complete(o);
 				} else {
-			future.fail(definirAsync.cause());
+					future.fail(definirAsync.cause());
 				}
 			});
 			return future;
@@ -505,7 +547,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, AnneeScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -709,6 +751,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 	public String varRechercheAnneeScolaire(String entiteVar) {
 		switch(entiteVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1011,10 +1055,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
 					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}

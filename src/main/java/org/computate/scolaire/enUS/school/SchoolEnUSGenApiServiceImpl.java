@@ -167,7 +167,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				Long pk = createLine.getLong(0);
 				School o = new School();
 				o.setPk(pk);
-				o.initDeepSchool(siteRequest);
+				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -188,6 +188,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "yearKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", jsonObject.getLong(entityVar)));
+						break;
 					case "schoolName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolName", jsonObject.getString(entityVar), pk));
@@ -207,7 +211,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -359,6 +363,24 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
 						}
 						break;
+					case "addYearKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("yearKeys", pk, "schoolKey", requestJson.getLong(methodName)));
+					case "addAllYearKeys":
+						JsonArray addAllYearKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("schoolKey", addAllYearKeysValues.getLong(i), "yearKeys", pk));
+						}
+					case "setYearKeys":
+						JsonArray setYearKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
+						for(Integer i = 0; i <  setYearKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("schoolKey", setYearKeysValues.getLong(i), "yearKeys", pk));
+						}
+										break;
 					case "setSchoolName":
 						o2.setSchoolName(requestJson.getString(methodName));
 						if(o2.getSchoolName() == null) {
@@ -401,7 +423,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
@@ -428,12 +450,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						o.initDeepSchool(siteRequest);
+						future.complete(o);
+					} catch(Exception e) {
+						future.fail(e);
 					}
-					future.complete(o);
 				} else {
-			future.fail(defineAsync.cause());
+					future.fail(defineAsync.cause());
 				}
 			});
 			return future;
@@ -561,7 +588,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, School.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -777,6 +804,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public String varSearchSchool(String entityVar) {
 		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1079,10 +1108,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						eventHandler.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						eventHandler.handle(Future.failedFuture(e));
 					}
-					eventHandler.handle(Future.succeededFuture());
 				} else {
 					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}

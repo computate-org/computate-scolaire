@@ -2228,6 +2228,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public Object attribuerEcole(String var, Object val) {
 		Ecole oEcole = (Ecole)this;
 		switch(var) {
+			case "anneeCles":
+				oEcole.addAnneeCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -2329,11 +2332,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					oEcole.saisonCles.addAll(saisonCles);
 			}
 
-			if(sauvegardesEcole.contains("anneeCles")) {
-				List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
-				if(anneeCles != null)
-					oEcole.anneeCles.addAll(anneeCles);
-			}
+			List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
+			if(anneeCles != null)
+				oEcole.anneeCles.addAll(anneeCles);
 
 			if(sauvegardesEcole.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");

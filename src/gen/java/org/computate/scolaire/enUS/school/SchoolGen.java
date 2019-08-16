@@ -2227,6 +2227,9 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public Object attributeSchool(String var, Object val) {
 		School oSchool = (School)this;
 		switch(var) {
+			case "yearKeys":
+				oSchool.addYearKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -2328,11 +2331,9 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					oSchool.seasonKeys.addAll(seasonKeys);
 			}
 
-			if(savesSchool.contains("yearKeys")) {
-				List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
-				if(yearKeys != null)
-					oSchool.yearKeys.addAll(yearKeys);
-			}
+			List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
+			if(yearKeys != null)
+				oSchool.yearKeys.addAll(yearKeys);
 
 			if(savesSchool.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");

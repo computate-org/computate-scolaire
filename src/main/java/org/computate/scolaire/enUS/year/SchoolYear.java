@@ -32,7 +32,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	}
 
 	protected void _yearShortName(Wrap<String> c) {
-		String o = "année";
+		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
 			o = String.format("%d-%d", yearStart.getYear(), yearEnd.getYear());
@@ -45,7 +45,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	}
 
 	protected void _yearCompleteName(Wrap<String> c) {
-		String o = "année";
+		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
 			o = String.format("%d-%d school year", yearStart.getYear(), yearEnd.getYear());
@@ -62,5 +62,11 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _objectSuggest(Wrap<String> c) { 
 		c.o(yearCompleteName);
+	}
+
+	@Override()
+	protected void  _classCanonicalNames(List<String> l) {
+		l.add(SchoolYear.class.getCanonicalName());
+		super._classCanonicalNames(l);
 	}
 }

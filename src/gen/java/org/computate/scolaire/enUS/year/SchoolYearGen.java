@@ -113,7 +113,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSchoolKey() {
-		return "key";
+		return "school";
 	}
 
 	public String htmTooltipSchoolKey() {
@@ -339,7 +339,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEnrollmentKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipEnrollmentKeys() {
@@ -461,7 +461,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSeasonKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipSeasonKeys() {
@@ -547,7 +547,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearStart(String o) {
-		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -575,7 +575,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageYearStart() {
-		return "";
+		return "start of year";
 	}
 
 	public String htmTooltipYearStart() {
@@ -661,7 +661,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearEnd(String o) {
-		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -689,7 +689,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageYearEnd() {
-		return "r: anneeDebut";
+		return "end of year";
 	}
 
 	public String htmTooltipYearEnd() {
@@ -826,7 +826,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageYearShortName() {
-		return "r: anneeDebut";
+		return null;
 	}
 
 	public String htmTooltipYearShortName() {
@@ -924,7 +924,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageYearCompleteName() {
-		return "r: anneeDebut";
+		return null;
 	}
 
 	public String htmTooltipYearCompleteName() {
@@ -1022,7 +1022,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageObjectSuggest() {
-		return "r: anneeNomComplete";
+		return null;
 	}
 
 	public String htmTooltipObjectSuggest() {
@@ -1190,6 +1190,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public Object attributeSchoolYear(String var, Object val) {
 		SchoolYear oSchoolYear = (SchoolYear)this;
 		switch(var) {
+			case "schoolKey":
+				oSchoolYear.setSchoolKey((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -1216,6 +1219,14 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	public Object defineSchoolYear(String var, String val) {
 		switch(var) {
+			case "yearStart":
+				setYearStart(val);
+				savesSchoolYear.add(var);
+				return val;
+			case "yearEnd":
+				setYearEnd(val);
+				savesSchoolYear.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -1239,11 +1250,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		savesSchoolYear = (List<String>)solrDocument.get("savesSchoolYear_stored_strings");
 		if(savesSchoolYear != null) {
 
-			if(savesSchoolYear.contains("schoolKey")) {
-				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
-				if(schoolKey != null)
-					oSchoolYear.setSchoolKey(schoolKey);
-			}
+			Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
+			if(schoolKey != null)
+				oSchoolYear.setSchoolKey(schoolKey);
 
 			if(savesSchoolYear.contains("yearKey")) {
 				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
@@ -1481,7 +1490,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash(super.hashCode(), yearStart, yearEnd);
 	}
 
 	////////////
@@ -1494,7 +1503,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(!(o instanceof SchoolYear))
 			return false;
 		SchoolYear that = (SchoolYear)o;
-		return super.equals(o);
+		return super.equals(o)
+				&& Objects.equals( yearStart, that.yearStart )
+				&& Objects.equals( yearEnd, that.yearEnd );
 	}
 
 	//////////////
@@ -1505,6 +1516,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolYear {");
+		sb.append( "yearStart: " ).append(yearStart);
+		sb.append( ", yearEnd: " ).append(yearEnd);
 		sb.append(" }");
 		return sb.toString();
 	}

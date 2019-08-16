@@ -167,7 +167,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				Long pk = createLine.getLong(0);
 				SchoolYear o = new SchoolYear();
 				o.setPk(pk);
-				o.initDeepSchoolYear(siteRequest);
+				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -188,10 +188,22 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "schoolKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("schoolKey", jsonObject.getLong(entityVar), "yearKeys", pk));
+						break;
+					case "yearStart":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("yearStart", jsonObject.getString(entityVar), pk));
+						break;
+					case "yearEnd":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("yearEnd", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -343,9 +355,34 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
 						}
 						break;
+					case "setSchoolKey":
+						o2.setSchoolKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
+										break;
+					case "setYearStart":
+						o2.setYearStart(requestJson.getString(methodName));
+						if(o2.getYearStart() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "yearStart"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("yearStart", o2.getYearStart(), pk));
+						}
+						break;
+					case "setYearEnd":
+						o2.setYearEnd(requestJson.getString(methodName));
+						if(o2.getYearEnd() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "yearEnd"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("yearEnd", o2.getYearEnd(), pk));
+						}
+						break;
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
@@ -372,12 +409,17 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						o.initDeepSchoolYear(siteRequest);
+						future.complete(o);
+					} catch(Exception e) {
+						future.fail(e);
 					}
-					future.complete(o);
 				} else {
-			future.fail(defineAsync.cause());
+					future.fail(defineAsync.cause());
 				}
 			});
 			return future;
@@ -505,7 +547,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolYear.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -709,6 +751,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public String varSearchSchoolYear(String entityVar) {
 		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1011,10 +1055,14 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						eventHandler.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						eventHandler.handle(Future.failedFuture(e));
 					}
-					eventHandler.handle(Future.succeededFuture());
 				} else {
 					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}

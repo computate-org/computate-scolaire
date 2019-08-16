@@ -167,7 +167,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				Long pk = creerLigne.getLong(0);
 				Ecole o = new Ecole();
 				o.setPk(pk);
-				o.initLoinEcole(requeteSite);
+				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -188,6 +188,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "anneeCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getLong(entiteVar), "ecoleCle", pk));
+						break;
 					case "ecoleNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleNom", jsonObject.getString(entiteVar), pk));
@@ -207,7 +211,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					}
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -359,6 +363,24 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
 						}
 						break;
+					case "addAnneeCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getLong(methodeNom)));
+					case "addAllAnneeCles":
+						JsonArray addAllAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllAnneeClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
+						}
+					case "setAnneeCles":
+						JsonArray setAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getJsonArray(methodeNom)));
+						for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.set(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
+						}
+										break;
 					case "setEcoleNom":
 						o2.setEcoleNom(requeteJson.getString(methodeNom));
 						if(o2.getEcoleNom() == null) {
@@ -401,7 +423,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
@@ -428,12 +450,17 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						o.initLoinEcole(requeteSite);
+						future.complete(o);
+					} catch(Exception e) {
+						future.fail(e);
 					}
-					future.complete(o);
 				} else {
-			future.fail(definirAsync.cause());
+					future.fail(definirAsync.cause());
 				}
 			});
 			return future;
@@ -561,7 +588,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, Ecole.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -777,6 +804,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public String varRechercheEcole(String entiteVar) {
 		switch(entiteVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1079,10 +1108,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
 					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}

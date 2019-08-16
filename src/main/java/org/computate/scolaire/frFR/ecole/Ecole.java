@@ -44,7 +44,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: duotone
  * IconeNom: school
- */                 
+ */                
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -118,7 +118,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */
+	 */ 
 	protected void _saisonCles(List<Long> o) {}
 	
 	/**
@@ -126,6 +126,9 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Var.enUS: yearKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: AnneeScolaire.ecoleCle
+	 * HtmlLigne: 4
+	 * HtmlColonne: 2
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
@@ -156,7 +159,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */      
+	 */            
 	protected void _ecoleTri(Couverture<Integer> c) {
 		c.o(1);
 	}
@@ -204,7 +207,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */                 
+	 */               
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 	}
 
@@ -215,7 +218,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 4
+	 * HtmlColonne: 1
 	 * Multiligne: true
 	 * NomAffichage.frFR: addresse
 	 * NomAffichage.enUS: address
@@ -232,7 +235,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */     
+	 */    
 	protected void _objetSuggerePoids(Couverture<Double> c) {
 		c.o(1D);
 	}
