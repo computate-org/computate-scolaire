@@ -767,22 +767,22 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "ageGroupKeys":
+				return "ageGroupKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "childKeys":
 				return "childKeys_indexed_longs";
 			case "blockKeys":
 				return "blockKeys_indexed_longs";
-			case "ageGroupKeys":
-				return "ageGroupKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
 			case "seasonKeys":
 				return "seasonKeys_indexed_longs";
-			case "yearKeys":
-				return "yearKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
 			case "schoolSort":
 				return "schoolSort_indexed_int";
 			case "schoolName":
@@ -793,10 +793,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolAdministratorName_indexed_string";
 			case "schoolAddress":
 				return "schoolAddress_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
 			case "pageUri":
 				return "pageUri_indexed_string";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

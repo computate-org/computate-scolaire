@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;        
+package org.computate.scolaire.frFR.ecole;         
 
 import java.text.Normalizer;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**   
+/**    
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -44,7 +44,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: duotone
  * IconeNom: school
- */                
+ */                 
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
