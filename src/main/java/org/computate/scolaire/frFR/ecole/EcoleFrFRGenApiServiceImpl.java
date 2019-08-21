@@ -767,22 +767,22 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
-			case "anneeCles":
-				return "anneeCles_indexed_longs";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "groupeAgeCles":
-				return "groupeAgeCles_indexed_longs";
-			case "sessionCles":
-				return "sessionCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "enfantCles":
 				return "enfantCles_indexed_longs";
 			case "blocCles":
 				return "blocCles_indexed_longs";
+			case "groupeAgeCles":
+				return "groupeAgeCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
 			case "saisonCles":
 				return "saisonCles_indexed_longs";
+			case "anneeCles":
+				return "anneeCles_indexed_longs";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
 			case "ecoleTri":
 				return "ecoleTri_indexed_int";
 			case "ecoleNom":
@@ -793,10 +793,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "ecoleAdministrateurNom_indexed_string";
 			case "ecoleAddresse":
 				return "ecoleAddresse_indexed_string";
-			case "pageUri":
-				return "pageUri_indexed_string";
 			case "objetSuggere":
 				return "objetSuggere_indexed_string";
+			case "pageUri":
+				return "pageUri_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

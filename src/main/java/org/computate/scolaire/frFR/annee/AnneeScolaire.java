@@ -43,7 +43,7 @@ import org.computate.scolaire.frFR.ecole.Ecole;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
- */                                  
+*/                                                              
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -58,7 +58,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */           
+	 */             
 	protected void _ecoleCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -148,7 +148,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "%d year"
 	 * r: "année"
 	 * r.enUS: "year"
-	 */           
+	 */               
 	protected void _anneeNomCourt(Couverture<String> c) {
 		String o = "année";
 
