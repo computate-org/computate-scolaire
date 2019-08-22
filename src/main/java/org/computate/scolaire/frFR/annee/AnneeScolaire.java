@@ -43,7 +43,7 @@ import org.computate.scolaire.frFR.ecole.Ecole;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                                              
+*/                                                                  
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -103,7 +103,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * HtmlColonne: 1
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
-	 */          
+	 */                   
 	protected void _anneeDebut(Couverture<LocalDate> c) {}
 
 	/**
@@ -118,7 +118,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of year
 	 * r: anneeDebut
 	 * r.enUS: yearStart
-	 */   
+	 */                
 	protected void _anneeFin(Couverture<LocalDate> c) {
 		if(anneeDebut != null)
 			c.o(anneeDebut.plusYears(1));
