@@ -146,12 +146,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "formAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
-							.a("name", "valueAnneeCles")
-							.a("class", "valueAnneeCles ")
-							.a("value", siteRequest_.getRequestPk())
+							.a("name", "valeurAnneeCles")
+							.a("class", "valeurAnneeCles ")
+							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-orange ").f();
 								e("label").a("for", "Page_ecoleCle").a("class", "").f().sx("école").g("label");
@@ -163,11 +163,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 										.a("type", "text")
 										.a("placeholder", "école")
 										.a("title", "La clé primaire de l'école dans la base de données. ")
-										.a("class", "valueObjetSuggere suggereEcoleCle w3-input w3-border ")
+										.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
 										.a("name", "setEcoleCle")
 										.a("id", "Page_ecoleCle")
 										.a("autocomplete", "off")
-										.a("oninput", "searchAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggest' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+										.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
 									.fg();
 
 								} g("div");
@@ -187,12 +187,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
-							.a("name", "value")
-							.a("class", "value ")
-							.a("value", siteRequest_.getRequestPk())
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							LocalDate val = o.getAnneeDebut();
 							{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -203,11 +203,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "MM/DD/YYYY")
-										.a("data-timeformat", "MM/DD/YYYY")
-										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+										.a("placeholder", "DD-MM-YYYY")
+										.a("data-timeformat", "DD-MM-YYYY")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 										.fg();
 									e("input")
 										.a("class", "setAnneeDebut")
@@ -226,7 +226,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeDebut', null, $('#Page_anneeDebut')); ")
+									.a("onclick", "enleverLueur($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeDebut', null, $('#Page_anneeDebut')); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -241,12 +241,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
-							.a("name", "value")
-							.a("class", "value ")
-							.a("value", siteRequest_.getRequestPk())
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							LocalDate val = o.getAnneeFin();
 							{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -257,11 +257,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "MM/DD/YYYY")
-										.a("data-timeformat", "MM/DD/YYYY")
-										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+										.a("placeholder", "DD-MM-YYYY")
+										.a("data-timeformat", "DD-MM-YYYY")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 										.fg();
 									e("input")
 										.a("class", "setAnneeFin")
@@ -280,7 +280,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeFin', null, $('#Page_anneeFin')); ")
+									.a("onclick", "enleverLueur($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeFin', null, $('#Page_anneeFin')); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -334,12 +334,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valueAnneeCles")
-						.a("class", "valueAnneeCles ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeurAnneeCles")
+						.a("class", "valeurAnneeCles ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "POST_ecoleCle").a("class", "").f().sx("école").g("label");
@@ -351,11 +351,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("type", "text")
 									.a("placeholder", "école")
 									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valueObjetSuggere suggereEcoleCle w3-input w3-border ")
+									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
 									.a("name", "setEcoleCle")
 									.a("id", "POST_ecoleCle")
 									.a("autocomplete", "off")
-									.a("oninput", "searchAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggest' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
 								.fg();
 
 							} g("div");
@@ -375,12 +375,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -391,14 +391,14 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
-									.a("class", "valueAnneeDebut")
+									.a("class", "valeurAnneeDebut")
 									.a("name", "anneeDebut")
 									.a("id", "POST_anneeDebut")
 									.a("type", "hidden")
@@ -415,12 +415,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -431,14 +431,14 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
-									.a("class", "valueAnneeFin")
+									.a("class", "valeurAnneeFin")
 									.a("name", "anneeFin")
 									.a("id", "POST_anneeFin")
 									.a("type", "hidden")
@@ -494,12 +494,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valueAnneeCles")
-						.a("class", "valueAnneeCles ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeurAnneeCles")
+						.a("class", "valeurAnneeCles ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "PATCH_ecoleCle").a("class", "").f().sx("école").g("label");
@@ -511,11 +511,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("type", "text")
 									.a("placeholder", "école")
 									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valueObjetSuggere suggereEcoleCle w3-input w3-border ")
+									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
 									.a("name", "setEcoleCle")
 									.a("id", "PATCH_ecoleCle")
 									.a("autocomplete", "off")
-									.a("oninput", "searchAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggest' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
 								.fg();
 
 							} g("div");
@@ -535,12 +535,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -551,11 +551,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
 									.a("class", "setAnneeDebut")
@@ -580,12 +580,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -596,11 +596,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
 									.a("class", "setAnneeFin")
@@ -664,12 +664,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valueAnneeCles")
-						.a("class", "valueAnneeCles ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeurAnneeCles")
+						.a("class", "valeurAnneeCles ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireEcoleCle").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "Recherche_ecoleCle").a("class", "").f().sx("école").g("label");
@@ -681,11 +681,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("type", "text")
 									.a("placeholder", "école")
 									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valueObjetSuggere suggereEcoleCle w3-input w3-border ")
+									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
 									.a("name", "setEcoleCle")
 									.a("id", "Recherche_ecoleCle")
 									.a("autocomplete", "off")
-									.a("oninput", "searchAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggest' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
 								.fg();
 
 							} g("div");
@@ -705,12 +705,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -721,14 +721,14 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
-									.a("class", "valueAnneeDebut")
+									.a("class", "valeurAnneeDebut")
 									.a("name", "anneeDebut")
 									.a("id", "Recherche_anneeDebut")
 									.a("type", "hidden")
@@ -745,12 +745,12 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
@@ -761,14 +761,14 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								e("input")
 									.a("type", "text")
 									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
 									.fg();
 								e("input")
-									.a("class", "valueAnneeFin")
+									.a("class", "valeurAnneeFin")
 									.a("name", "anneeFin")
 									.a("id", "Recherche_anneeFin")
 									.a("type", "hidden")

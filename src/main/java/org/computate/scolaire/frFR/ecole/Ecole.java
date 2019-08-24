@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                 
+/**                  
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -44,7 +44,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: duotone
  * IconeNom: school
- */                  
+ */                     
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -170,6 +170,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
+	 * VarTitre: true
 	 * HtmlLigne: 3
 	 * HtmlColonne: 2
 	 * NomAffichage.frFR: nom de l'école
