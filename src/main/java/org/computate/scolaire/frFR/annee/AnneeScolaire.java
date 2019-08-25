@@ -43,7 +43,7 @@ import org.computate.scolaire.frFR.ecole.Ecole;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                            
+*/                                        
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**

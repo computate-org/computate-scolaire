@@ -446,7 +446,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(4, "- ", classApiMediaType200Method);
 			}
 	
-		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
+		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 			wPaths.tl(3, "parameters:");
 			wPaths.s(wRequestHeaders);
 			if("GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
@@ -457,7 +457,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: string");
 			}
-			else if(classApiMethod.contains("Search")) {
+			else if(classApiMethod.contains("Search") || classApiMethod.contains("PATCH")) {
 				wPaths.tl(4, "- in: query");
 				wPaths.tl(5, "name: q");
 				wPaths.tl(5, "description: ''");
