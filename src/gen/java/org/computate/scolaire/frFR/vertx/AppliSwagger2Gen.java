@@ -11,6 +11,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -29,6 +30,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -65,6 +67,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContexteFrFR(). 
 	 */
 	protected SiteContexteFrFR siteContexte = new SiteContexteFrFR();
+	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexteCouverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte").o(siteContexte);
 
 	/**	<br/>L'entité « siteContexte »
@@ -100,6 +103,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ConfigSite configSite;
+	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
 
 	/**	<br/>L'entité « configSite »
@@ -138,6 +142,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String appliChemin;
+	@JsonIgnore
 	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
 
 	/**	<br/>L'entité « appliChemin »
@@ -194,6 +199,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
+	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
@@ -250,6 +256,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer openApiVersionNumero;
+	@JsonIgnore
 	public Couverture<Integer> openApiVersionNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("openApiVersionNumero").o(openApiVersionNumero);
 
 	/**	<br/>L'entité « openApiVersionNumero »
@@ -312,6 +319,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer tabsSchema;
+	@JsonIgnore
 	public Couverture<Integer> tabsSchemaCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
 
 	/**	<br/>L'entité « tabsSchema »
@@ -374,6 +382,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
+	@JsonIgnore
 	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
@@ -430,6 +439,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiYamlChemin;
+	@JsonIgnore
 	public Couverture<String> openApiYamlCheminCouverture = new Couverture<String>().p(this).c(String.class).var("openApiYamlChemin").o(openApiYamlChemin);
 
 	/**	<br/>L'entité « openApiYamlChemin »
@@ -486,6 +496,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected File openApiYamlFichier;
+	@JsonIgnore
 	public Couverture<File> openApiYamlFichierCouverture = new Couverture<File>().p(this).c(File.class).var("openApiYamlFichier").o(openApiYamlFichier);
 
 	/**	<br/>L'entité « openApiYamlFichier »
@@ -522,6 +533,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ToutEcrivain w;
+	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
 
 	/**	<br/>L'entité « w »
@@ -560,6 +572,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ToutEcrivain wChemins;
+	@JsonIgnore
 	public Couverture<ToutEcrivain> wCheminsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wChemins").o(wChemins);
 
 	/**	<br/>L'entité « wChemins »
@@ -598,6 +611,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ToutEcrivain wCorpsRequetes;
+	@JsonIgnore
 	public Couverture<ToutEcrivain> wCorpsRequetesCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wCorpsRequetes").o(wCorpsRequetes);
 
 	/**	<br/>L'entité « wCorpsRequetes »
@@ -636,6 +650,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ToutEcrivain wSchemas;
+	@JsonIgnore
 	public Couverture<ToutEcrivain> wSchemasCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wSchemas").o(wSchemas);
 
 	/**	<br/>L'entité « wSchemas »
@@ -856,7 +871,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AppliSwagger2 {");
+		sb.append("AppliSwagger2 { ");
 		sb.append(" }");
 		return sb.toString();
 	}

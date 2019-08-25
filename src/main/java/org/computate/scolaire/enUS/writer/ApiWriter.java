@@ -156,6 +156,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		c.o((String)classSolrDocument.get("classeSuperApiOperationId" + classApiMethod + "Reponse_enUS_stored_string"));
 	}
 
+	protected void _classPageCanonicalNameMethod(Wrap<String> c) {
+		c.o((String)classSolrDocument.get("classePageNomCanonique" + classApiMethod + "_enUS_stored_string"));
+	}
+
 	protected void _classKeywordsFound(Wrap<Boolean> c) {
 		c.o((Boolean)classSolrDocument.get("classeMotsClesTrouves_stored_boolean"));
 	}
@@ -414,15 +418,15 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		}
 	}
 
-	public void  writeApi() throws Exception, Exception {
+	public void  writeApi(Boolean id) throws Exception, Exception {
 
-			if(!classUris.contains(classApiUriMethod)) {
-				wPaths.tl(1, classApiUriMethod, ":");
+			if(!classUris.contains(classApiUriMethod) || id) {
+				wPaths.tl(1, classApiUriMethod, (id ? "/{id}" : ""), ":");
 				classUris.add(classApiUriMethod);
 			}
 	
 			wPaths.tl(2, StringUtils.lowerCase(classApiMethodMethod), ":");
-			wPaths.tl(3, "operationId: ", classApiOperationIdMethod);
+			wPaths.tl(3, "operationId: ", classApiOperationIdMethod, (id ? "Id" : ""));
 			wPaths.tl(3, "x-vertx-event-bus: ", languageName, classSimpleName);
 	
 			if(classRolesFound) {
@@ -446,18 +450,18 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(4, "- ", classApiMediaType200Method);
 			}
 	
-		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+		if(id || !wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 			wPaths.tl(3, "parameters:");
 			wPaths.s(wRequestHeaders);
-			if("GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
-				wPaths.tl(4, "- name: id");
-				wPaths.tl(5, "in: path");
+			if(id || "GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
+				wPaths.tl(4, "- in: path");
+				wPaths.tl(5, "name: id");
 				wPaths.t(5, "description: ").yamlStr(6, "");
 				wPaths.tl(5, "required: true");
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: string");
 			}
-			else if(classApiMethod.contains("Search") || classApiMethod.contains("PATCH")) {
+			if(classApiMethod.contains("Search") || classApiMethod.contains("PATCH")) {
 				wPaths.tl(4, "- in: query");
 				wPaths.tl(5, "name: q");
 				wPaths.tl(5, "description: ''");
@@ -655,6 +659,8 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wSchemas.s(wResponseSchema.toString());
 			}
 //		}
+		if(classPageCanonicalNameMethod != null && BooleanUtils.isFalse(id))
+			writeApi(true);
 	}
 
 	@Override()

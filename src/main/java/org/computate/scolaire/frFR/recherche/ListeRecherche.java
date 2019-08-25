@@ -36,6 +36,7 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 
 	/**
 	 * Var.enUS: siteRequest_
+	 * Ignorer: true
 	 */
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {
 	}

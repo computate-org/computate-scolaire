@@ -244,7 +244,7 @@ public abstract class AnneePageGen<DEV> extends AnneeGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("AnneePage {");
+		sb.append("AnneePage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

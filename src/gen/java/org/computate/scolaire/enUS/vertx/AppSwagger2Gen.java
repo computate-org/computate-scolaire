@@ -11,6 +11,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -29,6 +30,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -65,6 +67,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContextEnUS(). 
 	 */
 	protected SiteContextEnUS siteContext = new SiteContextEnUS();
+	@JsonIgnore
 	public Wrap<SiteContextEnUS> siteContextWrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext").o(siteContext);
 
 	/**	<br/>L'entité « siteContext »
@@ -100,6 +103,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteConfig siteConfig;
+	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
 
 	/**	<br/>L'entité « siteConfig »
@@ -138,6 +142,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String appPath;
+	@JsonIgnore
 	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
 
 	/**	<br/>L'entité « appPath »
@@ -194,6 +199,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
+	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
@@ -250,6 +256,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer openApiVersionNumber;
+	@JsonIgnore
 	public Wrap<Integer> openApiVersionNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("openApiVersionNumber").o(openApiVersionNumber);
 
 	/**	<br/>L'entité « openApiVersionNumber »
@@ -312,6 +319,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer tabsSchema;
+	@JsonIgnore
 	public Wrap<Integer> tabsSchemaWrap = new Wrap<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
 
 	/**	<br/>L'entité « tabsSchema »
@@ -374,6 +382,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
+	@JsonIgnore
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
@@ -430,6 +439,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiYamlPath;
+	@JsonIgnore
 	public Wrap<String> openApiYamlPathWrap = new Wrap<String>().p(this).c(String.class).var("openApiYamlPath").o(openApiYamlPath);
 
 	/**	<br/>L'entité « openApiYamlPath »
@@ -486,6 +496,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected File openApiYamlFile;
+	@JsonIgnore
 	public Wrap<File> openApiYamlFileWrap = new Wrap<File>().p(this).c(File.class).var("openApiYamlFile").o(openApiYamlFile);
 
 	/**	<br/>L'entité « openApiYamlFile »
@@ -522,6 +533,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected AllWriter w;
+	@JsonIgnore
 	public Wrap<AllWriter> wWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("w").o(w);
 
 	/**	<br/>L'entité « w »
@@ -560,6 +572,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected AllWriter wPaths;
+	@JsonIgnore
 	public Wrap<AllWriter> wPathsWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wPaths").o(wPaths);
 
 	/**	<br/>L'entité « wPaths »
@@ -598,6 +611,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected AllWriter wRequestBodies;
+	@JsonIgnore
 	public Wrap<AllWriter> wRequestBodiesWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wRequestBodies").o(wRequestBodies);
 
 	/**	<br/>L'entité « wRequestBodies »
@@ -636,6 +650,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected AllWriter wSchemas;
+	@JsonIgnore
 	public Wrap<AllWriter> wSchemasWrap = new Wrap<AllWriter>().p(this).c(AllWriter.class).var("wSchemas").o(wSchemas);
 
 	/**	<br/>L'entité « wSchemas »
@@ -856,7 +871,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AppSwagger2 {");
+		sb.append("AppSwagger2 { ");
 		sb.append(" }");
 		return sb.toString();
 	}

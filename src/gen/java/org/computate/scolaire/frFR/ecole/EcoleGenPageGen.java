@@ -336,7 +336,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("EcoleGenPage {");
+		sb.append("EcoleGenPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

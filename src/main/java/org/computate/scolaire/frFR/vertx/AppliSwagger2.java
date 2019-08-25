@@ -527,7 +527,7 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 					}
 					for(ApiEcrivain apiEcrivain : apiEcrivains) {
 						apiEcrivain.getEcrivains().flushClose();
-						apiEcrivain.ecrireApi();
+						apiEcrivain.ecrireApi(false);
 					}
 
 					for(ApiEcrivain apiEcrivain : apiEcrivains) {

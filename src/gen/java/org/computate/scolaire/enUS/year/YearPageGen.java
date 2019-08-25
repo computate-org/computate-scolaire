@@ -244,7 +244,7 @@ public abstract class YearPageGen<DEV> extends YearGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("YearPage {");
+		sb.append("YearPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

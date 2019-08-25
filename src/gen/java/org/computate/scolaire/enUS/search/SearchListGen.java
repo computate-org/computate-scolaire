@@ -11,6 +11,7 @@ import io.vertx.core.json.JsonArray;
 import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.solr.client.solrj.SolrQuery;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import java.lang.Class;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -29,6 +30,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Class<DEV> c;
+	@JsonIgnore
 	public Wrap<Class<DEV>> cWrap = new Wrap<Class<DEV>>().p(this).c(Class.class).var("c").o(c);
 
 	/**	<br/>L'entité « c »
@@ -64,7 +66,9 @@ public abstract class SearchListGen<DEV> {
 	/**	L'entité « siteRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonIgnore
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -101,6 +105,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean store;
+	@JsonIgnore
 	public Wrap<Boolean> storeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("store").o(store);
 
 	/**	<br/>L'entité « store »
@@ -162,6 +167,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean populate;
+	@JsonIgnore
 	public Wrap<Boolean> populateWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("populate").o(populate);
 
 	/**	<br/>L'entité « populate »
@@ -223,6 +229,7 @@ public abstract class SearchListGen<DEV> {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SolrQuery(). 
 	 */
 	protected SolrQuery solrQuery = new SolrQuery();
+	@JsonIgnore
 	public Wrap<SolrQuery> solrQueryWrap = new Wrap<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
 
 	/**	<br/>L'entité « solrQuery »
@@ -257,6 +264,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected QueryResponse queryResponse;
+	@JsonIgnore
 	public Wrap<QueryResponse> queryResponseWrap = new Wrap<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
 
 	/**	<br/>L'entité « queryResponse »
@@ -293,6 +301,7 @@ public abstract class SearchListGen<DEV> {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SolrDocumentList solrDocumentList;
+	@JsonIgnore
 	public Wrap<SolrDocumentList> solrDocumentListWrap = new Wrap<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("solrDocumentList").o(solrDocumentList);
 
 	/**	<br/>L'entité « solrDocumentList »
@@ -329,6 +338,7 @@ public abstract class SearchListGen<DEV> {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<DEV>(). 
 	 */
 	protected List<DEV> list = new java.util.ArrayList<DEV>();
+	@JsonIgnore
 	public Wrap<List<DEV>> listWrap = new Wrap<List<DEV>>().p(this).c(List.class).var("list").o(list);
 
 	/**	<br/>L'entité « list »
@@ -478,7 +488,7 @@ public abstract class SearchListGen<DEV> {
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -487,7 +497,7 @@ public abstract class SearchListGen<DEV> {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirSearchList(v, val);
+					o = defineSearchList(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -496,7 +506,7 @@ public abstract class SearchListGen<DEV> {
 		}
 		return o != null;
 	}
-	public Object definirSearchList(String var, String val) {
+	public Object defineSearchList(String var, String val) {
 		switch(var) {
 			default:
 				return null;
@@ -530,7 +540,7 @@ public abstract class SearchListGen<DEV> {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SearchList {");
+		sb.append("SearchList { ");
 		sb.append(" }");
 		return sb.toString();
 	}

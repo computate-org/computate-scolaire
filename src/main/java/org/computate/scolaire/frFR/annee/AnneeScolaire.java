@@ -1,12 +1,15 @@
 package org.computate.scolaire.frFR.annee;        
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
  * NomCanonique.enUS: org.computate.scolaire.enUS.year.SchoolYear
@@ -43,7 +46,7 @@ import org.computate.scolaire.frFR.ecole.Ecole;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                        
+*/                                     
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -58,7 +61,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */             
+	 */               
 	protected void _ecoleCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -94,6 +97,52 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	protected void _saisonCles(List<Long> o) {}
 
 	/**
+	 * Var.enUS: schoolSearch
+	 * r: anneeCles
+	 * r.enUS: yearKeys
+	 * r: Ecole
+	 * r.enUS: School
+	 * Ignorer: true
+	 */
+	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("anneeCles_indexed_longs:" + pk);
+		l.setC(Ecole.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolDocument
+	 * r: ecoleRecherche
+	 * r.enUS: schoolSearch
+	 * Ignorer: true
+	 */   
+	protected void _ecoleDocument(Couverture<SolrDocument> c) {
+		if(ecoleRecherche.getSolrDocumentList().size() > 0) {
+			c.o(ecoleRecherche.getSolrDocumentList().get(0));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolNameComplete
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolNameComplete
+	 * r: ecoleDocument
+	 * r.enUS: schoolDocument
+	 */   
+	protected void _ecoleNomComplet(Couverture<String> c) {
+		if(ecoleDocument != null)
+			c.o((String)ecoleDocument.get("ecoleNomComplet_stored_string"));
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
@@ -126,16 +175,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: school
-	 * r: anneeDebut
-	 * r.enUS: yearStart
-	 */
-	protected void _ecole(Couverture<Ecole> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: yearShortName
+	 * Var.enUS: yearNameShort
 	 * Indexe: true
 	 * Stocke: true
 	 * r: anneeDebut
@@ -164,7 +204,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: yearCompleteName
+	 * Var.enUS: yearNameComplete
 	 * Indexe: true
 	 * Stocke: true
 	 * r: anneeDebut
@@ -179,14 +219,14 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "%d school year"
 	 * r: " à %s"
 	 * r.enUS: " at %s"
-	 * r: ecole
-	 * r.enUS: school
 	 * r: EcoleNom
 	 * r.enUS: SchoolName
 	 * r: "année"
 	 * r.enUS: "year"
-	 */             
-	protected void _anneeNomComplete(Couverture<String> c) {
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolNameComplete
+	 */              
+	protected void _anneeNomComplet(Couverture<String> c) {
 		String o = "année";
 
 		if(anneeDebut != null && anneeFin != null)
@@ -196,21 +236,70 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		else if(anneeFin != null)
 			o = String.format("année scolaire %d", anneeFin.getYear());
 
-		if(ecole != null)
-			o += String.format(" à %s", ecole.getEcoleNom());
+		if(ecoleNomComplet != null)
+			o += String.format(" à %s", ecoleNomComplet);
 
 		c.o(o);
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: yearId
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: anneeNomComplet
+	 * r.enUS: yearNameComplete
+	 */            
+	protected void _anneeId(Couverture<String> c) {
+		if(anneeNomComplet != null) {
+			String s = Normalizer.normalize(anneeNomComplet, Normalizer.Form.NFD);
+			s = StringUtils.lowerCase(s);
+			s = StringUtils.trim(s);
+			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
+			s = StringUtils.replacePattern(s, "[^\\w-]", "");
+			s = StringUtils.replacePattern(s, "-{2,}", "-");
+			c.o(s);
+		}
+		else if(pk != null){
+			c.o(pk.toString());
+		}
+	}
+
+	/**	la version plus courte de l'URL qui commence avec « / » 
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * VarUrl: true
+	 * r: anneeId
+	 * r.enUS: yearId
+	 * r: /frFR/annee/
+	 * r.enUS: /enUS/year/
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * **/  
+	protected void _pageUrl(Couverture<String> c)  {
+		if(anneeId != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/annee/" + anneeId;
+			c.o(o);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
-	 * r: anneeNomComplete
-	 * r.enUS: yearCompleteName
+	 * r: anneeNomComplet
+	 * r.enUS: yearNameComplete
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(anneeNomComplete);
+		c.o(anneeNomComplet);
 	}
 
 	/**

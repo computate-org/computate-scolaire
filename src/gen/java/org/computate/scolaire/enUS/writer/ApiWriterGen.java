@@ -1776,6 +1776,63 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classSuperApiOperationIdMethodResponse == null ? "" : StringEscapeUtils.escapeHtml4(strClassSuperApiOperationIdMethodResponse());
 	}
 
+	//////////////////////////////////
+	// classPageCanonicalNameMethod //
+	//////////////////////////////////
+
+	/**	L'entité « classPageCanonicalNameMethod »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String classPageCanonicalNameMethod;
+	@JsonIgnore
+	public Wrap<String> classPageCanonicalNameMethodWrap = new Wrap<String>().p(this).c(String.class).var("classPageCanonicalNameMethod").o(classPageCanonicalNameMethod);
+
+	/**	<br/>L'entité « classPageCanonicalNameMethod »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classPageCanonicalNameMethod">Trouver l'entité classPageCanonicalNameMethod dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classPageCanonicalNameMethod(Wrap<String> c);
+
+	public String getClassPageCanonicalNameMethod() {
+		return classPageCanonicalNameMethod;
+	}
+
+	public void setClassPageCanonicalNameMethod(String classPageCanonicalNameMethod) {
+		this.classPageCanonicalNameMethod = classPageCanonicalNameMethod;
+		this.classPageCanonicalNameMethodWrap.alreadyInitialized = true;
+	}
+	protected ApiWriter classPageCanonicalNameMethodInit() {
+		if(!classPageCanonicalNameMethodWrap.alreadyInitialized) {
+			_classPageCanonicalNameMethod(classPageCanonicalNameMethodWrap);
+			if(classPageCanonicalNameMethod == null)
+				setClassPageCanonicalNameMethod(classPageCanonicalNameMethodWrap.o);
+		}
+		classPageCanonicalNameMethodWrap.alreadyInitialized(true);
+		return (ApiWriter)this;
+	}
+
+	public String solrClassPageCanonicalNameMethod() {
+		return classPageCanonicalNameMethod;
+	}
+
+	public String strClassPageCanonicalNameMethod() {
+		return classPageCanonicalNameMethod == null ? "" : classPageCanonicalNameMethod;
+	}
+
+	public String nomAffichageClassPageCanonicalNameMethod() {
+		return null;
+	}
+
+	public String htmTooltipClassPageCanonicalNameMethod() {
+		return null;
+	}
+
+	public String htmClassPageCanonicalNameMethod() {
+		return classPageCanonicalNameMethod == null ? "" : StringEscapeUtils.escapeHtml4(strClassPageCanonicalNameMethod());
+	}
+
 	////////////////////////
 	// classKeywordsFound //
 	////////////////////////
@@ -2277,6 +2334,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		classApiOperationIdMethodResponseInit();
 		classSuperApiOperationIdMethodRequestInit();
 		classSuperApiOperationIdMethodResponseInit();
+		classPageCanonicalNameMethodInit();
 		classKeywordsFoundInit();
 		classKeywordsInit();
 		classRolesFoundInit();
@@ -2415,6 +2473,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 				return oApiWriter.classSuperApiOperationIdMethodRequest;
 			case "classSuperApiOperationIdMethodResponse":
 				return oApiWriter.classSuperApiOperationIdMethodResponse;
+			case "classPageCanonicalNameMethod":
+				return oApiWriter.classPageCanonicalNameMethod;
 			case "classKeywordsFound":
 				return oApiWriter.classKeywordsFound;
 			case "classKeywords":
@@ -2512,7 +2572,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ApiWriter {");
+		sb.append("ApiWriter { ");
 		sb.append(" }");
 		return sb.toString();
 	}

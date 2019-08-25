@@ -441,6 +441,20 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classPageCanonicalNameMethod
+	 * r: classeApiMethode
+	 * r.enUS: classApiMethod
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: frFR
+	 * r.enUS: enUS
+	 **/
+	protected void _classePageNomCanoniqueMethode(Couverture<String> c) {
+		c.o((String)classeDocumentSolr.get("classePageNomCanonique" + classeApiMethode + "_frFR_stored_string"));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classKeywordsFound
 	 * r: classeDocumentSolr
 	 * r.enUS: classSolrDocument
@@ -1129,22 +1143,26 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: classApiOperationIdMethodResponse
 	 * r: classeApiOperationIdMethode
 	 * r.enUS: classApiOperationIdMethod
+	 * r: classePageNomCanoniqueMethode
+	 * r.enUS: classPageCanonicalNameMethod
 	 * r: Vide
 	 * r.enUS: Empty
 	 * r: ApiMethode
 	 * r.enUS: ApiMethod
 	 * r: "Recherche"
 	 * r.enUS: "Search"
+	 * r: ecrireApi
+	 * r.enUS: writeApi
 	 */
-	public void ecrireApi() throws Exception {
+	public void ecrireApi(Boolean id) throws Exception {
 
 			if(!classeUris.contains(classeApiUriMethode)) {
-				wChemins.tl(1, classeApiUriMethode, ":");
+				wChemins.tl(1, classeApiUriMethode, (id ? "/{id}" : ""), ":");
 				classeUris.add(classeApiUriMethode);
 			}
 	
 			wChemins.tl(2, StringUtils.lowerCase(classeApiMethodeMethode), ":");
-			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode);
+			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", langueNom, classeNomSimple);
 	
 			if(classeRolesTrouves) {
@@ -1377,6 +1395,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wSchemas.s(wReponseSchema.toString());
 			}
 //		}
+		if(classePageNomCanoniqueMethode != null && BooleanUtils.isFalse(id))
+			ecrireApi(true);
 	}
 
 	/**

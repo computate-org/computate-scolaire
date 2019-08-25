@@ -239,7 +239,7 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 					}
 					for(ApiWriter apiWriter : apiWriters) {
 						apiWriter.getWriters().flushClose();
-						apiWriter.writeApi();
+						apiWriter.writeApi(false);
 					}
 
 					for(ApiWriter apiWriter : apiWriters) {

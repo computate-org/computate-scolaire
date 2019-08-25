@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                  
+/**                 
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -44,7 +44,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: duotone
  * IconeNom: school
- */                     
+ */                   
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -259,6 +259,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: schoolNameShort
+	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -268,6 +269,22 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: schoolName
 	 */   
 	protected void _ecoleNomCourt(Couverture<String> c) {
+		c.o(ecoleNom);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolNameComplete
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: ecoleNom
+	 * r.enUS: schoolName
+	 */   
+	protected void _ecoleNomComplet(Couverture<String> c) {
 		c.o(ecoleNom);
 	}
 
@@ -281,7 +298,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: ecoleNom
 	 * r.enUS: schoolName
-	 */            
+	 */           
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);
@@ -301,16 +318,21 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
-	 * r: frFR
-	 * r.enUS: enUS
+	 * VarUrl: true
 	 * r: ecoleId
 	 * r.enUS: schoolId
-	 * r: /ecole/
-	 * r.enUS: /school/
+	 * r: /frFR/ecole/
+	 * r.enUS: /enUS/school/
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
 	 * **/  
-	protected void _pageUri(Couverture<String> c)  {
+	protected void _pageUrl(Couverture<String> c)  {
 		if(ecoleId != null) {
-			String o = "/ecole/" + ecoleId;
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/ecole/" + ecoleId;
 			c.o(o);
 		}
 	}

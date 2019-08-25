@@ -56,6 +56,10 @@ public class School extends SchoolGen<Cluster> {
 		c.o(schoolName);
 	}
 
+	protected void _schoolNameComplete(Wrap<String> c) {
+		c.o(schoolName);
+	}
+
 	protected void _schoolId(Wrap<String> c) {
 		if(schoolName != null) {
 			String s = Normalizer.normalize(schoolName, Normalizer.Form.NFD);
@@ -71,9 +75,9 @@ public class School extends SchoolGen<Cluster> {
 		}
 	}
 
-	protected void _pageUri(Wrap<String> c) {
+	protected void _pageUrl(Wrap<String> c) {
 		if(schoolId != null) {
-			String o = "/school/" + schoolId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/school/" + schoolId;
 			c.o(o);
 		}
 	}

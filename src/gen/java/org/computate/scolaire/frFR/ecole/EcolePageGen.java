@@ -244,7 +244,7 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("EcolePage {");
+		sb.append("EcolePage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

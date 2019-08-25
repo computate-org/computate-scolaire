@@ -283,11 +283,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		List<Future> futures = new ArrayList<>();
 		listeAnneeScolaire.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHAnneeScolaire(o).compose(
-					a -> definirPATCHAnneeScolaire(a).compose(
-						b -> indexerPATCHAnneeScolaire(b)
-					)
-				)
+				futurePATCHAnneeScolaire(o, gestionnaireEvenements)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -299,8 +295,43 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		});
 	}
 
-	public Future<AnneeScolaire> sqlPATCHAnneeScolaire(AnneeScolaire o) {
+	public Future<AnneeScolaire> futurePATCHAnneeScolaire(AnneeScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		Future<AnneeScolaire> future = Future.future();
+		try {
+			sqlPATCHAnneeScolaire(o, a -> {
+				if(a.succeeded()) {
+					AnneeScolaire anneeScolaire = a.result();
+					definirAnneeScolaire(anneeScolaire, b -> {
+						if(b.succeeded()) {
+							attribuerAnneeScolaire(anneeScolaire, c -> {
+								if(c.succeeded()) {
+									indexerAnneeScolaire(anneeScolaire, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										} else {
+											erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHAnneeScolaire(AnneeScolaire o, Handler<AsyncResult<AnneeScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -389,54 +420,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			-> {
 				o2.setRequeteSite_(o.getRequeteSite_());
 				o2.setPk(pk);
-				future.complete(o2);
+				gestionnaireEvenements.handle(Future.succeededFuture(o2));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<AnneeScolaire> definirPATCHAnneeScolaire(AnneeScolaire o) {
-		Future<AnneeScolaire> future = Future.future();
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
-			-> {
-				if(definirAsync.succeeded()) {
-					try {
-						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
-						}
-						o.initLoinAnneeScolaire(requeteSite);
-						future.complete(o);
-					} catch(Exception e) {
-						future.fail(e);
-					}
-				} else {
-					future.fail(definirAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexerPATCHAnneeScolaire(AnneeScolaire o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initLoinPourClasse(o.getRequeteSite_());
-			o.indexerPourClasse();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -734,14 +721,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "inscriptionCles_indexed_longs";
 			case "saisonCles":
 				return "saisonCles_indexed_longs";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_date";
 			case "anneeFin":
 				return "anneeFin_indexed_date";
 			case "anneeNomCourt":
 				return "anneeNomCourt_indexed_string";
-			case "anneeNomComplete":
-				return "anneeNomComplete_indexed_string";
+			case "anneeNomComplet":
+				return "anneeNomComplet_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "objetSuggere":
 				return "objetSuggere_indexed_string";
 			default:
@@ -1082,15 +1073,22 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
-				if(attribuerAsync.succeeded()) {
-					if(attribuerAsync.result() != null) {
-						for(JsonArray definition : attribuerAsync.result().getResults()) {
-							o.attribuerPourClasse(definition.getString(0), definition.getString(1));
+				try {
+					if(attribuerAsync.succeeded()) {
+						if(attribuerAsync.result() != null) {
+							for(JsonArray definition : attribuerAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attribuerPourClasse(definition.getString(2), definition.getLong(1));
+								else
+									o.attribuerPourClasse(definition.getString(3), definition.getLong(0));
+							}
 						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+				} catch(Exception e) {
+					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

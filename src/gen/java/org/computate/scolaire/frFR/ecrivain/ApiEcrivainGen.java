@@ -1776,6 +1776,63 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeSuperApiOperationIdMethodeReponse == null ? "" : StringEscapeUtils.escapeHtml4(strClasseSuperApiOperationIdMethodeReponse());
 	}
 
+	///////////////////////////////////
+	// classePageNomCanoniqueMethode //
+	///////////////////////////////////
+
+	/**	L'entité « classePageNomCanoniqueMethode »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String classePageNomCanoniqueMethode;
+	@JsonIgnore
+	public Couverture<String> classePageNomCanoniqueMethodeCouverture = new Couverture<String>().p(this).c(String.class).var("classePageNomCanoniqueMethode").o(classePageNomCanoniqueMethode);
+
+	/**	<br/>L'entité « classePageNomCanoniqueMethode »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classePageNomCanoniqueMethode">Trouver l'entité classePageNomCanoniqueMethode dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classePageNomCanoniqueMethode(Couverture<String> c);
+
+	public String getClassePageNomCanoniqueMethode() {
+		return classePageNomCanoniqueMethode;
+	}
+
+	public void setClassePageNomCanoniqueMethode(String classePageNomCanoniqueMethode) {
+		this.classePageNomCanoniqueMethode = classePageNomCanoniqueMethode;
+		this.classePageNomCanoniqueMethodeCouverture.dejaInitialise = true;
+	}
+	protected ApiEcrivain classePageNomCanoniqueMethodeInit() {
+		if(!classePageNomCanoniqueMethodeCouverture.dejaInitialise) {
+			_classePageNomCanoniqueMethode(classePageNomCanoniqueMethodeCouverture);
+			if(classePageNomCanoniqueMethode == null)
+				setClassePageNomCanoniqueMethode(classePageNomCanoniqueMethodeCouverture.o);
+		}
+		classePageNomCanoniqueMethodeCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public String solrClassePageNomCanoniqueMethode() {
+		return classePageNomCanoniqueMethode;
+	}
+
+	public String strClassePageNomCanoniqueMethode() {
+		return classePageNomCanoniqueMethode == null ? "" : classePageNomCanoniqueMethode;
+	}
+
+	public String nomAffichageClassePageNomCanoniqueMethode() {
+		return null;
+	}
+
+	public String htmTooltipClassePageNomCanoniqueMethode() {
+		return null;
+	}
+
+	public String htmClassePageNomCanoniqueMethode() {
+		return classePageNomCanoniqueMethode == null ? "" : StringEscapeUtils.escapeHtml4(strClassePageNomCanoniqueMethode());
+	}
+
 	///////////////////////////
 	// classeMotsClesTrouves //
 	///////////////////////////
@@ -2277,6 +2334,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classeApiOperationIdMethodeReponseInit();
 		classeSuperApiOperationIdMethodeRequeteInit();
 		classeSuperApiOperationIdMethodeReponseInit();
+		classePageNomCanoniqueMethodeInit();
 		classeMotsClesTrouvesInit();
 		classeMotsClesInit();
 		classeRolesTrouvesInit();
@@ -2415,6 +2473,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeSuperApiOperationIdMethodeRequete;
 			case "classeSuperApiOperationIdMethodeReponse":
 				return oApiEcrivain.classeSuperApiOperationIdMethodeReponse;
+			case "classePageNomCanoniqueMethode":
+				return oApiEcrivain.classePageNomCanoniqueMethode;
 			case "classeMotsClesTrouves":
 				return oApiEcrivain.classeMotsClesTrouves;
 			case "classeMotsCles":
@@ -2512,7 +2572,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ApiEcrivain {");
+		sb.append("ApiEcrivain { ");
 		sb.append(" }");
 		return sb.toString();
 	}

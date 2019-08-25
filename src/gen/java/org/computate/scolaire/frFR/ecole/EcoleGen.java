@@ -1793,6 +1793,104 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		}
 	}
 
+	/////////////////////
+	// ecoleNomComplet //
+	/////////////////////
+
+	/**	L'entité « ecoleNomComplet »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleNomComplet;
+	@JsonIgnore
+	public Couverture<String> ecoleNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNomComplet").o(ecoleNomComplet);
+
+	/**	<br/>L'entité « ecoleNomComplet »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNomComplet">Trouver l'entité ecoleNomComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNomComplet(Couverture<String> c);
+
+	public String getEcoleNomComplet() {
+		return ecoleNomComplet;
+	}
+
+	public void setEcoleNomComplet(String ecoleNomComplet) {
+		this.ecoleNomComplet = ecoleNomComplet;
+		this.ecoleNomCompletCouverture.dejaInitialise = true;
+	}
+	protected Ecole ecoleNomCompletInit() {
+		if(!ecoleNomCompletCouverture.dejaInitialise) {
+			_ecoleNomComplet(ecoleNomCompletCouverture);
+			if(ecoleNomComplet == null)
+				setEcoleNomComplet(ecoleNomCompletCouverture.o);
+		}
+		ecoleNomCompletCouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public String solrEcoleNomComplet() {
+		return ecoleNomComplet;
+	}
+
+	public String strEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
+	public String nomAffichageEcoleNomComplet() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEcoleNomComplet() {
+		return null;
+	}
+
+	public String htmEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomComplet());
+	}
+
+	public void htmEcoleNomComplet(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEcole", strPk(), "EcoleNomComplet\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEcole", strPk(), "EcoleNomComplet() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNomComplet\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNomComplet()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNomComplet\"");
+							r.s(" value=\"", htmEcoleNomComplet(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNomComplet());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////
 	// ecoleId //
 	/////////////
@@ -1892,69 +1990,69 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	/////////////
-	// pageUri //
+	// pageUrl //
 	/////////////
 
-	/**	L'entité « pageUri »
+	/**	L'entité « pageUrl »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String pageUri;
+	protected String pageUrl;
 	@JsonIgnore
-	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
+	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
 
-	/**	<br/>L'entité « pageUri »
+	/**	<br/>L'entité « pageUrl »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUri">Trouver l'entité pageUri dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _pageUri(Couverture<String> c);
+	protected abstract void _pageUrl(Couverture<String> c);
 
-	public String getPageUri() {
-		return pageUri;
+	public String getPageUrl() {
+		return pageUrl;
 	}
 
-	public void setPageUri(String pageUri) {
-		this.pageUri = pageUri;
-		this.pageUriCouverture.dejaInitialise = true;
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+		this.pageUrlCouverture.dejaInitialise = true;
 	}
-	protected Ecole pageUriInit() {
-		if(!pageUriCouverture.dejaInitialise) {
-			_pageUri(pageUriCouverture);
-			if(pageUri == null)
-				setPageUri(pageUriCouverture.o);
+	protected Ecole pageUrlInit() {
+		if(!pageUrlCouverture.dejaInitialise) {
+			_pageUrl(pageUrlCouverture);
+			if(pageUrl == null)
+				setPageUrl(pageUrlCouverture.o);
 		}
-		pageUriCouverture.dejaInitialise(true);
+		pageUrlCouverture.dejaInitialise(true);
 		return (Ecole)this;
 	}
 
-	public String solrPageUri() {
-		return pageUri;
+	public String solrPageUrl() {
+		return pageUrl;
 	}
 
-	public String strPageUri() {
-		return pageUri == null ? "" : pageUri;
+	public String strPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
 	}
 
-	public String nomAffichagePageUri() {
+	public String nomAffichagePageUrl() {
 		return null;
 	}
 
-	public String htmTooltipPageUri() {
+	public String htmTooltipPageUrl() {
 		return null;
 	}
 
-	public String htmPageUri() {
-		return pageUri == null ? "" : StringEscapeUtils.escapeHtml4(strPageUri());
+	public String htmPageUrl() {
+		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
 	}
 
-	public void htmPageUri(ToutEcrivain r, Boolean patchDroits) {
+	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchEcole", strPk(), "PageUri\">");
+			r.s("<div id=\"patchEcole", strPk(), "PageUrl\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcole", strPk(), "PageUri() {");
+				r.l("		function patchEcole", strPk(), "PageUrl() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1967,23 +2065,23 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setPageUri\": this.value },");
+				r.l("				data: {\"setPageUrl\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUri()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"pageUri\"");
-							r.s(" value=\"", htmPageUri(), "\");");
+							r.s(" name=\"pageUrl\"");
+							r.s(" value=\"", htmPageUrl(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmPageUri());
+				r.s(htmPageUrl());
 			}
 			r.l("</div>");
 		}
@@ -2124,8 +2222,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		objetSuggerePoidsInit();
 		objetSuggereInit();
 		ecoleNomCourtInit();
+		ecoleNomCompletInit();
 		ecoleIdInit();
-		pageUriInit();
+		pageUrlInit();
 		pageH1Init();
 	}
 
@@ -2197,10 +2296,12 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.objetSuggere;
 			case "ecoleNomCourt":
 				return oEcole.ecoleNomCourt;
+			case "ecoleNomComplet":
+				return oEcole.ecoleNomComplet;
 			case "ecoleId":
 				return oEcole.ecoleId;
-			case "pageUri":
-				return oEcole.pageUri;
+			case "pageUrl":
+				return oEcole.pageUrl;
 			case "pageH1":
 				return oEcole.pageH1;
 			default:
@@ -2384,16 +2485,22 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					oEcole.setEcoleNomCourt(ecoleNomCourt);
 			}
 
+			if(sauvegardesEcole.contains("ecoleNomComplet")) {
+				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
+				if(ecoleNomComplet != null)
+					oEcole.setEcoleNomComplet(ecoleNomComplet);
+			}
+
 			if(sauvegardesEcole.contains("ecoleId")) {
 				String ecoleId = (String)solrDocument.get("ecoleId_stored_string");
 				if(ecoleId != null)
 					oEcole.setEcoleId(ecoleId);
 			}
 
-			if(sauvegardesEcole.contains("pageUri")) {
-				String pageUri = (String)solrDocument.get("pageUri_stored_string");
-				if(pageUri != null)
-					oEcole.setPageUri(pageUri);
+			if(sauvegardesEcole.contains("pageUrl")) {
+				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
+				if(pageUrl != null)
+					oEcole.setPageUrl(pageUrl);
 			}
 		}
 
@@ -2546,14 +2653,19 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("objetSuggere_indexed_string", objetSuggere);
 		}
 		if(ecoleNomCourt != null) {
+			document.addField("ecoleNomCourt_indexed_string", ecoleNomCourt);
 			document.addField("ecoleNomCourt_stored_string", ecoleNomCourt);
+		}
+		if(ecoleNomComplet != null) {
+			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
+			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(ecoleId != null) {
 			document.addField("ecoleId_stored_string", ecoleId);
 		}
-		if(pageUri != null) {
-			document.addField("pageUri_indexed_string", pageUri);
-			document.addField("pageUri_stored_string", pageUri);
+		if(pageUrl != null) {
+			document.addField("pageUrl_indexed_string", pageUrl);
+			document.addField("pageUrl_stored_string", pageUrl);
 		}
 		super.indexerCluster(document);
 
@@ -2646,13 +2758,17 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleNomCourt != null)
 			oEcole.setEcoleNomCourt(ecoleNomCourt);
 
+		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
+		if(ecoleNomComplet != null)
+			oEcole.setEcoleNomComplet(ecoleNomComplet);
+
 		String ecoleId = (String)solrDocument.get("ecoleId_stored_string");
 		if(ecoleId != null)
 			oEcole.setEcoleId(ecoleId);
 
-		String pageUri = (String)solrDocument.get("pageUri_stored_string");
-		if(pageUri != null)
-			oEcole.setPageUri(pageUri);
+		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
+		if(pageUrl != null)
+			oEcole.setPageUrl(pageUrl);
 
 		super.stockerCluster(solrDocument);
 	}
@@ -2673,7 +2789,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse);
+		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleAddresse);
 	}
 
 	////////////
@@ -2687,6 +2803,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			return false;
 		Ecole that = (Ecole)o;
 		return super.equals(o)
+				&& Objects.equals( anneeCles, that.anneeCles )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
@@ -2700,8 +2817,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("Ecole {");
-		sb.append( "ecoleNom: \"" ).append(ecoleNom).append( "\"" );
+		sb.append("Ecole { ");
+		sb.append( "anneeCles: " ).append(anneeCles);
+		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );

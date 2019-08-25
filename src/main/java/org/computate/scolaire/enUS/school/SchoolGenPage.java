@@ -1026,7 +1026,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 						School o = listSchool.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = o.getPageUri();
+						String uri = "/enUS/school/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
