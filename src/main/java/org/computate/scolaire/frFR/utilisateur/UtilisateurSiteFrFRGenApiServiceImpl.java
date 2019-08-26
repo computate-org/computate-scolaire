@@ -143,11 +143,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		List<Future> futures = new ArrayList<>();
 		listeUtilisateurSite.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHUtilisateurSite(o).compose(
-					a -> definirPATCHUtilisateurSite(a).compose(
-						b -> indexerPATCHUtilisateurSite(b)
-					)
-				)
+				futurePATCHUtilisateurSite(o, gestionnaireEvenements)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -159,8 +155,43 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		});
 	}
 
-	public Future<UtilisateurSite> sqlPATCHUtilisateurSite(UtilisateurSite o) {
+	public Future<UtilisateurSite> futurePATCHUtilisateurSite(UtilisateurSite o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		Future<UtilisateurSite> future = Future.future();
+		try {
+			sqlPATCHUtilisateurSite(o, a -> {
+				if(a.succeeded()) {
+					UtilisateurSite utilisateurSite = a.result();
+					definirUtilisateurSite(utilisateurSite, b -> {
+						if(b.succeeded()) {
+							attribuerUtilisateurSite(utilisateurSite, c -> {
+								if(c.succeeded()) {
+									indexerUtilisateurSite(utilisateurSite, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										} else {
+											erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<UtilisateurSite>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -176,77 +207,59 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						o2.setCree(requeteJson.getString(methodeNom));
+						if(o2.getCree() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						o2.setModifie(requeteJson.getString(methodeNom));
+						if(o2.getModifie() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						}
 						break;
 					case "setArchive":
 						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						if(o2.getArchive() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						}
 						break;
 					case "setSupprime":
 						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						if(o2.getSupprime() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						}
 						break;
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
-				o2.setPk(pk);
-				future.complete(o2);
+				UtilisateurSite o3 = new UtilisateurSite();
+				o3.setRequeteSite_(o.getRequeteSite_());
+				o3.setPk(pk);
+				gestionnaireEvenements.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<UtilisateurSite> definirPATCHUtilisateurSite(UtilisateurSite o) {
-		Future<UtilisateurSite> future = Future.future();
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
-			-> {
-				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(definirAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexerPATCHUtilisateurSite(UtilisateurSite o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initLoinPourClasse(o.getRequeteSite_());
-			o.indexerPourClasse();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -347,18 +360,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			case "utilisateurId":
 				return "utilisateurId_indexed_string";
 			case "utilisateurNom":
@@ -603,11 +616,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
 				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listeRecherche.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -686,10 +697,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
 					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}
@@ -709,15 +724,22 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
-				if(attribuerAsync.succeeded()) {
-					if(attribuerAsync.result() != null) {
-						for(JsonArray definition : attribuerAsync.result().getResults()) {
-							o.attribuerPourClasse(definition.getString(0), definition.getString(1));
+				try {
+					if(attribuerAsync.succeeded()) {
+						if(attribuerAsync.result() != null) {
+							for(JsonArray definition : attribuerAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attribuerPourClasse(definition.getString(2), definition.getLong(1));
+								else
+									o.attribuerPourClasse(definition.getString(3), definition.getLong(0));
+							}
 						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+				} catch(Exception e) {
+					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

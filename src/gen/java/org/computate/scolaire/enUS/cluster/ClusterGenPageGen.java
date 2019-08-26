@@ -333,7 +333,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("ClusterGenPage {");
+		sb.append("ClusterGenPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

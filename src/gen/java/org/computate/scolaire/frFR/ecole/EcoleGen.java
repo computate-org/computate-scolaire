@@ -841,7 +841,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAnneeCles() {
-		return "NomAffichage.enUS: ";
+		return "années";
 	}
 
 	public String htmTooltipAnneeCles() {
@@ -2661,6 +2661,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(ecoleId != null) {
+			document.addField("ecoleId_indexed_string", ecoleId);
 			document.addField("ecoleId_stored_string", ecoleId);
 		}
 		if(pageUrl != null) {

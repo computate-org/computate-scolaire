@@ -226,7 +226,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "enleverLueur($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeDebut', null, $('#Page_anneeDebut')); ")
+									.a("onclick", "enleverLueur($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeDebut', null, $('#Page_anneeDebut'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -280,7 +280,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "enleverLueur($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeFin', null, $('#Page_anneeFin')); ")
+									.a("onclick", "enleverLueur($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeFin', null, $('#Page_anneeFin'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

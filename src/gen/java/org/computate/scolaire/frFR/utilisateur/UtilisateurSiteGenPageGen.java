@@ -336,7 +336,7 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("UtilisateurSiteGenPage {");
+		sb.append("UtilisateurSiteGenPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -244,7 +244,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("SiteUserPage {");
+		sb.append("SiteUserPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

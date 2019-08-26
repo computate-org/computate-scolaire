@@ -355,7 +355,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
+						o2.setCree(requeteJson.getString(methodeNom));
 						if(o2.getCree() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
@@ -365,7 +365,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
+						o2.setModifie(requeteJson.getString(methodeNom));
 						if(o2.getModifie() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
@@ -397,12 +397,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					case "addAnneeCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getLong(methodeNom)));
+						break;
 					case "addAllAnneeCles":
 						JsonArray addAllAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllAnneeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
 						}
+						break;
 					case "setAnneeCles":
 						JsonArray setAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
@@ -411,7 +413,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
 							patchSqlParams.set(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
 						}
-										break;
+						break;
+					case "removeAnneeCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getLong(methodeNom)));
+						break;
 					case "setEcoleNom":
 						o2.setEcoleNom(requeteJson.getString(methodeNom));
 						if(o2.getEcoleNom() == null) {
@@ -459,9 +465,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
-				o2.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o2));
+				Ecole o3 = new Ecole();
+				o3.setRequeteSite_(o.getRequeteSite_());
+				o3.setPk(pk);
+				gestionnaireEvenements.handle(Future.succeededFuture(o3));
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -742,18 +749,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "enfantCles":
@@ -786,6 +793,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "ecoleNomCourt_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
+			case "ecoleId":
+				return "ecoleId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			default:
@@ -1016,11 +1025,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
 				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listeRecherche.addFilterQuery("ecoleId_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

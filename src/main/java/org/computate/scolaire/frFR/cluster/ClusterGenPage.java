@@ -90,24 +90,42 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override public void htmlScriptClusterGenPage() {
+		l("$(document).ready(function() {");
+		l("});");
 	}
 
 	public void htmlFormPageCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
-				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("class", "").f().sx("crée").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strCree()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
-				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("class", "").f().sx("modifié").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strModifie()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -116,20 +134,36 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	public void htmlFormPOSTCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
-				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("crée").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strCree()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
+			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("modifié").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strModifie()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
-				} g("div");
+			} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -137,20 +171,36 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	public void htmlFormPATCHCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
-				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("crée").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strCree()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
+			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("modifié").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strModifie()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
-				} g("div");
+			} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -158,20 +208,36 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	public void htmlFormRechercheCluster(Cluster o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("crée").g("label");
-				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strCree()).g("span");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("crée").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strCree()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
+			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "").f();
-					e("label").a("class", "").f().sx("modifié").g("label");
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("modifié").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strModifie()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
-				{ e("div").a("class", "").f();
-					e("span").f().sx(o.strModifie()).g("span");
-				} g("div");
+			} g("div");
 			} g("div");
 		} g("div");
 	}
@@ -187,7 +253,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("aucun cluster trouvé").g("span");
 			} g("h1");
-		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
+		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
@@ -195,6 +261,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					e("span").a("class", " ").f().sx("un cluster").g("span");
 				} g("h1");
 				Cluster o = listeCluster.get(0);
+				requeteSite_.setRequetePk(o.getPk());
 			}
 		} else {
 
@@ -222,13 +289,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			} g("table");
 		}
 
-		if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*") && params.getJsonObject("query").getJsonArray("fq") == null) {
+		if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			Cluster o = listeCluster.first();
 
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "ClusterForm").a("style", "display: inline-block; ").f();
+					{ e("form").a("action", "").a("id", "ClusterForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")
@@ -263,7 +330,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					Cluster o = new Cluster();
 
 					// Form POST
-					{ e("form").a("action", "").a("id", "postClusterForm").f();
+					{ e("form").a("action", "").a("id", "postClusterForm").a("onsubmit", "event.preventDefault(); return false; ").f();
 						htmlFormPOSTCluster(o);
 					} g("form");
 					e("button")
@@ -292,7 +359,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					Cluster o = new Cluster();
 
 					// FormulaireFiltres PATCH
-					{ e("form").a("action", "").a("id", "patchClusterFormulaireFiltres").f();
+					{ e("form").a("action", "").a("id", "patchClusterFormulaireFiltres").a("onsubmit", "event.preventDefault(); return false; ").f();
 						htmlFormRechercheCluster(o);
 					} g("form");
 					e("button")
@@ -303,7 +370,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 
 					// FormulaireValeurs PATCH
-					{ e("form").a("action", "").a("id", "patchClusterFormulaireValeurs").f();
+					{ e("form").a("action", "").a("id", "patchClusterFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
 						htmlFormPATCHCluster(o);
 					} g("form");
 					e("button")
@@ -332,7 +399,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					Cluster o = new Cluster();
 
 					// Form DELETE
-					{ e("form").a("action", "").a("id", "deleteClusterForm").f();
+					{ e("form").a("action", "").a("id", "deleteClusterForm").a("onsubmit", "event.preventDefault(); return false; ").f();
 						htmlFormPATCHCluster(o);
 					} g("form");
 					e("button")

@@ -1778,6 +1778,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("anneeNomComplet_stored_string", anneeNomComplet);
 		}
 		if(anneeId != null) {
+			document.addField("anneeId_indexed_string", anneeId);
 			document.addField("anneeId_stored_string", anneeId);
 		}
 		if(pageUrl != null) {

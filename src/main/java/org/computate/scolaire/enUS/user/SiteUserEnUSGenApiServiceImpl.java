@@ -143,11 +143,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		List<Future> futures = new ArrayList<>();
 		listSiteUser.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHSiteUser(o).compose(
-					a -> definePATCHSiteUser(a).compose(
-						b -> indexPATCHSiteUser(b)
-					)
-				)
+				futurePATCHSiteUser(o, eventHandler)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -159,8 +155,43 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 	}
 
-	public Future<SiteUser> sqlPATCHSiteUser(SiteUser o) {
+	public Future<SiteUser> futurePATCHSiteUser(SiteUser o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
 		Future<SiteUser> future = Future.future();
+		try {
+			sqlPATCHSiteUser(o, a -> {
+				if(a.succeeded()) {
+					SiteUser siteUser = a.result();
+					defineSiteUser(siteUser, b -> {
+						if(b.succeeded()) {
+							attributeSiteUser(siteUser, c -> {
+								if(c.succeeded()) {
+									indexSiteUser(siteUser, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											eventHandler.handle(Future.succeededFuture(d.result()));
+										} else {
+											errorSiteUser(o.getSiteRequest_(), eventHandler, d);
+										}
+									});
+								} else {
+									errorSiteUser(o.getSiteRequest_(), eventHandler, c);
+								}
+							});
+						} else {
+							errorSiteUser(o.getSiteRequest_(), eventHandler, b);
+						}
+					});
+				} else {
+					errorSiteUser(o.getSiteRequest_(), eventHandler, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHSiteUser(SiteUser o, Handler<AsyncResult<SiteUser>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -176,77 +207,59 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getInstant(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						o2.setCreated(requestJson.getString(methodName));
+						if(o2.getCreated() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getInstant(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						o2.setModified(requestJson.getString(methodName));
+						if(o2.getModified() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						}
 						break;
 					case "setArchived":
 						o2.setArchived(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						if(o2.getArchived() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						}
 						break;
 					case "setDeleted":
 						o2.setDeleted(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						if(o2.getDeleted() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						}
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setSiteRequest_(o.getSiteRequest_());
-				o2.setPk(pk);
-				future.complete(o2);
+				SiteUser o3 = new SiteUser();
+				o3.setSiteRequest_(o.getSiteRequest_());
+				o3.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<SiteUser> definePATCHSiteUser(SiteUser o) {
-		Future<SiteUser> future = Future.future();
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, defineAsync
-			-> {
-				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(defineAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexPATCHSiteUser(SiteUser o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initDeepForClass(o.getSiteRequest_());
-			o.indexForClass();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -347,18 +360,18 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
 			case "modified":
 				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			case "userId":
 				return "userId_indexed_string";
 			case "userName":
@@ -603,11 +616,9 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			if(siteUser != null && !siteUser.getSeeArchived())
 				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classApiUriMethod + "/" + id;
-				listSearch.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listSearch.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -686,10 +697,14 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						eventHandler.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						eventHandler.handle(Future.failedFuture(e));
 					}
-					eventHandler.handle(Future.succeededFuture());
 				} else {
 					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
@@ -709,15 +724,22 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attributeAsync
 			-> {
-				if(attributeAsync.succeeded()) {
-					if(attributeAsync.result() != null) {
-						for(JsonArray definition : attributeAsync.result().getResults()) {
-							o.attributeForClass(definition.getString(0), definition.getString(1));
+				try {
+					if(attributeAsync.succeeded()) {
+						if(attributeAsync.result() != null) {
+							for(JsonArray definition : attributeAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attributeForClass(definition.getString(2), definition.getLong(1));
+								else
+									o.attributeForClass(definition.getString(3), definition.getLong(0));
+							}
 						}
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 					}
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+				} catch(Exception e) {
+					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

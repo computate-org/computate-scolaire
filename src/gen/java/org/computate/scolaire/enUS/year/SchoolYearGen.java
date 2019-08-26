@@ -1777,6 +1777,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("yearNameComplete_stored_string", yearNameComplete);
 		}
 		if(yearId != null) {
+			document.addField("yearId_indexed_string", yearId);
 			document.addField("yearId_stored_string", yearId);
 		}
 		if(pageUrl != null) {

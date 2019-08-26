@@ -167,7 +167,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				Long pk = creerLigne.getLong(0);
 				Cluster o = new Cluster();
 				o.setPk(pk);
-				o.initLoinCluster(requeteSite);
+				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -190,11 +190,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					switch(entiteVar) {
 					case "cree":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("cree", jsonObject.getString(entiteVar), pk));
 						break;
 					case "modifie":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getInstant(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("modifie", jsonObject.getString(entiteVar), pk));
 						break;
 					case "archive":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -207,7 +207,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					}
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -287,11 +287,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		List<Future> futures = new ArrayList<>();
 		listeCluster.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHCluster(o).compose(
-					a -> definirPATCHCluster(a).compose(
-						b -> indexerPATCHCluster(b)
-					)
-				)
+				futurePATCHCluster(o, gestionnaireEvenements)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -303,8 +299,43 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 	}
 
-	public Future<Cluster> sqlPATCHCluster(Cluster o) {
+	public Future<Cluster> futurePATCHCluster(Cluster o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		Future<Cluster> future = Future.future();
+		try {
+			sqlPATCHCluster(o, a -> {
+				if(a.succeeded()) {
+					Cluster cluster = a.result();
+					definirCluster(cluster, b -> {
+						if(b.succeeded()) {
+							attribuerCluster(cluster, c -> {
+								if(c.succeeded()) {
+									indexerCluster(cluster, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										} else {
+											erreurCluster(o.getRequeteSite_(), gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurCluster(o.getRequeteSite_(), gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurCluster(o.getRequeteSite_(), gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurCluster(o.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<Cluster>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -320,77 +351,59 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						o2.setCree(requeteJson.getString(methodeNom));
+						if(o2.getCree() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						o2.setModifie(requeteJson.getString(methodeNom));
+						if(o2.getModifie() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						}
 						break;
 					case "setArchive":
 						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						if(o2.getArchive() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						}
 						break;
 					case "setSupprime":
 						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						if(o2.getSupprime() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						}
 						break;
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
-				o2.setPk(pk);
-				future.complete(o2);
+				Cluster o3 = new Cluster();
+				o3.setRequeteSite_(o.getRequeteSite_());
+				o3.setPk(pk);
+				gestionnaireEvenements.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Cluster> definirPATCHCluster(Cluster o) {
-		Future<Cluster> future = Future.future();
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
-			-> {
-				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(definirAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexerPATCHCluster(Cluster o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initLoinPourClasse(o.getRequeteSite_());
-			o.indexerPourClasse();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -501,7 +514,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -668,18 +681,18 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -904,11 +917,9 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
 				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listeRecherche.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -987,10 +998,14 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
 					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}
@@ -1010,15 +1025,22 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
-				if(attribuerAsync.succeeded()) {
-					if(attribuerAsync.result() != null) {
-						for(JsonArray definition : attribuerAsync.result().getResults()) {
-							o.attribuerPourClasse(definition.getString(0), definition.getString(1));
+				try {
+					if(attribuerAsync.succeeded()) {
+						if(attribuerAsync.result() != null) {
+							for(JsonArray definition : attribuerAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attribuerPourClasse(definition.getString(2), definition.getLong(1));
+								else
+									o.attribuerPourClasse(definition.getString(3), definition.getLong(0));
+							}
 						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+				} catch(Exception e) {
+					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

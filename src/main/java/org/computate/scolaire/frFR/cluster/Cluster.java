@@ -82,7 +82,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
 	 * NomAffichage.enUS: primary key
-	 */                                        
+	 */                                         
 	protected void _pk(Couverture<Long> c) {}
 
 	/**

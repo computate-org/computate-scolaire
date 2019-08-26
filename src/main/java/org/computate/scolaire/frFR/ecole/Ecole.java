@@ -44,7 +44,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: duotone
  * IconeNom: school
- */                   
+ */                  
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -118,7 +118,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */ 
+	 */      
 	protected void _saisonCles(List<Long> o) {}
 	
 	/**
@@ -131,9 +131,9 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * HtmlColonne: 2
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
+	 * NomAffichage.frFR: années
+	 * NomAffichage.enUS: years
+	 */  
 	protected void _anneeCles(List<Long> o) {}
 
 	/**
@@ -170,14 +170,13 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * VarTitre: true
 	 * HtmlLigne: 3
 	 * HtmlColonne: 2
 	 * NomAffichage.frFR: nom de l'école
 	 * NomAffichage.enUS: name of the school
 	 * Description.frFR: Nom de l'école. 
 	 * Description.enUS: Name of the school. 
-	 */  
+	 */   
 	protected void _ecoleNom(Couverture<String> c) {
 	}
 
@@ -283,6 +282,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: ecoleNom
 	 * r.enUS: schoolName
+	 * VarTitre: true
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		c.o(ecoleNom);
@@ -291,14 +291,16 @@ public class Ecole extends EcoleGen<Cluster> {
 	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: schoolId
+	 * Indexe: true
 	 * Stocke: true
+	 * VarId: true
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: ecoleNom
 	 * r.enUS: schoolName
-	 */           
+	 */               
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);

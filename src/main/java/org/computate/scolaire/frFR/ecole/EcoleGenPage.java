@@ -161,7 +161,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										.a("name", "setEcoleNom")
 										.a("id", "Page_ecoleNom")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNom', $(this).val(), $(this)); ")
+										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNom', $(this).val(), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.a("value", o.strEcoleNom())
 									.fg();
 
@@ -169,7 +169,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#Page_ecoleNom')); $('#Page_ecoleNom').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNom', null, $('#Page_ecoleNom')); ")
+									.a("onclick", "enleverLueur($('#Page_ecoleNom')); $('#Page_ecoleNom').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNom', null, $('#Page_ecoleNom'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -205,7 +205,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										.a("name", "setEcoleNumeroTelephone")
 										.a("id", "Page_ecoleNumeroTelephone")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNumeroTelephone', $(this).val(), $(this)); ")
+										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNumeroTelephone', $(this).val(), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.a("value", o.strEcoleNumeroTelephone())
 									.fg();
 
@@ -213,7 +213,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#Page_ecoleNumeroTelephone')); $('#Page_ecoleNumeroTelephone').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNumeroTelephone', null, $('#Page_ecoleNumeroTelephone')); ")
+									.a("onclick", "enleverLueur($('#Page_ecoleNumeroTelephone')); $('#Page_ecoleNumeroTelephone').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleNumeroTelephone', null, $('#Page_ecoleNumeroTelephone'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -249,7 +249,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										.a("name", "setEcoleAdministrateurNom")
 										.a("id", "Page_ecoleAdministrateurNom")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAdministrateurNom', $(this).val(), $(this)); ")
+										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAdministrateurNom', $(this).val(), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.a("value", o.strEcoleAdministrateurNom())
 									.fg();
 
@@ -257,7 +257,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#Page_ecoleAdministrateurNom')); $('#Page_ecoleAdministrateurNom').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAdministrateurNom', null, $('#Page_ecoleAdministrateurNom')); ")
+									.a("onclick", "enleverLueur($('#Page_ecoleAdministrateurNom')); $('#Page_ecoleAdministrateurNom').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAdministrateurNom', null, $('#Page_ecoleAdministrateurNom'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -282,14 +282,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-pink ").f();
-								e("label").a("for", "Page_anneeCles").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+								e("label").a("for", "Page_anneeCles").a("class", "").f().sx("années").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "NomAffichage.enUS: ")
+										.a("placeholder", "années")
 										.a("title", "Description.enUS: ")
 										.a("class", "valeurObjetSuggere suggereAnneeCles w3-input w3-border ")
 										.a("name", "setAnneeCles")
@@ -335,14 +335,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										.a("name", "setEcoleAddresse")
 										.a("id", "Page_ecoleAddresse")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAddresse', $(this).val(), $(this)); ")
+										.a("onchange", "patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 									.f().sx(o.strEcoleAddresse()).g("textarea");
 
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "enleverLueur($('#Page_ecoleAddresse')); $('#Page_ecoleAddresse').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAddresse', null, $('#Page_ecoleAddresse')); ")
+									.a("onclick", "enleverLueur($('#Page_ecoleAddresse')); $('#Page_ecoleAddresse').val(null); patchEcoleVal({ 'pk': $('#EcoleForm :input[name=\"pk\"]').val() }, 'setEcoleAddresse', null, $('#Page_ecoleAddresse'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -508,14 +508,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "POST_anneeCles").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+							e("label").a("for", "POST_anneeCles").a("class", "").f().sx("années").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "NomAffichage.enUS: ")
+									.a("placeholder", "années")
 									.a("title", "Description.enUS: ")
 									.a("class", "valeurObjetSuggere suggereAnneeCles w3-input w3-border ")
 									.a("name", "setAnneeCles")
@@ -724,14 +724,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "PATCH_anneeCles").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+							e("label").a("for", "PATCH_anneeCles").a("class", "").f().sx("années").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "NomAffichage.enUS: ")
+									.a("placeholder", "années")
 									.a("title", "Description.enUS: ")
 									.a("class", "valeurObjetSuggere suggereAnneeCles w3-input w3-border ")
 									.a("name", "setAnneeCles")
@@ -940,14 +940,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "Recherche_anneeCles").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+							e("label").a("for", "Recherche_anneeCles").a("class", "").f().sx("années").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "NomAffichage.enUS: ")
+									.a("placeholder", "années")
 									.a("title", "Description.enUS: ")
 									.a("class", "valeurObjetSuggere suggereAnneeCles w3-input w3-border ")
 									.a("name", "setAnneeCles")
@@ -1035,7 +1035,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				{ e("thead").f();
 					{ e("tr").f();
 						e("th").f().sx("addresse").g("th");
-						e("th").f().sx("NomAffichage.enUS: ").g("th");
+						e("th").f().sx("années").g("th");
 						e("th").f().sx("nom de l'école").g("th");
 						e("th").f().sx("numéro de téléphone").g("th");
 					} g("tr");

@@ -225,7 +225,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_yearStart')); $('#Page_yearStart').val(null); patchSchoolYearVal({ 'pk': $('#SchoolYearForm :input[name=\"pk\"]').val() }, 'setYearStart', null, $('#Page_yearStart')); ")
+									.a("onclick", "removeGlow($('#Page_yearStart')); $('#Page_yearStart').val(null); patchSchoolYearVal({ 'pk': $('#SchoolYearForm :input[name=\"pk\"]').val() }, 'setYearStart', null, $('#Page_yearStart'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -279,7 +279,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_yearEnd')); $('#Page_yearEnd').val(null); patchSchoolYearVal({ 'pk': $('#SchoolYearForm :input[name=\"pk\"]').val() }, 'setYearEnd', null, $('#Page_yearEnd')); ")
+									.a("onclick", "removeGlow($('#Page_yearEnd')); $('#Page_yearEnd').val(null); patchSchoolYearVal({ 'pk': $('#SchoolYearForm :input[name=\"pk\"]').val() }, 'setYearEnd', null, $('#Page_yearEnd'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

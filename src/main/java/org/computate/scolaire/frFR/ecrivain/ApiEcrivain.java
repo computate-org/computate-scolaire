@@ -649,6 +649,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * 
 	 * r: entiteVarApi
 	 * r.enUS: entityVarApi
+	 * r: entiteVarCapitalise
+	 * r.enUS: entityVarCapitalized
 	 * r: entiteVar
 	 * r.enUS: entityVar
 	 * r: entiteMotsClesTrouves
@@ -703,6 +705,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	public void initEntite(SolrDocument entiteDocumentSolr) {
 		setEntiteDocumentSolr(entiteDocumentSolr);
 		entiteVar = (String)entiteDocumentSolr.get("entiteVar_frFR_stored_string");
+		entiteVarCapitalise = (String)entiteDocumentSolr.get("entiteVarCapitalise_frFR_stored_string");
 		entiteVarApi = StringUtils.defaultIfBlank((String)entiteDocumentSolr.get("entiteVarApi_stored_string"), entiteVar);
 		entiteMotsClesTrouves = BooleanUtils.isTrue((Boolean)entiteDocumentSolr.get("entiteMotsClesTrouves_stored_boolean"));
 		entiteMotsCles = (List<String>)entiteDocumentSolr.get("entiteMotsCles_stored_strings");
@@ -770,6 +773,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * Var.enUS: writeEntityDescription
 	 * Param1.var.enUS: numberTabs
 	 * Param3.var.enUS: apiRequestOrResponse
+	 * r: classeApiMethodeMethode
+	 * r.enUS: classApiMethodMethod
+	 * r: entiteVarCapitalise
+	 * r.enUS: entityVarCapitalized
 	 * r: nombreTabulations
 	 * r.enUS: numberTabs
 	 * r: wDescription
@@ -904,7 +911,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				|| entiteMotsCles.contains(classeApiMethode + "." + apiRequeteOuReponse)
 				) {
 			w.l();
-			w.t(nombreTabulations, "- " + entiteVar);
+
+			if("PATCH".equals(classeApiMethodeMethode))
+				w.t(nombreTabulations, "- " + entiteVarCapitalise);
+			else
+				w.t(nombreTabulations, "- " + entiteVar);
+
 			if(StringUtils.isNotBlank(entiteNomAffichage))
 				w.s(" (" + entiteNomAffichage + ")");
 			w.l(": ");
@@ -950,6 +962,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 						for(Integer l = 0; l < rechercheEntitesResultats.size(); l++) {
 							SolrDocument entiteDocumentSolr = rechercheEntitesResultats.get(l);
 							String entiteVarAncien = entiteVar;
+							String entiteVarCapitaliseAncien = entiteVarCapitalise;
 							String entiteVarApiAncien = entiteVarApi;
 							Boolean entiteMotsClesTrouvesAncien = entiteMotsClesTrouves;
 							List<String> entiteMotsClesAncien = entiteMotsCles;
@@ -963,6 +976,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 							String entiteDescriptionAncien = entiteDescription;
 							
 							entiteVar = (String)entiteDocumentSolr.get("entiteVar_enUS_stored_string");
+							entiteVarCapitalise = (String)entiteDocumentSolr.get("entiteVarCapitalise_enUS_stored_string");
 							entiteVarApi = StringUtils.defaultIfBlank((String)entiteDocumentSolr.get("entiteVarApi_stored_string"), entiteVar);
 							entiteMotsClesTrouves = BooleanUtils.isTrue((Boolean)entiteDocumentSolr.get("entiteMotsClesTrouves_stored_boolean"));
 							entiteMotsCles = (List<String>)entiteDocumentSolr.get("entiteMotsCles_stored_strings");
@@ -986,6 +1000,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 //							}
 							
 							entiteVar = entiteVarAncien;
+							entiteVarCapitalise = entiteVarCapitaliseAncien;
 							entiteVarApi = entiteVarApiAncien;
 							entiteMotsClesTrouves = entiteMotsClesTrouvesAncien;
 							entiteMotsCles = entiteMotsClesAncien;
@@ -1030,6 +1045,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * Var.enUS: writeEntitySchema
 	 * Param1.var.enUS: numberTabs
 	 * Param3.var.enUS: apiRequestOrResponse
+	 * r: classeApiMethodeMethode
+	 * r.enUS: classApiMethodMethod
+	 * r: entiteVarCapitalise
+	 * r.enUS: entityVarCapitalized
 	 * r: nombreTabulations
 	 * r.enUS: numberTabs
 	 * r: classeApiMethode
@@ -1058,7 +1077,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	public void ecrireEntiteSchema(Integer nombreTabulations, ToutEcrivain w, String apiRequeteOuReponse) throws Exception {
 		nombreTabulations = nombreTabulations == null ? (classeApiMethode.contains("Recherche") && "reponse".equals(apiRequeteOuReponse) ? 1 : 0) : nombreTabulations;
 		if(entiteTypeJson != null) {
-			w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
+
+			if("PATCH".equals(classeApiMethodeMethode))
+				w.tl(4 + tabsSchema + nombreTabulations, entiteVarCapitalise, ":");
+			else
+				w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
+
 			w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
 			if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
 				w.tl(5 + tabsSchema + nombreTabulations, "enum:");
@@ -1156,7 +1180,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 */
 	public void ecrireApi(Boolean id) throws Exception {
 
-			if(!classeUris.contains(classeApiUriMethode)) {
+			if(id || !classeUris.contains(classeApiUriMethode)) {
 				wChemins.tl(1, classeApiUriMethode, (id ? "/{id}" : ""), ":");
 				classeUris.add(classeApiUriMethode);
 			}
@@ -1189,7 +1213,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		if(!wRequeteEnTete.getVide() || "GET".equals(classeApiMethodeMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 			wChemins.tl(3, "parameters:");
 			wChemins.s(wRequeteEnTete);
-			if("GET".equals(classeApiMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode)) {
+			if(id || "GET".equals(classeApiMethode) || "DELETE".equals(classeApiMethodeMethode) || "PUT".equals(classeApiMethodeMethode)) {
 				wChemins.tl(4, "- name: id");
 				wChemins.tl(5, "in: path");
 				wChemins.t(5, "description: ").yamlStr(6, "");
@@ -1197,7 +1221,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wChemins.tl(5, "schema:");
 				wChemins.tl(6, "type: string");
 			}
-			else if(classeApiMethode.contains("Recherche") || classeApiMethode.contains("PATCH")) {
+			if(classeApiMethode.contains("Recherche") || classeApiMethode.contains("PATCH")) {
 				wChemins.tl(4, "- in: query");
 				wChemins.tl(5, "name: q");
 				wChemins.tl(5, "description: ''");
@@ -1344,57 +1368,59 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		wChemins.tl(5 + tabsReponses, "schema:");
 		wChemins.tl(6 + tabsReponses, "$ref: '#/components/requestBodies/ErrorResponse'");
 
-		if(openApiVersionNumero > 2) {
-			if(!"GET".equals(classeApiMethodeMethode) && !"DELETE".equals(classeApiMethodeMethode)) {
-				wCorpsRequetes.tl(2, classeApiOperationIdMethodeRequete, ":");
-				wCorpsRequetes.tl(3, "content:");
-				wCorpsRequetes.tl(4, "application/json:");
-				wCorpsRequetes.tl(5, "schema:");
-				wCorpsRequetes.tl(6, "$ref: '#/components/schemas/", classeApiOperationIdMethodeRequete, "'");
-			}
-			wCorpsRequetes.tl(2, classeApiOperationIdMethodeReponse, ":");
-			wCorpsRequetes.tl(3, "content:");
-			wCorpsRequetes.tl(4, classeApiTypeMedia200Methode, "; charset=utf-8:");
-			wCorpsRequetes.tl(5, "schema:");
-			wCorpsRequetes.tl(6, "$ref: '#/components/schemas/", classeApiOperationIdMethodeReponse, "'");
-		}
-
-		if(!"GET".equals(classeApiMethodeMethode) && !"DELETE".equals(classeApiMethodeMethode)) {
-//		if(classeMotsClesTrouves && classeMotsCles.contains(classeApiMethode + ".request")) {
-			wSchemas.tl(tabsSchema, classeApiOperationIdMethodeRequete, ":");
-			wSchemas.tl(tabsSchema + 1, "allOf:");
-			if(BooleanUtils.isTrue(classeEtendBase)) {
-				wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeRequete, "\"");
-			}
-			wSchemas.tl(tabsSchema + 2, "- type: object");
-			wSchemas.tl(tabsSchema + 3, "properties:");
-			wSchemas.s(wRequeteSchema.toString());
-		}
-
-//		if(classeMotsClesTrouves && classeMotsCles.contains(classeApiMethode + ".response")) {
-			wSchemas.tl(tabsSchema, classeApiOperationIdMethodeReponse, ":");
-			wSchemas.tl(tabsSchema + 1, "allOf:");
-			if("text/html".equals(classeApiTypeMedia200Methode)) {
-				wSchemas.tl(tabsSchema + 2, "- type: string");
-			}
-			else {
-				if(BooleanUtils.isTrue(classeEtendBase)) {
-					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeReponse, "\"");
+		if(!id) {
+			if(openApiVersionNumero > 2) {
+				if(!"GET".equals(classeApiMethodeMethode) && !"DELETE".equals(classeApiMethodeMethode)) {
+					wCorpsRequetes.tl(2, classeApiOperationIdMethodeRequete, ":");
+					wCorpsRequetes.tl(3, "content:");
+					wCorpsRequetes.tl(4, "application/json:");
+					wCorpsRequetes.tl(5, "schema:");
+					wCorpsRequetes.tl(6, "$ref: '#/components/schemas/", classeApiOperationIdMethodeRequete, "'");
 				}
+				wCorpsRequetes.tl(2, classeApiOperationIdMethodeReponse, ":");
+				wCorpsRequetes.tl(3, "content:");
+				wCorpsRequetes.tl(4, classeApiTypeMedia200Methode, "; charset=utf-8:");
+				wCorpsRequetes.tl(5, "schema:");
+				wCorpsRequetes.tl(6, "$ref: '#/components/schemas/", classeApiOperationIdMethodeReponse, "'");
+			}
 	
-				if(classeApiMethode.contains("Recherche")) {
-					wSchemas.tl(tabsSchema + 2, "- type: array");
-					wSchemas.tl(tabsSchema + 3, "items:");
-					wSchemas.tl(tabsSchema + 4, "type: object");
-					wSchemas.tl(tabsSchema + 4, "properties:");
+			if(!"GET".equals(classeApiMethodeMethode) && !"DELETE".equals(classeApiMethodeMethode)) {
+	//		if(classeMotsClesTrouves && classeMotsCles.contains(classeApiMethode + ".request")) {
+				wSchemas.tl(tabsSchema, classeApiOperationIdMethodeRequete, ":");
+				wSchemas.tl(tabsSchema + 1, "allOf:");
+				if(BooleanUtils.isTrue(classeEtendBase)) {
+					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeRequete, "\"");
+				}
+				wSchemas.tl(tabsSchema + 2, "- type: object");
+				wSchemas.tl(tabsSchema + 3, "properties:");
+				wSchemas.s(wRequeteSchema.toString());
+			}
+	
+	//		if(classeMotsClesTrouves && classeMotsCles.contains(classeApiMethode + ".response")) {
+				wSchemas.tl(tabsSchema, classeApiOperationIdMethodeReponse, ":");
+				wSchemas.tl(tabsSchema + 1, "allOf:");
+				if("text/html".equals(classeApiTypeMedia200Methode)) {
+					wSchemas.tl(tabsSchema + 2, "- type: string");
 				}
 				else {
-					wSchemas.tl(tabsSchema + 2, "- type: object");
-					wSchemas.tl(tabsSchema + 3, "properties:");
+					if(BooleanUtils.isTrue(classeEtendBase)) {
+						wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classeSuperApiOperationIdMethodeReponse, "\"");
+					}
+		
+					if(classeApiMethode.contains("Recherche")) {
+						wSchemas.tl(tabsSchema + 2, "- type: array");
+						wSchemas.tl(tabsSchema + 3, "items:");
+						wSchemas.tl(tabsSchema + 4, "type: object");
+						wSchemas.tl(tabsSchema + 4, "properties:");
+					}
+					else {
+						wSchemas.tl(tabsSchema + 2, "- type: object");
+						wSchemas.tl(tabsSchema + 3, "properties:");
+					}
+					wSchemas.s(wReponseSchema.toString());
 				}
-				wSchemas.s(wReponseSchema.toString());
-			}
-//		}
+	//		}
+		}
 		if(classePageNomCanoniqueMethode != null && BooleanUtils.isFalse(id))
 			ecrireApi(true);
 	}

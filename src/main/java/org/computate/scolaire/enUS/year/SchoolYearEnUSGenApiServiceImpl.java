@@ -347,7 +347,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getInstant(methodName));
+						o2.setCreated(requestJson.getString(methodName));
 						if(o2.getCreated() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
@@ -357,7 +357,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getInstant(methodName));
+						o2.setModified(requestJson.getString(methodName));
 						if(o2.getModified() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
@@ -390,7 +390,12 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						o2.setSchoolKey(requestJson.getLong(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA1);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
-										break;
+						break;
+					case "removeSchoolKey":
+						o2.setSchoolKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
+						break;
 					case "setYearStart":
 						o2.setYearStart(requestJson.getString(methodName));
 						if(o2.getYearStart() == null) {
@@ -418,9 +423,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setSiteRequest_(o.getSiteRequest_());
-				o2.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o2));
+				SchoolYear o3 = new SchoolYear();
+				o3.setSiteRequest_(o.getSiteRequest_());
+				o3.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o3));
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -701,18 +707,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
 			case "modified":
 				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "yearKey":
@@ -731,6 +737,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "yearNameShort_indexed_string";
 			case "yearNameComplete":
 				return "yearNameComplete_indexed_string";
+			case "yearId":
+				return "yearId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
@@ -963,11 +971,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			if(siteUser != null && !siteUser.getSeeArchived())
 				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classApiUriMethod + "/" + id;
-				listSearch.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listSearch.addFilterQuery("yearId_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

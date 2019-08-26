@@ -1495,7 +1495,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("UtilisateurSite {");
+		sb.append("UtilisateurSite { ");
 		sb.append(" }");
 		return sb.toString();
 	}

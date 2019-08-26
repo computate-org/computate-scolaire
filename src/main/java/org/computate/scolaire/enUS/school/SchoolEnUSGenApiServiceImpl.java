@@ -355,7 +355,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getInstant(methodName));
+						o2.setCreated(requestJson.getString(methodName));
 						if(o2.getCreated() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
@@ -365,7 +365,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getInstant(methodName));
+						o2.setModified(requestJson.getString(methodName));
 						if(o2.getModified() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
@@ -396,13 +396,15 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						break;
 					case "addYearKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("yearKeys", pk, "schoolKey", requestJson.getLong(methodName)));
+						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
+						break;
 					case "addAllYearKeys":
 						JsonArray addAllYearKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("schoolKey", addAllYearKeysValues.getLong(i), "yearKeys", pk));
 						}
+						break;
 					case "setYearKeys":
 						JsonArray setYearKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
@@ -411,7 +413,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("schoolKey", setYearKeysValues.getLong(i), "yearKeys", pk));
 						}
-										break;
+						break;
+					case "removeYearKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
+						break;
 					case "setSchoolName":
 						o2.setSchoolName(requestJson.getString(methodName));
 						if(o2.getSchoolName() == null) {
@@ -459,9 +465,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setSiteRequest_(o.getSiteRequest_());
-				o2.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o2));
+				School o3 = new School();
+				o3.setSiteRequest_(o.getSiteRequest_());
+				o3.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o3));
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -742,18 +749,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
 			case "modified":
 				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "childKeys":
@@ -786,6 +793,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolNameShort_indexed_string";
 			case "schoolNameComplete":
 				return "schoolNameComplete_indexed_string";
+			case "schoolId":
+				return "schoolId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			default:
@@ -1016,11 +1025,9 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			if(siteUser != null && !siteUser.getSeeArchived())
 				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classApiUriMethod + "/" + id;
-				listSearch.addFilterQuery("id:" + ClientUtils.escapeQueryChars(id));
+				listSearch.addFilterQuery("schoolId_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

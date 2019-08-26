@@ -46,7 +46,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                     
+*/                                           
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -63,7 +63,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: school
 	 */               
 	protected void _ecoleCle(Couverture<Long> c) {
-		c.o(pk);
 	}
 
 	/**
@@ -202,11 +201,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**
+	/**  
 	 * {@inheritDoc}
 	 * Var.enUS: yearNameComplete
 	 * Indexe: true
 	 * Stocke: true
+	 * VarTitre: true
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 * r: anneeFin
@@ -245,14 +245,16 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: yearId
+	 * Indexe: true
 	 * Stocke: true
+	 * VarId: true
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: anneeNomComplet
 	 * r.enUS: yearNameComplete
-	 */            
+	 */         
 	protected void _anneeId(Couverture<String> c) {
 		if(anneeNomComplet != null) {
 			String s = Normalizer.normalize(anneeNomComplet, Normalizer.Form.NFD);
@@ -283,7 +285,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: SiteUrlBase
 	 * r.enUS: SiteBaseUrl
-	 * **/  
+	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
 		if(anneeId != null) {
 			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/annee/" + anneeId;

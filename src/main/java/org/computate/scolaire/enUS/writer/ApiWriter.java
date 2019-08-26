@@ -243,6 +243,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	public void  initEntity(SolrDocument entitySolrDocument) {
 		setEntitySolrDocument(entitySolrDocument);
 		entityVar = (String)entitySolrDocument.get("entiteVar_enUS_stored_string");
+		entityVarCapitalized = (String)entitySolrDocument.get("entityVarCapitalized_enUS_stored_string");
 		entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
 		entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
 		entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
@@ -283,7 +284,12 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				|| entityKeywords.contains(classApiMethod + "." + apiRequestOrResponse)
 				) {
 			w.l();
-			w.t(numberTabs, "- " + entityVar);
+
+			if("PATCH".equals(classApiMethodMethod))
+				w.t(numberTabs, "- " + entityVarCapitalized);
+			else
+				w.t(numberTabs, "- " + entityVar);
+
 			if(StringUtils.isNotBlank(entityDisplayName))
 				w.s(" (" + entityDisplayName + ")");
 			w.l(": ");
@@ -329,6 +335,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 						for(Integer l = 0; l < searchEntitiesResults.size(); l++) {
 							SolrDocument entitySolrDocument = searchEntitiesResults.get(l);
 							String entityVarOld = entityVar;
+							String entityVarCapitalizedAncien = entityVarCapitalized;
 							String entityVarApiOld = entityVarApi;
 							Boolean entityKeywordsFoundOld = entityKeywordsFound;
 							List<String> entityKeywordsAncien = entityKeywords;
@@ -342,6 +349,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 							String entityDescriptionOld = entityDescription;
 							
 							entityVar = (String)entitySolrDocument.get("entiteVar_enUS_stored_string");
+							entityVarCapitalized = (String)entitySolrDocument.get("entityVarCapitalized_enUS_stored_string");
 							entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
 							entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
 							entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
@@ -365,6 +373,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 //							}
 							
 							entityVar = entityVarOld;
+							entityVarCapitalized = entityVarCapitalizedAncien;
 							entityVarApi = entityVarApiOld;
 							entityKeywordsFound = entityKeywordsFoundOld;
 							entityKeywords = entityKeywordsAncien;
@@ -392,7 +401,12 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	public void  writeEntitySchema(Integer numberTabs, AllWriter w, String apiRequestOrResponse) throws Exception, Exception {
 		numberTabs = numberTabs == null ? (classApiMethod.contains("Search") && "response".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
 		if(entityJsonType != null) {
-			w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
+
+			if("PATCH".equals(classApiMethodMethod))
+				w.tl(4 + tabsSchema + numberTabs, entityVarCapitalized, ":");
+			else
+				w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
+
 			w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
 			if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
 				w.tl(5 + tabsSchema + numberTabs, "enum:");
@@ -420,7 +434,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 
 	public void  writeApi(Boolean id) throws Exception, Exception {
 
-			if(!classUris.contains(classApiUriMethod) || id) {
+			if(id || !classUris.contains(classApiUriMethod)) {
 				wPaths.tl(1, classApiUriMethod, (id ? "/{id}" : ""), ":");
 				classUris.add(classApiUriMethod);
 			}
@@ -450,12 +464,12 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(4, "- ", classApiMediaType200Method);
 			}
 	
-		if(id || !wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+		if(!wRequestHeaders.getEmpty() || "GET".equals(classApiMethodMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 			wPaths.tl(3, "parameters:");
 			wPaths.s(wRequestHeaders);
 			if(id || "GET".equals(classApiMethod) || "DELETE".equals(classApiMethodMethod) || "PUT".equals(classApiMethodMethod)) {
-				wPaths.tl(4, "- in: path");
-				wPaths.tl(5, "name: id");
+				wPaths.tl(4, "- name: id");
+				wPaths.tl(5, "in: path");
 				wPaths.t(5, "description: ").yamlStr(6, "");
 				wPaths.tl(5, "required: true");
 				wPaths.tl(5, "schema:");
@@ -608,57 +622,59 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		wPaths.tl(5 + tabsResponses, "schema:");
 		wPaths.tl(6 + tabsResponses, "$ref: '#/components/requestBodies/ErrorResponse'");
 
-		if(openApiVersionNumber > 2) {
-			if(!"GET".equals(classApiMethodMethod) && !"DELETE".equals(classApiMethodMethod)) {
-				wRequestBodies.tl(2, classApiOperationIdMethodRequest, ":");
-				wRequestBodies.tl(3, "content:");
-				wRequestBodies.tl(4, "application/json:");
-				wRequestBodies.tl(5, "schema:");
-				wRequestBodies.tl(6, "$ref: '#/components/schemas/", classApiOperationIdMethodRequest, "'");
-			}
-			wRequestBodies.tl(2, classApiOperationIdMethodResponse, ":");
-			wRequestBodies.tl(3, "content:");
-			wRequestBodies.tl(4, classApiMediaType200Method, "; charset=utf-8:");
-			wRequestBodies.tl(5, "schema:");
-			wRequestBodies.tl(6, "$ref: '#/components/schemas/", classApiOperationIdMethodResponse, "'");
-		}
-
-		if(!"GET".equals(classApiMethodMethod) && !"DELETE".equals(classApiMethodMethod)) {
-//		if(classeMotsClesTrouves && classeMotsCles.contains(classApiMethod + ".request")) {
-			wSchemas.tl(tabsSchema, classApiOperationIdMethodRequest, ":");
-			wSchemas.tl(tabsSchema + 1, "allOf:");
-			if(BooleanUtils.isTrue(classExtendsBase)) {
-				wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodRequest, "\"");
-			}
-			wSchemas.tl(tabsSchema + 2, "- type: object");
-			wSchemas.tl(tabsSchema + 3, "properties:");
-			wSchemas.s(wRequestSchema.toString());
-		}
-
-//		if(classeMotsClesTrouves && classeMotsCles.contains(classApiMethod + ".response")) {
-			wSchemas.tl(tabsSchema, classApiOperationIdMethodResponse, ":");
-			wSchemas.tl(tabsSchema + 1, "allOf:");
-			if("text/html".equals(classApiMediaType200Method)) {
-				wSchemas.tl(tabsSchema + 2, "- type: string");
-			}
-			else {
-				if(BooleanUtils.isTrue(classExtendsBase)) {
-					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodResponse, "\"");
+		if(!id) {
+			if(openApiVersionNumber > 2) {
+				if(!"GET".equals(classApiMethodMethod) && !"DELETE".equals(classApiMethodMethod)) {
+					wRequestBodies.tl(2, classApiOperationIdMethodRequest, ":");
+					wRequestBodies.tl(3, "content:");
+					wRequestBodies.tl(4, "application/json:");
+					wRequestBodies.tl(5, "schema:");
+					wRequestBodies.tl(6, "$ref: '#/components/schemas/", classApiOperationIdMethodRequest, "'");
 				}
+				wRequestBodies.tl(2, classApiOperationIdMethodResponse, ":");
+				wRequestBodies.tl(3, "content:");
+				wRequestBodies.tl(4, classApiMediaType200Method, "; charset=utf-8:");
+				wRequestBodies.tl(5, "schema:");
+				wRequestBodies.tl(6, "$ref: '#/components/schemas/", classApiOperationIdMethodResponse, "'");
+			}
 	
-				if(classApiMethod.contains("Search")) {
-					wSchemas.tl(tabsSchema + 2, "- type: array");
-					wSchemas.tl(tabsSchema + 3, "items:");
-					wSchemas.tl(tabsSchema + 4, "type: object");
-					wSchemas.tl(tabsSchema + 4, "properties:");
+			if(!"GET".equals(classApiMethodMethod) && !"DELETE".equals(classApiMethodMethod)) {
+	//		if(classeMotsClesTrouves && classeMotsCles.contains(classApiMethod + ".request")) {
+				wSchemas.tl(tabsSchema, classApiOperationIdMethodRequest, ":");
+				wSchemas.tl(tabsSchema + 1, "allOf:");
+				if(BooleanUtils.isTrue(classExtendsBase)) {
+					wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodRequest, "\"");
+				}
+				wSchemas.tl(tabsSchema + 2, "- type: object");
+				wSchemas.tl(tabsSchema + 3, "properties:");
+				wSchemas.s(wRequestSchema.toString());
+			}
+	
+	//		if(classeMotsClesTrouves && classeMotsCles.contains(classApiMethod + ".response")) {
+				wSchemas.tl(tabsSchema, classApiOperationIdMethodResponse, ":");
+				wSchemas.tl(tabsSchema + 1, "allOf:");
+				if("text/html".equals(classApiMediaType200Method)) {
+					wSchemas.tl(tabsSchema + 2, "- type: string");
 				}
 				else {
-					wSchemas.tl(tabsSchema + 2, "- type: object");
-					wSchemas.tl(tabsSchema + 3, "properties:");
+					if(BooleanUtils.isTrue(classExtendsBase)) {
+						wSchemas.tl(tabsSchema + 2, "- $ref: \"#/components/schemas/", classSuperApiOperationIdMethodResponse, "\"");
+					}
+		
+					if(classApiMethod.contains("Search")) {
+						wSchemas.tl(tabsSchema + 2, "- type: array");
+						wSchemas.tl(tabsSchema + 3, "items:");
+						wSchemas.tl(tabsSchema + 4, "type: object");
+						wSchemas.tl(tabsSchema + 4, "properties:");
+					}
+					else {
+						wSchemas.tl(tabsSchema + 2, "- type: object");
+						wSchemas.tl(tabsSchema + 3, "properties:");
+					}
+					wSchemas.s(wResponseSchema.toString());
 				}
-				wSchemas.s(wResponseSchema.toString());
-			}
-//		}
+	//		}
+		}
 		if(classPageCanonicalNameMethod != null && BooleanUtils.isFalse(id))
 			writeApi(true);
 	}

@@ -840,7 +840,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageYearKeys() {
-		return "";
+		return "years";
 	}
 
 	public String htmTooltipYearKeys() {
@@ -2660,6 +2660,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
 		}
 		if(schoolId != null) {
+			document.addField("schoolId_indexed_string", schoolId);
 			document.addField("schoolId_stored_string", schoolId);
 		}
 		if(pageUrl != null) {

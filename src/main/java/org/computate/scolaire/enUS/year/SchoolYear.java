@@ -13,7 +13,6 @@ import org.computate.scolaire.enUS.search.SearchList;
 public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _schoolKey(Wrap<Long> c) {
-		c.o(pk);
 	}
 
 	protected void _yearKey(Wrap<Long> c) {

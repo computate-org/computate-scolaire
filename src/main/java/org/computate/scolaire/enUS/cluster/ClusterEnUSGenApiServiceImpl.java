@@ -167,7 +167,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				Long pk = createLine.getLong(0);
 				Cluster o = new Cluster();
 				o.setPk(pk);
-				o.initDeepCluster(siteRequest);
+				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -190,11 +190,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					switch(entityVar) {
 					case "created":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("created", jsonObject.getInstant(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
 						break;
 					case "modified":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getInstant(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
 						break;
 					case "archived":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -207,7 +207,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -287,11 +287,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		List<Future> futures = new ArrayList<>();
 		listCluster.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHCluster(o).compose(
-					a -> definePATCHCluster(a).compose(
-						b -> indexPATCHCluster(b)
-					)
-				)
+				futurePATCHCluster(o, eventHandler)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -303,8 +299,43 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		});
 	}
 
-	public Future<Cluster> sqlPATCHCluster(Cluster o) {
+	public Future<Cluster> futurePATCHCluster(Cluster o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
 		Future<Cluster> future = Future.future();
+		try {
+			sqlPATCHCluster(o, a -> {
+				if(a.succeeded()) {
+					Cluster cluster = a.result();
+					defineCluster(cluster, b -> {
+						if(b.succeeded()) {
+							attributeCluster(cluster, c -> {
+								if(c.succeeded()) {
+									indexCluster(cluster, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											eventHandler.handle(Future.succeededFuture(d.result()));
+										} else {
+											errorCluster(o.getSiteRequest_(), eventHandler, d);
+										}
+									});
+								} else {
+									errorCluster(o.getSiteRequest_(), eventHandler, c);
+								}
+							});
+						} else {
+							errorCluster(o.getSiteRequest_(), eventHandler, b);
+						}
+					});
+				} else {
+					errorCluster(o.getSiteRequest_(), eventHandler, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -320,77 +351,59 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getInstant(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						o2.setCreated(requestJson.getString(methodName));
+						if(o2.getCreated() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getInstant(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						o2.setModified(requestJson.getString(methodName));
+						if(o2.getModified() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+						}
 						break;
 					case "setArchived":
 						o2.setArchived(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						if(o2.getArchived() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+						}
 						break;
 					case "setDeleted":
 						o2.setDeleted(requestJson.getBoolean(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						if(o2.getDeleted() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+						}
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setSiteRequest_(o.getSiteRequest_());
-				o2.setPk(pk);
-				future.complete(o2);
+				Cluster o3 = new Cluster();
+				o3.setSiteRequest_(o.getSiteRequest_());
+				o3.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Cluster> definePATCHCluster(Cluster o) {
-		Future<Cluster> future = Future.future();
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, defineAsync
-			-> {
-				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(defineAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexPATCHCluster(Cluster o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initDeepForClass(o.getSiteRequest_());
-			o.indexForClass();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
@@ -501,7 +514,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -668,18 +681,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				return "id_indexed_string";
 			case "created":
 				return "created_indexed_date";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
 			case "modified":
 				return "modified_indexed_date";
 			case "archived":
 				return "archived_indexed_boolean";
 			case "deleted":
 				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -904,11 +917,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			if(siteUser != null && !siteUser.getSeeArchived())
 				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classApiUriMethod + "/" + id;
-				listSearch.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listSearch.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -987,10 +998,14 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						eventHandler.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						eventHandler.handle(Future.failedFuture(e));
 					}
-					eventHandler.handle(Future.succeededFuture());
 				} else {
 					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
@@ -1010,15 +1025,22 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attributeAsync
 			-> {
-				if(attributeAsync.succeeded()) {
-					if(attributeAsync.result() != null) {
-						for(JsonArray definition : attributeAsync.result().getResults()) {
-							o.attributeForClass(definition.getString(0), definition.getString(1));
+				try {
+					if(attributeAsync.succeeded()) {
+						if(attributeAsync.result() != null) {
+							for(JsonArray definition : attributeAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attributeForClass(definition.getString(2), definition.getLong(1));
+								else
+									o.attributeForClass(definition.getString(3), definition.getLong(0));
+							}
 						}
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 					}
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+				} catch(Exception e) {
+					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

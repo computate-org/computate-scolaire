@@ -347,7 +347,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
+						o2.setCree(requeteJson.getString(methodeNom));
 						if(o2.getCree() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
@@ -357,7 +357,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
+						o2.setModifie(requeteJson.getString(methodeNom));
 						if(o2.getModifie() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
@@ -390,7 +390,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						o2.setEcoleCle(requeteJson.getLong(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA2);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
-										break;
+						break;
+					case "removeEcoleCle":
+						o2.setEcoleCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
+						break;
 					case "setAnneeDebut":
 						o2.setAnneeDebut(requeteJson.getString(methodeNom));
 						if(o2.getAnneeDebut() == null) {
@@ -418,9 +423,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
-				o2.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o2));
+				AnneeScolaire o3 = new AnneeScolaire();
+				o3.setRequeteSite_(o.getRequeteSite_());
+				o3.setPk(pk);
+				gestionnaireEvenements.handle(Future.succeededFuture(o3));
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -701,18 +707,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "id_indexed_string";
 			case "cree":
 				return "cree_indexed_date";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
 				return "archive_indexed_boolean";
 			case "supprime":
 				return "supprime_indexed_boolean";
+			case "classeNomCanonique":
+				return "classeNomCanonique_indexed_string";
+			case "classeNomSimple":
+				return "classeNomSimple_indexed_string";
+			case "classeNomsCanoniques":
+				return "classeNomsCanoniques_indexed_strings";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
@@ -731,6 +737,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "anneeNomCourt_indexed_string";
 			case "anneeNomComplet":
 				return "anneeNomComplet_indexed_string";
+			case "anneeId":
+				return "anneeId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
@@ -963,11 +971,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
 				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listeRecherche.addFilterQuery("anneeId_indexed_string:" + ClientUtils.escapeQueryChars(id));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
