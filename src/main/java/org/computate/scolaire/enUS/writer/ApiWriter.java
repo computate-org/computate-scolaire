@@ -243,7 +243,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	public void  initEntity(SolrDocument entitySolrDocument) {
 		setEntitySolrDocument(entitySolrDocument);
 		entityVar = (String)entitySolrDocument.get("entiteVar_enUS_stored_string");
-		entityVarCapitalized = (String)entitySolrDocument.get("entityVarCapitalized_enUS_stored_string");
+		entityVarCapitalized = (String)entitySolrDocument.get("entiteVarCapitalise_enUS_stored_string");
 		entityVarApi = StringUtils.defaultIfBlank((String)entitySolrDocument.get("entiteVarApi_stored_string"), entityVar);
 		entityKeywordsFound = BooleanUtils.isTrue((Boolean)entitySolrDocument.get("entiteMotsClesTrouves_stored_boolean"));
 		entityKeywords = (List<String>)entitySolrDocument.get("entiteMotsCles_stored_strings");
@@ -402,33 +402,148 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		numberTabs = numberTabs == null ? (classApiMethod.contains("Search") && "response".equals(apiRequestOrResponse) ? 1 : 0) : numberTabs;
 		if(entityJsonType != null) {
 
-			if("PATCH".equals(classApiMethodMethod))
-				w.tl(4 + tabsSchema + numberTabs, entityVarCapitalized, ":");
-			else
-				w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
+			if("PATCH".equals(classApiMethodMethod)) {
 
-			w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
-			if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
-				w.tl(5 + tabsSchema + numberTabs, "enum:");
-				for(String entiteOptionVar : entityOptionsVar) {
-					w.tl(6 + tabsSchema + numberTabs, "- ", entiteOptionVar);
-					
-				}
-			}
-			if(entityListJsonType != null) {
-				w.tl(5 + tabsSchema + numberTabs, "items:");
-				w.tl(6 + tabsSchema + numberTabs, "type: ", entityListJsonType);
-				if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
-					w.tl(6 + tabsSchema + numberTabs, "enum:");
+				// set //
+				w.tl(4 + tabsSchema + numberTabs, "set", entityVarCapitalized, ":");
+				w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+				if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+					w.tl(5 + tabsSchema + numberTabs, "enum:");
 					for(String entiteOptionVar : entityOptionsVar) {
-						w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						w.tl(6 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						
 					}
 				}
+				if(entityListJsonType != null) {
+					w.tl(5 + tabsSchema + numberTabs, "items:");
+					w.tl(6 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+					if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+						w.tl(6 + tabsSchema + numberTabs, "enum:");
+						for(String entiteOptionVar : entityOptionsVar) {
+							w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entityDescription))
+					w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+				if(entityJsonFormat != null)
+					w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+
+				// remove //
+				w.tl(4 + tabsSchema + numberTabs, "remove", entityVarCapitalized, ":");
+
+				if(entityListJsonType == null)
+					w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+				else
+					w.tl(5 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+
+				if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+					w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+					w.tl(5 + tabsSchema + numberTabs, "enum:");
+					for(String entiteOptionVar : entityOptionsVar) {
+						w.tl(6 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entityListJsonType != null) {
+					if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+						w.tl(6 + tabsSchema + numberTabs, "enum:");
+						for(String entiteOptionVar : entityOptionsVar) {
+							w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entityDescription))
+					w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+				if(entityJsonFormat != null)
+					w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+
+				// removeAll //
+				w.tl(4 + tabsSchema + numberTabs, "removeAll", entityVarCapitalized, ":");
+				w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+				if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+					w.tl(5 + tabsSchema + numberTabs, "enum:");
+					for(String entiteOptionVar : entityOptionsVar) {
+						w.tl(6 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entityListJsonType != null) {
+					w.tl(5 + tabsSchema + numberTabs, "items:");
+					w.tl(6 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+					if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+						w.tl(6 + tabsSchema + numberTabs, "enum:");
+						for(String entiteOptionVar : entityOptionsVar) {
+							w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entityDescription))
+					w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+				if(entityJsonFormat != null)
+					w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+
+				if(entityListJsonType != null) {
+
+					// add //
+					w.tl(4 + tabsSchema + numberTabs, "add", entityVarCapitalized, ":");
+					w.tl(5 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+					if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+						w.tl(6 + tabsSchema + numberTabs, "enum:");
+						for(String entiteOptionVar : entityOptionsVar) {
+							w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						}
+					}
+					if(StringUtils.isNotBlank(entityDescription))
+						w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+					if(entityJsonFormat != null)
+						w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+	
+					// addAll //
+					w.tl(4 + tabsSchema + numberTabs, "addAll", entityVarCapitalized, ":");
+					w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+					if(entityListJsonType != null) {
+						w.tl(5 + tabsSchema + numberTabs, "items:");
+						w.tl(6 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+						if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+							w.tl(6 + tabsSchema + numberTabs, "enum:");
+							for(String entiteOptionVar : entityOptionsVar) {
+								w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+							}
+						}
+					}
+					if(StringUtils.isNotBlank(entityDescription))
+						w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+					if(entityJsonFormat != null)
+						w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+				}
 			}
-			if(StringUtils.isNotBlank(entityDescription))
-				w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
-			if(entityJsonFormat != null)
-				w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+			else {
+				w.tl(4 + tabsSchema + numberTabs, entityVarApi, ":");
+	
+				w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+				if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+					w.tl(5 + tabsSchema + numberTabs, "enum:");
+					for(String entiteOptionVar : entityOptionsVar) {
+						w.tl(6 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entityListJsonType != null) {
+					w.tl(5 + tabsSchema + numberTabs, "items:");
+					w.tl(6 + tabsSchema + numberTabs, "type: ", entityListJsonType);
+					if(entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
+						w.tl(6 + tabsSchema + numberTabs, "enum:");
+						for(String entiteOptionVar : entityOptionsVar) {
+							w.tl(7 + tabsSchema + numberTabs, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entityDescription))
+					w.t(5 + tabsSchema + numberTabs, "description: ").yamlStr(7 + numberTabs, "- " + entityDescription);
+				if(entityJsonFormat != null)
+					w.tl(5 + tabsSchema + numberTabs, "format: ", entityJsonFormat);
+			}
 		}
 	}
 

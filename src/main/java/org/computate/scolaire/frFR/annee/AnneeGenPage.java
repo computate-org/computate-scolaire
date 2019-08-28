@@ -207,26 +207,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 										.a("data-timeformat", "DD-MM-YYYY")
 										.a("onclick", "enleverLueur($(this)); ")
 										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#Page_anneeDebut')); }, function() { ajouterErreur($('#Page_anneeDebut')); }); } ")
 										.fg();
-									e("input")
-										.a("class", "setAnneeDebut")
-										.a("name", "setAnneeDebut")
-										.a("onchange", "patchAnneeScolaire($('#AnneeScolaireForm'), $('#anneeDebutForm'), $(this)); ")
-										.a("type", "hidden")
-										.a("value", o.strAnneeDebut())
-									.fg();
-									e("input")
-										.a("class", "removeAnneeDebut")
-										.a("name", "removeAnneeDebut")
-										.a("type", "hidden")
-										.a("value", "false")
-									.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "enleverLueur($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeDebut', null, $('#Page_anneeDebut'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
+									.a("onclick", "enleverLueur($('#Page_anneeDebut')); $('#Page_anneeDebut').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', null, $('#Page_anneeDebut'), function() { ajouterLueur($('#Page_anneeDebut')); }, function() { ajouterErreur($('#Page_anneeDebut')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -261,26 +248,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 										.a("data-timeformat", "DD-MM-YYYY")
 										.a("onclick", "enleverLueur($(this)); ")
 										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#Page_anneeFin')); }, function() { ajouterErreur($('#Page_anneeFin')); }); } ")
 										.fg();
-									e("input")
-										.a("class", "setAnneeFin")
-										.a("name", "setAnneeFin")
-										.a("onchange", "patchAnneeScolaire($('#AnneeScolaireForm'), $('#anneeFinForm'), $(this)); ")
-										.a("type", "hidden")
-										.a("value", o.strAnneeFin())
-									.fg();
-									e("input")
-										.a("class", "removeAnneeFin")
-										.a("name", "removeAnneeFin")
-										.a("type", "hidden")
-										.a("value", "false")
-									.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "enleverLueur($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal({ 'pk': $('#AnneeScolaireForm :input[name=\"pk\"]').val() }, 'setAnneeFin', null, $('#Page_anneeFin'), function() { ajouterLueur($(this)); }, function() { ajouterErreur($(this)); }); ")
+									.a("onclick", "enleverLueur($('#Page_anneeFin')); $('#Page_anneeFin').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', null, $('#Page_anneeFin'), function() { ajouterLueur($('#Page_anneeFin')); }, function() { ajouterErreur($('#Page_anneeFin')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -395,15 +369,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#POST_anneeDebut')); }, function() { ajouterErreur($('#POST_anneeDebut')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "valeurAnneeDebut")
-									.a("name", "anneeDebut")
-									.a("id", "POST_anneeDebut")
-									.a("type", "hidden")
-									.a("value", o.strAnneeDebut())
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");
@@ -435,15 +402,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#POST_anneeFin')); }, function() { ajouterErreur($('#POST_anneeFin')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "valeurAnneeFin")
-									.a("name", "anneeFin")
-									.a("id", "POST_anneeFin")
-									.a("type", "hidden")
-									.a("value", o.strAnneeFin())
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");
@@ -555,20 +515,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#PATCH_anneeDebut')); }, function() { ajouterErreur($('#PATCH_anneeDebut')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "setAnneeDebut")
-									.a("name", "setAnneeDebut")
-									.a("type", "hidden")
-									.a("value", o.strAnneeDebut())
-								.fg();
-								e("input")
-									.a("class", "removeAnneeDebut")
-									.a("name", "removeAnneeDebut")
-									.a("type", "hidden")
-									.a("value", "false")
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");
@@ -600,20 +548,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#PATCH_anneeFin')); }, function() { ajouterErreur($('#PATCH_anneeFin')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "setAnneeFin")
-									.a("name", "setAnneeFin")
-									.a("type", "hidden")
-									.a("value", o.strAnneeFin())
-								.fg();
-								e("input")
-									.a("class", "removeAnneeFin")
-									.a("name", "removeAnneeFin")
-									.a("type", "hidden")
-									.a("value", "false")
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");
@@ -725,15 +661,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#Recherche_anneeDebut')); }, function() { ajouterErreur($('#Recherche_anneeDebut')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "valeurAnneeDebut")
-									.a("name", "anneeDebut")
-									.a("id", "Recherche_anneeDebut")
-									.a("type", "hidden")
-									.a("value", o.strAnneeDebut())
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");
@@ -765,15 +694,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									.a("data-timeformat", "DD-MM-YYYY")
 									.a("onclick", "enleverLueur($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY/MM/DD'); $(this).next().val(s); $(this).next().trigger('change'); } ")
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#Recherche_anneeFin')); }, function() { ajouterErreur($('#Recherche_anneeFin')); }); } ")
 									.fg();
-								e("input")
-									.a("class", "valeurAnneeFin")
-									.a("name", "anneeFin")
-									.a("id", "Recherche_anneeFin")
-									.a("type", "hidden")
-									.a("value", o.strAnneeFin())
-								.fg();
 							} g("div");
 						} g("div");
 					} g("div");

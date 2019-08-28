@@ -698,6 +698,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: entiteOptionsDescription_
 	 * r: entityDescription_
 	 * r.enUS: entiteDescription_
+	 * r: entityVarCapitalized_
+	 * r.enUS: entiteVarCapitalise_
 	 * 
 	 * r: frFR
 	 * r.enUS: enUS
@@ -1078,33 +1080,148 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 		nombreTabulations = nombreTabulations == null ? (classeApiMethode.contains("Recherche") && "reponse".equals(apiRequeteOuReponse) ? 1 : 0) : nombreTabulations;
 		if(entiteTypeJson != null) {
 
-			if("PATCH".equals(classeApiMethodeMethode))
-				w.tl(4 + tabsSchema + nombreTabulations, entiteVarCapitalise, ":");
-			else
-				w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
+			if("PATCH".equals(classeApiMethodeMethode)) {
 
-			w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
-			if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
-				w.tl(5 + tabsSchema + nombreTabulations, "enum:");
-				for(String entiteOptionVar : entiteOptionsVar) {
-					w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
-					
-				}
-			}
-			if(entiteListeTypeJson != null) {
-				w.tl(5 + tabsSchema + nombreTabulations, "items:");
-				w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
-				if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
-					w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+				// set //
+				w.tl(4 + tabsSchema + nombreTabulations, "set", entiteVarCapitalise, ":");
+				w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
 					for(String entiteOptionVar : entiteOptionsVar) {
-						w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						
 					}
 				}
+				if(entiteListeTypeJson != null) {
+					w.tl(5 + tabsSchema + nombreTabulations, "items:");
+					w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+						for(String entiteOptionVar : entiteOptionsVar) {
+							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entiteDescription))
+					w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+				if(entiteFormatJson != null)
+					w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+
+				// remove //
+				w.tl(4 + tabsSchema + nombreTabulations, "remove", entiteVarCapitalise, ":");
+
+				if(entiteListeTypeJson == null)
+					w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+				else
+					w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+
+				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+					w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
+					for(String entiteOptionVar : entiteOptionsVar) {
+						w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entiteListeTypeJson != null) {
+					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+						for(String entiteOptionVar : entiteOptionsVar) {
+							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entiteDescription))
+					w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+				if(entiteFormatJson != null)
+					w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+
+				// removeAll //
+				w.tl(4 + tabsSchema + nombreTabulations, "removeAll", entiteVarCapitalise, ":");
+				w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
+					for(String entiteOptionVar : entiteOptionsVar) {
+						w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entiteListeTypeJson != null) {
+					w.tl(5 + tabsSchema + nombreTabulations, "items:");
+					w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+						for(String entiteOptionVar : entiteOptionsVar) {
+							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entiteDescription))
+					w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+				if(entiteFormatJson != null)
+					w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+
+				if(entiteListeTypeJson != null) {
+
+					// add //
+					w.tl(4 + tabsSchema + nombreTabulations, "add", entiteVarCapitalise, ":");
+					w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+						for(String entiteOptionVar : entiteOptionsVar) {
+							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						}
+					}
+					if(StringUtils.isNotBlank(entiteDescription))
+						w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+					if(entiteFormatJson != null)
+						w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+	
+					// addAll //
+					w.tl(4 + tabsSchema + nombreTabulations, "addAll", entiteVarCapitalise, ":");
+					w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+					if(entiteListeTypeJson != null) {
+						w.tl(5 + tabsSchema + nombreTabulations, "items:");
+						w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+						if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+							w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+							for(String entiteOptionVar : entiteOptionsVar) {
+								w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+							}
+						}
+					}
+					if(StringUtils.isNotBlank(entiteDescription))
+						w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+					if(entiteFormatJson != null)
+						w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+				}
 			}
-			if(StringUtils.isNotBlank(entiteDescription))
-				w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
-			if(entiteFormatJson != null)
-				w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+			else {
+				w.tl(4 + tabsSchema + nombreTabulations, entiteVarApi, ":");
+	
+				w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
+					for(String entiteOptionVar : entiteOptionsVar) {
+						w.tl(6 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						
+					}
+				}
+				if(entiteListeTypeJson != null) {
+					w.tl(5 + tabsSchema + nombreTabulations, "items:");
+					w.tl(6 + tabsSchema + nombreTabulations, "type: ", entiteListeTypeJson);
+					if(entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
+						w.tl(6 + tabsSchema + nombreTabulations, "enum:");
+						for(String entiteOptionVar : entiteOptionsVar) {
+							w.tl(7 + tabsSchema + nombreTabulations, "- ", entiteOptionVar);
+						}
+					}
+				}
+				if(StringUtils.isNotBlank(entiteDescription))
+					w.t(5 + tabsSchema + nombreTabulations, "description: ").yamlStr(7 + nombreTabulations, "- " + entiteDescription);
+				if(entiteFormatJson != null)
+					w.tl(5 + tabsSchema + nombreTabulations, "format: ", entiteFormatJson);
+			}
 		}
 	}
 

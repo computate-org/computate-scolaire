@@ -411,7 +411,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getJsonArray(methodeNom)));
 						for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.set(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", setAnneeClesValeurs.getLong(i)));
 						}
 						break;
 					case "removeAnneeCles":
@@ -1027,7 +1027,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("ecoleId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR ecoleId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

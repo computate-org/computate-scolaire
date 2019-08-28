@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;        
+package org.computate.scolaire.frFR.annee;                                
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -46,7 +46,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                           
+*/                                                
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -187,7 +187,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "%d year"
 	 * r: "année"
 	 * r.enUS: "year"
-	 */                    
+	 */                        
 	protected void _anneeNomCourt(Couverture<String> c) {
 		String o = "année";
 
@@ -201,7 +201,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**  
+	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: yearNameComplete
 	 * Indexe: true
@@ -225,7 +225,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "year"
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */              
+	 */                
 	protected void _anneeNomComplet(Couverture<String> c) {
 		String o = "année";
 

@@ -973,7 +973,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("yearId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR yearId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

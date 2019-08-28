@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;         
+package org.computate.scolaire.frFR.ecole;                   
 
 import java.text.Normalizer;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                 
+/**                                   
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -118,7 +118,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
-	 */      
+	 */        
 	protected void _saisonCles(List<Long> o) {}
 	
 	/**
@@ -136,7 +136,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 */  
 	protected void _anneeCles(List<Long> o) {}
 
-	/**
+	/**      
 	 * {@inheritDoc}
 	 * Var.enUS: educationSort
 	 * Indexe: true

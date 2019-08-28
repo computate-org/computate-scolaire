@@ -1027,7 +1027,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("schoolId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR schoolId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

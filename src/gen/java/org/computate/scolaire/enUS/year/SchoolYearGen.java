@@ -721,7 +721,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearStart(String o) {
-		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -835,7 +835,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearEnd(String o) {
-		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}

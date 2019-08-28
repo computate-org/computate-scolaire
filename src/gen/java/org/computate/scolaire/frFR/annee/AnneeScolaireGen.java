@@ -722,7 +722,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AnneeScolaire setAnneeDebut(String o) {
-		this.anneeDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.anneeDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -836,7 +836,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AnneeScolaire setAnneeFin(String o) {
-		this.anneeFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.anneeFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
