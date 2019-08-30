@@ -186,7 +186,7 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AppVertx {");
+		sb.append("AppVertx { ");
 		sb.append(" }");
 		return sb.toString();
 	}

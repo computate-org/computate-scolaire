@@ -213,7 +213,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -223,7 +223,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -233,7 +233,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -243,7 +243,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
 						}
 						break;
 				}
@@ -618,7 +618,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

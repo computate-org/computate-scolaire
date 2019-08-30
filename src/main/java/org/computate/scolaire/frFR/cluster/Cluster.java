@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */         
+ */                     
 public class Cluster extends ClusterGen<Object> {   
 
 	/**

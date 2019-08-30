@@ -283,7 +283,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r: ecoleNom
 	 * r.enUS: schoolName
 	 * VarTitre: true
-	 */   
+	 */    
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		c.o(ecoleNom);
 	}

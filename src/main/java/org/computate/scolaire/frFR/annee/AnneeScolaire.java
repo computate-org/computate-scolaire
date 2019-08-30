@@ -1,11 +1,10 @@
-package org.computate.scolaire.frFR.annee;                                
+package org.computate.scolaire.frFR.annee;                                 
 
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;

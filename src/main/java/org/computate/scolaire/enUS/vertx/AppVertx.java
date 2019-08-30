@@ -5,22 +5,21 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
-import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
+import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiService;
+import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
-import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
-
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.WorkerExecutor;
@@ -160,7 +159,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxStatementsPerConnection());
 		if (siteConfig.getJdbcMaxIdleTime() != null)
 			jdbcConfig.put("max_idle_time", siteConfig.getJdbcMaxIdleTime());
-		jdbcConfig.put("castUUID", true);
+		jdbcConfig.put("castUUID", false);
+		jdbcConfig.put("castDateTime", false);
+		jdbcConfig.put("castTime", false);
+		jdbcConfig.put("castDate", false);
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
 		siteContextEnUS.setSqlClient(jdbcClient);
@@ -357,6 +359,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SchoolEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SiteUserEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolYearEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolSeasonEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolSessionEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
 		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 

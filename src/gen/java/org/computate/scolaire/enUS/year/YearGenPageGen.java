@@ -52,8 +52,6 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolYear == null)
 				setListSchoolYear(listSchoolYearWrap.o);
 		}
-		if(listSchoolYear != null)
-			listSchoolYear.initDeepForClass(siteRequest_);
 		listSchoolYearWrap.alreadyInitialized(true);
 		return (YearGenPage)this;
 	}
@@ -91,8 +89,6 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 			if(schoolYear == null)
 				setSchoolYear(schoolYearWrap.o);
 		}
-		if(schoolYear != null)
-			schoolYear.initDeepForClass(siteRequest_);
 		schoolYearWrap.alreadyInitialized(true);
 		return (YearGenPage)this;
 	}
@@ -132,10 +128,6 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestYearGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
-		if(listSchoolYear != null)
-			listSchoolYear.setSiteRequest_(siteRequest_);
-		if(schoolYear != null)
-			schoolYear.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

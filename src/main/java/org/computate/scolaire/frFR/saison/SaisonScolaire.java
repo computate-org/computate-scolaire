@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison;
+package org.computate.scolaire.frFR.saison; 
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    

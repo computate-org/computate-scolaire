@@ -52,8 +52,6 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 			if(listSiteUser == null)
 				setListSiteUser(listSiteUserWrap.o);
 		}
-		if(listSiteUser != null)
-			listSiteUser.initDeepForClass(siteRequest_);
 		listSiteUserWrap.alreadyInitialized(true);
 		return (SiteUserGenPage)this;
 	}
@@ -91,8 +89,6 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 			if(siteUser == null)
 				setSiteUser(siteUserWrap.o);
 		}
-		if(siteUser != null)
-			siteUser.initDeepForClass(siteRequest_);
 		siteUserWrap.alreadyInitialized(true);
 		return (SiteUserGenPage)this;
 	}
@@ -132,10 +128,6 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestSiteUserGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
-		if(listSiteUser != null)
-			listSiteUser.setSiteRequest_(siteRequest_);
-		if(siteUser != null)
-			siteUser.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

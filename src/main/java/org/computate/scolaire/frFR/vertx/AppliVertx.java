@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.vertx;  
+package org.computate.scolaire.frFR.vertx;   
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
 import org.computate.scolaire.frFR.java.LocalDateSerializer;
 import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
+import org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.session.SessionScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiService;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -54,7 +56,7 @@ import io.vertx.ext.web.sstore.LocalSessionStore;
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppVertx
  * enUS: A Java class to start the Vert.x application as a main method. 
- */ 
+ */    
 public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 
 	/**
@@ -288,7 +290,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			jdbcConfig.put("max_statements_per_connection", configSite.getJdbcMaxDeclarationsParConnexion());
 		if (configSite.getJdbcTempsInactiviteMax() != null)
 			jdbcConfig.put("max_idle_time", configSite.getJdbcTempsInactiviteMax());
-		jdbcConfig.put("castUUID", true);
+		jdbcConfig.put("castUUID", false);
+		jdbcConfig.put("castDateTime", false);
+		jdbcConfig.put("castTime", false);
+		jdbcConfig.put("castDate", false);
 		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
 
 		siteContexteFrFR.setClientSql(jdbcClient);
@@ -626,9 +631,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteUserEnUSGenApiService
 	 * r: AnneeScolaireFrFRGenApiService
 	 * r.enUS: SchoolYearEnUSGenApiService
+	 * r: SaisonScolaireFrFRGenApiService
+	 * r.enUS: SchoolSeasonEnUSGenApiService
+	 * r: SessionScolaireFrFRGenApiService
+	 * r.enUS: SchoolSessionEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
-	 */
+	 */   
 	private Future<Void> demarrerServeur() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Future<Void> future = Future.future();
@@ -637,6 +646,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		EcoleFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		UtilisateurSiteFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		AnneeScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		SaisonScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		SessionScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

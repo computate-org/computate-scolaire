@@ -418,6 +418,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
 						break;
+					case "setSchoolName":
+						o2.setSchoolName(requestJson.getString(methodName));
+						if(o2.getSchoolName() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolName"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolName", o2.strSchoolName(), pk));
+						}
+						break;
 					case "setSchoolPhoneNumber":
 						o2.setSchoolPhoneNumber(requestJson.getString(methodName));
 						if(o2.getSchoolPhoneNumber() == null) {
@@ -446,16 +456,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.strSchoolAddress(), pk));
-						}
-						break;
-					case "setSchoolName":
-						o2.setSchoolName(requestJson.getString(methodName));
-						if(o2.getSchoolName() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolName"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolName", o2.strSchoolName(), pk));
 						}
 						break;
 				}
@@ -769,10 +769,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "blockKeys_indexed_longs";
 			case "ageGroupKeys":
 				return "ageGroupKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
 			case "yearKeys":
 				return "yearKeys_indexed_longs";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
 			case "schoolPhoneNumber":
 				return "schoolPhoneNumber_indexed_string";
 			case "schoolAdministratorName":
@@ -787,16 +795,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolNameComplete_indexed_string";
 			case "schoolId":
 				return "schoolId_indexed_string";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "schoolName":
-				return "schoolName_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

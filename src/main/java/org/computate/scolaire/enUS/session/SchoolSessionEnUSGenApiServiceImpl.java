@@ -192,6 +192,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionStartDay", jsonObject.getString(entityVar), pk));
 						break;
+					case "sessionEndDay":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("sessionEndDay", jsonObject.getString(entityVar), pk));
+						break;
 					case "sessionSummer":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionSummer", jsonObject.getBoolean(entityVar), pk));
@@ -394,6 +398,16 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionStartDay", o2.strSessionStartDay(), pk));
+						}
+						break;
+					case "setSessionEndDay":
+						o2.setSessionEndDay(requestJson.getString(methodName));
+						if(o2.getSessionEndDay() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionEndDay"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("sessionEndDay", o2.strSessionEndDay(), pk));
 						}
 						break;
 					case "setSessionSummer":
@@ -759,6 +773,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "seasonEnd_indexed_date";
 			case "sessionStartDay":
 				return "sessionStartDay_indexed_date";
+			case "sessionEndDay":
+				return "sessionEndDay_indexed_date";
 			case "sessionSummer":
 				return "sessionSummer_indexed_boolean";
 			case "sessionWinter":

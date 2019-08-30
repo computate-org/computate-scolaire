@@ -357,7 +357,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+							patchSqlParams.addAll(Arrays.asList("cree", o2.strCree(), pk));
 						}
 						break;
 					case "setModifie":
@@ -367,7 +367,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.strModifie(), pk));
 						}
 						break;
 					case "setArchive":
@@ -377,7 +377,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList("archive", o2.strArchive(), pk));
 						}
 						break;
 					case "setSupprime":
@@ -387,7 +387,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
 						}
 						break;
 				}

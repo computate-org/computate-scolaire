@@ -3,9 +3,7 @@ package org.computate.scolaire.enUS.session;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
@@ -52,10 +50,10 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 		c.o(4);
 	}
 
-	protected void _seasonSearch(SearchList<SchoolYear> l) {
+	protected void _seasonSearch(SearchList<SchoolSeason> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("sessonCles_indexed_longs:" + pk);
-		l.setC(AnneeScolaire.class);
+		l.addFilterQuery("sessionCles_indexed_longs:" + pk);
+		l.setC(SchoolSeason.class);
 	}
 
 	protected void _season(Wrap<SchoolSeason> c) {
@@ -70,13 +68,13 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
-		if(saison != null)
-			c.o((LocalDate)saison.getYearStart());
+		if(season != null)
+			c.o((LocalDate)season.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<LocalDate> c) {
-		if(saison != null)
-			c.o(saison.getYearStart());
+		if(season != null)
+			c.o(season.getYearStart());
 	}
 
 	protected void _seasonStart(Wrap<LocalDate> c) {
@@ -95,14 +93,8 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	}
 
 	protected void _seasonNameComplete(Wrap<String> c) {
-		String o;
-		
-		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("saison d'été qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
-		else
-			o = String.format("saison scolaire qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
-		
-		c.o(o);
+		if(season != null)
+			c.o(season.getSeasonNameComplete());
 	}
 
 	protected void _seasonEnd(Wrap<LocalDate> c) {
@@ -112,18 +104,15 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	protected void _sessionStartDay(Wrap<LocalDate> c) {}
 
+	protected void _sessionEndDay(Wrap<LocalDate> c) {}
+
 	protected void _sessionSummer(Wrap<Boolean> c) {}
 
 	protected void _sessionWinter(Wrap<Boolean> c) {}
 
 	protected void _sessionNameComplete(Wrap<String> c) {
 		String o;
-		
-		if(BooleanUtils.isTrue(sessionSummer))
-			o = String.format("sesson d'été qui commence %s à %s. ", strSeasonStartDay(), schoolNameComplete);
-		else
-			o = String.format("school session starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
-		
+		o = String.format("session %s - %s de la %s", strSessionStartDay(), strSessionEndDay(), seasonNameComplete);
 		c.o(o);
 	}
 

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolSeason extends SchoolSeasonGen<Cluster> {

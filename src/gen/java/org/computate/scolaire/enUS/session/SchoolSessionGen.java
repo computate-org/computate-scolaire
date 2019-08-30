@@ -19,7 +19,6 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.year.SchoolYear;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -1372,26 +1371,26 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	//////////////////
 
 	/**	L'entité « seasonSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolSeason>(). 
 	 */
 	@JsonIgnore
-	protected SearchList<SchoolYear> seasonSearch = new SearchList<SchoolYear>();
+	protected SearchList<SchoolSeason> seasonSearch = new SearchList<SchoolSeason>();
 	@JsonIgnore
-	public Wrap<SearchList<SchoolYear>> seasonSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("seasonSearch").o(seasonSearch);
+	public Wrap<SearchList<SchoolSeason>> seasonSearchWrap = new Wrap<SearchList<SchoolSeason>>().p(this).c(SearchList.class).var("seasonSearch").o(seasonSearch);
 
 	/**	<br/>L'entité « seasonSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolSeason>(). 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSearch">Trouver l'entité seasonSearch dans Solr</a>
 	 * <br/>
 	 * @param seasonSearch est l'entité déjà construit. 
 	 **/
-	protected abstract void _seasonSearch(SearchList<SchoolYear> l);
+	protected abstract void _seasonSearch(SearchList<SchoolSeason> l);
 
-	public SearchList<SchoolYear> getSeasonSearch() {
+	public SearchList<SchoolSeason> getSeasonSearch() {
 		return seasonSearch;
 	}
 
-	public void setSeasonSearch(SearchList<SchoolYear> seasonSearch) {
+	public void setSeasonSearch(SearchList<SchoolSeason> seasonSearch) {
 		this.seasonSearch = seasonSearch;
 		this.seasonSearchWrap.alreadyInitialized = true;
 	}
@@ -2417,6 +2416,120 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	///////////////////
+	// sessionEndDay //
+	///////////////////
+
+	/**	L'entité « sessionEndDay »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected LocalDate sessionEndDay;
+	@JsonIgnore
+	public Wrap<LocalDate> sessionEndDayWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDay").o(sessionEndDay);
+
+	/**	<br/>L'entité « sessionEndDay »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionEndDay">Trouver l'entité sessionEndDay dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionEndDay(Wrap<LocalDate> c);
+
+	public LocalDate getSessionEndDay() {
+		return sessionEndDay;
+	}
+
+	public void setSessionEndDay(LocalDate sessionEndDay) {
+		this.sessionEndDay = sessionEndDay;
+		this.sessionEndDayWrap.alreadyInitialized = true;
+	}
+	public SchoolSession setSessionEndDay(Instant o) {
+		this.sessionEndDay = LocalDate.from(o);
+		this.sessionEndDayWrap.alreadyInitialized = true;
+		return (SchoolSession)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolSession setSessionEndDay(String o) {
+		this.sessionEndDay = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionEndDayWrap.alreadyInitialized = true;
+		return (SchoolSession)this;
+	}
+	public SchoolSession setSessionEndDay(Date o) {
+		this.sessionEndDay = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionEndDayWrap.alreadyInitialized = true;
+		return (SchoolSession)this;
+	}
+	protected SchoolSession sessionEndDayInit() {
+		if(!sessionEndDayWrap.alreadyInitialized) {
+			_sessionEndDay(sessionEndDayWrap);
+			if(sessionEndDay == null)
+				setSessionEndDay(sessionEndDayWrap.o);
+		}
+		sessionEndDayWrap.alreadyInitialized(true);
+		return (SchoolSession)this;
+	}
+
+	public Date solrSessionEndDay() {
+		return sessionEndDay == null ? null : Date.from(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strSessionEndDay() {
+		return sessionEndDay == null ? "" : sessionEndDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	}
+
+	public String nomAffichageSessionEndDay() {
+		return "end of the session";
+	}
+
+	public String htmTooltipSessionEndDay() {
+		return null;
+	}
+
+	public String htmSessionEndDay() {
+		return sessionEndDay == null ? "" : StringEscapeUtils.escapeHtml4(strSessionEndDay());
+	}
+
+	public void htmSessionEndDay(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolSession", strPk(), "SessionEndDay\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolSession", strPk(), "SessionEndDay() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionEndDay\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionEndDay()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionEndDay\"");
+							r.s(" value=\"", htmSessionEndDay(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionEndDay());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////
 	// sessionSummer //
 	///////////////////
 
@@ -3058,6 +3171,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		seasonNameCompleteInit();
 		seasonEndInit();
 		sessionStartDayInit();
+		sessionEndDayInit();
 		sessionSummerInit();
 		sessionWinterInit();
 		sessionNameCompleteInit();
@@ -3152,6 +3266,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.seasonEnd;
 			case "sessionStartDay":
 				return oSchoolSession.sessionStartDay;
+			case "sessionEndDay":
+				return oSchoolSession.sessionEndDay;
 			case "sessionSummer":
 				return oSchoolSession.sessionSummer;
 			case "sessionWinter":
@@ -3217,6 +3333,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		switch(var) {
 			case "sessionStartDay":
 				setSessionStartDay(val);
+				savesSchoolSession.add(var);
+				return val;
+			case "sessionEndDay":
+				setSessionEndDay(val);
 				savesSchoolSession.add(var);
 				return val;
 			case "sessionSummer":
@@ -3368,6 +3488,12 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				Date sessionStartDay = (Date)solrDocument.get("sessionStartDay_stored_date");
 				if(sessionStartDay != null)
 					oSchoolSession.setSessionStartDay(sessionStartDay);
+			}
+
+			if(savesSchoolSession.contains("sessionEndDay")) {
+				Date sessionEndDay = (Date)solrDocument.get("sessionEndDay_stored_date");
+				if(sessionEndDay != null)
+					oSchoolSession.setSessionEndDay(sessionEndDay);
 			}
 
 			if(savesSchoolSession.contains("sessionSummer")) {
@@ -3567,6 +3693,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("sessionStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionStartDay.atStartOfDay(ZoneId.of("Z"))));
 			document.addField("sessionStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionStartDay.atStartOfDay(ZoneId.of("Z"))));
 		}
+		if(sessionEndDay != null) {
+			document.addField("sessionEndDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionEndDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.of("Z"))));
+		}
 		if(sessionSummer != null) {
 			document.addField("sessionSummer_indexed_boolean", sessionSummer);
 			document.addField("sessionSummer_stored_boolean", sessionSummer);
@@ -3702,6 +3832,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(sessionStartDay != null)
 			oSchoolSession.setSessionStartDay(sessionStartDay);
 
+		Date sessionEndDay = (Date)solrDocument.get("sessionEndDay_stored_date");
+		if(sessionEndDay != null)
+			oSchoolSession.setSessionEndDay(sessionEndDay);
+
 		Boolean sessionSummer = (Boolean)solrDocument.get("sessionSummer_stored_boolean");
 		if(sessionSummer != null)
 			oSchoolSession.setSessionSummer(sessionSummer);
@@ -3734,7 +3868,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionStartDay, sessionSummer, sessionWinter);
+		return Objects.hash(super.hashCode(), sessionStartDay, sessionEndDay, sessionSummer, sessionWinter);
 	}
 
 	////////////
@@ -3749,6 +3883,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession that = (SchoolSession)o;
 		return super.equals(o)
 				&& Objects.equals( sessionStartDay, that.sessionStartDay )
+				&& Objects.equals( sessionEndDay, that.sessionEndDay )
 				&& Objects.equals( sessionSummer, that.sessionSummer )
 				&& Objects.equals( sessionWinter, that.sessionWinter );
 	}
@@ -3762,6 +3897,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolSession { ");
 		sb.append( "sessionStartDay: " ).append(sessionStartDay);
+		sb.append( ", sessionEndDay: " ).append(sessionEndDay);
 		sb.append( ", sessionSummer: " ).append(sessionSummer);
 		sb.append( ", sessionWinter: " ).append(sessionWinter);
 		sb.append(" }");

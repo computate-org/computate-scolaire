@@ -4,7 +4,6 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.school.School;
