@@ -361,7 +361,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -371,7 +371,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -381,7 +381,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -391,7 +391,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
 						}
 						break;
 					case "addYearKeys":
@@ -418,16 +418,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
 						break;
-					case "setSchoolName":
-						o2.setSchoolName(requestJson.getString(methodName));
-						if(o2.getSchoolName() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolName"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolName", o2.getSchoolName(), pk));
-						}
-						break;
 					case "setSchoolPhoneNumber":
 						o2.setSchoolPhoneNumber(requestJson.getString(methodName));
 						if(o2.getSchoolPhoneNumber() == null) {
@@ -435,7 +425,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolPhoneNumber"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolPhoneNumber", o2.getSchoolPhoneNumber(), pk));
+							patchSqlParams.addAll(Arrays.asList("schoolPhoneNumber", o2.strSchoolPhoneNumber(), pk));
 						}
 						break;
 					case "setSchoolAdministratorName":
@@ -445,7 +435,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolAdministratorName"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.getSchoolAdministratorName(), pk));
+							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.strSchoolAdministratorName(), pk));
 						}
 						break;
 					case "setSchoolAddress":
@@ -455,7 +445,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.getSchoolAddress(), pk));
+							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.strSchoolAddress(), pk));
+						}
+						break;
+					case "setSchoolName":
+						o2.setSchoolName(requestJson.getString(methodName));
+						if(o2.getSchoolName() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolName"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolName", o2.strSchoolName(), pk));
 						}
 						break;
 				}
@@ -769,18 +769,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "blockKeys_indexed_longs";
 			case "ageGroupKeys":
 				return "ageGroupKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
 			case "yearKeys":
 				return "yearKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "schoolName":
-				return "schoolName_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "schoolPhoneNumber":
 				return "schoolPhoneNumber_indexed_string";
 			case "schoolAdministratorName":
@@ -795,8 +787,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolNameComplete_indexed_string";
 			case "schoolId":
 				return "schoolId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.cluster;
+package org.computate.scolaire.enUS.season;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -72,39 +72,39 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 /**
  * Translate: false
  **/
-public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
+public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(ClusterEnUSGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolSeasonEnUSGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "ClusterEnUSApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "SchoolSeasonEnUSApiServiceImpl";
 
 	protected SiteContextEnUS siteContext;
 
-	public ClusterEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
+	public SchoolSeasonEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		ClusterEnUSGenApiService service = ClusterEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
+		SchoolSeasonEnUSGenApiService service = SchoolSeasonEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
 
 	@Override
-	public void postCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void postSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
-			sqlCluster(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+			sqlSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					createPOSTCluster(siteRequest, b -> {
+					createPOSTSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							Cluster cluster = b.result();
-							sqlPOSTCluster(cluster, c -> {
+							SchoolSeason schoolSeason = b.result();
+							sqlPOSTSchoolSeason(schoolSeason, c -> {
 								if(c.succeeded()) {
-									defineCluster(cluster, d -> {
+									defineSchoolSeason(schoolSeason, d -> {
 										if(d.succeeded()) {
-											attributeCluster(cluster, e -> {
+											attributeSchoolSeason(schoolSeason, e -> {
 												if(e.succeeded()) {
-													indexCluster(cluster, f -> {
+													indexSchoolSeason(schoolSeason, f -> {
 														if(f.succeeded()) {
-															response200POSTCluster(cluster, g -> {
+															response200POSTSchoolSeason(schoolSeason, g -> {
 																if(f.succeeded()) {
 																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
 																	sqlConnection.commit(h -> {
@@ -113,59 +113,59 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 																				if(a.succeeded()) {
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					errorCluster(siteRequest, eventHandler, i);
+																					errorSchoolSeason(siteRequest, eventHandler, i);
 																				}
 																			});
 																		} else {
-																			errorCluster(siteRequest, eventHandler, h);
+																			errorSchoolSeason(siteRequest, eventHandler, h);
 																		}
 																	});
 																} else {
-																	errorCluster(siteRequest, eventHandler, g);
+																	errorSchoolSeason(siteRequest, eventHandler, g);
 																}
 															});
 														} else {
-															errorCluster(siteRequest, eventHandler, f);
+															errorSchoolSeason(siteRequest, eventHandler, f);
 														}
 													});
 												} else {
-													errorCluster(siteRequest, eventHandler, e);
+													errorSchoolSeason(siteRequest, eventHandler, e);
 												}
 											});
 										} else {
-											errorCluster(siteRequest, eventHandler, d);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorCluster(siteRequest, eventHandler, c);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void createPOSTCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<Cluster>> eventHandler) {
+	public void createPOSTSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(Cluster.class.getCanonicalName(), userId))
+					, new JsonArray(Arrays.asList(SchoolSeason.class.getCanonicalName(), userId))
 					, createAsync
 			-> {
 				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
-				Cluster o = new Cluster();
+				SchoolSeason o = new SchoolSeason();
 				o.setPk(pk);
 				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
@@ -175,7 +175,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void sqlPOSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -188,21 +188,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "created":
+					case "seasonStartDay":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("created", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("seasonStartDay", jsonObject.getString(entityVar), pk));
 						break;
-					case "modified":
+					case "seasonSummer":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("modified", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("seasonSummer", jsonObject.getBoolean(entityVar), pk));
 						break;
-					case "archived":
+					case "seasonWinter":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("archived", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "deleted":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("deleted", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("seasonWinter", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
@@ -219,7 +215,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void response200POSTCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200POSTSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = new JsonObject();
@@ -232,17 +228,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	// PATCH //
 
 	@Override
-	public void patchCluster(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest, body);
-			sqlCluster(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+			sqlSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					userCluster(siteRequest, b -> {
+					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, null, c -> {
+							aSearchSchoolSeason(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
-									SearchList<Cluster> listCluster = c.result();
-									listPATCHCluster(listCluster, d -> {
+									SearchList<SchoolSeason> listSchoolSeason = c.result();
+									listPATCHSchoolSeason(listSchoolSeason, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -254,79 +250,79 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorCluster(siteRequest, eventHandler, f);
+																errorSchoolSeason(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorCluster(siteRequest, eventHandler, e);
+														errorSchoolSeason(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorCluster(siteRequest, eventHandler, d);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorCluster(siteRequest, eventHandler, c);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void listPATCHCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		listCluster.getList().forEach(o -> {
+		listSchoolSeason.getList().forEach(o -> {
 			futures.add(
-				futurePATCHCluster(o, eventHandler)
+				futurePATCHSchoolSeason(o, eventHandler)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHCluster(listCluster, eventHandler);
+				response200PATCHSchoolSeason(listSchoolSeason, eventHandler);
 			} else {
-				errorCluster(listCluster.getSiteRequest_(), eventHandler, a);
+				errorSchoolSeason(listSchoolSeason.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<Cluster> futurePATCHCluster(Cluster o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<Cluster> future = Future.future();
+	public Future<SchoolSeason> futurePATCHSchoolSeason(SchoolSeason o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+		Future<SchoolSeason> future = Future.future();
 		try {
-			sqlPATCHCluster(o, a -> {
+			sqlPATCHSchoolSeason(o, a -> {
 				if(a.succeeded()) {
-					Cluster cluster = a.result();
-					defineCluster(cluster, b -> {
+					SchoolSeason schoolSeason = a.result();
+					defineSchoolSeason(schoolSeason, b -> {
 						if(b.succeeded()) {
-							attributeCluster(cluster, c -> {
+							attributeSchoolSeason(schoolSeason, c -> {
 								if(c.succeeded()) {
-									indexCluster(cluster, d -> {
+									indexSchoolSeason(schoolSeason, d -> {
 										if(d.succeeded()) {
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorCluster(o.getSiteRequest_(), eventHandler, d);
+											errorSchoolSeason(o.getSiteRequest_(), eventHandler, d);
 										}
 									});
 								} else {
-									errorCluster(o.getSiteRequest_(), eventHandler, c);
+									errorSchoolSeason(o.getSiteRequest_(), eventHandler, c);
 								}
 							});
 						} else {
-							errorCluster(o.getSiteRequest_(), eventHandler, b);
+							errorSchoolSeason(o.getSiteRequest_(), eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(o.getSiteRequest_(), eventHandler, a);
+					errorSchoolSeason(o.getSiteRequest_(), eventHandler, a);
 				}
 			});
 			return future;
@@ -335,7 +331,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void sqlPATCHCluster(Cluster o, Handler<AsyncResult<Cluster>> eventHandler) {
+	public void sqlPATCHSchoolSeason(SchoolSeason o, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -344,10 +340,10 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = requestJson.fieldNames();
-			Cluster o2 = new Cluster();
+			SchoolSeason o2 = new SchoolSeason();
 
 			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.season.SchoolSeason"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
@@ -357,7 +353,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -367,7 +363,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -377,7 +373,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -387,7 +383,37 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+						}
+						break;
+					case "setSeasonStartDay":
+						o2.setSeasonStartDay(requestJson.getString(methodName));
+						if(o2.getSeasonStartDay() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDay"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seasonStartDay", o2.strSeasonStartDay(), pk));
+						}
+						break;
+					case "setSeasonSummer":
+						o2.setSeasonSummer(requestJson.getBoolean(methodName));
+						if(o2.getSeasonSummer() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seasonSummer"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seasonSummer", o2.strSeasonSummer(), pk));
+						}
+						break;
+					case "setSeasonWinter":
+						o2.setSeasonWinter(requestJson.getBoolean(methodName));
+						if(o2.getSeasonWinter() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seasonWinter"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seasonWinter", o2.strSeasonWinter(), pk));
 						}
 						break;
 				}
@@ -397,7 +423,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				Cluster o3 = new Cluster();
+				SchoolSeason o3 = new SchoolSeason();
 				o3.setSiteRequest_(o.getSiteRequest_());
 				o3.setPk(pk);
 				eventHandler.handle(Future.succeededFuture(o3));
@@ -407,9 +433,9 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void response200PATCHCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
@@ -420,34 +446,34 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	// GET //
 
 	@Override
-	public void getCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void getSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			aSearchCluster(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+			aSearchSchoolSeason(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<Cluster> listCluster = a.result();
-					response200GETCluster(listCluster, b -> {
+					SearchList<SchoolSeason> listSchoolSeason = a.result();
+					response200GETSchoolSeason(listSchoolSeason, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200GETCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200GETSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
+			SolrDocumentList solrDocuments = listSchoolSeason.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listCluster.get(0));
+			JsonObject json = JsonObject.mapFrom(listSchoolSeason.get(0));
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -457,17 +483,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	// DELETE //
 
 	@Override
-	public void deleteCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			sqlCluster(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+			sqlSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					aSearchCluster(siteRequest, false, true, null, b -> {
+					aSearchSchoolSeason(siteRequest, false, true, null, b -> {
 						if(b.succeeded()) {
-							SearchList<Cluster> listCluster = b.result();
-							deleteDELETECluster(siteRequest, c -> {
+							SearchList<SchoolSeason> listSchoolSeason = b.result();
+							deleteDELETESchoolSeason(siteRequest, c -> {
 								if(c.succeeded()) {
-									response200DELETECluster(siteRequest, d -> {
+									response200DELETESchoolSeason(siteRequest, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -479,36 +505,36 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorCluster(siteRequest, eventHandler, f);
+																errorSchoolSeason(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorCluster(siteRequest, eventHandler, e);
+														errorSchoolSeason(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorCluster(siteRequest, eventHandler, d);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorCluster(siteRequest, eventHandler, c);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void deleteDELETECluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteDELETESchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -516,7 +542,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, Cluster.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, SchoolSeason.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
 			-> {
 				eventHandler.handle(Future.succeededFuture());
@@ -526,7 +552,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void response200DELETECluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200DELETESchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
@@ -538,33 +564,33 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	// Search //
 
 	@Override
-	public void searchCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			aSearchCluster(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+			aSearchSchoolSeason(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<Cluster> listCluster = a.result();
-					response200SearchCluster(listCluster, b -> {
+					SearchList<SchoolSeason> listSchoolSeason = a.result();
+					response200SearchSchoolSeason(listSchoolSeason, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
-			QueryResponse responseSearch = listCluster.getQueryResponse();
-			SolrDocumentList solrDocuments = listCluster.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolSeason.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolSeason.getSolrDocumentList();
 			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
 			Long transmissionInMillis = responseSearch.getElapsedTime();
 			Long startNum = responseSearch.getResults().getStart();
@@ -581,7 +607,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			json.put("searchTime", searchTime);
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
-			listCluster.getList().stream().forEach(o -> {
+			listSchoolSeason.getList().stream().forEach(o -> {
 				l.add(JsonObject.mapFrom(o));
 			});
 			json.put("list", l);
@@ -597,22 +623,22 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	// SearchPage //
 
 	@Override
-	public void searchpageClusterId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		searchpageCluster(operationRequest, eventHandler);
+	public void searchpageSchoolSeasonId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageSchoolSeason(operationRequest, eventHandler);
 	}
 
 	@Override
-	public void searchpageCluster(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchpageSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForCluster(siteContext, operationRequest);
-			sqlCluster(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+			sqlSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					userCluster(siteRequest, b -> {
+					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, "/enUS/cluster", c -> {
+							aSearchSchoolSeason(siteRequest, false, true, "/enUS/season", c -> {
 								if(c.succeeded()) {
-									SearchList<Cluster> listCluster = c.result();
-									response200SearchPageCluster(listCluster, d -> {
+									SearchList<SchoolSeason> listSchoolSeason = c.result();
+									response200SearchPageSchoolSeason(listSchoolSeason, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -624,48 +650,48 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorCluster(siteRequest, eventHandler, f);
+																errorSchoolSeason(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorCluster(siteRequest, eventHandler, e);
+														errorSchoolSeason(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorCluster(siteRequest, eventHandler, d);
+											errorSchoolSeason(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorCluster(siteRequest, eventHandler, c);
+									errorSchoolSeason(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorCluster(siteRequest, eventHandler, b);
+							errorSchoolSeason(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorCluster(siteRequest, eventHandler, a);
+					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorCluster(null, eventHandler, Future.failedFuture(e));
+			errorSchoolSeason(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchPageCluster(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchPageSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(listCluster.getSiteRequest_(), buffer);
-			ClusterPage page = new ClusterPage();
+			AllWriter w = AllWriter.create(listSchoolSeason.getSiteRequest_(), buffer);
+			SeasonPage page = new SeasonPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/cluster");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/season");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
-			page.setListCluster(listCluster);
-			page.initDeepClusterPage(siteRequest);
+			page.setListSchoolSeason(listSchoolSeason);
+			page.initDeepSeasonPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -673,7 +699,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public String varIndexedCluster(String entityVar) {
+	public String varIndexedSchoolSeason(String entityVar) {
 		switch(entityVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -693,20 +719,64 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "seasonSort":
+				return "seasonSort_indexed_int";
+			case "schoolNameComplete":
+				return "schoolNameComplete_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_date";
+			case "yearEnd":
+				return "yearEnd_indexed_date";
+			case "seasonStartDay":
+				return "seasonStartDay_indexed_date";
+			case "seasonSummer":
+				return "seasonSummer_indexed_boolean";
+			case "seasonWinter":
+				return "seasonWinter_indexed_boolean";
+			case "seasonNameComplete":
+				return "seasonNameComplete_indexed_string";
+			case "seasonId":
+				return "seasonId_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
-	public String varSearchCluster(String entityVar) {
+	public String varSearchSchoolSeason(String entityVar) {
 		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
-	public String varSuggereCluster(String entityVar) {
+	public String varSuggereSchoolSeason(String entityVar) {
 		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -714,7 +784,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 	// Partagé //
 
-	public void errorCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
+	public void errorSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -751,7 +821,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void sqlCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
 
@@ -779,11 +849,11 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForCluster(SiteContextEnUS siteContext, OperationRequest operationRequest) {
-		return generateSiteRequestEnUSForCluster(siteContext, operationRequest, null);
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolSeason(SiteContextEnUS siteContext, OperationRequest operationRequest) {
+		return generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, null);
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForCluster(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolSeason(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
 		Vertx vertx = siteContext.getVertx();
 		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 		siteRequest.setJsonObject(body);
@@ -796,7 +866,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		return siteRequest;
 	}
 
-	public void userCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void userSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -896,21 +966,21 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
+	public void aSearchSchoolSeason(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolSeason>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<Cluster> listSearch = new SearchList<Cluster>();
+			SearchList<SchoolSeason> listSearch = new SearchList<SchoolSeason>();
 			listSearch.setPopulate(populate);
 			listSearch.setStore(store);
 			listSearch.setQuery("*:*");
-			listSearch.setC(Cluster.class);
+			listSearch.setC(SchoolSeason.class);
 			if(entityList != null)
 			listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));
+			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.season.SchoolSeason"));
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -919,7 +989,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR seasonId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -938,7 +1008,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchCluster(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolSeason(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -952,18 +1022,18 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedCluster(entityVar);
+								varIndexed = varIndexedSchoolSeason(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedCluster(entityVar);
+								varIndexed = varIndexedSchoolSeason(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "fl":
 								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedCluster(entityVar);
+								varIndexed = varIndexedSchoolSeason(entityVar);
 								listSearch.addField(varIndexed);
 								break;
 							case "start":
@@ -987,7 +1057,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void defineCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void defineSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1015,7 +1085,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void attributeCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void attributeSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1048,7 +1118,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void indexCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void indexSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			o.initDeepForClass(siteRequest);

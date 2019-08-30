@@ -353,7 +353,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.getCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -363,7 +363,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.getModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -373,7 +373,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.getArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -383,7 +383,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.getDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
 						}
 						break;
 					case "setSchoolKey":
@@ -403,7 +403,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "yearStart"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("yearStart", o2.getYearStart(), pk));
+							patchSqlParams.addAll(Arrays.asList("yearStart", o2.strYearStart(), pk));
 						}
 						break;
 					case "setYearEnd":
@@ -413,7 +413,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							patchSqlParams.addAll(Arrays.asList(pk, "yearEnd"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("yearEnd", o2.getYearEnd(), pk));
+							patchSqlParams.addAll(Arrays.asList("yearEnd", o2.strYearEnd(), pk));
 						}
 						break;
 				}
@@ -727,6 +727,12 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "enrollmentKeys_indexed_longs";
 			case "seasonKeys":
 				return "seasonKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
 			case "schoolNameComplete":
 				return "schoolNameComplete_indexed_string";
 			case "yearStart":

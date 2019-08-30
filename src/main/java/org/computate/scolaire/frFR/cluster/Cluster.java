@@ -78,11 +78,13 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * ClePrimaire: true
+	 * HtmlLigne: 1
+	 * HtmlColonne: 3
 	 * Description.frFR: La clé primaire dans la base de données. 
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
 	 * NomAffichage.enUS: primary key
-	 */                                         
+	 */                                        
 	protected void _pk(Couverture<Long> c) {}
 
 	/**
@@ -102,6 +104,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Definir: true
 	 * Modifier: false
 	 * HtmlLigne: 1
+	 * HtmlColonne: 3
 	 * Description.frFR: La date et l'heure créées. 
 	 * Description.enUS: The date and time created. 
 	 * NomAffichage.frFR: crée
@@ -117,6 +120,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Definir: true
 	 * Modifier: false
 	 * HtmlLigne: 1
+	 * HtmlColonne: 4
 	 * Description.frFR: La date et l'heure modifiéés. 
 	 * Description.enUS: The date and time modified. 
 	 * NomAffichage.frFR: modifié

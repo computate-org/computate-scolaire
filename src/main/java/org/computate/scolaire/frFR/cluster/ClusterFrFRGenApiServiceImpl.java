@@ -919,7 +919,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("_indexed_string:" + ClientUtils.escapeQueryChars(id));
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

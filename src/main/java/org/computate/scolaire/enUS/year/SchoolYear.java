@@ -23,21 +23,33 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _seasonKeys(List<Long> o) {}
 
+	protected void _educationSort(Wrap<Integer> c) {
+		c.o(2);
+	}
+
+	protected void _schoolSort(Wrap<Integer> c) {
+		c.o(2);
+	}
+
+	protected void _yearSort(Wrap<Integer> c) {
+		c.o(2);
+	}
+
 	protected void _schoolSearch(SearchList<School> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("yearKeys_indexed_longs:" + pk);
 		l.setC(School.class);
 	}
 
-	protected void _schoolDocument(Wrap<SolrDocument> c) {
-		if(schoolSearch.getSolrDocumentList().size() > 0) {
-			c.o(schoolSearch.getSolrDocumentList().get(0));
+	protected void _school(Wrap<School> c) {
+		if(schoolSearch.size() > 0) {
+			c.o(schoolSearch.get(0));
 		}
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		if(schoolDocument != null)
-			c.o((String)schoolDocument.get("schoolNameComplete_stored_string"));
+		if(school != null)
+			c.o((String)school.getSchoolNameComplete());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {}

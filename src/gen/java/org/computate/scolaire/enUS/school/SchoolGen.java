@@ -1936,7 +1936,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSchoolId() {
-		return "r: ecoleNom";
+		return "ID";
 	}
 
 	public String htmTooltipSchoolId() {

@@ -1,28 +1,29 @@
-package org.computate.scolaire.frFR.annee;                                
+package org.computate.scolaire.frFR.saison;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.solr.common.SolrDocument;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
- * NomCanonique.enUS: org.computate.scolaire.enUS.year.SchoolYear
+ * NomCanonique.enUS: org.computate.scolaire.enUS.season.SchoolSeason
  * Modele: true
  * Api: true
  * Indexe: true
  * Sauvegarde: true
  * 
- * ApiTag.frFR: Année
- * ApiUri.frFR: /frFR/api/annee
+ * ApiTag.frFR: Saison
+ * ApiUri.frFR: /frFR/api/saison
  * 
- * ApiTag.enUS: School
- * ApiUri.enUS: /enUS/api/year
+ * ApiTag.enUS: Season
+ * ApiUri.enUS: /enUS/api/season
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -32,29 +33,28 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode.enUS: Search
  * 
  * ApiMethode.frFR: PageRecherche
- * PagePageRecherche.frFR: AnneePage
+ * PagePageRecherche.frFR: SaisonPage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/annee
+ * ApiUriPageRecherche.frFR: /frFR/saison
  * 
  * ApiMethode.enUS: SearchPage
- * PageSearchPage.enUS: YearPage
+ * PageSearchPage.enUS: SeasonPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/year
+ * ApiUriSearchPage.enUS: /enUS/season
  * 
- * UnNom.frFR: une année
+ * UnNom.frFR: une saison
  * UnNom.enUS: a year
- * Couleur: orange
+ * Couleur: yellow
  * IconeGroupe: duotone
- * IconeNom: calendar-check-o
+ * IconeNom: sun-o
 */                                                  
-public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
+public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: schoolKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: Ecole.anneeCles
 	 * HtmlLigne: 3
 	 * HtmlColonne: 3
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
@@ -70,12 +70,27 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'année dans la base de données. 
-	 * Description.enUS: The primary key of the year in the database. 
+	 * HtmlLigne: 3
+	 * HtmlColonne: 4
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 */          
+	protected void _anneeCle(Couverture<Long> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de la saison dans la base de données. 
+	 * Description.enUS: The primary key of the season in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
 	 */          
-	protected void _anneeCle(Couverture<Long> c) {
+	protected void _saisonCle(Couverture<Long> c) {
 		c.o(pk);
 	}
 
@@ -97,12 +112,20 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: sessionKeys
+	 * Indexe: true
+	 * Stocke: true
+	 */
+	protected void _sessionCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: educationSort
 	 * Indexe: true
 	 * Stocke: true
 	 */
 	protected void _scolaireTri(Couverture<Integer> c) {
-		c.o(2);
+		c.o(3);
 	}
 
 	/**
@@ -112,7 +135,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 */
 	protected void _ecoleTri(Couverture<Integer> c) {
-		c.o(2);
+		c.o(3);
 	}
 
 	/**
@@ -122,33 +145,43 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 */
 	protected void _anneeTri(Couverture<Integer> c) {
-		c.o(2);
-	}
-
-	/**
-	 * Var.enUS: schoolSearch
-	 * r: anneeCles
-	 * r.enUS: yearKeys
-	 * r: Ecole
-	 * r.enUS: School
-	 * Ignorer: true
-	 */
-	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("anneeCles_indexed_longs:" + pk);
-		l.setC(Ecole.class);
+		c.o(3);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: school
-	 * r: ecoleRecherche
-	 * r.enUS: schoolSearch
+	 * Var.enUS: seasonSort
+	 * Indexe: true
+	 * Stocke: true
+	 */
+	protected void _saisonTri(Couverture<Integer> c) {
+		c.o(3);
+	}
+
+	/**
+	 * Var.enUS: yearSearch
+	 * r: anneeCles
+	 * r.enUS: yearKeys
+	 * r: AnneeScolaire
+	 * r.enUS: SchoolYear
+	 * Ignorer: true
+	 */
+	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("saisonCles_indexed_longs:" + pk);
+		l.setC(AnneeScolaire.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: year
+	 * r: anneeRecherche
+	 * r.enUS: yearSearch
 	 * Ignorer: true
 	 */   
-	protected void _ecole(Couverture<Ecole> c) {
-		if(ecoleRecherche.size() > 0) {
-			c.o(ecoleRecherche.get(0));
+	protected void _annee(Couverture<AnneeScolaire> c) {
+		if(anneeRecherche.size() > 0) {
+			c.o(anneeRecherche.get(0));
 		}
 	}
 
@@ -163,12 +196,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
 	 * r.enUS: SchoolNameComplete
-	 * r: ecole
-	 * r.enUS: school
+	 * r: annee
+	 * r.enUS: year
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(ecole != null)
-			c.o((String)ecole.getEcoleNomComplet());
+		if(annee != null)
+			c.o((String)annee.getEcoleNomComplet());
 	}
 
 	/**
@@ -176,105 +209,103 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
+	 * r: AnneeDebut
+	 * r.enUS: YearStart
+	 * r: annee
+	 * r.enUS: year
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {}
+	protected void _anneeDebut(Couverture<LocalDate> c) {
+		if(annee != null)
+			c.o((LocalDate)annee.getAnneeDebut());
+	}
 
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearEnd
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 2
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
-	 * r: anneeDebut
-	 * r.enUS: yearStart
+	 * r: AnneeFin
+	 * r.enUS: YearStart
+	 * r: annee
+	 * r.enUS: year
 	 */                      
 	protected void _anneeFin(Couverture<LocalDate> c) {
-		if(anneeDebut != null)
-			c.o(anneeDebut.plusYears(1));
+		if(annee != null)
+			c.o((LocalDate)annee.getAnneeFin());
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: yearNameShort
+	 * Var.enUS: seasonStartDay
 	 * Indexe: true
 	 * Stocke: true
-	 * r: anneeDebut
-	 * r.enUS: yearStart
-	 * r: anneeFin
-	 * r.enUS: yearEnd
-	 * r: FRANCE
-	 * r.enUS: US
-	 * r: "année %d"
-	 * r.enUS: "%d year"
-	 * r: "année"
-	 * r.enUS: "year"
-	 */                        
-	protected void _anneeNomCourt(Couverture<String> c) {
-		String o = "année";
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 * NomAffichage.frFR: début de la saison
+	 * NomAffichage.enUS: start of the season
+	 */                   
+	protected void _saisonJourDebut(Couverture<LocalDate> c) {}
 
-		if(anneeDebut != null && anneeFin != null)
-			o = String.format("%d-%d", anneeDebut.getYear(), anneeFin.getYear());
-		else if(anneeDebut != null)
-			o = String.format("année %d", anneeDebut.getYear());
-		else if(anneeFin != null)
-			o = String.format("année %d", anneeFin.getYear());
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonSummer
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 * NomAffichage.frFR: été
+	 * NomAffichage.enUS: summer
+	 */                   
+	protected void _saisonEte(Couverture<Boolean> c) {}
 
-		c.o(o);
-	}
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonWinter
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 * NomAffichage.frFR: hiver
+	 * NomAffichage.enUS: winter
+	 */                   
+	protected void _saisonHiver(Couverture<Boolean> c) {}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: yearNameComplete
+	 * Var.enUS: seasonNameComplete
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
-	 * r: anneeDebut
-	 * r.enUS: yearStart
-	 * r: anneeFin
-	 * r.enUS: yearEnd
-	 * r: FRANCE
-	 * r.enUS: US
-	 * r: "année scolaire %d-%d"
-	 * r.enUS: "%d-%d school year"
-	 * r: "année scolaire %d"
-	 * r.enUS: "%d school year"
-	 * r: " à %s"
-	 * r.enUS: " at %s"
-	 * r: EcoleNom
-	 * r.enUS: SchoolName
-	 * r: "année"
-	 * r.enUS: "year"
+	 * r: saisonEte
+	 * r.enUS: seasonSummer
+	 * r: saison scolaire qui commence %s à %s. 
+	 * r.enUS: school season starting %s at %s. 
+	 * r: strSaisonJourDebut
+	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */                
-	protected void _anneeNomComplet(Couverture<String> c) {
-		String o = "année";
-
-		if(anneeDebut != null && anneeFin != null)
-			o = String.format("année scolaire %d-%d", anneeDebut.getYear(), anneeFin.getYear());
-		else if(anneeDebut != null)
-			o = String.format("année scolaire %d", anneeDebut.getYear());
-		else if(anneeFin != null)
-			o = String.format("année scolaire %d", anneeFin.getYear());
-
-		if(ecoleNomComplet != null)
-			o += String.format(" à %s", ecoleNomComplet);
-
+	 */
+	protected void _saisonNomComplet(Couverture<String> c) {
+		String o;
+		
+		if(BooleanUtils.isTrue(saisonEte))
+			o = String.format("saison d'été qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+		else
+			o = String.format("saison scolaire qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+		
 		c.o(o);
 	}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: yearId
+	 * Var.enUS: seasonId
 	 * Indexe: true
 	 * Stocke: true
 	 * VarId: true
@@ -284,12 +315,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
-	 * r: anneeNomComplet
-	 * r.enUS: yearNameComplete
+	 * r: saisonNomComplet
+	 * r.enUS: seasonNameComplete
 	 */            
-	protected void _anneeId(Couverture<String> c) {
-		if(anneeNomComplet != null) {
-			String s = Normalizer.normalize(anneeNomComplet, Normalizer.Form.NFD);
+	protected void _saisonId(Couverture<String> c) {
+		if(saisonNomComplet != null) {
+			String s = Normalizer.normalize(saisonNomComplet, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -307,10 +338,10 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarUrl: true
-	 * r: anneeId
-	 * r.enUS: yearId
-	 * r: /frFR/annee/
-	 * r.enUS: /enUS/year/
+	 * r: saisonId
+	 * r.enUS: seasonId
+	 * r: /frFR/saison/
+	 * r.enUS: /enUS/season/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -319,8 +350,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: SiteBaseUrl
 	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
-		if(anneeId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/annee/" + anneeId;
+		if(saisonId != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/saison/" + saisonId;
 			c.o(o);
 		}
 	}
@@ -329,11 +360,11 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
-	 * r: anneeNomComplet
-	 * r.enUS: yearNameComplete
+	 * r: saisonNomComplet
+	 * r.enUS: seasonNameComplete
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(anneeNomComplet);
+		c.o(saisonNomComplet);
 	}
 
 	/**
@@ -341,13 +372,13 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: _classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
-	 * r: AnneeScolaire
-	 * r.enUS: SchoolYear
+	 * r: SaisonScolaire
+	 * r.enUS: SchoolSeason
 	 * r: classeNomsCanoniques
 	 * r.enUS: classCanonicalNames
 	 **/      
 	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(AnneeScolaire.class.getCanonicalName());
+		l.add(SaisonScolaire.class.getCanonicalName());
 		super._classeNomsCanoniques(l);
 	}
 }

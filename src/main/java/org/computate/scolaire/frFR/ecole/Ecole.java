@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                                   
+/**                                     
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -294,13 +294,15 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarId: true
+	 * HtmlLigne: 1
+	 * HtmlColonne: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
+	 * NomAffichage.frFR: ID
+	 * NomAffichage.enUS: ID
 	 * r: ecoleNom
 	 * r.enUS: schoolName
-	 */               
+	 */                   
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
 			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);

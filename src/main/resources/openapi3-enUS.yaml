@@ -5,648 +5,6 @@ info:
 servers:
   - url: https://scolaire-dev.computate.org:10380
 paths:
-  /enUS/api/year:
-    post:
-      operationId: postSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSchoolYearRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHSchoolYearRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: searchSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /enUS/api/year/{id}:
-    get:
-      operationId: getSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    delete:
-      operationId: deleteSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/DELETESchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /enUS/year:
-    get:
-      operationId: searchpageSchoolYear
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /enUS/year/{id}:
-    get:
-      operationId: searchpageSchoolYearId
-      x-vertx-event-bus: enUSSchoolYear
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolYearResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
   /enUS/api/user:
     patch:
       operationId: patchSiteUser
@@ -2295,6 +1653,1290 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/api/year:
+    post:
+      operationId: postSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSchoolYearRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSchoolYearRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: searchSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/api/year/{id}:
+    get:
+      operationId: getSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETESchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/year:
+    get:
+      operationId: searchpageSchoolYear
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/year/{id}:
+    get:
+      operationId: searchpageSchoolYearId
+      x-vertx-event-bus: enUSSchoolYear
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolYearResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/api/season:
+    post:
+      operationId: postSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSchoolSeasonRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSchoolSeasonRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: searchSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/api/season/{id}:
+    get:
+      operationId: getSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETESchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/season:
+    get:
+      operationId: searchpageSchoolSeason
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enUS/season/{id}:
+    get:
+      operationId: searchpageSchoolSeasonId
+      x-vertx-event-bus: enUSSchoolSeason
+      description: >+
+      summary: >+
+      tags:
+        - Season
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolSeasonResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
 components:
   securitySchemes:
     openIdConnect:
@@ -2306,46 +2948,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    POSTSchoolYearRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolYearRequest'
-    POSTSchoolYearResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolYearResponse'
-    PATCHSchoolYearRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolYearRequest'
-    PATCHSchoolYearResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolYearResponse'
-    SearchSchoolYearResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchSchoolYearResponse'
-    GETSchoolYearResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETSchoolYearResponse'
-    DELETESchoolYearResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DELETESchoolYearResponse'
-    SearchPageSchoolYearResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchPageSchoolYearResponse'
     PATCHSiteUserRequest:
       content:
         application/json:
@@ -2441,371 +3043,87 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolResponse'
-  schemas:
     POSTSchoolYearRequest:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequest"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            yearKey:
-              type: number
-            enrollmentKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            schoolNameComplete:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            yearNameShort:
-              type: string
-            yearNameComplete:
-              type: string
-            yearId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolYearRequest'
     POSTSchoolYearResponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            yearKey:
-              type: number
-            enrollmentKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            schoolNameComplete:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            yearNameShort:
-              type: string
-            yearNameComplete:
-              type: string
-            yearId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolYearResponse'
     PATCHSchoolYearRequest:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequest"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: number
-            removeSchoolKey:
-              type: number
-            removeAllSchoolKey:
-              type: number
-            setYearKey:
-              type: number
-            removeYearKey:
-              type: number
-            removeAllYearKey:
-              type: number
-            setEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            removeEnrollmentKeys:
-              type: number
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            addEnrollmentKeys:
-              type: number
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            setSeasonKeys:
-              type: array
-              items:
-                type: number
-            removeSeasonKeys:
-              type: number
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            addSeasonKeys:
-              type: number
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            setSchoolNameComplete:
-              type: string
-            removeSchoolNameComplete:
-              type: string
-            removeAllSchoolNameComplete:
-              type: string
-            setYearStart:
-              type: string
-            removeYearStart:
-              type: string
-            removeAllYearStart:
-              type: string
-            setYearEnd:
-              type: string
-            removeYearEnd:
-              type: string
-            removeAllYearEnd:
-              type: string
-            setYearNameShort:
-              type: string
-            removeYearNameShort:
-              type: string
-            removeAllYearNameShort:
-              type: string
-            setYearNameComplete:
-              type: string
-            removeYearNameComplete:
-              type: string
-            removeAllYearNameComplete:
-              type: string
-            setYearId:
-              type: string
-            removeYearId:
-              type: string
-            removeAllYearId:
-              type: string
-            setPageUrl:
-              type: string
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjectSuggest:
-              type: string
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolYearRequest'
     PATCHSchoolYearResponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterResponse"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: number
-            removeSchoolKey:
-              type: number
-            removeAllSchoolKey:
-              type: number
-            setYearKey:
-              type: number
-            removeYearKey:
-              type: number
-            removeAllYearKey:
-              type: number
-            setEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            removeEnrollmentKeys:
-              type: number
-            removeAllEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            addEnrollmentKeys:
-              type: number
-            addAllEnrollmentKeys:
-              type: array
-              items:
-                type: number
-            setSeasonKeys:
-              type: array
-              items:
-                type: number
-            removeSeasonKeys:
-              type: number
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            addSeasonKeys:
-              type: number
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            setSchoolNameComplete:
-              type: string
-            removeSchoolNameComplete:
-              type: string
-            removeAllSchoolNameComplete:
-              type: string
-            setYearStart:
-              type: string
-            removeYearStart:
-              type: string
-            removeAllYearStart:
-              type: string
-            setYearEnd:
-              type: string
-            removeYearEnd:
-              type: string
-            removeAllYearEnd:
-              type: string
-            setYearNameShort:
-              type: string
-            removeYearNameShort:
-              type: string
-            removeAllYearNameShort:
-              type: string
-            setYearNameComplete:
-              type: string
-            removeYearNameComplete:
-              type: string
-            removeAllYearNameComplete:
-              type: string
-            setYearId:
-              type: string
-            removeYearId:
-              type: string
-            removeAllYearId:
-              type: string
-            setPageUrl:
-              type: string
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjectSuggest:
-              type: string
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolYearResponse'
     SearchSchoolYearResponse:
-      allOf:
-        - $ref: "#/components/schemas/SearchClusterResponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              schoolKey:
-                type: number
-              yearKey:
-                type: number
-              enrollmentKeys:
-                type: array
-                items:
-                  type: number
-              seasonKeys:
-                type: array
-                items:
-                  type: number
-              schoolNameComplete:
-                type: string
-              yearStart:
-                type: string
-              yearEnd:
-                type: string
-              yearNameShort:
-                type: string
-              yearNameComplete:
-                type: string
-              yearId:
-                type: string
-              pageUrl:
-                type: string
-              objectSuggest:
-                type: string
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSchoolYearResponse'
     GETSchoolYearResponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            yearKey:
-              type: number
-            enrollmentKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            schoolNameComplete:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            yearNameShort:
-              type: string
-            yearNameComplete:
-              type: string
-            yearId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSchoolYearResponse'
     DELETESchoolYearResponse:
-      allOf:
-        - $ref: "#/components/schemas/DELETEClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            yearKey:
-              type: number
-            enrollmentKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            schoolNameComplete:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            yearNameShort:
-              type: string
-            yearNameComplete:
-              type: string
-            yearId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESchoolYearResponse'
     SearchPageSchoolYearResponse:
-      allOf:
-        - type: string
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSchoolYearResponse'
+    POSTSchoolSeasonRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolSeasonRequest'
+    POSTSchoolSeasonResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolSeasonResponse'
+    PATCHSchoolSeasonRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolSeasonRequest'
+    PATCHSchoolSeasonResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolSeasonResponse'
+    SearchSchoolSeasonResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSchoolSeasonResponse'
+    GETSchoolSeasonResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSchoolSeasonResponse'
+    DELETESchoolSeasonResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESchoolSeasonResponse'
+    SearchPageSchoolSeasonResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSchoolSeasonResponse'
+  schemas:
     PATCHSiteUserRequest:
       allOf:
         - $ref: "#/components/schemas/PATCHClusterRequest"
@@ -3858,6 +4176,1006 @@ components:
             pageH1:
               type: string
     SearchPageSchoolResponse:
+      allOf:
+        - type: string
+    POSTSchoolYearRequest:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequest"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            yearNameShort:
+              type: string
+            yearNameComplete:
+              type: string
+            yearId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    POSTSchoolYearResponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            yearNameShort:
+              type: string
+            yearNameComplete:
+              type: string
+            yearId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    PATCHSchoolYearRequest:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequest"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: number
+            removeSchoolKey:
+              type: number
+            removeAllSchoolKey:
+              type: number
+            setYearKey:
+              type: number
+            removeYearKey:
+              type: number
+            removeAllYearKey:
+              type: number
+            setEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            removeEnrollmentKeys:
+              type: number
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            addEnrollmentKeys:
+              type: number
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            setSeasonKeys:
+              type: array
+              items:
+                type: number
+            removeSeasonKeys:
+              type: number
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            addSeasonKeys:
+              type: number
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            setEducationSort:
+              type: number
+            removeEducationSort:
+              type: number
+            removeAllEducationSort:
+              type: number
+            setSchoolSort:
+              type: number
+            removeSchoolSort:
+              type: number
+            removeAllSchoolSort:
+              type: number
+            setYearSort:
+              type: number
+            removeYearSort:
+              type: number
+            removeAllYearSort:
+              type: number
+            setSchoolNameComplete:
+              type: string
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setYearStart:
+              type: string
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setYearNameShort:
+              type: string
+            removeYearNameShort:
+              type: string
+            removeAllYearNameShort:
+              type: string
+            setYearNameComplete:
+              type: string
+            removeYearNameComplete:
+              type: string
+            removeAllYearNameComplete:
+              type: string
+            setYearId:
+              type: string
+            removeYearId:
+              type: string
+            removeAllYearId:
+              type: string
+            setPageUrl:
+              type: string
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    PATCHSchoolYearResponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterResponse"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: number
+            removeSchoolKey:
+              type: number
+            removeAllSchoolKey:
+              type: number
+            setYearKey:
+              type: number
+            removeYearKey:
+              type: number
+            removeAllYearKey:
+              type: number
+            setEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            removeEnrollmentKeys:
+              type: number
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            addEnrollmentKeys:
+              type: number
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            setSeasonKeys:
+              type: array
+              items:
+                type: number
+            removeSeasonKeys:
+              type: number
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            addSeasonKeys:
+              type: number
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            setEducationSort:
+              type: number
+            removeEducationSort:
+              type: number
+            removeAllEducationSort:
+              type: number
+            setSchoolSort:
+              type: number
+            removeSchoolSort:
+              type: number
+            removeAllSchoolSort:
+              type: number
+            setYearSort:
+              type: number
+            removeYearSort:
+              type: number
+            removeAllYearSort:
+              type: number
+            setSchoolNameComplete:
+              type: string
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setYearStart:
+              type: string
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setYearNameShort:
+              type: string
+            removeYearNameShort:
+              type: string
+            removeAllYearNameShort:
+              type: string
+            setYearNameComplete:
+              type: string
+            removeYearNameComplete:
+              type: string
+            removeAllYearNameComplete:
+              type: string
+            setYearId:
+              type: string
+            removeYearId:
+              type: string
+            removeAllYearId:
+              type: string
+            setPageUrl:
+              type: string
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    SearchSchoolYearResponse:
+      allOf:
+        - $ref: "#/components/schemas/SearchClusterResponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              schoolKey:
+                type: number
+              yearKey:
+                type: number
+              enrollmentKeys:
+                type: array
+                items:
+                  type: number
+              seasonKeys:
+                type: array
+                items:
+                  type: number
+              educationSort:
+                type: number
+              schoolSort:
+                type: number
+              yearSort:
+                type: number
+              schoolNameComplete:
+                type: string
+              yearStart:
+                type: string
+              yearEnd:
+                type: string
+              yearNameShort:
+                type: string
+              yearNameComplete:
+                type: string
+              yearId:
+                type: string
+              pageUrl:
+                type: string
+              objectSuggest:
+                type: string
+    GETSchoolYearResponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            yearNameShort:
+              type: string
+            yearNameComplete:
+              type: string
+            yearId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    DELETESchoolYearResponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            yearNameShort:
+              type: string
+            yearNameComplete:
+              type: string
+            yearId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    SearchPageSchoolYearResponse:
+      allOf:
+        - type: string
+    POSTSchoolSeasonRequest:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequest"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            seasonKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            sessionKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            seasonSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonNameComplete:
+              type: string
+            seasonId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    POSTSchoolSeasonResponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            seasonKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            sessionKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            seasonSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonNameComplete:
+              type: string
+            seasonId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    PATCHSchoolSeasonRequest:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequest"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: number
+            removeSchoolKey:
+              type: number
+            removeAllSchoolKey:
+              type: number
+            setYearKey:
+              type: number
+            removeYearKey:
+              type: number
+            removeAllYearKey:
+              type: number
+            setSeasonKey:
+              type: number
+            removeSeasonKey:
+              type: number
+            removeAllSeasonKey:
+              type: number
+            setEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            removeEnrollmentKeys:
+              type: number
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            addEnrollmentKeys:
+              type: number
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            setSeasonKeys:
+              type: array
+              items:
+                type: number
+            removeSeasonKeys:
+              type: number
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            addSeasonKeys:
+              type: number
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            setSessionKeys:
+              type: array
+              items:
+                type: number
+            removeSessionKeys:
+              type: number
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: number
+            addSessionKeys:
+              type: number
+            addAllSessionKeys:
+              type: array
+              items:
+                type: number
+            setEducationSort:
+              type: number
+            removeEducationSort:
+              type: number
+            removeAllEducationSort:
+              type: number
+            setSchoolSort:
+              type: number
+            removeSchoolSort:
+              type: number
+            removeAllSchoolSort:
+              type: number
+            setYearSort:
+              type: number
+            removeYearSort:
+              type: number
+            removeAllYearSort:
+              type: number
+            setSeasonSort:
+              type: number
+            removeSeasonSort:
+              type: number
+            removeAllSeasonSort:
+              type: number
+            setSchoolNameComplete:
+              type: string
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setYearStart:
+              type: string
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDay:
+              type: string
+            removeSeasonStartDay:
+              type: string
+            removeAllSeasonStartDay:
+              type: string
+            setSeasonSummer:
+              type: boolean
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setSeasonNameComplete:
+              type: string
+            removeSeasonNameComplete:
+              type: string
+            removeAllSeasonNameComplete:
+              type: string
+            setSeasonId:
+              type: string
+            removeSeasonId:
+              type: string
+            removeAllSeasonId:
+              type: string
+            setPageUrl:
+              type: string
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    PATCHSchoolSeasonResponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterResponse"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: number
+            removeSchoolKey:
+              type: number
+            removeAllSchoolKey:
+              type: number
+            setYearKey:
+              type: number
+            removeYearKey:
+              type: number
+            removeAllYearKey:
+              type: number
+            setSeasonKey:
+              type: number
+            removeSeasonKey:
+              type: number
+            removeAllSeasonKey:
+              type: number
+            setEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            removeEnrollmentKeys:
+              type: number
+            removeAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            addEnrollmentKeys:
+              type: number
+            addAllEnrollmentKeys:
+              type: array
+              items:
+                type: number
+            setSeasonKeys:
+              type: array
+              items:
+                type: number
+            removeSeasonKeys:
+              type: number
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            addSeasonKeys:
+              type: number
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: number
+            setSessionKeys:
+              type: array
+              items:
+                type: number
+            removeSessionKeys:
+              type: number
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: number
+            addSessionKeys:
+              type: number
+            addAllSessionKeys:
+              type: array
+              items:
+                type: number
+            setEducationSort:
+              type: number
+            removeEducationSort:
+              type: number
+            removeAllEducationSort:
+              type: number
+            setSchoolSort:
+              type: number
+            removeSchoolSort:
+              type: number
+            removeAllSchoolSort:
+              type: number
+            setYearSort:
+              type: number
+            removeYearSort:
+              type: number
+            removeAllYearSort:
+              type: number
+            setSeasonSort:
+              type: number
+            removeSeasonSort:
+              type: number
+            removeAllSeasonSort:
+              type: number
+            setSchoolNameComplete:
+              type: string
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setYearStart:
+              type: string
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDay:
+              type: string
+            removeSeasonStartDay:
+              type: string
+            removeAllSeasonStartDay:
+              type: string
+            setSeasonSummer:
+              type: boolean
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setSeasonNameComplete:
+              type: string
+            removeSeasonNameComplete:
+              type: string
+            removeAllSeasonNameComplete:
+              type: string
+            setSeasonId:
+              type: string
+            removeSeasonId:
+              type: string
+            removeAllSeasonId:
+              type: string
+            setPageUrl:
+              type: string
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    SearchSchoolSeasonResponse:
+      allOf:
+        - $ref: "#/components/schemas/SearchClusterResponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              schoolKey:
+                type: number
+              yearKey:
+                type: number
+              seasonKey:
+                type: number
+              enrollmentKeys:
+                type: array
+                items:
+                  type: number
+              seasonKeys:
+                type: array
+                items:
+                  type: number
+              sessionKeys:
+                type: array
+                items:
+                  type: number
+              educationSort:
+                type: number
+              schoolSort:
+                type: number
+              yearSort:
+                type: number
+              seasonSort:
+                type: number
+              schoolNameComplete:
+                type: string
+              yearStart:
+                type: string
+              yearEnd:
+                type: string
+              seasonStartDay:
+                type: string
+              seasonSummer:
+                type: boolean
+              seasonWinter:
+                type: boolean
+              seasonNameComplete:
+                type: string
+              seasonId:
+                type: string
+              pageUrl:
+                type: string
+              objectSuggest:
+                type: string
+    GETSchoolSeasonResponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            seasonKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            sessionKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            seasonSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonNameComplete:
+              type: string
+            seasonId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    DELETESchoolSeasonResponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: number
+            yearKey:
+              type: number
+            seasonKey:
+              type: number
+            enrollmentKeys:
+              type: array
+              items:
+                type: number
+            seasonKeys:
+              type: array
+              items:
+                type: number
+            sessionKeys:
+              type: array
+              items:
+                type: number
+            educationSort:
+              type: number
+            schoolSort:
+              type: number
+            yearSort:
+              type: number
+            seasonSort:
+              type: number
+            schoolNameComplete:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonNameComplete:
+              type: string
+            seasonId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    SearchPageSchoolSeasonResponse:
       allOf:
         - type: string
     ErrorResponse:
