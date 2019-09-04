@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.session;
+package org.computate.scolaire.enUS.age;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -72,39 +72,39 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 /**
  * Translate: false
  **/
-public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenApiService {
+public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolSessionEnUSGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolAgeEnUSGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "SchoolSessionEnUSApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "SchoolAgeEnUSApiServiceImpl";
 
 	protected SiteContextEnUS siteContext;
 
-	public SchoolSessionEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
+	public SchoolAgeEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolSessionEnUSGenApiService service = SchoolSessionEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
+		SchoolAgeEnUSGenApiService service = SchoolAgeEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
 
 	@Override
-	public void postSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void postSchoolAge(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
-			sqlSchoolSession(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					createPOSTSchoolSession(siteRequest, b -> {
+					createPOSTSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							SchoolSession schoolSession = b.result();
-							sqlPOSTSchoolSession(schoolSession, c -> {
+							SchoolAge schoolAge = b.result();
+							sqlPOSTSchoolAge(schoolAge, c -> {
 								if(c.succeeded()) {
-									defineSchoolSession(schoolSession, d -> {
+									defineSchoolAge(schoolAge, d -> {
 										if(d.succeeded()) {
-											attributeSchoolSession(schoolSession, e -> {
+											attributeSchoolAge(schoolAge, e -> {
 												if(e.succeeded()) {
-													indexSchoolSession(schoolSession, f -> {
+													indexSchoolAge(schoolAge, f -> {
 														if(f.succeeded()) {
-															response200POSTSchoolSession(schoolSession, g -> {
+															response200POSTSchoolAge(schoolAge, g -> {
 																if(f.succeeded()) {
 																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
 																	sqlConnection.commit(h -> {
@@ -113,59 +113,59 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 																				if(a.succeeded()) {
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					errorSchoolSession(siteRequest, eventHandler, i);
+																					errorSchoolAge(siteRequest, eventHandler, i);
 																				}
 																			});
 																		} else {
-																			errorSchoolSession(siteRequest, eventHandler, h);
+																			errorSchoolAge(siteRequest, eventHandler, h);
 																		}
 																	});
 																} else {
-																	errorSchoolSession(siteRequest, eventHandler, g);
+																	errorSchoolAge(siteRequest, eventHandler, g);
 																}
 															});
 														} else {
-															errorSchoolSession(siteRequest, eventHandler, f);
+															errorSchoolAge(siteRequest, eventHandler, f);
 														}
 													});
 												} else {
-													errorSchoolSession(siteRequest, eventHandler, e);
+													errorSchoolAge(siteRequest, eventHandler, e);
 												}
 											});
 										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSession(siteRequest, eventHandler, c);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void createPOSTSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolSession>> eventHandler) {
+	public void createPOSTSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolAge>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(SchoolSession.class.getCanonicalName(), userId))
+					, new JsonArray(Arrays.asList(SchoolAge.class.getCanonicalName(), userId))
 					, createAsync
 			-> {
 				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
-				SchoolSession o = new SchoolSession();
+				SchoolAge o = new SchoolAge();
 				o.setPk(pk);
 				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
@@ -175,7 +175,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void sqlPOSTSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -188,13 +188,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "sessionStartDay":
+					case "ageStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionStartDay", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getInteger(entityVar), pk));
 						break;
-					case "sessionEndDay":
+					case "ageEnd":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionEndDay", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageEnd", jsonObject.getInteger(entityVar), pk));
 						break;
 					}
 				}
@@ -211,7 +211,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void response200POSTSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200POSTSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = new JsonObject();
@@ -224,17 +224,17 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	// PATCH //
 
 	@Override
-	public void patchSchoolSession(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchoolAge(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, body);
-			sqlSchoolSession(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					userSchoolSession(siteRequest, b -> {
+					userSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolSession(siteRequest, false, true, null, c -> {
+							aSearchSchoolAge(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolSession> listSchoolSession = c.result();
-									listPATCHSchoolSession(listSchoolSession, d -> {
+									SearchList<SchoolAge> listSchoolAge = c.result();
+									listPATCHSchoolAge(listSchoolAge, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -246,79 +246,79 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolSession(siteRequest, eventHandler, f);
+																errorSchoolAge(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														errorSchoolAge(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSession(siteRequest, eventHandler, c);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void listPATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-		listSchoolSession.getList().forEach(o -> {
+		listSchoolAge.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolSession(o, eventHandler)
+				futurePATCHSchoolAge(o, eventHandler)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolSession(listSchoolSession, eventHandler);
+				response200PATCHSchoolAge(listSchoolAge, eventHandler);
 			} else {
-				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
+				errorSchoolAge(listSchoolAge.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<SchoolSession> futurePATCHSchoolSession(SchoolSession o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<SchoolSession> future = Future.future();
+	public Future<SchoolAge> futurePATCHSchoolAge(SchoolAge o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+		Future<SchoolAge> future = Future.future();
 		try {
-			sqlPATCHSchoolSession(o, a -> {
+			sqlPATCHSchoolAge(o, a -> {
 				if(a.succeeded()) {
-					SchoolSession schoolSession = a.result();
-					defineSchoolSession(schoolSession, b -> {
+					SchoolAge schoolAge = a.result();
+					defineSchoolAge(schoolAge, b -> {
 						if(b.succeeded()) {
-							attributeSchoolSession(schoolSession, c -> {
+							attributeSchoolAge(schoolAge, c -> {
 								if(c.succeeded()) {
-									indexSchoolSession(schoolSession, d -> {
+									indexSchoolAge(schoolAge, d -> {
 										if(d.succeeded()) {
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolSession(o.getSiteRequest_(), eventHandler, d);
+											errorSchoolAge(o.getSiteRequest_(), eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSession(o.getSiteRequest_(), eventHandler, c);
+									errorSchoolAge(o.getSiteRequest_(), eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolSession(o.getSiteRequest_(), eventHandler, b);
+							errorSchoolAge(o.getSiteRequest_(), eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(o.getSiteRequest_(), eventHandler, a);
+					errorSchoolAge(o.getSiteRequest_(), eventHandler, a);
 				}
 			});
 			return future;
@@ -327,7 +327,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void sqlPATCHSchoolSession(SchoolSession o, Handler<AsyncResult<SchoolSession>> eventHandler) {
+	public void sqlPATCHSchoolAge(SchoolAge o, Handler<AsyncResult<SchoolAge>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -336,10 +336,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = requestJson.fieldNames();
-			SchoolSession o2 = new SchoolSession();
+			SchoolAge o2 = new SchoolAge();
 
 			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.session.SchoolSession"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.age.SchoolAge"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
@@ -382,24 +382,24 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
 						}
 						break;
-					case "setSessionStartDay":
-						o2.setSessionStartDay(requestJson.getString(methodName));
-						if(o2.getSessionStartDay() == null) {
+					case "setAgeStart":
+						o2.setAgeStart(requestJson.getInteger(methodName));
+						if(o2.getAgeStart() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionStartDay"));
+							patchSqlParams.addAll(Arrays.asList(pk, "ageStart"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionStartDay", o2.strSessionStartDay(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageStart", o2.strAgeStart(), pk));
 						}
 						break;
-					case "setSessionEndDay":
-						o2.setSessionEndDay(requestJson.getString(methodName));
-						if(o2.getSessionEndDay() == null) {
+					case "setAgeEnd":
+						o2.setAgeEnd(requestJson.getInteger(methodName));
+						if(o2.getAgeEnd() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionEndDay"));
+							patchSqlParams.addAll(Arrays.asList(pk, "ageEnd"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionEndDay", o2.strSessionEndDay(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageEnd", o2.strAgeEnd(), pk));
 						}
 						break;
 				}
@@ -409,7 +409,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolSession o3 = new SchoolSession();
+				SchoolAge o3 = new SchoolAge();
 				o3.setSiteRequest_(o.getSiteRequest_());
 				o3.setPk(pk);
 				eventHandler.handle(Future.succeededFuture(o3));
@@ -419,9 +419,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void response200PATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
@@ -432,34 +432,34 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	// GET //
 
 	@Override
-	public void getSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void getSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
-			aSearchSchoolSession(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
+			aSearchSchoolAge(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolSession> listSchoolSession = a.result();
-					response200GETSchoolSession(listSchoolSession, b -> {
+					SearchList<SchoolAge> listSchoolAge = a.result();
+					response200GETSchoolAge(listSchoolAge, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200GETSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200GETSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-			SolrDocumentList solrDocuments = listSchoolSession.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
+			SolrDocumentList solrDocuments = listSchoolAge.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listSchoolSession.get(0));
+			JsonObject json = JsonObject.mapFrom(listSchoolAge.get(0));
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -469,17 +469,17 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	// DELETE //
 
 	@Override
-	public void deleteSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
-			sqlSchoolSession(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					aSearchSchoolSession(siteRequest, false, true, null, b -> {
+					aSearchSchoolAge(siteRequest, false, true, null, b -> {
 						if(b.succeeded()) {
-							SearchList<SchoolSession> listSchoolSession = b.result();
-							deleteDELETESchoolSession(siteRequest, c -> {
+							SearchList<SchoolAge> listSchoolAge = b.result();
+							deleteDELETESchoolAge(siteRequest, c -> {
 								if(c.succeeded()) {
-									response200DELETESchoolSession(siteRequest, d -> {
+									response200DELETESchoolAge(siteRequest, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -491,36 +491,36 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolSession(siteRequest, eventHandler, f);
+																errorSchoolAge(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														errorSchoolAge(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSession(siteRequest, eventHandler, c);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void deleteDELETESchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteDELETESchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -528,7 +528,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, SchoolSession.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, SchoolAge.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
 			-> {
 				eventHandler.handle(Future.succeededFuture());
@@ -538,7 +538,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void response200DELETESchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200DELETESchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
@@ -550,33 +550,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	// Search //
 
 	@Override
-	public void searchSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
-			aSearchSchoolSession(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
+			aSearchSchoolAge(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolSession> listSchoolSession = a.result();
-					response200SearchSchoolSession(listSchoolSession, b -> {
+					SearchList<SchoolAge> listSchoolAge = a.result();
+					response200SearchSchoolAge(listSchoolAge, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-			QueryResponse responseSearch = listSchoolSession.getQueryResponse();
-			SolrDocumentList solrDocuments = listSchoolSession.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolAge.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolAge.getSolrDocumentList();
 			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
 			Long transmissionInMillis = responseSearch.getElapsedTime();
 			Long startNum = responseSearch.getResults().getStart();
@@ -593,7 +593,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			json.put("searchTime", searchTime);
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
-			listSchoolSession.getList().stream().forEach(o -> {
+			listSchoolAge.getList().stream().forEach(o -> {
 				l.add(JsonObject.mapFrom(o));
 			});
 			json.put("list", l);
@@ -609,22 +609,22 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	// SearchPage //
 
 	@Override
-	public void searchpageSchoolSessionId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		searchpageSchoolSession(operationRequest, eventHandler);
+	public void searchpageSchoolAgeId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageSchoolAge(operationRequest, eventHandler);
 	}
 
 	@Override
-	public void searchpageSchoolSession(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchpageSchoolAge(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest);
-			sqlSchoolSession(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest);
+			sqlSchoolAge(siteRequest, a -> {
 				if(a.succeeded()) {
-					userSchoolSession(siteRequest, b -> {
+					userSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolSession(siteRequest, false, true, "/enUS/session", c -> {
+							aSearchSchoolAge(siteRequest, false, true, "/enUS/age", c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolSession> listSchoolSession = c.result();
-									response200SearchPageSchoolSession(listSchoolSession, d -> {
+									SearchList<SchoolAge> listSchoolAge = c.result();
+									response200SearchPageSchoolAge(listSchoolAge, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -636,48 +636,48 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolSession(siteRequest, eventHandler, f);
+																errorSchoolAge(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														errorSchoolAge(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+											errorSchoolAge(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolSession(siteRequest, eventHandler, c);
+									errorSchoolAge(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolSession(siteRequest, eventHandler, b);
+							errorSchoolAge(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolSession(siteRequest, eventHandler, a);
+					errorSchoolAge(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolSession(null, eventHandler, Future.failedFuture(e));
+			errorSchoolAge(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchPageSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchPageSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(listSchoolSession.getSiteRequest_(), buffer);
-			SessionPage page = new SessionPage();
+			AllWriter w = AllWriter.create(listSchoolAge.getSiteRequest_(), buffer);
+			AgePage page = new AgePage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/session");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/age");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
-			page.setListSchoolSession(listSchoolSession);
-			page.initDeepSessionPage(siteRequest);
+			page.setListSchoolAge(listSchoolAge);
+			page.initDeepAgePage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -685,7 +685,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public String varIndexedSchoolSession(String entityVar) {
+	public String varIndexedSchoolAge(String entityVar) {
 		switch(entityVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -711,10 +711,12 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "seasonKey_indexed_long";
 			case "sessionKey":
 				return "sessionKey_indexed_long";
+			case "ageKey":
+				return "ageKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
-			case "ageKeys":
-				return "ageKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":
@@ -731,8 +733,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "yearStart_indexed_date";
 			case "yearEnd":
 				return "yearEnd_indexed_date";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
+			case "seasonStart":
+				return "seasonStart_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -749,8 +751,14 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "sessionEndDay_indexed_date";
 			case "sessionNameComplete":
 				return "sessionNameComplete_indexed_string";
-			case "sessionId":
-				return "sessionId_indexed_string";
+			case "ageStart":
+				return "ageStart_indexed_int";
+			case "ageEnd":
+				return "ageEnd_indexed_int";
+			case "ageNameComplete":
+				return "ageNameComplete_indexed_string";
+			case "ageId":
+				return "ageId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
@@ -760,7 +768,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public String varSearchSchoolSession(String entityVar) {
+	public String varSearchSchoolAge(String entityVar) {
 		switch(entityVar) {
 			case "objectSuggest":
 				return "objectSuggest_suggested";
@@ -769,7 +777,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public String varSuggereSchoolSession(String entityVar) {
+	public String varSuggereSchoolAge(String entityVar) {
 		switch(entityVar) {
 			case "objectSuggest":
 				return "objectSuggest_suggested";
@@ -780,7 +788,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	// Partagé //
 
-	public void errorSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
+	public void errorSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -817,7 +825,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void sqlSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
 
@@ -845,11 +853,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForSchoolSession(SiteContextEnUS siteContext, OperationRequest operationRequest) {
-		return generateSiteRequestEnUSForSchoolSession(siteContext, operationRequest, null);
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolAge(SiteContextEnUS siteContext, OperationRequest operationRequest) {
+		return generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, null);
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForSchoolSession(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolAge(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
 		Vertx vertx = siteContext.getVertx();
 		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 		siteRequest.setJsonObject(body);
@@ -862,7 +870,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		return siteRequest;
 	}
 
-	public void userSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void userSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -962,21 +970,21 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void aSearchSchoolSession(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolSession>>> eventHandler) {
+	public void aSearchSchoolAge(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolAge>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolSession> listSearch = new SearchList<SchoolSession>();
+			SearchList<SchoolAge> listSearch = new SearchList<SchoolAge>();
 			listSearch.setPopulate(populate);
 			listSearch.setStore(store);
 			listSearch.setQuery("*:*");
-			listSearch.setC(SchoolSession.class);
+			listSearch.setC(SchoolAge.class);
 			if(entityList != null)
 			listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.session.SchoolSession"));
+			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.age.SchoolAge"));
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -985,7 +993,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR sessionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR ageId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1004,7 +1012,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolSession(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolAge(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1018,18 +1026,18 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolSession(entityVar);
+								varIndexed = varIndexedSchoolAge(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolSession(entityVar);
+								varIndexed = varIndexedSchoolAge(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "fl":
 								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchoolSession(entityVar);
+								varIndexed = varIndexedSchoolAge(entityVar);
 								listSearch.addField(varIndexed);
 								break;
 							case "start":
@@ -1053,7 +1061,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void defineSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void defineSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1081,7 +1089,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void attributeSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void attributeSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1114,7 +1122,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void indexSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void indexSchoolAge(SchoolAge o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			o.initDeepForClass(siteRequest);

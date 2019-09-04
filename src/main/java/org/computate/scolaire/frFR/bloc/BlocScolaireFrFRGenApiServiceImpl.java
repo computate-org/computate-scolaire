@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session;
+package org.computate.scolaire.frFR.bloc;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -72,39 +72,39 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 /**
  * Traduire: false
  **/
-public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFRGenApiService {
+public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(SessionScolaireFrFRGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(BlocScolaireFrFRGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "SessionScolaireFrFRApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "BlocScolaireFrFRApiServiceImpl";
 
 	protected SiteContexteFrFR siteContexte;
 
-	public SessionScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
+	public BlocScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		SessionScolaireFrFRGenApiService service = SessionScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+		BlocScolaireFrFRGenApiService service = BlocScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
 
 	@Override
-	public void postSessionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void postBlocScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete, body);
-			sqlSessionScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+			sqlBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPOSTSessionScolaire(requeteSite, b -> {
+					creerPOSTBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							SessionScolaire sessionScolaire = b.result();
-							sqlPOSTSessionScolaire(sessionScolaire, c -> {
+							BlocScolaire blocScolaire = b.result();
+							sqlPOSTBlocScolaire(blocScolaire, c -> {
 								if(c.succeeded()) {
-									definirSessionScolaire(sessionScolaire, d -> {
+									definirBlocScolaire(blocScolaire, d -> {
 										if(d.succeeded()) {
-											attribuerSessionScolaire(sessionScolaire, e -> {
+											attribuerBlocScolaire(blocScolaire, e -> {
 												if(e.succeeded()) {
-													indexerSessionScolaire(sessionScolaire, f -> {
+													indexerBlocScolaire(blocScolaire, f -> {
 														if(f.succeeded()) {
-															reponse200POSTSessionScolaire(sessionScolaire, g -> {
+															reponse200POSTBlocScolaire(blocScolaire, g -> {
 																if(f.succeeded()) {
 																	SQLConnection connexionSql = requeteSite.getConnexionSql();
 																	connexionSql.commit(h -> {
@@ -113,59 +113,59 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 																				if(a.succeeded()) {
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					erreurSessionScolaire(requeteSite, gestionnaireEvenements, i);
+																					erreurBlocScolaire(requeteSite, gestionnaireEvenements, i);
 																				}
 																			});
 																		} else {
-																			erreurSessionScolaire(requeteSite, gestionnaireEvenements, h);
+																			erreurBlocScolaire(requeteSite, gestionnaireEvenements, h);
 																		}
 																	});
 																} else {
-																	erreurSessionScolaire(requeteSite, gestionnaireEvenements, g);
+																	erreurBlocScolaire(requeteSite, gestionnaireEvenements, g);
 																}
 															});
 														} else {
-															erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
+															erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
 														}
 													});
 												} else {
-													erreurSessionScolaire(requeteSite, gestionnaireEvenements, e);
+													erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
 												}
 											});
 										} else {
-											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void creerPOSTSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
+	public void creerPOSTBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_creer
-					, new JsonArray(Arrays.asList(SessionScolaire.class.getCanonicalName(), utilisateurId))
+					, new JsonArray(Arrays.asList(BlocScolaire.class.getCanonicalName(), utilisateurId))
 					, creerAsync
 			-> {
 				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = creerLigne.getLong(0);
-				SessionScolaire o = new SessionScolaire();
+				BlocScolaire o = new BlocScolaire();
 				o.setPk(pk);
 				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
@@ -175,7 +175,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void sqlPOSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlPOSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -188,13 +188,13 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "sessionJourDebut":
+					case "ageDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionJourDebut", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageDebut", jsonObject.getInteger(entiteVar), pk));
 						break;
-					case "sessionJourFin":
+					case "ageFin":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionJourFin", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageFin", jsonObject.getInteger(entiteVar), pk));
 						break;
 					}
 				}
@@ -211,7 +211,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200POSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200POSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = new JsonObject();
@@ -224,17 +224,17 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	// PATCH //
 
 	@Override
-	public void patchSessionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchBlocScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete, body);
-			sqlSessionScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+			sqlBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurSessionScolaire(requeteSite, b -> {
+					utilisateurBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheSessionScolaire(requeteSite, false, true, null, c -> {
+							rechercheBlocScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									listePATCHSessionScolaire(listeSessionScolaire, d -> {
+									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
+									listePATCHBlocScolaire(listeBlocScolaire, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -246,79 +246,79 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurSessionScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void listePATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-		listeSessionScolaire.getList().forEach(o -> {
+		listeBlocScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSessionScolaire(o, gestionnaireEvenements)
+				futurePATCHBlocScolaire(o, gestionnaireEvenements)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHSessionScolaire(listeSessionScolaire, gestionnaireEvenements);
+				reponse200PATCHBlocScolaire(listeBlocScolaire, gestionnaireEvenements);
 			} else {
-				erreurSessionScolaire(listeSessionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
+				erreurBlocScolaire(listeBlocScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<SessionScolaire> futurePATCHSessionScolaire(SessionScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		Future<SessionScolaire> future = Future.future();
+	public Future<BlocScolaire> futurePATCHBlocScolaire(BlocScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		Future<BlocScolaire> future = Future.future();
 		try {
-			sqlPATCHSessionScolaire(o, a -> {
+			sqlPATCHBlocScolaire(o, a -> {
 				if(a.succeeded()) {
-					SessionScolaire sessionScolaire = a.result();
-					definirSessionScolaire(sessionScolaire, b -> {
+					BlocScolaire blocScolaire = a.result();
+					definirBlocScolaire(blocScolaire, b -> {
 						if(b.succeeded()) {
-							attribuerSessionScolaire(sessionScolaire, c -> {
+							attribuerBlocScolaire(blocScolaire, c -> {
 								if(c.succeeded()) {
-									indexerSessionScolaire(sessionScolaire, d -> {
+									indexerBlocScolaire(blocScolaire, d -> {
 										if(d.succeeded()) {
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurSessionScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSessionScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurSessionScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
 				}
 			});
 			return future;
@@ -327,7 +327,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void sqlPATCHSessionScolaire(SessionScolaire o, Handler<AsyncResult<SessionScolaire>> gestionnaireEvenements) {
+	public void sqlPATCHBlocScolaire(BlocScolaire o, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -336,10 +336,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
-			SessionScolaire o2 = new SessionScolaire();
+			BlocScolaire o2 = new BlocScolaire();
 
 			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.session.SessionScolaire"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.bloc.BlocScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
@@ -382,24 +382,24 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
 						}
 						break;
-					case "setSessionJourDebut":
-						o2.setSessionJourDebut(requeteJson.getString(methodeNom));
-						if(o2.getSessionJourDebut() == null) {
+					case "setAgeDebut":
+						o2.setAgeDebut(requeteJson.getInteger(methodeNom));
+						if(o2.getAgeDebut() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionJourDebut"));
+							patchSqlParams.addAll(Arrays.asList(pk, "ageDebut"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionJourDebut", o2.strSessionJourDebut(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageDebut", o2.strAgeDebut(), pk));
 						}
 						break;
-					case "setSessionJourFin":
-						o2.setSessionJourFin(requeteJson.getString(methodeNom));
-						if(o2.getSessionJourFin() == null) {
+					case "setAgeFin":
+						o2.setAgeFin(requeteJson.getInteger(methodeNom));
+						if(o2.getAgeFin() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionJourFin"));
+							patchSqlParams.addAll(Arrays.asList(pk, "ageFin"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionJourFin", o2.strSessionJourFin(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageFin", o2.strAgeFin(), pk));
 						}
 						break;
 				}
@@ -409,7 +409,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SessionScolaire o3 = new SessionScolaire();
+				BlocScolaire o3 = new BlocScolaire();
 				o3.setRequeteSite_(o.getRequeteSite_());
 				o3.setPk(pk);
 				gestionnaireEvenements.handle(Future.succeededFuture(o3));
@@ -419,9 +419,9 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200PATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
@@ -432,34 +432,34 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	// GET //
 
 	@Override
-	public void getSessionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void getBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
-			rechercheSessionScolaire(requeteSite, false, true, null, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
+			rechercheBlocScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<SessionScolaire> listeSessionScolaire = a.result();
-					reponse200GETSessionScolaire(listeSessionScolaire, b -> {
+					ListeRecherche<BlocScolaire> listeBlocScolaire = a.result();
+					reponse200GETBlocScolaire(listeBlocScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200GETSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200GETBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-			SolrDocumentList documentsSolr = listeSessionScolaire.getSolrDocumentList();
+			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+			SolrDocumentList documentsSolr = listeBlocScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeSessionScolaire.get(0));
+			JsonObject json = JsonObject.mapFrom(listeBlocScolaire.get(0));
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -469,17 +469,17 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	// DELETE //
 
 	@Override
-	public void deleteSessionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void deleteBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
-			sqlSessionScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
+			sqlBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					rechercheSessionScolaire(requeteSite, false, true, null, b -> {
+					rechercheBlocScolaire(requeteSite, false, true, null, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<SessionScolaire> listeSessionScolaire = b.result();
-							supprimerDELETESessionScolaire(requeteSite, c -> {
+							ListeRecherche<BlocScolaire> listeBlocScolaire = b.result();
+							supprimerDELETEBlocScolaire(requeteSite, c -> {
 								if(c.succeeded()) {
-									reponse200DELETESessionScolaire(requeteSite, d -> {
+									reponse200DELETEBlocScolaire(requeteSite, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -491,36 +491,36 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurSessionScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void supprimerDELETESessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void supprimerDELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -528,7 +528,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, SessionScolaire.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, BlocScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
 			-> {
 				gestionnaireEvenements.handle(Future.succeededFuture());
@@ -538,7 +538,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200DELETESessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200DELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
@@ -550,33 +550,33 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	// Recherche //
 
 	@Override
-	public void rechercheSessionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
-			rechercheSessionScolaire(requeteSite, false, true, null, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
+			rechercheBlocScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<SessionScolaire> listeSessionScolaire = a.result();
-					reponse200RechercheSessionScolaire(listeSessionScolaire, b -> {
+					ListeRecherche<BlocScolaire> listeBlocScolaire = a.result();
+					reponse200RechercheBlocScolaire(listeBlocScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200RechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200RechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-			QueryResponse reponseRecherche = listeSessionScolaire.getQueryResponse();
-			SolrDocumentList documentsSolr = listeSessionScolaire.getSolrDocumentList();
+			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+			QueryResponse reponseRecherche = listeBlocScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeBlocScolaire.getSolrDocumentList();
 			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
 			Long millisTransmission = reponseRecherche.getElapsedTime();
 			Long numCommence = reponseRecherche.getResults().getStart();
@@ -593,7 +593,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			json.put("tempsRecherche", tempsRecherche);
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
-			listeSessionScolaire.getList().stream().forEach(o -> {
+			listeBlocScolaire.getList().stream().forEach(o -> {
 				l.add(JsonObject.mapFrom(o));
 			});
 			json.put("liste", l);
@@ -609,22 +609,22 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	// PageRecherche //
 
 	@Override
-	public void pagerechercheSessionScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		pagerechercheSessionScolaire(operationRequete, gestionnaireEvenements);
+	public void pagerechercheBlocScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		pagerechercheBlocScolaire(operationRequete, gestionnaireEvenements);
 	}
 
 	@Override
-	public void pagerechercheSessionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void pagerechercheBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
-			sqlSessionScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
+			sqlBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurSessionScolaire(requeteSite, b -> {
+					utilisateurBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheSessionScolaire(requeteSite, false, true, "/frFR/session", c -> {
+							rechercheBlocScolaire(requeteSite, false, true, "/frFR/bloc", c -> {
 								if(c.succeeded()) {
-									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									reponse200PageRechercheSessionScolaire(listeSessionScolaire, d -> {
+									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
+									reponse200PageRechercheBlocScolaire(listeBlocScolaire, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -636,48 +636,48 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurSessionScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurSessionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200PageRechercheSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PageRechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
 			Buffer buffer = Buffer.buffer();
-			ToutEcrivain w = ToutEcrivain.creer(listeSessionScolaire.getRequeteSite_(), buffer);
-			SessionPage page = new SessionPage();
+			ToutEcrivain w = ToutEcrivain.creer(listeBlocScolaire.getRequeteSite_(), buffer);
+			BlocPage page = new BlocPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/session");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/bloc");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
-			page.setListeSessionScolaire(listeSessionScolaire);
-			page.initLoinSessionPage(requeteSite);
+			page.setListeBlocScolaire(listeBlocScolaire);
+			page.initLoinBlocPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -685,7 +685,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public String varIndexeSessionScolaire(String entiteVar) {
+	public String varIndexeBlocScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -711,10 +711,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "saisonCle_indexed_long";
 			case "sessionCle":
 				return "sessionCle_indexed_long";
+			case "ageCle":
+				return "ageCle_indexed_long";
+			case "blocCle":
+				return "blocCle_indexed_long";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
-			case "ageCles":
-				return "ageCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":
@@ -749,8 +751,14 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "sessionJourFin_indexed_date";
 			case "sessionNomComplet":
 				return "sessionNomComplet_indexed_string";
-			case "sessionId":
-				return "sessionId_indexed_string";
+			case "ageDebut":
+				return "ageDebut_indexed_int";
+			case "ageFin":
+				return "ageFin_indexed_int";
+			case "ageNomComplet":
+				return "ageNomComplet_indexed_string";
+			case "ageId":
+				return "ageId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
@@ -760,7 +768,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public String varRechercheSessionScolaire(String entiteVar) {
+	public String varRechercheBlocScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
@@ -769,7 +777,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public String varSuggereSessionScolaire(String entiteVar) {
+	public String varSuggereBlocScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
@@ -780,7 +788,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 	// Partagé //
 
-	public void erreurSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
+	public void erreurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -817,7 +825,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void sqlSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
@@ -845,11 +853,11 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourSessionScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
-		return genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete, null);
+	public RequeteSiteFrFR genererRequeteSiteFrFRPourBlocScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
+		return genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, null);
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourSessionScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
+	public RequeteSiteFrFR genererRequeteSiteFrFRPourBlocScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
 		Vertx vertx = siteContexte.getVertx();
 		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
 		requeteSite.setObjetJson(body);
@@ -862,7 +870,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		return requeteSite;
 	}
 
-	public void utilisateurSessionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void utilisateurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -962,21 +970,21 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void rechercheSessionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<SessionScolaire>>> gestionnaireEvenements) {
+	public void rechercheBlocScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<BlocScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+			ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
 			listeRecherche.setPeupler(peupler);
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(SessionScolaire.class);
+			listeRecherche.setC(BlocScolaire.class);
 			if(entiteListe != null)
 			listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.session.SessionScolaire"));
+			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.bloc.BlocScolaire"));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -985,7 +993,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR sessionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR ageId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1004,7 +1012,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheSessionScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheBlocScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1018,18 +1026,18 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeSessionScolaire(entiteVar);
+								varIndexe = varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeSessionScolaire(entiteVar);
+								varIndexe = varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "fl":
 								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeSessionScolaire(entiteVar);
+								varIndexe = varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
@@ -1053,7 +1061,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void definirSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void definirBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1081,7 +1089,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void attribuerSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void attribuerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1114,7 +1122,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void indexerSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void indexerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			o.initLoinPourClasse(requeteSite);

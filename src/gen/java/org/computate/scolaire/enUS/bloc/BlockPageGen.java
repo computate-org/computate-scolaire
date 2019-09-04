@@ -1,0 +1,251 @@
+package org.computate.scolaire.enUS.bloc;
+
+import java.util.Objects;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.bloc.BlockGenPage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.apache.commons.lang3.StringUtils;
+
+/**	
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.bloc.BlockPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/>
+ **/
+public abstract class BlockPageGen<DEV> extends BlockGenPage {
+
+	//////////////
+	// initDeep //
+	//////////////
+
+	protected boolean alreadyInitializedBlockPage = false;
+
+	public BlockPage initDeepBlockPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedBlockPage) {
+			alreadyInitializedBlockPage = true;
+			initDeepBlockPage();
+		}
+		return (BlockPage)this;
+	}
+
+	public void initDeepBlockPage() {
+		super.initDeepBlockGenPage(siteRequest_);
+		initBlockPage();
+	}
+
+	public void initBlockPage() {
+	}
+
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepBlockPage(siteRequest_);
+	}
+
+	/////////////////
+	// siteRequest //
+	/////////////////
+
+	public void siteRequestBlockPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestBlockGenPage(siteRequest_);
+	}
+
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestBlockPage(siteRequest_);
+	}
+
+	/////////////
+	// obtain //
+	/////////////
+
+	@Override public Object obtainForClass(String var) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		for(String v : vars) {
+			if(o == null)
+				o = obtainBlockPage(v);
+			else if(o instanceof Cluster) {
+				Cluster cluster = (Cluster)o;
+				o = cluster.obtainForClass(v);
+			}
+		}
+		return o;
+	}
+	public Object obtainBlockPage(String var) {
+		BlockPage oBlockPage = (BlockPage)this;
+		switch(var) {
+			default:
+				return super.obtainBlockGenPage(var);
+		}
+	}
+
+	///////////////
+	// attribute //
+	///////////////
+
+	@Override public boolean attributeForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		for(String v : vars) {
+			if(o == null)
+				o = attributeBlockPage(v, val);
+			else if(o instanceof Cluster) {
+				Cluster cluster = (Cluster)o;
+				o = cluster.attributeForClass(v, val);
+			}
+		}
+		return o != null;
+	}
+	public Object attributeBlockPage(String var, Object val) {
+		BlockPage oBlockPage = (BlockPage)this;
+		switch(var) {
+			default:
+				return super.attributeBlockGenPage(var, val);
+		}
+	}
+
+	/////////////
+	// define //
+	/////////////
+
+	@Override public boolean defineForClass(String var, String val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineBlockPage(v, val);
+				else if(o instanceof Cluster) {
+					Cluster cluster = (Cluster)o;
+					o = cluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineBlockPage(String var, String val) {
+		switch(var) {
+			default:
+				return super.defineBlockGenPage(var, val);
+		}
+	}
+
+	/////////////////
+	// htmlScripts //
+	/////////////////
+
+	@Override public void htmlScripts() {
+		htmlScriptsBlockPage();
+		super.htmlScripts();
+	}
+
+	public void htmlScriptsBlockPage() {
+	}
+
+	////////////////
+	// htmlScript //
+	////////////////
+
+	@Override public void htmlScript() {
+		htmlScriptBlockPage();
+		super.htmlScript();
+	}
+
+	public void htmlScriptBlockPage() {
+	}
+
+	//////////////
+	// htmlBody //
+	//////////////
+
+	@Override public void htmlBody() {
+		htmlBodyBlockPage();
+		super.htmlBody();
+	}
+
+	public void htmlBodyBlockPage() {
+	}
+
+	//////////
+	// html //
+	//////////
+
+	@Override public void html() {
+		htmlBlockPage();
+		super.html();
+	}
+
+	public void htmlBlockPage() {
+	}
+
+	//////////////
+	// htmlMeta //
+	//////////////
+
+	@Override public void htmlMeta() {
+		htmlMetaBlockPage();
+		super.htmlMeta();
+	}
+
+	public void htmlMetaBlockPage() {
+	}
+
+	////////////////
+	// htmlStyles //
+	////////////////
+
+	@Override public void htmlStyles() {
+		htmlStylesBlockPage();
+		super.htmlStyles();
+	}
+
+	public void htmlStylesBlockPage() {
+	}
+
+	///////////////
+	// htmlStyle //
+	///////////////
+
+	@Override public void htmlStyle() {
+		htmlStyleBlockPage();
+		super.htmlStyle();
+	}
+
+	public void htmlStyleBlockPage() {
+	}
+
+	//////////////
+	// hashCode //
+	//////////////
+
+	@Override public int hashCode() {
+		return Objects.hash(super.hashCode());
+	}
+
+	////////////
+	// equals //
+	////////////
+
+	@Override public boolean equals(Object o) {
+		if(this == o)
+			return true;
+		if(!(o instanceof BlockPage))
+			return false;
+		BlockPage that = (BlockPage)o;
+		return super.equals(o);
+	}
+
+	//////////////
+	// toString //
+	//////////////
+
+	@Override public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString() + "\n");
+		sb.append("BlockPage { ");
+		sb.append(" }");
+		return sb.toString();
+	}
+}

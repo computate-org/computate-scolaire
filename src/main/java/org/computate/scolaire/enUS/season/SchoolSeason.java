@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.season;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,8 +24,6 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	}
 
 	protected void _enrollmentKeys(List<Long> o) {}
-
-	protected void _seasonKeys(List<Long> o) {}
 
 	protected void _sessionKeys(List<Long> o) {}
 
@@ -76,6 +75,8 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	protected void _seasonSummer(Wrap<Boolean> c) {}
 
 	protected void _seasonWinter(Wrap<Boolean> c) {}
+
+	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {}
 
 	protected void _seasonNameComplete(Wrap<String> c) {
 		String o;

@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.saison; 
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
@@ -54,8 +55,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Var.enUS: schoolKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 3
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
@@ -100,14 +99,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 */
 	protected void _inscriptionCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKeys
-	 * Indexe: true
-	 * Stocke: true
-	 */
-	protected void _saisonCles(List<Long> o) {}
 
 	/**
 	 * {@inheritDoc}
@@ -275,6 +266,19 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * NomAffichage.enUS: winter
 	 */                   
 	protected void _saisonHiver(Couverture<Boolean> c) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonEnrollmentFee
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 * NomAffichage.frFR: frais d'inscription
+	 * NomAffichage.enUS: enrollment fee
+	 */                   
+	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {}
 
 	/**   
 	 * {@inheritDoc}

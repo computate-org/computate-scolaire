@@ -200,6 +200,10 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("seasonWinter", jsonObject.getBoolean(entityVar), pk));
 						break;
+					case "seasonEnrollmentFee":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", jsonObject.getDouble(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -414,6 +418,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("seasonWinter", o2.strSeasonWinter(), pk));
+						}
+						break;
+					case "setSeasonEnrollmentFee":
+						o2.setSeasonEnrollmentFee(requestJson.getDouble(methodName));
+						if(o2.getSeasonEnrollmentFee() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seasonEnrollmentFee"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", o2.strSeasonEnrollmentFee(), pk));
 						}
 						break;
 				}
@@ -727,8 +741,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "seasonKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
 			case "sessionKeys":
 				return "sessionKeys_indexed_longs";
 			case "educationSort":
@@ -751,6 +763,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
 				return "seasonWinter_indexed_boolean";
+			case "seasonEnrollmentFee":
+				return "seasonEnrollmentFee_indexed_double";
 			case "seasonNameComplete":
 				return "seasonNameComplete_indexed_string";
 			case "seasonId":

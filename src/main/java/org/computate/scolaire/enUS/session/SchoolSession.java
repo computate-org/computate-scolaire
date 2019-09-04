@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.session;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,8 +28,6 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	protected void _enrollmentKeys(List<Long> o) {}
 
 	protected void _ageKeys(List<Long> o) {}
-
-	protected void _sessionKeys(List<Long> o) {}
 
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(4);
@@ -77,7 +76,7 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season.getYearStart());
 	}
 
-	protected void _seasonStart(Wrap<LocalDate> c) {
+	protected void _seasonStartDay(Wrap<LocalDate> c) {
 		if(season != null)
 			c.o(season.getSeasonStartDay());
 	}
@@ -90,6 +89,11 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	protected void _seasonWinter(Wrap<Boolean> c) {
 		if(season != null)
 			c.o(season.getSeasonWinter());
+	}
+
+	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
+		if(season != null)
+			c.o(season.getSeasonEnrollmentFee());
 	}
 
 	protected void _seasonNameComplete(Wrap<String> c) {
@@ -105,10 +109,6 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	protected void _sessionStartDay(Wrap<LocalDate> c) {}
 
 	protected void _sessionEndDay(Wrap<LocalDate> c) {}
-
-	protected void _sessionSummer(Wrap<Boolean> c) {}
-
-	protected void _sessionWinter(Wrap<Boolean> c) {}
 
 	protected void _sessionNameComplete(Wrap<String> c) {
 		String o;
@@ -144,7 +144,7 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	@Override()
 	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolSeason.class.getCanonicalName());
+		l.add(SchoolSession.class.getCanonicalName());
 		super._classCanonicalNames(l);
 	}
 }

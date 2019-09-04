@@ -200,6 +200,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("saisonHiver", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "saisonFraisInscription":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("saisonFraisInscription", jsonObject.getDouble(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -414,6 +418,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("saisonHiver", o2.strSaisonHiver(), pk));
+						}
+						break;
+					case "setSaisonFraisInscription":
+						o2.setSaisonFraisInscription(requeteJson.getDouble(methodeNom));
+						if(o2.getSaisonFraisInscription() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "saisonFraisInscription"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("saisonFraisInscription", o2.strSaisonFraisInscription(), pk));
 						}
 						break;
 				}
@@ -727,8 +741,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "saisonCle_indexed_long";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
 			case "sessionCles":
 				return "sessionCles_indexed_longs";
 			case "scolaireTri":
@@ -751,6 +763,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "saisonEte_indexed_boolean";
 			case "saisonHiver":
 				return "saisonHiver_indexed_boolean";
+			case "saisonFraisInscription":
+				return "saisonFraisInscription_indexed_double";
 			case "saisonNomComplet":
 				return "saisonNomComplet_indexed_string";
 			case "saisonId":

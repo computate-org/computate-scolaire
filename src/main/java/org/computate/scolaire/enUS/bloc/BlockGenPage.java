@@ -1,12 +1,4 @@
-
-
-
-
-
-
-
-
-package org.computate.scolaire.enUS.session;
+package org.computate.scolaire.enUS.bloc;
 
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -37,25 +29,25 @@ import java.util.List;
 /**
  * Translate: false
  **/
-public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
+public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 	/**
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _listSchoolSession(Wrap<SearchList<SchoolSession>> c) {
+	protected void _listSchoolBlock(Wrap<SearchList<SchoolBlock>> c) {
 	}
 
-	protected void _schoolSession(Wrap<SchoolSession> c) {
-		if(listSchoolSession != null && listSchoolSession.size() == 1)
-			c.o(listSchoolSession.get(0));
+	protected void _schoolBlock(Wrap<SchoolBlock> c) {
+		if(listSchoolBlock != null && listSchoolBlock.size() == 1)
+			c.o(listSchoolBlock.get(0));
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(schoolSession != null)
-			c.o("a session");
-		else if(listSchoolSession == null || listSchoolSession.size() == 0)
-			c.o("no session found");
+		if(schoolBlock != null)
+			c.o("a block");
+		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
+			c.o("no block found");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -67,18 +59,18 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolSession != null)
+		if(schoolBlock != null)
 			c.o("");
-		else if(listSchoolSession == null || listSchoolSession.size() == 0)
-			c.o("no session found");
+		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
+			c.o("no block found");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enUS/session");
+		c.o("/enUS/block");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enUS/session-999.png");
+			c.o("/png/enUS/block-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -86,29 +78,29 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _contextIconName(Wrap<String> c) {
-			c.o("graduation-cap");
+			c.o("bell-o");
 	}
 
-	@Override public void initDeepSessionGenPage() {
-		initSessionGenPage();
+	@Override public void initDeepBlockGenPage() {
+		initBlockGenPage();
 		super.initDeepPageLayout();
 	}
 
-	@Override public void htmlScriptsSessionGenPage() {
-		e("script").a("src", staticBaseUrl, "/js/enUS/SessionPage.js").f().g("script");
+	@Override public void htmlScriptsBlockGenPage() {
+		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
 	}
 
-	@Override public void htmlScriptSessionGenPage() {
+	@Override public void htmlScriptBlockGenPage() {
 		l("$(document).ready(function() {");
 		l("});");
 	}
 
-	public void htmlFormPageSchoolSession(SchoolSession o) {
+	public void htmlFormPageSchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("class", "").f().sx("primary key").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
@@ -124,7 +116,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("class", "").f().sx("created").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
@@ -140,7 +132,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("class", "").f().sx("modified").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
@@ -156,13 +148,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("class", "").f().sx("ID").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strSessionId()).g("span");
+									e("span").f().sx(o.strAgeId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -174,13 +166,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("class", "").f().sx("season").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("school").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strSeasonKey()).g("span");
+									e("span").f().sx(o.strSchoolKey()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -189,7 +181,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("key").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strAgeKey()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -197,29 +205,30 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							LocalDate val = o.getSessionStartDay();
-							{ e("div").a("class", "w3-cell-row w3-green ").f();
-								e("label").a("for", "Page_sessionStartDay").a("class", "").f().sx("start of the session").g("label");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_ageStart").a("class", "").f().sx("start of the age group").g("label");
 							} g("div");
-							{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+
 									e("input")
 										.a("type", "text")
-										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "MM/DD/YYYY")
-										.a("data-timeformat", "MM/DD/YYYY")
-										.a("id", "Page_sessionStartDay")
+										.a("placeholder", "start of the age group")
+										.a("class", "setAgeStart w3-input w3-border ")
+										.a("name", "setAgeStart")
+										.a("id", "Page_ageStart")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', s, function() { addGlow($('#Page_sessionStartDay')); }, function() { ajouterErreur($('#Page_sessionStartDay')); }); } ")
-										.fg();
+										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setAgeStart', $(this).val(), function() { addGlow($('#Page_ageStart')); }, function() { ajouterErreur($('#Page_ageStart')); }); ")
+										.a("value", o.strAgeStart())
+									.fg();
+
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#Page_sessionStartDay')); $('#Page_sessionStartDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', null, $('#Page_sessionStartDay'), function() { addGlow($('#Page_sessionStartDay')); }, function() { ajouterErreur($('#Page_sessionStartDay')); }); ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "removeGlow($('#Page_ageStart')); $('#Page_ageStart').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setAgeStart', null, $('#Page_ageStart'), function() { addGlow($('#Page_ageStart')); }, function() { ajouterErreur($('#Page_ageStart')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -231,7 +240,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -239,29 +248,30 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							LocalDate val = o.getSessionEndDay();
-							{ e("div").a("class", "w3-cell-row w3-green ").f();
-								e("label").a("for", "Page_sessionEndDay").a("class", "").f().sx("end of the session").g("label");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_ageEnd").a("class", "").f().sx("end of the age group").g("label");
 							} g("div");
-							{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+
 									e("input")
 										.a("type", "text")
-										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "MM/DD/YYYY")
-										.a("data-timeformat", "MM/DD/YYYY")
-										.a("id", "Page_sessionEndDay")
+										.a("placeholder", "end of the age group")
+										.a("class", "setAgeEnd w3-input w3-border ")
+										.a("name", "setAgeEnd")
+										.a("id", "Page_ageEnd")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', s, function() { addGlow($('#Page_sessionEndDay')); }, function() { ajouterErreur($('#Page_sessionEndDay')); }); } ")
-										.fg();
+										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setAgeEnd', $(this).val(), function() { addGlow($('#Page_ageEnd')); }, function() { ajouterErreur($('#Page_ageEnd')); }); ")
+										.a("value", o.strAgeEnd())
+									.fg();
+
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#Page_sessionEndDay')); $('#Page_sessionEndDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', null, $('#Page_sessionEndDay'), function() { addGlow($('#Page_sessionEndDay')); }, function() { ajouterErreur($('#Page_sessionEndDay')); }); ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "removeGlow($('#Page_ageEnd')); $('#Page_ageEnd').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setAgeEnd', null, $('#Page_ageEnd'), function() { addGlow($('#Page_ageEnd')); }, function() { ajouterErreur($('#Page_ageEnd')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -274,12 +284,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPOSTSchoolSession(SchoolSession o) {
+	public void htmlFormPOSTSchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("primary key").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -295,7 +305,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("created").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -311,7 +321,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("modified").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -327,13 +337,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("ID").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSessionId()).g("span");
+								e("span").f().sx(o.strAgeId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -345,13 +355,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("season").g("label");
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("school").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSeasonKey()).g("span");
+								e("span").f().sx(o.strSchoolKey()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -360,7 +370,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("key").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strAgeKey()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -368,24 +394,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionStartDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "POST_sessionStartDay").a("class", "").f().sx("start of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_ageStart").a("class", "").f().sx("start of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "POST_sessionStartDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', s, function() { addGlow($('#POST_sessionStartDay')); }, function() { ajouterErreur($('#POST_sessionStartDay')); }); } ")
-									.fg();
+									.a("placeholder", "start of the age group")
+									.a("class", "valueAgeStart w3-input w3-border ")
+									.a("name", "ageStart")
+									.a("id", "POST_ageStart")
+									.a("value", o.strAgeStart())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -394,7 +419,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -402,24 +427,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionEndDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "POST_sessionEndDay").a("class", "").f().sx("end of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_ageEnd").a("class", "").f().sx("end of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "POST_sessionEndDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', s, function() { addGlow($('#POST_sessionEndDay')); }, function() { ajouterErreur($('#POST_sessionEndDay')); }); } ")
-									.fg();
+									.a("placeholder", "end of the age group")
+									.a("class", "valueAgeEnd w3-input w3-border ")
+									.a("name", "ageEnd")
+									.a("id", "POST_ageEnd")
+									.a("value", o.strAgeEnd())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -429,12 +453,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormPATCHSchoolSession(SchoolSession o) {
+	public void htmlFormPATCHSchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("primary key").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -450,7 +474,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("created").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -466,7 +490,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("modified").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -482,13 +506,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("ID").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSessionId()).g("span");
+								e("span").f().sx(o.strAgeId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -500,13 +524,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("season").g("label");
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("school").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSeasonKey()).g("span");
+								e("span").f().sx(o.strSchoolKey()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -515,7 +539,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("key").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strAgeKey()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -523,24 +563,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionStartDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "PATCH_sessionStartDay").a("class", "").f().sx("start of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_ageStart").a("class", "").f().sx("start of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "PATCH_sessionStartDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', s, function() { addGlow($('#PATCH_sessionStartDay')); }, function() { ajouterErreur($('#PATCH_sessionStartDay')); }); } ")
-									.fg();
+									.a("placeholder", "start of the age group")
+									.a("class", "setAgeStart w3-input w3-border ")
+									.a("name", "setAgeStart")
+									.a("id", "PATCH_ageStart")
+									.a("value", o.strAgeStart())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -549,7 +588,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -557,24 +596,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionEndDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "PATCH_sessionEndDay").a("class", "").f().sx("end of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_ageEnd").a("class", "").f().sx("end of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "PATCH_sessionEndDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', s, function() { addGlow($('#PATCH_sessionEndDay')); }, function() { ajouterErreur($('#PATCH_sessionEndDay')); }); } ")
-									.fg();
+									.a("placeholder", "end of the age group")
+									.a("class", "setAgeEnd w3-input w3-border ")
+									.a("name", "setAgeEnd")
+									.a("id", "PATCH_ageEnd")
+									.a("value", o.strAgeEnd())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -584,12 +622,12 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	public void htmlFormSearchSchoolSession(SchoolSession o) {
+	public void htmlFormSearchSchoolBlock(SchoolBlock o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("primary key").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -605,7 +643,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("created").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -621,7 +659,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("modified").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -637,13 +675,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("ID").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSessionId()).g("span");
+								e("span").f().sx(o.strAgeId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -655,13 +693,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("season").g("label");
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("school").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSeasonKey()).g("span");
+								e("span").f().sx(o.strSchoolKey()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -670,7 +708,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("key").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strAgeKey()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -678,24 +732,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeStart").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionStartDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "Recherche_sessionStartDay").a("class", "").f().sx("start of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_ageStart").a("class", "").f().sx("start of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "Recherche_sessionStartDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', s, function() { addGlow($('#Recherche_sessionStartDay')); }, function() { ajouterErreur($('#Recherche_sessionStartDay')); }); } ")
-									.fg();
+									.a("placeholder", "start of the age group")
+									.a("class", "valueAgeStart w3-input w3-border ")
+									.a("name", "ageStart")
+									.a("id", "Recherche_ageStart")
+									.a("value", o.strAgeStart())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -704,7 +757,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -712,24 +765,23 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSessionSessionEndDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeEnd").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSessionEndDay();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "Recherche_sessionEndDay").a("class", "").f().sx("end of the session").g("label");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_ageEnd").a("class", "").f().sx("end of the age group").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "MM/DD/YYYY")
-									.a("data-timeformat", "MM/DD/YYYY")
-									.a("id", "Recherche_sessionEndDay")
-									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', s, function() { addGlow($('#Recherche_sessionEndDay')); }, function() { ajouterErreur($('#Recherche_sessionEndDay')); }); } ")
-									.fg();
+									.a("placeholder", "end of the age group")
+									.a("class", "valueAgeEnd w3-input w3-border ")
+									.a("name", "ageEnd")
+									.a("id", "Recherche_ageEnd")
+									.a("value", o.strAgeEnd())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -739,25 +791,25 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodySessionGenPage() {
+	@Override public void htmlBodyBlockGenPage() {
 
 		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		JsonObject params = operationRequest.getParams();
-		if(listSchoolSession == null || listSchoolSession.size() == 0) {
+		if(listSchoolBlock == null || listSchoolBlock.size() == 0) {
 
 			{ e("h1").f();
 				if(contextIconCssClasses != null)
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no session found").g("span");
+				e("span").a("class", " ").f().sx("no block found").g("span");
 			} g("h1");
-		} else if(listSchoolSession != null && listSchoolSession.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+		} else if(listSchoolBlock != null && listSchoolBlock.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("a session").g("span");
+					e("span").a("class", " ").f().sx("a block").g("span");
 				} g("h1");
-				SchoolSession o = listSchoolSession.get(0);
+				SchoolBlock o = listSchoolBlock.get(0);
 				siteRequest_.setRequestPk(o.getPk());
 			}
 		} else {
@@ -765,36 +817,37 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("h1").f();
 				if(contextIconCssClasses != null)
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("sessions").g("span");
+				e("span").a("class", " ").f().sx("blocks").g("span");
 			} g("h1");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("start of the session").g("th");
-						e("th").f().sx("end of the session").g("th");
+						e("th").f().sx("start of the age group").g("th");
+						e("th").f().sx("end of the age group").g("th");
 						e("th").f().sx("primary key").g("th");
 						e("th").f().sx("created").g("th");
+						e("th").f().sx("school").g("th");
 						e("th").f().sx("modified").g("th");
-						e("th").f().sx("season").g("th");
+						e("th").f().sx("key").g("th");
 						e("th").f().sx("ID").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
-					Map<String, Map<String, List<String>>> highlighting = listSchoolSession.getQueryResponse().getHighlighting();
-					for(int i = 0; i < listSchoolSession.size(); i++) {
-						SchoolSession o = listSchoolSession.getList().get(i);
+					Map<String, Map<String, List<String>>> highlighting = listSchoolBlock.getQueryResponse().getHighlighting();
+					for(int i = 0; i < listSchoolBlock.size(); i++) {
+						SchoolBlock o = listSchoolBlock.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enUS/session/" + o.getPk();
+						String uri = "/enUS/block/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSessionStartDay());
+									sx(o.getAgeStart());
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSessionEndDay());
+									sx(o.getAgeEnd());
 								} g("a");
 							} g("td");
 							{ e("td").f();
@@ -809,17 +862,22 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
+									sx(o.getSchoolKey());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
 									sx(o.getModified());
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSeasonKey());
+									sx(o.getAgeKey());
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSessionId());
+									sx(o.getAgeId());
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -828,13 +886,13 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("table");
 		}
 
-		if(listSchoolSession != null && listSchoolSession.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			SchoolSession o = listSchoolSession.first();
+		if(listSchoolBlock != null && listSchoolBlock.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			SchoolBlock o = listSchoolBlock.first();
 
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "SchoolSessionForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "SchoolBlockForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valuePk")
@@ -842,40 +900,40 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						.a("value", o.getPk())
 						.fg();
 					} g("form");
-					htmlFormPageSchoolSession(o);
+					htmlFormPageSchoolBlock(o);
 				}
 
 			} g("div");
 		}
-		htmlBodyFormsSessionGenPage();
+		htmlBodyFormsBlockGenPage();
 	}
 
-	public void htmlBodyFormsSessionGenPage() {
+	public void htmlBodyFormsBlockGenPage() {
 		e("div").f();
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#postSchoolSessionModal').show(); ")
-			.f().sx("Create a session")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+			.a("onclick", "$('#postSchoolBlockModal').show(); ")
+			.f().sx("Create a block")
 		.g("button");
-		{ e("div").a("id", "postSchoolSessionModal").a("class", "w3-modal ").f();
+		{ e("div").a("id", "postSchoolBlockModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSessionModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Create a session").g("h2");
+				{ e("header").a("class", "w3-container w3-indigo ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolBlockModal').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Create a block").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
-					SchoolSession o = new SchoolSession();
+					SchoolBlock o = new SchoolBlock();
 
 					// Form POST
-					{ e("form").a("action", "").a("id", "postSchoolSessionForm").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPOSTSchoolSession(o);
+					{ e("form").a("action", "").a("id", "postSchoolBlockForm").a("onsubmit", "event.preventDefault(); return false; ").f();
+						htmlFormPOSTSchoolBlock(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "postSchoolSession($('#postSchoolSessionForm')); ")
-						.f().sx("Create a session")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+						.a("onclick", "postSchoolBlock($('#postSchoolBlockForm')); ")
+						.f().sx("Create a block")
 					.g("button");
 
 				} g("div");
@@ -884,38 +942,38 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#patchSchoolSessionModal').show(); ")
-			.f().sx("Modify the sessions")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+			.a("onclick", "$('#patchSchoolBlockModal').show(); ")
+			.f().sx("Modify the blocks")
 		.g("button");
-		{ e("div").a("id", "patchSchoolSessionModal").a("class", "w3-modal ").f();
+		{ e("div").a("id", "patchSchoolBlockModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSessionModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modify the sessions").g("h2");
+				{ e("header").a("class", "w3-container w3-indigo ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolBlockModal').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Modify the blocks").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
-					SchoolSession o = new SchoolSession();
+					SchoolBlock o = new SchoolBlock();
 
 					// FormFilters PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolSessionFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormSearchSchoolSession(o);
+					{ e("form").a("action", "").a("id", "patchSchoolBlockFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
+						htmlFormSearchSchoolBlock(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "aSearchSchoolSession($('#patchSchoolSessionFormFilters')); ")
-						.f().sx("Search the a session")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+						.a("onclick", "aSearchSchoolBlock($('#patchSchoolBlockFormFilters')); ")
+						.f().sx("Search the a block")
 					.g("button");
 
 
 					// FormValues PATCH
-					{ e("form").a("action", "").a("id", "patchSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHSchoolSession(o);
+					{ e("form").a("action", "").a("id", "patchSchoolBlockFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
+						htmlFormPATCHSchoolBlock(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchSchoolSession($('#patchSchoolSessionFormFilters'), $('#patchSchoolSessionFormValues')); ")
-						.f().sx("Modify the sessions")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+						.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues')); ")
+						.f().sx("Modify the blocks")
 					.g("button");
 
 				} g("div");
@@ -924,27 +982,27 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 
 		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#deleteSchoolSessionModal').show(); ")
-			.f().sx("Delete the sessions")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+			.a("onclick", "$('#deleteSchoolBlockModal').show(); ")
+			.f().sx("Delete the blocks")
 		.g("button");
-		{ e("div").a("id", "deleteSchoolSessionModal").a("class", "w3-modal ").f();
+		{ e("div").a("id", "deleteSchoolBlockModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolSessionModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Delete the sessions").g("h2");
+				{ e("header").a("class", "w3-container w3-indigo ").f();
+					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolBlockModal').hide(); ").f().sx("×").g("span");
+					e("h2").a("class", "").f().sx("Delete the blocks").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
-					SchoolSession o = new SchoolSession();
+					SchoolBlock o = new SchoolBlock();
 
 					// Form DELETE
-					{ e("form").a("action", "").a("id", "deleteSchoolSessionForm").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHSchoolSession(o);
+					{ e("form").a("action", "").a("id", "deleteSchoolBlockForm").a("onsubmit", "event.preventDefault(); return false; ").f();
+						htmlFormPATCHSchoolBlock(o);
 					} g("form");
 					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "deleteSchoolSession(); ")
-						.f().sx("Delete the sessions")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+						.a("onclick", "deleteSchoolBlock(); ")
+						.f().sx("Delete the blocks")
 					.g("button");
 
 				} g("div");
