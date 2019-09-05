@@ -38,6 +38,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		l.setQuery("*:*");
 		l.addFilterQuery("yearKeys_indexed_longs:" + pk);
 		l.setC(School.class);
+		l.setPopulate(true);
 	}
 
 	protected void _school(Wrap<School> c) {

@@ -188,14 +188,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "ageStart":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getInteger(entityVar), pk));
-						break;
-					case "ageEnd":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageEnd", jsonObject.getInteger(entityVar), pk));
-						break;
 					}
 				}
 			}
@@ -380,26 +372,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
-						}
-						break;
-					case "setAgeStart":
-						o2.setAgeStart(requestJson.getInteger(methodName));
-						if(o2.getAgeStart() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ageStart"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageStart", o2.strAgeStart(), pk));
-						}
-						break;
-					case "setAgeEnd":
-						o2.setAgeEnd(requestJson.getInteger(methodName));
-						if(o2.getAgeEnd() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ageEnd"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageEnd", o2.strAgeEnd(), pk));
 						}
 						break;
 				}
@@ -713,8 +685,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "sessionKey_indexed_long";
 			case "ageKey":
 				return "ageKey_indexed_long";
-			case "ageKey":
-				return "ageKey_indexed_long";
+			case "blockKey":
+				return "blockKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
 			case "educationSort":
@@ -727,14 +699,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
+			case "ageSort":
+				return "ageSort_indexed_int";
 			case "schoolNameComplete":
 				return "schoolNameComplete_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_date";
 			case "yearEnd":
 				return "yearEnd_indexed_date";
-			case "seasonStart":
-				return "seasonStart_indexed_date";
+			case "seasonStartDay":
+				return "seasonStartDay_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -743,10 +717,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "seasonEnrollmentFee_indexed_double";
 			case "seasonNameComplete":
 				return "seasonNameComplete_indexed_string";
-			case "seasonEnd":
-				return "seasonEnd_indexed_date";
-			case "sessionStartDay":
-				return "sessionStartDay_indexed_date";
+			case "ageStartDay":
+				return "ageStartDay_indexed_date";
 			case "sessionEndDay":
 				return "sessionEndDay_indexed_date";
 			case "sessionNameComplete":
@@ -755,10 +727,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "ageStart_indexed_int";
 			case "ageEnd":
 				return "ageEnd_indexed_int";
-			case "ageNameComplete":
-				return "ageNameComplete_indexed_string";
-			case "ageId":
-				return "ageId_indexed_string";
+			case "blocNameComplete":
+				return "blocNameComplete_indexed_string";
+			case "blocId":
+				return "blocId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
@@ -981,7 +953,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolBlock.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.bloc.SchoolBlock"));
@@ -993,7 +965,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR ageId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR blocId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1034,11 +1006,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = varIndexedSchoolBlock(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
-								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchoolBlock(entityVar);
-								listSearch.addField(varIndexed);
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;

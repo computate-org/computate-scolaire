@@ -80,7 +80,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session.getYearStart());
 	}
 
-	protected void _seasonStart(Wrap<LocalDate> c) {
+	protected void _seasonStartDay(Wrap<LocalDate> c) {
 		if(session != null)
 			c.o(session.getSeasonStartDay());
 	}

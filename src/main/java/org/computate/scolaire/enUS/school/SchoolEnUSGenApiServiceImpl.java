@@ -1069,11 +1069,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								varIndexed = varIndexedSchool(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchool(entityVar);
-								listSearch.addField(varIndexed);
-								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;
 								listSearch.setStart(aSearchStart);

@@ -733,8 +733,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "yearStart_indexed_date";
 			case "yearEnd":
 				return "yearEnd_indexed_date";
-			case "seasonStart":
-				return "seasonStart_indexed_date";
+			case "seasonStartDay":
+				return "seasonStartDay_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -981,7 +981,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolAge.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.age.SchoolAge"));
@@ -1034,11 +1034,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = varIndexedSchoolAge(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
-								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchoolAge(entityVar);
-								listSearch.addField(varIndexed);
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;

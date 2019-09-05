@@ -981,7 +981,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(AgeScolaire.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.age.AgeScolaire"));
@@ -1034,11 +1034,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = varIndexeAgeScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
-								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeAgeScolaire(entiteVar);
-								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;

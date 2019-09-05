@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -418,6 +420,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureOpenApi
 	 * r: openapi3-frFR.yaml
 	 * r.enUS: openapi3-enUS.yaml
+	 * r: /frFR/ecole
+	 * r.enUS: /enUS/school
 	 */
 	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -469,7 +473,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						session.destroy();
 					}
 					rc.clearUser();
-					rc.reroute("/");
+					rc.reroute("/frFR/ecole");
 				});
 
 				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
@@ -635,6 +639,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolSeasonEnUSGenApiService
 	 * r: SessionScolaireFrFRGenApiService
 	 * r.enUS: SchoolSessionEnUSGenApiService
+	 * r: AgeScolaireFrFRGenApiService
+	 * r.enUS: SchoolAgeEnUSGenApiService
+	 * r: BlocScolaireFrFRGenApiService
+	 * r.enUS: SchoolBlockEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */   
@@ -648,6 +656,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		AnneeScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		SaisonScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		SessionScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		AgeScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		BlocScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

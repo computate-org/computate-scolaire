@@ -967,7 +967,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolYear.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.year.SchoolYear"));
@@ -1020,11 +1020,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = varIndexedSchoolYear(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
-								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchoolYear(entityVar);
-								listSearch.addField(varIndexed);
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;

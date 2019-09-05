@@ -96,7 +96,7 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * r: peuplerPourClasse
 	 * r.enUS: populateForClass
 	 * r: stockerPourClasse
-	 * r.enUS: populateForClass
+	 * r.enUS: storeForClass
 	 * r: initLoinPourClasse
 	 * r.enUS: initDeepForClass
 	 * r: peupler

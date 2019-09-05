@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.contexte;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
+import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
@@ -12,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -32,6 +34,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Vertx vertx;
+	@JsonIgnore
 	public Couverture<Vertx> vertxCouverture = new Couverture<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
 
 	/**	<br/>L'entité « vertx »
@@ -68,6 +71,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OpenAPI3RouterFactory usineRouteur;
+	@JsonIgnore
 	public Couverture<OpenAPI3RouterFactory> usineRouteurCouverture = new Couverture<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("usineRouteur").o(usineRouteur);
 
 	/**	<br/>L'entité « usineRouteur »
@@ -96,6 +100,43 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return (SiteContexteFrFR)this;
 	}
 
+	/////////////
+	// routeur //
+	/////////////
+
+	/**	L'entité « routeur »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Router routeur;
+	@JsonIgnore
+	public Couverture<Router> routeurCouverture = new Couverture<Router>().p(this).c(Router.class).var("routeur").o(routeur);
+
+	/**	<br/>L'entité « routeur »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:routeur">Trouver l'entité routeur dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _routeur(Couverture<Router> c);
+
+	public Router getRouteur() {
+		return routeur;
+	}
+
+	public void setRouteur(Router routeur) {
+		this.routeur = routeur;
+		this.routeurCouverture.dejaInitialise = true;
+	}
+	protected SiteContexteFrFR routeurInit() {
+		if(!routeurCouverture.dejaInitialise) {
+			_routeur(routeurCouverture);
+			if(routeur == null)
+				setRouteur(routeurCouverture.o);
+		}
+		routeurCouverture.dejaInitialise(true);
+		return (SiteContexteFrFR)this;
+	}
+
 	//////////////////////
 	// gestionnaireAuth //
 	//////////////////////
@@ -104,6 +145,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OAuth2AuthHandler gestionnaireAuth;
+	@JsonIgnore
 	public Couverture<OAuth2AuthHandler> gestionnaireAuthCouverture = new Couverture<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("gestionnaireAuth").o(gestionnaireAuth);
 
 	/**	<br/>L'entité « gestionnaireAuth »
@@ -140,6 +182,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OAuth2Auth authFournisseur;
+	@JsonIgnore
 	public Couverture<OAuth2Auth> authFournisseurCouverture = new Couverture<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authFournisseur").o(authFournisseur);
 
 	/**	<br/>L'entité « authFournisseur »
@@ -176,6 +219,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected WorkerExecutor executeurTravailleur;
+	@JsonIgnore
 	public Couverture<WorkerExecutor> executeurTravailleurCouverture = new Couverture<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("executeurTravailleur").o(executeurTravailleur);
 
 	/**	<br/>L'entité « executeurTravailleur »
@@ -212,6 +256,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ConfigSite(). 
 	 */
 	protected ConfigSite configSite = new ConfigSite();
+	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
 
 	/**	<br/>L'entité « configSite »
@@ -247,6 +292,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SQLClient clientSql;
+	@JsonIgnore
 	public Couverture<SQLClient> clientSqlCouverture = new Couverture<SQLClient>().p(this).c(SQLClient.class).var("clientSql").o(clientSql);
 
 	/**	<br/>L'entité « clientSql »
@@ -283,6 +329,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected HttpSolrClient clientSolr;
+	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolr").o(clientSolr);
 
 	/**	<br/>L'entité « clientSolr »
@@ -319,6 +366,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected HttpSolrClient clientSolrComputate;
+	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrComputateCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);
 
 	/**	<br/>L'entité « clientSolrComputate »
@@ -368,6 +416,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void initSiteContexteFrFR() {
 		vertxInit();
 		usineRouteurInit();
+		routeurInit();
 		gestionnaireAuthInit();
 		authFournisseurInit();
 		executeurTravailleurInit();
@@ -405,6 +454,8 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				return oSiteContexteFrFR.vertx;
 			case "usineRouteur":
 				return oSiteContexteFrFR.usineRouteur;
+			case "routeur":
+				return oSiteContexteFrFR.routeur;
 			case "gestionnaireAuth":
 				return oSiteContexteFrFR.gestionnaireAuth;
 			case "authFournisseur":
@@ -502,7 +553,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SiteContexteFrFR {");
+		sb.append("SiteContexteFrFR { ");
 		sb.append(" }");
 		return sb.toString();
 	}

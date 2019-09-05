@@ -188,14 +188,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "ageDebut":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageDebut", jsonObject.getInteger(entiteVar), pk));
-						break;
-					case "ageFin":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageFin", jsonObject.getInteger(entiteVar), pk));
-						break;
 					}
 				}
 			}
@@ -380,26 +372,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
-						}
-						break;
-					case "setAgeDebut":
-						o2.setAgeDebut(requeteJson.getInteger(methodeNom));
-						if(o2.getAgeDebut() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ageDebut"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageDebut", o2.strAgeDebut(), pk));
-						}
-						break;
-					case "setAgeFin":
-						o2.setAgeFin(requeteJson.getInteger(methodeNom));
-						if(o2.getAgeFin() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ageFin"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageFin", o2.strAgeFin(), pk));
 						}
 						break;
 				}
@@ -727,6 +699,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "saisonTri_indexed_int";
 			case "sessionTri":
 				return "sessionTri_indexed_int";
+			case "ageTri":
+				return "ageTri_indexed_int";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "anneeDebut":
@@ -743,8 +717,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "saisonFraisInscription_indexed_double";
 			case "saisonNomComplet":
 				return "saisonNomComplet_indexed_string";
-			case "saisonFin":
-				return "saisonFin_indexed_date";
 			case "sessionJourDebut":
 				return "sessionJourDebut_indexed_date";
 			case "sessionJourFin":
@@ -755,10 +727,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "ageDebut_indexed_int";
 			case "ageFin":
 				return "ageFin_indexed_int";
-			case "ageNomComplet":
-				return "ageNomComplet_indexed_string";
-			case "ageId":
-				return "ageId_indexed_string";
+			case "blocNomComplet":
+				return "blocNomComplet_indexed_string";
+			case "blocId":
+				return "blocId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
@@ -981,7 +953,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(BlocScolaire.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.bloc.BlocScolaire"));
@@ -993,7 +965,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR ageId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR blocId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1034,11 +1006,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
-								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeBlocScolaire(entiteVar);
-								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;

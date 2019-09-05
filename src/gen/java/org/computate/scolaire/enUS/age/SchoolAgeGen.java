@@ -1753,86 +1753,86 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////////
-	// seasonStart //
-	/////////////////
+	////////////////////
+	// seasonStartDay //
+	////////////////////
 
-	/**	L'entité « seasonStart »
+	/**	L'entité « seasonStartDay »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate seasonStart;
+	protected LocalDate seasonStartDay;
 	@JsonIgnore
-	public Wrap<LocalDate> seasonStartWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStart").o(seasonStart);
+	public Wrap<LocalDate> seasonStartDayWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDay").o(seasonStartDay);
 
-	/**	<br/>L'entité « seasonStart »
+	/**	<br/>L'entité « seasonStartDay »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStart">Trouver l'entité seasonStart dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDay">Trouver l'entité seasonStartDay dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _seasonStart(Wrap<LocalDate> c);
+	protected abstract void _seasonStartDay(Wrap<LocalDate> c);
 
-	public LocalDate getSeasonStart() {
-		return seasonStart;
+	public LocalDate getSeasonStartDay() {
+		return seasonStartDay;
 	}
 
-	public void setSeasonStart(LocalDate seasonStart) {
-		this.seasonStart = seasonStart;
-		this.seasonStartWrap.alreadyInitialized = true;
+	public void setSeasonStartDay(LocalDate seasonStartDay) {
+		this.seasonStartDay = seasonStartDay;
+		this.seasonStartDayWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSeasonStart(Instant o) {
-		this.seasonStart = LocalDate.from(o);
-		this.seasonStartWrap.alreadyInitialized = true;
+	public SchoolAge setSeasonStartDay(Instant o) {
+		this.seasonStartDay = LocalDate.from(o);
+		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolAge setSeasonStart(String o) {
-		this.seasonStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.seasonStartWrap.alreadyInitialized = true;
+	public SchoolAge setSeasonStartDay(String o) {
+		this.seasonStartDay = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
-	public SchoolAge setSeasonStart(Date o) {
-		this.seasonStart = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		this.seasonStartWrap.alreadyInitialized = true;
+	public SchoolAge setSeasonStartDay(Date o) {
+		this.seasonStartDay = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
-	protected SchoolAge seasonStartInit() {
-		if(!seasonStartWrap.alreadyInitialized) {
-			_seasonStart(seasonStartWrap);
-			if(seasonStart == null)
-				setSeasonStart(seasonStartWrap.o);
+	protected SchoolAge seasonStartDayInit() {
+		if(!seasonStartDayWrap.alreadyInitialized) {
+			_seasonStartDay(seasonStartDayWrap);
+			if(seasonStartDay == null)
+				setSeasonStartDay(seasonStartDayWrap.o);
 		}
-		seasonStartWrap.alreadyInitialized(true);
+		seasonStartDayWrap.alreadyInitialized(true);
 		return (SchoolAge)this;
 	}
 
-	public Date solrSeasonStart() {
-		return seasonStart == null ? null : Date.from(seasonStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSeasonStartDay() {
+		return seasonStartDay == null ? null : Date.from(seasonStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSeasonStart() {
-		return seasonStart == null ? "" : seasonStart.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	public String strSeasonStartDay() {
+		return seasonStartDay == null ? "" : seasonStartDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
 	}
 
-	public String nomAffichageSeasonStart() {
+	public String nomAffichageSeasonStartDay() {
 		return "start of season";
 	}
 
-	public String htmTooltipSeasonStart() {
+	public String htmTooltipSeasonStartDay() {
 		return null;
 	}
 
-	public String htmSeasonStart() {
-		return seasonStart == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonStart());
+	public String htmSeasonStartDay() {
+		return seasonStartDay == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonStartDay());
 	}
 
-	public void htmSeasonStart(AllWriter r, Boolean patchRights) {
+	public void htmSeasonStartDay(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolAge", strPk(), "SeasonStart\">");
+			r.s("<div id=\"patchSchoolAge", strPk(), "SeasonStartDay\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolAge", strPk(), "SeasonStart() {");
+				r.l("		function patchSchoolAge", strPk(), "SeasonStartDay() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1845,23 +1845,23 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSeasonStart\": this.value },");
+				r.l("				data: {\"setSeasonStartDay\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonStart()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonStartDay()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"seasonStart\"");
-							r.s(" value=\"", htmSeasonStart(), "\");");
+							r.s(" name=\"seasonStartDay\"");
+							r.s(" value=\"", htmSeasonStartDay(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSeasonStart());
+				r.s(htmSeasonStartDay());
 			}
 			r.l("</div>");
 		}
@@ -3363,7 +3363,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		schoolNameCompleteInit();
 		yearStartInit();
 		yearEndInit();
-		seasonStartInit();
+		seasonStartDayInit();
 		seasonSummerInit();
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
@@ -3454,8 +3454,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.yearStart;
 			case "yearEnd":
 				return oSchoolAge.yearEnd;
-			case "seasonStart":
-				return oSchoolAge.seasonStart;
+			case "seasonStartDay":
+				return oSchoolAge.seasonStartDay;
 			case "seasonSummer":
 				return oSchoolAge.seasonSummer;
 			case "seasonWinter":
@@ -3650,10 +3650,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolAge.contains("seasonStart")) {
-				Date seasonStart = (Date)solrDocument.get("seasonStart_stored_date");
-				if(seasonStart != null)
-					oSchoolAge.setSeasonStart(seasonStart);
+			if(savesSchoolAge.contains("seasonStartDay")) {
+				Date seasonStartDay = (Date)solrDocument.get("seasonStartDay_stored_date");
+				if(seasonStartDay != null)
+					oSchoolAge.setSeasonStartDay(seasonStartDay);
 			}
 
 			if(savesSchoolAge.contains("seasonSummer")) {
@@ -3873,9 +3873,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
 			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
 		}
-		if(seasonStart != null) {
-			document.addField("seasonStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStart.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("seasonStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStart.atStartOfDay(ZoneId.of("Z"))));
+		if(seasonStartDay != null) {
+			document.addField("seasonStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("seasonStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.of("Z"))));
 		}
 		if(seasonSummer != null) {
 			document.addField("seasonSummer_indexed_boolean", seasonSummer);
@@ -4020,9 +4020,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(yearEnd != null)
 			oSchoolAge.setYearEnd(yearEnd);
 
-		Date seasonStart = (Date)solrDocument.get("seasonStart_stored_date");
-		if(seasonStart != null)
-			oSchoolAge.setSeasonStart(seasonStart);
+		Date seasonStartDay = (Date)solrDocument.get("seasonStartDay_stored_date");
+		if(seasonStartDay != null)
+			oSchoolAge.setSeasonStartDay(seasonStartDay);
 
 		Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
 		if(seasonSummer != null)

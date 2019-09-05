@@ -63,7 +63,7 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 				if(populate)
 					MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
 				if(store)
-					MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
+					MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
 				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
 				l.add(o);
 			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException

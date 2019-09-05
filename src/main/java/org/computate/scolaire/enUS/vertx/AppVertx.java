@@ -9,7 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiService;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
+import org.computate.scolaire.enUS.bloc.SchoolBlockEnUSGenApiService;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -274,7 +276,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						session.destroy();
 					}
 					rc.clearUser();
-					rc.reroute("/");
+					rc.reroute("/enUS/school");
 				});
 
 				routerFactory.addSecurityHandler("openIdConnect", gestionnaireAuth);
@@ -361,6 +363,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SchoolYearEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolSeasonEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolSessionEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolAgeEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolBlockEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
 		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 

@@ -967,7 +967,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(AnneeScolaire.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.annee.AnneeScolaire"));
@@ -1020,11 +1020,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = varIndexeAnneeScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
-								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeAnneeScolaire(entiteVar);
-								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;

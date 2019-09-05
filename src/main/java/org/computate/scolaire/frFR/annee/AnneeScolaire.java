@@ -130,12 +130,15 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: yearKeys
 	 * r: Ecole
 	 * r.enUS: School
+	 * r: setPeupler
+	 * r.enUS: setPopulate
 	 * Ignorer: true
 	 */
 	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("anneeCles_indexed_longs:" + pk);
 		l.setC(Ecole.class);
+		l.setPeupler(true);
 	}
 
 	/**
@@ -164,7 +167,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: SchoolNameComplete
 	 * r: ecole
 	 * r.enUS: school
-	 */   
+	 */  
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(ecole != null)
 			c.o((String)ecole.getEcoleNomComplet());

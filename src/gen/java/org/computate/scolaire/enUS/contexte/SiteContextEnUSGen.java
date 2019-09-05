@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.contexte;
 
 import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
+import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
@@ -12,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -32,6 +34,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Vertx vertx;
+	@JsonIgnore
 	public Wrap<Vertx> vertxWrap = new Wrap<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
 
 	/**	<br/>L'entité « vertx »
@@ -68,6 +71,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OpenAPI3RouterFactory routerFactory;
+	@JsonIgnore
 	public Wrap<OpenAPI3RouterFactory> routerFactoryWrap = new Wrap<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("routerFactory").o(routerFactory);
 
 	/**	<br/>L'entité « routerFactory »
@@ -96,6 +100,43 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		return (SiteContextEnUS)this;
 	}
 
+	////////////
+	// router //
+	////////////
+
+	/**	L'entité « router »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Router router;
+	@JsonIgnore
+	public Wrap<Router> routerWrap = new Wrap<Router>().p(this).c(Router.class).var("router").o(router);
+
+	/**	<br/>L'entité « router »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:router">Trouver l'entité router dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _router(Wrap<Router> c);
+
+	public Router getRouter() {
+		return router;
+	}
+
+	public void setRouter(Router router) {
+		this.router = router;
+		this.routerWrap.alreadyInitialized = true;
+	}
+	protected SiteContextEnUS routerInit() {
+		if(!routerWrap.alreadyInitialized) {
+			_router(routerWrap);
+			if(router == null)
+				setRouter(routerWrap.o);
+		}
+		routerWrap.alreadyInitialized(true);
+		return (SiteContextEnUS)this;
+	}
+
 	/////////////////
 	// authHandler //
 	/////////////////
@@ -104,6 +145,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OAuth2AuthHandler authHandler;
+	@JsonIgnore
 	public Wrap<OAuth2AuthHandler> authHandlerWrap = new Wrap<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("authHandler").o(authHandler);
 
 	/**	<br/>L'entité « authHandler »
@@ -140,6 +182,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OAuth2Auth authProvider;
+	@JsonIgnore
 	public Wrap<OAuth2Auth> authProviderWrap = new Wrap<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authProvider").o(authProvider);
 
 	/**	<br/>L'entité « authProvider »
@@ -176,6 +219,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected WorkerExecutor workerExecutor;
+	@JsonIgnore
 	public Wrap<WorkerExecutor> workerExecutorWrap = new Wrap<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("workerExecutor").o(workerExecutor);
 
 	/**	<br/>L'entité « workerExecutor »
@@ -212,6 +256,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteConfig(). 
 	 */
 	protected SiteConfig siteConfig = new SiteConfig();
+	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
 
 	/**	<br/>L'entité « siteConfig »
@@ -247,6 +292,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SQLClient sqlClient;
+	@JsonIgnore
 	public Wrap<SQLClient> sqlClientWrap = new Wrap<SQLClient>().p(this).c(SQLClient.class).var("sqlClient").o(sqlClient);
 
 	/**	<br/>L'entité « sqlClient »
@@ -283,6 +329,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected HttpSolrClient solrClient;
+	@JsonIgnore
 	public Wrap<HttpSolrClient> solrClientWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("solrClient").o(solrClient);
 
 	/**	<br/>L'entité « solrClient »
@@ -319,6 +366,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected HttpSolrClient solrClientComputate;
+	@JsonIgnore
 	public Wrap<HttpSolrClient> solrClientComputateWrap = new Wrap<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("solrClientComputate").o(solrClientComputate);
 
 	/**	<br/>L'entité « solrClientComputate »
@@ -368,6 +416,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void initSiteContextEnUS() {
 		vertxInit();
 		routerFactoryInit();
+		routerInit();
 		authHandlerInit();
 		authProviderInit();
 		workerExecutorInit();
@@ -405,6 +454,8 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 				return oSiteContextEnUS.vertx;
 			case "routerFactory":
 				return oSiteContextEnUS.routerFactory;
+			case "router":
+				return oSiteContextEnUS.router;
 			case "authHandler":
 				return oSiteContextEnUS.authHandler;
 			case "authProvider":
@@ -502,7 +553,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SiteContextEnUS {");
+		sb.append("SiteContextEnUS { ");
 		sb.append(" }");
 		return sb.toString();
 	}

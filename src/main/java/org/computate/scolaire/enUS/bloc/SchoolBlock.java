@@ -5,11 +5,10 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
-import org.computate.scolaire.enUS.season.SchoolSeason;
-import org.computate.scolaire.enUS.session.SchoolSession;
 
 public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
@@ -28,119 +27,122 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	protected void _ageKey(Wrap<Long> c) {
 	}
 
-	protected void _ageKey(Wrap<Long> c) {
+	protected void _blockKey(Wrap<Long> c) {
 		c.o(pk);
 	}
 
 	protected void _enrollmentKeys(List<Long> o) {}
 
 	protected void _educationSort(Wrap<Integer> c) {
-		c.o(5);
+		c.o(6);
 	}
 
 	protected void _schoolSort(Wrap<Integer> c) {
-		c.o(5);
+		c.o(6);
 	}
 
 	protected void _yearSort(Wrap<Integer> c) {
-		c.o(5);
+		c.o(6);
 	}
 
 	protected void _seasonSort(Wrap<Integer> c) {
-		c.o(5);
+		c.o(6);
 	}
 
 	protected void _sessionSort(Wrap<Integer> c) {
-		c.o(5);
+		c.o(6);
 	}
 
-	protected void _sessionSearch(SearchList<SchoolSession> l) {
+	protected void _ageSort(Wrap<Integer> c) {
+		c.o(6);
+	}
+
+	protected void _ageSearch(SearchList<SchoolAge> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("ageCles_indexed_longs:" + pk);
-		l.setC(SchoolSession.class);
+		l.setC(SchoolAge.class);
 	}
 
-	protected void _session(Wrap<SchoolSession> c) {
-		if(sessionSearch.size() > 0) {
-			c.o(sessionSearch.get(0));
+	protected void _age(Wrap<SchoolAge> c) {
+		if(ageSearch.size() > 0) {
+			c.o(ageSearch.get(0));
 		}
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		if(session != null)
-			c.o((String)session.getSchoolNameComplete());
+		if(age != null)
+			c.o((String)age.getSchoolNameComplete());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getYearStart());
+		if(age != null)
+			c.o((LocalDate)age.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o(session.getYearStart());
+		if(age != null)
+			c.o(age.getYearStart());
 	}
 
-	protected void _seasonStart(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o(session.getSeasonStartDay());
+	protected void _seasonStartDay(Wrap<LocalDate> c) {
+		if(age != null)
+			c.o(age.getSeasonStartDay());
 	}
 
 	protected void _seasonSummer(Wrap<Boolean> c) {
-		if(session != null)
-			c.o(session.getSeasonSummer());
+		if(age != null)
+			c.o(age.getSeasonSummer());
 	}
 
 	protected void _seasonWinter(Wrap<Boolean> c) {
-		if(session != null)
-			c.o(session.getSeasonWinter());
+		if(age != null)
+			c.o(age.getSeasonWinter());
 	}
 
 	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
-		if(session != null)
-			c.o(session.getSeasonEnrollmentFee());
+		if(age != null)
+			c.o(age.getSeasonEnrollmentFee());
 	}
 
 	protected void _seasonNameComplete(Wrap<String> c) {
-		if(session != null)
-			c.o(session.getSeasonNameComplete());
+		if(age != null)
+			c.o(age.getSeasonNameComplete());
 	}
 
-	protected void _seasonEnd(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getYearStart());
-	}
-
-	protected void _sessionStartDay(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getSessionStartDay());
+	protected void _ageStartDay(Wrap<LocalDate> c) {
+		if(age != null)
+			c.o((LocalDate)age.getSessionStartDay());
 	}
 
 	protected void _sessionEndDay(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getSessionEndDay());
+		if(age != null)
+			c.o((LocalDate)age.getSessionEndDay());
 	}
 
 	protected void _sessionNameComplete(Wrap<String> c) {
-		if(session != null)
-			c.o(session.getSessionNameComplete());
+		if(age != null)
+			c.o(age.getSessionNameComplete());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
+		if(age != null)
+			c.o(age.getAgeStart());
 	}
 
 	protected void _ageEnd(Wrap<Integer> c) {
+		if(age != null)
+			c.o(age.getAgeEnd());
 	}
 
-	protected void _ageNameComplete(Wrap<String> c) {
+	protected void _blocNameComplete(Wrap<String> c) {
 		String o;
-		o = String.format("ages %s - %s during %s. ", strAgeStart(), strAgeEnd(), sessionNameComplete);
+		o = String.format("âges %s - %s pendant %s. ", strAgeStart(), strAgeEnd(), sessionNameComplete);
 		c.o(o);
 	}
 
-	protected void _ageId(Wrap<String> c) {
-		if(ageNameComplete != null) {
-			String s = Normalizer.normalize(ageNameComplete, Normalizer.Form.NFD);
+	protected void _blocId(Wrap<String> c) {
+		if(blocNameComplete != null) {
+			String s = Normalizer.normalize(blocNameComplete, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -154,19 +156,19 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	}
 
 	protected void _pageUrl(Wrap<String> c) {
-		if(ageId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/age/" + ageId;
+		if(blocId != null) {
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/bloc/" + blocId;
 			c.o(o);
 		}
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(ageNameComplete);
+		c.o(blocNameComplete);
 	}
 
 	@Override()
 	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolAge.class.getCanonicalName());
+		l.add(BlocScolaire.class.getCanonicalName());
 		super._classCanonicalNames(l);
 	}
 }

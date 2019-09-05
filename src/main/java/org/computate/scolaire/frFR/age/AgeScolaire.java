@@ -266,7 +266,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStart
+	 * Var.enUS: seasonStartDay
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année

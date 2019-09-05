@@ -13,6 +13,7 @@ import io.vertx.core.WorkerExecutor;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.sql.SQLClient;
+import io.vertx.ext.web.Router;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 
@@ -224,6 +225,12 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * Var.enUS: routerFactory
 	 */
 	protected void _usineRouteur(Couverture<OpenAPI3RouterFactory> c) {
+	}
+
+	/**
+	 * Var.enUS: router
+	 */
+	protected void _routeur(Couverture<Router> c) {
 	}
 
 	/**
