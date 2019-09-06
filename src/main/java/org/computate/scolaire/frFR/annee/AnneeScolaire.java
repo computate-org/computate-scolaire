@@ -203,7 +203,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of year
 	 * r: anneeDebut
 	 * r.enUS: yearStart
-	 */                      
+	 */                       
 	protected void _anneeFin(Couverture<LocalDate> c) {
 		if(anneeDebut != null)
 			c.o(anneeDebut.plusYears(1));
@@ -224,7 +224,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "%d year"
 	 * r: "année"
 	 * r.enUS: "year"
-	 */                        
+	 */                                
 	protected void _anneeNomCourt(Couverture<String> c) {
 		String o = "année";
 

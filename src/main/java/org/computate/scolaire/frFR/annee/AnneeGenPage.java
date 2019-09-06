@@ -279,18 +279,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
 
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "école")
-										.a("title", "La clé primaire de l'école dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
-										.a("name", "setEcoleCle")
-										.a("id", "Page_ecoleCle")
-										.a("autocomplete", "off")
-										.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
-									.fg();
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "école")
+											.a("title", "La clé primaire de l'école dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setEcoleCle")
+											.a("id", "Page_ecoleCle")
+											.a("autocomplete", "off")
+											.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+										.fg();
 
+									} g("div");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("onclick", "$('#somethingModale').show(); ")
+											.f().sx("add")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -320,18 +330,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
 
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "saisons")
-										.a("title", "Description.enUS: ")
-										.a("class", "valeurObjetSuggere suggereSaisonCles w3-input w3-border ")
-										.a("name", "setSaisonCles")
-										.a("id", "Page_saisonCles")
-										.a("autocomplete", "off")
-										.a("oninput", "rechercherAnneeScolaireSaisonCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); ")
-									.fg();
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "saisons")
+											.a("title", "Description.enUS: ")
+											.a("class", "valeurObjetSuggere suggereSaisonCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setSaisonCles")
+											.a("id", "Page_saisonCles")
+											.a("autocomplete", "off")
+											.a("oninput", "rechercherAnneeScolaireSaisonCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); ")
+										.fg();
 
+									} g("div");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("onclick", "$('#somethingModale').show(); ")
+											.f().sx("add")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -502,18 +522,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "école")
-									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
-									.a("name", "setEcoleCle")
-									.a("id", "POST_ecoleCle")
-									.a("autocomplete", "off")
-									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "école")
+										.a("title", "La clé primaire de l'école dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEcoleCle")
+										.a("id", "POST_ecoleCle")
+										.a("autocomplete", "off")
+										.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.fg();
 
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "$('#somethingModale').show(); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -543,18 +573,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "saisons")
-									.a("title", "Description.enUS: ")
-									.a("class", "valeurObjetSuggere suggereSaisonCles w3-input w3-border ")
-									.a("name", "setSaisonCles")
-									.a("id", "POST_saisonCles")
-									.a("autocomplete", "off")
-									.a("oninput", "rechercherAnneeScolaireSaisonCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); ")
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "saisons")
+										.a("title", "Description.enUS: ")
+										.a("class", "valeurObjetSuggere suggereSaisonCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSaisonCles")
+										.a("id", "POST_saisonCles")
+										.a("autocomplete", "off")
+										.a("oninput", "rechercherAnneeScolaireSaisonCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); ")
+									.fg();
 
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "$('#somethingModale').show(); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -725,18 +765,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "école")
-									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
-									.a("name", "setEcoleCle")
-									.a("id", "PATCH_ecoleCle")
-									.a("autocomplete", "off")
-									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "école")
+										.a("title", "La clé primaire de l'école dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEcoleCle")
+										.a("id", "PATCH_ecoleCle")
+										.a("autocomplete", "off")
+										.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.fg();
 
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "$('#somethingModale').show(); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -907,18 +957,28 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "école")
-									.a("title", "La clé primaire de l'école dans la base de données. ")
-									.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border ")
-									.a("name", "setEcoleCle")
-									.a("id", "Recherche_ecoleCle")
-									.a("autocomplete", "off")
-									.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "école")
+										.a("title", "La clé primaire de l'école dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEcoleCle")
+										.a("id", "Recherche_ecoleCle")
+										.a("autocomplete", "off")
+										.a("oninput", "rechercherAnneeScolaireEcoleCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); ")
+									.fg();
 
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "$('#somethingModale').show(); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
