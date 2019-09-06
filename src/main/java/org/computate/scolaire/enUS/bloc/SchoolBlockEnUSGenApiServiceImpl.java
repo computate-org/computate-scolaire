@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -188,6 +189,46 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "blockTimeStart":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockTimeStart", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockTimeEnd":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockTimeEnd", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockSunday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockSunday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockMonday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockTuesday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockWednesday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockThursday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockFriday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockSaturday":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockSaturday", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "blockPricePerMonth":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getDouble(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -372,6 +413,106 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+						}
+						break;
+					case "setBlockTimeStart":
+						o2.setBlockTimeStart(requestJson.getString(methodName));
+						if(o2.getBlockTimeStart() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeStart"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockTimeStart", o2.strBlockTimeStart(), pk));
+						}
+						break;
+					case "setBlockTimeEnd":
+						o2.setBlockTimeEnd(requestJson.getString(methodName));
+						if(o2.getBlockTimeEnd() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeEnd"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockTimeEnd", o2.strBlockTimeEnd(), pk));
+						}
+						break;
+					case "setBlockSunday":
+						o2.setBlockSunday(requestJson.getBoolean(methodName));
+						if(o2.getBlockSunday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockSunday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockSunday", o2.strBlockSunday(), pk));
+						}
+						break;
+					case "setBlockMonday":
+						o2.setBlockMonday(requestJson.getBoolean(methodName));
+						if(o2.getBlockMonday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockMonday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockMonday", o2.strBlockMonday(), pk));
+						}
+						break;
+					case "setBlockTuesday":
+						o2.setBlockTuesday(requestJson.getBoolean(methodName));
+						if(o2.getBlockTuesday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockTuesday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockTuesday", o2.strBlockTuesday(), pk));
+						}
+						break;
+					case "setBlockWednesday":
+						o2.setBlockWednesday(requestJson.getBoolean(methodName));
+						if(o2.getBlockWednesday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockWednesday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockWednesday", o2.strBlockWednesday(), pk));
+						}
+						break;
+					case "setBlockThursday":
+						o2.setBlockThursday(requestJson.getBoolean(methodName));
+						if(o2.getBlockThursday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockThursday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockThursday", o2.strBlockThursday(), pk));
+						}
+						break;
+					case "setBlockFriday":
+						o2.setBlockFriday(requestJson.getBoolean(methodName));
+						if(o2.getBlockFriday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockFriday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockFriday", o2.strBlockFriday(), pk));
+						}
+						break;
+					case "setBlockSaturday":
+						o2.setBlockSaturday(requestJson.getBoolean(methodName));
+						if(o2.getBlockSaturday() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockSaturday"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.strBlockSaturday(), pk));
+						}
+						break;
+					case "setBlockPricePerMonth":
+						o2.setBlockPricePerMonth(requestJson.getDouble(methodName));
+						if(o2.getBlockPricePerMonth() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.strBlockPricePerMonth(), pk));
 						}
 						break;
 				}
@@ -721,12 +862,32 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "ageStartDay_indexed_date";
 			case "sessionEndDay":
 				return "sessionEndDay_indexed_date";
-			case "sessionNameComplete":
-				return "sessionNameComplete_indexed_string";
+			case "ageNameComplete":
+				return "ageNameComplete_indexed_string";
 			case "ageStart":
 				return "ageStart_indexed_int";
 			case "ageEnd":
 				return "ageEnd_indexed_int";
+			case "blockTimeStart":
+				return "blockTimeStart_indexed_string";
+			case "blockTimeEnd":
+				return "blockTimeEnd_indexed_string";
+			case "blockSunday":
+				return "blockSunday_indexed_boolean";
+			case "blockMonday":
+				return "blockMonday_indexed_boolean";
+			case "blockTuesday":
+				return "blockTuesday_indexed_boolean";
+			case "blockWednesday":
+				return "blockWednesday_indexed_boolean";
+			case "blockThursday":
+				return "blockThursday_indexed_boolean";
+			case "blockFriday":
+				return "blockFriday_indexed_boolean";
+			case "blockSaturday":
+				return "blockSaturday_indexed_boolean";
+			case "blockPricePerMonth":
+				return "blockPricePerMonth_indexed_double";
 			case "blocNameComplete":
 				return "blocNameComplete_indexed_string";
 			case "blocId":

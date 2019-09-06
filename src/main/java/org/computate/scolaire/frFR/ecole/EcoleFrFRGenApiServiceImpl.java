@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -1015,7 +1016,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(Ecole.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.setFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.ecole.Ecole"));
@@ -1068,11 +1069,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = varIndexeEcole(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
-								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeEcole(entiteVar);
-								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;

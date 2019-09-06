@@ -108,6 +108,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
 	public String nomAffichageEcoleCle() {
 		return "clé";
 	}
@@ -227,6 +231,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strEnfantCles() {
+		return enfantCles == null ? "" : enfantCles.toString();
+	}
+
+	public String jsonEnfantCles() {
 		return enfantCles == null ? "" : enfantCles.toString();
 	}
 
@@ -352,6 +360,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return blocCles == null ? "" : blocCles.toString();
 	}
 
+	public String jsonBlocCles() {
+		return blocCles == null ? "" : blocCles.toString();
+	}
+
 	public String nomAffichageBlocCles() {
 		return "NomAffichage.enUS: ";
 	}
@@ -471,6 +483,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strGroupeAgeCles() {
+		return groupeAgeCles == null ? "" : groupeAgeCles.toString();
+	}
+
+	public String jsonGroupeAgeCles() {
 		return groupeAgeCles == null ? "" : groupeAgeCles.toString();
 	}
 
@@ -596,6 +612,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return sessionCles == null ? "" : sessionCles.toString();
 	}
 
+	public String jsonSessionCles() {
+		return sessionCles == null ? "" : sessionCles.toString();
+	}
+
 	public String nomAffichageSessionCles() {
 		return "NomAffichage.enUS: ";
 	}
@@ -715,6 +735,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonCles() {
+		return saisonCles == null ? "" : saisonCles.toString();
+	}
+
+	public String jsonSaisonCles() {
 		return saisonCles == null ? "" : saisonCles.toString();
 	}
 
@@ -840,6 +864,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return anneeCles == null ? "" : anneeCles.toString();
 	}
 
+	public String jsonAnneeCles() {
+		return anneeCles == null ? "" : anneeCles.toString();
+	}
+
 	public String nomAffichageAnneeCles() {
 		return "années";
 	}
@@ -941,6 +969,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strScolaireTri() {
+		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
@@ -1048,6 +1080,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public String jsonEcoleTri() {
+		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
 	public String nomAffichageEcoleTri() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1143,6 +1179,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strEcoleNom() {
+		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String jsonEcoleNom() {
 		return ecoleNom == null ? "" : ecoleNom;
 	}
 
@@ -1244,6 +1284,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
 
+	public String jsonEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
 	public String nomAffichageEcoleNumeroTelephone() {
 		return "numéro de téléphone";
 	}
@@ -1342,6 +1386,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
 	}
 
+	public String jsonEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
+	}
+
 	public String nomAffichageEcoleAdministrateurNom() {
 		return "administrateur de l'école";
 	}
@@ -1437,6 +1485,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String jsonEcoleAddresse() {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
 
@@ -1544,6 +1596,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return objetSuggerePoids == null ? "" : objetSuggerePoids.toString();
 	}
 
+	public String jsonObjetSuggerePoids() {
+		return objetSuggerePoids == null ? "" : objetSuggerePoids.toString();
+	}
+
 	public String nomAffichageObjetSuggerePoids() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1639,6 +1695,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
 		return objetSuggere == null ? "" : objetSuggere;
 	}
 
@@ -1740,6 +1800,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNomCourt == null ? "" : ecoleNomCourt;
 	}
 
+	public String jsonEcoleNomCourt() {
+		return ecoleNomCourt == null ? "" : ecoleNomCourt;
+	}
+
 	public String nomAffichageEcoleNomCourt() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1835,6 +1899,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
+	public String jsonEcoleNomComplet() {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
@@ -1936,6 +2004,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleId == null ? "" : ecoleId;
 	}
 
+	public String jsonEcoleId() {
+		return ecoleId == null ? "" : ecoleId;
+	}
+
 	public String nomAffichageEcoleId() {
 		return "ID";
 	}
@@ -2034,6 +2106,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -2129,6 +2205,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String strPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String jsonPageH1() {
 		return pageH1 == null ? "" : pageH1;
 	}
 

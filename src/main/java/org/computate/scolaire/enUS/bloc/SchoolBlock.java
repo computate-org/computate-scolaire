@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.bloc;
 import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.age.SchoolAge;
@@ -119,9 +120,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o((LocalDate)age.getSessionEndDay());
 	}
 
-	protected void _sessionNameComplete(Wrap<String> c) {
+	protected void _ageNameComplete(Wrap<String> c) {
 		if(age != null)
-			c.o(age.getSessionNameComplete());
+			c.o(age.getAgeNameComplete());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
@@ -134,9 +135,53 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age.getAgeEnd());
 	}
 
+	protected void _blockTimeStart(Wrap<LocalTime> c) {
+	}
+
+	protected void _blockTimeEnd(Wrap<LocalTime> c) {
+	}
+
+	protected void _blockSunday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockMonday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockTuesday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockWednesday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockThursday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockFriday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockSaturday(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
+	}
+
 	protected void _blocNameComplete(Wrap<String> c) {
 		String o;
-		o = String.format("âges %s - %s pendant %s. ", strAgeStart(), strAgeEnd(), sessionNameComplete);
+		String weekdays = "";
+		if(blockMonday) weekdays += " Mo";
+		if(blockTuesday) weekdays += " Tu";
+		if(blockWednesday) weekdays += " We";
+		if(blockThursday) weekdays += " Th";
+		if(blockFriday) weekdays += " Fr";
+		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
+		o = String.format("%s - %s %s %s/month %s. ", strBlockTimeStart(), strBlockTimeEnd(), weekdays, strBlockPricePerMonth(), ageNameComplete);
 		c.o(o);
 	}
 

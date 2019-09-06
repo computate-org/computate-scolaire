@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -188,6 +189,46 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "blocHeureDebut":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
+						break;
+					case "blocHeureFin":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocHeureFin", jsonObject.getString(entiteVar), pk));
+						break;
+					case "blocDimanche":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocDimanche", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocLundi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocLundi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocMardi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocMardi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocMercredi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocMercredi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocJeudi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocJeudi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocVendredi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocVendredi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocSamedi":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocSamedi", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "blocPrixParMois":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocPrixParMois", jsonObject.getDouble(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -372,6 +413,106 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
+						}
+						break;
+					case "setBlocHeureDebut":
+						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
+						if(o2.getBlocHeureDebut() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.strBlocHeureDebut(), pk));
+						}
+						break;
+					case "setBlocHeureFin":
+						o2.setBlocHeureFin(requeteJson.getString(methodeNom));
+						if(o2.getBlocHeureFin() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.strBlocHeureFin(), pk));
+						}
+						break;
+					case "setBlocDimanche":
+						o2.setBlocDimanche(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocDimanche() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocDimanche"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocDimanche", o2.strBlocDimanche(), pk));
+						}
+						break;
+					case "setBlocLundi":
+						o2.setBlocLundi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocLundi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocLundi", o2.strBlocLundi(), pk));
+						}
+						break;
+					case "setBlocMardi":
+						o2.setBlocMardi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocMardi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocMardi", o2.strBlocMardi(), pk));
+						}
+						break;
+					case "setBlocMercredi":
+						o2.setBlocMercredi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocMercredi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocMercredi", o2.strBlocMercredi(), pk));
+						}
+						break;
+					case "setBlocJeudi":
+						o2.setBlocJeudi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocJeudi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocJeudi", o2.strBlocJeudi(), pk));
+						}
+						break;
+					case "setBlocVendredi":
+						o2.setBlocVendredi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocVendredi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocVendredi", o2.strBlocVendredi(), pk));
+						}
+						break;
+					case "setBlocSamedi":
+						o2.setBlocSamedi(requeteJson.getBoolean(methodeNom));
+						if(o2.getBlocSamedi() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocSamedi"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.strBlocSamedi(), pk));
+						}
+						break;
+					case "setBlocPrixParMois":
+						o2.setBlocPrixParMois(requeteJson.getDouble(methodeNom));
+						if(o2.getBlocPrixParMois() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.strBlocPrixParMois(), pk));
 						}
 						break;
 				}
@@ -721,12 +862,32 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "sessionJourDebut_indexed_date";
 			case "sessionJourFin":
 				return "sessionJourFin_indexed_date";
-			case "sessionNomComplet":
-				return "sessionNomComplet_indexed_string";
+			case "ageNomComplet":
+				return "ageNomComplet_indexed_string";
 			case "ageDebut":
 				return "ageDebut_indexed_int";
 			case "ageFin":
 				return "ageFin_indexed_int";
+			case "blocHeureDebut":
+				return "blocHeureDebut_indexed_string";
+			case "blocHeureFin":
+				return "blocHeureFin_indexed_string";
+			case "blocDimanche":
+				return "blocDimanche_indexed_boolean";
+			case "blocLundi":
+				return "blocLundi_indexed_boolean";
+			case "blocMardi":
+				return "blocMardi_indexed_boolean";
+			case "blocMercredi":
+				return "blocMercredi_indexed_boolean";
+			case "blocJeudi":
+				return "blocJeudi_indexed_boolean";
+			case "blocVendredi":
+				return "blocVendredi_indexed_boolean";
+			case "blocSamedi":
+				return "blocSamedi_indexed_boolean";
+			case "blocPrixParMois":
+				return "blocPrixParMois_indexed_double";
 			case "blocNomComplet":
 				return "blocNomComplet_indexed_string";
 			case "blocId":

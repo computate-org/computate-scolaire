@@ -127,13 +127,13 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.ecoleCle
-	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlLigne: 5
+	 * HtmlColonne: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: années
 	 * NomAffichage.enUS: years
-	 */  
+	 */   
 	protected void _anneeCles(List<Long> o) {}
 
 	/**      
@@ -171,7 +171,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom de l'école
 	 * NomAffichage.enUS: name of the school
 	 * Description.frFR: Nom de l'école. 
@@ -186,8 +186,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * HtmlLigne: 4
+	 * HtmlColonne: 1
 	 * NomAffichage.frFR: numéro de téléphone
 	 * NomAffichage.enUS: phone number
 	 * Description.frFR: Numéro de téléphone de l'école. 
@@ -203,6 +203,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
+	 * HtmlColonne: 2
 	 * NomAffichage.enUS: administrator of the school
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
@@ -218,7 +219,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlColonne: 2
 	 * Multiligne: true
 	 * NomAffichage.frFR: addresse
 	 * NomAffichage.enUS: address

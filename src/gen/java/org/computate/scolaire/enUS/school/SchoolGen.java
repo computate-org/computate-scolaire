@@ -107,6 +107,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public String jsonSchoolKey() {
+		return schoolKey == null ? "" : schoolKey.toString();
+	}
+
 	public String nomAffichageSchoolKey() {
 		return "key";
 	}
@@ -226,6 +230,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strChildKeys() {
+		return childKeys == null ? "" : childKeys.toString();
+	}
+
+	public String jsonChildKeys() {
 		return childKeys == null ? "" : childKeys.toString();
 	}
 
@@ -351,6 +359,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return blockKeys == null ? "" : blockKeys.toString();
 	}
 
+	public String jsonBlockKeys() {
+		return blockKeys == null ? "" : blockKeys.toString();
+	}
+
 	public String nomAffichageBlockKeys() {
 		return "";
 	}
@@ -470,6 +482,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strAgeGroupKeys() {
+		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
+	}
+
+	public String jsonAgeGroupKeys() {
 		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
 	}
 
@@ -595,6 +611,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return sessionKeys == null ? "" : sessionKeys.toString();
 	}
 
+	public String jsonSessionKeys() {
+		return sessionKeys == null ? "" : sessionKeys.toString();
+	}
+
 	public String nomAffichageSessionKeys() {
 		return "";
 	}
@@ -714,6 +734,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonKeys() {
+		return seasonKeys == null ? "" : seasonKeys.toString();
+	}
+
+	public String jsonSeasonKeys() {
 		return seasonKeys == null ? "" : seasonKeys.toString();
 	}
 
@@ -839,6 +863,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return yearKeys == null ? "" : yearKeys.toString();
 	}
 
+	public String jsonYearKeys() {
+		return yearKeys == null ? "" : yearKeys.toString();
+	}
+
 	public String nomAffichageYearKeys() {
 		return "years";
 	}
@@ -940,6 +968,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strEducationSort() {
+		return educationSort == null ? "" : educationSort.toString();
+	}
+
+	public String jsonEducationSort() {
 		return educationSort == null ? "" : educationSort.toString();
 	}
 
@@ -1047,6 +1079,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolSort == null ? "" : schoolSort.toString();
 	}
 
+	public String jsonSchoolSort() {
+		return schoolSort == null ? "" : schoolSort.toString();
+	}
+
 	public String nomAffichageSchoolSort() {
 		return "";
 	}
@@ -1142,6 +1178,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strSchoolName() {
+		return schoolName == null ? "" : schoolName;
+	}
+
+	public String jsonSchoolName() {
 		return schoolName == null ? "" : schoolName;
 	}
 
@@ -1243,6 +1283,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
 
+	public String jsonSchoolPhoneNumber() {
+		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
+	}
+
 	public String nomAffichageSchoolPhoneNumber() {
 		return "phone number";
 	}
@@ -1341,6 +1385,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolAdministratorName == null ? "" : schoolAdministratorName;
 	}
 
+	public String jsonSchoolAdministratorName() {
+		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
 	public String nomAffichageSchoolAdministratorName() {
 		return "administrator of the school";
 	}
@@ -1436,6 +1484,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strSchoolAddress() {
+		return schoolAddress == null ? "" : schoolAddress;
+	}
+
+	public String jsonSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
 
@@ -1543,6 +1595,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return objectSuggestWeight == null ? "" : objectSuggestWeight.toString();
 	}
 
+	public String jsonObjectSuggestWeight() {
+		return objectSuggestWeight == null ? "" : objectSuggestWeight.toString();
+	}
+
 	public String nomAffichageObjectSuggestWeight() {
 		return "";
 	}
@@ -1638,6 +1694,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strObjectSuggest() {
+		return objectSuggest == null ? "" : objectSuggest;
+	}
+
+	public String jsonObjectSuggest() {
 		return objectSuggest == null ? "" : objectSuggest;
 	}
 
@@ -1739,6 +1799,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolNameShort == null ? "" : schoolNameShort;
 	}
 
+	public String jsonSchoolNameShort() {
+		return schoolNameShort == null ? "" : schoolNameShort;
+	}
+
 	public String nomAffichageSchoolNameShort() {
 		return "r: ecoleNom";
 	}
@@ -1834,6 +1898,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strSchoolNameComplete() {
+		return schoolNameComplete == null ? "" : schoolNameComplete;
+	}
+
+	public String jsonSchoolNameComplete() {
 		return schoolNameComplete == null ? "" : schoolNameComplete;
 	}
 
@@ -1935,6 +2003,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return schoolId == null ? "" : schoolId;
 	}
 
+	public String jsonSchoolId() {
+		return schoolId == null ? "" : schoolId;
+	}
+
 	public String nomAffichageSchoolId() {
 		return "ID";
 	}
@@ -2033,6 +2105,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -2128,6 +2204,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String strPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String jsonPageH1() {
 		return pageH1 == null ? "" : pageH1;
 	}
 

@@ -13,6 +13,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalTime;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -115,6 +116,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
+	public String jsonEcoleCle() {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
@@ -222,6 +227,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
 
+	public String jsonAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
 	public String nomAffichageAnneeCle() {
 		return null;
 	}
@@ -323,6 +332,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String jsonSaisonCle() {
 		return saisonCle == null ? "" : saisonCle.toString();
 	}
 
@@ -430,6 +443,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return sessionCle == null ? "" : sessionCle.toString();
 	}
 
+	public String jsonSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
 	public String nomAffichageSessionCle() {
 		return "clé";
 	}
@@ -534,6 +551,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return ageCle == null ? "" : ageCle.toString();
 	}
 
+	public String jsonAgeCle() {
+		return ageCle == null ? "" : ageCle.toString();
+	}
+
 	public String nomAffichageAgeCle() {
 		return "clé";
 	}
@@ -635,6 +656,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocCle() {
+		return blocCle == null ? "" : blocCle.toString();
+	}
+
+	public String jsonBlocCle() {
 		return blocCle == null ? "" : blocCle.toString();
 	}
 
@@ -760,6 +785,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public String jsonInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
 	public String nomAffichageInscriptionCles() {
 		return "inscriptions";
 	}
@@ -861,6 +890,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strScolaireTri() {
+		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
@@ -968,6 +1001,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public String jsonEcoleTri() {
+		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
 	public String nomAffichageEcoleTri() {
 		return null;
 	}
@@ -1069,6 +1106,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeTri() {
+		return anneeTri == null ? "" : anneeTri.toString();
+	}
+
+	public String jsonAnneeTri() {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
 
@@ -1176,6 +1217,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return saisonTri == null ? "" : saisonTri.toString();
 	}
 
+	public String jsonSaisonTri() {
+		return saisonTri == null ? "" : saisonTri.toString();
+	}
+
 	public String nomAffichageSaisonTri() {
 		return null;
 	}
@@ -1280,6 +1325,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return sessionTri == null ? "" : sessionTri.toString();
 	}
 
+	public String jsonSessionTri() {
+		return sessionTri == null ? "" : sessionTri.toString();
+	}
+
 	public String nomAffichageSessionTri() {
 		return null;
 	}
@@ -1381,6 +1430,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAgeTri() {
+		return ageTri == null ? "" : ageTri.toString();
+	}
+
+	public String jsonAgeTri() {
 		return ageTri == null ? "" : ageTri.toString();
 	}
 
@@ -1559,6 +1612,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
+	public String jsonEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
 	public String nomAffichageEcoleNomComplet() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1670,6 +1727,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeDebut() {
 		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1784,6 +1845,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeFin() {
 		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1898,6 +1963,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSaisonJourDebut() {
 		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2004,6 +2073,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return saisonEte == null ? "" : saisonEte.toString();
 	}
 
+	public String jsonSaisonEte() {
+		return saisonEte == null ? "" : saisonEte.toString();
+	}
+
 	public String nomAffichageSaisonEte() {
 		return "été";
 	}
@@ -2104,6 +2177,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonHiver() {
+		return saisonHiver == null ? "" : saisonHiver.toString();
+	}
+
+	public String jsonSaisonHiver() {
 		return saisonHiver == null ? "" : saisonHiver.toString();
 	}
 
@@ -2221,6 +2298,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
 	}
 
+	public String jsonSaisonFraisInscription() {
+		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
+	}
+
 	public String nomAffichageSaisonFraisInscription() {
 		return "frais d'inscription";
 	}
@@ -2316,6 +2397,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonNomComplet() {
+		return saisonNomComplet == null ? "" : saisonNomComplet;
+	}
+
+	public String jsonSaisonNomComplet() {
 		return saisonNomComplet == null ? "" : saisonNomComplet;
 	}
 
@@ -2430,6 +2515,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourDebut() {
 		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2544,6 +2633,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourFin() {
 		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2600,70 +2693,74 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////////////
-	// sessionNomComplet //
-	///////////////////////
+	///////////////////
+	// ageNomComplet //
+	///////////////////
 
-	/**	L'entité « sessionNomComplet »
+	/**	L'entité « ageNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String sessionNomComplet;
+	protected String ageNomComplet;
 	@JsonIgnore
-	public Couverture<String> sessionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("sessionNomComplet").o(sessionNomComplet);
+	public Couverture<String> ageNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("ageNomComplet").o(ageNomComplet);
 
-	/**	<br/>L'entité « sessionNomComplet »
+	/**	<br/>L'entité « ageNomComplet »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionNomComplet">Trouver l'entité sessionNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageNomComplet">Trouver l'entité ageNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionNomComplet(Couverture<String> c);
+	protected abstract void _ageNomComplet(Couverture<String> c);
 
-	public String getSessionNomComplet() {
-		return sessionNomComplet;
+	public String getAgeNomComplet() {
+		return ageNomComplet;
 	}
 
-	public void setSessionNomComplet(String sessionNomComplet) {
-		this.sessionNomComplet = sessionNomComplet;
-		this.sessionNomCompletCouverture.dejaInitialise = true;
+	public void setAgeNomComplet(String ageNomComplet) {
+		this.ageNomComplet = ageNomComplet;
+		this.ageNomCompletCouverture.dejaInitialise = true;
 	}
-	protected BlocScolaire sessionNomCompletInit() {
-		if(!sessionNomCompletCouverture.dejaInitialise) {
-			_sessionNomComplet(sessionNomCompletCouverture);
-			if(sessionNomComplet == null)
-				setSessionNomComplet(sessionNomCompletCouverture.o);
+	protected BlocScolaire ageNomCompletInit() {
+		if(!ageNomCompletCouverture.dejaInitialise) {
+			_ageNomComplet(ageNomCompletCouverture);
+			if(ageNomComplet == null)
+				setAgeNomComplet(ageNomCompletCouverture.o);
 		}
-		sessionNomCompletCouverture.dejaInitialise(true);
+		ageNomCompletCouverture.dejaInitialise(true);
 		return (BlocScolaire)this;
 	}
 
-	public String solrSessionNomComplet() {
-		return sessionNomComplet;
+	public String solrAgeNomComplet() {
+		return ageNomComplet;
 	}
 
-	public String strSessionNomComplet() {
-		return sessionNomComplet == null ? "" : sessionNomComplet;
+	public String strAgeNomComplet() {
+		return ageNomComplet == null ? "" : ageNomComplet;
 	}
 
-	public String nomAffichageSessionNomComplet() {
+	public String jsonAgeNomComplet() {
+		return ageNomComplet == null ? "" : ageNomComplet;
+	}
+
+	public String nomAffichageAgeNomComplet() {
 		return null;
 	}
 
-	public String htmTooltipSessionNomComplet() {
+	public String htmTooltipAgeNomComplet() {
 		return null;
 	}
 
-	public String htmSessionNomComplet() {
-		return sessionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSessionNomComplet());
+	public String htmAgeNomComplet() {
+		return ageNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAgeNomComplet());
 	}
 
-	public void htmSessionNomComplet(ToutEcrivain r, Boolean patchDroits) {
+	public void htmAgeNomComplet(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "SessionNomComplet\">");
+			r.s("<div id=\"patchBlocScolaire", strPk(), "AgeNomComplet\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "SessionNomComplet() {");
+				r.l("		function patchBlocScolaire", strPk(), "AgeNomComplet() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2676,23 +2773,23 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSessionNomComplet\": this.value },");
+				r.l("				data: {\"setAgeNomComplet\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionNomComplet()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeNomComplet()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"sessionNomComplet\"");
-							r.s(" value=\"", htmSessionNomComplet(), "\");");
+							r.s(" name=\"ageNomComplet\"");
+							r.s(" value=\"", htmAgeNomComplet(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSessionNomComplet());
+				r.s(htmAgeNomComplet());
 			}
 			r.l("</div>");
 		}
@@ -2746,6 +2843,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAgeDebut() {
+		return ageDebut == null ? "" : ageDebut.toString();
+	}
+
+	public String jsonAgeDebut() {
 		return ageDebut == null ? "" : ageDebut.toString();
 	}
 
@@ -2853,6 +2954,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return ageFin == null ? "" : ageFin.toString();
 	}
 
+	public String jsonAgeFin() {
+		return ageFin == null ? "" : ageFin.toString();
+	}
+
 	public String nomAffichageAgeFin() {
 		return "fin du groupe d'âge";
 	}
@@ -2907,6 +3012,1089 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	////////////////////
+	// blocHeureDebut //
+	////////////////////
+
+	/**	L'entité « blocHeureDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected LocalTime blocHeureDebut;
+	@JsonIgnore
+	public Couverture<LocalTime> blocHeureDebutCouverture = new Couverture<LocalTime>().p(this).c(LocalTime.class).var("blocHeureDebut").o(blocHeureDebut);
+
+	/**	<br/>L'entité « blocHeureDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocHeureDebut">Trouver l'entité blocHeureDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocHeureDebut(Couverture<LocalTime> c);
+
+	public LocalTime getBlocHeureDebut() {
+		return blocHeureDebut;
+	}
+
+	public void setBlocHeureDebut(LocalTime blocHeureDebut) {
+		this.blocHeureDebut = blocHeureDebut;
+		this.blocHeureDebutCouverture.dejaInitialise = true;
+	}
+	/** Example: 01:00 **/
+	public BlocScolaire setBlocHeureDebut(String o) {
+		this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
+		this.blocHeureDebutCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocHeureDebutInit() {
+		if(!blocHeureDebutCouverture.dejaInitialise) {
+			_blocHeureDebut(blocHeureDebutCouverture);
+			if(blocHeureDebut == null)
+				setBlocHeureDebut(blocHeureDebutCouverture.o);
+		}
+		blocHeureDebutCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public String solrBlocHeureDebut() {
+		return blocHeureDebut == null ? null : blocHeureDebut.format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+
+	public String strBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String nomAffichageBlocHeureDebut() {
+		return "heure début";
+	}
+
+	public String htmTooltipBlocHeureDebut() {
+		return null;
+	}
+
+	public String htmBlocHeureDebut() {
+		return blocHeureDebut == null ? "" : StringEscapeUtils.escapeHtml4(strBlocHeureDebut());
+	}
+
+	public void htmBlocHeureDebut(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocHeureDebut\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocHeureDebut() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocHeureDebut\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocHeureDebut()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocHeureDebut\"");
+							r.s(" value=\"", htmBlocHeureDebut(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocHeureDebut());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// blocHeureFin //
+	//////////////////
+
+	/**	L'entité « blocHeureFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected LocalTime blocHeureFin;
+	@JsonIgnore
+	public Couverture<LocalTime> blocHeureFinCouverture = new Couverture<LocalTime>().p(this).c(LocalTime.class).var("blocHeureFin").o(blocHeureFin);
+
+	/**	<br/>L'entité « blocHeureFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocHeureFin">Trouver l'entité blocHeureFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocHeureFin(Couverture<LocalTime> c);
+
+	public LocalTime getBlocHeureFin() {
+		return blocHeureFin;
+	}
+
+	public void setBlocHeureFin(LocalTime blocHeureFin) {
+		this.blocHeureFin = blocHeureFin;
+		this.blocHeureFinCouverture.dejaInitialise = true;
+	}
+	/** Example: 01:00 **/
+	public BlocScolaire setBlocHeureFin(String o) {
+		this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
+		this.blocHeureFinCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocHeureFinInit() {
+		if(!blocHeureFinCouverture.dejaInitialise) {
+			_blocHeureFin(blocHeureFinCouverture);
+			if(blocHeureFin == null)
+				setBlocHeureFin(blocHeureFinCouverture.o);
+		}
+		blocHeureFinCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public String solrBlocHeureFin() {
+		return blocHeureFin == null ? null : blocHeureFin.format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+
+	public String strBlocHeureFin() {
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonBlocHeureFin() {
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String nomAffichageBlocHeureFin() {
+		return "heure fin";
+	}
+
+	public String htmTooltipBlocHeureFin() {
+		return null;
+	}
+
+	public String htmBlocHeureFin() {
+		return blocHeureFin == null ? "" : StringEscapeUtils.escapeHtml4(strBlocHeureFin());
+	}
+
+	public void htmBlocHeureFin(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocHeureFin\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocHeureFin() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocHeureFin\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocHeureFin()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocHeureFin\"");
+							r.s(" value=\"", htmBlocHeureFin(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocHeureFin());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// blocDimanche //
+	//////////////////
+
+	/**	L'entité « blocDimanche »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocDimanche;
+	@JsonIgnore
+	public Couverture<Boolean> blocDimancheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocDimanche").o(blocDimanche);
+
+	/**	<br/>L'entité « blocDimanche »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocDimanche">Trouver l'entité blocDimanche dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocDimanche(Couverture<Boolean> c);
+
+	public Boolean getBlocDimanche() {
+		return blocDimanche;
+	}
+
+	public void setBlocDimanche(Boolean blocDimanche) {
+		this.blocDimanche = blocDimanche;
+		this.blocDimancheCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocDimanche(String o) {
+		this.blocDimanche = Boolean.parseBoolean(o);
+		this.blocDimancheCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocDimancheInit() {
+		if(!blocDimancheCouverture.dejaInitialise) {
+			_blocDimanche(blocDimancheCouverture);
+			if(blocDimanche == null)
+				setBlocDimanche(blocDimancheCouverture.o);
+		}
+		blocDimancheCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocDimanche() {
+		return blocDimanche;
+	}
+
+	public String strBlocDimanche() {
+		return blocDimanche == null ? "" : blocDimanche.toString();
+	}
+
+	public String jsonBlocDimanche() {
+		return blocDimanche == null ? "" : blocDimanche.toString();
+	}
+
+	public String nomAffichageBlocDimanche() {
+		return "dimanche";
+	}
+
+	public String htmTooltipBlocDimanche() {
+		return null;
+	}
+
+	public String htmBlocDimanche() {
+		return blocDimanche == null ? "" : StringEscapeUtils.escapeHtml4(strBlocDimanche());
+	}
+
+	public void htmBlocDimanche(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocDimanche\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocDimanche() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocDimanche\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocDimanche()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocDimanche\"");
+							r.s(" value=\"", htmBlocDimanche(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocDimanche());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// blocLundi //
+	///////////////
+
+	/**	L'entité « blocLundi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocLundi;
+	@JsonIgnore
+	public Couverture<Boolean> blocLundiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocLundi").o(blocLundi);
+
+	/**	<br/>L'entité « blocLundi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocLundi">Trouver l'entité blocLundi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocLundi(Couverture<Boolean> c);
+
+	public Boolean getBlocLundi() {
+		return blocLundi;
+	}
+
+	public void setBlocLundi(Boolean blocLundi) {
+		this.blocLundi = blocLundi;
+		this.blocLundiCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocLundi(String o) {
+		this.blocLundi = Boolean.parseBoolean(o);
+		this.blocLundiCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocLundiInit() {
+		if(!blocLundiCouverture.dejaInitialise) {
+			_blocLundi(blocLundiCouverture);
+			if(blocLundi == null)
+				setBlocLundi(blocLundiCouverture.o);
+		}
+		blocLundiCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocLundi() {
+		return blocLundi;
+	}
+
+	public String strBlocLundi() {
+		return blocLundi == null ? "" : blocLundi.toString();
+	}
+
+	public String jsonBlocLundi() {
+		return blocLundi == null ? "" : blocLundi.toString();
+	}
+
+	public String nomAffichageBlocLundi() {
+		return "lundi";
+	}
+
+	public String htmTooltipBlocLundi() {
+		return null;
+	}
+
+	public String htmBlocLundi() {
+		return blocLundi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocLundi());
+	}
+
+	public void htmBlocLundi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocLundi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocLundi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocLundi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocLundi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocLundi\"");
+							r.s(" value=\"", htmBlocLundi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocLundi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// blocMardi //
+	///////////////
+
+	/**	L'entité « blocMardi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocMardi;
+	@JsonIgnore
+	public Couverture<Boolean> blocMardiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocMardi").o(blocMardi);
+
+	/**	<br/>L'entité « blocMardi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocMardi">Trouver l'entité blocMardi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocMardi(Couverture<Boolean> c);
+
+	public Boolean getBlocMardi() {
+		return blocMardi;
+	}
+
+	public void setBlocMardi(Boolean blocMardi) {
+		this.blocMardi = blocMardi;
+		this.blocMardiCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocMardi(String o) {
+		this.blocMardi = Boolean.parseBoolean(o);
+		this.blocMardiCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocMardiInit() {
+		if(!blocMardiCouverture.dejaInitialise) {
+			_blocMardi(blocMardiCouverture);
+			if(blocMardi == null)
+				setBlocMardi(blocMardiCouverture.o);
+		}
+		blocMardiCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocMardi() {
+		return blocMardi;
+	}
+
+	public String strBlocMardi() {
+		return blocMardi == null ? "" : blocMardi.toString();
+	}
+
+	public String jsonBlocMardi() {
+		return blocMardi == null ? "" : blocMardi.toString();
+	}
+
+	public String nomAffichageBlocMardi() {
+		return "mardi";
+	}
+
+	public String htmTooltipBlocMardi() {
+		return null;
+	}
+
+	public String htmBlocMardi() {
+		return blocMardi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocMardi());
+	}
+
+	public void htmBlocMardi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocMardi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocMardi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocMardi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocMardi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocMardi\"");
+							r.s(" value=\"", htmBlocMardi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocMardi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// blocMercredi //
+	//////////////////
+
+	/**	L'entité « blocMercredi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocMercredi;
+	@JsonIgnore
+	public Couverture<Boolean> blocMercrediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocMercredi").o(blocMercredi);
+
+	/**	<br/>L'entité « blocMercredi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocMercredi">Trouver l'entité blocMercredi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocMercredi(Couverture<Boolean> c);
+
+	public Boolean getBlocMercredi() {
+		return blocMercredi;
+	}
+
+	public void setBlocMercredi(Boolean blocMercredi) {
+		this.blocMercredi = blocMercredi;
+		this.blocMercrediCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocMercredi(String o) {
+		this.blocMercredi = Boolean.parseBoolean(o);
+		this.blocMercrediCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocMercrediInit() {
+		if(!blocMercrediCouverture.dejaInitialise) {
+			_blocMercredi(blocMercrediCouverture);
+			if(blocMercredi == null)
+				setBlocMercredi(blocMercrediCouverture.o);
+		}
+		blocMercrediCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocMercredi() {
+		return blocMercredi;
+	}
+
+	public String strBlocMercredi() {
+		return blocMercredi == null ? "" : blocMercredi.toString();
+	}
+
+	public String jsonBlocMercredi() {
+		return blocMercredi == null ? "" : blocMercredi.toString();
+	}
+
+	public String nomAffichageBlocMercredi() {
+		return "mercredi";
+	}
+
+	public String htmTooltipBlocMercredi() {
+		return null;
+	}
+
+	public String htmBlocMercredi() {
+		return blocMercredi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocMercredi());
+	}
+
+	public void htmBlocMercredi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocMercredi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocMercredi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocMercredi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocMercredi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocMercredi\"");
+							r.s(" value=\"", htmBlocMercredi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocMercredi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// blocJeudi //
+	///////////////
+
+	/**	L'entité « blocJeudi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocJeudi;
+	@JsonIgnore
+	public Couverture<Boolean> blocJeudiCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocJeudi").o(blocJeudi);
+
+	/**	<br/>L'entité « blocJeudi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocJeudi">Trouver l'entité blocJeudi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocJeudi(Couverture<Boolean> c);
+
+	public Boolean getBlocJeudi() {
+		return blocJeudi;
+	}
+
+	public void setBlocJeudi(Boolean blocJeudi) {
+		this.blocJeudi = blocJeudi;
+		this.blocJeudiCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocJeudi(String o) {
+		this.blocJeudi = Boolean.parseBoolean(o);
+		this.blocJeudiCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocJeudiInit() {
+		if(!blocJeudiCouverture.dejaInitialise) {
+			_blocJeudi(blocJeudiCouverture);
+			if(blocJeudi == null)
+				setBlocJeudi(blocJeudiCouverture.o);
+		}
+		blocJeudiCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocJeudi() {
+		return blocJeudi;
+	}
+
+	public String strBlocJeudi() {
+		return blocJeudi == null ? "" : blocJeudi.toString();
+	}
+
+	public String jsonBlocJeudi() {
+		return blocJeudi == null ? "" : blocJeudi.toString();
+	}
+
+	public String nomAffichageBlocJeudi() {
+		return "jeudi";
+	}
+
+	public String htmTooltipBlocJeudi() {
+		return null;
+	}
+
+	public String htmBlocJeudi() {
+		return blocJeudi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocJeudi());
+	}
+
+	public void htmBlocJeudi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocJeudi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocJeudi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocJeudi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocJeudi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocJeudi\"");
+							r.s(" value=\"", htmBlocJeudi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocJeudi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// blocVendredi //
+	//////////////////
+
+	/**	L'entité « blocVendredi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocVendredi;
+	@JsonIgnore
+	public Couverture<Boolean> blocVendrediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocVendredi").o(blocVendredi);
+
+	/**	<br/>L'entité « blocVendredi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocVendredi">Trouver l'entité blocVendredi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocVendredi(Couverture<Boolean> c);
+
+	public Boolean getBlocVendredi() {
+		return blocVendredi;
+	}
+
+	public void setBlocVendredi(Boolean blocVendredi) {
+		this.blocVendredi = blocVendredi;
+		this.blocVendrediCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocVendredi(String o) {
+		this.blocVendredi = Boolean.parseBoolean(o);
+		this.blocVendrediCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocVendrediInit() {
+		if(!blocVendrediCouverture.dejaInitialise) {
+			_blocVendredi(blocVendrediCouverture);
+			if(blocVendredi == null)
+				setBlocVendredi(blocVendrediCouverture.o);
+		}
+		blocVendrediCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocVendredi() {
+		return blocVendredi;
+	}
+
+	public String strBlocVendredi() {
+		return blocVendredi == null ? "" : blocVendredi.toString();
+	}
+
+	public String jsonBlocVendredi() {
+		return blocVendredi == null ? "" : blocVendredi.toString();
+	}
+
+	public String nomAffichageBlocVendredi() {
+		return "vendredi";
+	}
+
+	public String htmTooltipBlocVendredi() {
+		return null;
+	}
+
+	public String htmBlocVendredi() {
+		return blocVendredi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocVendredi());
+	}
+
+	public void htmBlocVendredi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocVendredi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocVendredi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocVendredi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocVendredi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocVendredi\"");
+							r.s(" value=\"", htmBlocVendredi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocVendredi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////
+	// blocSamedi //
+	////////////////
+
+	/**	L'entité « blocSamedi »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean blocSamedi;
+	@JsonIgnore
+	public Couverture<Boolean> blocSamediCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("blocSamedi").o(blocSamedi);
+
+	/**	<br/>L'entité « blocSamedi »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocSamedi">Trouver l'entité blocSamedi dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocSamedi(Couverture<Boolean> c);
+
+	public Boolean getBlocSamedi() {
+		return blocSamedi;
+	}
+
+	public void setBlocSamedi(Boolean blocSamedi) {
+		this.blocSamedi = blocSamedi;
+		this.blocSamediCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocSamedi(String o) {
+		this.blocSamedi = Boolean.parseBoolean(o);
+		this.blocSamediCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocSamediInit() {
+		if(!blocSamediCouverture.dejaInitialise) {
+			_blocSamedi(blocSamediCouverture);
+			if(blocSamedi == null)
+				setBlocSamedi(blocSamediCouverture.o);
+		}
+		blocSamediCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Boolean solrBlocSamedi() {
+		return blocSamedi;
+	}
+
+	public String strBlocSamedi() {
+		return blocSamedi == null ? "" : blocSamedi.toString();
+	}
+
+	public String jsonBlocSamedi() {
+		return blocSamedi == null ? "" : blocSamedi.toString();
+	}
+
+	public String nomAffichageBlocSamedi() {
+		return "samedi";
+	}
+
+	public String htmTooltipBlocSamedi() {
+		return null;
+	}
+
+	public String htmBlocSamedi() {
+		return blocSamedi == null ? "" : StringEscapeUtils.escapeHtml4(strBlocSamedi());
+	}
+
+	public void htmBlocSamedi(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocSamedi\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocSamedi() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocSamedi\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocSamedi()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocSamedi\"");
+							r.s(" value=\"", htmBlocSamedi(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocSamedi());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////
+	// blocPrixParMois //
+	/////////////////////
+
+	/**	L'entité « blocPrixParMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal blocPrixParMois;
+	@JsonIgnore
+	public Couverture<BigDecimal> blocPrixParMoisCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixParMois").o(blocPrixParMois);
+
+	/**	<br/>L'entité « blocPrixParMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixParMois">Trouver l'entité blocPrixParMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocPrixParMois(Couverture<BigDecimal> c);
+
+	public BigDecimal getBlocPrixParMois() {
+		return blocPrixParMois;
+	}
+
+	public void setBlocPrixParMois(BigDecimal blocPrixParMois) {
+		this.blocPrixParMois = blocPrixParMois;
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocPrixParMois(String o) {
+		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+			this.blocPrixParMois = new BigDecimal(o);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	public BlocScolaire setBlocPrixParMois(Double o) {
+			this.blocPrixParMois = new BigDecimal(o);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	public BlocScolaire setBlocPrixParMois(Integer o) {
+			this.blocPrixParMois = new BigDecimal(o);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocPrixParMoisInit() {
+		if(!blocPrixParMoisCouverture.dejaInitialise) {
+			_blocPrixParMois(blocPrixParMoisCouverture);
+			if(blocPrixParMois == null)
+				setBlocPrixParMois(blocPrixParMoisCouverture.o);
+		}
+		blocPrixParMoisCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Double solrBlocPrixParMois() {
+		return blocPrixParMois == null ? null : blocPrixParMois.doubleValue();
+	}
+
+	public String strBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
+	}
+
+	public String jsonBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
+	}
+
+	public String nomAffichageBlocPrixParMois() {
+		return "prix par mois";
+	}
+
+	public String htmTooltipBlocPrixParMois() {
+		return null;
+	}
+
+	public String htmBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixParMois());
+	}
+
+	public void htmBlocPrixParMois(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocPrixParMois\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocPrixParMois() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocPrixParMois\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocPrixParMois()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocPrixParMois\"");
+							r.s(" value=\"", htmBlocPrixParMois(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocPrixParMois());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////
 	// blocNomComplet //
 	////////////////////
 
@@ -2948,6 +4136,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocNomComplet() {
+		return blocNomComplet == null ? "" : blocNomComplet;
+	}
+
+	public String jsonBlocNomComplet() {
 		return blocNomComplet == null ? "" : blocNomComplet;
 	}
 
@@ -3049,6 +4241,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return blocId == null ? "" : blocId;
 	}
 
+	public String jsonBlocId() {
+		return blocId == null ? "" : blocId;
+	}
+
 	public String nomAffichageBlocId() {
 		return "ID";
 	}
@@ -3147,6 +4343,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -3242,6 +4442,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
 		return objetSuggere == null ? "" : objetSuggere;
 	}
 
@@ -3344,9 +4548,19 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		saisonNomCompletInit();
 		sessionJourDebutInit();
 		sessionJourFinInit();
-		sessionNomCompletInit();
+		ageNomCompletInit();
 		ageDebutInit();
 		ageFinInit();
+		blocHeureDebutInit();
+		blocHeureFinInit();
+		blocDimancheInit();
+		blocLundiInit();
+		blocMardiInit();
+		blocMercrediInit();
+		blocJeudiInit();
+		blocVendrediInit();
+		blocSamediInit();
+		blocPrixParMoisInit();
 		blocNomCompletInit();
 		blocIdInit();
 		pageUrlInit();
@@ -3443,12 +4657,32 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.sessionJourDebut;
 			case "sessionJourFin":
 				return oBlocScolaire.sessionJourFin;
-			case "sessionNomComplet":
-				return oBlocScolaire.sessionNomComplet;
+			case "ageNomComplet":
+				return oBlocScolaire.ageNomComplet;
 			case "ageDebut":
 				return oBlocScolaire.ageDebut;
 			case "ageFin":
 				return oBlocScolaire.ageFin;
+			case "blocHeureDebut":
+				return oBlocScolaire.blocHeureDebut;
+			case "blocHeureFin":
+				return oBlocScolaire.blocHeureFin;
+			case "blocDimanche":
+				return oBlocScolaire.blocDimanche;
+			case "blocLundi":
+				return oBlocScolaire.blocLundi;
+			case "blocMardi":
+				return oBlocScolaire.blocMardi;
+			case "blocMercredi":
+				return oBlocScolaire.blocMercredi;
+			case "blocJeudi":
+				return oBlocScolaire.blocJeudi;
+			case "blocVendredi":
+				return oBlocScolaire.blocVendredi;
+			case "blocSamedi":
+				return oBlocScolaire.blocSamedi;
+			case "blocPrixParMois":
+				return oBlocScolaire.blocPrixParMois;
 			case "blocNomComplet":
 				return oBlocScolaire.blocNomComplet;
 			case "blocId":
@@ -3508,6 +4742,46 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirBlocScolaire(String var, String val) {
 		switch(var) {
+			case "blocHeureDebut":
+				setBlocHeureDebut(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocHeureFin":
+				setBlocHeureFin(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocDimanche":
+				setBlocDimanche(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocLundi":
+				setBlocLundi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocMardi":
+				setBlocMardi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocMercredi":
+				setBlocMercredi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocJeudi":
+				setBlocJeudi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocVendredi":
+				setBlocVendredi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocSamedi":
+				setBlocSamedi(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
+			case "blocPrixParMois":
+				setBlocPrixParMois(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -3663,10 +4937,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setSessionJourFin(sessionJourFin);
 			}
 
-			if(sauvegardesBlocScolaire.contains("sessionNomComplet")) {
-				String sessionNomComplet = (String)solrDocument.get("sessionNomComplet_stored_string");
-				if(sessionNomComplet != null)
-					oBlocScolaire.setSessionNomComplet(sessionNomComplet);
+			if(sauvegardesBlocScolaire.contains("ageNomComplet")) {
+				String ageNomComplet = (String)solrDocument.get("ageNomComplet_stored_string");
+				if(ageNomComplet != null)
+					oBlocScolaire.setAgeNomComplet(ageNomComplet);
 			}
 
 			if(sauvegardesBlocScolaire.contains("ageDebut")) {
@@ -3679,6 +4953,66 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 				if(ageFin != null)
 					oBlocScolaire.setAgeFin(ageFin);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocHeureDebut")) {
+				String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
+				if(blocHeureDebut != null)
+					oBlocScolaire.setBlocHeureDebut(blocHeureDebut);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocHeureFin")) {
+				String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
+				if(blocHeureFin != null)
+					oBlocScolaire.setBlocHeureFin(blocHeureFin);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocDimanche")) {
+				Boolean blocDimanche = (Boolean)solrDocument.get("blocDimanche_stored_boolean");
+				if(blocDimanche != null)
+					oBlocScolaire.setBlocDimanche(blocDimanche);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocLundi")) {
+				Boolean blocLundi = (Boolean)solrDocument.get("blocLundi_stored_boolean");
+				if(blocLundi != null)
+					oBlocScolaire.setBlocLundi(blocLundi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocMardi")) {
+				Boolean blocMardi = (Boolean)solrDocument.get("blocMardi_stored_boolean");
+				if(blocMardi != null)
+					oBlocScolaire.setBlocMardi(blocMardi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocMercredi")) {
+				Boolean blocMercredi = (Boolean)solrDocument.get("blocMercredi_stored_boolean");
+				if(blocMercredi != null)
+					oBlocScolaire.setBlocMercredi(blocMercredi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocJeudi")) {
+				Boolean blocJeudi = (Boolean)solrDocument.get("blocJeudi_stored_boolean");
+				if(blocJeudi != null)
+					oBlocScolaire.setBlocJeudi(blocJeudi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocVendredi")) {
+				Boolean blocVendredi = (Boolean)solrDocument.get("blocVendredi_stored_boolean");
+				if(blocVendredi != null)
+					oBlocScolaire.setBlocVendredi(blocVendredi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocSamedi")) {
+				Boolean blocSamedi = (Boolean)solrDocument.get("blocSamedi_stored_boolean");
+				if(blocSamedi != null)
+					oBlocScolaire.setBlocSamedi(blocSamedi);
+			}
+
+			if(sauvegardesBlocScolaire.contains("blocPrixParMois")) {
+				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+				if(blocPrixParMois != null)
+					oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
 			}
 
 			if(sauvegardesBlocScolaire.contains("blocNomComplet")) {
@@ -3866,9 +5200,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
 			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
 		}
-		if(sessionNomComplet != null) {
-			document.addField("sessionNomComplet_indexed_string", sessionNomComplet);
-			document.addField("sessionNomComplet_stored_string", sessionNomComplet);
+		if(ageNomComplet != null) {
+			document.addField("ageNomComplet_indexed_string", ageNomComplet);
+			document.addField("ageNomComplet_stored_string", ageNomComplet);
 		}
 		if(ageDebut != null) {
 			document.addField("ageDebut_indexed_int", ageDebut);
@@ -3877,6 +5211,46 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(ageFin != null) {
 			document.addField("ageFin_indexed_int", ageFin);
 			document.addField("ageFin_stored_int", ageFin);
+		}
+		if(blocHeureDebut != null) {
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+		}
+		if(blocHeureFin != null) {
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+		}
+		if(blocDimanche != null) {
+			document.addField("blocDimanche_indexed_boolean", blocDimanche);
+			document.addField("blocDimanche_stored_boolean", blocDimanche);
+		}
+		if(blocLundi != null) {
+			document.addField("blocLundi_indexed_boolean", blocLundi);
+			document.addField("blocLundi_stored_boolean", blocLundi);
+		}
+		if(blocMardi != null) {
+			document.addField("blocMardi_indexed_boolean", blocMardi);
+			document.addField("blocMardi_stored_boolean", blocMardi);
+		}
+		if(blocMercredi != null) {
+			document.addField("blocMercredi_indexed_boolean", blocMercredi);
+			document.addField("blocMercredi_stored_boolean", blocMercredi);
+		}
+		if(blocJeudi != null) {
+			document.addField("blocJeudi_indexed_boolean", blocJeudi);
+			document.addField("blocJeudi_stored_boolean", blocJeudi);
+		}
+		if(blocVendredi != null) {
+			document.addField("blocVendredi_indexed_boolean", blocVendredi);
+			document.addField("blocVendredi_stored_boolean", blocVendredi);
+		}
+		if(blocSamedi != null) {
+			document.addField("blocSamedi_indexed_boolean", blocSamedi);
+			document.addField("blocSamedi_stored_boolean", blocSamedi);
+		}
+		if(blocPrixParMois != null) {
+			document.addField("blocPrixParMois_indexed_double", blocPrixParMois);
+			document.addField("blocPrixParMois_stored_double", blocPrixParMois);
 		}
 		if(blocNomComplet != null) {
 			document.addField("blocNomComplet_indexed_string", blocNomComplet);
@@ -4013,9 +5387,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(sessionJourFin != null)
 			oBlocScolaire.setSessionJourFin(sessionJourFin);
 
-		String sessionNomComplet = (String)solrDocument.get("sessionNomComplet_stored_string");
-		if(sessionNomComplet != null)
-			oBlocScolaire.setSessionNomComplet(sessionNomComplet);
+		String ageNomComplet = (String)solrDocument.get("ageNomComplet_stored_string");
+		if(ageNomComplet != null)
+			oBlocScolaire.setAgeNomComplet(ageNomComplet);
 
 		Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
 		if(ageDebut != null)
@@ -4024,6 +5398,46 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 		if(ageFin != null)
 			oBlocScolaire.setAgeFin(ageFin);
+
+		String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
+		if(blocHeureDebut != null)
+			oBlocScolaire.setBlocHeureDebut(blocHeureDebut);
+
+		String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
+		if(blocHeureFin != null)
+			oBlocScolaire.setBlocHeureFin(blocHeureFin);
+
+		Boolean blocDimanche = (Boolean)solrDocument.get("blocDimanche_stored_boolean");
+		if(blocDimanche != null)
+			oBlocScolaire.setBlocDimanche(blocDimanche);
+
+		Boolean blocLundi = (Boolean)solrDocument.get("blocLundi_stored_boolean");
+		if(blocLundi != null)
+			oBlocScolaire.setBlocLundi(blocLundi);
+
+		Boolean blocMardi = (Boolean)solrDocument.get("blocMardi_stored_boolean");
+		if(blocMardi != null)
+			oBlocScolaire.setBlocMardi(blocMardi);
+
+		Boolean blocMercredi = (Boolean)solrDocument.get("blocMercredi_stored_boolean");
+		if(blocMercredi != null)
+			oBlocScolaire.setBlocMercredi(blocMercredi);
+
+		Boolean blocJeudi = (Boolean)solrDocument.get("blocJeudi_stored_boolean");
+		if(blocJeudi != null)
+			oBlocScolaire.setBlocJeudi(blocJeudi);
+
+		Boolean blocVendredi = (Boolean)solrDocument.get("blocVendredi_stored_boolean");
+		if(blocVendredi != null)
+			oBlocScolaire.setBlocVendredi(blocVendredi);
+
+		Boolean blocSamedi = (Boolean)solrDocument.get("blocSamedi_stored_boolean");
+		if(blocSamedi != null)
+			oBlocScolaire.setBlocSamedi(blocSamedi);
+
+		Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+		if(blocPrixParMois != null)
+			oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
 
 		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 		if(blocNomComplet != null)
@@ -4049,7 +5463,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash(super.hashCode(), blocHeureDebut, blocHeureFin, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixParMois);
 	}
 
 	////////////
@@ -4062,7 +5476,17 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(!(o instanceof BlocScolaire))
 			return false;
 		BlocScolaire that = (BlocScolaire)o;
-		return super.equals(o);
+		return super.equals(o)
+				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
+				&& Objects.equals( blocHeureFin, that.blocHeureFin )
+				&& Objects.equals( blocDimanche, that.blocDimanche )
+				&& Objects.equals( blocLundi, that.blocLundi )
+				&& Objects.equals( blocMardi, that.blocMardi )
+				&& Objects.equals( blocMercredi, that.blocMercredi )
+				&& Objects.equals( blocJeudi, that.blocJeudi )
+				&& Objects.equals( blocVendredi, that.blocVendredi )
+				&& Objects.equals( blocSamedi, that.blocSamedi )
+				&& Objects.equals( blocPrixParMois, that.blocPrixParMois );
 	}
 
 	//////////////
@@ -4073,6 +5497,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("BlocScolaire { ");
+		sb.append( "blocHeureDebut: " ).append(blocHeureDebut);
+		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
+		sb.append( ", blocDimanche: " ).append(blocDimanche);
+		sb.append( ", blocLundi: " ).append(blocLundi);
+		sb.append( ", blocMardi: " ).append(blocMardi);
+		sb.append( ", blocMercredi: " ).append(blocMercredi);
+		sb.append( ", blocJeudi: " ).append(blocJeudi);
+		sb.append( ", blocVendredi: " ).append(blocVendredi);
+		sb.append( ", blocSamedi: " ).append(blocSamedi);
+		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
 		sb.append(" }");
 		return sb.toString();
 	}

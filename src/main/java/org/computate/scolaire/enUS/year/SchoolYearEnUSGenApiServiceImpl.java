@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -191,6 +192,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "schoolKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("schoolKey", jsonObject.getLong(entityVar), "yearKeys", pk));
+						break;
+					case "seasonKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("seasonKeys", jsonObject.getLong(entityVar), "yearKey", pk));
 						break;
 					case "yearStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -395,6 +400,30 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						o2.setSchoolKey(requestJson.getLong(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
+						break;
+					case "addSeasonKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getLong(methodName)));
+						break;
+					case "addAllSeasonKeys":
+						JsonArray addAllSeasonKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", addAllSeasonKeysValues.getLong(i)));
+						}
+						break;
+					case "setSeasonKeys":
+						JsonArray setSeasonKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getJsonArray(methodName)));
+						for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", setSeasonKeysValues.getLong(i)));
+						}
+						break;
+					case "removeSeasonKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getLong(methodName)));
 						break;
 					case "setYearStart":
 						o2.setYearStart(requestJson.getString(methodName));
@@ -725,8 +754,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "yearKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":

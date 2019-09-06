@@ -115,6 +115,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
 	public String nomAffichageEcoleCle() {
 		return "école";
 	}
@@ -216,6 +220,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String jsonAnneeCle() {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
 
@@ -341,6 +349,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public String jsonInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
 	public String nomAffichageInscriptionCles() {
 		return null;
 	}
@@ -463,8 +475,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return saisonCles == null ? "" : saisonCles.toString();
 	}
 
+	public String jsonSaisonCles() {
+		return saisonCles == null ? "" : saisonCles.toString();
+	}
+
 	public String nomAffichageSaisonCles() {
-		return null;
+		return "saisons";
 	}
 
 	public String htmTooltipSaisonCles() {
@@ -564,6 +580,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strScolaireTri() {
+		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
@@ -671,6 +691,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public String jsonEcoleTri() {
+		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
 	public String nomAffichageEcoleTri() {
 		return null;
 	}
@@ -772,6 +796,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeTri() {
+		return anneeTri == null ? "" : anneeTri.toString();
+	}
+
+	public String jsonAnneeTri() {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
 
@@ -950,6 +978,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
+	public String jsonEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
 	public String nomAffichageEcoleNomComplet() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1061,6 +1093,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeDebut() {
 		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1175,6 +1211,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeFin() {
 		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1276,6 +1316,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return anneeNomCourt == null ? "" : anneeNomCourt;
 	}
 
+	public String jsonAnneeNomCourt() {
+		return anneeNomCourt == null ? "" : anneeNomCourt;
+	}
+
 	public String nomAffichageAnneeNomCourt() {
 		return null;
 	}
@@ -1371,6 +1415,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeNomComplet() {
+		return anneeNomComplet == null ? "" : anneeNomComplet;
+	}
+
+	public String jsonAnneeNomComplet() {
 		return anneeNomComplet == null ? "" : anneeNomComplet;
 	}
 
@@ -1472,6 +1520,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return anneeId == null ? "" : anneeId;
 	}
 
+	public String jsonAnneeId() {
+		return anneeId == null ? "" : anneeId;
+	}
+
 	public String nomAffichageAnneeId() {
 		return "ID";
 	}
@@ -1570,6 +1622,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -1665,6 +1721,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
 		return objetSuggere == null ? "" : objetSuggere;
 	}
 
@@ -1863,6 +1923,9 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			case "ecoleCle":
 				oAnneeScolaire.setEcoleCle((Long)val);
 				return val;
+			case "saisonCles":
+				oAnneeScolaire.addSaisonCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -1934,12 +1997,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 				if(inscriptionCles != null)
 					oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
-			}
-
-			if(sauvegardesAnneeScolaire.contains("saisonCles")) {
-				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
-				if(saisonCles != null)
-					oAnneeScolaire.saisonCles.addAll(saisonCles);
 			}
 
 			if(sauvegardesAnneeScolaire.contains("scolaireTri")) {
@@ -2093,14 +2150,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				document.addField("inscriptionCles_stored_longs", o);
 			}
 		}
-		if(saisonCles != null) {
-			for(java.lang.Long o : saisonCles) {
-				document.addField("saisonCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : saisonCles) {
-				document.addField("saisonCles_stored_longs", o);
-			}
-		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -2188,10 +2237,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(inscriptionCles != null)
 			oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
 
-		List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
-		if(saisonCles != null)
-			oAnneeScolaire.saisonCles.addAll(saisonCles);
-
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
 			oAnneeScolaire.setScolaireTri(scolaireTri);
@@ -2244,7 +2289,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, anneeDebut, anneeFin);
+		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin);
 	}
 
 	////////////
@@ -2259,6 +2304,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire that = (AnneeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( ecoleCle, that.ecoleCle )
+				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( anneeDebut, that.anneeDebut )
 				&& Objects.equals( anneeFin, that.anneeFin );
 	}
@@ -2272,6 +2318,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AnneeScolaire { ");
 		sb.append( "ecoleCle: " ).append(ecoleCle);
+		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", anneeDebut: " ).append(anneeDebut);
 		sb.append( ", anneeFin: " ).append(anneeFin);
 		sb.append(" }");

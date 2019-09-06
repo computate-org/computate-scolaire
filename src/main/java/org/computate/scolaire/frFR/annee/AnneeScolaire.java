@@ -54,8 +54,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: Ecole.anneeCles
-	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * HtmlLigne: 4
+	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
@@ -89,9 +89,14 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: seasonKeys
-	 * Indexe: true
-	 * Stocke: true
-	 */
+	 * Attribuer: SaisonScolaire.anneeCle
+	 * HtmlLigne: 4
+	 * HtmlColonne: 2
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: saisons
+	 * NomAffichage.enUS: seasons
+	 */   
 	protected void _saisonCles(List<Long> o) {}
 
 	/**

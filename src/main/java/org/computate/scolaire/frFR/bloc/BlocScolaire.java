@@ -3,6 +3,7 @@ package org.computate.scolaire.frFR.bloc;
 import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -46,7 +47,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: indigo
  * IconeGroupe: duotone
  * IconeNom: bell-o
-*/
+*/    
 public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
@@ -60,7 +61,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */                
+	 */                  
 	protected void _ecoleCle(Couverture<Long> c) {
 	}
 
@@ -280,7 +281,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r.enUS: YearStart
 	 * r: age
 	 * r.enUS: age
-	 */                      
+	 */                     
 	protected void _anneeFin(Couverture<LocalDate> c) {
 		if(age != null)
 			c.o(age.getAnneeFin());
@@ -405,17 +406,17 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionNameComplete
+	 * Var.enUS: ageNameComplete
 	 * Indexe: true
 	 * Stocke: true
-	 * r: SessionNomComplet
-	 * r.enUS: SessionNameComplete
+	 * r: AgeNomComplet
+	 * r.enUS: AgeNameComplete
 	 * r: age
 	 * r.enUS: age
 	 */                   
-	protected void _sessionNomComplet(Couverture<String> c) {
+	protected void _ageNomComplet(Couverture<String> c) {
 		if(age != null)
-			c.o(age.getSessionNomComplet());
+			c.o(age.getAgeNomComplet());
 	}
 
 	/**
@@ -452,24 +453,194 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 			c.o(age.getAgeFin());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockTimeStart
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: heure début
+	 * NomAffichage.enUS: start time
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocHeureDebut(Couverture<LocalTime> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockTimeEnd
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: heure fin
+	 * NomAffichage.enUS: end time
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocHeureFin(Couverture<LocalTime> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockSunday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: dimanche
+	 * NomAffichage.enUS: sunday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocDimanche(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockMonday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: lundi
+	 * NomAffichage.enUS: monday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocLundi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockTuesday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: mardi
+	 * NomAffichage.enUS: tuesday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocMardi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockWednesday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: mercredi
+	 * NomAffichage.enUS: wednesday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocMercredi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockThursday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: jeudi
+	 * NomAffichage.enUS: thursday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocJeudi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockFriday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: vendredi
+	 * NomAffichage.enUS: friday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocVendredi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockSaturday
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: samedi
+	 * NomAffichage.enUS: saturday
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocSamedi(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockPricePerMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix par mois
+	 * NomAffichage.enUS: price per month
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 1
+	 */                   
+	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
+	}
+
 	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: blocNameComplete
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
-	 * r: bloc %s - %s pendant %s. 
-	 * r.enUS: block %s - %s during %s. 
-	 * r: strAgeDebut
-	 * r.enUS: strAgeStart
-	 * r: strAgeFin
-	 * r.enUS: strAgeEnd
-	 * r: sessionNomComplet
-	 * r.enUS: sessionNameComplete
-	 */
+	 * r: %s - %s %s %s/mois %s. 
+	 * r.enUS: %s - %s %s %s/month %s. 
+	 * r: strBlocHeureDebut
+	 * r.enUS: strBlockTimeStart
+	 * r: strBlocHeureFin
+	 * r.enUS: strBlockTimeEnd
+	 * r: strBlocPrixParMois
+	 * r.enUS: strBlockPricePerMonth
+	 * r: blocDimanche
+	 * r.enUS: blockSunday
+	 * r: blocLundi
+	 * r.enUS: blockMonday
+	 * r: blocMardi
+	 * r.enUS: blockTuesday
+	 * r: blocMercredi
+	 * r.enUS: blockWednesday
+	 * r: blocJeudi
+	 * r.enUS: blockThursday
+	 * r: blocVendredi
+	 * r.enUS: blockFriday
+	 * r: blocSamedi
+	 * r.enUS: blockSaturday
+	 * r: ageNomComplet
+	 * r.enUS: ageNameComplete
+	 */  
 	protected void _blocNomComplet(Couverture<String> c) {
 		String o;
-		o = String.format("âges %s - %s pendant %s. ", strAgeDebut(), strAgeFin(), sessionNomComplet);
+		String weekdays = "";
+		if(blocLundi) weekdays += " Mo";
+		if(blocMardi) weekdays += " Tu";
+		if(blocMercredi) weekdays += " We";
+		if(blocJeudi) weekdays += " Th";
+		if(blocVendredi) weekdays += " Fr";
+		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
+		o = String.format("%s - %s %s %s/mois %s. ", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
 		c.o(o);
 	}
 

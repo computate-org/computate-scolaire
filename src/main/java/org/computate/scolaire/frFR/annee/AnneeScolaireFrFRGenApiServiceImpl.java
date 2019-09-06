@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -191,6 +192,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "ecoleCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", jsonObject.getLong(entiteVar)));
+						break;
+					case "saisonCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", jsonObject.getLong(entiteVar)));
 						break;
 					case "anneeDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -395,6 +400,30 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						o2.setEcoleCle(requeteJson.getLong(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
+						break;
+					case "addSaisonCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
+						break;
+					case "addAllSaisonCles":
+						JsonArray addAllSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("anneeCle", addAllSaisonClesValeurs.getLong(i), "saisonCles", pk));
+						}
+						break;
+					case "setSaisonCles":
+						JsonArray setSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
+						for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("anneeCle", setSaisonClesValeurs.getLong(i), "saisonCles", pk));
+						}
+						break;
+					case "removeSaisonCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
 						break;
 					case "setAnneeDebut":
 						o2.setAnneeDebut(requeteJson.getString(methodeNom));
@@ -725,8 +754,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "anneeCle_indexed_long";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":

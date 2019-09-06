@@ -12,6 +12,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -211,6 +212,483 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("div");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							LocalTime val = o.getBlocHeureDebut();
+
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocHeureDebut").a("class", "").f().sx("heure début").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "text")
+										.a("class", "w3-input w3-border timepicker ")
+										.a("placeholder", "HH:MM AM")
+										.a("id", "Page_blocHeureDebut")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#Page_blocHeureDebut')); }, function() { ajouterErreur($('#Page_blocHeureDebut')); }); } ")
+										.fg();
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocHeureDebut')); $('#Page_blocHeureDebut').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', null, $('#Page_blocHeureDebut'), function() { ajouterLueur($('#Page_blocHeureDebut')); }, function() { ajouterErreur($('#Page_blocHeureDebut')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							LocalTime val = o.getBlocHeureFin();
+
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "text")
+										.a("class", "w3-input w3-border timepicker ")
+										.a("placeholder", "HH:MM AM")
+										.a("id", "Page_blocHeureFin")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); } ")
+										.fg();
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocHeureFin')); $('#Page_blocHeureFin').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', null, $('#Page_blocHeureFin'), function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocDimanche")
+										.a("id", "Page_blocDimanche")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocDimanche")
+										.a("name", "setBlocDimanche")
+										.a("id", "Page_blocDimanche")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocDimanche', $(this).val(), function() { ajouterLueur($('#Page_blocDimanche')); }, function() { ajouterErreur($('#Page_blocDimanche')); }); ")
+										;
+										if(o.getBlocDimanche() != null && o.getBlocDimanche())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocDimanche')); $('#Page_blocDimanche').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocDimanche', null, $('#Page_blocDimanche'), function() { ajouterLueur($('#Page_blocDimanche')); }, function() { ajouterErreur($('#Page_blocDimanche')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocLundi")
+										.a("id", "Page_blocLundi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocLundi")
+										.a("name", "setBlocLundi")
+										.a("id", "Page_blocLundi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocLundi', $(this).val(), function() { ajouterLueur($('#Page_blocLundi')); }, function() { ajouterErreur($('#Page_blocLundi')); }); ")
+										;
+										if(o.getBlocLundi() != null && o.getBlocLundi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocLundi").a("class", "").f().sx("lundi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocLundi')); $('#Page_blocLundi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocLundi', null, $('#Page_blocLundi'), function() { ajouterLueur($('#Page_blocLundi')); }, function() { ajouterErreur($('#Page_blocLundi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocMardi")
+										.a("id", "Page_blocMardi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocMardi")
+										.a("name", "setBlocMardi")
+										.a("id", "Page_blocMardi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMardi', $(this).val(), function() { ajouterLueur($('#Page_blocMardi')); }, function() { ajouterErreur($('#Page_blocMardi')); }); ")
+										;
+										if(o.getBlocMardi() != null && o.getBlocMardi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocMardi").a("class", "").f().sx("mardi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocMardi')); $('#Page_blocMardi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMardi', null, $('#Page_blocMardi'), function() { ajouterLueur($('#Page_blocMardi')); }, function() { ajouterErreur($('#Page_blocMardi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocMercredi")
+										.a("id", "Page_blocMercredi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocMercredi")
+										.a("name", "setBlocMercredi")
+										.a("id", "Page_blocMercredi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMercredi', $(this).val(), function() { ajouterLueur($('#Page_blocMercredi')); }, function() { ajouterErreur($('#Page_blocMercredi')); }); ")
+										;
+										if(o.getBlocMercredi() != null && o.getBlocMercredi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocMercredi')); $('#Page_blocMercredi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMercredi', null, $('#Page_blocMercredi'), function() { ajouterLueur($('#Page_blocMercredi')); }, function() { ajouterErreur($('#Page_blocMercredi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocJeudi")
+										.a("id", "Page_blocJeudi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocJeudi")
+										.a("name", "setBlocJeudi")
+										.a("id", "Page_blocJeudi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocJeudi', $(this).val(), function() { ajouterLueur($('#Page_blocJeudi')); }, function() { ajouterErreur($('#Page_blocJeudi')); }); ")
+										;
+										if(o.getBlocJeudi() != null && o.getBlocJeudi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocJeudi')); $('#Page_blocJeudi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocJeudi', null, $('#Page_blocJeudi'), function() { ajouterLueur($('#Page_blocJeudi')); }, function() { ajouterErreur($('#Page_blocJeudi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocVendredi")
+										.a("id", "Page_blocVendredi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocVendredi")
+										.a("name", "setBlocVendredi")
+										.a("id", "Page_blocVendredi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocVendredi', $(this).val(), function() { ajouterLueur($('#Page_blocVendredi')); }, function() { ajouterErreur($('#Page_blocVendredi')); }); ")
+										;
+										if(o.getBlocVendredi() != null && o.getBlocVendredi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocVendredi')); $('#Page_blocVendredi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocVendredi', null, $('#Page_blocVendredi'), function() { ajouterLueur($('#Page_blocVendredi')); }, function() { ajouterErreur($('#Page_blocVendredi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "hidden")
+										.a("name", "blocSamedi")
+										.a("id", "Page_blocSamedi")
+										.a("value", "false")
+									.fg();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setBlocSamedi")
+										.a("name", "setBlocSamedi")
+										.a("id", "Page_blocSamedi")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocSamedi', $(this).val(), function() { ajouterLueur($('#Page_blocSamedi')); }, function() { ajouterErreur($('#Page_blocSamedi')); }); ")
+										;
+										if(o.getBlocSamedi() != null && o.getBlocSamedi())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocSamedi").a("class", "").f().sx("samedi").g("label");
+							} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocSamedi')); $('#Page_blocSamedi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocSamedi', null, $('#Page_blocSamedi'), function() { ajouterLueur($('#Page_blocSamedi')); }, function() { ajouterErreur($('#Page_blocSamedi')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "prix par mois")
+										.a("class", "setBlocPrixParMois w3-input w3-border ")
+										.a("name", "setBlocPrixParMois")
+										.a("id", "Page_blocPrixParMois")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', $(this).val(), function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
+										.a("value", o.strBlocPrixParMois())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#Page_blocPrixParMois')); $('#Page_blocPrixParMois').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', null, $('#Page_blocPrixParMois'), function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -328,6 +806,394 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						} g("div");
 					} g("div");
 				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureDebut();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocHeureDebut").a("class", "").f().sx("heure début").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "POST_blocHeureDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#POST_blocHeureDebut')); }, function() { ajouterErreur($('#POST_blocHeureDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "POST_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#POST_blocHeureFin')); }, function() { ajouterErreur($('#POST_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocDimanche")
+									.a("id", "POST_blocDimanche")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocDimanche")
+									.a("name", "blocDimanche")
+									.a("id", "POST_blocDimanche")
+									;
+									if(o.getBlocDimanche() != null && o.getBlocDimanche())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocLundi")
+									.a("id", "POST_blocLundi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocLundi")
+									.a("name", "blocLundi")
+									.a("id", "POST_blocLundi")
+									;
+									if(o.getBlocLundi() != null && o.getBlocLundi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMardi")
+									.a("id", "POST_blocMardi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocMardi")
+									.a("name", "blocMardi")
+									.a("id", "POST_blocMardi")
+									;
+									if(o.getBlocMardi() != null && o.getBlocMardi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMercredi")
+									.a("id", "POST_blocMercredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocMercredi")
+									.a("name", "blocMercredi")
+									.a("id", "POST_blocMercredi")
+									;
+									if(o.getBlocMercredi() != null && o.getBlocMercredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocJeudi")
+									.a("id", "POST_blocJeudi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocJeudi")
+									.a("name", "blocJeudi")
+									.a("id", "POST_blocJeudi")
+									;
+									if(o.getBlocJeudi() != null && o.getBlocJeudi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocVendredi")
+									.a("id", "POST_blocVendredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocVendredi")
+									.a("name", "blocVendredi")
+									.a("id", "POST_blocVendredi")
+									;
+									if(o.getBlocVendredi() != null && o.getBlocVendredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocSamedi")
+									.a("id", "POST_blocSamedi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocSamedi")
+									.a("name", "blocSamedi")
+									.a("id", "POST_blocSamedi")
+									;
+									if(o.getBlocSamedi() != null && o.getBlocSamedi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "valeurBlocPrixParMois w3-input w3-border ")
+									.a("name", "blocPrixParMois")
+									.a("id", "POST_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -449,6 +1315,394 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureDebut();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocHeureDebut").a("class", "").f().sx("heure début").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "PATCH_blocHeureDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#PATCH_blocHeureDebut')); }, function() { ajouterErreur($('#PATCH_blocHeureDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "PATCH_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#PATCH_blocHeureFin')); }, function() { ajouterErreur($('#PATCH_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocDimanche")
+									.a("id", "PATCH_blocDimanche")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocDimanche")
+									.a("name", "setBlocDimanche")
+									.a("id", "PATCH_blocDimanche")
+									;
+									if(o.getBlocDimanche() != null && o.getBlocDimanche())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocLundi")
+									.a("id", "PATCH_blocLundi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocLundi")
+									.a("name", "setBlocLundi")
+									.a("id", "PATCH_blocLundi")
+									;
+									if(o.getBlocLundi() != null && o.getBlocLundi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMardi")
+									.a("id", "PATCH_blocMardi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocMardi")
+									.a("name", "setBlocMardi")
+									.a("id", "PATCH_blocMardi")
+									;
+									if(o.getBlocMardi() != null && o.getBlocMardi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMercredi")
+									.a("id", "PATCH_blocMercredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocMercredi")
+									.a("name", "setBlocMercredi")
+									.a("id", "PATCH_blocMercredi")
+									;
+									if(o.getBlocMercredi() != null && o.getBlocMercredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocJeudi")
+									.a("id", "PATCH_blocJeudi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocJeudi")
+									.a("name", "setBlocJeudi")
+									.a("id", "PATCH_blocJeudi")
+									;
+									if(o.getBlocJeudi() != null && o.getBlocJeudi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocVendredi")
+									.a("id", "PATCH_blocVendredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocVendredi")
+									.a("name", "setBlocVendredi")
+									.a("id", "PATCH_blocVendredi")
+									;
+									if(o.getBlocVendredi() != null && o.getBlocVendredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocSamedi")
+									.a("id", "PATCH_blocSamedi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setBlocSamedi")
+									.a("name", "setBlocSamedi")
+									.a("id", "PATCH_blocSamedi")
+									;
+									if(o.getBlocSamedi() != null && o.getBlocSamedi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "setBlocPrixParMois w3-input w3-border ")
+									.a("name", "setBlocPrixParMois")
+									.a("id", "PATCH_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -568,6 +1822,394 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureDebut();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocHeureDebut").a("class", "").f().sx("heure début").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "Recherche_blocHeureDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#Recherche_blocHeureDebut')); }, function() { ajouterErreur($('#Recherche_blocHeureDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocHeureFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "Recherche_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#Recherche_blocHeureFin')); }, function() { ajouterErreur($('#Recherche_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocDimanche")
+									.a("id", "Recherche_blocDimanche")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocDimanche")
+									.a("name", "blocDimanche")
+									.a("id", "Recherche_blocDimanche")
+									;
+									if(o.getBlocDimanche() != null && o.getBlocDimanche())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocLundi")
+									.a("id", "Recherche_blocLundi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocLundi")
+									.a("name", "blocLundi")
+									.a("id", "Recherche_blocLundi")
+									;
+									if(o.getBlocLundi() != null && o.getBlocLundi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMardi")
+									.a("id", "Recherche_blocMardi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocMardi")
+									.a("name", "blocMardi")
+									.a("id", "Recherche_blocMardi")
+									;
+									if(o.getBlocMardi() != null && o.getBlocMardi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocMercredi")
+									.a("id", "Recherche_blocMercredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocMercredi")
+									.a("name", "blocMercredi")
+									.a("id", "Recherche_blocMercredi")
+									;
+									if(o.getBlocMercredi() != null && o.getBlocMercredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocJeudi")
+									.a("id", "Recherche_blocJeudi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocJeudi")
+									.a("name", "blocJeudi")
+									.a("id", "Recherche_blocJeudi")
+									;
+									if(o.getBlocJeudi() != null && o.getBlocJeudi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocVendredi")
+									.a("id", "Recherche_blocVendredi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocVendredi")
+									.a("name", "blocVendredi")
+									.a("id", "Recherche_blocVendredi")
+									;
+									if(o.getBlocVendredi() != null && o.getBlocVendredi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "hidden")
+									.a("name", "blocSamedi")
+									.a("id", "Recherche_blocSamedi")
+									.a("value", "false")
+								.fg();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurBlocSamedi")
+									.a("name", "blocSamedi")
+									.a("id", "Recherche_blocSamedi")
+									;
+									if(o.getBlocSamedi() != null && o.getBlocSamedi())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocPrixParMois").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "valeurBlocPrixParMois w3-input w3-border ")
+									.a("name", "blocPrixParMois")
+									.a("id", "Recherche_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -602,6 +2244,16 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
+						e("th").f().sx("heure début").g("th");
+						e("th").f().sx("heure fin").g("th");
+						e("th").f().sx("dimanche").g("th");
+						e("th").f().sx("lundi").g("th");
+						e("th").f().sx("mardi").g("th");
+						e("th").f().sx("mercredi").g("th");
+						e("th").f().sx("jeudi").g("th");
+						e("th").f().sx("vendredi").g("th");
+						e("th").f().sx("samedi").g("th");
+						e("th").f().sx("prix par mois").g("th");
 						e("th").f().sx("clé primaire").g("th");
 						e("th").f().sx("crée").g("th");
 						e("th").f().sx("école").g("th");
@@ -619,6 +2271,56 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/frFR/bloc/" + o.getPk();
 						{ e("tr").f();
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocHeureDebut());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocHeureFin());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocDimanche());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocLundi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocMardi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocMercredi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocJeudi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocVendredi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocSamedi());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlocPrixParMois());
+								} g("a");
+							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getPk());
