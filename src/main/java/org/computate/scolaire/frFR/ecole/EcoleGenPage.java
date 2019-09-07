@@ -382,7 +382,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 											.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Page_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCles')); }); ")
-											.f().sx("add")
+											.f().sx("ajouter une année")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -642,7 +642,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#POST_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -902,7 +902,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1162,7 +1162,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");

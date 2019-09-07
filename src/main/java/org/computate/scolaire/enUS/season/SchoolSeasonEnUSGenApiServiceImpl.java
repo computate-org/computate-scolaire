@@ -433,16 +433,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
 						break;
-					case "setSeasonStartDay":
-						o2.setSeasonStartDay(requestJson.getString(methodName));
-						if(o2.getSeasonStartDay() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDay"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("seasonStartDay", o2.jsonSeasonStartDay(), pk));
-						}
-						break;
 					case "setSeasonSummer":
 						o2.setSeasonSummer(requestJson.getBoolean(methodName));
 						if(o2.getSeasonSummer() == null) {
@@ -461,6 +451,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("seasonWinter", o2.jsonSeasonWinter(), pk));
+						}
+						break;
+					case "setSeasonStartDay":
+						o2.setSeasonStartDay(requestJson.getString(methodName));
+						if(o2.getSeasonStartDay() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDay"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seasonStartDay", o2.jsonSeasonStartDay(), pk));
 						}
 						break;
 					case "setSeasonEnrollmentFee":
@@ -776,8 +776,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
 			case "sessionKeys":
 				return "sessionKeys_indexed_longs";
 			case "yearKey":
@@ -786,28 +784,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "seasonKey_indexed_long";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_date";
-			case "yearEnd":
-				return "yearEnd_indexed_date";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
 			case "seasonNameComplete":
 				return "seasonNameComplete_indexed_string";
 			case "seasonId":
@@ -816,6 +794,28 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
 				return "objectSuggest_indexed_string";
+			case "seasonSummer":
+				return "seasonSummer_indexed_boolean";
+			case "seasonWinter":
+				return "seasonWinter_indexed_boolean";
+			case "schoolNameComplete":
+				return "schoolNameComplete_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_date";
+			case "yearEnd":
+				return "yearEnd_indexed_date";
+			case "seasonStartDay":
+				return "seasonStartDay_indexed_date";
+			case "seasonEnrollmentFee":
+				return "seasonEnrollmentFee_indexed_double";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "seasonSort":
+				return "seasonSort_indexed_int";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}

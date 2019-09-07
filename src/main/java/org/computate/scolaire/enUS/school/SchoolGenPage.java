@@ -377,7 +377,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 											.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#Page_yearKeys'); $e.html($e.val()); }, function() { addError($('#Page_yearKeys')); }); ")
-											.f().sx("add")
+											.f().sx("add a year")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -632,7 +632,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#POST_yearKeys'); $e.html($e.val()); }, function() { addError($('#POST_yearKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a year")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -887,7 +887,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#PATCH_yearKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_yearKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a year")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1142,7 +1142,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#Recherche_yearKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_yearKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a year")
 									.g("button");
 								} g("div");
 							} g("div");

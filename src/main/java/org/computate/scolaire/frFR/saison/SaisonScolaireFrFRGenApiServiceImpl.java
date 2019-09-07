@@ -433,16 +433,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", o2.getAnneeCle()));
 						break;
-					case "setSaisonJourDebut":
-						o2.setSaisonJourDebut(requeteJson.getString(methodeNom));
-						if(o2.getSaisonJourDebut() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "saisonJourDebut"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("saisonJourDebut", o2.jsonSaisonJourDebut(), pk));
-						}
-						break;
 					case "setSaisonEte":
 						o2.setSaisonEte(requeteJson.getBoolean(methodeNom));
 						if(o2.getSaisonEte() == null) {
@@ -461,6 +451,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("saisonHiver", o2.jsonSaisonHiver(), pk));
+						}
+						break;
+					case "setSaisonJourDebut":
+						o2.setSaisonJourDebut(requeteJson.getString(methodeNom));
+						if(o2.getSaisonJourDebut() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "saisonJourDebut"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("saisonJourDebut", o2.jsonSaisonJourDebut(), pk));
 						}
 						break;
 					case "setSaisonFraisInscription":
@@ -776,8 +776,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
 			case "sessionCles":
 				return "sessionCles_indexed_longs";
 			case "anneeCle":
@@ -786,28 +784,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "saisonCle_indexed_long";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "anneeTri":
-				return "anneeTri_indexed_int";
-			case "saisonTri":
-				return "saisonTri_indexed_int";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "anneeDebut":
-				return "anneeDebut_indexed_date";
-			case "anneeFin":
-				return "anneeFin_indexed_date";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
-			case "saisonEte":
-				return "saisonEte_indexed_boolean";
-			case "saisonHiver":
-				return "saisonHiver_indexed_boolean";
-			case "saisonFraisInscription":
-				return "saisonFraisInscription_indexed_double";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
 			case "saisonNomComplet":
 				return "saisonNomComplet_indexed_string";
 			case "saisonId":
@@ -816,6 +794,28 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
 				return "objetSuggere_indexed_string";
+			case "saisonEte":
+				return "saisonEte_indexed_boolean";
+			case "saisonHiver":
+				return "saisonHiver_indexed_boolean";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "anneeDebut":
+				return "anneeDebut_indexed_date";
+			case "anneeFin":
+				return "anneeFin_indexed_date";
+			case "saisonJourDebut":
+				return "saisonJourDebut_indexed_date";
+			case "saisonFraisInscription":
+				return "saisonFraisInscription_indexed_double";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
+			case "ecoleTri":
+				return "ecoleTri_indexed_int";
+			case "anneeTri":
+				return "anneeTri_indexed_int";
+			case "saisonTri":
+				return "saisonTri_indexed_int";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

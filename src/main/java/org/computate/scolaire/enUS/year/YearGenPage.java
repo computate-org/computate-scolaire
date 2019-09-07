@@ -297,7 +297,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 											.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#Page_schoolKey'); $e.html($e.val()); }, function() { addError($('#Page_schoolKey')); }); ")
-											.f().sx("add")
+											.f().sx("add a school")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -347,7 +347,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 											.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#Page_seasonKeys'); $e.html($e.val()); }, function() { addError($('#Page_seasonKeys')); }); ")
-											.f().sx("add")
+											.f().sx("add a season")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -538,7 +538,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#POST_schoolKey'); $e.html($e.val()); }, function() { addError($('#POST_schoolKey')); }); ")
-										.f().sx("add")
+										.f().sx("add a school")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -588,7 +588,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#POST_seasonKeys'); $e.html($e.val()); }, function() { addError($('#POST_seasonKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a season")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -779,7 +779,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_schoolKey'); $e.html($e.val()); }, function() { addError($('#PATCH_schoolKey')); }); ")
-										.f().sx("add")
+										.f().sx("add a school")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -829,7 +829,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#PATCH_seasonKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_seasonKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a season")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1020,7 +1020,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_schoolKey'); $e.html($e.val()); }, function() { addError($('#Recherche_schoolKey')); }); ")
-										.f().sx("add")
+										.f().sx("add a school")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1070,7 +1070,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#Recherche_seasonKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_seasonKeys')); }); ")
-										.f().sx("add")
+										.f().sx("add a season")
 									.g("button");
 								} g("div");
 							} g("div");

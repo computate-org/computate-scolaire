@@ -133,7 +133,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: années
 	 * NomAffichage.enUS: years
-	 */   
+	 */    
 	protected void _anneeCles(List<Long> o) {}
 
 	/**      

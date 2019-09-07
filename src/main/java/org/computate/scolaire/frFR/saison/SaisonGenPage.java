@@ -174,48 +174,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valeur")
-							.a("class", "valeur ")
-							.a("value", requeteSite_.getRequetePk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							LocalDate val = o.getSaisonJourDebut();
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row  ").f();
-								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "text")
-										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "DD-MM-YYYY")
-										.a("data-timeformat", "DD-MM-YYYY")
-										.a("id", "Page_saisonJourDebut")
-										.a("onclick", "enleverLueur($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); } ")
-										.fg();
-								} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#Page_saisonJourDebut')); $('#Page_saisonJourDebut').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', null, $('#Page_saisonJourDebut'), function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("form");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonEte").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -304,6 +262,48 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							LocalDate val = o.getSaisonJourDebut();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "text")
+										.a("class", "w3-input w3-border datepicker ")
+										.a("placeholder", "DD-MM-YYYY")
+										.a("data-timeformat", "DD-MM-YYYY")
+										.a("id", "Page_saisonJourDebut")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); } ")
+										.fg();
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "enleverLueur($('#Page_saisonJourDebut')); $('#Page_saisonJourDebut').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', null, $('#Page_saisonJourDebut'), function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonFraisInscription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -359,7 +359,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereSaisonScolaireSessionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
 								e("label").a("for", "Page_sessionCles").a("class", "").f().sx("sessions").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -381,9 +381,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 									} g("div");
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 											.a("onclick", "postSessionScolaireVals({ saisonCle: ", o.getPk(), " }, function() { var $e = $('#Page_sessionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_sessionCles')); }); ")
-											.f().sx("add")
+											.f().sx("ajouter une session")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -410,7 +410,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereSaisonScolaireAnneeCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							{ e("div").a("class", "w3-cell-row w3-orange ").f();
 								e("label").a("for", "Page_anneeCle").a("class", "").f().sx("année").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -432,9 +432,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 									} g("div");
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 											.a("onclick", "postAnneeScolaireVals({ saisonCles: ", o.getPk(), " }, function() { var $e = $('#Page_anneeCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCle')); }); ")
-											.f().sx("add")
+											.f().sx("ajouter une année")
 										.g("button");
 									} g("div");
 								} g("div");
@@ -522,40 +522,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSaisonJourDebut();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
-									.a("id", "POST_saisonJourDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#POST_saisonJourDebut')); }, function() { ajouterErreur($('#POST_saisonJourDebut')); }); } ")
-									.fg();
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonEte").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -626,6 +592,40 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getSaisonJourDebut();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "POST_saisonJourDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#POST_saisonJourDebut')); }, function() { ajouterErreur($('#POST_saisonJourDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonFraisInscription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -671,7 +671,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSessionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", "POST_sessionCles").a("class", "").f().sx("sessions").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -693,9 +693,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 										.a("onclick", "postSessionScolaireVals({ saisonCle: ", o.getPk(), " }, function() { var $e = $('#POST_sessionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_sessionCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une session")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -722,7 +722,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireAnneeCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "POST_anneeCle").a("class", "").f().sx("année").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -744,9 +744,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postAnneeScolaireVals({ saisonCles: ", o.getPk(), " }, function() { var $e = $('#POST_anneeCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCle')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -834,40 +834,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSaisonJourDebut();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
-									.a("id", "PATCH_saisonJourDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#PATCH_saisonJourDebut')); }, function() { ajouterErreur($('#PATCH_saisonJourDebut')); }); } ")
-									.fg();
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonEte").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -938,6 +904,40 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getSaisonJourDebut();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "PATCH_saisonJourDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#PATCH_saisonJourDebut')); }, function() { ajouterErreur($('#PATCH_saisonJourDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonFraisInscription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -983,7 +983,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSessionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", "PATCH_sessionCles").a("class", "").f().sx("sessions").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1005,9 +1005,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 										.a("onclick", "postSessionScolaireVals({ saisonCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_sessionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_sessionCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une session")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1034,7 +1034,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireAnneeCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "PATCH_anneeCle").a("class", "").f().sx("année").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1056,9 +1056,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postAnneeScolaireVals({ saisonCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_anneeCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCle')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1146,40 +1146,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getSaisonJourDebut();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
-									.a("id", "Recherche_saisonJourDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#Recherche_saisonJourDebut')); }, function() { ajouterErreur($('#Recherche_saisonJourDebut')); }); } ")
-									.fg();
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonEte").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1250,6 +1216,40 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSaisonJourDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getSaisonJourDebut();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_saisonJourDebut").a("class", "").f().sx("début de la saison").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "Recherche_saisonJourDebut")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#Recherche_saisonJourDebut')); }, function() { ajouterErreur($('#Recherche_saisonJourDebut')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSaisonScolaireSaisonFraisInscription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1295,7 +1295,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireSessionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
 							e("label").a("for", "Recherche_sessionCles").a("class", "").f().sx("sessions").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1317,9 +1317,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 										.a("onclick", "postSessionScolaireVals({ saisonCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_sessionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_sessionCles')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une session")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1346,7 +1346,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereSaisonScolaireAnneeCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "Recherche_anneeCle").a("class", "").f().sx("année").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1368,9 +1368,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 										.a("onclick", "postAnneeScolaireVals({ saisonCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_anneeCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCle')); }); ")
-										.f().sx("add")
+										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
 							} g("div");
@@ -1420,9 +1420,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				{ e("thead").f();
 					{ e("tr").f();
 						e("th").f().sx("année").g("th");
-						e("th").f().sx("début de la saison").g("th");
 						e("th").f().sx("été").g("th");
 						e("th").f().sx("hiver").g("th");
+						e("th").f().sx("début de la saison").g("th");
 						e("th").f().sx("frais d'inscription").g("th");
 						e("th").f().sx("sessions").g("th");
 						e("th").f().sx("clé primaire").g("th");
@@ -1446,17 +1446,17 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSaisonJourDebut());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
 									sx(o.getSaisonEte());
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getSaisonHiver());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getSaisonJourDebut());
 								} g("a");
 							} g("td");
 							{ e("td").f();

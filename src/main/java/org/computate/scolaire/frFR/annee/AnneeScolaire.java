@@ -140,7 +140,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
-	 */ 
+	 */  
 	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("anneeCles_indexed_longs:" + pk);

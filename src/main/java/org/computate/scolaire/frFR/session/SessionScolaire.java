@@ -261,7 +261,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r.enUS: SeasonStartDay
 	 * r: saison
 	 * r.enUS: season
-	 */                  
+	 */                   
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {
 		if(saison != null)
 			c.o(saison.getSaisonJourDebut());
