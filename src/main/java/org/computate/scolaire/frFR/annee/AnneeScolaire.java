@@ -45,7 +45,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: orange
  * IconeGroupe: duotone
  * IconeNom: calendar-check-o
-*/                                                  
+*/                                               
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -73,7 +73,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the year in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */          
+	 */           
 	protected void _anneeCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -89,6 +89,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: seasonKeys
+	 * Indexe: true
+	 * Stocke: true
 	 * Attribuer: SaisonScolaire.anneeCle
 	 * HtmlLigne: 4
 	 * HtmlColonne: 2
@@ -96,7 +98,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: saisons
 	 * NomAffichage.enUS: seasons
-	 */   
+	 */    
 	protected void _saisonCles(List<Long> o) {}
 
 	/**
@@ -135,15 +137,15 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: yearKeys
 	 * r: Ecole
 	 * r.enUS: School
-	 * r: setPeupler
-	 * r.enUS: setPopulate
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * Ignorer: true
-	 */
+	 */ 
 	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("anneeCles_indexed_longs:" + pk);
 		l.setC(Ecole.class);
-		l.setPeupler(true);
+		l.setStocker(true);
 	}
 
 	/**
@@ -224,7 +226,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "%d year"
 	 * r: "année"
 	 * r.enUS: "year"
-	 */                                
+	 */                               
 	protected void _anneeNomCourt(Couverture<String> c) {
 		String o = "année";
 

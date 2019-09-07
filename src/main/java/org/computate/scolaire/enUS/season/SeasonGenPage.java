@@ -16,6 +16,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -49,9 +50,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	@Override protected void _pageH1(Wrap<String> c) {
 		if(schoolSeason != null)
-			c.o("a year");
+			c.o("a season");
 		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
-			c.o("no year found");
+			c.o("no season found");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -66,7 +67,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		if(schoolSeason != null)
 			c.o("");
 		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
-			c.o("no year found");
+			c.o("no season found");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
@@ -92,10 +93,14 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsSeasonGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/SeasonPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SessionPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptSeasonGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "searchSchoolSeasonSessionKeys($('#formSchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ");
+		tl(1, "searchSchoolSeasonYearKey($('#formSchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ");
 		l("});");
 	}
 
@@ -169,23 +174,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("class", "").f().sx("year").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strYearKey()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -193,7 +182,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							LocalDate val = o.getSeasonStartDay();
 							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -209,13 +198,13 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										.a("id", "Page_seasonStartDay")
 										.a("onclick", "removeGlow($(this)); ")
 										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#Page_seasonStartDay')); }, function() { ajouterErreur($('#Page_seasonStartDay')); }); } ")
+										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#Page_seasonStartDay')); }, function() { addError($('#Page_seasonStartDay')); }); } ")
 										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonStartDay')); $('#Page_seasonStartDay').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', null, $('#Page_seasonStartDay'), function() { addGlow($('#Page_seasonStartDay')); }, function() { ajouterErreur($('#Page_seasonStartDay')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonStartDay')); $('#Page_seasonStartDay').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', null, $('#Page_seasonStartDay'), function() { addGlow($('#Page_seasonStartDay')); }, function() { addError($('#Page_seasonStartDay')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -227,7 +216,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -235,16 +224,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "seasonSummer")
-										.a("id", "Page_seasonSummer")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -252,7 +235,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										.a("class", "setSeasonSummer")
 										.a("name", "setSeasonSummer")
 										.a("id", "Page_seasonSummer")
-										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonSummer', $(this).val(), function() { addGlow($('#Page_seasonSummer')); }, function() { ajouterErreur($('#Page_seasonSummer')); }); ")
+										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#Page_seasonSummer')); }, function() { addError($('#Page_seasonSummer')); }); ")
 										;
 										if(o.getSeasonSummer() != null && o.getSeasonSummer())
 											a("checked", "checked");
@@ -265,7 +248,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonSummer')); $('#Page_seasonSummer').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonSummer', null, $('#Page_seasonSummer'), function() { addGlow($('#Page_seasonSummer')); }, function() { ajouterErreur($('#Page_seasonSummer')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonSummer')); $('#Page_seasonSummer').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonSummer', null, $('#Page_seasonSummer'), function() { addGlow($('#Page_seasonSummer')); }, function() { addError($('#Page_seasonSummer')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -277,7 +260,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -285,16 +268,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "seasonWinter")
-										.a("id", "Page_seasonWinter")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -302,7 +279,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										.a("class", "setSeasonWinter")
 										.a("name", "setSeasonWinter")
 										.a("id", "Page_seasonWinter")
-										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonWinter', $(this).val(), function() { addGlow($('#Page_seasonWinter')); }, function() { ajouterErreur($('#Page_seasonWinter')); }); ")
+										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#Page_seasonWinter')); }, function() { addError($('#Page_seasonWinter')); }); ")
 										;
 										if(o.getSeasonWinter() != null && o.getSeasonWinter())
 											a("checked", "checked");
@@ -315,7 +292,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonWinter')); $('#Page_seasonWinter').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonWinter', null, $('#Page_seasonWinter'), function() { addGlow($('#Page_seasonWinter')); }, function() { ajouterErreur($('#Page_seasonWinter')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonWinter')); $('#Page_seasonWinter').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonWinter', null, $('#Page_seasonWinter'), function() { addGlow($('#Page_seasonWinter')); }, function() { addError($('#Page_seasonWinter')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -327,7 +304,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -335,7 +312,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 								e("label").a("for", "Page_seasonEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
@@ -350,7 +327,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										.a("name", "setSeasonEnrollmentFee")
 										.a("id", "Page_seasonEnrollmentFee")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', $(this).val(), function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { ajouterErreur($('#Page_seasonEnrollmentFee')); }); ")
+										.a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', $(this).val(), function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { addError($('#Page_seasonEnrollmentFee')); }); ")
 										.a("value", o.strSeasonEnrollmentFee())
 									.fg();
 
@@ -358,10 +335,112 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonEnrollmentFee')); $('#Page_seasonEnrollmentFee').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', null, $('#Page_seasonEnrollmentFee'), function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { ajouterErreur($('#Page_seasonEnrollmentFee')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonEnrollmentFee')); $('#Page_seasonEnrollmentFee').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', null, $('#Page_seasonEnrollmentFee'), function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { addError($('#Page_seasonEnrollmentFee')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valueSeasonKey")
+							.a("class", "valueSeasonKey ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_sessionKeys").a("class", "").f().sx("sessions").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "sessions")
+											.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setSessionKeys")
+											.a("id", "Page_sessionKeys")
+											.a("autocomplete", "off")
+											.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+										.fg();
+
+									} g("div");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postSchoolSessionVals({ seasonKey: ", o.getPk(), " }, function() { var $e = $('#Page_sessionKeys'); $e.html($e.val()); }, function() { addError($('#Page_sessionKeys')); }); ")
+											.f().sx("add")
+										.g("button");
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys").f();
+									} g("ul");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valueSeasonKeys")
+							.a("class", "valueSeasonKeys ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_yearKey").a("class", "").f().sx("year").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "year")
+											.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setYearKey")
+											.a("id", "Page_yearKey")
+											.a("autocomplete", "off")
+											.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+										.fg();
+
+									} g("div");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postSchoolYearVals({ seasonKeys: ", o.getPk(), " }, function() { var $e = $('#Page_yearKey'); $e.html($e.val()); }, function() { addError($('#Page_yearKey')); }); ")
+											.f().sx("add")
+										.g("button");
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey").f();
+									} g("ul");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -441,23 +520,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-						e("label").a("class", "").f().sx("year").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strYearKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -465,7 +528,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getSeasonStartDay();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -481,7 +544,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									.a("id", "POST_seasonStartDay")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#POST_seasonStartDay')); }, function() { ajouterErreur($('#POST_seasonStartDay')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#POST_seasonStartDay')); }, function() { addError($('#POST_seasonStartDay')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -491,7 +554,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -499,16 +562,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonSummer")
-									.a("id", "POST_seasonSummer")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -532,7 +589,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -540,16 +597,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonWinter")
-									.a("id", "POST_seasonWinter")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -573,7 +624,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -581,7 +632,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", "POST_seasonEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
@@ -598,6 +649,108 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									.a("value", o.strSeasonEnrollmentFee())
 								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKey")
+						.a("class", "valueSeasonKey ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_sessionKeys").a("class", "").f().sx("sessions").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "sessions")
+										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSessionKeys")
+										.a("id", "POST_sessionKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: ", o.getPk(), " }, function() { var $e = $('#POST_sessionKeys'); $e.html($e.val()); }, function() { addError($('#POST_sessionKeys')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKeys")
+						.a("class", "valueSeasonKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_yearKey").a("class", "").f().sx("year").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "year")
+										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setYearKey")
+										.a("id", "POST_yearKey")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: ", o.getPk(), " }, function() { var $e = $('#POST_yearKey'); $e.html($e.val()); }, function() { addError($('#POST_yearKey')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey").f();
+								} g("ul");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -677,23 +830,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-						e("label").a("class", "").f().sx("year").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strYearKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -701,7 +838,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getSeasonStartDay();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -717,7 +854,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									.a("id", "PATCH_seasonStartDay")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#PATCH_seasonStartDay')); }, function() { ajouterErreur($('#PATCH_seasonStartDay')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#PATCH_seasonStartDay')); }, function() { addError($('#PATCH_seasonStartDay')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -727,7 +864,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -735,16 +872,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonSummer")
-									.a("id", "PATCH_seasonSummer")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -768,7 +899,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -776,16 +907,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonWinter")
-									.a("id", "PATCH_seasonWinter")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -809,7 +934,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -817,7 +942,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", "PATCH_seasonEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
@@ -834,6 +959,108 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									.a("value", o.strSeasonEnrollmentFee())
 								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKey")
+						.a("class", "valueSeasonKey ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_sessionKeys").a("class", "").f().sx("sessions").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "sessions")
+										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSessionKeys")
+										.a("id", "PATCH_sessionKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: ", o.getPk(), " }, function() { var $e = $('#PATCH_sessionKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_sessionKeys')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKeys")
+						.a("class", "valueSeasonKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_yearKey").a("class", "").f().sx("year").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "year")
+										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setYearKey")
+										.a("id", "PATCH_yearKey")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_yearKey'); $e.html($e.val()); }, function() { addError($('#PATCH_yearKey')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey").f();
+								} g("ul");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -913,23 +1140,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-						e("label").a("class", "").f().sx("year").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strYearKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -937,7 +1148,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonStartDay").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						LocalDate val = o.getSeasonStartDay();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -953,7 +1164,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									.a("id", "Recherche_seasonStartDay")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#Recherche_seasonStartDay')); }, function() { ajouterErreur($('#Recherche_seasonStartDay')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', s, function() { addGlow($('#Recherche_seasonStartDay')); }, function() { addError($('#Recherche_seasonStartDay')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -963,7 +1174,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -971,16 +1182,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonSummer")
-									.a("id", "Recherche_seasonSummer")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1004,7 +1209,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1012,16 +1217,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "seasonWinter")
-									.a("id", "Recherche_seasonWinter")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1045,7 +1244,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1053,7 +1252,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
 							e("label").a("for", "Recherche_seasonEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
@@ -1077,6 +1276,108 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKey")
+						.a("class", "valueSeasonKey ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sessionKeys").a("class", "").f().sx("sessions").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "sessions")
+										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSessionKeys")
+										.a("id", "Recherche_sessionKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: ", o.getPk(), " }, function() { var $e = $('#Recherche_sessionKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_sessionKeys')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueSeasonKeys")
+						.a("class", "valueSeasonKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_yearKey").a("class", "").f().sx("year").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "year")
+										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setYearKey")
+										.a("id", "Recherche_yearKey")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_yearKey'); $e.html($e.val()); }, function() { addError($('#Recherche_yearKey')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodySeasonGenPage() {
@@ -1088,14 +1389,14 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			{ e("h1").f();
 				if(contextIconCssClasses != null)
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no year found").g("span");
+				e("span").a("class", " ").f().sx("no season found").g("span");
 			} g("h1");
 		} else if(listSchoolSeason != null && listSchoolSeason.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
 			if(pageH1 != null) {
 				{ e("h1").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("a year").g("span");
+					e("span").a("class", " ").f().sx("a season").g("span");
 				} g("h1");
 				SchoolSeason o = listSchoolSeason.get(0);
 				siteRequest_.setRequestPk(o.getPk());
@@ -1105,19 +1406,20 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			{ e("h1").f();
 				if(contextIconCssClasses != null)
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("years").g("span");
+				e("span").a("class", " ").f().sx("seasons").g("span");
 			} g("h1");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
+						e("th").f().sx("year").g("th");
 						e("th").f().sx("start of the season").g("th");
 						e("th").f().sx("summer").g("th");
 						e("th").f().sx("winter").g("th");
 						e("th").f().sx("enrollment fee").g("th");
+						e("th").f().sx("sessions").g("th");
 						e("th").f().sx("primary key").g("th");
 						e("th").f().sx("created").g("th");
 						e("th").f().sx("modified").g("th");
-						e("th").f().sx("year").g("th");
 						e("th").f().sx("ID").g("th");
 					} g("tr");
 				} g("thead");
@@ -1129,6 +1431,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/enUS/season/" + o.getPk();
 						{ e("tr").f();
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getYearKey());
+								} g("a");
+							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getSeasonStartDay());
@@ -1151,6 +1458,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
+									sx(o.getSessionKeys());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
 									sx(o.getPk());
 								} g("a");
 							} g("td");
@@ -1162,11 +1474,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getModified());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getYearKey());
 								} g("a");
 							} g("td");
 							{ e("td").f();
@@ -1186,7 +1493,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "SchoolSeasonForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "SchoolSeasonForm").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valuePk")
@@ -1209,13 +1516,13 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 			.a("onclick", "$('#postSchoolSeasonModal').show(); ")
-			.f().sx("Create a year")
+			.f().sx("Create a season")
 		.g("button");
 		{ e("div").a("id", "postSchoolSeasonModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-yellow ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSeasonModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Create a year").g("h2");
+					e("h2").a("class", "").f().sx("Create a season").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SchoolSeason o = new SchoolSeason();
@@ -1227,7 +1534,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 						.a("onclick", "postSchoolSeason($('#postSchoolSeasonForm')); ")
-						.f().sx("Create a year")
+						.f().sx("Create a season")
 					.g("button");
 
 				} g("div");
@@ -1238,13 +1545,13 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 			.a("onclick", "$('#patchSchoolSeasonModal').show(); ")
-			.f().sx("Modify the years")
+			.f().sx("Modify the seasons")
 		.g("button");
 		{ e("div").a("id", "patchSchoolSeasonModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-yellow ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSeasonModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modify the years").g("h2");
+					e("h2").a("class", "").f().sx("Modify the seasons").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SchoolSeason o = new SchoolSeason();
@@ -1256,7 +1563,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 						.a("onclick", "aSearchSchoolSeason($('#patchSchoolSeasonFormFilters')); ")
-						.f().sx("Search the a year")
+						.f().sx("Search the a season")
 					.g("button");
 
 
@@ -1267,7 +1574,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 						.a("onclick", "patchSchoolSeason($('#patchSchoolSeasonFormFilters'), $('#patchSchoolSeasonFormValues')); ")
-						.f().sx("Modify the years")
+						.f().sx("Modify the seasons")
 					.g("button");
 
 				} g("div");
@@ -1278,13 +1585,13 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 			.a("onclick", "$('#deleteSchoolSeasonModal').show(); ")
-			.f().sx("Delete the years")
+			.f().sx("Delete the seasons")
 		.g("button");
 		{ e("div").a("id", "deleteSchoolSeasonModal").a("class", "w3-modal ").f();
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-yellow ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteSchoolSeasonModal').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Delete the years").g("h2");
+					e("h2").a("class", "").f().sx("Delete the seasons").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SchoolSeason o = new SchoolSeason();
@@ -1296,7 +1603,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
 						.a("onclick", "deleteSchoolSeason(); ")
-						.f().sx("Delete the years")
+						.f().sx("Delete the seasons")
 					.g("button");
 
 				} g("div");

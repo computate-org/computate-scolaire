@@ -200,6 +200,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pk == null ? "" : pk.toString();
 	}
 
+	public String jsonPk() {
+		return pk == null ? "" : pk.toString();
+	}
+
 	public String nomAffichagePk() {
 		return "primary key";
 	}
@@ -298,6 +302,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return id == null ? "" : id;
 	}
 
+	public String jsonId() {
+		return id == null ? "" : id;
+	}
+
 	public String nomAffichageId() {
 		return null;
 	}
@@ -390,7 +398,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setCreated(Date o) {
-		this.created = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.created = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -409,6 +417,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCreated() {
+		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+	}
+
+	public String jsonCreated() {
 		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
 	}
 
@@ -504,7 +516,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setModified(Date o) {
-		this.modified = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.modified = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -523,6 +535,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModified() {
+		return modified == null ? "" : modified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+	}
+
+	public String jsonModified() {
 		return modified == null ? "" : modified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
 	}
 
@@ -629,6 +645,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return archived == null ? "" : archived.toString();
 	}
 
+	public String jsonArchived() {
+		return archived == null ? "" : archived.toString();
+	}
+
 	public String nomAffichageArchived() {
 		return "archived";
 	}
@@ -732,6 +752,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return deleted == null ? "" : deleted.toString();
 	}
 
+	public String jsonDeleted() {
+		return deleted == null ? "" : deleted.toString();
+	}
+
 	public String nomAffichageDeleted() {
 		return "deleted";
 	}
@@ -830,6 +854,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalName == null ? "" : classCanonicalName;
 	}
 
+	public String jsonClassCanonicalName() {
+		return classCanonicalName == null ? "" : classCanonicalName;
+	}
+
 	public String nomAffichageClassCanonicalName() {
 		return null;
 	}
@@ -925,6 +953,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strClassSimpleName() {
+		return classSimpleName == null ? "" : classSimpleName;
+	}
+
+	public String jsonClassSimpleName() {
 		return classSimpleName == null ? "" : classSimpleName;
 	}
 
@@ -1040,6 +1072,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strClassCanonicalNames() {
+		return classCanonicalNames == null ? "" : classCanonicalNames.toString();
+	}
+
+	public String jsonClassCanonicalNames() {
 		return classCanonicalNames == null ? "" : classCanonicalNames.toString();
 	}
 

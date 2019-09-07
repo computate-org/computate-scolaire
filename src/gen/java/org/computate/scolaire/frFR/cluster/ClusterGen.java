@@ -201,6 +201,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pk == null ? "" : pk.toString();
 	}
 
+	public String jsonPk() {
+		return pk == null ? "" : pk.toString();
+	}
+
 	public String nomAffichagePk() {
 		return "clé primaire";
 	}
@@ -299,6 +303,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return id == null ? "" : id;
 	}
 
+	public String jsonId() {
+		return id == null ? "" : id;
+	}
+
 	public String nomAffichageId() {
 		return null;
 	}
@@ -391,7 +399,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setCree(Date o) {
-		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
@@ -410,6 +418,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCree() {
+		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonCree() {
 		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
 	}
 
@@ -505,7 +517,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setModifie(Date o) {
-		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
@@ -524,6 +536,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModifie() {
+		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonModifie() {
 		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
 	}
 
@@ -630,6 +646,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return archive == null ? "" : archive.toString();
 	}
 
+	public String jsonArchive() {
+		return archive == null ? "" : archive.toString();
+	}
+
 	public String nomAffichageArchive() {
 		return "archivé";
 	}
@@ -733,6 +753,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return supprime == null ? "" : supprime.toString();
 	}
 
+	public String jsonSupprime() {
+		return supprime == null ? "" : supprime.toString();
+	}
+
 	public String nomAffichageSupprime() {
 		return "supprimé";
 	}
@@ -831,6 +855,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classeNomCanonique == null ? "" : classeNomCanonique;
 	}
 
+	public String jsonClasseNomCanonique() {
+		return classeNomCanonique == null ? "" : classeNomCanonique;
+	}
+
 	public String nomAffichageClasseNomCanonique() {
 		return null;
 	}
@@ -926,6 +954,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strClasseNomSimple() {
+		return classeNomSimple == null ? "" : classeNomSimple;
+	}
+
+	public String jsonClasseNomSimple() {
 		return classeNomSimple == null ? "" : classeNomSimple;
 	}
 
@@ -1041,6 +1073,10 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strClasseNomsCanoniques() {
+		return classeNomsCanoniques == null ? "" : classeNomsCanoniques.toString();
+	}
+
+	public String jsonClasseNomsCanoniques() {
 		return classeNomsCanoniques == null ? "" : classeNomsCanoniques.toString();
 	}
 

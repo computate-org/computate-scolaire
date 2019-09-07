@@ -50,6 +50,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -188,6 +189,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "yearKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("seasonKeys", jsonObject.getLong(entityVar), "yearKey", pk));
+						break;
+					case "sessionKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("seasonKey", jsonObject.getLong(entityVar), "sessionKeys", pk));
+						break;
 					case "seasonStartDay":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("seasonStartDay", jsonObject.getString(entityVar), pk));
@@ -357,7 +366,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -367,7 +376,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -377,7 +386,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -387,8 +396,42 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
+						break;
+					case "addSessionKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						break;
+					case "addAllSessionKeys":
+						JsonArray addAllSessionKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllSessionKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("seasonKey", addAllSessionKeysValues.getLong(i), "sessionKeys", pk));
+						}
+						break;
+					case "setSessionKeys":
+						JsonArray setSessionKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						for(Integer i = 0; i <  setSessionKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("seasonKey", setSessionKeysValues.getLong(i), "sessionKeys", pk));
+						}
+						break;
+					case "removeSessionKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						break;
+					case "setYearKey":
+						o2.setYearKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
+						break;
+					case "removeYearKey":
+						o2.setYearKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
 						break;
 					case "setSeasonStartDay":
 						o2.setSeasonStartDay(requestJson.getString(methodName));
@@ -397,7 +440,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDay"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("seasonStartDay", o2.strSeasonStartDay(), pk));
+							patchSqlParams.addAll(Arrays.asList("seasonStartDay", o2.jsonSeasonStartDay(), pk));
 						}
 						break;
 					case "setSeasonSummer":
@@ -407,7 +450,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "seasonSummer"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("seasonSummer", o2.strSeasonSummer(), pk));
+							patchSqlParams.addAll(Arrays.asList("seasonSummer", o2.jsonSeasonSummer(), pk));
 						}
 						break;
 					case "setSeasonWinter":
@@ -417,7 +460,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "seasonWinter"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("seasonWinter", o2.strSeasonWinter(), pk));
+							patchSqlParams.addAll(Arrays.asList("seasonWinter", o2.jsonSeasonWinter(), pk));
 						}
 						break;
 					case "setSeasonEnrollmentFee":
@@ -427,7 +470,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "seasonEnrollmentFee"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", o2.strSeasonEnrollmentFee(), pk));
+							patchSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", o2.jsonSeasonEnrollmentFee(), pk));
 						}
 						break;
 				}
@@ -733,16 +776,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
 			case "sessionKeys":
 				return "sessionKeys_indexed_longs";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":
@@ -991,7 +1034,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolSeason.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.setFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.season.SchoolSeason"));
@@ -1044,11 +1087,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = varIndexedSchoolSeason(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
-								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSchoolSeason(entityVar);
-								listSearch.addField(varIndexed);
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;

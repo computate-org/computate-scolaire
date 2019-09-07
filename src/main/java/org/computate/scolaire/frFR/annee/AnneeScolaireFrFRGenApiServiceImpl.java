@@ -191,11 +191,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					switch(entiteVar) {
 					case "ecoleCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getLong(entiteVar), "ecoleCle", pk));
 						break;
 					case "saisonCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("anneeCle", jsonObject.getLong(entiteVar), "saisonCles", pk));
 						break;
 					case "anneeDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -358,7 +358,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.strCree(), pk));
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
@@ -368,7 +368,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.strModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
@@ -378,7 +378,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.strArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
@@ -388,7 +388,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 					case "setEcoleCle":
@@ -432,7 +432,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeDebut"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("anneeDebut", o2.strAnneeDebut(), pk));
+							patchSqlParams.addAll(Arrays.asList("anneeDebut", o2.jsonAnneeDebut(), pk));
 						}
 						break;
 					case "setAnneeFin":
@@ -442,7 +442,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeFin"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.strAnneeFin(), pk));
+							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.jsonAnneeFin(), pk));
 						}
 						break;
 				}
@@ -754,6 +754,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "anneeCle_indexed_long";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":

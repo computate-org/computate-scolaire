@@ -45,8 +45,9 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("saisonCles_indexed_longs:" + pk);
+		l.addFilterQuery("seasonKeys_indexed_longs:" + pk);
 		l.setC(SchoolYear.class);
+		l.setStore(true);
 	}
 
 	protected void _year(Wrap<SchoolYear> c) {
@@ -82,9 +83,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		String o;
 		
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("saison d'été qui commence %s à %s. ", strSeasonStartDay(), schoolNameComplete);
-		else
+			o = String.format("summer season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
+		if(BooleanUtils.isTrue(seasonWinter))
 			o = String.format("school season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
+		else
+			o = String.format("season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
 		
 		c.o(o);
 	}

@@ -43,7 +43,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiUriSearchPage.enUS: /enUS/season
  * 
  * UnNom.frFR: une saison
- * UnNom.enUS: a year
+ * UnNom.enUS: a season
  * Couleur: yellow
  * IconeGroupe: duotone
  * IconeNom: sun-o
@@ -59,7 +59,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */               
+	 */                
 	protected void _ecoleCle(Couverture<Long> c) {
 	}
 
@@ -68,13 +68,14 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 4
+	 * Attribuer: AnneeScolaire.saisonCles
+	 * HtmlLigne: 4
+	 * HtmlColonne: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
 	 * NomAffichage.enUS: year
-	 */          
+	*/            
 	protected void _anneeCle(Couverture<Long> c) {
 	}
 
@@ -105,7 +106,14 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Var.enUS: sessionKeys
 	 * Indexe: true
 	 * Stocke: true
-	 */
+	 * Attribuer: SessionScolaire.saisonCle
+	 * HtmlLigne: 4
+	 * HtmlColonne: 2
+	 * Description.frFR: Les sessions scolaires de la saison scolaire. 
+	 * Description.enUS: The school sessions of the school season. 
+	 * NomAffichage.frFR: sessions
+	 * NomAffichage.enUS: sessions
+	 */   
 	protected void _sessionCles(List<Long> o) {}
 
 	/**
@@ -150,16 +158,19 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * Var.enUS: yearSearch
-	 * r: anneeCles
-	 * r.enUS: yearKeys
+	 * r: saisonCles
+	 * r.enUS: seasonKeys
 	 * r: AnneeScolaire
 	 * r.enUS: SchoolYear
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * Ignorer: true
 	 */
 	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("saisonCles_indexed_longs:" + pk);
 		l.setC(AnneeScolaire.class);
+		l.setStocker(true);
 	}
 
 	/**
@@ -222,7 +233,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: YearStart
 	 * r: annee
 	 * r.enUS: year
-	 */                      
+	 */                     
 	protected void _anneeFin(Couverture<LocalDate> c) {
 		if(annee != null)
 			c.o((LocalDate)annee.getAnneeFin());
@@ -288,25 +299,33 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * VarTitre: true
 	 * r: saisonEte
 	 * r.enUS: seasonSummer
+	 * r: saisonHiver
+	 * r.enUS: seasonWinter
+	 * r: saison d'été qui commence %s à %s. 
+	 * r.enUS: summer season starting %s at %s. 
 	 * r: saison scolaire qui commence %s à %s. 
 	 * r.enUS: school season starting %s at %s. 
+	 * r: saison qui commence %s à %s. 
+	 * r.enUS: season starting %s at %s. 
 	 * r: strSaisonJourDebut
 	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */
+	 */   
 	protected void _saisonNomComplet(Couverture<String> c) {
 		String o;
 		
 		if(BooleanUtils.isTrue(saisonEte))
 			o = String.format("saison d'été qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
-		else
+		if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("saison scolaire qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+		else
+			o = String.format("saison qui commence %s à %s. ", strSaisonJourDebut(), ecoleNomComplet);
 		
 		c.o(o);
 	}
 
-	/**   
+	/**    
 	 * {@inheritDoc}
 	 * Var.enUS: seasonId
 	 * Indexe: true

@@ -202,13 +202,13 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										.a("id", "Page_yearStart")
 										.a("onclick", "removeGlow($(this)); ")
 										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#Page_yearStart')); }, function() { ajouterErreur($('#Page_yearStart')); }); } ")
+										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#Page_yearStart')); }, function() { addError($('#Page_yearStart')); }); } ")
 										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_yearStart')); $('#Page_yearStart').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', null, $('#Page_yearStart'), function() { addGlow($('#Page_yearStart')); }, function() { ajouterErreur($('#Page_yearStart')); }); ")
+									.a("onclick", "removeGlow($('#Page_yearStart')); $('#Page_yearStart').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', null, $('#Page_yearStart'), function() { addGlow($('#Page_yearStart')); }, function() { addError($('#Page_yearStart')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -244,13 +244,13 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										.a("id", "Page_yearEnd")
 										.a("onclick", "removeGlow($(this)); ")
 										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#Page_yearEnd')); }, function() { ajouterErreur($('#Page_yearEnd')); }); } ")
+										.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#Page_yearEnd')); }, function() { addError($('#Page_yearEnd')); }); } ")
 										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-									.a("onclick", "removeGlow($('#Page_yearEnd')); $('#Page_yearEnd').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', null, $('#Page_yearEnd'), function() { addGlow($('#Page_yearEnd')); }, function() { ajouterErreur($('#Page_yearEnd')); }); ")
+									.a("onclick", "removeGlow($('#Page_yearEnd')); $('#Page_yearEnd').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', null, $('#Page_yearEnd'), function() { addGlow($('#Page_yearEnd')); }, function() { addError($('#Page_yearEnd')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -296,7 +296,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "$('#somethingModal').show(); ")
+											.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#Page_schoolKey'); $e.html($e.val()); }, function() { addError($('#Page_schoolKey')); }); ")
 											.f().sx("add")
 										.g("button");
 									} g("div");
@@ -346,7 +346,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "$('#somethingModal').show(); ")
+											.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#Page_seasonKeys'); $e.html($e.val()); }, function() { addError($('#Page_seasonKeys')); }); ")
 											.f().sx("add")
 										.g("button");
 									} g("div");
@@ -459,7 +459,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "POST_yearStart")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#POST_yearStart')); }, function() { ajouterErreur($('#POST_yearStart')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#POST_yearStart')); }, function() { addError($('#POST_yearStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -493,7 +493,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "POST_yearEnd")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#POST_yearEnd')); }, function() { ajouterErreur($('#POST_yearEnd')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#POST_yearEnd')); }, function() { addError($('#POST_yearEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -537,7 +537,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "$('#somethingModal').show(); ")
+										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#POST_schoolKey'); $e.html($e.val()); }, function() { addError($('#POST_schoolKey')); }); ")
 										.f().sx("add")
 									.g("button");
 								} g("div");
@@ -587,7 +587,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "$('#somethingModal').show(); ")
+										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#POST_seasonKeys'); $e.html($e.val()); }, function() { addError($('#POST_seasonKeys')); }); ")
 										.f().sx("add")
 									.g("button");
 								} g("div");
@@ -700,7 +700,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "PATCH_yearStart")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#PATCH_yearStart')); }, function() { ajouterErreur($('#PATCH_yearStart')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#PATCH_yearStart')); }, function() { addError($('#PATCH_yearStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -734,7 +734,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "PATCH_yearEnd")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#PATCH_yearEnd')); }, function() { ajouterErreur($('#PATCH_yearEnd')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#PATCH_yearEnd')); }, function() { addError($('#PATCH_yearEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -778,7 +778,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "$('#somethingModal').show(); ")
+										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_schoolKey'); $e.html($e.val()); }, function() { addError($('#PATCH_schoolKey')); }); ")
 										.f().sx("add")
 									.g("button");
 								} g("div");
@@ -787,6 +787,56 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSchoolKey").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolYearSeasonKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueYearKey")
+						.a("class", "valueYearKey ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolYearSeasonKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "PATCH_seasonKeys").a("class", "").f().sx("seasons").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "seasons")
+										.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSeasonKeys")
+										.a("id", "PATCH_seasonKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#PATCH_seasonKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_seasonKeys')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSeasonKeys").f();
 								} g("ul");
 							} g("div");
 						} g("div");
@@ -891,7 +941,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "Recherche_yearStart")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#Recherche_yearStart')); }, function() { ajouterErreur($('#Recherche_yearStart')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearStart', s, function() { addGlow($('#Recherche_yearStart')); }, function() { addError($('#Recherche_yearStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -925,7 +975,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									.a("id", "Recherche_yearEnd")
 									.a("onclick", "removeGlow($(this)); ")
 									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#Recherche_yearEnd')); }, function() { ajouterErreur($('#Recherche_yearEnd')); }); } ")
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=\"pk\"]').val() }], 'setYearEnd', s, function() { addGlow($('#Recherche_yearEnd')); }, function() { addError($('#Recherche_yearEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -969,7 +1019,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "$('#somethingModal').show(); ")
+										.a("onclick", "postSchoolVals({ yearKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_schoolKey'); $e.html($e.val()); }, function() { addError($('#Recherche_schoolKey')); }); ")
 										.f().sx("add")
 									.g("button");
 								} g("div");
@@ -978,6 +1028,56 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSchoolKey").f();
+								} g("ul");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolYearSeasonKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueYearKey")
+						.a("class", "valueYearKey ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolYearSeasonKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "Recherche_seasonKeys").a("class", "").f().sx("seasons").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "seasons")
+										.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setSeasonKeys")
+										.a("id", "Recherche_seasonKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postSchoolSeasonVals({ yearKey: ", o.getPk(), " }, function() { var $e = $('#Recherche_seasonKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_seasonKeys')); }); ")
+										.f().sx("add")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSeasonKeys").f();
 								} g("ul");
 							} g("div");
 						} g("div");

@@ -1073,7 +1073,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.yearStart = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1191,7 +1191,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.yearEnd = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1998,6 +1998,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					oSchoolYear.enrollmentKeys.addAll(enrollmentKeys);
 			}
 
+			List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
+			if(seasonKeys != null)
+				oSchoolYear.seasonKeys.addAll(seasonKeys);
+
 			if(savesSchoolYear.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 				if(educationSort != null)
@@ -2149,6 +2153,14 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				document.addField("enrollmentKeys_stored_longs", o);
 			}
 		}
+		if(seasonKeys != null) {
+			for(java.lang.Long o : seasonKeys) {
+				document.addField("seasonKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : seasonKeys) {
+				document.addField("seasonKeys_stored_longs", o);
+			}
+		}
 		if(educationSort != null) {
 			document.addField("educationSort_indexed_int", educationSort);
 			document.addField("educationSort_stored_int", educationSort);
@@ -2166,12 +2178,12 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
 		}
 		if(yearStart != null) {
-			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(yearEnd != null) {
-			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(yearNameShort != null) {
 			document.addField("yearNameShort_indexed_string", yearNameShort);
@@ -2235,6 +2247,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 		if(enrollmentKeys != null)
 			oSchoolYear.enrollmentKeys.addAll(enrollmentKeys);
+
+		List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
+		if(seasonKeys != null)
+			oSchoolYear.seasonKeys.addAll(seasonKeys);
 
 		Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 		if(educationSort != null)

@@ -118,6 +118,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
 	public String nomAffichageEcoleCle() {
 		return "école";
 	}
@@ -219,6 +223,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String jsonAnneeCle() {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
 
@@ -326,6 +334,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return saisonCle == null ? "" : saisonCle.toString();
 	}
 
+	public String jsonSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
 	public String nomAffichageSaisonCle() {
 		return "saison";
 	}
@@ -427,6 +439,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String jsonSessionCle() {
 		return sessionCle == null ? "" : sessionCle.toString();
 	}
 
@@ -552,6 +568,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public String jsonInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
 	public String nomAffichageInscriptionCles() {
 		return null;
 	}
@@ -674,6 +694,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return ageCles == null ? "" : ageCles.toString();
 	}
 
+	public String jsonAgeCles() {
+		return ageCles == null ? "" : ageCles.toString();
+	}
+
 	public String nomAffichageAgeCles() {
 		return null;
 	}
@@ -775,6 +799,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strScolaireTri() {
+		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
@@ -882,6 +910,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public String jsonEcoleTri() {
+		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
 	public String nomAffichageEcoleTri() {
 		return null;
 	}
@@ -983,6 +1015,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeTri() {
+		return anneeTri == null ? "" : anneeTri.toString();
+	}
+
+	public String jsonAnneeTri() {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
 
@@ -1090,6 +1126,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return saisonTri == null ? "" : saisonTri.toString();
 	}
 
+	public String jsonSaisonTri() {
+		return saisonTri == null ? "" : saisonTri.toString();
+	}
+
 	public String nomAffichageSaisonTri() {
 		return null;
 	}
@@ -1191,6 +1231,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionTri() {
+		return sessionTri == null ? "" : sessionTri.toString();
+	}
+
+	public String jsonSessionTri() {
 		return sessionTri == null ? "" : sessionTri.toString();
 	}
 
@@ -1369,6 +1413,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
+	public String jsonEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
 	public String nomAffichageEcoleNomComplet() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1461,7 +1509,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1480,6 +1528,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeDebut() {
 		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1575,7 +1627,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1594,6 +1646,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeFin() {
 		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1689,7 +1745,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1708,6 +1764,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSaisonJourDebut() {
 		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1814,6 +1874,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return saisonEte == null ? "" : saisonEte.toString();
 	}
 
+	public String jsonSaisonEte() {
+		return saisonEte == null ? "" : saisonEte.toString();
+	}
+
 	public String nomAffichageSaisonEte() {
 		return "été";
 	}
@@ -1914,6 +1978,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonHiver() {
+		return saisonHiver == null ? "" : saisonHiver.toString();
+	}
+
+	public String jsonSaisonHiver() {
 		return saisonHiver == null ? "" : saisonHiver.toString();
 	}
 
@@ -2031,6 +2099,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
 	}
 
+	public String jsonSaisonFraisInscription() {
+		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
+	}
+
 	public String nomAffichageSaisonFraisInscription() {
 		return "frais d'inscription";
 	}
@@ -2129,6 +2201,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return saisonNomComplet == null ? "" : saisonNomComplet;
 	}
 
+	public String jsonSaisonNomComplet() {
+		return saisonNomComplet == null ? "" : saisonNomComplet;
+	}
+
 	public String nomAffichageSaisonNomComplet() {
 		return null;
 	}
@@ -2221,7 +2297,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSaisonFin(Date o) {
-		this.saisonFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.saisonFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.saisonFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2240,6 +2316,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonFin() {
+		return saisonFin == null ? "" : saisonFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSaisonFin() {
 		return saisonFin == null ? "" : saisonFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2335,7 +2415,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSessionJourDebut(Date o) {
-		this.sessionJourDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2354,6 +2434,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourDebut() {
 		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2449,7 +2533,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSessionJourFin(Date o) {
-		this.sessionJourFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionJourFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2468,6 +2552,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSessionJourFin() {
 		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -2569,6 +2657,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return sessionNomComplet == null ? "" : sessionNomComplet;
 	}
 
+	public String jsonSessionNomComplet() {
+		return sessionNomComplet == null ? "" : sessionNomComplet;
+	}
+
 	public String nomAffichageSessionNomComplet() {
 		return null;
 	}
@@ -2664,6 +2756,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String jsonSessionId() {
 		return sessionId == null ? "" : sessionId;
 	}
 
@@ -2765,6 +2861,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -2860,6 +2960,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
 		return objetSuggere == null ? "" : objetSuggere;
 	}
 
@@ -3417,16 +3521,16 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(anneeDebut != null) {
-			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeFin != null) {
-			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonJourDebut != null) {
-			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonEte != null) {
 			document.addField("saisonEte_indexed_boolean", saisonEte);
@@ -3445,16 +3549,16 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			document.addField("saisonNomComplet_stored_string", saisonNomComplet);
 		}
 		if(saisonFin != null) {
-			document.addField("saisonFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("saisonFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("saisonFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionJourDebut != null) {
-			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionJourFin != null) {
-			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionNomComplet != null) {
 			document.addField("sessionNomComplet_indexed_string", sessionNomComplet);

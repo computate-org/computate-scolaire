@@ -1074,7 +1074,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -1192,7 +1192,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -1999,6 +1999,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
 			}
 
+			List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
+			if(saisonCles != null)
+				oAnneeScolaire.saisonCles.addAll(saisonCles);
+
 			if(sauvegardesAnneeScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 				if(scolaireTri != null)
@@ -2150,6 +2154,14 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				document.addField("inscriptionCles_stored_longs", o);
 			}
 		}
+		if(saisonCles != null) {
+			for(java.lang.Long o : saisonCles) {
+				document.addField("saisonCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : saisonCles) {
+				document.addField("saisonCles_stored_longs", o);
+			}
+		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -2167,12 +2179,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(anneeDebut != null) {
-			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeFin != null) {
-			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeNomCourt != null) {
 			document.addField("anneeNomCourt_indexed_string", anneeNomCourt);
@@ -2236,6 +2248,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 		if(inscriptionCles != null)
 			oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
+
+		List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
+		if(saisonCles != null)
+			oAnneeScolaire.saisonCles.addAll(saisonCles);
 
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)

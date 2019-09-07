@@ -118,6 +118,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
 	public String nomAffichageEcoleCle() {
 		return "école";
 	}
@@ -222,6 +226,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
 
+	public String jsonAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
 	public String nomAffichageAnneeCle() {
 		return "année";
 	}
@@ -323,6 +331,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String jsonSaisonCle() {
 		return saisonCle == null ? "" : saisonCle.toString();
 	}
 
@@ -448,6 +460,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public String jsonInscriptionCles() {
+		return inscriptionCles == null ? "" : inscriptionCles.toString();
+	}
+
 	public String nomAffichageInscriptionCles() {
 		return null;
 	}
@@ -570,8 +586,12 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return sessionCles == null ? "" : sessionCles.toString();
 	}
 
+	public String jsonSessionCles() {
+		return sessionCles == null ? "" : sessionCles.toString();
+	}
+
 	public String nomAffichageSessionCles() {
-		return null;
+		return "sessions";
 	}
 
 	public String htmTooltipSessionCles() {
@@ -671,6 +691,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strScolaireTri() {
+		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
@@ -778,6 +802,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public String jsonEcoleTri() {
+		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
 	public String nomAffichageEcoleTri() {
 		return null;
 	}
@@ -882,6 +910,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
 
+	public String jsonAnneeTri() {
+		return anneeTri == null ? "" : anneeTri.toString();
+	}
+
 	public String nomAffichageAnneeTri() {
 		return null;
 	}
@@ -983,6 +1015,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonTri() {
+		return saisonTri == null ? "" : saisonTri.toString();
+	}
+
+	public String jsonSaisonTri() {
 		return saisonTri == null ? "" : saisonTri.toString();
 	}
 
@@ -1161,6 +1197,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
+	public String jsonEcoleNomComplet() {
+		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
 	public String nomAffichageEcoleNomComplet() {
 		return "NomAffichage.enUS: ";
 	}
@@ -1253,7 +1293,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1272,6 +1312,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeDebut() {
+		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeDebut() {
 		return anneeDebut == null ? "" : anneeDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1367,7 +1411,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1386,6 +1430,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFin() {
+		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonAnneeFin() {
 		return anneeFin == null ? "" : anneeFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1481,7 +1529,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1500,6 +1548,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonSaisonJourDebut() {
 		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
@@ -1606,6 +1658,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return saisonEte == null ? "" : saisonEte.toString();
 	}
 
+	public String jsonSaisonEte() {
+		return saisonEte == null ? "" : saisonEte.toString();
+	}
+
 	public String nomAffichageSaisonEte() {
 		return "été";
 	}
@@ -1706,6 +1762,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonHiver() {
+		return saisonHiver == null ? "" : saisonHiver.toString();
+	}
+
+	public String jsonSaisonHiver() {
 		return saisonHiver == null ? "" : saisonHiver.toString();
 	}
 
@@ -1823,6 +1883,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
 	}
 
+	public String jsonSaisonFraisInscription() {
+		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
+	}
+
 	public String nomAffichageSaisonFraisInscription() {
 		return "frais d'inscription";
 	}
@@ -1918,6 +1982,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonNomComplet() {
+		return saisonNomComplet == null ? "" : saisonNomComplet;
+	}
+
+	public String jsonSaisonNomComplet() {
 		return saisonNomComplet == null ? "" : saisonNomComplet;
 	}
 
@@ -2019,6 +2087,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return saisonId == null ? "" : saisonId;
 	}
 
+	public String jsonSaisonId() {
+		return saisonId == null ? "" : saisonId;
+	}
+
 	public String nomAffichageSaisonId() {
 		return "ID";
 	}
@@ -2117,6 +2189,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
 	public String nomAffichagePageUrl() {
 		return null;
 	}
@@ -2212,6 +2288,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
 		return objetSuggere == null ? "" : objetSuggere;
 	}
 
@@ -2422,6 +2502,12 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	public Object attribuerSaisonScolaire(String var, Object val) {
 		SaisonScolaire oSaisonScolaire = (SaisonScolaire)this;
 		switch(var) {
+			case "anneeCle":
+				oSaisonScolaire.setAnneeCle((Long)val);
+				return val;
+			case "sessionCles":
+				oSaisonScolaire.addSessionCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -2493,11 +2579,9 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					oSaisonScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardesSaisonScolaire.contains("anneeCle")) {
-				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-				if(anneeCle != null)
-					oSaisonScolaire.setAnneeCle(anneeCle);
-			}
+			Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+			if(anneeCle != null)
+				oSaisonScolaire.setAnneeCle(anneeCle);
 
 			if(sauvegardesSaisonScolaire.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
@@ -2511,11 +2595,9 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					oSaisonScolaire.inscriptionCles.addAll(inscriptionCles);
 			}
 
-			if(sauvegardesSaisonScolaire.contains("sessionCles")) {
-				List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
-				if(sessionCles != null)
-					oSaisonScolaire.sessionCles.addAll(sessionCles);
-			}
+			List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
+			if(sessionCles != null)
+				oSaisonScolaire.sessionCles.addAll(sessionCles);
 
 			if(sauvegardesSaisonScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -2725,16 +2807,16 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(anneeDebut != null) {
-			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeFin != null) {
-			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonJourDebut != null) {
-			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonEte != null) {
 			document.addField("saisonEte_indexed_boolean", saisonEte);
@@ -2883,7 +2965,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), saisonJourDebut, saisonEte, saisonHiver, saisonFraisInscription);
+		return Objects.hash(super.hashCode(), anneeCle, sessionCles, saisonJourDebut, saisonEte, saisonHiver, saisonFraisInscription);
 	}
 
 	////////////
@@ -2897,6 +2979,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 			return false;
 		SaisonScolaire that = (SaisonScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( anneeCle, that.anneeCle )
+				&& Objects.equals( sessionCles, that.sessionCles )
 				&& Objects.equals( saisonJourDebut, that.saisonJourDebut )
 				&& Objects.equals( saisonEte, that.saisonEte )
 				&& Objects.equals( saisonHiver, that.saisonHiver )
@@ -2911,7 +2995,9 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SaisonScolaire { ");
-		sb.append( "saisonJourDebut: " ).append(saisonJourDebut);
+		sb.append( "anneeCle: " ).append(anneeCle);
+		sb.append( ", sessionCles: " ).append(sessionCles);
+		sb.append( ", saisonJourDebut: " ).append(saisonJourDebut);
 		sb.append( ", saisonEte: " ).append(saisonEte);
 		sb.append( ", saisonHiver: " ).append(saisonHiver);
 		sb.append( ", saisonFraisInscription: " ).append(saisonFraisInscription);

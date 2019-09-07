@@ -600,7 +600,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
 	}
 
-	/**   
+	/**    
 	 * {@inheritDoc}
 	 * Var.enUS: blocNameComplete
 	 * Indexe: true
