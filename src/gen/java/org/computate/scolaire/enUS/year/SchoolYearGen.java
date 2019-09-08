@@ -60,8 +60,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public static final String SchoolYear_NomVar = "year";
 	public static final String SchoolYear_DeNom = "of year";
 	public static final String SchoolYear_Couleur = "orange";
-	public static final String SchoolYear_IconeGroupe = "duotone";
-	public static final String SchoolYear_IconeNom = "calendar-check-o";
+	public static final String SchoolYear_IconeGroupe = "regular";
+	public static final String SchoolYear_IconeNom = "calendar-check";
 
 	///////////////
 	// schoolKey //

@@ -43,8 +43,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.frFR: une année
  * UnNom.enUS: a year
  * Couleur: orange
- * IconeGroupe: duotone
- * IconeNom: calendar-check-o
+ * IconeGroupe: regular
+ * IconeNom: calendar-check
 */                                               
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 

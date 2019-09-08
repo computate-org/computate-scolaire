@@ -61,8 +61,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public static final String AnneeScolaire_NomVar = "année";
 	public static final String AnneeScolaire_DeNom = "d'année";
 	public static final String AnneeScolaire_Couleur = "orange";
-	public static final String AnneeScolaire_IconeGroupe = "duotone";
-	public static final String AnneeScolaire_IconeNom = "calendar-check-o";
+	public static final String AnneeScolaire_IconeGroupe = "regular";
+	public static final String AnneeScolaire_IconeNom = "calendar-check";
 
 	//////////////
 	// ecoleCle //

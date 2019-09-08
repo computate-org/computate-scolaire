@@ -47,7 +47,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: yellow
  * IconeGroupe: duotone
  * IconeNom: sun-o
-*/                                                 
+*/                                        
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
@@ -75,7 +75,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
 	 * NomAffichage.enUS: year
-	*/              
+	*/             
 	protected void _anneeCle(Couverture<Long> c) {
 	}
 
