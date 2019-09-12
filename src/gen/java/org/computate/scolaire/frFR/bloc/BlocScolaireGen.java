@@ -1708,7 +1708,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -1826,7 +1826,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -1944,7 +1944,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2496,7 +2496,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSessionJourDebut(Date o) {
-		this.sessionJourDebut = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2614,7 +2614,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSessionJourFin(Date o) {
-		this.sessionJourFin = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionJourFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -5165,16 +5165,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
 		}
 		if(anneeDebut != null) {
-			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeFin != null) {
-			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("anneeFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("anneeFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(anneeFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonJourDebut != null) {
-			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonEte != null) {
 			document.addField("saisonEte_indexed_boolean", saisonEte);
@@ -5193,12 +5193,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("saisonNomComplet_stored_string", saisonNomComplet);
 		}
 		if(sessionJourDebut != null) {
-			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionJourFin != null) {
-			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(ageNomComplet != null) {
 			document.addField("ageNomComplet_indexed_string", ageNomComplet);

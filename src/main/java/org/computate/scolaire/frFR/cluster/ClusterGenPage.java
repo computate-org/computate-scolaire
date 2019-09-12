@@ -66,11 +66,11 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/cluster");
+		c.o("/cluster");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/cluster-999.png");
+			c.o("/png/cluster-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -323,10 +323,20 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("un cluster").g("span");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("h1");
 				Cluster o = listeCluster.get(0);
 				requeteSite_.setRequetePk(o.getPk());
+			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -349,7 +359,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 						Cluster o = listeCluster.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/cluster/" + o.getPk();
+						String uri = "/cluster/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();

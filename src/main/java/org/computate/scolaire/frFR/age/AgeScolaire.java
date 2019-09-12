@@ -20,10 +20,10 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * Sauvegarde: true
  * 
  * ApiTag.frFR: Age
- * ApiUri.frFR: /frFR/api/age
+ * ApiUri.frFR: /api/age
  * 
  * ApiTag.enUS: Age
- * ApiUri.enUS: /enUS/api/age
+ * ApiUri.enUS: /api/age
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -35,12 +35,12 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: AgePage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/age
+ * ApiUriPageRecherche.frFR: /age
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: AgePage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/age
+ * ApiUriSearchPage.enUS: /age
  * 
  * UnNom.frFR: un âge
  * UnNom.enUS: an age
@@ -502,7 +502,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r: ageId
 	 * r.enUS: ageId
 	 * r: /frFR/age/
-	 * r.enUS: /enUS/age/
+	 * r.enUS: /age/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

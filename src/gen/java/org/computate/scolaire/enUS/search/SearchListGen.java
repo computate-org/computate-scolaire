@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import java.lang.Class;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchList&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -147,6 +148,10 @@ public abstract class SearchListGen<DEV> {
 		return store == null ? "" : store.toString();
 	}
 
+	public String jsonStore() {
+		return store == null ? "" : store.toString();
+	}
+
 	public String nomAffichageStore() {
 		return null;
 	}
@@ -209,6 +214,10 @@ public abstract class SearchListGen<DEV> {
 		return populate == null ? "" : populate.toString();
 	}
 
+	public String jsonPopulate() {
+		return populate == null ? "" : populate.toString();
+	}
+
 	public String nomAffichagePopulate() {
 		return null;
 	}
@@ -219,6 +228,84 @@ public abstract class SearchListGen<DEV> {
 
 	public String htmPopulate() {
 		return populate == null ? "" : StringEscapeUtils.escapeHtml4(strPopulate());
+	}
+
+	////////////
+	// fields //
+	////////////
+
+	/**	L'entité « fields »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> fields = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Wrap<List<String>> fieldsWrap = new Wrap<List<String>>().p(this).c(List.class).var("fields").o(fields);
+
+	/**	<br/>L'entité « fields »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchList&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:fields">Trouver l'entité fields dans Solr</a>
+	 * <br/>
+	 * @param fields est l'entité déjà construit. 
+	 **/
+	protected abstract void _fields(List<String> c);
+
+	public List<String> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<String> fields) {
+		this.fields = fields;
+		this.fieldsWrap.alreadyInitialized = true;
+	}
+	public SearchList addFields(String...objets) {
+		for(String o : objets) {
+			addFields(o);
+		}
+		return (SearchList)this;
+	}
+	public SearchList addFields(String o) {
+		if(o != null && !fields.contains(o))
+			this.fields.add(o);
+		return (SearchList)this;
+	}
+	public SearchList setFields(JsonArray objets) {
+		fields.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addFields(o);
+		}
+		return (SearchList)this;
+	}
+	protected SearchList fieldsInit() {
+		if(!fieldsWrap.alreadyInitialized) {
+			_fields(fields);
+		}
+		fieldsWrap.alreadyInitialized(true);
+		return (SearchList)this;
+	}
+
+	public List<String> solrFields() {
+		return fields;
+	}
+
+	public String strFields() {
+		return fields == null ? "" : fields.toString();
+	}
+
+	public String jsonFields() {
+		return fields == null ? "" : fields.toString();
+	}
+
+	public String nomAffichageFields() {
+		return null;
+	}
+
+	public String htmTooltipFields() {
+		return null;
+	}
+
+	public String htmFields() {
+		return fields == null ? "" : StringEscapeUtils.escapeHtml4(strFields());
 	}
 
 	///////////////
@@ -400,6 +487,7 @@ public abstract class SearchListGen<DEV> {
 		siteRequest_Init();
 		storeInit();
 		populateInit();
+		fieldsInit();
 		solrQueryInit();
 		queryResponseInit();
 		solrDocumentListInit();
@@ -449,6 +537,8 @@ public abstract class SearchListGen<DEV> {
 				return oSearchList.store;
 			case "populate":
 				return oSearchList.populate;
+			case "fields":
+				return oSearchList.fields;
 			case "solrQuery":
 				return oSearchList.solrQuery;
 			case "queryResponse":

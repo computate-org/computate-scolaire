@@ -100,6 +100,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurId == null ? "" : utilisateurId;
 	}
 
+	public String jsonUtilisateurId() {
+		return utilisateurId == null ? "" : utilisateurId;
+	}
+
 	public String nomAffichageUtilisateurId() {
 		return "utilisateur ID";
 	}
@@ -195,6 +199,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public String strUtilisateurNom() {
+		return utilisateurNom == null ? "" : utilisateurNom;
+	}
+
+	public String jsonUtilisateurNom() {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
 
@@ -296,6 +304,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurMail == null ? "" : utilisateurMail;
 	}
 
+	public String jsonUtilisateurMail() {
+		return utilisateurMail == null ? "" : utilisateurMail;
+	}
+
 	public String nomAffichageUtilisateurMail() {
 		return null;
 	}
@@ -391,6 +403,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public String strUtilisateurPrenom() {
+		return utilisateurPrenom == null ? "" : utilisateurPrenom;
+	}
+
+	public String jsonUtilisateurPrenom() {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
 
@@ -492,6 +508,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
 	}
 
+	public String jsonUtilisateurNomFamille() {
+		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
+	}
+
 	public String nomAffichageUtilisateurNomFamille() {
 		return null;
 	}
@@ -590,6 +610,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
 	}
 
+	public String jsonUtilisateurNomComplet() {
+		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
+	}
+
 	public String nomAffichageUtilisateurNomComplet() {
 		return null;
 	}
@@ -685,6 +709,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public String strUtilisateurSite() {
+		return utilisateurSite == null ? "" : utilisateurSite;
+	}
+
+	public String jsonUtilisateurSite() {
 		return utilisateurSite == null ? "" : utilisateurSite;
 	}
 
@@ -791,6 +819,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurRecevoirCourriels == null ? "" : utilisateurRecevoirCourriels.toString();
 	}
 
+	public String jsonUtilisateurRecevoirCourriels() {
+		return utilisateurRecevoirCourriels == null ? "" : utilisateurRecevoirCourriels.toString();
+	}
+
 	public String nomAffichageUtilisateurRecevoirCourriels() {
 		return null;
 	}
@@ -894,6 +926,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return voirArchive == null ? "" : voirArchive.toString();
 	}
 
+	public String jsonVoirArchive() {
+		return voirArchive == null ? "" : voirArchive.toString();
+	}
+
 	public String nomAffichageVoirArchive() {
 		return "voir archivé";
 	}
@@ -994,6 +1030,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public String strVoirSupprime() {
+		return voirSupprime == null ? "" : voirSupprime.toString();
+	}
+
+	public String jsonVoirSupprime() {
 		return voirSupprime == null ? "" : voirSupprime.toString();
 	}
 

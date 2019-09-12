@@ -21,8 +21,8 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiMethode: DELETE
  * ApiMotCleRecherchePage.frFR: page
  * ApiMotCleRecherchePage.enUS: page
- * ApiUriRecherchePage.frFR: /frFR/mission
- * ApiUriRecherchePage.enUS: /enUS/mission
+ * ApiUriRecherchePage.frFR: /mission
+ * ApiUriRecherchePage.enUS: /mission
  * UnNomMinuscule.frFR: une mission
  * UnNomMinuscule.enUS: a mission
  * Couleur: pink

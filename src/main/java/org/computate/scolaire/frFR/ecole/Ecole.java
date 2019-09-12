@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                                     
+/**                                    
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -17,10 +17,10 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Sauvegarde: true
  * 
  * ApiTag.frFR: Ecole
- * ApiUri.frFR: /frFR/api/ecole
+ * ApiUri.frFR: /api/ecole
  * 
  * ApiTag.enUS: School
- * ApiUri.enUS: /enUS/api/school
+ * ApiUri.enUS: /api/school
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -32,12 +32,12 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: EcolePage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/ecole
+ * ApiUriPageRecherche.frFR: /ecole
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: SchoolPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/school
+ * ApiUriSearchPage.enUS: /school
  * 
  * UnNom.frFR: une école
  * UnNom.enUS: a school
@@ -133,7 +133,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: années
 	 * NomAffichage.enUS: years
-	 */    
+	 */   
 	protected void _anneeCles(List<Long> o) {}
 
 	/**      
@@ -327,7 +327,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r: ecoleId
 	 * r.enUS: schoolId
 	 * r: /frFR/ecole/
-	 * r.enUS: /enUS/school/
+	 * r.enUS: /school/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

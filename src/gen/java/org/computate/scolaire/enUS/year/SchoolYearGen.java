@@ -48,8 +48,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public static final String SchoolYear_UnNom = "a year";
 	public static final String SchoolYear_Ce = "this ";
 	public static final String SchoolYear_CeNom = "this year";
-	public static final String SchoolYear_Un = "an ";
-	public static final String SchoolYear_LeNom = "theyear";
+	public static final String SchoolYear_Un = "a ";
+	public static final String SchoolYear_LeNom = "the year";
 	public static final String SchoolYear_NomSingulier = "year";
 	public static final String SchoolYear_NomPluriel = "years";
 	public static final String SchoolYear_NomActuel = "current year";
@@ -59,6 +59,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public static final String SchoolYear_AucunNomTrouve = "no year found";
 	public static final String SchoolYear_NomVar = "year";
 	public static final String SchoolYear_DeNom = "of year";
+	public static final String SchoolYear_UnNomAdjectif = "a year";
+	public static final String SchoolYear_NomAdjectifSingulier = "year";
+	public static final String SchoolYear_NomAdjectifPluriel = "years";
 	public static final String SchoolYear_Couleur = "orange";
 	public static final String SchoolYear_IconeGroupe = "regular";
 	public static final String SchoolYear_IconeNom = "calendar-check";
@@ -892,43 +895,41 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 
-	////////////
-	// school //
-	////////////
+	/////////////
+	// school_ //
+	/////////////
 
-	/**	L'entité « school »
+	/**	L'entité « school_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected School school;
+	protected School school_;
 	@JsonIgnore
-	public Wrap<School> schoolWrap = new Wrap<School>().p(this).c(School.class).var("school").o(school);
+	public Wrap<School> school_Wrap = new Wrap<School>().p(this).c(School.class).var("school_").o(school_);
 
-	/**	<br/>L'entité « school »
+	/**	<br/>L'entité « school_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school">Trouver l'entité school dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Trouver l'entité school_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _school(Wrap<School> c);
+	protected abstract void _school_(Wrap<School> c);
 
-	public School getSchool() {
-		return school;
+	public School getSchool_() {
+		return school_;
 	}
 
-	public void setSchool(School school) {
-		this.school = school;
-		this.schoolWrap.alreadyInitialized = true;
+	public void setSchool_(School school_) {
+		this.school_ = school_;
+		this.school_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolYear schoolInit() {
-		if(!schoolWrap.alreadyInitialized) {
-			_school(schoolWrap);
-			if(school == null)
-				setSchool(schoolWrap.o);
+	protected SchoolYear school_Init() {
+		if(!school_Wrap.alreadyInitialized) {
+			_school_(school_Wrap);
+			if(school_ == null)
+				setSchool_(school_Wrap.o);
 		}
-		if(school != null)
-			school.initDeepForClass(siteRequest_);
-		schoolWrap.alreadyInitialized(true);
+		school_Wrap.alreadyInitialized(true);
 		return (SchoolYear)this;
 	}
 
@@ -1073,7 +1074,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1191,7 +1192,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1809,7 +1810,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		schoolSortInit();
 		yearSortInit();
 		schoolSearchInit();
-		schoolInit();
+		school_Init();
 		schoolNameCompleteInit();
 		yearStartInit();
 		yearEndInit();
@@ -1832,8 +1833,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(schoolSearch != null)
 			schoolSearch.setSiteRequest_(siteRequest_);
-		if(school != null)
-			school.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -1876,8 +1875,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.yearSort;
 			case "schoolSearch":
 				return oSchoolYear.schoolSearch;
-			case "school":
-				return oSchoolYear.school;
+			case "school_":
+				return oSchoolYear.school_;
 			case "schoolNameComplete":
 				return oSchoolYear.schoolNameComplete;
 			case "yearStart":

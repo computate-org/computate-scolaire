@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -189,6 +190,14 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "saisonCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", jsonObject.getLong(entiteVar)));
+						break;
+					case "ageCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", jsonObject.getLong(entiteVar)));
+						break;
 					case "sessionJourDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionJourDebut", jsonObject.getString(entiteVar), pk));
@@ -278,9 +287,15 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 	public void listePATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
 		listeSessionScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSessionScolaire(o, gestionnaireEvenements)
+				futurePATCHSessionScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurSessionScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -382,6 +397,40 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
+						break;
+					case "setSaisonCle":
+						o2.setSaisonCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
+						break;
+					case "removeSaisonCle":
+						o2.setSaisonCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
+						break;
+					case "addAgeCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getLong(methodeNom)));
+						break;
+					case "addAllAgeCles":
+						JsonArray addAllAgeClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", addAllAgeClesValeurs.getLong(i)));
+						}
+						break;
+					case "setAgeCles":
+						JsonArray setAgeClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getJsonArray(methodeNom)));
+						for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", setAgeClesValeurs.getLong(i)));
+						}
+						break;
+					case "removeAgeCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getLong(methodeNom)));
 						break;
 					case "setSessionJourDebut":
 						o2.setSessionJourDebut(requeteJson.getString(methodeNom));
@@ -595,7 +644,17 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeSessionScolaire.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeSessionScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -622,7 +681,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurSessionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheSessionScolaire(requeteSite, false, true, "/frFR/session", c -> {
+							rechercheSessionScolaire(requeteSite, false, true, "/session", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
 									reponse200PageRechercheSessionScolaire(listeSessionScolaire, d -> {
@@ -674,7 +733,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			SessionPage page = new SessionPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/session");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/session");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeSessionScolaire(listeSessionScolaire);
@@ -974,7 +1033,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(SessionScolaire.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.session.SessionScolaire"));

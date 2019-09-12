@@ -51,7 +51,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public static final String SchoolSeason_UnNom = "a season";
 	public static final String SchoolSeason_Ce = "this ";
 	public static final String SchoolSeason_CeNom = "this season";
-	public static final String SchoolSeason_Un = "an ";
+	public static final String SchoolSeason_Un = "a ";
 	public static final String SchoolSeason_LeNom = "the season";
 	public static final String SchoolSeason_NomSingulier = "season";
 	public static final String SchoolSeason_NomPluriel = "seasons";
@@ -62,9 +62,14 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public static final String SchoolSeason_AucunNomTrouve = "no season found";
 	public static final String SchoolSeason_NomVar = "season";
 	public static final String SchoolSeason_DeNom = "of season";
+	public static final String SchoolSeason_AdjectifPluriel = "school";
+	public static final String SchoolSeason_AdjectifVar = "school";
+	public static final String SchoolSeason_UnNomAdjectif = "a school season";
+	public static final String SchoolSeason_NomAdjectifSingulier = "school season";
+	public static final String SchoolSeason_NomAdjectifPluriel = "school seasons";
 	public static final String SchoolSeason_Couleur = "yellow";
-	public static final String SchoolSeason_IconeGroupe = "duotone";
-	public static final String SchoolSeason_IconeNom = "sun-o";
+	public static final String SchoolSeason_IconeGroupe = "regular";
+	public static final String SchoolSeason_IconeNom = "sun";
 
 	///////////////
 	// schoolKey //
@@ -1111,43 +1116,41 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return (SchoolSeason)this;
 	}
 
-	//////////
-	// year //
-	//////////
+	///////////
+	// year_ //
+	///////////
 
-	/**	L'entité « year »
+	/**	L'entité « year_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected SchoolYear year;
+	protected SchoolYear year_;
 	@JsonIgnore
-	public Wrap<SchoolYear> yearWrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year").o(year);
+	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
 
-	/**	<br/>L'entité « year »
+	/**	<br/>L'entité « year_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year">Trouver l'entité year dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _year(Wrap<SchoolYear> c);
+	protected abstract void _year_(Wrap<SchoolYear> c);
 
-	public SchoolYear getYear() {
-		return year;
+	public SchoolYear getYear_() {
+		return year_;
 	}
 
-	public void setYear(SchoolYear year) {
-		this.year = year;
-		this.yearWrap.alreadyInitialized = true;
+	public void setYear_(SchoolYear year_) {
+		this.year_ = year_;
+		this.year_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolSeason yearInit() {
-		if(!yearWrap.alreadyInitialized) {
-			_year(yearWrap);
-			if(year == null)
-				setYear(yearWrap.o);
+	protected SchoolSeason year_Init() {
+		if(!year_Wrap.alreadyInitialized) {
+			_year_(year_Wrap);
+			if(year_ == null)
+				setYear_(year_Wrap.o);
 		}
-		if(year != null)
-			year.initDeepForClass(siteRequest_);
-		yearWrap.alreadyInitialized(true);
+		year_Wrap.alreadyInitialized(true);
 		return (SchoolSeason)this;
 	}
 
@@ -1292,7 +1295,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
@@ -1410,7 +1413,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
@@ -1528,7 +1531,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setSeasonStartDay(Date o) {
-		this.seasonStartDay = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.seasonStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
@@ -2378,7 +2381,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		yearSortInit();
 		seasonSortInit();
 		yearSearchInit();
-		yearInit();
+		year_Init();
 		schoolNameCompleteInit();
 		yearStartInit();
 		yearEndInit();
@@ -2404,8 +2407,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
-		if(year != null)
-			year.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -2452,8 +2453,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.seasonSort;
 			case "yearSearch":
 				return oSchoolSeason.yearSearch;
-			case "year":
-				return oSchoolSeason.year;
+			case "year_":
+				return oSchoolSeason.year_;
 			case "schoolNameComplete":
 				return oSchoolSeason.schoolNameComplete;
 			case "yearStart":

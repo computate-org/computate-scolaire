@@ -18,10 +18,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Sauvegarde: true
  * 
  * ApiTag.frFR: Année
- * ApiUri.frFR: /frFR/api/annee
+ * ApiUri.frFR: /api/annee
  * 
  * ApiTag.enUS: School
- * ApiUri.enUS: /enUS/api/year
+ * ApiUri.enUS: /api/year
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -33,19 +33,19 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: AnneePage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/annee
+ * ApiUriPageRecherche.frFR: /annee
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: YearPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/year
+ * ApiUriSearchPage.enUS: /year
  * 
  * UnNom.frFR: une année
  * UnNom.enUS: a year
  * Couleur: orange
  * IconeGroupe: regular
  * IconeNom: calendar-check
-*/                                               
+*/                                     
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -150,12 +150,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: school
+	 * Var.enUS: school_
 	 * r: ecoleRecherche
 	 * r.enUS: schoolSearch
 	 * Ignorer: true
-	 */   
-	protected void _ecole(Couverture<Ecole> c) {
+	 */    
+	protected void _ecole_(Couverture<Ecole> c) {
 		if(ecoleRecherche.size() > 0) {
 			c.o(ecoleRecherche.get(0));
 		}
@@ -176,8 +176,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: school
 	 */  
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(ecole != null)
-			c.o((String)ecole.getEcoleNomComplet());
+		if(ecole_ != null)
+			c.o((String)ecole_.getEcoleNomComplet());
 	}
 
 	/**
@@ -264,7 +264,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "year"
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */                
+	 */                  
 	protected void _anneeNomComplet(Couverture<String> c) {
 		String o = "année";
 
@@ -319,7 +319,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r: anneeId
 	 * r.enUS: yearId
 	 * r: /frFR/annee/
-	 * r.enUS: /enUS/year/
+	 * r.enUS: /year/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

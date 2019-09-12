@@ -14,6 +14,7 @@ import io.vertx.ext.web.api.OperationResponse;
 
 /**
  * Translate: false
+ * classCanonicalName.frFR: org.computate.scolaire.frFR.mission.MissionScolaireFrFRGenApiService
  * Gen: false
  **/
 @WebApiServiceGen
@@ -32,9 +33,9 @@ public interface MissionEnUSGenApiService {
 		return new MissionEnUSGenApiServiceVertxEBProxy(vertx, address);
 	}
 
-	public void rechercheMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void postMissionScolaire(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void patchMissionScolaire(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void getMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
-	public void deleteMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void rechercheMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void postMission(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void patchMission(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void getMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void deleteMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 }

@@ -12,6 +12,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.page.PageLayout;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,11 +67,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enUS/user");
+		c.o("/user");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enUS/user-999.png");
+			c.o("/png/user-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
@@ -523,10 +524,20 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 				{ e("h1").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("a site user").g("span");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("h1");
 				SiteUser o = listSiteUser.get(0);
 				siteRequest_.setRequestPk(o.getPk());
+			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -549,7 +560,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 						SiteUser o = listSiteUser.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enUS/user/" + o.getPk();
+						String uri = "/user/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
@@ -578,7 +589,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "SiteUserForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "SiteUserForm").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valuePk")

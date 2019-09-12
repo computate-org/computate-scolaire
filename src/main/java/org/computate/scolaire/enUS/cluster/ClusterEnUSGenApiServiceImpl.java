@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -583,7 +584,17 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listCluster.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listCluster.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -610,7 +621,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				if(a.succeeded()) {
 					userCluster(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchCluster(siteRequest, false, true, "/enUS/cluster", c -> {
+							aSearchCluster(siteRequest, false, true, "/cluster", c -> {
 								if(c.succeeded()) {
 									SearchList<Cluster> listCluster = c.result();
 									response200SearchPageCluster(listCluster, d -> {
@@ -662,7 +673,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			ClusterPage page = new ClusterPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/cluster");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/cluster");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListCluster(listCluster);
@@ -908,7 +919,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			listSearch.setQuery("*:*");
 			listSearch.setC(Cluster.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.cluster.Cluster"));

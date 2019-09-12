@@ -77,7 +77,7 @@ public class School extends SchoolGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(schoolId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/school/" + schoolId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/school/" + schoolId;
 			c.o(o);
 		}
 	}

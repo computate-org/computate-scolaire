@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -286,9 +287,15 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 	public void listePATCHAnneeScolaire(ListeRecherche<AnneeScolaire> listeAnneeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeAnneeScolaire.getRequeteSite_();
 		listeAnneeScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHAnneeScolaire(o, gestionnaireEvenements)
+				futurePATCHAnneeScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -637,7 +644,17 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeAnneeScolaire.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeAnneeScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -664,7 +681,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				if(a.succeeded()) {
 					utilisateurAnneeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheAnneeScolaire(requeteSite, false, true, "/frFR/annee", c -> {
+							rechercheAnneeScolaire(requeteSite, false, true, "/annee", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
 									reponse200PageRechercheAnneeScolaire(listeAnneeScolaire, d -> {
@@ -716,7 +733,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			AnneePage page = new AnneePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/annee");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/annee");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeAnneeScolaire(listeAnneeScolaire);
@@ -996,7 +1013,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(AnneeScolaire.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.annee.AnneeScolaire"));

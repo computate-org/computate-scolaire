@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -382,7 +383,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -392,7 +393,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -402,7 +403,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -412,7 +413,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
 					case "setBlockTimeStart":
@@ -422,7 +423,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeStart"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTimeStart", o2.strBlockTimeStart(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockTimeStart", o2.jsonBlockTimeStart(), pk));
 						}
 						break;
 					case "setBlockTimeEnd":
@@ -432,7 +433,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeEnd"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTimeEnd", o2.strBlockTimeEnd(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockTimeEnd", o2.jsonBlockTimeEnd(), pk));
 						}
 						break;
 					case "setBlockSunday":
@@ -442,7 +443,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockSunday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockSunday", o2.strBlockSunday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockSunday", o2.jsonBlockSunday(), pk));
 						}
 						break;
 					case "setBlockMonday":
@@ -452,7 +453,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockMonday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockMonday", o2.strBlockMonday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockMonday", o2.jsonBlockMonday(), pk));
 						}
 						break;
 					case "setBlockTuesday":
@@ -462,7 +463,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockTuesday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTuesday", o2.strBlockTuesday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockTuesday", o2.jsonBlockTuesday(), pk));
 						}
 						break;
 					case "setBlockWednesday":
@@ -472,7 +473,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockWednesday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockWednesday", o2.strBlockWednesday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockWednesday", o2.jsonBlockWednesday(), pk));
 						}
 						break;
 					case "setBlockThursday":
@@ -482,7 +483,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockThursday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockThursday", o2.strBlockThursday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockThursday", o2.jsonBlockThursday(), pk));
 						}
 						break;
 					case "setBlockFriday":
@@ -492,7 +493,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockFriday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockFriday", o2.strBlockFriday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockFriday", o2.jsonBlockFriday(), pk));
 						}
 						break;
 					case "setBlockSaturday":
@@ -502,7 +503,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockSaturday"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.strBlockSaturday(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.jsonBlockSaturday(), pk));
 						}
 						break;
 					case "setBlockPricePerMonth":
@@ -512,7 +513,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.strBlockPricePerMonth(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
 						}
 						break;
 				}
@@ -707,7 +708,17 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchoolBlock.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolBlock.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -734,7 +745,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					userSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolBlock(siteRequest, false, true, "/enUS/block", c -> {
+							aSearchSchoolBlock(siteRequest, false, true, "/block", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolBlock> listSchoolBlock = c.result();
 									response200SearchPageSchoolBlock(listSchoolBlock, d -> {
@@ -786,7 +797,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			BlockPage page = new BlockPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/block");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/block");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolBlock(listSchoolBlock);
@@ -1114,7 +1125,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolBlock.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.bloc.SchoolBlock"));

@@ -63,9 +63,13 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	public static final String SaisonScolaire_AucunNomTrouve = "aucune saison trouvée";
 	public static final String SaisonScolaire_NomVar = "saison";
 	public static final String SaisonScolaire_DeNom = "de saison";
+	public static final String SaisonScolaire_AdjectifPluriel = "scolaires";
+	public static final String SaisonScolaire_AdjectifVar = "scolaire";
+	public static final String SaisonScolaire_UnNomAdjectif = "une saison scolaire";
+	public static final String SaisonScolaire_NomAdjectifSingulier = "saison scolaire";
 	public static final String SaisonScolaire_Couleur = "yellow";
-	public static final String SaisonScolaire_IconeGroupe = "duotone";
-	public static final String SaisonScolaire_IconeNom = "sun-o";
+	public static final String SaisonScolaire_IconeGroupe = "regular";
+	public static final String SaisonScolaire_IconeNom = "sun";
 
 	//////////////
 	// ecoleCle //
@@ -1112,43 +1116,41 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 
-	///////////
-	// annee //
-	///////////
+	////////////
+	// annee_ //
+	////////////
 
-	/**	L'entité « annee »
+	/**	L'entité « annee_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected AnneeScolaire annee;
+	protected AnneeScolaire annee_;
 	@JsonIgnore
-	public Couverture<AnneeScolaire> anneeCouverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("annee").o(annee);
+	public Couverture<AnneeScolaire> annee_Couverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("annee_").o(annee_);
 
-	/**	<br/>L'entité « annee »
+	/**	<br/>L'entité « annee_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.saison.SaisonScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:annee">Trouver l'entité annee dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.saison.SaisonScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:annee_">Trouver l'entité annee_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _annee(Couverture<AnneeScolaire> c);
+	protected abstract void _annee_(Couverture<AnneeScolaire> c);
 
-	public AnneeScolaire getAnnee() {
-		return annee;
+	public AnneeScolaire getAnnee_() {
+		return annee_;
 	}
 
-	public void setAnnee(AnneeScolaire annee) {
-		this.annee = annee;
-		this.anneeCouverture.dejaInitialise = true;
+	public void setAnnee_(AnneeScolaire annee_) {
+		this.annee_ = annee_;
+		this.annee_Couverture.dejaInitialise = true;
 	}
-	protected SaisonScolaire anneeInit() {
-		if(!anneeCouverture.dejaInitialise) {
-			_annee(anneeCouverture);
-			if(annee == null)
-				setAnnee(anneeCouverture.o);
+	protected SaisonScolaire annee_Init() {
+		if(!annee_Couverture.dejaInitialise) {
+			_annee_(annee_Couverture);
+			if(annee_ == null)
+				setAnnee_(annee_Couverture.o);
 		}
-		if(annee != null)
-			annee.initLoinPourClasse(requeteSite_);
-		anneeCouverture.dejaInitialise(true);
+		annee_Couverture.dejaInitialise(true);
 		return (SaisonScolaire)this;
 	}
 
@@ -1293,7 +1295,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1411,7 +1413,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1529,7 +1531,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -2379,7 +2381,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		anneeTriInit();
 		saisonTriInit();
 		anneeRechercheInit();
-		anneeInit();
+		annee_Init();
 		ecoleNomCompletInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -2405,8 +2407,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(anneeRecherche != null)
 			anneeRecherche.setRequeteSite_(requeteSite_);
-		if(annee != null)
-			annee.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2453,8 +2453,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				return oSaisonScolaire.saisonTri;
 			case "anneeRecherche":
 				return oSaisonScolaire.anneeRecherche;
-			case "annee":
-				return oSaisonScolaire.annee;
+			case "annee_":
+				return oSaisonScolaire.annee_;
 			case "ecoleNomComplet":
 				return oSaisonScolaire.ecoleNomComplet;
 			case "anneeDebut":

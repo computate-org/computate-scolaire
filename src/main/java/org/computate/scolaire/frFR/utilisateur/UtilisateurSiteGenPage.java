@@ -12,6 +12,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,11 +67,11 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/utilisateur");
+		c.o("/utilisateur");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/utilisateur-999.png");
+			c.o("/png/utilisateur-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -523,10 +524,20 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("un utilisateur du site").g("span");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("h1");
 				UtilisateurSite o = listeUtilisateurSite.get(0);
 				requeteSite_.setRequetePk(o.getPk());
+			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -549,7 +560,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 						UtilisateurSite o = listeUtilisateurSite.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/utilisateur/" + o.getPk();
+						String uri = "/utilisateur/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
@@ -578,7 +589,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "UtilisateurSiteForm").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")

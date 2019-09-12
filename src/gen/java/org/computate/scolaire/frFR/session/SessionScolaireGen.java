@@ -699,7 +699,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeCles() {
-		return null;
+		return "âges";
 	}
 
 	public String htmTooltipAgeCles() {
@@ -1328,43 +1328,41 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
-	////////////
-	// saison //
-	////////////
+	/////////////
+	// saison_ //
+	/////////////
 
-	/**	L'entité « saison »
+	/**	L'entité « saison_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected SaisonScolaire saison;
+	protected SaisonScolaire saison_;
 	@JsonIgnore
-	public Couverture<SaisonScolaire> saisonCouverture = new Couverture<SaisonScolaire>().p(this).c(SaisonScolaire.class).var("saison").o(saison);
+	public Couverture<SaisonScolaire> saison_Couverture = new Couverture<SaisonScolaire>().p(this).c(SaisonScolaire.class).var("saison_").o(saison_);
 
-	/**	<br/>L'entité « saison »
+	/**	<br/>L'entité « saison_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saison">Trouver l'entité saison dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saison_">Trouver l'entité saison_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saison(Couverture<SaisonScolaire> c);
+	protected abstract void _saison_(Couverture<SaisonScolaire> c);
 
-	public SaisonScolaire getSaison() {
-		return saison;
+	public SaisonScolaire getSaison_() {
+		return saison_;
 	}
 
-	public void setSaison(SaisonScolaire saison) {
-		this.saison = saison;
-		this.saisonCouverture.dejaInitialise = true;
+	public void setSaison_(SaisonScolaire saison_) {
+		this.saison_ = saison_;
+		this.saison_Couverture.dejaInitialise = true;
 	}
-	protected SessionScolaire saisonInit() {
-		if(!saisonCouverture.dejaInitialise) {
-			_saison(saisonCouverture);
-			if(saison == null)
-				setSaison(saisonCouverture.o);
+	protected SessionScolaire saison_Init() {
+		if(!saison_Couverture.dejaInitialise) {
+			_saison_(saison_Couverture);
+			if(saison_ == null)
+				setSaison_(saison_Couverture.o);
 		}
-		if(saison != null)
-			saison.initLoinPourClasse(requeteSite_);
-		saisonCouverture.dejaInitialise(true);
+		saison_Couverture.dejaInitialise(true);
 		return (SessionScolaire)this;
 	}
 
@@ -1509,7 +1507,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1627,7 +1625,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1745,7 +1743,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2297,7 +2295,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSaisonFin(Date o) {
-		this.saisonFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.saisonFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2415,7 +2413,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSessionJourDebut(Date o) {
-		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2533,7 +2531,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setSessionJourFin(Date o) {
-		this.sessionJourFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.sessionJourFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -3053,7 +3051,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		saisonTriInit();
 		sessionTriInit();
 		saisonRechercheInit();
-		saisonInit();
+		saison_Init();
 		ecoleNomCompletInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -3083,8 +3081,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(saisonRecherche != null)
 			saisonRecherche.setRequeteSite_(requeteSite_);
-		if(saison != null)
-			saison.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -3135,8 +3131,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				return oSessionScolaire.sessionTri;
 			case "saisonRecherche":
 				return oSessionScolaire.saisonRecherche;
-			case "saison":
-				return oSessionScolaire.saison;
+			case "saison_":
+				return oSessionScolaire.saison_;
 			case "ecoleNomComplet":
 				return oSessionScolaire.ecoleNomComplet;
 			case "anneeDebut":
@@ -3192,6 +3188,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public Object attribuerSessionScolaire(String var, Object val) {
 		SessionScolaire oSessionScolaire = (SessionScolaire)this;
 		switch(var) {
+			case "saisonCle":
+				oSessionScolaire.setSaisonCle((Long)val);
+				return val;
+			case "ageCles":
+				oSessionScolaire.addAgeCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -3255,11 +3257,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					oSessionScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonCle")) {
-				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-				if(saisonCle != null)
-					oSessionScolaire.setSaisonCle(saisonCle);
-			}
+			Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+			if(saisonCle != null)
+				oSessionScolaire.setSaisonCle(saisonCle);
 
 			if(sauvegardesSessionScolaire.contains("sessionCle")) {
 				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
@@ -3273,11 +3273,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					oSessionScolaire.inscriptionCles.addAll(inscriptionCles);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ageCles")) {
-				List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
-				if(ageCles != null)
-					oSessionScolaire.ageCles.addAll(ageCles);
-			}
+			List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
+			if(ageCles != null)
+				oSessionScolaire.ageCles.addAll(ageCles);
 
 			if(sauvegardesSessionScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -3715,7 +3713,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionJourDebut, sessionJourFin);
+		return Objects.hash(super.hashCode(), saisonCle, ageCles, sessionJourDebut, sessionJourFin);
 	}
 
 	////////////
@@ -3729,6 +3727,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			return false;
 		SessionScolaire that = (SessionScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( saisonCle, that.saisonCle )
+				&& Objects.equals( ageCles, that.ageCles )
 				&& Objects.equals( sessionJourDebut, that.sessionJourDebut )
 				&& Objects.equals( sessionJourFin, that.sessionJourFin );
 	}
@@ -3741,7 +3741,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SessionScolaire { ");
-		sb.append( "sessionJourDebut: " ).append(sessionJourDebut);
+		sb.append( "saisonCle: " ).append(saisonCle);
+		sb.append( ", ageCles: " ).append(ageCles);
+		sb.append( ", sessionJourDebut: " ).append(sessionJourDebut);
 		sb.append( ", sessionJourFin: " ).append(sessionJourFin);
 		sb.append(" }");
 		return sb.toString();

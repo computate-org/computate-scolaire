@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -88,70 +90,12 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 	// Recherche //
 
 	@Override
-	public void rechercheMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForMission(siteContext, operationRequest);
-			aSearchMission(siteRequest, false, true, null, a -> {
-				if(a.succeeded()) {
-					SearchList<Mission> listMission = a.result();
-					response200RechercheMission(listMission, b -> {
-						if(b.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(b.result()));
-						} else {
-							errorMission(siteRequest, eventHandler, b);
-						}
-					});
-				} else {
-					errorMission(siteRequest, eventHandler, a);
-				}
-			});
-		} catch(Exception e) {
-			errorMission(null, eventHandler, Future.failedFuture(e));
-		}
+	public void rechercheMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 	}
 
 	public void response200RechercheMission(SearchList<Mission> listMission, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
-			SiteRequestEnUS siteRequest = listMission.getSiteRequest_();
-			AllWriter w = AllWriter.create(listMission.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			QueryResponse responseSearch = listMission.getQueryResponse();
-			SolrDocumentList solrDocuments = listMission.getSolrDocumentList();
-			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
-			Long transmissionInMillis = responseSearch.getElapsedTime();
-			Long startNum = responseSearch.getResults().getStart();
-			Long foundNum = responseSearch.getResults().getNumFound();
-			Integer returnedNum = responseSearch.getResults().size();
-			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
-			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
-			Exception exceptionSearch = responseSearch.getException();
-
-			w.l("{");
-			w.tl(1, "\"startNum\": ", startNum);
-			w.tl(1, ", \"foundNum\": ", foundNum);
-			w.tl(1, ", \"returnedNum\": ", returnedNum);
-			w.tl(1, ", \"searchTime\": ", w.q(searchTime));
-			w.tl(1, ", \"transmissionTime\": ", w.q(transmissionTime));
-			w.tl(1, ", \"list\": [");
-			for(int i = 0; i < listMission.size(); i++) {
-				Mission o = listMission.getList().get(i);
-				Object entityValue;
-				Integer entityNumber = 0;
-
-				w.t(2);
-				if(i > 0)
-					w.s(", ");
-				w.l("{");
-
-				w.tl(2, "}");
-			}
-			w.tl(1, "]");
-			if(exceptionSearch != null) {
-				w.tl(1, ", \"exceptionSearch\": ", w.q(exceptionSearch.getMessage()));
-			}
-			w.l("}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -160,7 +104,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 	// POST //
 
 	@Override
-	public void postMissionScolaire(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void postMission(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForMission(siteContext, operationRequest, body);
 			sqlMission(siteRequest, a -> {
@@ -239,7 +183,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 				Long pk = createLine.getLong(0);
 				Mission o = new Mission();
 				o.setPk(pk);
-				o.initDeepMission(siteRequest);
+				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -263,7 +207,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -277,11 +221,9 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 
 	public void response200POSTMission(Mission o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			AllWriter w = AllWriter.create(o.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -290,7 +232,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 	// PATCH //
 
 	@Override
-	public void patchMissionScolaire(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchMission(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForMission(siteContext, operationRequest, body);
 			sqlMission(siteRequest, a -> {
@@ -345,11 +287,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 		List<Future> futures = new ArrayList<>();
 		listMission.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHMission(o).compose(
-					a -> definePATCHMission(a).compose(
-						b -> indexPATCHMission(b)
-					)
-				)
+				futurePATCHMission(o, eventHandler)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -361,8 +299,43 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 		});
 	}
 
-	public Future<Mission> sqlPATCHMission(Mission o) {
+	public Future<Mission> futurePATCHMission(Mission o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
 		Future<Mission> future = Future.future();
+		try {
+			sqlPATCHMission(o, a -> {
+				if(a.succeeded()) {
+					Mission mission = a.result();
+					defineMission(mission, b -> {
+						if(b.succeeded()) {
+							attributeMission(mission, c -> {
+								if(c.succeeded()) {
+									indexMission(mission, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											eventHandler.handle(Future.succeededFuture(d.result()));
+										} else {
+											errorMission(o.getSiteRequest_(), eventHandler, d);
+										}
+									});
+								} else {
+									errorMission(o.getSiteRequest_(), eventHandler, c);
+								}
+							});
+						} else {
+							errorMission(o.getSiteRequest_(), eventHandler, b);
+						}
+					});
+				} else {
+					errorMission(o.getSiteRequest_(), eventHandler, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHMission(Mission o, Handler<AsyncResult<Mission>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -377,69 +350,68 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.mission.Mission"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						o2.setCreated(requestJson.getString(methodName));
+						if(o2.getCreated() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
+					case "setModified":
+						o2.setModified(requestJson.getString(methodName));
+						if(o2.getModified() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
+						}
+						break;
+					case "setArchived":
+						o2.setArchived(requestJson.getBoolean(methodName));
+						if(o2.getArchived() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
+						}
+						break;
+					case "setDeleted":
+						o2.setDeleted(requestJson.getBoolean(methodName));
+						if(o2.getDeleted() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
 				}
 			}
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setSiteRequest_(o.getSiteRequest_());
-				o2.setPk(pk);
-				future.complete(o2);
+				Mission o3 = new Mission();
+				o3.setSiteRequest_(o.getSiteRequest_());
+				o3.setPk(pk);
+				eventHandler.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Mission> definePATCHMission(Mission o) {
-		Future<Mission> future = Future.future();
-		try {
-			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
-					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, defineAsync
-			-> {
-				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(defineAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexPATCHMission(Mission o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initDeepForClass(o.getSiteRequest_());
-			o.indexForClass();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 
 	public void response200PATCHMission(SearchList<Mission> listMission, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listMission.getSiteRequest_();
-			AllWriter w = AllWriter.create(listMission.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
-			buffer.appendString("{}");
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -448,7 +420,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 	// GET //
 
 	@Override
-	public void getMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void getMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForMission(siteContext, operationRequest);
 			aSearchMission(siteRequest, false, true, null, a -> {
@@ -472,23 +444,11 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 
 	public void response200GETMission(SearchList<Mission> listMission, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			SiteRequestEnUS siteRequest = listMission.getSiteRequest_();
-			AllWriter w = AllWriter.create(listMission.getSiteRequest_(), buffer);
-			siteRequest.setW(w);
 			SolrDocumentList solrDocuments = listMission.getSolrDocumentList();
 
-			if(listMission.size() > 0) {
-				SolrDocument solrDocument = solrDocuments.get(0);
-				Mission o = listMission.get(0);
-				Object entityValue;
-				Integer entityNumber = 0;
-
-				w.l("{");
-
-				w.l("}");
-			}
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = JsonObject.mapFrom(listMission.get(0));
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -497,7 +457,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 	// DELETE //
 
 	@Override
-	public void deleteMissionScolaire(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteMission(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForMission(siteContext, operationRequest);
 			sqlMission(siteRequest, a -> {
@@ -554,7 +514,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.queryWithParams(
+			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, Mission.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -568,10 +528,8 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 
 	public void response200DELETEMission(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(siteRequest, buffer);
-			siteRequest.setW(w);
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -817,7 +775,7 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 			listSearch.setQuery("*:*");
 			listSearch.setC(Mission.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.mission.Mission"));
@@ -827,11 +785,9 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 			if(siteUser != null && !siteUser.getSeeArchived())
 				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classApiUriMethod + "/" + id;
-				listSearch.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -873,11 +829,6 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 								varIndexed = varIndexedMission(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedMission(entityVar);
-								listSearch.addField(varIndexed);
-								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;
 								listSearch.setStart(aSearchStart);
@@ -910,10 +861,14 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
-					for(JsonArray definition : defineAsync.result().getResults()) {
-						o.defineForClass(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : defineAsync.result().getResults()) {
+							o.defineForClass(definition.getString(0), definition.getString(1));
+						}
+						eventHandler.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						eventHandler.handle(Future.failedFuture(e));
 					}
-					eventHandler.handle(Future.succeededFuture());
 				} else {
 					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
@@ -933,15 +888,22 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attributeAsync
 			-> {
-				if(attributeAsync.succeeded()) {
-					if(attributeAsync.result() != null) {
-						for(JsonArray definition : attributeAsync.result().getResults()) {
-							o.attributeForClass(definition.getString(0), definition.getString(1));
+				try {
+					if(attributeAsync.succeeded()) {
+						if(attributeAsync.result() != null) {
+							for(JsonArray definition : attributeAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attributeForClass(definition.getString(2), definition.getLong(1));
+								else
+									o.attributeForClass(definition.getString(3), definition.getLong(0));
+							}
 						}
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 					}
-					eventHandler.handle(Future.succeededFuture());
-				} else {
-					eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+				} catch(Exception e) {
+					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

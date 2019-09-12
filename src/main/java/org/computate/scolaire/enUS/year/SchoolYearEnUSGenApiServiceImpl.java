@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -286,9 +287,15 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public void listPATCHSchoolYear(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
 		listSchoolYear.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolYear(o, eventHandler)
+				futurePATCHSchoolYear(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchoolYear(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -637,7 +644,17 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchoolYear.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolYear.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -664,7 +681,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				if(a.succeeded()) {
 					userSchoolYear(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolYear(siteRequest, false, true, "/enUS/year", c -> {
+							aSearchSchoolYear(siteRequest, false, true, "/year", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
 									response200SearchPageSchoolYear(listSchoolYear, d -> {
@@ -716,7 +733,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			YearPage page = new YearPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/year");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/year");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolYear(listSchoolYear);
@@ -996,7 +1013,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolYear.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.year.SchoolYear"));

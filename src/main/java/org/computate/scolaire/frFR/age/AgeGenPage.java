@@ -12,6 +12,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +45,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(ageScolaire != null)
+		if(ageScolaire != null && ageScolaire.getAgeNomComplet() != null)
+			c.o(ageScolaire.getAgeNomComplet());
+		else if(ageScolaire != null)
 			c.o("un âge");
 		else if(listeAgeScolaire == null || listeAgeScolaire.size() == 0)
 			c.o("aucun âge trouvé");
@@ -59,18 +62,20 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(ageScolaire != null)
+		if(ageScolaire != null && ageScolaire.getAgeNomComplet() != null)
+			c.o(ageScolaire.getAgeNomComplet());
+		else if(ageScolaire != null)
 			c.o("");
 		else if(listeAgeScolaire == null || listeAgeScolaire.size() == 0)
 			c.o("aucun âge trouvé");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/age");
+		c.o("/age");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/age-999.png");
+			c.o("/png/age-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -181,7 +186,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valeur")
@@ -189,7 +194,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-blue ").f();
 								e("label").a("for", "Page_ageDebut").a("class", "").f().sx("début du groupe d'âge").g("label");
@@ -224,7 +229,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valeur")
@@ -232,7 +237,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-blue ").f();
 								e("label").a("for", "Page_ageFin").a("class", "").f().sx("fin du groupe d'âge").g("label");
@@ -354,7 +359,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -362,7 +367,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "POST_ageDebut").a("class", "").f().sx("début du groupe d'âge").g("label");
@@ -387,7 +392,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -395,7 +400,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "POST_ageFin").a("class", "").f().sx("fin du groupe d'âge").g("label");
@@ -507,7 +512,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -515,7 +520,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "PATCH_ageDebut").a("class", "").f().sx("début du groupe d'âge").g("label");
@@ -540,7 +545,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -548,7 +553,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "PATCH_ageFin").a("class", "").f().sx("fin du groupe d'âge").g("label");
@@ -660,7 +665,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -668,7 +673,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "Recherche_ageDebut").a("class", "").f().sx("début du groupe d'âge").g("label");
@@ -693,7 +698,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -701,7 +706,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereAgeScolaireAgeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-blue ").f();
 							e("label").a("for", "Recherche_ageFin").a("class", "").f().sx("fin du groupe d'âge").g("label");
@@ -743,10 +748,20 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("un âge").g("span");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("h1");
 				AgeScolaire o = listeAgeScolaire.get(0);
 				requeteSite_.setRequetePk(o.getPk());
+			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -773,7 +788,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 						AgeScolaire o = listeAgeScolaire.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/age/" + o.getPk();
+						String uri = "/age/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
@@ -822,7 +837,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			{ e("div").a("class", "").f();
 
 				if(o.getPk() != null) {
-					{ e("form").a("action", "").a("id", "AgeScolaireForm").a("style", "display: inline-block; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "AgeScolaireForm").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 						.a("name", "pk")
 						.a("class", "valeurPk")

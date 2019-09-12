@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;
+package org.computate.scolaire.frFR.cluster; 
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,17 +18,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
-/**      
+/**       
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Modele: true
  * Api: true
  * Indexe: true
  * 
  * ApiTag.frFR: Cluster
- * ApiUri.frFR: /frFR/api/cluster
+ * ApiUri.frFR: /api/cluster
  * 
  * ApiTag.enUS: Cluster
- * ApiUri.enUS: /enUS/api/cluster
+ * ApiUri.enUS: /api/cluster
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -39,11 +39,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/cluster
+ * ApiUriPageRecherche.frFR: /cluster
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/cluster
+ * ApiUriSearchPage.enUS: /cluster
  * 
  * UnNom.frFR: un cluster
  * UnNom.enUS: a cluster
@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */                     
+ */                  
 public class Cluster extends ClusterGen<Object> {   
 
 	/**

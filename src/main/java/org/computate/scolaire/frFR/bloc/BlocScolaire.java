@@ -20,10 +20,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Sauvegarde: true
  * 
  * ApiTag.frFR: Bloc
- * ApiUri.frFR: /frFR/api/bloc
+ * ApiUri.frFR: /api/bloc
  * 
  * ApiTag.enUS: Block
- * ApiUri.enUS: /enUS/api/block
+ * ApiUri.enUS: /api/block
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -35,12 +35,12 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: BlocPage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/bloc
+ * ApiUriPageRecherche.frFR: /bloc
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: BlockPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/block
+ * ApiUriSearchPage.enUS: /block
  * 
  * UnNom.frFR: un bloc
  * UnNom.enUS: a block
@@ -682,7 +682,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: blocId
 	 * r.enUS: blocId
 	 * r: /frFR/bloc/
-	 * r.enUS: /enUS/bloc/
+	 * r.enUS: /bloc/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

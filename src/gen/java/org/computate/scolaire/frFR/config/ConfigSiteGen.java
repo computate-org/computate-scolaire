@@ -1,17 +1,18 @@
 package org.computate.scolaire.frFR.config;
 
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
 import org.apache.commons.configuration2.INIConfiguration;
-import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Object;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
 
 /**	
  *	Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
@@ -28,6 +29,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String configChemin;
+	@JsonIgnore
 	public Couverture<String> configCheminCouverture = new Couverture<String>().p(this).c(String.class).var("configChemin").o(configChemin);
 
 	/**	<br/>L'entité « configChemin »
@@ -64,6 +66,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return configChemin == null ? "" : configChemin;
 	}
 
+	public String jsonConfigChemin() {
+		return configChemin == null ? "" : configChemin;
+	}
+
 	public String nomAffichageConfigChemin() {
 		return null;
 	}
@@ -84,6 +90,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected INIConfiguration config;
+	@JsonIgnore
 	public Couverture<INIConfiguration> configCouverture = new Couverture<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
 
 	/**	<br/>L'entité « config »
@@ -120,6 +127,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String identifiantSite;
+	@JsonIgnore
 	public Couverture<String> identifiantSiteCouverture = new Couverture<String>().p(this).c(String.class).var("identifiantSite").o(identifiantSite);
 
 	/**	<br/>L'entité « identifiantSite »
@@ -156,6 +164,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return identifiantSite == null ? "" : identifiantSite;
 	}
 
+	public String jsonIdentifiantSite() {
+		return identifiantSite == null ? "" : identifiantSite;
+	}
+
 	public String nomAffichageIdentifiantSite() {
 		return null;
 	}
@@ -176,6 +188,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String prefixeEchappe;
+	@JsonIgnore
 	public Couverture<String> prefixeEchappeCouverture = new Couverture<String>().p(this).c(String.class).var("prefixeEchappe").o(prefixeEchappe);
 
 	/**	<br/>L'entité « prefixeEchappe »
@@ -212,6 +225,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return prefixeEchappe == null ? "" : prefixeEchappe;
 	}
 
+	public String jsonPrefixeEchappe() {
+		return prefixeEchappe == null ? "" : prefixeEchappe;
+	}
+
 	public String nomAffichagePrefixeEchappe() {
 		return null;
 	}
@@ -232,6 +249,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String appliChemin;
+	@JsonIgnore
 	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
 
 	/**	<br/>L'entité « appliChemin »
@@ -268,6 +286,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return appliChemin == null ? "" : appliChemin;
 	}
 
+	public String jsonAppliChemin() {
+		return appliChemin == null ? "" : appliChemin;
+	}
+
 	public String nomAffichageAppliChemin() {
 		return null;
 	}
@@ -288,6 +310,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String racineDocument;
+	@JsonIgnore
 	public Couverture<String> racineDocumentCouverture = new Couverture<String>().p(this).c(String.class).var("racineDocument").o(racineDocument);
 
 	/**	<br/>L'entité « racineDocument »
@@ -324,6 +347,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return racineDocument == null ? "" : racineDocument;
 	}
 
+	public String jsonRacineDocument() {
+		return racineDocument == null ? "" : racineDocument;
+	}
+
 	public String nomAffichageRacineDocument() {
 		return null;
 	}
@@ -344,6 +371,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String nomEntreprise;
+	@JsonIgnore
 	public Couverture<String> nomEntrepriseCouverture = new Couverture<String>().p(this).c(String.class).var("nomEntreprise").o(nomEntreprise);
 
 	/**	<br/>L'entité « nomEntreprise »
@@ -380,6 +408,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return nomEntreprise == null ? "" : nomEntreprise;
 	}
 
+	public String jsonNomEntreprise() {
+		return nomEntreprise == null ? "" : nomEntreprise;
+	}
+
 	public String nomAffichageNomEntreprise() {
 		return null;
 	}
@@ -400,6 +432,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String nomDomaine;
+	@JsonIgnore
 	public Couverture<String> nomDomaineCouverture = new Couverture<String>().p(this).c(String.class).var("nomDomaine").o(nomDomaine);
 
 	/**	<br/>L'entité « nomDomaine »
@@ -436,6 +469,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return nomDomaine == null ? "" : nomDomaine;
 	}
 
+	public String jsonNomDomaine() {
+		return nomDomaine == null ? "" : nomDomaine;
+	}
+
 	public String nomAffichageNomDomaine() {
 		return null;
 	}
@@ -456,6 +493,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteNomHote;
+	@JsonIgnore
 	public Couverture<String> siteNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomHote").o(siteNomHote);
 
 	/**	<br/>L'entité « siteNomHote »
@@ -492,6 +530,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return siteNomHote == null ? "" : siteNomHote;
 	}
 
+	public String jsonSiteNomHote() {
+		return siteNomHote == null ? "" : siteNomHote;
+	}
+
 	public String nomAffichageSiteNomHote() {
 		return null;
 	}
@@ -512,6 +554,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer sitePort;
+	@JsonIgnore
 	public Couverture<Integer> sitePortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
 
 	/**	<br/>L'entité « sitePort »
@@ -554,6 +597,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return sitePort == null ? "" : sitePort.toString();
 	}
 
+	public String jsonSitePort() {
+		return sitePort == null ? "" : sitePort.toString();
+	}
+
 	public String nomAffichageSitePort() {
 		return null;
 	}
@@ -574,6 +621,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authRoyaume;
+	@JsonIgnore
 	public Couverture<String> authRoyaumeCouverture = new Couverture<String>().p(this).c(String.class).var("authRoyaume").o(authRoyaume);
 
 	/**	<br/>L'entité « authRoyaume »
@@ -610,6 +658,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return authRoyaume == null ? "" : authRoyaume;
 	}
 
+	public String jsonAuthRoyaume() {
+		return authRoyaume == null ? "" : authRoyaume;
+	}
+
 	public String nomAffichageAuthRoyaume() {
 		return null;
 	}
@@ -630,6 +682,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authRessource;
+	@JsonIgnore
 	public Couverture<String> authRessourceCouverture = new Couverture<String>().p(this).c(String.class).var("authRessource").o(authRessource);
 
 	/**	<br/>L'entité « authRessource »
@@ -666,6 +719,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return authRessource == null ? "" : authRessource;
 	}
 
+	public String jsonAuthRessource() {
+		return authRessource == null ? "" : authRessource;
+	}
+
 	public String nomAffichageAuthRessource() {
 		return null;
 	}
@@ -686,6 +743,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSecret;
+	@JsonIgnore
 	public Couverture<String> authSecretCouverture = new Couverture<String>().p(this).c(String.class).var("authSecret").o(authSecret);
 
 	/**	<br/>L'entité « authSecret »
@@ -722,6 +780,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return authSecret == null ? "" : authSecret;
 	}
 
+	public String jsonAuthSecret() {
+		return authSecret == null ? "" : authSecret;
+	}
+
 	public String nomAffichageAuthSecret() {
 		return null;
 	}
@@ -742,6 +804,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSslRequis;
+	@JsonIgnore
 	public Couverture<String> authSslRequisCouverture = new Couverture<String>().p(this).c(String.class).var("authSslRequis").o(authSslRequis);
 
 	/**	<br/>L'entité « authSslRequis »
@@ -778,6 +841,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return authSslRequis == null ? "" : authSslRequis;
 	}
 
+	public String jsonAuthSslRequis() {
+		return authSslRequis == null ? "" : authSslRequis;
+	}
+
 	public String nomAffichageAuthSslRequis() {
 		return null;
 	}
@@ -798,6 +865,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksChemin;
+	@JsonIgnore
 	public Couverture<String> sslJksCheminCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksChemin").o(sslJksChemin);
 
 	/**	<br/>L'entité « sslJksChemin »
@@ -834,6 +902,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return sslJksChemin == null ? "" : sslJksChemin;
 	}
 
+	public String jsonSslJksChemin() {
+		return sslJksChemin == null ? "" : sslJksChemin;
+	}
+
 	public String nomAffichageSslJksChemin() {
 		return null;
 	}
@@ -854,6 +926,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksMotDePasse;
+	@JsonIgnore
 	public Couverture<String> sslJksMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("sslJksMotDePasse").o(sslJksMotDePasse);
 
 	/**	<br/>L'entité « sslJksMotDePasse »
@@ -890,6 +963,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return sslJksMotDePasse == null ? "" : sslJksMotDePasse;
 	}
 
+	public String jsonSslJksMotDePasse() {
+		return sslJksMotDePasse == null ? "" : sslJksMotDePasse;
+	}
+
 	public String nomAffichageSslJksMotDePasse() {
 		return null;
 	}
@@ -910,6 +987,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authUrl;
+	@JsonIgnore
 	public Couverture<String> authUrlCouverture = new Couverture<String>().p(this).c(String.class).var("authUrl").o(authUrl);
 
 	/**	<br/>L'entité « authUrl »
@@ -946,6 +1024,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return authUrl == null ? "" : authUrl;
 	}
 
+	public String jsonAuthUrl() {
+		return authUrl == null ? "" : authUrl;
+	}
+
 	public String nomAffichageAuthUrl() {
 		return null;
 	}
@@ -966,6 +1048,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String cryptageSel;
+	@JsonIgnore
 	public Couverture<String> cryptageSelCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageSel").o(cryptageSel);
 
 	/**	<br/>L'entité « cryptageSel »
@@ -1002,6 +1085,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return cryptageSel == null ? "" : cryptageSel;
 	}
 
+	public String jsonCryptageSel() {
+		return cryptageSel == null ? "" : cryptageSel;
+	}
+
 	public String nomAffichageCryptageSel() {
 		return null;
 	}
@@ -1022,6 +1109,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String cryptageMotDePasse;
+	@JsonIgnore
 	public Couverture<String> cryptageMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
 
 	/**	<br/>L'entité « cryptageMotDePasse »
@@ -1058,6 +1146,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
 	}
 
+	public String jsonCryptageMotDePasse() {
+		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
+	}
+
 	public String nomAffichageCryptageMotDePasse() {
 		return null;
 	}
@@ -1078,6 +1170,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteUrlBase;
+	@JsonIgnore
 	public Couverture<String> siteUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("siteUrlBase").o(siteUrlBase);
 
 	/**	<br/>L'entité « siteUrlBase »
@@ -1114,6 +1207,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return siteUrlBase == null ? "" : siteUrlBase;
 	}
 
+	public String jsonSiteUrlBase() {
+		return siteUrlBase == null ? "" : siteUrlBase;
+	}
+
 	public String nomAffichageSiteUrlBase() {
 		return null;
 	}
@@ -1134,6 +1231,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteNomAffichage;
+	@JsonIgnore
 	public Couverture<String> siteNomAffichageCouverture = new Couverture<String>().p(this).c(String.class).var("siteNomAffichage").o(siteNomAffichage);
 
 	/**	<br/>L'entité « siteNomAffichage »
@@ -1170,6 +1268,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return siteNomAffichage == null ? "" : siteNomAffichage;
 	}
 
+	public String jsonSiteNomAffichage() {
+		return siteNomAffichage == null ? "" : siteNomAffichage;
+	}
+
 	public String nomAffichageSiteNomAffichage() {
 		return null;
 	}
@@ -1190,6 +1292,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcClassePilote;
+	@JsonIgnore
 	public Couverture<String> jdbcClassePiloteCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcClassePilote").o(jdbcClassePilote);
 
 	/**	<br/>L'entité « jdbcClassePilote »
@@ -1226,6 +1329,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcClassePilote == null ? "" : jdbcClassePilote;
 	}
 
+	public String jsonJdbcClassePilote() {
+		return jdbcClassePilote == null ? "" : jdbcClassePilote;
+	}
+
 	public String nomAffichageJdbcClassePilote() {
 		return null;
 	}
@@ -1246,6 +1353,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUtilisateur;
+	@JsonIgnore
 	public Couverture<String> jdbcUtilisateurCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUtilisateur").o(jdbcUtilisateur);
 
 	/**	<br/>L'entité « jdbcUtilisateur »
@@ -1282,6 +1390,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcUtilisateur == null ? "" : jdbcUtilisateur;
 	}
 
+	public String jsonJdbcUtilisateur() {
+		return jdbcUtilisateur == null ? "" : jdbcUtilisateur;
+	}
+
 	public String nomAffichageJdbcUtilisateur() {
 		return null;
 	}
@@ -1302,6 +1414,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcMotDePasse;
+	@JsonIgnore
 	public Couverture<String> jdbcMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcMotDePasse").o(jdbcMotDePasse);
 
 	/**	<br/>L'entité « jdbcMotDePasse »
@@ -1338,6 +1451,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcMotDePasse == null ? "" : jdbcMotDePasse;
 	}
 
+	public String jsonJdbcMotDePasse() {
+		return jdbcMotDePasse == null ? "" : jdbcMotDePasse;
+	}
+
 	public String nomAffichageJdbcMotDePasse() {
 		return null;
 	}
@@ -1358,6 +1475,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleMaxPiscine;
+	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMaxPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMaxPiscine").o(jdbcTailleMaxPiscine);
 
 	/**	<br/>L'entité « jdbcTailleMaxPiscine »
@@ -1400,6 +1518,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTailleMaxPiscine == null ? "" : jdbcTailleMaxPiscine.toString();
 	}
 
+	public String jsonJdbcTailleMaxPiscine() {
+		return jdbcTailleMaxPiscine == null ? "" : jdbcTailleMaxPiscine.toString();
+	}
+
 	public String nomAffichageJdbcTailleMaxPiscine() {
 		return null;
 	}
@@ -1420,6 +1542,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleInitialePiscine;
+	@JsonIgnore
 	public Couverture<Integer> jdbcTailleInitialePiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
 
 	/**	<br/>L'entité « jdbcTailleInitialePiscine »
@@ -1462,6 +1585,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTailleInitialePiscine == null ? "" : jdbcTailleInitialePiscine.toString();
 	}
 
+	public String jsonJdbcTailleInitialePiscine() {
+		return jdbcTailleInitialePiscine == null ? "" : jdbcTailleInitialePiscine.toString();
+	}
+
 	public String nomAffichageJdbcTailleInitialePiscine() {
 		return null;
 	}
@@ -1482,6 +1609,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTailleMinPiscine;
+	@JsonIgnore
 	public Couverture<Integer> jdbcTailleMinPiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleMinPiscine").o(jdbcTailleMinPiscine);
 
 	/**	<br/>L'entité « jdbcTailleMinPiscine »
@@ -1524,6 +1652,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTailleMinPiscine == null ? "" : jdbcTailleMinPiscine.toString();
 	}
 
+	public String jsonJdbcTailleMinPiscine() {
+		return jdbcTailleMinPiscine == null ? "" : jdbcTailleMinPiscine.toString();
+	}
+
 	public String nomAffichageJdbcTailleMinPiscine() {
 		return null;
 	}
@@ -1544,6 +1676,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxDeclarations;
+	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarations").o(jdbcMaxDeclarations);
 
 	/**	<br/>L'entité « jdbcMaxDeclarations »
@@ -1586,6 +1719,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcMaxDeclarations == null ? "" : jdbcMaxDeclarations.toString();
 	}
 
+	public String jsonJdbcMaxDeclarations() {
+		return jdbcMaxDeclarations == null ? "" : jdbcMaxDeclarations.toString();
+	}
+
 	public String nomAffichageJdbcMaxDeclarations() {
 		return null;
 	}
@@ -1606,6 +1743,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxDeclarationsParConnexion;
+	@JsonIgnore
 	public Couverture<Integer> jdbcMaxDeclarationsParConnexionCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxDeclarationsParConnexion").o(jdbcMaxDeclarationsParConnexion);
 
 	/**	<br/>L'entité « jdbcMaxDeclarationsParConnexion »
@@ -1648,6 +1786,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcMaxDeclarationsParConnexion == null ? "" : jdbcMaxDeclarationsParConnexion.toString();
 	}
 
+	public String jsonJdbcMaxDeclarationsParConnexion() {
+		return jdbcMaxDeclarationsParConnexion == null ? "" : jdbcMaxDeclarationsParConnexion.toString();
+	}
+
 	public String nomAffichageJdbcMaxDeclarationsParConnexion() {
 		return null;
 	}
@@ -1668,6 +1810,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcTempsInactiviteMax;
+	@JsonIgnore
 	public Couverture<Integer> jdbcTempsInactiviteMaxCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTempsInactiviteMax").o(jdbcTempsInactiviteMax);
 
 	/**	<br/>L'entité « jdbcTempsInactiviteMax »
@@ -1710,6 +1853,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTempsInactiviteMax == null ? "" : jdbcTempsInactiviteMax.toString();
 	}
 
+	public String jsonJdbcTempsInactiviteMax() {
+		return jdbcTempsInactiviteMax == null ? "" : jdbcTempsInactiviteMax.toString();
+	}
+
 	public String nomAffichageJdbcTempsInactiviteMax() {
 		return null;
 	}
@@ -1730,6 +1877,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUrl;
+	@JsonIgnore
 	public Couverture<String> jdbcUrlCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
 
 	/**	<br/>L'entité « jdbcUrl »
@@ -1766,6 +1914,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcUrl == null ? "" : jdbcUrl;
 	}
 
+	public String jsonJdbcUrl() {
+		return jdbcUrl == null ? "" : jdbcUrl;
+	}
+
 	public String nomAffichageJdbcUrl() {
 		return null;
 	}
@@ -1786,6 +1938,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrl;
+	@JsonIgnore
 	public Couverture<String> solrUrlCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
 
 	/**	<br/>L'entité « solrUrl »
@@ -1822,6 +1975,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return solrUrl == null ? "" : solrUrl;
 	}
 
+	public String jsonSolrUrl() {
+		return solrUrl == null ? "" : solrUrl;
+	}
+
 	public String nomAffichageSolrUrl() {
 		return null;
 	}
@@ -1842,6 +1999,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrlComputate;
+	@JsonIgnore
 	public Couverture<String> solrUrlComputateCouverture = new Couverture<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
 
 	/**	<br/>L'entité « solrUrlComputate »
@@ -1878,6 +2036,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return solrUrlComputate == null ? "" : solrUrlComputate;
 	}
 
+	public String jsonSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : solrUrlComputate;
+	}
+
 	public String nomAffichageSolrUrlComputate() {
 		return null;
 	}
@@ -1898,6 +2060,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteFacebook;
+	@JsonIgnore
 	public Couverture<String> compteFacebookCouverture = new Couverture<String>().p(this).c(String.class).var("compteFacebook").o(compteFacebook);
 
 	/**	<br/>L'entité « compteFacebook »
@@ -1934,6 +2097,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteFacebook == null ? "" : compteFacebook;
 	}
 
+	public String jsonCompteFacebook() {
+		return compteFacebook == null ? "" : compteFacebook;
+	}
+
 	public String nomAffichageCompteFacebook() {
 		return null;
 	}
@@ -1954,6 +2121,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteTwitter;
+	@JsonIgnore
 	public Couverture<String> compteTwitterCouverture = new Couverture<String>().p(this).c(String.class).var("compteTwitter").o(compteTwitter);
 
 	/**	<br/>L'entité « compteTwitter »
@@ -1990,6 +2158,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteTwitter == null ? "" : compteTwitter;
 	}
 
+	public String jsonCompteTwitter() {
+		return compteTwitter == null ? "" : compteTwitter;
+	}
+
 	public String nomAffichageCompteTwitter() {
 		return null;
 	}
@@ -2010,6 +2182,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteInstagram;
+	@JsonIgnore
 	public Couverture<String> compteInstagramCouverture = new Couverture<String>().p(this).c(String.class).var("compteInstagram").o(compteInstagram);
 
 	/**	<br/>L'entité « compteInstagram »
@@ -2046,6 +2219,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteInstagram == null ? "" : compteInstagram;
 	}
 
+	public String jsonCompteInstagram() {
+		return compteInstagram == null ? "" : compteInstagram;
+	}
+
 	public String nomAffichageCompteInstagram() {
 		return null;
 	}
@@ -2066,6 +2243,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteYoutube;
+	@JsonIgnore
 	public Couverture<String> compteYoutubeCouverture = new Couverture<String>().p(this).c(String.class).var("compteYoutube").o(compteYoutube);
 
 	/**	<br/>L'entité « compteYoutube »
@@ -2102,6 +2280,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteYoutube == null ? "" : compteYoutube;
 	}
 
+	public String jsonCompteYoutube() {
+		return compteYoutube == null ? "" : compteYoutube;
+	}
+
 	public String nomAffichageCompteYoutube() {
 		return null;
 	}
@@ -2122,6 +2304,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String comptePinterest;
+	@JsonIgnore
 	public Couverture<String> comptePinterestCouverture = new Couverture<String>().p(this).c(String.class).var("comptePinterest").o(comptePinterest);
 
 	/**	<br/>L'entité « comptePinterest »
@@ -2158,6 +2341,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return comptePinterest == null ? "" : comptePinterest;
 	}
 
+	public String jsonComptePinterest() {
+		return comptePinterest == null ? "" : comptePinterest;
+	}
+
 	public String nomAffichageComptePinterest() {
 		return null;
 	}
@@ -2178,6 +2365,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String compteMail;
+	@JsonIgnore
 	public Couverture<String> compteMailCouverture = new Couverture<String>().p(this).c(String.class).var("compteMail").o(compteMail);
 
 	/**	<br/>L'entité « compteMail »
@@ -2214,6 +2402,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return compteMail == null ? "" : compteMail;
 	}
 
+	public String jsonCompteMail() {
+		return compteMail == null ? "" : compteMail;
+	}
+
 	public String nomAffichageCompteMail() {
 		return null;
 	}
@@ -2234,6 +2426,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String roleAdmin;
+	@JsonIgnore
 	public Couverture<String> roleAdminCouverture = new Couverture<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
 
 	/**	<br/>L'entité « roleAdmin »
@@ -2270,6 +2463,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return roleAdmin == null ? "" : roleAdmin;
 	}
 
+	public String jsonRoleAdmin() {
+		return roleAdmin == null ? "" : roleAdmin;
+	}
+
 	public String nomAffichageRoleAdmin() {
 		return null;
 	}
@@ -2290,6 +2487,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String mailAdmin;
+	@JsonIgnore
 	public Couverture<String> mailAdminCouverture = new Couverture<String>().p(this).c(String.class).var("mailAdmin").o(mailAdmin);
 
 	/**	<br/>L'entité « mailAdmin »
@@ -2326,6 +2524,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return mailAdmin == null ? "" : mailAdmin;
 	}
 
+	public String jsonMailAdmin() {
+		return mailAdmin == null ? "" : mailAdmin;
+	}
+
 	public String nomAffichageMailAdmin() {
 		return null;
 	}
@@ -2346,6 +2548,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer nombreExecuteurs;
+	@JsonIgnore
 	public Couverture<Integer> nombreExecuteursCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("nombreExecuteurs").o(nombreExecuteurs);
 
 	/**	<br/>L'entité « nombreExecuteurs »
@@ -2388,6 +2591,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
 	}
 
+	public String jsonNombreExecuteurs() {
+		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
+	}
+
 	public String nomAffichageNombreExecuteurs() {
 		return null;
 	}
@@ -2408,6 +2615,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
+	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
@@ -2444,6 +2652,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return openApiVersion == null ? "" : openApiVersion;
 	}
 
+	public String jsonOpenApiVersion() {
+		return openApiVersion == null ? "" : openApiVersion;
+	}
+
 	public String nomAffichageOpenApiVersion() {
 		return null;
 	}
@@ -2464,6 +2676,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiDescription;
+	@JsonIgnore
 	public Couverture<String> apiDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
 
 	/**	<br/>L'entité « apiDescription »
@@ -2500,6 +2713,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiDescription == null ? "" : apiDescription;
 	}
 
+	public String jsonApiDescription() {
+		return apiDescription == null ? "" : apiDescription;
+	}
+
 	public String nomAffichageApiDescription() {
 		return null;
 	}
@@ -2520,6 +2737,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTitre;
+	@JsonIgnore
 	public Couverture<String> apiTitreCouverture = new Couverture<String>().p(this).c(String.class).var("apiTitre").o(apiTitre);
 
 	/**	<br/>L'entité « apiTitre »
@@ -2556,6 +2774,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiTitre == null ? "" : apiTitre;
 	}
 
+	public String jsonApiTitre() {
+		return apiTitre == null ? "" : apiTitre;
+	}
+
 	public String nomAffichageApiTitre() {
 		return null;
 	}
@@ -2576,6 +2798,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTermsService;
+	@JsonIgnore
 	public Couverture<String> apiTermsServiceCouverture = new Couverture<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
 
 	/**	<br/>L'entité « apiTermsService »
@@ -2612,6 +2835,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiTermsService == null ? "" : apiTermsService;
 	}
 
+	public String jsonApiTermsService() {
+		return apiTermsService == null ? "" : apiTermsService;
+	}
+
 	public String nomAffichageApiTermsService() {
 		return null;
 	}
@@ -2632,6 +2859,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
+	@JsonIgnore
 	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
@@ -2668,6 +2896,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiVersion == null ? "" : apiVersion;
 	}
 
+	public String jsonApiVersion() {
+		return apiVersion == null ? "" : apiVersion;
+	}
+
 	public String nomAffichageApiVersion() {
 		return null;
 	}
@@ -2688,6 +2920,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiContactMail;
+	@JsonIgnore
 	public Couverture<String> apiContactMailCouverture = new Couverture<String>().p(this).c(String.class).var("apiContactMail").o(apiContactMail);
 
 	/**	<br/>L'entité « apiContactMail »
@@ -2724,6 +2957,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiContactMail == null ? "" : apiContactMail;
 	}
 
+	public String jsonApiContactMail() {
+		return apiContactMail == null ? "" : apiContactMail;
+	}
+
 	public String nomAffichageApiContactMail() {
 		return null;
 	}
@@ -2744,6 +2981,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenceNom;
+	@JsonIgnore
 	public Couverture<String> apiLicenceNomCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceNom").o(apiLicenceNom);
 
 	/**	<br/>L'entité « apiLicenceNom »
@@ -2780,6 +3018,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiLicenceNom == null ? "" : apiLicenceNom;
 	}
 
+	public String jsonApiLicenceNom() {
+		return apiLicenceNom == null ? "" : apiLicenceNom;
+	}
+
 	public String nomAffichageApiLicenceNom() {
 		return null;
 	}
@@ -2800,6 +3042,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenceUrl;
+	@JsonIgnore
 	public Couverture<String> apiLicenceUrlCouverture = new Couverture<String>().p(this).c(String.class).var("apiLicenceUrl").o(apiLicenceUrl);
 
 	/**	<br/>L'entité « apiLicenceUrl »
@@ -2836,6 +3079,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiLicenceUrl == null ? "" : apiLicenceUrl;
 	}
 
+	public String jsonApiLicenceUrl() {
+		return apiLicenceUrl == null ? "" : apiLicenceUrl;
+	}
+
 	public String nomAffichageApiLicenceUrl() {
 		return null;
 	}
@@ -2856,6 +3103,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiNomHote;
+	@JsonIgnore
 	public Couverture<String> apiNomHoteCouverture = new Couverture<String>().p(this).c(String.class).var("apiNomHote").o(apiNomHote);
 
 	/**	<br/>L'entité « apiNomHote »
@@ -2892,6 +3140,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiNomHote == null ? "" : apiNomHote;
 	}
 
+	public String jsonApiNomHote() {
+		return apiNomHote == null ? "" : apiNomHote;
+	}
+
 	public String nomAffichageApiNomHote() {
 		return null;
 	}
@@ -2912,6 +3164,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiCheminBase;
+	@JsonIgnore
 	public Couverture<String> apiCheminBaseCouverture = new Couverture<String>().p(this).c(String.class).var("apiCheminBase").o(apiCheminBase);
 
 	/**	<br/>L'entité « apiCheminBase »
@@ -2948,6 +3201,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return apiCheminBase == null ? "" : apiCheminBase;
 	}
 
+	public String jsonApiCheminBase() {
+		return apiCheminBase == null ? "" : apiCheminBase;
+	}
+
 	public String nomAffichageApiCheminBase() {
 		return null;
 	}
@@ -2968,6 +3225,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String statiqueUrlBase;
+	@JsonIgnore
 	public Couverture<String> statiqueUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
 
 	/**	<br/>L'entité « statiqueUrlBase »
@@ -3004,6 +3262,10 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return statiqueUrlBase == null ? "" : statiqueUrlBase;
 	}
 
+	public String jsonStatiqueUrlBase() {
+		return statiqueUrlBase == null ? "" : statiqueUrlBase;
+	}
+
 	public String nomAffichageStatiqueUrlBase() {
 		return null;
 	}
@@ -3014,6 +3276,67 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public String htmStatiqueUrlBase() {
 		return statiqueUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strStatiqueUrlBase());
+	}
+
+	//////////////
+	// siteZone //
+	//////////////
+
+	/**	L'entité « siteZone »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String siteZone;
+	@JsonIgnore
+	public Couverture<String> siteZoneCouverture = new Couverture<String>().p(this).c(String.class).var("siteZone").o(siteZone);
+
+	/**	<br/>L'entité « siteZone »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteZone">Trouver l'entité siteZone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteZone(Couverture<String> c);
+
+	public String getSiteZone() {
+		return siteZone;
+	}
+
+	public void setSiteZone(String siteZone) {
+		this.siteZone = siteZone;
+		this.siteZoneCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite siteZoneInit() {
+		if(!siteZoneCouverture.dejaInitialise) {
+			_siteZone(siteZoneCouverture);
+			if(siteZone == null)
+				setSiteZone(siteZoneCouverture.o);
+		}
+		siteZoneCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrSiteZone() {
+		return siteZone;
+	}
+
+	public String strSiteZone() {
+		return siteZone == null ? "" : siteZone;
+	}
+
+	public String jsonSiteZone() {
+		return siteZone == null ? "" : siteZone;
+	}
+
+	public String nomAffichageSiteZone() {
+		return null;
+	}
+
+	public String htmTooltipSiteZone() {
+		return null;
+	}
+
+	public String htmSiteZone() {
+		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
 	}
 
 	//////////////
@@ -3088,6 +3411,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		apiNomHoteInit();
 		apiCheminBaseInit();
 		statiqueUrlBaseInit();
+		siteZoneInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -3220,6 +3544,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.apiCheminBase;
 			case "statiqueUrlBase":
 				return oConfigSite.statiqueUrlBase;
+			case "siteZone":
+				return oConfigSite.siteZone;
 			default:
 				return null;
 		}
@@ -3303,7 +3629,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ConfigSite {");
+		sb.append("ConfigSite { ");
 		sb.append(" }");
 		return sb.toString();
 	}

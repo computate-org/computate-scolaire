@@ -50,25 +50,25 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		l.setStore(true);
 	}
 
-	protected void _year(Wrap<SchoolYear> c) {
+	protected void _year_(Wrap<SchoolYear> c) {
 		if(yearSearch.size() > 0) {
 			c.o(yearSearch.get(0));
 		}
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		if(year != null)
-			c.o((String)year.getSchoolNameComplete());
+		if(year_ != null)
+			c.o((String)year_.getSchoolNameComplete());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
-		if(year != null)
-			c.o((LocalDate)year.getYearStart());
+		if(year_ != null)
+			c.o((LocalDate)year_.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<LocalDate> c) {
-		if(year != null)
-			c.o((LocalDate)year.getYearStart());
+		if(year_ != null)
+			c.o((LocalDate)year_.getYearStart());
 	}
 
 	protected void _seasonStartDay(Wrap<LocalDate> c) {}
@@ -83,11 +83,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		String o;
 		
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("summer season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s summer season at %s. ", strSeasonStartDay(), schoolNameComplete);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("school season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s school season at %s. ", strSeasonStartDay(), schoolNameComplete);
 		else
-			o = String.format("season starting %s at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s season at %s. ", strSeasonStartDay(), schoolNameComplete);
 		
 		c.o(o);
 	}

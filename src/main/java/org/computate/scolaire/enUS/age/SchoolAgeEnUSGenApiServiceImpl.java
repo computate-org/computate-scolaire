@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -349,7 +351,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -359,7 +361,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -369,7 +371,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -379,7 +381,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
 					case "setAgeStart":
@@ -389,7 +391,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "ageStart"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageStart", o2.strAgeStart(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageStart", o2.jsonAgeStart(), pk));
 						}
 						break;
 					case "setAgeEnd":
@@ -399,7 +401,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList(pk, "ageEnd"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageEnd", o2.strAgeEnd(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageEnd", o2.jsonAgeEnd(), pk));
 						}
 						break;
 				}
@@ -594,7 +596,17 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchoolAge.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolAge.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -621,7 +633,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				if(a.succeeded()) {
 					userSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolAge(siteRequest, false, true, "/enUS/age", c -> {
+							aSearchSchoolAge(siteRequest, false, true, "/age", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolAge> listSchoolAge = c.result();
 									response200SearchPageSchoolAge(listSchoolAge, d -> {
@@ -673,7 +685,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			AgePage page = new AgePage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/age");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/age");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolAge(listSchoolAge);
@@ -981,7 +993,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolAge.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.age.SchoolAge"));

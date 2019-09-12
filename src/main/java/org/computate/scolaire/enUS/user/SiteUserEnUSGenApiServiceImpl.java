@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -213,7 +215,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.strCreated(), pk));
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
@@ -223,7 +225,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modified", o2.strModified(), pk));
+							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
@@ -233,7 +235,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archived", o2.strArchived(), pk));
+							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
@@ -243,7 +245,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("deleted", o2.strDeleted(), pk));
+							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
 				}
@@ -288,7 +290,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				if(a.succeeded()) {
 					userSiteUser(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSiteUser(siteRequest, false, true, "/enUS/user", c -> {
+							aSearchSiteUser(siteRequest, false, true, "/user", c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
 									response200SearchPageSiteUser(listSiteUser, d -> {
@@ -340,7 +342,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			SiteUserPage page = new SiteUserPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/user");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/user");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSiteUser(listSiteUser);
@@ -606,7 +608,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			listSearch.setQuery("*:*");
 			listSearch.setC(SiteUser.class);
 			if(entityList != null)
-			listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
@@ -659,11 +661,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
 								varIndexed = varIndexedSiteUser(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
-								break;
-							case "fl":
-								entityVar = StringUtils.trim((String)paramObject);
-								varIndexed = varIndexedSiteUser(entityVar);
-								listSearch.addField(varIndexed);
 								break;
 							case "start":
 								aSearchStart = (Integer)paramObject;

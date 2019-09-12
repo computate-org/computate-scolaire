@@ -99,6 +99,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userId == null ? "" : userId;
 	}
 
+	public String jsonUserId() {
+		return userId == null ? "" : userId;
+	}
+
 	public String nomAffichageUserId() {
 		return "user ID";
 	}
@@ -194,6 +198,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String strUserName() {
+		return userName == null ? "" : userName;
+	}
+
+	public String jsonUserName() {
 		return userName == null ? "" : userName;
 	}
 
@@ -295,6 +303,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userEmail == null ? "" : userEmail;
 	}
 
+	public String jsonUserEmail() {
+		return userEmail == null ? "" : userEmail;
+	}
+
 	public String nomAffichageUserEmail() {
 		return null;
 	}
@@ -390,6 +402,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String strUserFirstName() {
+		return userFirstName == null ? "" : userFirstName;
+	}
+
+	public String jsonUserFirstName() {
 		return userFirstName == null ? "" : userFirstName;
 	}
 
@@ -491,6 +507,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userLastName == null ? "" : userLastName;
 	}
 
+	public String jsonUserLastName() {
+		return userLastName == null ? "" : userLastName;
+	}
+
 	public String nomAffichageUserLastName() {
 		return null;
 	}
@@ -589,6 +609,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userFullName == null ? "" : userFullName;
 	}
 
+	public String jsonUserFullName() {
+		return userFullName == null ? "" : userFullName;
+	}
+
 	public String nomAffichageUserFullName() {
 		return null;
 	}
@@ -684,6 +708,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String strUserSite() {
+		return userSite == null ? "" : userSite;
+	}
+
+	public String jsonUserSite() {
 		return userSite == null ? "" : userSite;
 	}
 
@@ -790,6 +818,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userReceiveEmails == null ? "" : userReceiveEmails.toString();
 	}
 
+	public String jsonUserReceiveEmails() {
+		return userReceiveEmails == null ? "" : userReceiveEmails.toString();
+	}
+
 	public String nomAffichageUserReceiveEmails() {
 		return null;
 	}
@@ -893,6 +925,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return seeArchived == null ? "" : seeArchived.toString();
 	}
 
+	public String jsonSeeArchived() {
+		return seeArchived == null ? "" : seeArchived.toString();
+	}
+
 	public String nomAffichageSeeArchived() {
 		return "see archived";
 	}
@@ -993,6 +1029,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String strSeeDeleted() {
+		return seeDeleted == null ? "" : seeDeleted.toString();
+	}
+
+	public String jsonSeeDeleted() {
 		return seeDeleted == null ? "" : seeDeleted.toString();
 	}
 

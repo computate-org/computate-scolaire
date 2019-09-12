@@ -45,8 +45,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(ecole != null && ecole.getPageH1() != null)
-			c.o(ecole.getPageH1());
+		if(ecole != null && ecole.getEcoleNomComplet() != null)
+			c.o(ecole.getEcoleNomComplet());
 		else if(ecole != null)
 			c.o("une école");
 		else if(listeEcole == null || listeEcole.size() == 0)
@@ -62,18 +62,20 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(ecole != null)
+		if(ecole != null && ecole.getEcoleNomComplet() != null)
+			c.o(ecole.getEcoleNomComplet());
+		else if(ecole != null)
 			c.o("");
 		else if(listeEcole == null || listeEcole.size() == 0)
 			c.o("aucune école trouvée");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/ecole");
+		c.o("/ecole");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/ecole-999.png");
+			c.o("/png/ecole-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -358,8 +360,16 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-pink ").f();
-								e("label").a("for", "Page_anneeCles").a("class", "").f().sx("années").g("label");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+									e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+									sx("années");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+									sx("relier  a cette école");
+								} g("h5");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
@@ -378,19 +388,19 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 										.fg();
 
 									} g("div");
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Page_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCles')); }); ")
-											.f().sx("ajouter une année")
-										.g("button");
-									} g("div");
 								} g("div");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleAnneeCles").f();
 									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Page_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCles')); }); ")
+											.f().sx("ajouter une année")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -618,8 +628,16 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "POST_anneeCles").a("class", "").f().sx("années").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+								sx("années");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relier  a cette école");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -638,19 +656,19 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									.fg();
 
 								} g("div");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#POST_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCles')); }); ")
-										.f().sx("ajouter une année")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleAnneeCles").f();
 								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#POST_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCles')); }); ")
+										.f().sx("ajouter une année")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -878,8 +896,16 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "PATCH_anneeCles").a("class", "").f().sx("années").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+								sx("années");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relier  a cette école");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -898,19 +924,19 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									.fg();
 
 								} g("div");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCles')); }); ")
-										.f().sx("ajouter une année")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleAnneeCles").f();
 								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCles')); }); ")
+										.f().sx("ajouter une année")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1138,8 +1164,16 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereEcoleAnneeCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "Recherche_anneeCles").a("class", "").f().sx("années").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+								sx("années");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relier  a cette école");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1158,19 +1192,19 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									.fg();
 
 								} g("div");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCles')); }); ")
-										.f().sx("ajouter une année")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleAnneeCles").f();
 								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCles')); }); ")
+										.f().sx("ajouter une année")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1201,6 +1235,16 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 				Ecole o = listeEcole.get(0);
 				requeteSite_.setRequetePk(o.getPk());
 			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
+			}
 		} else {
 
 			{ e("h1").f();
@@ -1228,7 +1272,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 						Ecole o = listeEcole.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/ecole/" + o.getPk();
+						String uri = "/ecole/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();

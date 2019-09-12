@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -189,6 +190,14 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "seasonKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", jsonObject.getLong(entityVar)));
+						break;
+					case "ageKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", jsonObject.getLong(entityVar)));
+						break;
 					case "sessionStartDay":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionStartDay", jsonObject.getString(entityVar), pk));
@@ -278,9 +287,15 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 	public void listPATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
 		listSchoolSession.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolSession(o, eventHandler)
+				futurePATCHSchoolSession(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchoolSession(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -382,6 +397,40 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
+						break;
+					case "setSeasonKey":
+						o2.setSeasonKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
+						break;
+					case "removeSeasonKey":
+						o2.setSeasonKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
+						break;
+					case "addAgeKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getLong(methodName)));
+						break;
+					case "addAllAgeKeys":
+						JsonArray addAllAgeKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllAgeKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", addAllAgeKeysValues.getLong(i)));
+						}
+						break;
+					case "setAgeKeys":
+						JsonArray setAgeKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getJsonArray(methodName)));
+						for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", setAgeKeysValues.getLong(i)));
+						}
+						break;
+					case "removeAgeKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getLong(methodName)));
 						break;
 					case "setSessionStartDay":
 						o2.setSessionStartDay(requestJson.getString(methodName));
@@ -595,7 +644,17 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchoolSession.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolSession.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -622,7 +681,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolSession(siteRequest, false, true, "/enUS/session", c -> {
+							aSearchSchoolSession(siteRequest, false, true, "/session", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolSession> listSchoolSession = c.result();
 									response200SearchPageSchoolSession(listSchoolSession, d -> {
@@ -674,7 +733,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			SessionPage page = new SessionPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/session");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/session");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolSession(listSchoolSession);
@@ -974,7 +1033,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolSession.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.session.SchoolSession"));

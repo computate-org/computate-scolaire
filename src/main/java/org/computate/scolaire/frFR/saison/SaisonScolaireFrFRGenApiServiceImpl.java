@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -294,9 +295,15 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 
 	public void listePATCHSaisonScolaire(ListeRecherche<SaisonScolaire> listeSaisonScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
 		listeSaisonScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSaisonScolaire(o, gestionnaireEvenements)
+				futurePATCHSaisonScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -665,7 +672,17 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeSaisonScolaire.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeSaisonScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -692,7 +709,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				if(a.succeeded()) {
 					utilisateurSaisonScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheSaisonScolaire(requeteSite, false, true, "/frFR/saison", c -> {
+							rechercheSaisonScolaire(requeteSite, false, true, "/saison", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
 									reponse200PageRechercheSaisonScolaire(listeSaisonScolaire, d -> {
@@ -744,7 +761,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			SaisonPage page = new SaisonPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/saison");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/saison");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeSaisonScolaire(listeSaisonScolaire);
@@ -1034,7 +1051,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(SaisonScolaire.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.saison.SaisonScolaire"));

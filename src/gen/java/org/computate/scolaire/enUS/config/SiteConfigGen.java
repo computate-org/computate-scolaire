@@ -1,17 +1,18 @@
 package org.computate.scolaire.enUS.config;
 
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
 import org.apache.commons.configuration2.INIConfiguration;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import java.lang.Object;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Object;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
 
 /**	
  *	Loads the properties in the application config file into specific fields. 
@@ -29,6 +30,7 @@ The path to the config file of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String configPath;
+	@JsonIgnore
 	public Wrap<String> configPathWrap = new Wrap<String>().p(this).c(String.class).var("configPath").o(configPath);
 
 	/**	<br/>L'entité « configPath »
@@ -66,6 +68,10 @@ The path to the config file of the site.
 		return configPath == null ? "" : configPath;
 	}
 
+	public String jsonConfigPath() {
+		return configPath == null ? "" : configPath;
+	}
+
 	public String nomAffichageConfigPath() {
 		return null;
 	}
@@ -87,6 +93,7 @@ The INI Configuration Object for the config file.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected INIConfiguration config;
+	@JsonIgnore
 	public Wrap<INIConfiguration> configWrap = new Wrap<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
 
 	/**	<br/>L'entité « config »
@@ -125,6 +132,7 @@ The name of the principal group of settings of the config for this website.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteIdentifier;
+	@JsonIgnore
 	public Wrap<String> siteIdentifierWrap = new Wrap<String>().p(this).c(String.class).var("siteIdentifier").o(siteIdentifier);
 
 	/**	<br/>L'entité « siteIdentifier »
@@ -162,6 +170,10 @@ The name of the principal group of settings of the config for this website.
 		return siteIdentifier == null ? "" : siteIdentifier;
 	}
 
+	public String jsonSiteIdentifier() {
+		return siteIdentifier == null ? "" : siteIdentifier;
+	}
+
 	public String nomAffichageSiteIdentifier() {
 		return null;
 	}
@@ -183,6 +195,7 @@ The already escaped prefix to find the properties of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String prefixEscaped;
+	@JsonIgnore
 	public Wrap<String> prefixEscapedWrap = new Wrap<String>().p(this).c(String.class).var("prefixEscaped").o(prefixEscaped);
 
 	/**	<br/>L'entité « prefixEscaped »
@@ -220,6 +233,10 @@ The already escaped prefix to find the properties of the site.
 		return prefixEscaped == null ? "" : prefixEscaped;
 	}
 
+	public String jsonPrefixEscaped() {
+		return prefixEscaped == null ? "" : prefixEscaped;
+	}
+
 	public String nomAffichagePrefixEscaped() {
 		return null;
 	}
@@ -241,6 +258,7 @@ The path to the project of the site cloned from git.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String appPath;
+	@JsonIgnore
 	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
 
 	/**	<br/>L'entité « appPath »
@@ -278,6 +296,10 @@ The path to the project of the site cloned from git.
 		return appPath == null ? "" : appPath;
 	}
 
+	public String jsonAppPath() {
+		return appPath == null ? "" : appPath;
+	}
+
 	public String nomAffichageAppPath() {
 		return null;
 	}
@@ -299,6 +321,7 @@ The path to the docroot for the project.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String docRoot;
+	@JsonIgnore
 	public Wrap<String> docRootWrap = new Wrap<String>().p(this).c(String.class).var("docRoot").o(docRoot);
 
 	/**	<br/>L'entité « docRoot »
@@ -336,6 +359,10 @@ The path to the docroot for the project.
 		return docRoot == null ? "" : docRoot;
 	}
 
+	public String jsonDocRoot() {
+		return docRoot == null ? "" : docRoot;
+	}
+
 	public String nomAffichageDocRoot() {
 		return null;
 	}
@@ -357,6 +384,7 @@ The name of the company.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String companyName;
+	@JsonIgnore
 	public Wrap<String> companyNameWrap = new Wrap<String>().p(this).c(String.class).var("companyName").o(companyName);
 
 	/**	<br/>L'entité « companyName »
@@ -394,6 +422,10 @@ The name of the company.
 		return companyName == null ? "" : companyName;
 	}
 
+	public String jsonCompanyName() {
+		return companyName == null ? "" : companyName;
+	}
+
 	public String nomAffichageCompanyName() {
 		return null;
 	}
@@ -415,6 +447,7 @@ The domain name of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String domainName;
+	@JsonIgnore
 	public Wrap<String> domainNameWrap = new Wrap<String>().p(this).c(String.class).var("domainName").o(domainName);
 
 	/**	<br/>L'entité « domainName »
@@ -452,6 +485,10 @@ The domain name of the site.
 		return domainName == null ? "" : domainName;
 	}
 
+	public String jsonDomainName() {
+		return domainName == null ? "" : domainName;
+	}
+
 	public String nomAffichageDomainName() {
 		return null;
 	}
@@ -473,6 +510,7 @@ The host name of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteHostName;
+	@JsonIgnore
 	public Wrap<String> siteHostNameWrap = new Wrap<String>().p(this).c(String.class).var("siteHostName").o(siteHostName);
 
 	/**	<br/>L'entité « siteHostName »
@@ -510,6 +548,10 @@ The host name of the site.
 		return siteHostName == null ? "" : siteHostName;
 	}
 
+	public String jsonSiteHostName() {
+		return siteHostName == null ? "" : siteHostName;
+	}
+
 	public String nomAffichageSiteHostName() {
 		return null;
 	}
@@ -531,6 +573,7 @@ The port of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer sitePort;
+	@JsonIgnore
 	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
 
 	/**	<br/>L'entité « sitePort »
@@ -574,6 +617,10 @@ The port of the site.
 		return sitePort == null ? "" : sitePort.toString();
 	}
 
+	public String jsonSitePort() {
+		return sitePort == null ? "" : sitePort.toString();
+	}
+
 	public String nomAffichageSitePort() {
 		return null;
 	}
@@ -595,6 +642,7 @@ The Keycloak realm of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authRealm;
+	@JsonIgnore
 	public Wrap<String> authRealmWrap = new Wrap<String>().p(this).c(String.class).var("authRealm").o(authRealm);
 
 	/**	<br/>L'entité « authRealm »
@@ -632,6 +680,10 @@ The Keycloak realm of the site.
 		return authRealm == null ? "" : authRealm;
 	}
 
+	public String jsonAuthRealm() {
+		return authRealm == null ? "" : authRealm;
+	}
+
 	public String nomAffichageAuthRealm() {
 		return null;
 	}
@@ -653,6 +705,7 @@ The Keycloak client ID of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authResource;
+	@JsonIgnore
 	public Wrap<String> authResourceWrap = new Wrap<String>().p(this).c(String.class).var("authResource").o(authResource);
 
 	/**	<br/>L'entité « authResource »
@@ -690,6 +743,10 @@ The Keycloak client ID of the site.
 		return authResource == null ? "" : authResource;
 	}
 
+	public String jsonAuthResource() {
+		return authResource == null ? "" : authResource;
+	}
+
 	public String nomAffichageAuthResource() {
 		return null;
 	}
@@ -711,6 +768,7 @@ The Keycloak client secret of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSecret;
+	@JsonIgnore
 	public Wrap<String> authSecretWrap = new Wrap<String>().p(this).c(String.class).var("authSecret").o(authSecret);
 
 	/**	<br/>L'entité « authSecret »
@@ -748,6 +806,10 @@ The Keycloak client secret of the site.
 		return authSecret == null ? "" : authSecret;
 	}
 
+	public String jsonAuthSecret() {
+		return authSecret == null ? "" : authSecret;
+	}
+
 	public String nomAffichageAuthSecret() {
 		return null;
 	}
@@ -769,6 +831,7 @@ Whether SSL is required in Keycloak for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authSslRequired;
+	@JsonIgnore
 	public Wrap<String> authSslRequiredWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequired").o(authSslRequired);
 
 	/**	<br/>L'entité « authSslRequired »
@@ -806,6 +869,10 @@ Whether SSL is required in Keycloak for the site.
 		return authSslRequired == null ? "" : authSslRequired;
 	}
 
+	public String jsonAuthSslRequired() {
+		return authSslRequired == null ? "" : authSslRequired;
+	}
+
 	public String nomAffichageAuthSslRequired() {
 		return null;
 	}
@@ -827,6 +894,7 @@ The path to the Java keystore for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksPath;
+	@JsonIgnore
 	public Wrap<String> sslJksPathWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPath").o(sslJksPath);
 
 	/**	<br/>L'entité « sslJksPath »
@@ -864,6 +932,10 @@ The path to the Java keystore for the site.
 		return sslJksPath == null ? "" : sslJksPath;
 	}
 
+	public String jsonSslJksPath() {
+		return sslJksPath == null ? "" : sslJksPath;
+	}
+
 	public String nomAffichageSslJksPath() {
 		return null;
 	}
@@ -885,6 +957,7 @@ The password for the Java keystore for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String sslJksPassword;
+	@JsonIgnore
 	public Wrap<String> sslJksPasswordWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPassword").o(sslJksPassword);
 
 	/**	<br/>L'entité « sslJksPassword »
@@ -922,6 +995,10 @@ The password for the Java keystore for the site.
 		return sslJksPassword == null ? "" : sslJksPassword;
 	}
 
+	public String jsonSslJksPassword() {
+		return sslJksPassword == null ? "" : sslJksPassword;
+	}
+
 	public String nomAffichageSslJksPassword() {
 		return null;
 	}
@@ -943,6 +1020,7 @@ The URL to the Keycloak server.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String authUrl;
+	@JsonIgnore
 	public Wrap<String> authUrlWrap = new Wrap<String>().p(this).c(String.class).var("authUrl").o(authUrl);
 
 	/**	<br/>L'entité « authUrl »
@@ -980,6 +1058,10 @@ The URL to the Keycloak server.
 		return authUrl == null ? "" : authUrl;
 	}
 
+	public String jsonAuthUrl() {
+		return authUrl == null ? "" : authUrl;
+	}
+
 	public String nomAffichageAuthUrl() {
 		return null;
 	}
@@ -1001,6 +1083,7 @@ The encryption salt to use for all database encryption.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String encryptionSalt;
+	@JsonIgnore
 	public Wrap<String> encryptionSaltWrap = new Wrap<String>().p(this).c(String.class).var("encryptionSalt").o(encryptionSalt);
 
 	/**	<br/>L'entité « encryptionSalt »
@@ -1038,6 +1121,10 @@ The encryption salt to use for all database encryption.
 		return encryptionSalt == null ? "" : encryptionSalt;
 	}
 
+	public String jsonEncryptionSalt() {
+		return encryptionSalt == null ? "" : encryptionSalt;
+	}
+
 	public String nomAffichageEncryptionSalt() {
 		return null;
 	}
@@ -1059,6 +1146,7 @@ The encryption password to use for all encryption of the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String encryptionPassword;
+	@JsonIgnore
 	public Wrap<String> encryptionPasswordWrap = new Wrap<String>().p(this).c(String.class).var("encryptionPassword").o(encryptionPassword);
 
 	/**	<br/>L'entité « encryptionPassword »
@@ -1096,6 +1184,10 @@ The encryption password to use for all encryption of the database.
 		return encryptionPassword == null ? "" : encryptionPassword;
 	}
 
+	public String jsonEncryptionPassword() {
+		return encryptionPassword == null ? "" : encryptionPassword;
+	}
+
 	public String nomAffichageEncryptionPassword() {
 		return null;
 	}
@@ -1117,6 +1209,7 @@ The base URL for the URLs of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteBaseUrl;
+	@JsonIgnore
 	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
 
 	/**	<br/>L'entité « siteBaseUrl »
@@ -1154,6 +1247,10 @@ The base URL for the URLs of the site.
 		return siteBaseUrl == null ? "" : siteBaseUrl;
 	}
 
+	public String jsonSiteBaseUrl() {
+		return siteBaseUrl == null ? "" : siteBaseUrl;
+	}
+
 	public String nomAffichageSiteBaseUrl() {
 		return null;
 	}
@@ -1175,6 +1272,7 @@ The display name of the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String siteDisplayName;
+	@JsonIgnore
 	public Wrap<String> siteDisplayNameWrap = new Wrap<String>().p(this).c(String.class).var("siteDisplayName").o(siteDisplayName);
 
 	/**	<br/>L'entité « siteDisplayName »
@@ -1212,6 +1310,10 @@ The display name of the site.
 		return siteDisplayName == null ? "" : siteDisplayName;
 	}
 
+	public String jsonSiteDisplayName() {
+		return siteDisplayName == null ? "" : siteDisplayName;
+	}
+
 	public String nomAffichageSiteDisplayName() {
 		return null;
 	}
@@ -1233,6 +1335,7 @@ The class name of the JDBC driver class for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcDriverClass;
+	@JsonIgnore
 	public Wrap<String> jdbcDriverClassWrap = new Wrap<String>().p(this).c(String.class).var("jdbcDriverClass").o(jdbcDriverClass);
 
 	/**	<br/>L'entité « jdbcDriverClass »
@@ -1270,6 +1373,10 @@ The class name of the JDBC driver class for the database.
 		return jdbcDriverClass == null ? "" : jdbcDriverClass;
 	}
 
+	public String jsonJdbcDriverClass() {
+		return jdbcDriverClass == null ? "" : jdbcDriverClass;
+	}
+
 	public String nomAffichageJdbcDriverClass() {
 		return null;
 	}
@@ -1291,6 +1398,7 @@ The username for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUsername;
+	@JsonIgnore
 	public Wrap<String> jdbcUsernameWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUsername").o(jdbcUsername);
 
 	/**	<br/>L'entité « jdbcUsername »
@@ -1328,6 +1436,10 @@ The username for the database.
 		return jdbcUsername == null ? "" : jdbcUsername;
 	}
 
+	public String jsonJdbcUsername() {
+		return jdbcUsername == null ? "" : jdbcUsername;
+	}
+
 	public String nomAffichageJdbcUsername() {
 		return null;
 	}
@@ -1349,6 +1461,7 @@ The password for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcPassword;
+	@JsonIgnore
 	public Wrap<String> jdbcPasswordWrap = new Wrap<String>().p(this).c(String.class).var("jdbcPassword").o(jdbcPassword);
 
 	/**	<br/>L'entité « jdbcPassword »
@@ -1386,6 +1499,10 @@ The password for the database.
 		return jdbcPassword == null ? "" : jdbcPassword;
 	}
 
+	public String jsonJdbcPassword() {
+		return jdbcPassword == null ? "" : jdbcPassword;
+	}
+
 	public String nomAffichageJdbcPassword() {
 		return null;
 	}
@@ -1407,6 +1524,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxPoolSize;
+	@JsonIgnore
 	public Wrap<Integer> jdbcMaxPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxPoolSize").o(jdbcMaxPoolSize);
 
 	/**	<br/>L'entité « jdbcMaxPoolSize »
@@ -1450,6 +1568,10 @@ The max pool size for the database.
 		return jdbcMaxPoolSize == null ? "" : jdbcMaxPoolSize.toString();
 	}
 
+	public String jsonJdbcMaxPoolSize() {
+		return jdbcMaxPoolSize == null ? "" : jdbcMaxPoolSize.toString();
+	}
+
 	public String nomAffichageJdbcMaxPoolSize() {
 		return null;
 	}
@@ -1471,6 +1593,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcInitialPoolSize;
+	@JsonIgnore
 	public Wrap<Integer> jdbcInitialPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcInitialPoolSize").o(jdbcInitialPoolSize);
 
 	/**	<br/>L'entité « jdbcInitialPoolSize »
@@ -1514,6 +1637,10 @@ The max pool size for the database.
 		return jdbcInitialPoolSize == null ? "" : jdbcInitialPoolSize.toString();
 	}
 
+	public String jsonJdbcInitialPoolSize() {
+		return jdbcInitialPoolSize == null ? "" : jdbcInitialPoolSize.toString();
+	}
+
 	public String nomAffichageJdbcInitialPoolSize() {
 		return null;
 	}
@@ -1535,6 +1662,7 @@ The max pool size for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMinPoolSize;
+	@JsonIgnore
 	public Wrap<Integer> jdbcMinPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMinPoolSize").o(jdbcMinPoolSize);
 
 	/**	<br/>L'entité « jdbcMinPoolSize »
@@ -1578,6 +1706,10 @@ The max pool size for the database.
 		return jdbcMinPoolSize == null ? "" : jdbcMinPoolSize.toString();
 	}
 
+	public String jsonJdbcMinPoolSize() {
+		return jdbcMinPoolSize == null ? "" : jdbcMinPoolSize.toString();
+	}
+
 	public String nomAffichageJdbcMinPoolSize() {
 		return null;
 	}
@@ -1599,6 +1731,7 @@ The max statements for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxStatements;
+	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatements").o(jdbcMaxStatements);
 
 	/**	<br/>L'entité « jdbcMaxStatements »
@@ -1642,6 +1775,10 @@ The max statements for the database.
 		return jdbcMaxStatements == null ? "" : jdbcMaxStatements.toString();
 	}
 
+	public String jsonJdbcMaxStatements() {
+		return jdbcMaxStatements == null ? "" : jdbcMaxStatements.toString();
+	}
+
 	public String nomAffichageJdbcMaxStatements() {
 		return null;
 	}
@@ -1663,6 +1800,7 @@ The max statements per connection for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxStatementsPerConnection;
+	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsPerConnectionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatementsPerConnection").o(jdbcMaxStatementsPerConnection);
 
 	/**	<br/>L'entité « jdbcMaxStatementsPerConnection »
@@ -1706,6 +1844,10 @@ The max statements per connection for the database.
 		return jdbcMaxStatementsPerConnection == null ? "" : jdbcMaxStatementsPerConnection.toString();
 	}
 
+	public String jsonJdbcMaxStatementsPerConnection() {
+		return jdbcMaxStatementsPerConnection == null ? "" : jdbcMaxStatementsPerConnection.toString();
+	}
+
 	public String nomAffichageJdbcMaxStatementsPerConnection() {
 		return null;
 	}
@@ -1727,6 +1869,7 @@ The max idle time for the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer jdbcMaxIdleTime;
+	@JsonIgnore
 	public Wrap<Integer> jdbcMaxIdleTimeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxIdleTime").o(jdbcMaxIdleTime);
 
 	/**	<br/>L'entité « jdbcMaxIdleTime »
@@ -1770,6 +1913,10 @@ The max idle time for the database.
 		return jdbcMaxIdleTime == null ? "" : jdbcMaxIdleTime.toString();
 	}
 
+	public String jsonJdbcMaxIdleTime() {
+		return jdbcMaxIdleTime == null ? "" : jdbcMaxIdleTime.toString();
+	}
+
 	public String nomAffichageJdbcMaxIdleTime() {
 		return null;
 	}
@@ -1791,6 +1938,7 @@ The JDBC URL to the database.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String jdbcUrl;
+	@JsonIgnore
 	public Wrap<String> jdbcUrlWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
 
 	/**	<br/>L'entité « jdbcUrl »
@@ -1828,6 +1976,10 @@ The JDBC URL to the database.
 		return jdbcUrl == null ? "" : jdbcUrl;
 	}
 
+	public String jsonJdbcUrl() {
+		return jdbcUrl == null ? "" : jdbcUrl;
+	}
+
 	public String nomAffichageJdbcUrl() {
 		return null;
 	}
@@ -1849,6 +2001,7 @@ The URL to the SOLR search engine.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrl;
+	@JsonIgnore
 	public Wrap<String> solrUrlWrap = new Wrap<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
 
 	/**	<br/>L'entité « solrUrl »
@@ -1886,6 +2039,10 @@ The URL to the SOLR search engine.
 		return solrUrl == null ? "" : solrUrl;
 	}
 
+	public String jsonSolrUrl() {
+		return solrUrl == null ? "" : solrUrl;
+	}
+
 	public String nomAffichageSolrUrl() {
 		return null;
 	}
@@ -1907,6 +2064,7 @@ The URL to the SOLR search engine for the computate project.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String solrUrlComputate;
+	@JsonIgnore
 	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
 
 	/**	<br/>L'entité « solrUrlComputate »
@@ -1944,6 +2102,10 @@ The URL to the SOLR search engine for the computate project.
 		return solrUrlComputate == null ? "" : solrUrlComputate;
 	}
 
+	public String jsonSolrUrlComputate() {
+		return solrUrlComputate == null ? "" : solrUrlComputate;
+	}
+
 	public String nomAffichageSolrUrlComputate() {
 		return null;
 	}
@@ -1965,6 +2127,7 @@ The Facebook account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountFacebook;
+	@JsonIgnore
 	public Wrap<String> accountFacebookWrap = new Wrap<String>().p(this).c(String.class).var("accountFacebook").o(accountFacebook);
 
 	/**	<br/>L'entité « accountFacebook »
@@ -2002,6 +2165,10 @@ The Facebook account for the site.
 		return accountFacebook == null ? "" : accountFacebook;
 	}
 
+	public String jsonAccountFacebook() {
+		return accountFacebook == null ? "" : accountFacebook;
+	}
+
 	public String nomAffichageAccountFacebook() {
 		return null;
 	}
@@ -2023,6 +2190,7 @@ The Twitter account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountTwitter;
+	@JsonIgnore
 	public Wrap<String> accountTwitterWrap = new Wrap<String>().p(this).c(String.class).var("accountTwitter").o(accountTwitter);
 
 	/**	<br/>L'entité « accountTwitter »
@@ -2060,6 +2228,10 @@ The Twitter account for the site.
 		return accountTwitter == null ? "" : accountTwitter;
 	}
 
+	public String jsonAccountTwitter() {
+		return accountTwitter == null ? "" : accountTwitter;
+	}
+
 	public String nomAffichageAccountTwitter() {
 		return null;
 	}
@@ -2081,6 +2253,7 @@ The Instagram account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountInstagram;
+	@JsonIgnore
 	public Wrap<String> accountInstagramWrap = new Wrap<String>().p(this).c(String.class).var("accountInstagram").o(accountInstagram);
 
 	/**	<br/>L'entité « accountInstagram »
@@ -2118,6 +2291,10 @@ The Instagram account for the site.
 		return accountInstagram == null ? "" : accountInstagram;
 	}
 
+	public String jsonAccountInstagram() {
+		return accountInstagram == null ? "" : accountInstagram;
+	}
+
 	public String nomAffichageAccountInstagram() {
 		return null;
 	}
@@ -2139,6 +2316,7 @@ The Youtube account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountYoutube;
+	@JsonIgnore
 	public Wrap<String> accountYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("accountYoutube").o(accountYoutube);
 
 	/**	<br/>L'entité « accountYoutube »
@@ -2176,6 +2354,10 @@ The Youtube account for the site.
 		return accountYoutube == null ? "" : accountYoutube;
 	}
 
+	public String jsonAccountYoutube() {
+		return accountYoutube == null ? "" : accountYoutube;
+	}
+
 	public String nomAffichageAccountYoutube() {
 		return null;
 	}
@@ -2197,6 +2379,7 @@ The Pinterest account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountPinterest;
+	@JsonIgnore
 	public Wrap<String> accountPinterestWrap = new Wrap<String>().p(this).c(String.class).var("accountPinterest").o(accountPinterest);
 
 	/**	<br/>L'entité « accountPinterest »
@@ -2234,6 +2417,10 @@ The Pinterest account for the site.
 		return accountPinterest == null ? "" : accountPinterest;
 	}
 
+	public String jsonAccountPinterest() {
+		return accountPinterest == null ? "" : accountPinterest;
+	}
+
 	public String nomAffichageAccountPinterest() {
 		return null;
 	}
@@ -2255,6 +2442,7 @@ The Email account for the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String accountEmail;
+	@JsonIgnore
 	public Wrap<String> accountEmailWrap = new Wrap<String>().p(this).c(String.class).var("accountEmail").o(accountEmail);
 
 	/**	<br/>L'entité « accountEmail »
@@ -2292,6 +2480,10 @@ The Email account for the site.
 		return accountEmail == null ? "" : accountEmail;
 	}
 
+	public String jsonAccountEmail() {
+		return accountEmail == null ? "" : accountEmail;
+	}
+
 	public String nomAffichageAccountEmail() {
 		return null;
 	}
@@ -2313,6 +2505,7 @@ The OpenID Connect role for an administrator.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String roleAdmin;
+	@JsonIgnore
 	public Wrap<String> roleAdminWrap = new Wrap<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
 
 	/**	<br/>L'entité « roleAdmin »
@@ -2350,6 +2543,10 @@ The OpenID Connect role for an administrator.
 		return roleAdmin == null ? "" : roleAdmin;
 	}
 
+	public String jsonRoleAdmin() {
+		return roleAdmin == null ? "" : roleAdmin;
+	}
+
 	public String nomAffichageRoleAdmin() {
 		return null;
 	}
@@ -2371,6 +2568,7 @@ The email address for the administrator of the site for the error reports.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String emailAdmin;
+	@JsonIgnore
 	public Wrap<String> emailAdminWrap = new Wrap<String>().p(this).c(String.class).var("emailAdmin").o(emailAdmin);
 
 	/**	<br/>L'entité « emailAdmin »
@@ -2408,6 +2606,10 @@ The email address for the administrator of the site for the error reports.
 		return emailAdmin == null ? "" : emailAdmin;
 	}
 
+	public String jsonEmailAdmin() {
+		return emailAdmin == null ? "" : emailAdmin;
+	}
+
 	public String nomAffichageEmailAdmin() {
 		return null;
 	}
@@ -2429,6 +2631,7 @@ The number of executors for executing background tasks in the site.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Integer numberExecutors;
+	@JsonIgnore
 	public Wrap<Integer> numberExecutorsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("numberExecutors").o(numberExecutors);
 
 	/**	<br/>L'entité « numberExecutors »
@@ -2472,6 +2675,10 @@ The number of executors for executing background tasks in the site.
 		return numberExecutors == null ? "" : numberExecutors.toString();
 	}
 
+	public String jsonNumberExecutors() {
+		return numberExecutors == null ? "" : numberExecutors.toString();
+	}
+
 	public String nomAffichageNumberExecutors() {
 		return null;
 	}
@@ -2493,6 +2700,7 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String openApiVersion;
+	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
 	/**	<br/>L'entité « openApiVersion »
@@ -2530,6 +2738,10 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 		return openApiVersion == null ? "" : openApiVersion;
 	}
 
+	public String jsonOpenApiVersion() {
+		return openApiVersion == null ? "" : openApiVersion;
+	}
+
 	public String nomAffichageOpenApiVersion() {
 		return null;
 	}
@@ -2551,6 +2763,7 @@ The description of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiDescription;
+	@JsonIgnore
 	public Wrap<String> apiDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
 
 	/**	<br/>L'entité « apiDescription »
@@ -2588,6 +2801,10 @@ The description of your site API.
 		return apiDescription == null ? "" : apiDescription;
 	}
 
+	public String jsonApiDescription() {
+		return apiDescription == null ? "" : apiDescription;
+	}
+
 	public String nomAffichageApiDescription() {
 		return null;
 	}
@@ -2609,6 +2826,7 @@ The title of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTitle;
+	@JsonIgnore
 	public Wrap<String> apiTitleWrap = new Wrap<String>().p(this).c(String.class).var("apiTitle").o(apiTitle);
 
 	/**	<br/>L'entité « apiTitle »
@@ -2646,6 +2864,10 @@ The title of your site API.
 		return apiTitle == null ? "" : apiTitle;
 	}
 
+	public String jsonApiTitle() {
+		return apiTitle == null ? "" : apiTitle;
+	}
+
 	public String nomAffichageApiTitle() {
 		return null;
 	}
@@ -2667,6 +2889,7 @@ The terms of service of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiTermsService;
+	@JsonIgnore
 	public Wrap<String> apiTermsServiceWrap = new Wrap<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
 
 	/**	<br/>L'entité « apiTermsService »
@@ -2704,6 +2927,10 @@ The terms of service of your site API.
 		return apiTermsService == null ? "" : apiTermsService;
 	}
 
+	public String jsonApiTermsService() {
+		return apiTermsService == null ? "" : apiTermsService;
+	}
+
 	public String nomAffichageApiTermsService() {
 		return null;
 	}
@@ -2725,6 +2952,7 @@ The version of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiVersion;
+	@JsonIgnore
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
 	/**	<br/>L'entité « apiVersion »
@@ -2762,6 +2990,10 @@ The version of your site API.
 		return apiVersion == null ? "" : apiVersion;
 	}
 
+	public String jsonApiVersion() {
+		return apiVersion == null ? "" : apiVersion;
+	}
+
 	public String nomAffichageApiVersion() {
 		return null;
 	}
@@ -2783,6 +3015,7 @@ The contact email of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiContactEmail;
+	@JsonIgnore
 	public Wrap<String> apiContactEmailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactEmail").o(apiContactEmail);
 
 	/**	<br/>L'entité « apiContactEmail »
@@ -2820,6 +3053,10 @@ The contact email of your site API.
 		return apiContactEmail == null ? "" : apiContactEmail;
 	}
 
+	public String jsonApiContactEmail() {
+		return apiContactEmail == null ? "" : apiContactEmail;
+	}
+
 	public String nomAffichageApiContactEmail() {
 		return null;
 	}
@@ -2841,6 +3078,7 @@ The open source license name of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenseName;
+	@JsonIgnore
 	public Wrap<String> apiLicenseNameWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseName").o(apiLicenseName);
 
 	/**	<br/>L'entité « apiLicenseName »
@@ -2878,6 +3116,10 @@ The open source license name of your site API.
 		return apiLicenseName == null ? "" : apiLicenseName;
 	}
 
+	public String jsonApiLicenseName() {
+		return apiLicenseName == null ? "" : apiLicenseName;
+	}
+
 	public String nomAffichageApiLicenseName() {
 		return null;
 	}
@@ -2899,6 +3141,7 @@ The open source license URL of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiLicenseUrl;
+	@JsonIgnore
 	public Wrap<String> apiLicenseUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseUrl").o(apiLicenseUrl);
 
 	/**	<br/>L'entité « apiLicenseUrl »
@@ -2936,6 +3179,10 @@ The open source license URL of your site API.
 		return apiLicenseUrl == null ? "" : apiLicenseUrl;
 	}
 
+	public String jsonApiLicenseUrl() {
+		return apiLicenseUrl == null ? "" : apiLicenseUrl;
+	}
+
 	public String nomAffichageApiLicenseUrl() {
 		return null;
 	}
@@ -2957,6 +3204,7 @@ The host name of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiHostName;
+	@JsonIgnore
 	public Wrap<String> apiHostNameWrap = new Wrap<String>().p(this).c(String.class).var("apiHostName").o(apiHostName);
 
 	/**	<br/>L'entité « apiHostName »
@@ -2994,6 +3242,10 @@ The host name of your site API.
 		return apiHostName == null ? "" : apiHostName;
 	}
 
+	public String jsonApiHostName() {
+		return apiHostName == null ? "" : apiHostName;
+	}
+
 	public String nomAffichageApiHostName() {
 		return null;
 	}
@@ -3015,6 +3267,7 @@ The base path of your site API.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String apiBasePath;
+	@JsonIgnore
 	public Wrap<String> apiBasePathWrap = new Wrap<String>().p(this).c(String.class).var("apiBasePath").o(apiBasePath);
 
 	/**	<br/>L'entité « apiBasePath »
@@ -3052,6 +3305,10 @@ The base path of your site API.
 		return apiBasePath == null ? "" : apiBasePath;
 	}
 
+	public String jsonApiBasePath() {
+		return apiBasePath == null ? "" : apiBasePath;
+	}
+
 	public String nomAffichageApiBasePath() {
 		return null;
 	}
@@ -3073,6 +3330,7 @@ The base URL of your static files.
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String staticBaseUrl;
+	@JsonIgnore
 	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
 
 	/**	<br/>L'entité « staticBaseUrl »
@@ -3110,6 +3368,10 @@ The base URL of your static files.
 		return staticBaseUrl == null ? "" : staticBaseUrl;
 	}
 
+	public String jsonStaticBaseUrl() {
+		return staticBaseUrl == null ? "" : staticBaseUrl;
+	}
+
 	public String nomAffichageStaticBaseUrl() {
 		return null;
 	}
@@ -3120,6 +3382,69 @@ The base URL of your static files.
 
 	public String htmStaticBaseUrl() {
 		return staticBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strStaticBaseUrl());
+	}
+
+	//////////////
+	// siteZone //
+	//////////////
+
+	/**	L'entité « siteZone »
+The default timezone of the site. 
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String siteZone;
+	@JsonIgnore
+	public Wrap<String> siteZoneWrap = new Wrap<String>().p(this).c(String.class).var("siteZone").o(siteZone);
+
+	/**	<br/>L'entité « siteZone »
+The default timezone of the site. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteZone">Trouver l'entité siteZone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteZone(Wrap<String> c);
+
+	public String getSiteZone() {
+		return siteZone;
+	}
+
+	public void setSiteZone(String siteZone) {
+		this.siteZone = siteZone;
+		this.siteZoneWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig siteZoneInit() {
+		if(!siteZoneWrap.alreadyInitialized) {
+			_siteZone(siteZoneWrap);
+			if(siteZone == null)
+				setSiteZone(siteZoneWrap.o);
+		}
+		siteZoneWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrSiteZone() {
+		return siteZone;
+	}
+
+	public String strSiteZone() {
+		return siteZone == null ? "" : siteZone;
+	}
+
+	public String jsonSiteZone() {
+		return siteZone == null ? "" : siteZone;
+	}
+
+	public String nomAffichageSiteZone() {
+		return null;
+	}
+
+	public String htmTooltipSiteZone() {
+		return null;
+	}
+
+	public String htmSiteZone() {
+		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
 	}
 
 	//////////////
@@ -3194,6 +3519,7 @@ The base URL of your static files.
 		apiHostNameInit();
 		apiBasePathInit();
 		staticBaseUrlInit();
+		siteZoneInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -3326,6 +3652,8 @@ The base URL of your static files.
 				return oSiteConfig.apiBasePath;
 			case "staticBaseUrl":
 				return oSiteConfig.staticBaseUrl;
+			case "siteZone":
+				return oSiteConfig.siteZone;
 			default:
 				return null;
 		}
@@ -3357,7 +3685,7 @@ The base URL of your static files.
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
 	public boolean defineForClass(String var, String val) {
@@ -3366,7 +3694,7 @@ The base URL of your static files.
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirSiteConfig(v, val);
+					o = defineSiteConfig(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -3375,7 +3703,7 @@ The base URL of your static files.
 		}
 		return o != null;
 	}
-	public Object definirSiteConfig(String var, String val) {
+	public Object defineSiteConfig(String var, String val) {
 		switch(var) {
 			default:
 				return null;
@@ -3409,7 +3737,7 @@ The base URL of your static files.
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SiteConfig {");
+		sb.append("SiteConfig { ");
 		sb.append(" }");
 		return sb.toString();
 	}

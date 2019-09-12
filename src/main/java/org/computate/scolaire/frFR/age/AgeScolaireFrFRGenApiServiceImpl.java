@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -349,7 +351,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.strCree(), pk));
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
@@ -359,7 +361,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.strModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
@@ -369,7 +371,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.strArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
@@ -379,7 +381,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 					case "setAgeDebut":
@@ -389,7 +391,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "ageDebut"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageDebut", o2.strAgeDebut(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageDebut", o2.jsonAgeDebut(), pk));
 						}
 						break;
 					case "setAgeFin":
@@ -399,7 +401,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList(pk, "ageFin"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("ageFin", o2.strAgeFin(), pk));
+							patchSqlParams.addAll(Arrays.asList("ageFin", o2.jsonAgeFin(), pk));
 						}
 						break;
 				}
@@ -594,7 +596,17 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeAgeScolaire.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeAgeScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -621,7 +633,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				if(a.succeeded()) {
 					utilisateurAgeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheAgeScolaire(requeteSite, false, true, "/frFR/age", c -> {
+							rechercheAgeScolaire(requeteSite, false, true, "/age", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<AgeScolaire> listeAgeScolaire = c.result();
 									reponse200PageRechercheAgeScolaire(listeAgeScolaire, d -> {
@@ -673,7 +685,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			AgePage page = new AgePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/age");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/age");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeAgeScolaire(listeAgeScolaire);
@@ -981,7 +993,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(AgeScolaire.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.age.AgeScolaire"));

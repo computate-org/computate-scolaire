@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -294,9 +295,15 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 	public void listPATCHSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		listSchoolSeason.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolSeason(o, eventHandler)
+				futurePATCHSchoolSeason(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchoolSeason(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -665,7 +672,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchoolSeason.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolSeason.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -692,7 +709,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(a.succeeded()) {
 					userSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolSeason(siteRequest, false, true, "/enUS/season", c -> {
+							aSearchSchoolSeason(siteRequest, false, true, "/season", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolSeason> listSchoolSeason = c.result();
 									response200SearchPageSchoolSeason(listSchoolSeason, d -> {
@@ -744,7 +761,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			SeasonPage page = new SeasonPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/season");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/season");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolSeason(listSchoolSeason);
@@ -1034,7 +1051,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			listSearch.setQuery("*:*");
 			listSearch.setC(SchoolSeason.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.season.SchoolSeason"));

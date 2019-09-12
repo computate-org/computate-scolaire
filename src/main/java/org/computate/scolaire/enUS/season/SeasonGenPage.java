@@ -49,14 +49,12 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(schoolSeason != null)
-			c.o("a season");
-		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
-			c.o("no season found");
+			c.o("school seasons");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		c.o("");
+		if(schoolSeason != null && schoolSeason.getSeasonNameComplete() != null)
+			c.o(schoolSeason.getSeasonNameComplete());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -64,26 +62,28 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolSeason != null)
+		if(schoolSeason != null && schoolSeason.getSeasonNameComplete() != null)
+			c.o(schoolSeason.getSeasonNameComplete());
+		else if(schoolSeason != null)
 			c.o("");
 		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
 			c.o("no season found");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
-		c.o("/enUS/season");
+		c.o("/season");
 	}
 
 	@Override protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/enUS/season-999.png");
+			c.o("/png/season-999.png");
 	}
 
 	@Override protected void _contextIconGroup(Wrap<String> c) {
-			c.o("duotone");
+			c.o("regular");
 	}
 
 	@Override protected void _contextIconName(Wrap<String> c) {
-			c.o("sun-o");
+			c.o("sun");
 	}
 
 	@Override public void initDeepSeasonGenPage() {
@@ -226,6 +226,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_seasonSummer").a("class", "").f().sx("summer").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
@@ -241,17 +244,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_seasonSummer").a("class", "").f().sx("summer").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonSummer')); $('#Page_seasonSummer').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonSummer', null, $('#Page_seasonSummer'), function() { addGlow($('#Page_seasonSummer')); }, function() { addError($('#Page_seasonSummer')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -270,6 +262,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_seasonWinter").a("class", "").f().sx("winter").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
@@ -285,17 +280,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_seasonWinter").a("class", "").f().sx("winter").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonWinter')); $('#Page_seasonWinter').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonWinter', null, $('#Page_seasonWinter'), function() { addGlow($('#Page_seasonWinter')); }, function() { addError($('#Page_seasonWinter')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -360,10 +344,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								{ e("a").a("href", "/year").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 									e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
 									sx("year");
 								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+									sx("relate a year to this season");
+								} g("h5");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
@@ -413,10 +402,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								{ e("a").a("href", "/session").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 									e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
 									sx("sessions");
 								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+									sx("relate sessions to this season");
+								} g("h5");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
@@ -570,6 +564,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_seasonSummer").a("class", "").f().sx("summer").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -585,9 +582,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_seasonSummer").a("class", "").f().sx("summer").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -605,6 +599,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_seasonWinter").a("class", "").f().sx("winter").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -620,9 +617,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_seasonWinter").a("class", "").f().sx("winter").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -676,10 +670,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/year").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
 								sx("year");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate a year to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -729,10 +728,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/session").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
 								sx("sessions");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate sessions to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -886,6 +890,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_seasonSummer").a("class", "").f().sx("summer").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -901,9 +908,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_seasonSummer").a("class", "").f().sx("summer").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -921,6 +925,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_seasonWinter").a("class", "").f().sx("winter").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -936,9 +943,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_seasonWinter").a("class", "").f().sx("winter").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -992,10 +996,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/year").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
 								sx("year");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate a year to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1045,10 +1054,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/session").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
 								sx("sessions");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate sessions to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1202,6 +1216,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonSummer").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_seasonSummer").a("class", "").f().sx("summer").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -1217,9 +1234,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_seasonSummer").a("class", "").f().sx("summer").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1237,6 +1251,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSeasonWinter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_seasonWinter").a("class", "").f().sx("winter").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -1252,9 +1269,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_seasonWinter").a("class", "").f().sx("winter").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1308,10 +1322,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonYearKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/year").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
 								sx("year");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate a year to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1361,10 +1380,15 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				{ e("form").a("action", "").a("id", "suggestSchoolSeasonSessionKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/session").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
 								sx("sessions");
 							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								sx("relate sessions to this season");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1411,19 +1435,46 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		if(listSchoolSeason == null || listSchoolSeason.size() == 0) {
 
 			{ e("h1").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no season found").g("span");
-			} g("h1");
-		} else if(listSchoolSeason != null && listSchoolSeason.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/season").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("a season").g("span");
+					e("span").a("class", " ").f().sx("school seasons").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("no season found").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listSchoolSeason != null && listSchoolSeason.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			SchoolSeason o = listSchoolSeason.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/season").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+						if(contextIconCssClasses != null)
+							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				SchoolSeason o = listSchoolSeason.get(0);
-				siteRequest_.setRequestPk(o.getPk());
+			}
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
+				{ e("h2").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
+				} g("h2");
+			}
+			if(StringUtils.isNotEmpty(pageH3)) {
+				{ e("h3").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -1432,6 +1483,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("seasons").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
@@ -1453,7 +1505,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						SchoolSeason o = listSchoolSeason.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/enUS/season/" + o.getPk();
+						String uri = "/season/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
@@ -1531,6 +1583,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 		}
 		htmlBodyFormsSeasonGenPage();
+			g("div");
 	}
 
 	public void htmlBodyFormsSeasonGenPage() {
@@ -1597,7 +1650,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-						.a("onclick", "patchSchoolSeason($('#patchSchoolSeasonFormFilters'), $('#patchSchoolSeasonFormValues')); ")
+						.a("onclick", "patchSchoolSeason($('#patchSchoolSeasonFormFilters'), $('#patchSchoolSeasonFormValues'), function() {}, function() {}); ")
 						.f().sx("Modify the seasons")
 					.g("button");
 

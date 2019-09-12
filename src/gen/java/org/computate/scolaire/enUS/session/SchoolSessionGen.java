@@ -698,7 +698,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeKeys() {
-		return null;
+		return "ages";
 	}
 
 	public String htmTooltipAgeKeys() {
@@ -1327,43 +1327,41 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 
-	////////////
-	// season //
-	////////////
+	/////////////
+	// season_ //
+	/////////////
 
-	/**	L'entité « season »
+	/**	L'entité « season_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected SchoolSeason season;
+	protected SchoolSeason season_;
 	@JsonIgnore
-	public Wrap<SchoolSeason> seasonWrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("season").o(season);
+	public Wrap<SchoolSeason> season_Wrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("season_").o(season_);
 
-	/**	<br/>L'entité « season »
+	/**	<br/>L'entité « season_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:season">Trouver l'entité season dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:season_">Trouver l'entité season_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _season(Wrap<SchoolSeason> c);
+	protected abstract void _season_(Wrap<SchoolSeason> c);
 
-	public SchoolSeason getSeason() {
-		return season;
+	public SchoolSeason getSeason_() {
+		return season_;
 	}
 
-	public void setSeason(SchoolSeason season) {
-		this.season = season;
-		this.seasonWrap.alreadyInitialized = true;
+	public void setSeason_(SchoolSeason season_) {
+		this.season_ = season_;
+		this.season_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolSession seasonInit() {
-		if(!seasonWrap.alreadyInitialized) {
-			_season(seasonWrap);
-			if(season == null)
-				setSeason(seasonWrap.o);
+	protected SchoolSession season_Init() {
+		if(!season_Wrap.alreadyInitialized) {
+			_season_(season_Wrap);
+			if(season_ == null)
+				setSeason_(season_Wrap.o);
 		}
-		if(season != null)
-			season.initDeepForClass(siteRequest_);
-		seasonWrap.alreadyInitialized(true);
+		season_Wrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
@@ -1508,7 +1506,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -1626,7 +1624,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -1744,7 +1742,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setSeasonStartDay(Date o) {
-		this.seasonStartDay = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.seasonStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2296,7 +2294,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setSeasonEnd(Date o) {
-		this.seasonEnd = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.seasonEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonEndWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2414,7 +2412,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setSessionStartDay(Date o) {
-		this.sessionStartDay = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.sessionStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionStartDayWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2532,7 +2530,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return (SchoolSession)this;
 	}
 	public SchoolSession setSessionEndDay(Date o) {
-		this.sessionEndDay = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.sessionEndDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDayWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -3052,7 +3050,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		seasonSortInit();
 		sessionSortInit();
 		seasonSearchInit();
-		seasonInit();
+		season_Init();
 		schoolNameCompleteInit();
 		yearStartInit();
 		yearEndInit();
@@ -3082,8 +3080,6 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(seasonSearch != null)
 			seasonSearch.setSiteRequest_(siteRequest_);
-		if(season != null)
-			season.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -3134,8 +3130,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.sessionSort;
 			case "seasonSearch":
 				return oSchoolSession.seasonSearch;
-			case "season":
-				return oSchoolSession.season;
+			case "season_":
+				return oSchoolSession.season_;
 			case "schoolNameComplete":
 				return oSchoolSession.schoolNameComplete;
 			case "yearStart":
@@ -3191,6 +3187,12 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	public Object attributeSchoolSession(String var, Object val) {
 		SchoolSession oSchoolSession = (SchoolSession)this;
 		switch(var) {
+			case "seasonKey":
+				oSchoolSession.setSeasonKey((Long)val);
+				return val;
+			case "ageKeys":
+				oSchoolSession.addAgeKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -3254,11 +3256,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.setSchoolKey(schoolKey);
 			}
 
-			if(savesSchoolSession.contains("seasonKey")) {
-				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
-				if(seasonKey != null)
-					oSchoolSession.setSeasonKey(seasonKey);
-			}
+			Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
+			if(seasonKey != null)
+				oSchoolSession.setSeasonKey(seasonKey);
 
 			if(savesSchoolSession.contains("sessionKey")) {
 				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
@@ -3272,11 +3272,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.enrollmentKeys.addAll(enrollmentKeys);
 			}
 
-			if(savesSchoolSession.contains("ageKeys")) {
-				List<Long> ageKeys = (List<Long>)solrDocument.get("ageKeys_stored_longs");
-				if(ageKeys != null)
-					oSchoolSession.ageKeys.addAll(ageKeys);
-			}
+			List<Long> ageKeys = (List<Long>)solrDocument.get("ageKeys_stored_longs");
+			if(ageKeys != null)
+				oSchoolSession.ageKeys.addAll(ageKeys);
 
 			if(savesSchoolSession.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -3714,7 +3712,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionStartDay, sessionEndDay);
+		return Objects.hash(super.hashCode(), seasonKey, ageKeys, sessionStartDay, sessionEndDay);
 	}
 
 	////////////
@@ -3728,6 +3726,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			return false;
 		SchoolSession that = (SchoolSession)o;
 		return super.equals(o)
+				&& Objects.equals( seasonKey, that.seasonKey )
+				&& Objects.equals( ageKeys, that.ageKeys )
 				&& Objects.equals( sessionStartDay, that.sessionStartDay )
 				&& Objects.equals( sessionEndDay, that.sessionEndDay );
 	}
@@ -3740,7 +3740,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolSession { ");
-		sb.append( "sessionStartDay: " ).append(sessionStartDay);
+		sb.append( "seasonKey: " ).append(seasonKey);
+		sb.append( ", ageKeys: " ).append(ageKeys);
+		sb.append( ", sessionStartDay: " ).append(sessionStartDay);
 		sb.append( ", sessionEndDay: " ).append(sessionEndDay);
 		sb.append(" }");
 		return sb.toString();

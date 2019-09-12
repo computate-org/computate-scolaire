@@ -399,7 +399,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setCree(Date o) {
-		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
+		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
@@ -517,7 +517,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 	public Cluster setModifie(Date o) {
-		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of("Z"));
+		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}

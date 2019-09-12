@@ -41,15 +41,15 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		l.setStore(true);
 	}
 
-	protected void _school(Wrap<School> c) {
+	protected void _school_(Wrap<School> c) {
 		if(schoolSearch.size() > 0) {
 			c.o(schoolSearch.get(0));
 		}
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		if(school != null)
-			c.o((String)school.getSchoolNameComplete());
+		if(school_ != null)
+			c.o((String)school_.getSchoolNameComplete());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {}
@@ -105,7 +105,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(yearId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/year/" + yearId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/year/" + yearId;
 			c.o(o);
 		}
 	}

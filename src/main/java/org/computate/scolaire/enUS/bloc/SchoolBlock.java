@@ -202,7 +202,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(blocId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/bloc/" + blocId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/bloc/" + blocId;
 			c.o(o);
 		}
 	}

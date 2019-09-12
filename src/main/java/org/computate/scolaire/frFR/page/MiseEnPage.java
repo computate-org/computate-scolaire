@@ -461,7 +461,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: pageSchoolUri
-	 * String.enUS: /enUS/school
+	 * String.enUS: /school
 	 */
 	protected void _pageEcoleUri(Couverture<String> c)  {
 		c.o("/frFR/ecole");
@@ -575,9 +575,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: enUS
 	 */
 	@Override public void htmlStylesMiseEnPage() {
-		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/site-frFR.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
+		e("link").a("rel", "stylesheet").a("href", statiqueUrlBase, "/css/w3.css").fg();
+		e("link").a("rel", "stylesheet").a("href", statiqueUrlBase, "/css/site-frFR.css").fg();
+		e("link").a("rel", "stylesheet").a("href", statiqueUrlBase, "/css/datePicker.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "/static/css/site-frFR.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
 //		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
@@ -636,7 +639,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("div");
 				e("div").a("class", "site-section-all ").f();
 					e("div").a("class", "site-section-above ").f();
-						e("div").a("class", "w3-content w3-center w3-text-black ").f();
+						e("div").a("class", "w3-content w3-center w3-black ").f();
 							e("div").a("class", "").f();
 								menu();
 							g("div"); 
@@ -702,6 +705,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: UserName
 	 * r: pageDeconnexionUri
 	 * r.enUS: pageLogoutUri
+	 * r: "Accueil"
+	 * r.enUS: "Home"
+	 * r: "Déconnexion"
+	 * r.enUS: "Logout"
+	 * r: "Connexion"
+	 * r.enUS: "Login"
 	 */
 	public void menu()  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();

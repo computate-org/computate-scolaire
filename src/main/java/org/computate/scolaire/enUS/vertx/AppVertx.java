@@ -276,7 +276,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						session.destroy();
 					}
 					rc.clearUser();
-					rc.reroute("/enUS/school");
+					rc.reroute("/school");
 				});
 
 				routerFactory.addSecurityHandler("openIdConnect", gestionnaireAuth);

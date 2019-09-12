@@ -420,8 +420,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureOpenApi
 	 * r: openapi3-frFR.yaml
 	 * r.enUS: openapi3-enUS.yaml
-	 * r: /frFR/ecole
-	 * r.enUS: /enUS/school
+	 * r: /ecole
+	 * r.enUS: /school
 	 */
 	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -473,7 +473,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						session.destroy();
 					}
 					rc.clearUser();
-					rc.reroute("/frFR/ecole");
+					rc.reroute("/ecole");
 				});
 
 				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);

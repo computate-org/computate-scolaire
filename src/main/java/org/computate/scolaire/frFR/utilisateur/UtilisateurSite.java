@@ -11,22 +11,22 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Indexe: true
  * 
  * ApiTag.frFR: Utilisateur
- * ApiUri.frFR: /frFR/api/utilisateur
+ * ApiUri.frFR: /api/utilisateur
  * 
  * ApiTag.enUS: User
- * ApiUri.enUS: /enUS/api/user
+ * ApiUri.enUS: /api/user
  * 
  * ApiMethode: PATCH
  * 
  * ApiMethode.frFR: PageRecherche
  * PagePageRecherche.frFR: UtilisateurSitePage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /frFR/utilisateur
+ * ApiUriPageRecherche.frFR: /utilisateur
  * 
  * ApiMethode.enUS: SearchPage
  * PageSearchPage.enUS: SiteUserPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /enUS/user
+ * ApiUriSearchPage.enUS: /user
  * 
  * MotCle: classeNomSimpleUtilisateurSite
  * Role.frFR: SiteAdmin

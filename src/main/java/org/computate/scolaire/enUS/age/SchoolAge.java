@@ -154,7 +154,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(ageId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/age/" + ageId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/age/" + ageId;
 			c.o(o);
 		}
 	}

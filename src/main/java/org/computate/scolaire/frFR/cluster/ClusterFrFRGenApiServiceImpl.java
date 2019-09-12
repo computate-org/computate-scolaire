@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -583,7 +584,17 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeCluster.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeCluster.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -610,7 +621,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurCluster(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheCluster(requeteSite, false, true, "/frFR/cluster", c -> {
+							rechercheCluster(requeteSite, false, true, "/cluster", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Cluster> listeCluster = c.result();
 									reponse200PageRechercheCluster(listeCluster, d -> {
@@ -662,7 +673,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			ClusterPage page = new ClusterPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/cluster");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/cluster");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeCluster(listeCluster);
@@ -908,7 +919,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(Cluster.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.cluster.Cluster"));

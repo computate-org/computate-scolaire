@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -651,7 +652,17 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeEcole.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeEcole.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -678,7 +689,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurEcole(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheEcole(requeteSite, false, true, "/frFR/ecole", c -> {
+							rechercheEcole(requeteSite, false, true, "/ecole", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Ecole> listeEcole = c.result();
 									reponse200PageRechercheEcole(listeEcole, d -> {
@@ -730,7 +741,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			EcolePage page = new EcolePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/ecole");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/ecole");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeEcole(listeEcole);
@@ -1016,7 +1027,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(Ecole.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.ecole.Ecole"));

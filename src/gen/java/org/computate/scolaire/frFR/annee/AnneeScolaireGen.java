@@ -60,6 +60,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public static final String AnneeScolaire_AucunNomTrouve = "aucune année trouvée";
 	public static final String AnneeScolaire_NomVar = "année";
 	public static final String AnneeScolaire_DeNom = "d'année";
+	public static final String AnneeScolaire_NomAdjectifSingulier = "année";
+	public static final String AnneeScolaire_NomAdjectifPluriel = "années";
 	public static final String AnneeScolaire_Couleur = "orange";
 	public static final String AnneeScolaire_IconeGroupe = "regular";
 	public static final String AnneeScolaire_IconeNom = "calendar-check";
@@ -893,43 +895,41 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return (AnneeScolaire)this;
 	}
 
-	///////////
-	// ecole //
-	///////////
+	////////////
+	// ecole_ //
+	////////////
 
-	/**	L'entité « ecole »
+	/**	L'entité « ecole_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected Ecole ecole;
+	protected Ecole ecole_;
 	@JsonIgnore
-	public Couverture<Ecole> ecoleCouverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole").o(ecole);
+	public Couverture<Ecole> ecole_Couverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole_").o(ecole_);
 
-	/**	<br/>L'entité « ecole »
+	/**	<br/>L'entité « ecole_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole">Trouver l'entité ecole dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole_">Trouver l'entité ecole_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecole(Couverture<Ecole> c);
+	protected abstract void _ecole_(Couverture<Ecole> c);
 
-	public Ecole getEcole() {
-		return ecole;
+	public Ecole getEcole_() {
+		return ecole_;
 	}
 
-	public void setEcole(Ecole ecole) {
-		this.ecole = ecole;
-		this.ecoleCouverture.dejaInitialise = true;
+	public void setEcole_(Ecole ecole_) {
+		this.ecole_ = ecole_;
+		this.ecole_Couverture.dejaInitialise = true;
 	}
-	protected AnneeScolaire ecoleInit() {
-		if(!ecoleCouverture.dejaInitialise) {
-			_ecole(ecoleCouverture);
-			if(ecole == null)
-				setEcole(ecoleCouverture.o);
+	protected AnneeScolaire ecole_Init() {
+		if(!ecole_Couverture.dejaInitialise) {
+			_ecole_(ecole_Couverture);
+			if(ecole_ == null)
+				setEcole_(ecole_Couverture.o);
 		}
-		if(ecole != null)
-			ecole.initLoinPourClasse(requeteSite_);
-		ecoleCouverture.dejaInitialise(true);
+		ecole_Couverture.dejaInitialise(true);
 		return (AnneeScolaire)this;
 	}
 
@@ -1074,7 +1074,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeDebut(Date o) {
-		this.anneeDebut = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -1192,7 +1192,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeFin(Date o) {
-		this.anneeFin = o.toInstant().atZone(ZoneId.of("Z")).toLocalDate();
+		this.anneeFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -1810,7 +1810,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		ecoleTriInit();
 		anneeTriInit();
 		ecoleRechercheInit();
-		ecoleInit();
+		ecole_Init();
 		ecoleNomCompletInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -1833,8 +1833,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(ecoleRecherche != null)
 			ecoleRecherche.setRequeteSite_(requeteSite_);
-		if(ecole != null)
-			ecole.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1877,8 +1875,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.anneeTri;
 			case "ecoleRecherche":
 				return oAnneeScolaire.ecoleRecherche;
-			case "ecole":
-				return oAnneeScolaire.ecole;
+			case "ecole_":
+				return oAnneeScolaire.ecole_;
 			case "ecoleNomComplet":
 				return oAnneeScolaire.ecoleNomComplet;
 			case "anneeDebut":

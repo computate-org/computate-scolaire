@@ -35,6 +35,9 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		c.o(false);
 	}
 
+	protected void _fields(List<String> c) {
+	}
+
 	protected void _solrQuery(SolrQuery o) {
 	}
 
@@ -60,11 +63,12 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		for(SolrDocument solrDocument : solrDocumentList) {
 			try {
 				DEV o = c.newInstance();
+				MethodUtils.invokeMethod(o, "setSiteRequest_", siteRequest_);
 				if(populate)
 					MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
 				if(store)
 					MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
-				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
+//				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
 				l.add(o);
 			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
 					| InvocationTargetException e) {
@@ -514,18 +518,6 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 
 	public boolean getMoreLikeThis() {
 		return solrQuery.getMoreLikeThis();
-	}
-
-	public SolrQuery setFields(String...fields) {
-		return solrQuery.setFields(fields);
-	}
-
-	public SolrQuery addField(String field) {
-		return solrQuery.addField(field);
-	}
-
-	public String getFields() {
-		return solrQuery.getFields();
 	}
 
 	public SolrQuery setIncludeScore(boolean includeScore) {

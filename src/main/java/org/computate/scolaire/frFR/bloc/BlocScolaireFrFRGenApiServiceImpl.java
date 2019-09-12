@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -382,7 +383,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.strCree(), pk));
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
@@ -392,7 +393,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.strModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
@@ -402,7 +403,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.strArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
@@ -412,7 +413,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 					case "setBlocHeureDebut":
@@ -422,7 +423,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.strBlocHeureDebut(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.jsonBlocHeureDebut(), pk));
 						}
 						break;
 					case "setBlocHeureFin":
@@ -432,7 +433,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.strBlocHeureFin(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.jsonBlocHeureFin(), pk));
 						}
 						break;
 					case "setBlocDimanche":
@@ -442,7 +443,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocDimanche"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocDimanche", o2.strBlocDimanche(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocDimanche", o2.jsonBlocDimanche(), pk));
 						}
 						break;
 					case "setBlocLundi":
@@ -452,7 +453,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocLundi", o2.strBlocLundi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocLundi", o2.jsonBlocLundi(), pk));
 						}
 						break;
 					case "setBlocMardi":
@@ -462,7 +463,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocMardi", o2.strBlocMardi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocMardi", o2.jsonBlocMardi(), pk));
 						}
 						break;
 					case "setBlocMercredi":
@@ -472,7 +473,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocMercredi", o2.strBlocMercredi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocMercredi", o2.jsonBlocMercredi(), pk));
 						}
 						break;
 					case "setBlocJeudi":
@@ -482,7 +483,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocJeudi", o2.strBlocJeudi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocJeudi", o2.jsonBlocJeudi(), pk));
 						}
 						break;
 					case "setBlocVendredi":
@@ -492,7 +493,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocVendredi", o2.strBlocVendredi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocVendredi", o2.jsonBlocVendredi(), pk));
 						}
 						break;
 					case "setBlocSamedi":
@@ -502,7 +503,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocSamedi"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.strBlocSamedi(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.jsonBlocSamedi(), pk));
 						}
 						break;
 					case "setBlocPrixParMois":
@@ -512,7 +513,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.strBlocPrixParMois(), pk));
+							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
 						}
 						break;
 				}
@@ -707,7 +708,17 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
 			listeBlocScolaire.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeBlocScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("liste", l);
 			if(exceptionRecherche != null) {
@@ -734,7 +745,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				if(a.succeeded()) {
 					utilisateurBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, "/frFR/bloc", c -> {
+							rechercheBlocScolaire(requeteSite, false, true, "/bloc", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
 									reponse200PageRechercheBlocScolaire(listeBlocScolaire, d -> {
@@ -786,7 +797,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			BlocPage page = new BlocPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/bloc");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/bloc");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeBlocScolaire(listeBlocScolaire);
@@ -1114,7 +1125,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(BlocScolaire.class);
 			if(entiteListe != null)
-				listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.bloc.BlocScolaire"));

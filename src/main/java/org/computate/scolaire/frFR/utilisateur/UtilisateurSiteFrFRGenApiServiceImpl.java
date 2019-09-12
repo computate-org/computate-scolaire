@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -213,7 +215,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.strCree(), pk));
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
@@ -223,7 +225,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("modifie", o2.strModifie(), pk));
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
@@ -233,7 +235,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("archive", o2.strArchive(), pk));
+							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
@@ -243,7 +245,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("supprime", o2.strSupprime(), pk));
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
 				}
@@ -288,7 +290,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				if(a.succeeded()) {
 					utilisateurUtilisateurSite(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheUtilisateurSite(requeteSite, false, true, "/frFR/utilisateur", c -> {
+							rechercheUtilisateurSite(requeteSite, false, true, "/utilisateur", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
 									reponse200PageRechercheUtilisateurSite(listeUtilisateurSite, d -> {
@@ -340,7 +342,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			UtilisateurSitePage page = new UtilisateurSitePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/frFR/utilisateur");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/utilisateur");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeUtilisateurSite(listeUtilisateurSite);
@@ -606,7 +608,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(UtilisateurSite.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
@@ -659,11 +661,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
 								varIndexe = varIndexeUtilisateurSite(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
-								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeUtilisateurSite(entiteVar);
-								listeRecherche.addField(varIndexe);
 								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;

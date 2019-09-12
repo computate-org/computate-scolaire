@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -651,7 +652,17 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
 			listSchool.getList().stream().forEach(o -> {
-				l.add(JsonObject.mapFrom(o));
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchool.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
 			});
 			json.put("list", l);
 			if(exceptionSearch != null) {
@@ -678,7 +689,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(a.succeeded()) {
 					userSchool(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchool(siteRequest, false, true, "/enUS/school", c -> {
+							aSearchSchool(siteRequest, false, true, "/school", c -> {
 								if(c.succeeded()) {
 									SearchList<School> listSchool = c.result();
 									response200SearchPageSchool(listSchool, d -> {
@@ -730,7 +741,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			SchoolPage page = new SchoolPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enUS/school");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/school");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchool(listSchool);
@@ -1016,7 +1027,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			listSearch.setQuery("*:*");
 			listSearch.setC(School.class);
 			if(entityList != null)
-				listSearch.setFields(entityList);
+				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.school.School"));

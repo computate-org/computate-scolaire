@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -42,6 +43,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String missionNom;
+	@JsonIgnore
 	public Wrap<String> missionNomWrap = new Wrap<String>().p(this).c(String.class).var("missionNom").o(missionNom);
 
 	/**	<br/>L'entité « missionNom »
@@ -78,6 +80,10 @@ public abstract class MissionGen<DEV> extends Cluster {
 		return missionNom == null ? "" : missionNom;
 	}
 
+	public String jsonMissionNom() {
+		return missionNom == null ? "" : missionNom;
+	}
+
 	public String nomAffichageMissionNom() {
 		return "mission name";
 	}
@@ -98,7 +104,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchMission", strPk(), "MissionNom() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/mission?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -139,6 +145,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String ecoleNumeroTelephone;
+	@JsonIgnore
 	public Wrap<String> ecoleNumeroTelephoneWrap = new Wrap<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
 
 	/**	<br/>L'entité « ecoleNumeroTelephone »
@@ -175,6 +182,10 @@ public abstract class MissionGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
 
+	public String jsonEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
 	public String nomAffichageEcoleNumeroTelephone() {
 		return "mission description";
 	}
@@ -195,7 +206,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchMission", strPk(), "EcoleNumeroTelephone() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/mission?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -236,6 +247,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String missionId;
+	@JsonIgnore
 	public Wrap<String> missionIdWrap = new Wrap<String>().p(this).c(String.class).var("missionId").o(missionId);
 
 	/**	<br/>L'entité « missionId »
@@ -272,6 +284,10 @@ public abstract class MissionGen<DEV> extends Cluster {
 		return missionId == null ? "" : missionId;
 	}
 
+	public String jsonMissionId() {
+		return missionId == null ? "" : missionId;
+	}
+
 	public String nomAffichageMissionId() {
 		return "";
 	}
@@ -292,7 +308,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchMission", strPk(), "MissionId() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/mission?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -333,6 +349,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUri;
+	@JsonIgnore
 	public Wrap<String> pageUriWrap = new Wrap<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
 	/**	<br/>L'entité « pageUri »
@@ -369,6 +386,10 @@ public abstract class MissionGen<DEV> extends Cluster {
 		return pageUri == null ? "" : pageUri;
 	}
 
+	public String jsonPageUri() {
+		return pageUri == null ? "" : pageUri;
+	}
+
 	public String nomAffichagePageUri() {
 		return null;
 	}
@@ -389,7 +410,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 				r.l("	<script>//<![CDATA[");
 				r.l("		function patchMission", strPk(), "PageUri() {");
 				r.l("			$.ajax({");
-				r.l("				url: '/api/mission?fq=pk:", strPk(), "',");
+				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
 				r.l("				type: 'patch',");
 				r.l("				contentType: 'application/json',");
@@ -764,7 +785,7 @@ public abstract class MissionGen<DEV> extends Cluster {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("Mission {");
+		sb.append("Mission { ");
 		sb.append(" }");
 		return sb.toString();
 	}

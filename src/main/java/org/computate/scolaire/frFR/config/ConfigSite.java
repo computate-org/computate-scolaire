@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.config;
 
 import java.io.File;
 import java.io.Serializable;
+import java.time.ZoneId;
 
 import org.apache.commons.configuration2.INIConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
@@ -876,6 +877,22 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 			o = System.getenv(c.var);
 		else
 			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), "/static");
+		c.o(o);
+	}
+
+	/**	
+	 * Var.enUS: siteZone
+	 * frFR:
+	 * enUS: The default timezone of the site. 
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 * **/
+	protected void _siteZone(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = StringUtils.defaultIfBlank(config.getString(prefixeEchappe + c.var), ZoneId.systemDefault().getId());
 		c.o(o);
 	}
 }

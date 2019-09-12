@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
@@ -50,6 +51,7 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -112,10 +114,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 
 	public void reponse200RechercheMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = listeMissionScolaire.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
 			QueryResponse reponseRecherche = listeMissionScolaire.getQueryResponse();
 			SolrDocumentList documentsSolr = listeMissionScolaire.getSolrDocumentList();
 			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
@@ -127,90 +126,31 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 			String tempsTransmission = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(millisTransmission), TimeUnit.MILLISECONDS.toMillis(millisTransmission) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisTransmission)));
 			Exception exceptionRecherche = reponseRecherche.getException();
 
-			w.l("{");
-			w.tl(1, "\"numCommence\": ", numCommence);
-			w.tl(1, ", \"numTrouve\": ", numTrouve);
-			w.tl(1, ", \"numRetourne\": ", numRetourne);
-			w.tl(1, ", \"tempsRecherche\": ", w.q(tempsRecherche));
-			w.tl(1, ", \"tempsTransmission\": ", w.q(tempsTransmission));
-			w.tl(1, ", \"liste\": [");
-			for(int i = 0; i < listeMissionScolaire.size(); i++) {
-				MissionScolaire o = listeMissionScolaire.getList().get(i);
-				Object entiteValeur;
-				Integer entiteNumero = 0;
-
-				w.t(2);
-				if(i > 0)
-					w.s(", ");
-				w.l("{");
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomSimple();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
-
-				{
-					List<String> entiteValeurs = o.getClasseNomsCanoniques();
-					w.t(3, entiteNumero++ == 0 ? "" : ", ");
-					w.s("\"classeNomsCanoniques\": [");
-					for(int k = 0; k < entiteValeurs.size(); k++) {
-						entiteValeur = entiteValeurs.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entiteValeur));
-						w.s("\"");
+			JsonObject json = new JsonObject();
+			json.put("numCommence", numCommence);
+			json.put("numTrouve", numTrouve);
+			json.put("numRetourne", numRetourne);
+			json.put("tempsRecherche", tempsRecherche);
+			json.put("tempsTransmission", tempsTransmission);
+			JsonArray l = new JsonArray();
+			listeMissionScolaire.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listeMissionScolaire.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
 					}
-					w.l("]");
 				}
-
-				entiteValeur = o.getMissionNom();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionNom\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getEcoleNumeroTelephone();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getMissionId();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionId\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getPageUri();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entiteValeur));
-
-				w.tl(2, "}");
-			}
-			w.tl(1, "]");
+				l.add(json2);
+			});
+			json.put("liste", l);
 			if(exceptionRecherche != null) {
-				w.tl(1, ", \"exceptionRecherche\": ", w.q(exceptionRecherche.getMessage()));
+				json.put("exceptionRecherche", exceptionRecherche.getMessage());
 			}
-			w.l("}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -298,7 +238,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 				Long pk = creerLigne.getLong(0);
 				MissionScolaire o = new MissionScolaire();
 				o.setPk(pk);
-				o.initLoinMissionScolaire(requeteSite);
+				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
@@ -322,7 +262,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 					}
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -336,11 +276,9 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 
 	public void reponse200POSTMissionScolaire(MissionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(o.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -404,11 +342,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 		List<Future> futures = new ArrayList<>();
 		listeMissionScolaire.getList().forEach(o -> {
 			futures.add(
-				sqlPATCHMissionScolaire(o).compose(
-					a -> definirPATCHMissionScolaire(a).compose(
-						b -> indexerPATCHMissionScolaire(b)
-					)
-				)
+				futurePATCHMissionScolaire(o, gestionnaireEvenements)
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -420,8 +354,43 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 		});
 	}
 
-	public Future<MissionScolaire> sqlPATCHMissionScolaire(MissionScolaire o) {
+	public Future<MissionScolaire> futurePATCHMissionScolaire(MissionScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		Future<MissionScolaire> future = Future.future();
+		try {
+			sqlPATCHMissionScolaire(o, a -> {
+				if(a.succeeded()) {
+					MissionScolaire missionScolaire = a.result();
+					definirMissionScolaire(missionScolaire, b -> {
+						if(b.succeeded()) {
+							attribuerMissionScolaire(missionScolaire, c -> {
+								if(c.succeeded()) {
+									indexerMissionScolaire(missionScolaire, d -> {
+										if(d.succeeded()) {
+											future.complete(o);
+											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										} else {
+											erreurMissionScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurMissionScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurMissionScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurMissionScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+				}
+			});
+			return future;
+		} catch(Exception e) {
+			return Future.failedFuture(e);
+		}
+	}
+
+	public void sqlPATCHMissionScolaire(MissionScolaire o, Handler<AsyncResult<MissionScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -437,88 +406,67 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("cree", o2.getCree(), pk));
+						o2.setCree(requeteJson.getString(methodeNom));
+						if(o2.getCree() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getInstant(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("modifie", o2.getModifie(), pk));
+						o2.setModifie(requeteJson.getString(methodeNom));
+						if(o2.getModifie() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
+						}
 						break;
 					case "setArchive":
 						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("archive", o2.getArchive(), pk));
+						if(o2.getArchive() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
+						}
 						break;
 					case "setSupprime":
 						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setD);
-						patchSqlParams.addAll(Arrays.asList("supprime", o2.getSupprime(), pk));
+						if(o2.getSupprime() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
 						break;
 				}
 			}
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				o2.setRequeteSite_(o.getRequeteSite_());
-				o2.setPk(pk);
-				future.complete(o2);
+				MissionScolaire o3 = new MissionScolaire();
+				o3.setRequeteSite_(o.getRequeteSite_());
+				o3.setPk(pk);
+				gestionnaireEvenements.handle(Future.succeededFuture(o3));
 			});
-			return future;
 		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<MissionScolaire> definirPATCHMissionScolaire(MissionScolaire o) {
-		Future<MissionScolaire> future = Future.future();
-		try {
-			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			Long pk = o.getPk();
-			connexionSql.queryWithParams(
-					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk, pk))
-					, definirAsync
-			-> {
-				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
-					}
-					future.complete(o);
-				} else {
-			future.fail(definirAsync.cause());
-				}
-			});
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> indexerPATCHMissionScolaire(MissionScolaire o) {
-		Future<Void> future = Future.future();
-		try {
-			o.initLoinPourClasse(o.getRequeteSite_());
-			o.indexerPourClasse();
-				future.complete();
-			return future;
-		} catch(Exception e) {
-			return Future.failedFuture(e);
+			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
 
 	public void reponse200PATCHMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = listeMissionScolaire.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
-			buffer.appendString("{}");
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -551,82 +499,11 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 
 	public void reponse200GETMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
 			RequeteSiteFrFR requeteSite = listeMissionScolaire.getRequeteSite_();
-			ToutEcrivain w = ToutEcrivain.creer(listeMissionScolaire.getRequeteSite_(), buffer);
-			requeteSite.setW(w);
 			SolrDocumentList documentsSolr = listeMissionScolaire.getSolrDocumentList();
 
-			if(listeMissionScolaire.size() > 0) {
-				SolrDocument documentSolr = documentsSolr.get(0);
-				MissionScolaire o = listeMissionScolaire.get(0);
-				Object entiteValeur;
-				Integer entiteNumero = 0;
-
-				w.l("{");
-
-				entiteValeur = o.getPk();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pk\": ", entiteValeur);
-
-				entiteValeur = o.getCree();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"cree\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getModifie();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"modifie\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getArchive();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"archive\": ", entiteValeur);
-
-				entiteValeur = o.getSupprime();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"supprime\": ", entiteValeur);
-
-				entiteValeur = o.getClasseNomCanonique();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomCanonique\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getClasseNomSimple();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"classeNomSimple\": ", w.qjs(entiteValeur));
-
-				{
-					List<String> entiteValeurs = o.getClasseNomsCanoniques();
-					w.t(3, entiteNumero++ == 0 ? "" : ", ");
-					w.s("\"classeNomsCanoniques\": [");
-					for(int k = 0; k < entiteValeurs.size(); k++) {
-						entiteValeur = entiteValeurs.get(k);
-						if(k > 0)
-							w.s(", ");
-						w.s("\"");
-						w.s(((String)entiteValeur));
-						w.s("\"");
-					}
-					w.l("]");
-				}
-
-				entiteValeur = o.getMissionNom();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionNom\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getEcoleNumeroTelephone();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"ecoleNumeroTelephone\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getMissionId();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"missionId\": ", w.qjs(entiteValeur));
-
-				entiteValeur = o.getPageUri();
-				if(entiteValeur != null)
-					w.tl(3, entiteNumero++ == 0 ? "" : ", ", "\"pageUri\": ", w.qjs(entiteValeur));
-
-				w.l("}");
-			}
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = JsonObject.mapFrom(listeMissionScolaire.get(0));
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -692,7 +569,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.queryWithParams(
+			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, MissionScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -706,10 +583,8 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 
 	public void reponse200DELETEMissionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			Buffer buffer = Buffer.buffer();
-			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
-			requeteSite.setW(w);
-			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -955,7 +830,7 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 			listeRecherche.setQuery("*:*");
 			listeRecherche.setC(MissionScolaire.class);
 			if(entiteListe != null)
-			listeRecherche.setFields(entiteListe);
+				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.mission.MissionScolaire"));
@@ -965,11 +840,9 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
 				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
-			String pageUri = null;
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				pageUri = classeApiUriMethode + "/" + id;
-				listeRecherche.addFilterQuery("pageUri_indexed_string:" + ClientUtils.escapeQueryChars(pageUri));
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1011,11 +884,6 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 								varIndexe = varIndexeMissionScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
-							case "fl":
-								entiteVar = StringUtils.trim((String)paramObjet);
-								varIndexe = varIndexeMissionScolaire(entiteVar);
-								listeRecherche.addField(varIndexe);
-								break;
 							case "start":
 								rechercheDebut = (Integer)paramObjet;
 								listeRecherche.setStart(rechercheDebut);
@@ -1048,10 +916,14 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
-					for(JsonArray definition : definirAsync.result().getResults()) {
-						o.definirPourClasse(definition.getString(0), definition.getString(1));
+					try {
+						for(JsonArray definition : definirAsync.result().getResults()) {
+							o.definirPourClasse(definition.getString(0), definition.getString(1));
+						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} catch(Exception e) {
+						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
 					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}
@@ -1071,15 +943,22 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 					, new JsonArray(Arrays.asList(pk, pk))
 					, attribuerAsync
 			-> {
-				if(attribuerAsync.succeeded()) {
-					if(attribuerAsync.result() != null) {
-						for(JsonArray definition : attribuerAsync.result().getResults()) {
-							o.attribuerPourClasse(definition.getString(0), definition.getString(1));
+				try {
+					if(attribuerAsync.succeeded()) {
+						if(attribuerAsync.result() != null) {
+							for(JsonArray definition : attribuerAsync.result().getResults()) {
+								if(pk.equals(definition.getLong(0)))
+									o.attribuerPourClasse(definition.getString(2), definition.getLong(1));
+								else
+									o.attribuerPourClasse(definition.getString(3), definition.getLong(0));
+							}
 						}
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
 					}
-					gestionnaireEvenements.handle(Future.succeededFuture());
-				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+				} catch(Exception e) {
+					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {

@@ -1707,7 +1707,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -1825,7 +1825,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -1943,7 +1943,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSeasonStartDay(Date o) {
-		this.seasonStartDay = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.seasonStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDayWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2495,7 +2495,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setAgeStartDay(Date o) {
-		this.ageStartDay = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.ageStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.ageStartDayWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2613,7 +2613,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSessionEndDay(Date o) {
-		this.sessionEndDay = o.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.sessionEndDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDayWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -5164,16 +5164,16 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
 		}
 		if(yearStart != null) {
-			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(yearEnd != null) {
-			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(seasonStartDay != null) {
-			document.addField("seasonStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("seasonStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("seasonStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("seasonStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(seasonSummer != null) {
 			document.addField("seasonSummer_indexed_boolean", seasonSummer);
@@ -5192,12 +5192,12 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			document.addField("seasonNameComplete_stored_string", seasonNameComplete);
 		}
 		if(ageStartDay != null) {
-			document.addField("ageStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(ageStartDay.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("ageStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(ageStartDay.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("ageStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(ageStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("ageStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(ageStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionEndDay != null) {
-			document.addField("sessionEndDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.of("Z"))));
-			document.addField("sessionEndDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.of("Z"))));
+			document.addField("sessionEndDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionEndDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(ageNameComplete != null) {
 			document.addField("ageNameComplete_indexed_string", ageNameComplete);

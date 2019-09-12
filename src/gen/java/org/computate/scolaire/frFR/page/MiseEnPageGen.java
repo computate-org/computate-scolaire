@@ -160,6 +160,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return statiqueUrlBase == null ? "" : statiqueUrlBase;
 	}
 
+	public String jsonStatiqueUrlBase() {
+		return statiqueUrlBase == null ? "" : statiqueUrlBase;
+	}
+
 	public String nomAffichageStatiqueUrlBase() {
 		return null;
 	}
@@ -293,6 +297,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return contexteIconeGroupe == null ? "" : contexteIconeGroupe;
 	}
 
+	public String jsonContexteIconeGroupe() {
+		return contexteIconeGroupe == null ? "" : contexteIconeGroupe;
+	}
+
 	public String nomAffichageContexteIconeGroupe() {
 		return null;
 	}
@@ -350,6 +358,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return contexteIconeNom == null ? "" : contexteIconeNom;
 	}
 
+	public String jsonContexteIconeNom() {
+		return contexteIconeNom == null ? "" : contexteIconeNom;
+	}
+
 	public String nomAffichageContexteIconeNom() {
 		return null;
 	}
@@ -404,6 +416,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strContexteIconeClassesCss() {
+		return contexteIconeClassesCss == null ? "" : contexteIconeClassesCss;
+	}
+
+	public String jsonContexteIconeClassesCss() {
 		return contexteIconeClassesCss == null ? "" : contexteIconeClassesCss;
 	}
 
@@ -469,6 +485,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageVisibleAuxBots == null ? "" : pageVisibleAuxBots.toString();
 	}
 
+	public String jsonPageVisibleAuxBots() {
+		return pageVisibleAuxBots == null ? "" : pageVisibleAuxBots.toString();
+	}
+
 	public String nomAffichagePageVisibleAuxBots() {
 		return null;
 	}
@@ -523,6 +543,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String jsonPageH1() {
 		return pageH1 == null ? "" : pageH1;
 	}
 
@@ -583,6 +607,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageH2 == null ? "" : pageH2;
 	}
 
+	public String jsonPageH2() {
+		return pageH2 == null ? "" : pageH2;
+	}
+
 	public String nomAffichagePageH2() {
 		return null;
 	}
@@ -637,6 +665,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageH3() {
+		return pageH3 == null ? "" : pageH3;
+	}
+
+	public String jsonPageH3() {
 		return pageH3 == null ? "" : pageH3;
 	}
 
@@ -697,6 +729,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageH1Court == null ? "" : pageH1Court;
 	}
 
+	public String jsonPageH1Court() {
+		return pageH1Court == null ? "" : pageH1Court;
+	}
+
 	public String nomAffichagePageH1Court() {
 		return null;
 	}
@@ -751,6 +787,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageH2Court() {
+		return pageH2Court == null ? "" : pageH2Court;
+	}
+
+	public String jsonPageH2Court() {
 		return pageH2Court == null ? "" : pageH2Court;
 	}
 
@@ -811,6 +851,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageH3Court == null ? "" : pageH3Court;
 	}
 
+	public String jsonPageH3Court() {
+		return pageH3Court == null ? "" : pageH3Court;
+	}
+
 	public String nomAffichagePageH3Court() {
 		return null;
 	}
@@ -868,6 +912,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageTitre == null ? "" : pageTitre;
 	}
 
+	public String jsonPageTitre() {
+		return pageTitre == null ? "" : pageTitre;
+	}
+
 	public String nomAffichagePageTitre() {
 		return null;
 	}
@@ -922,6 +970,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageUri() {
+		return pageUri == null ? "" : pageUri;
+	}
+
+	public String jsonPageUri() {
 		return pageUri == null ? "" : pageUri;
 	}
 
@@ -999,6 +1051,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageUris == null ? "" : pageUris.toString();
 	}
 
+	public String jsonPageUris() {
+		return pageUris == null ? "" : pageUris.toString();
+	}
+
 	public String nomAffichagePageUris() {
 		return null;
 	}
@@ -1053,6 +1109,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
+	public String jsonPageUrl() {
 		return pageUrl == null ? "" : pageUrl;
 	}
 
@@ -1113,6 +1173,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageImageUri == null ? "" : pageImageUri;
 	}
 
+	public String jsonPageImageUri() {
+		return pageImageUri == null ? "" : pageImageUri;
+	}
+
 	public String nomAffichagePageImageUri() {
 		return null;
 	}
@@ -1167,6 +1231,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageImageUrl() {
+		return pageImageUrl == null ? "" : pageImageUrl;
+	}
+
+	public String jsonPageImageUrl() {
 		return pageImageUrl == null ? "" : pageImageUrl;
 	}
 
@@ -1227,6 +1295,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageVideoId == null ? "" : pageVideoId;
 	}
 
+	public String jsonPageVideoId() {
+		return pageVideoId == null ? "" : pageVideoId;
+	}
+
 	public String nomAffichagePageVideoId() {
 		return null;
 	}
@@ -1284,6 +1356,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageVideoUrl == null ? "" : pageVideoUrl;
 	}
 
+	public String jsonPageVideoUrl() {
+		return pageVideoUrl == null ? "" : pageVideoUrl;
+	}
+
 	public String nomAffichagePageVideoUrl() {
 		return null;
 	}
@@ -1338,6 +1414,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageVideoUrlEmbed() {
+		return pageVideoUrlEmbed == null ? "" : pageVideoUrlEmbed;
+	}
+
+	public String jsonPageVideoUrlEmbed() {
 		return pageVideoUrlEmbed == null ? "" : pageVideoUrlEmbed;
 	}
 
@@ -1404,6 +1484,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageImageLargeur == null ? "" : pageImageLargeur.toString();
 	}
 
+	public String jsonPageImageLargeur() {
+		return pageImageLargeur == null ? "" : pageImageLargeur.toString();
+	}
+
 	public String nomAffichagePageImageLargeur() {
 		return null;
 	}
@@ -1467,6 +1551,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageImageHauteur == null ? "" : pageImageHauteur.toString();
 	}
 
+	public String jsonPageImageHauteur() {
+		return pageImageHauteur == null ? "" : pageImageHauteur.toString();
+	}
+
 	public String nomAffichagePageImageHauteur() {
 		return null;
 	}
@@ -1521,6 +1609,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageImageTypeContenu() {
+		return pageImageTypeContenu == null ? "" : pageImageTypeContenu;
+	}
+
+	public String jsonPageImageTypeContenu() {
 		return pageImageTypeContenu == null ? "" : pageImageTypeContenu;
 	}
 
@@ -1581,6 +1673,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageTypeContenu == null ? "" : pageTypeContenu;
 	}
 
+	public String jsonPageTypeContenu() {
+		return pageTypeContenu == null ? "" : pageTypeContenu;
+	}
+
 	public String nomAffichagePageTypeContenu() {
 		return null;
 	}
@@ -1632,7 +1728,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageCree(Date o) {
-		this.pageCree = LocalDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.pageCree = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -1651,7 +1747,11 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageCree() {
-		return pageCree == null ? "" : pageCree.toString();
+		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonPageCree() {
+		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
 	}
 
 	public String nomAffichagePageCree() {
@@ -1705,7 +1805,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageModifiee(Date o) {
-		this.pageModifiee = LocalDateTime.ofInstant(o.toInstant(), ZoneId.systemDefault());
+		this.pageModifiee = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -1724,7 +1824,11 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageModifiee() {
-		return pageModifiee == null ? "" : pageModifiee.toString();
+		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
+	}
+
+	public String jsonPageModifiee() {
+		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.FRANCE));
 	}
 
 	public String nomAffichagePageModifiee() {
@@ -1781,6 +1885,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageMotsCles() {
+		return pageMotsCles == null ? "" : pageMotsCles;
+	}
+
+	public String jsonPageMotsCles() {
 		return pageMotsCles == null ? "" : pageMotsCles;
 	}
 
@@ -1841,6 +1949,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageDescription == null ? "" : pageDescription;
 	}
 
+	public String jsonPageDescription() {
+		return pageDescription == null ? "" : pageDescription;
+	}
+
 	public String nomAffichagePageDescription() {
 		return null;
 	}
@@ -1895,6 +2007,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageAccueilUri() {
+		return pageAccueilUri == null ? "" : pageAccueilUri;
+	}
+
+	public String jsonPageAccueilUri() {
 		return pageAccueilUri == null ? "" : pageAccueilUri;
 	}
 
@@ -1955,6 +2071,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageEcoleUri == null ? "" : pageEcoleUri;
 	}
 
+	public String jsonPageEcoleUri() {
+		return pageEcoleUri == null ? "" : pageEcoleUri;
+	}
+
 	public String nomAffichagePageEcoleUri() {
 		return null;
 	}
@@ -2012,6 +2132,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return pageUtilisateurUri == null ? "" : pageUtilisateurUri;
 	}
 
+	public String jsonPageUtilisateurUri() {
+		return pageUtilisateurUri == null ? "" : pageUtilisateurUri;
+	}
+
 	public String nomAffichagePageUtilisateurUri() {
 		return null;
 	}
@@ -2066,6 +2190,10 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageDeconnexionUri() {
+		return pageDeconnexionUri == null ? "" : pageDeconnexionUri;
+	}
+
+	public String jsonPageDeconnexionUri() {
 		return pageDeconnexionUri == null ? "" : pageDeconnexionUri;
 	}
 
@@ -2408,7 +2536,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("MiseEnPage {");
+		sb.append("MiseEnPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

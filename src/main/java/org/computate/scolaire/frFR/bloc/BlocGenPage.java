@@ -45,7 +45,9 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(blocScolaire != null)
+		if(blocScolaire != null && blocScolaire.getBlocNomComplet() != null)
+			c.o(blocScolaire.getBlocNomComplet());
+		else if(blocScolaire != null)
 			c.o("un bloc");
 		else if(listeBlocScolaire == null || listeBlocScolaire.size() == 0)
 			c.o("aucun bloc trouvé");
@@ -60,18 +62,20 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(blocScolaire != null)
+		if(blocScolaire != null && blocScolaire.getBlocNomComplet() != null)
+			c.o(blocScolaire.getBlocNomComplet());
+		else if(blocScolaire != null)
 			c.o("");
 		else if(listeBlocScolaire == null || listeBlocScolaire.size() == 0)
 			c.o("aucun bloc trouvé");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/frFR/bloc");
+		c.o("/bloc");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/frFR/bloc-999.png");
+			c.o("/png/bloc-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -308,14 +312,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocDimanche")
-										.a("id", "Page_blocDimanche")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -323,23 +324,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocDimanche")
 										.a("name", "setBlocDimanche")
 										.a("id", "Page_blocDimanche")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocDimanche', $(this).val(), function() { ajouterLueur($('#Page_blocDimanche')); }, function() { ajouterErreur($('#Page_blocDimanche')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocDimanche', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocDimanche')); }, function() { ajouterErreur($('#Page_blocDimanche')); }); ")
 										;
 										if(o.getBlocDimanche() != null && o.getBlocDimanche())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocDimanche").a("class", "").f().sx("dimanche").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocDimanche')); $('#Page_blocDimanche').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocDimanche', null, $('#Page_blocDimanche'), function() { ajouterLueur($('#Page_blocDimanche')); }, function() { ajouterErreur($('#Page_blocDimanche')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -358,14 +348,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocLundi").a("class", "").f().sx("lundi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocLundi")
-										.a("id", "Page_blocLundi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -373,23 +360,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocLundi")
 										.a("name", "setBlocLundi")
 										.a("id", "Page_blocLundi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocLundi', $(this).val(), function() { ajouterLueur($('#Page_blocLundi')); }, function() { ajouterErreur($('#Page_blocLundi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocLundi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocLundi')); }, function() { ajouterErreur($('#Page_blocLundi')); }); ")
 										;
 										if(o.getBlocLundi() != null && o.getBlocLundi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocLundi").a("class", "").f().sx("lundi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocLundi')); $('#Page_blocLundi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocLundi', null, $('#Page_blocLundi'), function() { ajouterLueur($('#Page_blocLundi')); }, function() { ajouterErreur($('#Page_blocLundi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -408,14 +384,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocMardi").a("class", "").f().sx("mardi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocMardi")
-										.a("id", "Page_blocMardi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -423,23 +396,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocMardi")
 										.a("name", "setBlocMardi")
 										.a("id", "Page_blocMardi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMardi', $(this).val(), function() { ajouterLueur($('#Page_blocMardi')); }, function() { ajouterErreur($('#Page_blocMardi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMardi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocMardi')); }, function() { ajouterErreur($('#Page_blocMardi')); }); ")
 										;
 										if(o.getBlocMardi() != null && o.getBlocMardi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocMardi").a("class", "").f().sx("mardi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocMardi')); $('#Page_blocMardi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMardi', null, $('#Page_blocMardi'), function() { ajouterLueur($('#Page_blocMardi')); }, function() { ajouterErreur($('#Page_blocMardi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -458,14 +420,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocMercredi")
-										.a("id", "Page_blocMercredi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -473,23 +432,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocMercredi")
 										.a("name", "setBlocMercredi")
 										.a("id", "Page_blocMercredi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMercredi', $(this).val(), function() { ajouterLueur($('#Page_blocMercredi')); }, function() { ajouterErreur($('#Page_blocMercredi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMercredi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocMercredi')); }, function() { ajouterErreur($('#Page_blocMercredi')); }); ")
 										;
 										if(o.getBlocMercredi() != null && o.getBlocMercredi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocMercredi").a("class", "").f().sx("mercredi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocMercredi')); $('#Page_blocMercredi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocMercredi', null, $('#Page_blocMercredi'), function() { ajouterLueur($('#Page_blocMercredi')); }, function() { ajouterErreur($('#Page_blocMercredi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -508,14 +456,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocJeudi")
-										.a("id", "Page_blocJeudi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -523,23 +468,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocJeudi")
 										.a("name", "setBlocJeudi")
 										.a("id", "Page_blocJeudi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocJeudi', $(this).val(), function() { ajouterLueur($('#Page_blocJeudi')); }, function() { ajouterErreur($('#Page_blocJeudi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocJeudi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocJeudi')); }, function() { ajouterErreur($('#Page_blocJeudi')); }); ")
 										;
 										if(o.getBlocJeudi() != null && o.getBlocJeudi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocJeudi").a("class", "").f().sx("jeudi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocJeudi')); $('#Page_blocJeudi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocJeudi', null, $('#Page_blocJeudi'), function() { ajouterLueur($('#Page_blocJeudi')); }, function() { ajouterErreur($('#Page_blocJeudi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -558,14 +492,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocVendredi")
-										.a("id", "Page_blocVendredi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -573,23 +504,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocVendredi")
 										.a("name", "setBlocVendredi")
 										.a("id", "Page_blocVendredi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocVendredi', $(this).val(), function() { ajouterLueur($('#Page_blocVendredi')); }, function() { ajouterErreur($('#Page_blocVendredi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocVendredi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocVendredi')); }, function() { ajouterErreur($('#Page_blocVendredi')); }); ")
 										;
 										if(o.getBlocVendredi() != null && o.getBlocVendredi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocVendredi").a("class", "").f().sx("vendredi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocVendredi')); $('#Page_blocVendredi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocVendredi', null, $('#Page_blocVendredi'), function() { ajouterLueur($('#Page_blocVendredi')); }, function() { ajouterErreur($('#Page_blocVendredi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -608,14 +528,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+								e("label").a("for", "Page_blocSamedi").a("class", "").f().sx("samedi").g("label");
+							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
-									e("input")
-										.a("type", "hidden")
-										.a("name", "blocSamedi")
-										.a("id", "Page_blocSamedi")
-										.a("value", "false")
-									.fg();
 
 									e("input")
 										.a("type", "checkbox")
@@ -623,23 +540,12 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 										.a("class", "setBlocSamedi")
 										.a("name", "setBlocSamedi")
 										.a("id", "Page_blocSamedi")
-										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocSamedi', $(this).val(), function() { ajouterLueur($('#Page_blocSamedi')); }, function() { ajouterErreur($('#Page_blocSamedi')); }); ")
+										.a("onchange", "patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocSamedi', $(this).prop('checked'), function() { ajouterLueur($('#Page_blocSamedi')); }, function() { ajouterErreur($('#Page_blocSamedi')); }); ")
 										;
 										if(o.getBlocSamedi() != null && o.getBlocSamedi())
 											a("checked", "checked");
 									fg();
 
-								} g("div");
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blocSamedi").a("class", "").f().sx("samedi").g("label");
-							} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocSamedi')); $('#Page_blocSamedi').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocSamedi', null, $('#Page_blocSamedi'), function() { ajouterLueur($('#Page_blocSamedi')); }, function() { ajouterErreur($('#Page_blocSamedi')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -888,14 +794,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocDimanche")
-									.a("id", "POST_blocDimanche")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -909,9 +812,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocDimanche").a("class", "").f().sx("dimanche").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -929,14 +829,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocLundi")
-									.a("id", "POST_blocLundi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -950,9 +847,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocLundi").a("class", "").f().sx("lundi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -970,14 +864,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMardi")
-									.a("id", "POST_blocMardi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -991,9 +882,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocMardi").a("class", "").f().sx("mardi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1011,14 +899,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMercredi")
-									.a("id", "POST_blocMercredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1032,9 +917,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocMercredi").a("class", "").f().sx("mercredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1052,14 +934,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocJeudi")
-									.a("id", "POST_blocJeudi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1073,9 +952,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocJeudi").a("class", "").f().sx("jeudi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1093,14 +969,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocVendredi")
-									.a("id", "POST_blocVendredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1114,9 +987,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocVendredi").a("class", "").f().sx("vendredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1134,14 +1004,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "POST_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocSamedi")
-									.a("id", "POST_blocSamedi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1155,9 +1022,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blocSamedi").a("class", "").f().sx("samedi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1395,14 +1259,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocDimanche")
-									.a("id", "PATCH_blocDimanche")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1416,9 +1277,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocDimanche").a("class", "").f().sx("dimanche").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1436,14 +1294,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocLundi")
-									.a("id", "PATCH_blocLundi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1457,9 +1312,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocLundi").a("class", "").f().sx("lundi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1477,14 +1329,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMardi")
-									.a("id", "PATCH_blocMardi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1498,9 +1347,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocMardi").a("class", "").f().sx("mardi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1518,14 +1364,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMercredi")
-									.a("id", "PATCH_blocMercredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1539,9 +1382,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocMercredi").a("class", "").f().sx("mercredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1559,14 +1399,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocJeudi")
-									.a("id", "PATCH_blocJeudi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1580,9 +1417,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocJeudi").a("class", "").f().sx("jeudi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1600,14 +1434,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocVendredi")
-									.a("id", "PATCH_blocVendredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1621,9 +1452,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocVendredi").a("class", "").f().sx("vendredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1641,14 +1469,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "PATCH_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocSamedi")
-									.a("id", "PATCH_blocSamedi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1662,9 +1487,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blocSamedi").a("class", "").f().sx("samedi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1902,14 +1724,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocDimanche").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocDimanche").a("class", "").f().sx("dimanche").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocDimanche")
-									.a("id", "Recherche_blocDimanche")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1923,9 +1742,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocDimanche").a("class", "").f().sx("dimanche").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1943,14 +1759,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocLundi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocLundi").a("class", "").f().sx("lundi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocLundi")
-									.a("id", "Recherche_blocLundi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -1964,9 +1777,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocLundi").a("class", "").f().sx("lundi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -1984,14 +1794,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMardi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocMardi").a("class", "").f().sx("mardi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMardi")
-									.a("id", "Recherche_blocMardi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -2005,9 +1812,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocMardi").a("class", "").f().sx("mardi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -2025,14 +1829,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocMercredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocMercredi").a("class", "").f().sx("mercredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocMercredi")
-									.a("id", "Recherche_blocMercredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -2046,9 +1847,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocMercredi").a("class", "").f().sx("mercredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -2066,14 +1864,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocJeudi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocJeudi").a("class", "").f().sx("jeudi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocJeudi")
-									.a("id", "Recherche_blocJeudi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -2087,9 +1882,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocJeudi").a("class", "").f().sx("jeudi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -2107,14 +1899,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocVendredi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocVendredi").a("class", "").f().sx("vendredi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocVendredi")
-									.a("id", "Recherche_blocVendredi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -2128,9 +1917,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocVendredi").a("class", "").f().sx("vendredi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -2148,14 +1934,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereBlocScolaireBlocSamedi").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("for", "Recherche_blocSamedi").a("class", "").f().sx("samedi").g("label");
+						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								e("input")
-									.a("type", "hidden")
-									.a("name", "blocSamedi")
-									.a("id", "Recherche_blocSamedi")
-									.a("value", "false")
-								.fg();
 
 								e("input")
 									.a("type", "checkbox")
@@ -2169,9 +1952,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 								fg();
 
 							} g("div");
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blocSamedi").a("class", "").f().sx("samedi").g("label");
-						} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
@@ -2229,10 +2009,20 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				{ e("h1").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx("un bloc").g("span");
+					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("h1");
 				BlocScolaire o = listeBlocScolaire.get(0);
 				requeteSite_.setRequetePk(o.getPk());
+			}
+			if(pageH2 != null) {
+				{ e("h2").f();
+					e("span").a("class", " ").f().sx(pageH2).g("span");
+				} g("h2");
+			}
+			if(pageH3 != null) {
+				{ e("h3").f();
+					e("span").a("class", " ").f().sx(pageH3).g("span");
+				} g("h3");
 			}
 		} else {
 
@@ -2269,7 +2059,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						BlocScolaire o = listeBlocScolaire.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/frFR/bloc/" + o.getPk();
+						String uri = "/bloc/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();

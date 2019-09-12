@@ -180,7 +180,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _pageSchoolUri(Wrap<String> c) {
-		c.o(" /enUS/school");
+		c.o(" /school");
 	}
 
 	protected void _pageUserUri(Wrap<String> c) {
@@ -238,9 +238,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	@Override()
 	public void  htmlStylesPageLayout() {
-		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/site-enUS.css").fg();
-		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
+		e("link").a("rel", "stylesheet").a("href", staticBaseUrl, "/css/w3.css").fg();
+		e("link").a("rel", "stylesheet").a("href", staticBaseUrl, "/css/site-enUS.css").fg();
+		e("link").a("rel", "stylesheet").a("href", staticBaseUrl, "/css/datePicker.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "https://www.w3schools.com/w3css/4/w3.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "/static/css/site-enUS.css").fg();
+//		e("link").a("rel", "stylesheet").a("href", "/static/css/datePicker.css").fg();
 		e("link").a("rel", "stylesheet").a("href", "https://fonts.googleapis.com/css?family=Khand").fg();
 //		e("link").a("rel", "stylesheet").a("href", "https://pro.fontawesome.com/releases/v5.9.0/css/all.css").a("integrity", "sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz").a("crossorigin", "anonymous").fg();
 	}
@@ -287,7 +290,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("div");
 				e("div").a("class", "site-section-all ").f();
 					e("div").a("class", "site-section-above ").f();
-						e("div").a("class", "w3-content w3-center w3-text-black ").f();
+						e("div").a("class", "w3-content w3-center w3-black ").f();
 							e("div").a("class", "").f();
 								menu();
 							g("div"); 
@@ -335,7 +338,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	//				e("img").a("alt", "").a("src", staticBaseUrl, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
 					e("br").fg();
 					e("span").a("class", "site-menu-item").f();
-						sx("Accueil");
+						sx("Home");
 					g("span");
 				g("a");
 			g("div");
@@ -345,7 +348,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
 						e("br").fg();
 						e("span").a("class", "site-menu-item").f();
-							sx("Connexion");
+							sx("Login");
 						g("span");
 					g("a");
 				g("div");
@@ -365,7 +368,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
 						e("br").fg();
 						e("span").a("class", "site-menu-item").f();
-							sx("Déconnexion");
+							sx("Logout");
 						g("span");
 					g("a");
 				g("div");
