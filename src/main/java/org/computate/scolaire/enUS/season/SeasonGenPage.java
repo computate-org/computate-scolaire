@@ -99,8 +99,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSeasonGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "searchSchoolSeasonYearKey($('#formSchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ");
-		tl(1, "searchSchoolSeasonSessionKeys($('#formSchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ");
+		tl(1, "suggestSchoolSeasonYearKey($('#formSchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ");
+		tl(1, "suggestSchoolSeasonSessionKeys($('#formSchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ");
 		l("});");
 	}
 
@@ -350,7 +350,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relate a year to this season");
 								} g("h5");
 							} g("div");
@@ -362,11 +362,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "year")
-											.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setYearKey")
 											.a("id", "Page_yearKey")
 											.a("autocomplete", "off")
-											.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+											.a("oninput", "suggestSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
 										.fg();
 
 									} g("div");
@@ -408,7 +408,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relate sessions to this season");
 								} g("h5");
 							} g("div");
@@ -420,11 +420,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "sessions")
-											.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setSessionKeys")
 											.a("id", "Page_sessionKeys")
 											.a("autocomplete", "off")
-											.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+											.a("oninput", "suggestSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
 										.fg();
 
 									} g("div");
@@ -676,7 +676,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a year to this season");
 							} g("h5");
 						} g("div");
@@ -688,11 +688,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "year")
-										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKey")
 										.a("id", "POST_yearKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+										.a("oninput", "suggestSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
 									.fg();
 
 								} g("div");
@@ -734,7 +734,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate sessions to this season");
 							} g("h5");
 						} g("div");
@@ -746,11 +746,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "sessions")
-										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSessionKeys")
 										.a("id", "POST_sessionKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+										.a("oninput", "suggestSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1002,7 +1002,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a year to this season");
 							} g("h5");
 						} g("div");
@@ -1014,11 +1014,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "year")
-										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKey")
 										.a("id", "PATCH_yearKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+										.a("oninput", "suggestSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
 									.fg();
 
 								} g("div");
@@ -1060,7 +1060,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate sessions to this season");
 							} g("h5");
 						} g("div");
@@ -1072,11 +1072,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "sessions")
-										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSessionKeys")
 										.a("id", "PATCH_sessionKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+										.a("oninput", "suggestSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1328,7 +1328,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a year to this season");
 							} g("h5");
 						} g("div");
@@ -1340,11 +1340,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "year")
-										.a("class", "valueObjectSuggest suggereYearKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKey")
 										.a("id", "Recherche_yearKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
+										.a("oninput", "suggestSchoolSeasonYearKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey')); ")
 									.fg();
 
 								} g("div");
@@ -1386,7 +1386,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate sessions to this season");
 							} g("h5");
 						} g("div");
@@ -1398,11 +1398,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "sessions")
-										.a("class", "valueObjectSuggest suggereSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSessionKeys")
 										.a("id", "Recherche_sessionKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
+										.a("oninput", "suggestSchoolSeasonSessionKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1581,9 +1581,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsSeasonGenPage();
-			g("div");
+		htmlSuggestSeasonGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsSeasonGenPage() {
@@ -1688,6 +1690,48 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggestSeasonGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/season").a("class", "").f();
+					e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+					sx("see all the seasons");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshSeasonGenPage").a("href", "/season").a("class", "").a("onclick", "patchSchoolSeasonVals([], {}, function() { addGlow($('#refreshSeasonGenPage')); }, function() { addError($('#refreshSeasonGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the seasons");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSchoolSeason").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestSchoolSeason w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSchoolSeason")
+							.a("id", "suggestSchoolSeason")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSchoolSeasonObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolSeason')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolSeason").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

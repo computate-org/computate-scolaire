@@ -167,7 +167,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
-	 */ 
+	 */                 
 	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("saisonCles_indexed_longs:" + pk);
@@ -181,7 +181,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: anneeRecherche
 	 * r.enUS: yearSearch
 	 * Ignorer: true
-	 */             
+	 */           
 	protected void _annee_(Couverture<AnneeScolaire> c) {
 		if(anneeRecherche.size() > 0) {
 			c.o(anneeRecherche.get(0));
@@ -314,7 +314,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */          
+	 */            
 	protected void _saisonNomComplet(Couverture<String> c) {
 		String o;
 		
@@ -365,23 +365,23 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * VarUrl: true
 	 * r: saisonId
 	 * r.enUS: seasonId
-	 * r: /frFR/saison/
-	 * r.enUS: /enUS/season/
+	 * r: /saison/
+	 * r.enUS: /season/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
 	 * r.enUS: SiteConfig
 	 * r: SiteUrlBase
 	 * r.enUS: SiteBaseUrl
-	 * **/   
+	 * **/     
 	protected void _pageUrl(Couverture<String> c)  {
 		if(saisonId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/saison/" + saisonId;
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/saison/" + saisonId;
 			c.o(o);
 		}
 	}
 
-	/**
+	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true

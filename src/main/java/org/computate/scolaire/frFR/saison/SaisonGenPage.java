@@ -99,8 +99,8 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSaisonGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "rechercherSaisonScolaireAnneeCle($('#formSaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ");
-		tl(1, "rechercherSaisonScolaireSessionCles($('#formSaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ");
+		tl(1, "suggereSaisonScolaireAnneeCle($('#formSaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ");
+		tl(1, "suggereSaisonScolaireSessionCles($('#formSaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ");
 		l("});");
 	}
 
@@ -350,7 +350,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relier une année a cette saison");
 								} g("h5");
 							} g("div");
@@ -367,7 +367,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 											.a("name", "setAnneeCle")
 											.a("id", "Page_anneeCle")
 											.a("autocomplete", "off")
-											.a("oninput", "rechercherSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
+											.a("oninput", "suggereSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
 										.fg();
 
 									} g("div");
@@ -409,7 +409,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relier  a cette saison");
 								} g("h5");
 							} g("div");
@@ -426,7 +426,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 											.a("name", "setSessionCles")
 											.a("id", "Page_sessionCles")
 											.a("autocomplete", "off")
-											.a("oninput", "rechercherSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
+											.a("oninput", "suggereSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
 										.fg();
 
 									} g("div");
@@ -678,7 +678,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une année a cette saison");
 							} g("h5");
 						} g("div");
@@ -695,7 +695,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setAnneeCle")
 										.a("id", "POST_anneeCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
+										.a("oninput", "suggereSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
 									.fg();
 
 								} g("div");
@@ -737,7 +737,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette saison");
 							} g("h5");
 						} g("div");
@@ -754,7 +754,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setSessionCles")
 										.a("id", "POST_sessionCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
+										.a("oninput", "suggereSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
 									.fg();
 
 								} g("div");
@@ -1006,7 +1006,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une année a cette saison");
 							} g("h5");
 						} g("div");
@@ -1023,7 +1023,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setAnneeCle")
 										.a("id", "PATCH_anneeCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
+										.a("oninput", "suggereSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
 									.fg();
 
 								} g("div");
@@ -1065,7 +1065,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette saison");
 							} g("h5");
 						} g("div");
@@ -1082,7 +1082,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setSessionCles")
 										.a("id", "PATCH_sessionCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
+										.a("oninput", "suggereSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
 									.fg();
 
 								} g("div");
@@ -1334,7 +1334,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une année a cette saison");
 							} g("h5");
 						} g("div");
@@ -1351,7 +1351,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setAnneeCle")
 										.a("id", "Recherche_anneeCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
+										.a("oninput", "suggereSaisonScolaireAnneeCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireAnneeCle'), $('#listSaisonScolaireAnneeCle')); ")
 									.fg();
 
 								} g("div");
@@ -1393,7 +1393,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette saison");
 							} g("h5");
 						} g("div");
@@ -1410,7 +1410,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 										.a("name", "setSessionCles")
 										.a("id", "Recherche_sessionCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
+										.a("oninput", "suggereSaisonScolaireSessionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SaisonScolaireSessionCles'), $('#listSaisonScolaireSessionCles')); ")
 									.fg();
 
 								} g("div");
@@ -1589,9 +1589,11 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsSaisonGenPage();
-			g("div");
+		htmlSuggereSaisonGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsSaisonGenPage() {
@@ -1696,6 +1698,49 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggereSaisonGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/saison").a("class", "").f();
+					e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+					sx("voir toutes les saisons");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "rechargerSaisonGenPage").a("href", "/saison").a("class", "").a("onclick", "patchSaisonScolaireVals([], {}, function() { ajouterLueur($('#rechargerSaisonGenPage')); }, function() { ajouterErreur($('#rechargerSaisonGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("recharger toutes les saisons");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggereFormSaisonScolaire").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "rechercher saisons")
+							.a("class", "suggereSaisonScolaire w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggereSaisonScolaire")
+							.a("id", "suggereSaisonScolaire")
+							.a("autocomplete", "off")
+							.a("oninput", "suggereSaisonScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListSaisonScolaire')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListSaisonScolaire").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

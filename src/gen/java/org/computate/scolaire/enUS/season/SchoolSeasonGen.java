@@ -56,7 +56,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public static final String SchoolSeason_NomSingulier = "season";
 	public static final String SchoolSeason_NomPluriel = "seasons";
 	public static final String SchoolSeason_NomActuel = "current season";
-	public static final String SchoolSeason_TousNom = "the seasons";
+	public static final String SchoolSeason_TousNom = "all the seasons";
 	public static final String SchoolSeason_RechercherTousNomPar = "search seasons by ";
 	public static final String SchoolSeason_LesNoms = "the seasons";
 	public static final String SchoolSeason_AucunNomTrouve = "no season found";
@@ -2684,9 +2684,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolSeason.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchoolSeason.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchoolSeason.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -2953,9 +2952,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSchoolSeason.setPageUrl(pageUrl);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchoolSeason.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchoolSeason.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

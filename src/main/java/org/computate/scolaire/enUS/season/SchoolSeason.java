@@ -109,7 +109,7 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(seasonId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enUS/season/" + seasonId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/season/" + seasonId;
 			c.o(o);
 		}
 	}
