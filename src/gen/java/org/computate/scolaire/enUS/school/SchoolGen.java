@@ -41,17 +41,20 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public static final String School_UnNom = "a school";
 	public static final String School_Ce = "this ";
 	public static final String School_CeNom = "this school";
-	public static final String School_Un = "an ";
+	public static final String School_Un = "a ";
 	public static final String School_LeNom = "the school";
 	public static final String School_NomSingulier = "school";
 	public static final String School_NomPluriel = "schools";
 	public static final String School_NomActuel = "current school";
-	public static final String School_TousNom = "the schools";
+	public static final String School_TousNom = "all the schools";
 	public static final String School_RechercherTousNomPar = "search schools by ";
 	public static final String School_LesNoms = "the schools";
 	public static final String School_AucunNomTrouve = "no school found";
 	public static final String School_NomVar = "school";
 	public static final String School_DeNom = "of school";
+	public static final String School_UnNomAdjectif = "a school";
+	public static final String School_NomAdjectifSingulier = "school";
+	public static final String School_NomAdjectifPluriel = "schools";
 	public static final String School_Couleur = "pink";
 	public static final String School_IconeGroupe = "duotone";
 	public static final String School_IconeNom = "school";
@@ -2553,9 +2556,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			}
 
 			if(savesSchool.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchool.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchool.setObjectSuggest(objectSuggest);
 			}
 
 			if(savesSchool.contains("schoolNameShort")) {
@@ -2830,9 +2832,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolAddress != null)
 			oSchool.setSchoolAddress(schoolAddress);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchool.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchool.setObjectSuggest(objectSuggest);
 
 		String schoolNameShort = (String)solrDocument.get("schoolNameShort_stored_string");
 		if(schoolNameShort != null)

@@ -291,9 +291,15 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void listPATCHSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
 		listSchool.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchool(o, eventHandler)
+				futurePATCHSchool(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchool(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {

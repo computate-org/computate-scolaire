@@ -291,9 +291,15 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public void listePATCHEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
 		listeEcole.getList().forEach(o -> {
 			futures.add(
-				futurePATCHEcole(o, gestionnaireEvenements)
+				futurePATCHEcole(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurEcole(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {

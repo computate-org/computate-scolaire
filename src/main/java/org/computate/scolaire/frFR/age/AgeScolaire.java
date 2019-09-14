@@ -85,7 +85,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Description.enUS: The school season of the school age. 
 	 * NomAffichage.frFR: saison
 	 * NomAffichage.enUS: season
-	 */          
+	 */           
 	protected void _saisonCle(Couverture<Long> c) {
 	}
 
@@ -94,13 +94,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: sessionKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 4
+	 * Attribuer: SessionScolaire.ageCles
+	 * HtmlLigne: 4
+	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire de la session dans la base de données. 
 	 * Description.enUS: The primary key of the session in the database. 
-	 * NomAffichage.frFR: clé
-	 * NomAffichage.enUS: key
-	 */          
+	 * NomAffichage.frFR: session
+	 * NomAffichage.enUS: session
+	 */             
 	protected void _sessionCle(Couverture<Long> c) {
 	}
 
@@ -131,7 +132,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: blockKeys
 	 * Indexe: true
 	 * Stocke: true
-	 */
+	 * Attribuer: BlocScolaire.ageCle
+	 * HtmlLigne: 4
+	 * HtmlColonne: 1
+	 * Description.frFR: Les blocs scolaires de l'âge scolaire. 
+	 * Description.enUS: The school blocks of the school age. 
+	 * NomAffichage.frFR: blocs
+	 * NomAffichage.enUS: blocks
+	 */   
 	protected void _blocCles(List<Long> o) {}
 
 	/**

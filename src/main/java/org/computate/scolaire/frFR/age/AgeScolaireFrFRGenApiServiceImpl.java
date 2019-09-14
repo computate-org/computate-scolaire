@@ -190,13 +190,21 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "sessionCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageCles", jsonObject.getLong(entiteVar), "sessionCle", pk));
+						break;
+					case "blocCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageCle", jsonObject.getLong(entiteVar), "blocCles", pk));
+						break;
 					case "ageDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageDebut", jsonObject.getInteger(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageDebut", jsonObject.getString(entiteVar), pk));
 						break;
 					case "ageFin":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageFin", jsonObject.getInteger(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageFin", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -279,9 +287,15 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 	public void listePATCHAgeScolaire(ListeRecherche<AgeScolaire> listeAgeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeAgeScolaire.getRequeteSite_();
 		listeAgeScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHAgeScolaire(o, gestionnaireEvenements)
+				futurePATCHAgeScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurAgeScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -384,8 +398,42 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "setSessionCle":
+						o2.setSessionCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
+						break;
+					case "removeSessionCle":
+						o2.setSessionCle(requeteJson.getLong(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
+						break;
+					case "addBlocCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getLong(methodeNom), "blocCles", pk));
+						break;
+					case "addAllBlocCles":
+						JsonArray addAllBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllBlocClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("ageCle", addAllBlocClesValeurs.getLong(i), "blocCles", pk));
+						}
+						break;
+					case "setBlocCles":
+						JsonArray setBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getLong(methodeNom), "blocCles", pk));
+						for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("ageCle", setBlocClesValeurs.getLong(i), "blocCles", pk));
+						}
+						break;
+					case "removeBlocCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getLong(methodeNom), "blocCles", pk));
+						break;
 					case "setAgeDebut":
-						o2.setAgeDebut(requeteJson.getInteger(methodeNom));
+						o2.setAgeDebut(requeteJson.getString(methodeNom));
 						if(o2.getAgeDebut() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageDebut"));
@@ -395,7 +443,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						}
 						break;
 					case "setAgeFin":
-						o2.setAgeFin(requeteJson.getInteger(methodeNom));
+						o2.setAgeFin(requeteJson.getString(methodeNom));
 						if(o2.getAgeFin() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageFin"));

@@ -95,7 +95,6 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 
 	public void response200RechercheMission(SearchList<Mission> listMission, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -285,9 +284,15 @@ public class MissionEnUSGenApiServiceImpl implements MissionEnUSGenApiService {
 
 	public void listPATCHMission(SearchList<Mission> listMission, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listMission.getSiteRequest_();
 		listMission.getList().forEach(o -> {
 			futures.add(
-				futurePATCHMission(o, eventHandler)
+				futurePATCHMission(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorMission(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {

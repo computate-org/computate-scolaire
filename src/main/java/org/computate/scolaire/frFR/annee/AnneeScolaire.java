@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                                 
+package org.computate.scolaire.frFR.annee;                                
 
 import java.text.Normalizer;
 import java.time.LocalDate;

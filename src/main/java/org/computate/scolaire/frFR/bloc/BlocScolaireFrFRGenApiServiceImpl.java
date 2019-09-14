@@ -190,6 +190,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "ageCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", jsonObject.getLong(entiteVar)));
+						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
@@ -197,6 +201,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					case "blocHeureFin":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocHeureFin", jsonObject.getString(entiteVar), pk));
+						break;
+					case "blocPrixParMois":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocPrixParMois", jsonObject.getString(entiteVar), pk));
 						break;
 					case "blocDimanche":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -225,10 +233,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					case "blocSamedi":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocSamedi", jsonObject.getBoolean(entiteVar), pk));
-						break;
-					case "blocPrixParMois":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocPrixParMois", jsonObject.getDouble(entiteVar), pk));
 						break;
 					}
 				}
@@ -311,9 +315,15 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 	public void listePATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
 		listeBlocScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHBlocScolaire(o, gestionnaireEvenements)
+				futurePATCHBlocScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -416,6 +426,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "setAgeCle":
+						o2.setAgeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						break;
+					case "removeAgeCle":
+						o2.setAgeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						break;
 					case "setBlocHeureDebut":
 						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
 						if(o2.getBlocHeureDebut() == null) {
@@ -434,6 +454,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.jsonBlocHeureFin(), pk));
+						}
+						break;
+					case "setBlocPrixParMois":
+						o2.setBlocPrixParMois(requeteJson.getString(methodeNom));
+						if(o2.getBlocPrixParMois() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
 						}
 						break;
 					case "setBlocDimanche":
@@ -504,16 +534,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.jsonBlocSamedi(), pk));
-						}
-						break;
-					case "setBlocPrixParMois":
-						o2.setBlocPrixParMois(requeteJson.getDouble(methodeNom));
-						if(o2.getBlocPrixParMois() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
 						}
 						break;
 				}
@@ -883,6 +903,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "blocHeureDebut_indexed_string";
 			case "blocHeureFin":
 				return "blocHeureFin_indexed_string";
+			case "blocPrixParMois":
+				return "blocPrixParMois_indexed_double";
 			case "blocDimanche":
 				return "blocDimanche_indexed_boolean";
 			case "blocLundi":
@@ -897,8 +919,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "blocVendredi_indexed_boolean";
 			case "blocSamedi":
 				return "blocSamedi_indexed_boolean";
-			case "blocPrixParMois":
-				return "blocPrixParMois_indexed_double";
 			case "blocNomComplet":
 				return "blocNomComplet_indexed_string";
 			case "blocId":

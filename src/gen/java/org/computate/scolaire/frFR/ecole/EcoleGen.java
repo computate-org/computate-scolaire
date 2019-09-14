@@ -46,13 +46,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public static final String Ecole_NomSingulier = "école";
 	public static final String Ecole_NomPluriel = "écoles";
 	public static final String Ecole_NomActuel = "école actuelle";
-	public static final String Ecole_TousNom = "les écoles";
+	public static final String Ecole_Tous = "all ";
+	public static final String Ecole_TousNom = "toutes les écoles";
 	public static final String Ecole_RechercherTousNomPar = "rechercher écoles par ";
 	public static final String Ecole_RechercherTousNom = "rechercher écoles";
 	public static final String Ecole_LesNoms = "les écoles";
 	public static final String Ecole_AucunNomTrouve = "aucune école trouvée";
 	public static final String Ecole_NomVar = "école";
 	public static final String Ecole_DeNom = "d'école";
+	public static final String Ecole_NomAdjectifSingulier = "école";
+	public static final String Ecole_NomAdjectifPluriel = "écoles";
 	public static final String Ecole_Couleur = "pink";
 	public static final String Ecole_IconeGroupe = "duotone";
 	public static final String Ecole_IconeNom = "school";
@@ -2554,9 +2557,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			}
 
 			if(sauvegardesEcole.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-				if(objetSuggere != null)
-					oEcole.setObjetSuggere(objetSuggere);
+				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+				oEcole.setObjetSuggere(objetSuggere);
 			}
 
 			if(sauvegardesEcole.contains("ecoleNomCourt")) {
@@ -2831,9 +2833,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleAddresse != null)
 			oEcole.setEcoleAddresse(ecoleAddresse);
 
-		String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-		if(objetSuggere != null)
-			oEcole.setObjetSuggere(objetSuggere);
+		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+		oEcole.setObjetSuggere(objetSuggere);
 
 		String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 		if(ecoleNomCourt != null)

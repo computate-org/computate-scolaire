@@ -102,8 +102,8 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptYearGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "searchSchoolYearSchoolKey($('#formSchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ");
-		tl(1, "searchSchoolYearSeasonKeys($('#formSchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ");
+		tl(1, "suggestSchoolYearSchoolKey($('#formSchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ");
+		tl(1, "suggestSchoolYearSeasonKeys($('#formSchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ");
 		l("});");
 	}
 
@@ -280,7 +280,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relate a school to this year");
 								} g("h5");
 							} g("div");
@@ -292,11 +292,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "school")
-											.a("class", "valueObjectSuggest suggereSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setSchoolKey")
 											.a("id", "Page_schoolKey")
 											.a("autocomplete", "off")
-											.a("oninput", "searchSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
+											.a("oninput", "suggestSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
 										.fg();
 
 									} g("div");
@@ -338,7 +338,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relate seasons to this year");
 								} g("h5");
 							} g("div");
@@ -350,11 +350,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "seasons")
-											.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setSeasonKeys")
 											.a("id", "Page_seasonKeys")
 											.a("autocomplete", "off")
-											.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+											.a("oninput", "suggestSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
 										.fg();
 
 									} g("div");
@@ -537,7 +537,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a school to this year");
 							} g("h5");
 						} g("div");
@@ -549,11 +549,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "school")
-										.a("class", "valueObjectSuggest suggereSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSchoolKey")
 										.a("id", "POST_schoolKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
+										.a("oninput", "suggestSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
 									.fg();
 
 								} g("div");
@@ -595,7 +595,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate seasons to this year");
 							} g("h5");
 						} g("div");
@@ -607,11 +607,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "seasons")
-										.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSeasonKeys")
 										.a("id", "POST_seasonKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+										.a("oninput", "suggestSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
 									.fg();
 
 								} g("div");
@@ -794,7 +794,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a school to this year");
 							} g("h5");
 						} g("div");
@@ -806,11 +806,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "school")
-										.a("class", "valueObjectSuggest suggereSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSchoolKey")
 										.a("id", "PATCH_schoolKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
+										.a("oninput", "suggestSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
 									.fg();
 
 								} g("div");
@@ -852,7 +852,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate seasons to this year");
 							} g("h5");
 						} g("div");
@@ -864,11 +864,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "seasons")
-										.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSeasonKeys")
 										.a("id", "PATCH_seasonKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+										.a("oninput", "suggestSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1051,7 +1051,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate a school to this year");
 							} g("h5");
 						} g("div");
@@ -1063,11 +1063,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "school")
-										.a("class", "valueObjectSuggest suggereSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSchoolKey")
 										.a("id", "Recherche_schoolKey")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
+										.a("oninput", "suggestSchoolYearSchoolKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey')); ")
 									.fg();
 
 								} g("div");
@@ -1109,7 +1109,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate seasons to this year");
 							} g("h5");
 						} g("div");
@@ -1121,11 +1121,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "seasons")
-										.a("class", "valueObjectSuggest suggereSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestSeasonKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setSeasonKeys")
 										.a("id", "Recherche_seasonKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
+										.a("oninput", "suggestSchoolYearSeasonKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1164,15 +1164,18 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx("years").g("span");
 				} g("a");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("no year found").g("span");
 				} g("span");
 			} g("h2");
 		} else if(listSchoolYear != null && listSchoolYear.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
+			SchoolYear o = listSchoolYear.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
 					{ e("a").a("href", "/year").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange w3-hover-orange ").f();
 						if(contextIconCssClasses != null)
@@ -1180,19 +1183,18 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 						e("span").a("class", " ").f().sx(pageH1).g("span");
 					} g("a");
 				} g("h1");
-				SchoolYear o = listSchoolYear.get(0);
-				siteRequest_.setRequestPk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-orange ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -1204,6 +1206,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("years").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
@@ -1289,8 +1292,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsYearGenPage();
+		htmlSuggestYearGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsYearGenPage() {
@@ -1395,6 +1401,55 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggestYearGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/year").a("class", "").f();
+					e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+					sx("see all the years");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshYearGenPage").a("href", "/year").a("class", "").a("onclick", "patchSchoolYearVals([], {}, function() { addGlow($('#refreshYearGenPage')); }, function() { addError($('#refreshYearGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the years");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search years: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSchoolYear").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestSchoolYear w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSchoolYear")
+							.a("id", "suggestSchoolYear")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSchoolYearObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolYear')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolYear").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

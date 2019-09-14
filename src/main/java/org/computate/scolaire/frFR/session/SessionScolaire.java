@@ -126,7 +126,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Description.enUS: The school age of the school session. 
 	 * NomAffichage.frFR: âges
 	 * NomAffichage.enUS: ages
-	 */
+	 */  
 	protected void _ageCles(List<Long> o) {}
 
 	/**

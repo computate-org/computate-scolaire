@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison; 
+package org.computate.scolaire.frFR.saison;  
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -314,7 +314,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolNameComplete
-	 */            
+	 */              
 	protected void _saisonNomComplet(Couverture<String> c) {
 		String o;
 		

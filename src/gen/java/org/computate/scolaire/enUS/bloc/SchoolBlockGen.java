@@ -7,6 +7,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -20,6 +21,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -52,17 +54,20 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public static final String SchoolBlock_UnNom = "a block";
 	public static final String SchoolBlock_Ce = "this ";
 	public static final String SchoolBlock_CeNom = "this block";
-	public static final String SchoolBlock_Un = "an ";
+	public static final String SchoolBlock_Un = "a ";
 	public static final String SchoolBlock_LeNom = "the block";
 	public static final String SchoolBlock_NomSingulier = "block";
 	public static final String SchoolBlock_NomPluriel = "blocks";
 	public static final String SchoolBlock_NomActuel = "current block";
-	public static final String SchoolBlock_TousNom = "the blocks";
+	public static final String SchoolBlock_TousNom = "all the blocks";
 	public static final String SchoolBlock_RechercherTousNomPar = "search blocks by ";
 	public static final String SchoolBlock_LesNoms = "the blocks";
 	public static final String SchoolBlock_AucunNomTrouve = "no block found";
 	public static final String SchoolBlock_NomVar = "block";
 	public static final String SchoolBlock_DeNom = "of block";
+	public static final String SchoolBlock_UnNomAdjectif = "a block";
+	public static final String SchoolBlock_NomAdjectifSingulier = "block";
+	public static final String SchoolBlock_NomAdjectifPluriel = "blocks";
 	public static final String SchoolBlock_Couleur = "indigo";
 	public static final String SchoolBlock_IconeGroupe = "duotone";
 	public static final String SchoolBlock_IconeNom = "bell-o";
@@ -95,7 +100,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSchoolKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolKey = Long.parseLong(o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -203,7 +208,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.anneeCleWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setAnneeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeCle = Long.parseLong(o);
 		this.anneeCleWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -311,7 +316,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.seasonKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSeasonKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.seasonKey = Long.parseLong(o);
 		this.seasonKeyWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -419,7 +424,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.sessionKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSessionKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionKey = Long.parseLong(o);
 		this.sessionKeyWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -527,7 +532,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.ageKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setAgeKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageKey = Long.parseLong(o);
 		this.ageKeyWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -555,7 +560,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeKey() {
-		return "key";
+		return "age";
 	}
 
 	public String htmTooltipAgeKey() {
@@ -635,7 +640,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.blockKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setBlockKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.blockKey = Long.parseLong(o);
 		this.blockKeyWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -762,7 +767,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock addEnrollmentKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addEnrollmentKeys(p);
 		}
@@ -869,7 +874,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.educationSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setEducationSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.educationSort = Integer.parseInt(o);
 		this.educationSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -977,7 +982,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSchoolSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolSort = Integer.parseInt(o);
 		this.schoolSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -1085,7 +1090,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.yearSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setYearSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.yearSort = Integer.parseInt(o);
 		this.yearSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -1193,7 +1198,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.seasonSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSeasonSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.seasonSort = Integer.parseInt(o);
 		this.seasonSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -1301,7 +1306,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.sessionSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSessionSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionSort = Integer.parseInt(o);
 		this.sessionSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -1409,7 +1414,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.ageSortWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setAgeSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageSort = Integer.parseInt(o);
 		this.ageSortWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -2264,18 +2269,19 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSeasonEnrollmentFee(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.seasonEnrollmentFee = new BigDecimal(o);
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSeasonEnrollmentFee(Double o) {
-			this.seasonEnrollmentFee = new BigDecimal(o);
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSeasonEnrollmentFee(Integer o) {
-			this.seasonEnrollmentFee = new BigDecimal(o);
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2822,7 +2828,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.ageStartWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setAgeStart(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageStart = Integer.parseInt(o);
 		this.ageStartWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -2930,7 +2936,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.ageEndWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setAgeEnd(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageEnd = Integer.parseInt(o);
 		this.ageEndWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
@@ -3039,8 +3045,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockTimeStart(String o) {
-		this.blockTimeStart = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
-		this.blockTimeStartWrap.alreadyInitialized = true;
+		try {
+			this.blockTimeStart = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blockTimeStartWrap.alreadyInitialized = true;
+		} catch(Exception e) {
+		}
 		return (SchoolBlock)this;
 	}
 	protected SchoolBlock blockTimeStartInit() {
@@ -3058,11 +3067,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String strBlockTimeStart() {
-		return blockTimeStart == null ? "" : blockTimeStart.format(DateTimeFormatter.ofPattern("h:mm:ss a zz VV", Locale.US));
+		return blockTimeStart == null ? "" : blockTimeStart.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US));
 	}
 
 	public String jsonBlockTimeStart() {
-		return blockTimeStart == null ? "" : blockTimeStart.format(DateTimeFormatter.ofPattern("h:mm:ss a zz VV", Locale.US));
+		return blockTimeStart == null ? "" : blockTimeStart.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
 	}
 
 	public String nomAffichageBlockTimeStart() {
@@ -3147,8 +3156,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockTimeEnd(String o) {
-		this.blockTimeEnd = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
-		this.blockTimeEndWrap.alreadyInitialized = true;
+		try {
+			this.blockTimeEnd = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blockTimeEndWrap.alreadyInitialized = true;
+		} catch(Exception e) {
+		}
 		return (SchoolBlock)this;
 	}
 	protected SchoolBlock blockTimeEndInit() {
@@ -3166,11 +3178,11 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String strBlockTimeEnd() {
-		return blockTimeEnd == null ? "" : blockTimeEnd.format(DateTimeFormatter.ofPattern("h:mm:ss a zz VV", Locale.US));
+		return blockTimeEnd == null ? "" : blockTimeEnd.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US));
 	}
 
 	public String jsonBlockTimeEnd() {
-		return blockTimeEnd == null ? "" : blockTimeEnd.format(DateTimeFormatter.ofPattern("h:mm:ss a zz VV", Locale.US));
+		return blockTimeEnd == null ? "" : blockTimeEnd.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
 	}
 
 	public String nomAffichageBlockTimeEnd() {
@@ -3221,6 +3233,125 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmBlockTimeEnd());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////////
+	// blockPricePerMonth //
+	////////////////////////
+
+	/**	L'entité « blockPricePerMonth »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal blockPricePerMonth;
+	@JsonIgnore
+	public Wrap<BigDecimal> blockPricePerMonthWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockPricePerMonth").o(blockPricePerMonth);
+
+	/**	<br/>L'entité « blockPricePerMonth »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.bloc.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockPricePerMonth">Trouver l'entité blockPricePerMonth dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blockPricePerMonth(Wrap<BigDecimal> c);
+
+	public BigDecimal getBlockPricePerMonth() {
+		return blockPricePerMonth;
+	}
+
+	public void setBlockPricePerMonth(BigDecimal blockPricePerMonth) {
+		this.blockPricePerMonth = blockPricePerMonth;
+		this.blockPricePerMonthWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setBlockPricePerMonth(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockPricePerMonthWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	public SchoolBlock setBlockPricePerMonth(Double o) {
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockPricePerMonthWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	public SchoolBlock setBlockPricePerMonth(Integer o) {
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockPricePerMonthWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock blockPricePerMonthInit() {
+		if(!blockPricePerMonthWrap.alreadyInitialized) {
+			_blockPricePerMonth(blockPricePerMonthWrap);
+			if(blockPricePerMonth == null)
+				setBlockPricePerMonth(blockPricePerMonthWrap.o);
+		}
+		blockPricePerMonthWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Double solrBlockPricePerMonth() {
+		return blockPricePerMonth == null ? null : blockPricePerMonth.doubleValue();
+	}
+
+	public String strBlockPricePerMonth() {
+		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
+	}
+
+	public String jsonBlockPricePerMonth() {
+		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
+	}
+
+	public String nomAffichageBlockPricePerMonth() {
+		return "price per month";
+	}
+
+	public String htmTooltipBlockPricePerMonth() {
+		return null;
+	}
+
+	public String htmBlockPricePerMonth() {
+		return blockPricePerMonth == null ? "" : StringEscapeUtils.escapeHtml4(strBlockPricePerMonth());
+	}
+
+	public void htmBlockPricePerMonth(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "BlockPricePerMonth\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "BlockPricePerMonth() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlockPricePerMonth\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlockPricePerMonth()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blockPricePerMonth\"");
+							r.s(" value=\"", htmBlockPricePerMonth(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlockPricePerMonth());
 			}
 			r.l("</div>");
 		}
@@ -3975,124 +4106,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////////////
-	// blockPricePerMonth //
-	////////////////////////
-
-	/**	L'entité « blockPricePerMonth »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected BigDecimal blockPricePerMonth;
-	@JsonIgnore
-	public Wrap<BigDecimal> blockPricePerMonthWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockPricePerMonth").o(blockPricePerMonth);
-
-	/**	<br/>L'entité « blockPricePerMonth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.bloc.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockPricePerMonth">Trouver l'entité blockPricePerMonth dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _blockPricePerMonth(Wrap<BigDecimal> c);
-
-	public BigDecimal getBlockPricePerMonth() {
-		return blockPricePerMonth;
-	}
-
-	public void setBlockPricePerMonth(BigDecimal blockPricePerMonth) {
-		this.blockPricePerMonth = blockPricePerMonth;
-		this.blockPricePerMonthWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setBlockPricePerMonth(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.blockPricePerMonth = new BigDecimal(o);
-		this.blockPricePerMonthWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	public SchoolBlock setBlockPricePerMonth(Double o) {
-			this.blockPricePerMonth = new BigDecimal(o);
-		this.blockPricePerMonthWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	public SchoolBlock setBlockPricePerMonth(Integer o) {
-			this.blockPricePerMonth = new BigDecimal(o);
-		this.blockPricePerMonthWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock blockPricePerMonthInit() {
-		if(!blockPricePerMonthWrap.alreadyInitialized) {
-			_blockPricePerMonth(blockPricePerMonthWrap);
-			if(blockPricePerMonth == null)
-				setBlockPricePerMonth(blockPricePerMonthWrap.o);
-		}
-		blockPricePerMonthWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Double solrBlockPricePerMonth() {
-		return blockPricePerMonth == null ? null : blockPricePerMonth.doubleValue();
-	}
-
-	public String strBlockPricePerMonth() {
-		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
-	}
-
-	public String jsonBlockPricePerMonth() {
-		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
-	}
-
-	public String nomAffichageBlockPricePerMonth() {
-		return "price per month";
-	}
-
-	public String htmTooltipBlockPricePerMonth() {
-		return null;
-	}
-
-	public String htmBlockPricePerMonth() {
-		return blockPricePerMonth == null ? "" : StringEscapeUtils.escapeHtml4(strBlockPricePerMonth());
-	}
-
-	public void htmBlockPricePerMonth(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "BlockPricePerMonth\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "BlockPricePerMonth() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setBlockPricePerMonth\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlockPricePerMonth()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"blockPricePerMonth\"");
-							r.s(" value=\"", htmBlockPricePerMonth(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmBlockPricePerMonth());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////
 	// blocNameComplete //
 	//////////////////////
@@ -4552,6 +4565,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		ageEndInit();
 		blockTimeStartInit();
 		blockTimeEndInit();
+		blockPricePerMonthInit();
 		blockSundayInit();
 		blockMondayInit();
 		blockTuesdayInit();
@@ -4559,7 +4573,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		blockThursdayInit();
 		blockFridayInit();
 		blockSaturdayInit();
-		blockPricePerMonthInit();
 		blocNameCompleteInit();
 		blocIdInit();
 		pageUrlInit();
@@ -4666,6 +4679,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				return oSchoolBlock.blockTimeStart;
 			case "blockTimeEnd":
 				return oSchoolBlock.blockTimeEnd;
+			case "blockPricePerMonth":
+				return oSchoolBlock.blockPricePerMonth;
 			case "blockSunday":
 				return oSchoolBlock.blockSunday;
 			case "blockMonday":
@@ -4680,8 +4695,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				return oSchoolBlock.blockFriday;
 			case "blockSaturday":
 				return oSchoolBlock.blockSaturday;
-			case "blockPricePerMonth":
-				return oSchoolBlock.blockPricePerMonth;
 			case "blocNameComplete":
 				return oSchoolBlock.blocNameComplete;
 			case "blocId":
@@ -4715,6 +4728,9 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public Object attributeSchoolBlock(String var, Object val) {
 		SchoolBlock oSchoolBlock = (SchoolBlock)this;
 		switch(var) {
+			case "ageKey":
+				oSchoolBlock.setAgeKey((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -4749,6 +4765,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				setBlockTimeEnd(val);
 				savesSchoolBlock.add(var);
 				return val;
+			case "blockPricePerMonth":
+				setBlockPricePerMonth(val);
+				savesSchoolBlock.add(var);
+				return val;
 			case "blockSunday":
 				setBlockSunday(val);
 				savesSchoolBlock.add(var);
@@ -4775,10 +4795,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				return val;
 			case "blockSaturday":
 				setBlockSaturday(val);
-				savesSchoolBlock.add(var);
-				return val;
-			case "blockPricePerMonth":
-				setBlockPricePerMonth(val);
 				savesSchoolBlock.add(var);
 				return val;
 			default:
@@ -4822,11 +4838,9 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					oSchoolBlock.setSessionKey(sessionKey);
 			}
 
-			if(savesSchoolBlock.contains("ageKey")) {
-				Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
-				if(ageKey != null)
-					oSchoolBlock.setAgeKey(ageKey);
-			}
+			Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
+			if(ageKey != null)
+				oSchoolBlock.setAgeKey(ageKey);
 
 			if(savesSchoolBlock.contains("blockKey")) {
 				Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
@@ -4966,6 +4980,12 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					oSchoolBlock.setBlockTimeEnd(blockTimeEnd);
 			}
 
+			if(savesSchoolBlock.contains("blockPricePerMonth")) {
+				Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
+				if(blockPricePerMonth != null)
+					oSchoolBlock.setBlockPricePerMonth(blockPricePerMonth);
+			}
+
 			if(savesSchoolBlock.contains("blockSunday")) {
 				Boolean blockSunday = (Boolean)solrDocument.get("blockSunday_stored_boolean");
 				if(blockSunday != null)
@@ -5008,12 +5028,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					oSchoolBlock.setBlockSaturday(blockSaturday);
 			}
 
-			if(savesSchoolBlock.contains("blockPricePerMonth")) {
-				Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
-				if(blockPricePerMonth != null)
-					oSchoolBlock.setBlockPricePerMonth(blockPricePerMonth);
-			}
-
 			if(savesSchoolBlock.contains("blocNameComplete")) {
 				String blocNameComplete = (String)solrDocument.get("blocNameComplete_stored_string");
 				if(blocNameComplete != null)
@@ -5033,9 +5047,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolBlock.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchoolBlock.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchoolBlock.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -5184,8 +5197,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			document.addField("seasonWinter_stored_boolean", seasonWinter);
 		}
 		if(seasonEnrollmentFee != null) {
-			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee);
-			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee);
+			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee.doubleValue());
+			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee.doubleValue());
 		}
 		if(seasonNameComplete != null) {
 			document.addField("seasonNameComplete_indexed_string", seasonNameComplete);
@@ -5212,12 +5225,16 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			document.addField("ageEnd_stored_int", ageEnd);
 		}
 		if(blockTimeStart != null) {
-			document.addField("blockTimeStart_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blockTimeStart.atOffset(ZoneOffset.UTC)));
-			document.addField("blockTimeStart_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blockTimeStart.atOffset(ZoneOffset.UTC)));
+			document.addField("blockTimeStart_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blockTimeStart.atOffset(ZoneOffset.UTC)));
+			document.addField("blockTimeStart_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blockTimeStart.atOffset(ZoneOffset.UTC)));
 		}
 		if(blockTimeEnd != null) {
-			document.addField("blockTimeEnd_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blockTimeEnd.atOffset(ZoneOffset.UTC)));
-			document.addField("blockTimeEnd_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blockTimeEnd.atOffset(ZoneOffset.UTC)));
+			document.addField("blockTimeEnd_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blockTimeEnd.atOffset(ZoneOffset.UTC)));
+			document.addField("blockTimeEnd_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blockTimeEnd.atOffset(ZoneOffset.UTC)));
+		}
+		if(blockPricePerMonth != null) {
+			document.addField("blockPricePerMonth_indexed_double", blockPricePerMonth.doubleValue());
+			document.addField("blockPricePerMonth_stored_double", blockPricePerMonth.doubleValue());
 		}
 		if(blockSunday != null) {
 			document.addField("blockSunday_indexed_boolean", blockSunday);
@@ -5246,10 +5263,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(blockSaturday != null) {
 			document.addField("blockSaturday_indexed_boolean", blockSaturday);
 			document.addField("blockSaturday_stored_boolean", blockSaturday);
-		}
-		if(blockPricePerMonth != null) {
-			document.addField("blockPricePerMonth_indexed_double", blockPricePerMonth);
-			document.addField("blockPricePerMonth_stored_double", blockPricePerMonth);
 		}
 		if(blocNameComplete != null) {
 			document.addField("blocNameComplete_indexed_string", blocNameComplete);
@@ -5406,6 +5419,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(blockTimeEnd != null)
 			oSchoolBlock.setBlockTimeEnd(blockTimeEnd);
 
+		Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
+		if(blockPricePerMonth != null)
+			oSchoolBlock.setBlockPricePerMonth(blockPricePerMonth);
+
 		Boolean blockSunday = (Boolean)solrDocument.get("blockSunday_stored_boolean");
 		if(blockSunday != null)
 			oSchoolBlock.setBlockSunday(blockSunday);
@@ -5434,10 +5451,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(blockSaturday != null)
 			oSchoolBlock.setBlockSaturday(blockSaturday);
 
-		Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
-		if(blockPricePerMonth != null)
-			oSchoolBlock.setBlockPricePerMonth(blockPricePerMonth);
-
 		String blocNameComplete = (String)solrDocument.get("blocNameComplete_stored_string");
 		if(blocNameComplete != null)
 			oSchoolBlock.setBlocNameComplete(blocNameComplete);
@@ -5450,9 +5463,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSchoolBlock.setPageUrl(pageUrl);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchoolBlock.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchoolBlock.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}
@@ -5462,7 +5474,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockTimeStart, blockTimeEnd, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockPricePerMonth);
+		return Objects.hash(super.hashCode(), ageKey, blockTimeStart, blockTimeEnd, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
 	}
 
 	////////////
@@ -5476,16 +5488,17 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			return false;
 		SchoolBlock that = (SchoolBlock)o;
 		return super.equals(o)
+				&& Objects.equals( ageKey, that.ageKey )
 				&& Objects.equals( blockTimeStart, that.blockTimeStart )
 				&& Objects.equals( blockTimeEnd, that.blockTimeEnd )
+				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
 				&& Objects.equals( blockSunday, that.blockSunday )
 				&& Objects.equals( blockMonday, that.blockMonday )
 				&& Objects.equals( blockTuesday, that.blockTuesday )
 				&& Objects.equals( blockWednesday, that.blockWednesday )
 				&& Objects.equals( blockThursday, that.blockThursday )
 				&& Objects.equals( blockFriday, that.blockFriday )
-				&& Objects.equals( blockSaturday, that.blockSaturday )
-				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth );
+				&& Objects.equals( blockSaturday, that.blockSaturday );
 	}
 
 	//////////////
@@ -5496,8 +5509,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolBlock { ");
-		sb.append( "blockTimeStart: " ).append(blockTimeStart);
+		sb.append( "ageKey: " ).append(ageKey);
+		sb.append( ", blockTimeStart: " ).append(blockTimeStart);
 		sb.append( ", blockTimeEnd: " ).append(blockTimeEnd);
+		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
 		sb.append( ", blockSunday: " ).append(blockSunday);
 		sb.append( ", blockMonday: " ).append(blockMonday);
 		sb.append( ", blockTuesday: " ).append(blockTuesday);
@@ -5505,7 +5520,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		sb.append( ", blockThursday: " ).append(blockThursday);
 		sb.append( ", blockFriday: " ).append(blockFriday);
 		sb.append( ", blockSaturday: " ).append(blockSaturday);
-		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -141,6 +141,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	protected void _blockTimeEnd(Wrap<LocalTime> c) {
 	}
 
+	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
+	}
+
 	protected void _blockSunday(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -167,9 +170,6 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _blockSaturday(Wrap<Boolean> c) {
 		c.o(false);
-	}
-
-	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
 	}
 
 	protected void _blocNameComplete(Wrap<String> c) {
@@ -213,7 +213,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	@Override()
 	protected void  _classCanonicalNames(List<String> l) {
-		l.add(BlocScolaire.class.getCanonicalName());
+		l.add(SchoolBlock.class.getCanonicalName());
 		super._classCanonicalNames(l);
 	}
 }

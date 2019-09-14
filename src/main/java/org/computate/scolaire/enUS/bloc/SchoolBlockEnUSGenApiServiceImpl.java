@@ -190,6 +190,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "ageKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", jsonObject.getLong(entityVar)));
+						break;
 					case "blockTimeStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blockTimeStart", jsonObject.getString(entityVar), pk));
@@ -197,6 +201,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					case "blockTimeEnd":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blockTimeEnd", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockPricePerMonth":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
 						break;
 					case "blockSunday":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -225,10 +233,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					case "blockSaturday":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blockSaturday", jsonObject.getBoolean(entityVar), pk));
-						break;
-					case "blockPricePerMonth":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getDouble(entityVar), pk));
 						break;
 					}
 				}
@@ -311,9 +315,15 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 	public void listPATCHSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		listSchoolBlock.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolBlock(o, eventHandler)
+				futurePATCHSchoolBlock(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchoolBlock(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -416,6 +426,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
+					case "setAgeKey":
+						o2.setAgeKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
+						break;
+					case "removeAgeKey":
+						o2.setAgeKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
+						break;
 					case "setBlockTimeStart":
 						o2.setBlockTimeStart(requestJson.getString(methodName));
 						if(o2.getBlockTimeStart() == null) {
@@ -434,6 +454,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockTimeEnd", o2.jsonBlockTimeEnd(), pk));
+						}
+						break;
+					case "setBlockPricePerMonth":
+						o2.setBlockPricePerMonth(requestJson.getString(methodName));
+						if(o2.getBlockPricePerMonth() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
 						}
 						break;
 					case "setBlockSunday":
@@ -504,16 +534,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.jsonBlockSaturday(), pk));
-						}
-						break;
-					case "setBlockPricePerMonth":
-						o2.setBlockPricePerMonth(requestJson.getDouble(methodName));
-						if(o2.getBlockPricePerMonth() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
 						}
 						break;
 				}
@@ -883,6 +903,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "blockTimeStart_indexed_string";
 			case "blockTimeEnd":
 				return "blockTimeEnd_indexed_string";
+			case "blockPricePerMonth":
+				return "blockPricePerMonth_indexed_double";
 			case "blockSunday":
 				return "blockSunday_indexed_boolean";
 			case "blockMonday":
@@ -897,8 +919,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "blockFriday_indexed_boolean";
 			case "blockSaturday":
 				return "blockSaturday_indexed_boolean";
-			case "blockPricePerMonth":
-				return "blockPricePerMonth_indexed_double";
 			case "blocNameComplete":
 				return "blocNameComplete_indexed_string";
 			case "blocId":

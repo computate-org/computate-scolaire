@@ -51,17 +51,20 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public static final String SchoolAge_UnNom = "an age";
 	public static final String SchoolAge_Ce = "this ";
 	public static final String SchoolAge_CeNom = "this age";
-	public static final String SchoolAge_Un = "an ";
+	public static final String SchoolAge_Un = "a ";
 	public static final String SchoolAge_LeNom = "theage";
 	public static final String SchoolAge_NomSingulier = "age";
 	public static final String SchoolAge_NomPluriel = "ages";
 	public static final String SchoolAge_NomActuel = "current age";
-	public static final String SchoolAge_TousNom = "the ages";
+	public static final String SchoolAge_TousNom = "all the ages";
 	public static final String SchoolAge_RechercherTousNomPar = "search ages by ";
 	public static final String SchoolAge_LesNoms = "the ages";
 	public static final String SchoolAge_AucunNomTrouve = "no age found";
 	public static final String SchoolAge_NomVar = "age";
 	public static final String SchoolAge_DeNom = "of age";
+	public static final String SchoolAge_UnNomAdjectif = "an age";
+	public static final String SchoolAge_NomAdjectifSingulier = "age";
+	public static final String SchoolAge_NomAdjectifPluriel = "ages";
 	public static final String SchoolAge_Couleur = "blue";
 	public static final String SchoolAge_IconeGroupe = "duotone";
 	public static final String SchoolAge_IconeNom = "birthday-cake";
@@ -446,7 +449,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSessionKey() {
-		return "key";
+		return "session";
 	}
 
 	public String htmTooltipSessionKey() {
@@ -806,7 +809,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageBlockKeys() {
-		return null;
+		return "blocks";
 	}
 
 	public String htmTooltipBlockKeys() {
@@ -3629,6 +3632,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public Object attributeSchoolAge(String var, Object val) {
 		SchoolAge oSchoolAge = (SchoolAge)this;
 		switch(var) {
+			case "sessionKey":
+				oSchoolAge.setSessionKey((Long)val);
+				return val;
+			case "blockKeys":
+				oSchoolAge.addBlockKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -3698,11 +3707,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setSeasonKey(seasonKey);
 			}
 
-			if(savesSchoolAge.contains("sessionKey")) {
-				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-				if(sessionKey != null)
-					oSchoolAge.setSessionKey(sessionKey);
-			}
+			Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+			if(sessionKey != null)
+				oSchoolAge.setSessionKey(sessionKey);
 
 			if(savesSchoolAge.contains("ageKey")) {
 				Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
@@ -3716,11 +3723,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.enrollmentKeys.addAll(enrollmentKeys);
 			}
 
-			if(savesSchoolAge.contains("blockKeys")) {
-				List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
-				if(blockKeys != null)
-					oSchoolAge.blockKeys.addAll(blockKeys);
-			}
+			List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
+			if(blockKeys != null)
+				oSchoolAge.blockKeys.addAll(blockKeys);
 
 			if(savesSchoolAge.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -3855,9 +3860,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolAge.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchoolAge.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchoolAge.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -4196,9 +4200,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSchoolAge.setPageUrl(pageUrl);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchoolAge.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchoolAge.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}
@@ -4208,7 +4211,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageStart, ageEnd);
+		return Objects.hash(super.hashCode(), sessionKey, blockKeys, ageStart, ageEnd);
 	}
 
 	////////////
@@ -4222,6 +4225,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			return false;
 		SchoolAge that = (SchoolAge)o;
 		return super.equals(o)
+				&& Objects.equals( sessionKey, that.sessionKey )
+				&& Objects.equals( blockKeys, that.blockKeys )
 				&& Objects.equals( ageStart, that.ageStart )
 				&& Objects.equals( ageEnd, that.ageEnd );
 	}
@@ -4234,7 +4239,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolAge { ");
-		sb.append( "ageStart: " ).append(ageStart);
+		sb.append( "sessionKey: " ).append(sessionKey);
+		sb.append( ", blockKeys: " ).append(blockKeys);
+		sb.append( ", ageStart: " ).append(ageStart);
 		sb.append( ", ageEnd: " ).append(ageEnd);
 		sb.append(" }");
 		return sb.toString();

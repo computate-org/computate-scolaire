@@ -53,12 +53,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(sessionScolaire != null && sessionScolaire.getSessionNomComplet() != null)
-			c.o(sessionScolaire.getSessionNomComplet());
-		else if(sessionScolaire != null)
-			c.o("une session");
-		else if(listeSessionScolaire == null || listeSessionScolaire.size() == 0)
-			c.o("aucune session trouvée");
+			c.o("sessions");
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
@@ -107,8 +102,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "rechercherSessionScolaireSaisonCle($('#formSessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ");
-		tl(1, "rechercherSessionScolaireAgeCles($('#formSessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ");
+		tl(1, "suggereSessionScolaireSaisonCle($('#formSessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ");
+		tl(1, "suggereSessionScolaireAgeCles($('#formSessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ");
 		l("});");
 	}
 
@@ -211,6 +206,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
 									.a("onclick", "enleverLueur($('#Page_sessionJourDebut')); $('#Page_sessionJourDebut').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourDebut', null, $('#Page_sessionJourDebut'), function() { ajouterLueur($('#Page_sessionJourDebut')); }, function() { ajouterErreur($('#Page_sessionJourDebut')); }); ")
 										.f();
@@ -253,6 +249,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
 									.a("onclick", "enleverLueur($('#Page_sessionJourFin')); $('#Page_sessionJourFin').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourFin', null, $('#Page_sessionJourFin'), function() { ajouterLueur($('#Page_sessionJourFin')); }, function() { ajouterErreur($('#Page_sessionJourFin')); }); ")
 										.f();
@@ -285,7 +282,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relier une saison a cette session");
 								} g("h5");
 							} g("div");
@@ -302,7 +299,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 											.a("name", "setSaisonCle")
 											.a("id", "Page_saisonCle")
 											.a("autocomplete", "off")
-											.a("oninput", "rechercherSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
+											.a("oninput", "suggereSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
 										.fg();
 
 									} g("div");
@@ -344,7 +341,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relier  a cette session");
 								} g("h5");
 							} g("div");
@@ -361,7 +358,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 											.a("name", "setAgeCles")
 											.a("id", "Page_ageCles")
 											.a("autocomplete", "off")
-											.a("oninput", "rechercherSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
+											.a("oninput", "suggereSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
 										.fg();
 
 									} g("div");
@@ -544,7 +541,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une saison a cette session");
 							} g("h5");
 						} g("div");
@@ -561,7 +558,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setSaisonCle")
 										.a("id", "POST_saisonCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
+										.a("oninput", "suggereSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
 									.fg();
 
 								} g("div");
@@ -603,7 +600,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette session");
 							} g("h5");
 						} g("div");
@@ -620,7 +617,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setAgeCles")
 										.a("id", "POST_ageCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
+										.a("oninput", "suggereSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
 									.fg();
 
 								} g("div");
@@ -803,7 +800,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une saison a cette session");
 							} g("h5");
 						} g("div");
@@ -820,7 +817,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setSaisonCle")
 										.a("id", "PATCH_saisonCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
+										.a("oninput", "suggereSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
 									.fg();
 
 								} g("div");
@@ -862,7 +859,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette session");
 							} g("h5");
 						} g("div");
@@ -879,7 +876,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setAgeCles")
 										.a("id", "PATCH_ageCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
+										.a("oninput", "suggereSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
 									.fg();
 
 								} g("div");
@@ -1062,7 +1059,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier une saison a cette session");
 							} g("h5");
 						} g("div");
@@ -1079,7 +1076,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setSaisonCle")
 										.a("id", "Recherche_saisonCle")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
+										.a("oninput", "suggereSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle')); ")
 									.fg();
 
 								} g("div");
@@ -1121,7 +1118,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relier  a cette session");
 							} g("h5");
 						} g("div");
@@ -1138,7 +1135,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 										.a("name", "setAgeCles")
 										.a("id", "Recherche_ageCles")
 										.a("autocomplete", "off")
-										.a("oninput", "rechercherSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
+										.a("oninput", "suggereSessionScolaireAgeCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireAgeCles'), $('#listSessionScolaireAgeCles')); ")
 									.fg();
 
 								} g("div");
@@ -1171,28 +1168,45 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		if(listeSessionScolaire == null || listeSessionScolaire.size() == 0) {
 
 			{ e("h1").f();
-				if(contexteIconeClassesCss != null)
-					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("aucune session trouvée").g("span");
-			} g("h1");
-		} else if(listeSessionScolaire != null && listeSessionScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/session").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("sessions").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("aucune session trouvée").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listeSessionScolaire != null && listeSessionScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			SessionScolaire o = listeSessionScolaire.get(0);
+			requeteSite_.setRequetePk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/session").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contexteIconeClassesCss != null)
+							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				SessionScolaire o = listeSessionScolaire.get(0);
-				requeteSite_.setRequetePk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -1202,6 +1216,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("sessions").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
@@ -1287,8 +1302,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsSessionGenPage();
+		htmlSuggereSessionGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsSessionGenPage() {
@@ -1393,6 +1411,56 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggereSessionGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/session").a("class", "").f();
+					e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+					sx("voir toutes les sessions");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "rechargerSessionGenPage").a("href", "/session").a("class", "").a("onclick", "patchSessionScolaireVals([], {}, function() { ajouterLueur($('#rechargerSessionGenPage')); }, function() { ajouterErreur($('#rechargerSessionGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("recharger toutes les sessions");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("rechercher sessions : ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggereFormSessionScolaire").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "rechercher sessions")
+							.a("class", "suggereSessionScolaire w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggereSessionScolaire")
+							.a("id", "suggereSessionScolaire")
+							.a("autocomplete", "off")
+							.a("oninput", "suggereSessionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListSessionScolaire')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListSessionScolaire").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

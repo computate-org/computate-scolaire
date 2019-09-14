@@ -56,13 +56,16 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public static final String SessionScolaire_NomSingulier = "session";
 	public static final String SessionScolaire_NomPluriel = "sessions";
 	public static final String SessionScolaire_NomActuel = "session actuelle";
-	public static final String SessionScolaire_TousNom = "les sessions";
+	public static final String SessionScolaire_Tous = "all ";
+	public static final String SessionScolaire_TousNom = "toutes les sessions";
 	public static final String SessionScolaire_RechercherTousNomPar = "rechercher sessions par ";
 	public static final String SessionScolaire_RechercherTousNom = "rechercher sessions";
 	public static final String SessionScolaire_LesNoms = "les sessions";
 	public static final String SessionScolaire_AucunNomTrouve = "aucune session trouvée";
 	public static final String SessionScolaire_NomVar = "session";
 	public static final String SessionScolaire_DeNom = "de session";
+	public static final String SessionScolaire_NomAdjectifSingulier = "session";
+	public static final String SessionScolaire_NomAdjectifPluriel = "sessions";
 	public static final String SessionScolaire_Couleur = "green";
 	public static final String SessionScolaire_IconeGroupe = "duotone";
 	public static final String SessionScolaire_IconeNom = "graduation-cap";
@@ -3392,9 +3395,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			}
 
 			if(sauvegardesSessionScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-				if(objetSuggere != null)
-					oSessionScolaire.setObjetSuggere(objetSuggere);
+				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+				oSessionScolaire.setObjetSuggere(objetSuggere);
 			}
 		}
 
@@ -3701,9 +3703,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSessionScolaire.setPageUrl(pageUrl);
 
-		String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-		if(objetSuggere != null)
-			oSessionScolaire.setObjetSuggere(objetSuggere);
+		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+		oSessionScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

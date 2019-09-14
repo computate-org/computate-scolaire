@@ -340,9 +340,15 @@ public class MissionScolaireFrFRGenApiServiceImpl implements MissionScolaireFrFR
 
 	public void listePATCHMissionScolaire(ListeRecherche<MissionScolaire> listeMissionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+			RequeteSiteFrFR requeteSite = listeMissionScolaire.getRequeteSite_();
 		listeMissionScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHMissionScolaire(o, gestionnaireEvenements)
+				futurePATCHMissionScolaire(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurMissionScolaire(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {

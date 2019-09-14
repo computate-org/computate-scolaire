@@ -190,13 +190,21 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "sessionKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageKeys", jsonObject.getLong(entityVar), "sessionKey", pk));
+						break;
+					case "blockKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageKey", jsonObject.getLong(entityVar), "blockKeys", pk));
+						break;
 					case "ageStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getInteger(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getString(entityVar), pk));
 						break;
 					case "ageEnd":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("ageEnd", jsonObject.getInteger(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("ageEnd", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -279,9 +287,15 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 
 	public void listPATCHSchoolAge(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+			SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 		listSchoolAge.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolAge(o, eventHandler)
+				futurePATCHSchoolAge(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						errorSchoolAge(siteRequest, eventHandler, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
@@ -384,8 +398,42 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
+					case "setSessionKey":
+						o2.setSessionKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						break;
+					case "removeSessionKey":
+						o2.setSessionKey(requestJson.getLong(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						break;
+					case "addBlockKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						break;
+					case "addAllBlockKeys":
+						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("ageKey", addAllBlockKeysValues.getLong(i), "blockKeys", pk));
+						}
+						break;
+					case "setBlockKeys":
+						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("ageKey", setBlockKeysValues.getLong(i), "blockKeys", pk));
+						}
+						break;
+					case "removeBlockKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						break;
 					case "setAgeStart":
-						o2.setAgeStart(requestJson.getInteger(methodName));
+						o2.setAgeStart(requestJson.getString(methodName));
 						if(o2.getAgeStart() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageStart"));
@@ -395,7 +443,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "setAgeEnd":
-						o2.setAgeEnd(requestJson.getInteger(methodName));
+						o2.setAgeEnd(requestJson.getString(methodName));
 						if(o2.getAgeEnd() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ageEnd"));

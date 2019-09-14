@@ -1717,6 +1717,13 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row w3-padding ").f();
 			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("rechercher  : ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
 				{ e("div").a("class", "w3-cell-row ").f();
 
 					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");

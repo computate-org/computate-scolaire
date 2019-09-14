@@ -1,16 +1,19 @@
 package org.computate.scolaire.enUS.bloc;
 
-import java.util.Objects;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import java.math.MathContext;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.text.StringEscapeUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.bloc.SchoolBlock;
 
 /**	

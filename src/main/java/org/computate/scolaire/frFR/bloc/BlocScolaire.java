@@ -55,8 +55,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: schoolKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 3
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
@@ -70,8 +68,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 4
 	 * Description.frFR: L'année scolaire du bloc scolaire. 
 	 * Description.enUS: The school year of the school block. 
 	 * NomAffichage.frFR: année
@@ -111,11 +107,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: ageKey
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: AgeScolaire.blocCles
+	 * HtmlLigne: 5
+	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
 	 * Description.enUS: The primary key of the age in the database. 
-	 * NomAffichage.frFR: clé
-	 * NomAffichage.enUS: key
-	 */          
+	 * NomAffichage.frFR: âge
+	 * NomAffichage.enUS: age
+	 */                  
 	protected void _ageCle(Couverture<Long> c) {
 	}
 
@@ -124,13 +123,11 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: blockKey
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 4
 	 * Description.frFR: La clé primaire du bloc dans la base de données. 
 	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */          
+	 */            
 	protected void _blocCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -140,11 +137,9 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 4
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
-	 */
+	 */               
 	protected void _inscriptionCles(List<Long> o) {}
 
 	/**
@@ -476,9 +471,23 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end time
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlColonne: 2
 	 */                   
 	protected void _blocHeureFin(Couverture<LocalTime> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockPricePerMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix par mois
+	 * NomAffichage.enUS: price per month
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 3
+	 */                   
+	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
 	}
 
 	/**
@@ -489,8 +498,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: dimanche
 	 * NomAffichage.enUS: sunday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
 	 */                   
 	protected void _blocDimanche(Couverture<Boolean> c) {
 		c.o(false);
@@ -504,8 +511,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: lundi
 	 * NomAffichage.enUS: monday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlLigne: 4
+	 * HtmlColonne: 2
 	 */                   
 	protected void _blocLundi(Couverture<Boolean> c) {
 		c.o(false);
@@ -519,8 +526,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: mardi
 	 * NomAffichage.enUS: tuesday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlLigne: 4
+	 * HtmlColonne: 3
 	 */                   
 	protected void _blocMardi(Couverture<Boolean> c) {
 		c.o(false);
@@ -534,8 +541,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: mercredi
 	 * NomAffichage.enUS: wednesday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlLigne: 4
+	 * HtmlColonne: 4
 	 */                   
 	protected void _blocMercredi(Couverture<Boolean> c) {
 		c.o(false);
@@ -549,8 +556,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: jeudi
 	 * NomAffichage.enUS: thursday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlLigne: 4
+	 * HtmlColonne: 5
 	 */                   
 	protected void _blocJeudi(Couverture<Boolean> c) {
 		c.o(false);
@@ -564,8 +571,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: vendredi
 	 * NomAffichage.enUS: friday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlLigne: 4
+	 * HtmlColonne: 6
 	 */                   
 	protected void _blocVendredi(Couverture<Boolean> c) {
 		c.o(false);
@@ -579,25 +586,9 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: samedi
 	 * NomAffichage.enUS: saturday
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
 	 */                   
 	protected void _blocSamedi(Couverture<Boolean> c) {
 		c.o(false);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: blockPricePerMonth
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: prix par mois
-	 * NomAffichage.enUS: price per month
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 1
-	 */                   
-	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
 	}
 
 	/**    
@@ -713,8 +704,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: _classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
-	 * r: AgeScolaire
-	 * r.enUS: SchoolAge
+	 * r: BlocScolaire
+	 * r.enUS: SchoolBlock
 	 * r: classeNomsCanoniques
 	 * r.enUS: classCanonicalNames
 	 **/      

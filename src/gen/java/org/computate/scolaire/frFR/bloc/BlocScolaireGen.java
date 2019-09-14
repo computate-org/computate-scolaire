@@ -7,6 +7,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -20,6 +21,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -57,6 +59,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public static final String BlocScolaire_NomSingulier = "bloc";
 	public static final String BlocScolaire_NomPluriel = "blocs";
 	public static final String BlocScolaire_NomActuel = "bloc actuel";
+	public static final String BlocScolaire_Tous = "all ";
 	public static final String BlocScolaire_TousNom = "tous les blocs";
 	public static final String BlocScolaire_RechercherTousNomPar = "rechercher blocs par ";
 	public static final String BlocScolaire_RechercherTousNom = "rechercher blocs";
@@ -64,6 +67,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public static final String BlocScolaire_AucunNomTrouve = "aucun bloc trouvé";
 	public static final String BlocScolaire_NomVar = "bloc";
 	public static final String BlocScolaire_DeNom = "de bloc";
+	public static final String BlocScolaire_NomAdjectifSingulier = "bloc";
+	public static final String BlocScolaire_NomAdjectifPluriel = "blocs";
 	public static final String BlocScolaire_Couleur = "indigo";
 	public static final String BlocScolaire_IconeGroupe = "duotone";
 	public static final String BlocScolaire_IconeNom = "bell-o";
@@ -96,7 +101,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setEcoleCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleCle = Long.parseLong(o);
 		this.ecoleCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -204,7 +209,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAnneeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeCle = Long.parseLong(o);
 		this.anneeCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -312,7 +317,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.saisonCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSaisonCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonCle = Long.parseLong(o);
 		this.saisonCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -420,7 +425,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSessionCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionCle = Long.parseLong(o);
 		this.sessionCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -528,7 +533,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ageCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAgeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageCle = Long.parseLong(o);
 		this.ageCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -556,7 +561,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeCle() {
-		return "clé";
+		return "âge";
 	}
 
 	public String htmTooltipAgeCle() {
@@ -636,7 +641,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.blocCleCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setBlocCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.blocCle = Long.parseLong(o);
 		this.blocCleCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -763,7 +768,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire addInscriptionCles(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addInscriptionCles(p);
 		}
@@ -870,7 +875,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setScolaireTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.scolaireTri = Integer.parseInt(o);
 		this.scolaireTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -978,7 +983,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setEcoleTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleTri = Integer.parseInt(o);
 		this.ecoleTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -1086,7 +1091,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAnneeTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeTri = Integer.parseInt(o);
 		this.anneeTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -1194,7 +1199,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSaisonTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonTri = Integer.parseInt(o);
 		this.saisonTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -1302,7 +1307,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.sessionTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSessionTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionTri = Integer.parseInt(o);
 		this.sessionTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -1410,7 +1415,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ageTriCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAgeTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageTri = Integer.parseInt(o);
 		this.ageTriCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -2265,18 +2270,19 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSaisonFraisInscription(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.saisonFraisInscription = new BigDecimal(o);
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSaisonFraisInscription(Double o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSaisonFraisInscription(Integer o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2823,7 +2829,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ageDebutCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAgeDebut(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageDebut = Integer.parseInt(o);
 		this.ageDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -2931,7 +2937,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.ageFinCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setAgeFin(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageFin = Integer.parseInt(o);
 		this.ageFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
@@ -3040,8 +3046,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureDebut(String o) {
-		this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
-		this.blocHeureDebutCouverture.dejaInitialise = true;
+		try {
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureDebutCouverture.dejaInitialise = true;
+		} catch(Exception e) {
+		}
 		return (BlocScolaire)this;
 	}
 	protected BlocScolaire blocHeureDebutInit() {
@@ -3059,11 +3068,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
 	}
 
 	public String jsonBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
 	}
 
 	public String nomAffichageBlocHeureDebut() {
@@ -3148,8 +3157,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureFin(String o) {
-		this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_OFFSET_TIME);
-		this.blocHeureFinCouverture.dejaInitialise = true;
+		try {
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureFinCouverture.dejaInitialise = true;
+		} catch(Exception e) {
+		}
 		return (BlocScolaire)this;
 	}
 	protected BlocScolaire blocHeureFinInit() {
@@ -3167,11 +3179,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
 	}
 
 	public String jsonBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm:ss zz VV", Locale.FRANCE));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
 	}
 
 	public String nomAffichageBlocHeureFin() {
@@ -3222,6 +3234,125 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmBlocHeureFin());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////
+	// blocPrixParMois //
+	/////////////////////
+
+	/**	L'entité « blocPrixParMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal blocPrixParMois;
+	@JsonIgnore
+	public Couverture<BigDecimal> blocPrixParMoisCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixParMois").o(blocPrixParMois);
+
+	/**	<br/>L'entité « blocPrixParMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixParMois">Trouver l'entité blocPrixParMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocPrixParMois(Couverture<BigDecimal> c);
+
+	public BigDecimal getBlocPrixParMois() {
+		return blocPrixParMois;
+	}
+
+	public void setBlocPrixParMois(BigDecimal blocPrixParMois) {
+		this.blocPrixParMois = blocPrixParMois;
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setBlocPrixParMois(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	public BlocScolaire setBlocPrixParMois(Double o) {
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	public BlocScolaire setBlocPrixParMois(Integer o) {
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixParMoisCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire blocPrixParMoisInit() {
+		if(!blocPrixParMoisCouverture.dejaInitialise) {
+			_blocPrixParMois(blocPrixParMoisCouverture);
+			if(blocPrixParMois == null)
+				setBlocPrixParMois(blocPrixParMoisCouverture.o);
+		}
+		blocPrixParMoisCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Double solrBlocPrixParMois() {
+		return blocPrixParMois == null ? null : blocPrixParMois.doubleValue();
+	}
+
+	public String strBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
+	}
+
+	public String jsonBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
+	}
+
+	public String nomAffichageBlocPrixParMois() {
+		return "prix par mois";
+	}
+
+	public String htmTooltipBlocPrixParMois() {
+		return null;
+	}
+
+	public String htmBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixParMois());
+	}
+
+	public void htmBlocPrixParMois(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocPrixParMois\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "BlocPrixParMois() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocPrixParMois\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocPrixParMois()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocPrixParMois\"");
+							r.s(" value=\"", htmBlocPrixParMois(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocPrixParMois());
 			}
 			r.l("</div>");
 		}
@@ -3976,124 +4107,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////////////
-	// blocPrixParMois //
-	/////////////////////
-
-	/**	L'entité « blocPrixParMois »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected BigDecimal blocPrixParMois;
-	@JsonIgnore
-	public Couverture<BigDecimal> blocPrixParMoisCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixParMois").o(blocPrixParMois);
-
-	/**	<br/>L'entité « blocPrixParMois »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixParMois">Trouver l'entité blocPrixParMois dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _blocPrixParMois(Couverture<BigDecimal> c);
-
-	public BigDecimal getBlocPrixParMois() {
-		return blocPrixParMois;
-	}
-
-	public void setBlocPrixParMois(BigDecimal blocPrixParMois) {
-		this.blocPrixParMois = blocPrixParMois;
-		this.blocPrixParMoisCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setBlocPrixParMois(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.blocPrixParMois = new BigDecimal(o);
-		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	public BlocScolaire setBlocPrixParMois(Double o) {
-			this.blocPrixParMois = new BigDecimal(o);
-		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	public BlocScolaire setBlocPrixParMois(Integer o) {
-			this.blocPrixParMois = new BigDecimal(o);
-		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire blocPrixParMoisInit() {
-		if(!blocPrixParMoisCouverture.dejaInitialise) {
-			_blocPrixParMois(blocPrixParMoisCouverture);
-			if(blocPrixParMois == null)
-				setBlocPrixParMois(blocPrixParMoisCouverture.o);
-		}
-		blocPrixParMoisCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Double solrBlocPrixParMois() {
-		return blocPrixParMois == null ? null : blocPrixParMois.doubleValue();
-	}
-
-	public String strBlocPrixParMois() {
-		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
-	}
-
-	public String jsonBlocPrixParMois() {
-		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
-	}
-
-	public String nomAffichageBlocPrixParMois() {
-		return "prix par mois";
-	}
-
-	public String htmTooltipBlocPrixParMois() {
-		return null;
-	}
-
-	public String htmBlocPrixParMois() {
-		return blocPrixParMois == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixParMois());
-	}
-
-	public void htmBlocPrixParMois(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "BlocPrixParMois\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "BlocPrixParMois() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setBlocPrixParMois\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocPrixParMois()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"blocPrixParMois\"");
-							r.s(" value=\"", htmBlocPrixParMois(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmBlocPrixParMois());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// blocNomComplet //
 	////////////////////
@@ -4553,6 +4566,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		ageFinInit();
 		blocHeureDebutInit();
 		blocHeureFinInit();
+		blocPrixParMoisInit();
 		blocDimancheInit();
 		blocLundiInit();
 		blocMardiInit();
@@ -4560,7 +4574,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		blocJeudiInit();
 		blocVendrediInit();
 		blocSamediInit();
-		blocPrixParMoisInit();
 		blocNomCompletInit();
 		blocIdInit();
 		pageUrlInit();
@@ -4667,6 +4680,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.blocHeureDebut;
 			case "blocHeureFin":
 				return oBlocScolaire.blocHeureFin;
+			case "blocPrixParMois":
+				return oBlocScolaire.blocPrixParMois;
 			case "blocDimanche":
 				return oBlocScolaire.blocDimanche;
 			case "blocLundi":
@@ -4681,8 +4696,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.blocVendredi;
 			case "blocSamedi":
 				return oBlocScolaire.blocSamedi;
-			case "blocPrixParMois":
-				return oBlocScolaire.blocPrixParMois;
 			case "blocNomComplet":
 				return oBlocScolaire.blocNomComplet;
 			case "blocId":
@@ -4716,6 +4729,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public Object attribuerBlocScolaire(String var, Object val) {
 		BlocScolaire oBlocScolaire = (BlocScolaire)this;
 		switch(var) {
+			case "ageCle":
+				oBlocScolaire.setAgeCle((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -4750,6 +4766,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				setBlocHeureFin(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
+			case "blocPrixParMois":
+				setBlocPrixParMois(val);
+				sauvegardesBlocScolaire.add(var);
+				return val;
 			case "blocDimanche":
 				setBlocDimanche(val);
 				sauvegardesBlocScolaire.add(var);
@@ -4776,10 +4796,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return val;
 			case "blocSamedi":
 				setBlocSamedi(val);
-				sauvegardesBlocScolaire.add(var);
-				return val;
-			case "blocPrixParMois":
-				setBlocPrixParMois(val);
 				sauvegardesBlocScolaire.add(var);
 				return val;
 			default:
@@ -4823,11 +4839,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setSessionCle(sessionCle);
 			}
 
-			if(sauvegardesBlocScolaire.contains("ageCle")) {
-				Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
-				if(ageCle != null)
-					oBlocScolaire.setAgeCle(ageCle);
-			}
+			Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
+			if(ageCle != null)
+				oBlocScolaire.setAgeCle(ageCle);
 
 			if(sauvegardesBlocScolaire.contains("blocCle")) {
 				Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
@@ -4967,6 +4981,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setBlocHeureFin(blocHeureFin);
 			}
 
+			if(sauvegardesBlocScolaire.contains("blocPrixParMois")) {
+				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+				if(blocPrixParMois != null)
+					oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
+			}
+
 			if(sauvegardesBlocScolaire.contains("blocDimanche")) {
 				Boolean blocDimanche = (Boolean)solrDocument.get("blocDimanche_stored_boolean");
 				if(blocDimanche != null)
@@ -5009,12 +5029,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setBlocSamedi(blocSamedi);
 			}
 
-			if(sauvegardesBlocScolaire.contains("blocPrixParMois")) {
-				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
-				if(blocPrixParMois != null)
-					oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
-			}
-
 			if(sauvegardesBlocScolaire.contains("blocNomComplet")) {
 				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 				if(blocNomComplet != null)
@@ -5034,9 +5048,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			}
 
 			if(sauvegardesBlocScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-				if(objetSuggere != null)
-					oBlocScolaire.setObjetSuggere(objetSuggere);
+				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+				oBlocScolaire.setObjetSuggere(objetSuggere);
 			}
 		}
 
@@ -5185,8 +5198,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("saisonHiver_stored_boolean", saisonHiver);
 		}
 		if(saisonFraisInscription != null) {
-			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription);
-			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription);
+			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription.doubleValue());
+			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription.doubleValue());
 		}
 		if(saisonNomComplet != null) {
 			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);
@@ -5213,12 +5226,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_stored_int", ageFin);
 		}
 		if(blocHeureDebut != null) {
-			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocHeureFin != null) {
-			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH:mm:ss'Z'").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+		}
+		if(blocPrixParMois != null) {
+			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());
+			document.addField("blocPrixParMois_stored_double", blocPrixParMois.doubleValue());
 		}
 		if(blocDimanche != null) {
 			document.addField("blocDimanche_indexed_boolean", blocDimanche);
@@ -5247,10 +5264,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(blocSamedi != null) {
 			document.addField("blocSamedi_indexed_boolean", blocSamedi);
 			document.addField("blocSamedi_stored_boolean", blocSamedi);
-		}
-		if(blocPrixParMois != null) {
-			document.addField("blocPrixParMois_indexed_double", blocPrixParMois);
-			document.addField("blocPrixParMois_stored_double", blocPrixParMois);
 		}
 		if(blocNomComplet != null) {
 			document.addField("blocNomComplet_indexed_string", blocNomComplet);
@@ -5407,6 +5420,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(blocHeureFin != null)
 			oBlocScolaire.setBlocHeureFin(blocHeureFin);
 
+		Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
+		if(blocPrixParMois != null)
+			oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
+
 		Boolean blocDimanche = (Boolean)solrDocument.get("blocDimanche_stored_boolean");
 		if(blocDimanche != null)
 			oBlocScolaire.setBlocDimanche(blocDimanche);
@@ -5435,10 +5452,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(blocSamedi != null)
 			oBlocScolaire.setBlocSamedi(blocSamedi);
 
-		Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
-		if(blocPrixParMois != null)
-			oBlocScolaire.setBlocPrixParMois(blocPrixParMois);
-
 		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 		if(blocNomComplet != null)
 			oBlocScolaire.setBlocNomComplet(blocNomComplet);
@@ -5451,9 +5464,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oBlocScolaire.setPageUrl(pageUrl);
 
-		String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-		if(objetSuggere != null)
-			oBlocScolaire.setObjetSuggere(objetSuggere);
+		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+		oBlocScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}
@@ -5463,7 +5475,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocHeureDebut, blocHeureFin, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixParMois);
+		return Objects.hash(super.hashCode(), ageCle, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi);
 	}
 
 	////////////
@@ -5477,16 +5489,17 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			return false;
 		BlocScolaire that = (BlocScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( ageCle, that.ageCle )
 				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
 				&& Objects.equals( blocHeureFin, that.blocHeureFin )
+				&& Objects.equals( blocPrixParMois, that.blocPrixParMois )
 				&& Objects.equals( blocDimanche, that.blocDimanche )
 				&& Objects.equals( blocLundi, that.blocLundi )
 				&& Objects.equals( blocMardi, that.blocMardi )
 				&& Objects.equals( blocMercredi, that.blocMercredi )
 				&& Objects.equals( blocJeudi, that.blocJeudi )
 				&& Objects.equals( blocVendredi, that.blocVendredi )
-				&& Objects.equals( blocSamedi, that.blocSamedi )
-				&& Objects.equals( blocPrixParMois, that.blocPrixParMois );
+				&& Objects.equals( blocSamedi, that.blocSamedi );
 	}
 
 	//////////////
@@ -5497,8 +5510,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("BlocScolaire { ");
-		sb.append( "blocHeureDebut: " ).append(blocHeureDebut);
+		sb.append( "ageCle: " ).append(ageCle);
+		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
 		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
+		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
 		sb.append( ", blocDimanche: " ).append(blocDimanche);
 		sb.append( ", blocLundi: " ).append(blocLundi);
 		sb.append( ", blocMardi: " ).append(blocMardi);
@@ -5506,7 +5521,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		sb.append( ", blocJeudi: " ).append(blocJeudi);
 		sb.append( ", blocVendredi: " ).append(blocVendredi);
 		sb.append( ", blocSamedi: " ).append(blocSamedi);
-		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
 		sb.append(" }");
 		return sb.toString();
 	}

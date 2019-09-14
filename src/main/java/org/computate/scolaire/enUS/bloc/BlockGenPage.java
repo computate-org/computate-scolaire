@@ -45,12 +45,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(schoolBlock != null && schoolBlock.getBlocNameComplete() != null)
-			c.o(schoolBlock.getBlocNameComplete());
-		else if(schoolBlock != null)
-			c.o("a block");
-		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
-			c.o("no block found");
+			c.o("blocks");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -93,10 +88,12 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsBlockGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/AgePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptBlockGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "suggestSchoolBlockAgeKey($('#formSchoolBlockAgeKey'), $('#listSchoolBlockAgeKey')); ");
 		l("});");
 	}
 
@@ -170,54 +167,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("school").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strSchoolKey()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("key").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strBlockKey()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("enrollments").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strEnrollmentKeys()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formSchoolBlockBlockTimeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -241,12 +190,13 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 										.a("placeholder", "HH:MM AM")
 										.a("id", "Page_blockTimeStart")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', s, function() { addGlow($('#Page_blockTimeStart')); }, function() { addError($('#Page_blockTimeStart')); }); } ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeStart', s, function() { addGlow($('#Page_blockTimeStart')); }, function() { addError($('#Page_blockTimeStart')); }); } ")
 										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
 									.a("onclick", "removeGlow($('#Page_blockTimeStart')); $('#Page_blockTimeStart').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', null, $('#Page_blockTimeStart'), function() { addGlow($('#Page_blockTimeStart')); }, function() { addError($('#Page_blockTimeStart')); }); ")
 										.f();
@@ -283,12 +233,13 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 										.a("placeholder", "HH:MM AM")
 										.a("id", "Page_blockTimeEnd")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', s, function() { addGlow($('#Page_blockTimeEnd')); }, function() { addError($('#Page_blockTimeEnd')); }); } ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeEnd', s, function() { addGlow($('#Page_blockTimeEnd')); }, function() { addError($('#Page_blockTimeEnd')); }); } ")
 										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
 									.a("onclick", "removeGlow($('#Page_blockTimeEnd')); $('#Page_blockTimeEnd').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', null, $('#Page_blockTimeEnd'), function() { addGlow($('#Page_blockTimeEnd')); }, function() { addError($('#Page_blockTimeEnd')); }); ")
 										.f();
@@ -302,7 +253,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -310,32 +261,42 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blockSunday").a("class", "").f().sx("sunday").g("label");
+								e("label").a("for", "Page_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
-										.a("type", "checkbox")
-										.a("value", "true")
-										.a("class", "setBlockSunday")
-										.a("name", "setBlockSunday")
-										.a("id", "Page_blockSunday")
-										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockSunday', $(this).prop('checked'), function() { addGlow($('#Page_blockSunday')); }, function() { addError($('#Page_blockSunday')); }); ")
-										;
-										if(o.getBlockSunday() != null && o.getBlockSunday())
-											a("checked", "checked");
-									fg();
+										.a("type", "text")
+										.a("placeholder", "price per month")
+										.a("class", "setBlockPricePerMonth w3-input w3-border ")
+										.a("name", "setBlockPricePerMonth")
+										.a("id", "Page_blockPricePerMonth")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
+										.a("value", o.strBlockPricePerMonth())
+									.fg();
 
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "removeGlow($('#Page_blockPricePerMonth')); $('#Page_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', null, $('#Page_blockPricePerMonth'), function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
 					} g("form");
 				} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formSchoolBlockBlockMonday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -516,79 +477,60 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					} g("form");
 				} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
-							.a("name", "value")
-							.a("class", "value ")
+							.a("name", "valueBlockKeys")
+							.a("class", "valueBlockKeys ")
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blockSaturday").a("class", "").f().sx("saturday").g("label");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "/age").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+									e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+									sx("age");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relate an age to this block");
+								} g("h5");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
 
-									e("input")
-										.a("type", "checkbox")
-										.a("value", "true")
-										.a("class", "setBlockSaturday")
-										.a("name", "setBlockSaturday")
-										.a("id", "Page_blockSaturday")
-										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockSaturday', $(this).prop('checked'), function() { addGlow($('#Page_blockSaturday')); }, function() { addError($('#Page_blockSaturday')); }); ")
-										;
-										if(o.getBlockSaturday() != null && o.getBlockSaturday())
-											a("checked", "checked");
-									fg();
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "age")
+											.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setAgeKey")
+											.a("id", "Page_ageKey")
+											.a("autocomplete", "off")
+											.a("oninput", "suggestSchoolBlockAgeKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolBlockAgeKey'), $('#listSchoolBlockAgeKey')); ")
+										.fg();
 
+									} g("div");
 								} g("div");
-							} g("div");
-						} g("div");
-					} g("form");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "value")
-							.a("class", "value ")
-							.a("value", siteRequest_.getRequestPk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-								e("label").a("for", "Page_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "price per month")
-										.a("class", "setBlockPricePerMonth w3-input w3-border ")
-										.a("name", "setBlockPricePerMonth")
-										.a("id", "Page_blockPricePerMonth")
-										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
-										.a("value", o.strBlockPricePerMonth())
-									.fg();
-
-								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#Page_blockPricePerMonth')); $('#Page_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', null, $('#Page_blockPricePerMonth'), function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+											.a("onclick", "postSchoolAgeVals({ blockKeys: ", o.getPk(), " }, function() { var $e = $('#Page_ageKey'); $e.html($e.val()); }, function() { addError($('#Page_ageKey')); }); ")
+											.f().sx("add an age")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -668,54 +610,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("school").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("key").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlockKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("enrollments").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnrollmentKeys()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockTimeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -739,8 +633,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "POST_blockTimeStart")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', s, function() { addGlow($('#POST_blockTimeStart')); }, function() { addError($('#POST_blockTimeStart')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeStart', s, function() { addGlow($('#POST_blockTimeStart')); }, function() { addError($('#POST_blockTimeStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -773,8 +667,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "POST_blockTimeEnd")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', s, function() { addGlow($('#POST_blockTimeEnd')); }, function() { addError($('#POST_blockTimeEnd')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeEnd', s, function() { addGlow($('#POST_blockTimeEnd')); }, function() { addError($('#POST_blockTimeEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -784,7 +678,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -792,24 +686,22 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blockSunday").a("class", "").f().sx("sunday").g("label");
+							e("label").a("for", "POST_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "valueBlockSunday")
-									.a("name", "blockSunday")
-									.a("id", "POST_blockSunday")
-									;
-									if(o.getBlockSunday() != null && o.getBlockSunday())
-										a("checked", "checked");
-								fg();
+									.a("type", "text")
+									.a("placeholder", "price per month")
+									.a("class", "valueBlockPricePerMonth w3-input w3-border ")
+									.a("name", "blockPricePerMonth")
+									.a("id", "POST_blockPricePerMonth")
+									.a("value", o.strBlockPricePerMonth())
+								.fg();
 
 							} g("div");
 						} g("div");
@@ -817,6 +709,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockMonday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -992,68 +886,60 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueBlockKeys")
+						.a("class", "valueBlockKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blockSaturday").a("class", "").f().sx("saturday").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/age").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+								sx("age");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate an age to this block");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "valueBlockSaturday")
-									.a("name", "blockSaturday")
-									.a("id", "POST_blockSaturday")
-									;
-									if(o.getBlockSaturday() != null && o.getBlockSaturday())
-										a("checked", "checked");
-								fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "age")
+										.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setAgeKey")
+										.a("id", "POST_ageKey")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolBlockAgeKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolBlockAgeKey'), $('#listSchoolBlockAgeKey')); ")
+									.fg();
 
+								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "POST_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
-						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "price per month")
-									.a("class", "valueBlockPricePerMonth w3-input w3-border ")
-									.a("name", "blockPricePerMonth")
-									.a("id", "POST_blockPricePerMonth")
-									.a("value", o.strBlockPricePerMonth())
-								.fg();
-
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+										.a("onclick", "postSchoolAgeVals({ blockKeys: ", o.getPk(), " }, function() { var $e = $('#POST_ageKey'); $e.html($e.val()); }, function() { addError($('#POST_ageKey')); }); ")
+										.f().sx("add an age")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1133,54 +1019,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("school").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("key").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlockKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("enrollments").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnrollmentKeys()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockTimeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1204,8 +1042,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "PATCH_blockTimeStart")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', s, function() { addGlow($('#PATCH_blockTimeStart')); }, function() { addError($('#PATCH_blockTimeStart')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeStart', s, function() { addGlow($('#PATCH_blockTimeStart')); }, function() { addError($('#PATCH_blockTimeStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -1238,8 +1076,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "PATCH_blockTimeEnd")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', s, function() { addGlow($('#PATCH_blockTimeEnd')); }, function() { addError($('#PATCH_blockTimeEnd')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeEnd', s, function() { addGlow($('#PATCH_blockTimeEnd')); }, function() { addError($('#PATCH_blockTimeEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -1249,7 +1087,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1257,24 +1095,22 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blockSunday").a("class", "").f().sx("sunday").g("label");
+							e("label").a("for", "PATCH_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "setBlockSunday")
-									.a("name", "setBlockSunday")
-									.a("id", "PATCH_blockSunday")
-									;
-									if(o.getBlockSunday() != null && o.getBlockSunday())
-										a("checked", "checked");
-								fg();
+									.a("type", "text")
+									.a("placeholder", "price per month")
+									.a("class", "setBlockPricePerMonth w3-input w3-border ")
+									.a("name", "setBlockPricePerMonth")
+									.a("id", "PATCH_blockPricePerMonth")
+									.a("value", o.strBlockPricePerMonth())
+								.fg();
 
 							} g("div");
 						} g("div");
@@ -1282,6 +1118,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockMonday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -1457,68 +1295,60 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueBlockKeys")
+						.a("class", "valueBlockKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blockSaturday").a("class", "").f().sx("saturday").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/age").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+								sx("age");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate an age to this block");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "setBlockSaturday")
-									.a("name", "setBlockSaturday")
-									.a("id", "PATCH_blockSaturday")
-									;
-									if(o.getBlockSaturday() != null && o.getBlockSaturday())
-										a("checked", "checked");
-								fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "age")
+										.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setAgeKey")
+										.a("id", "PATCH_ageKey")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolBlockAgeKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolBlockAgeKey'), $('#listSchoolBlockAgeKey')); ")
+									.fg();
 
+								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "PATCH_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
-						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "price per month")
-									.a("class", "setBlockPricePerMonth w3-input w3-border ")
-									.a("name", "setBlockPricePerMonth")
-									.a("id", "PATCH_blockPricePerMonth")
-									.a("value", o.strBlockPricePerMonth())
-								.fg();
-
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+										.a("onclick", "postSchoolAgeVals({ blockKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_ageKey'); $e.html($e.val()); }, function() { addError($('#PATCH_ageKey')); }); ")
+										.f().sx("add an age")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1598,54 +1428,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("school").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("key").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlockKey()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-						e("label").a("class", "").f().sx("enrollments").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnrollmentKeys()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockTimeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1669,8 +1451,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "Recherche_blockTimeStart")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', s, function() { addGlow($('#Recherche_blockTimeStart')); }, function() { addError($('#Recherche_blockTimeStart')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeStart', s, function() { addGlow($('#Recherche_blockTimeStart')); }, function() { addError($('#Recherche_blockTimeStart')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -1703,8 +1485,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									.a("placeholder", "HH:MM AM")
 									.a("id", "Recherche_blockTimeEnd")
 									.a("onclick", "removeGlow($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("en-US")).format(val))
-									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, \"'h'MM\"); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', s, function() { addGlow($('#Recherche_blockTimeEnd')); }, function() { addError($('#Recherche_blockTimeEnd')); }); } ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $(\"#SchoolBlockForm :input[name='pk']\").val() }], 'setBlockTimeEnd', s, function() { addGlow($('#Recherche_blockTimeEnd')); }, function() { addError($('#Recherche_blockTimeEnd')); }); } ")
 									.fg();
 							} g("div");
 						} g("div");
@@ -1714,7 +1496,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1722,24 +1504,22 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSunday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blockSunday").a("class", "").f().sx("sunday").g("label");
+							e("label").a("for", "Recherche_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "valueBlockSunday")
-									.a("name", "blockSunday")
-									.a("id", "Recherche_blockSunday")
-									;
-									if(o.getBlockSunday() != null && o.getBlockSunday())
-										a("checked", "checked");
-								fg();
+									.a("type", "text")
+									.a("placeholder", "price per month")
+									.a("class", "valueBlockPricePerMonth w3-input w3-border ")
+									.a("name", "blockPricePerMonth")
+									.a("id", "Recherche_blockPricePerMonth")
+									.a("value", o.strBlockPricePerMonth())
+								.fg();
 
 							} g("div");
 						} g("div");
@@ -1747,6 +1527,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formSchoolBlockBlockMonday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -1922,68 +1704,60 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueBlockKeys")
+						.a("class", "valueBlockKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockSaturday").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolBlockAgeKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blockSaturday").a("class", "").f().sx("saturday").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/age").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+								sx("age");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate an age to this block");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "checkbox")
-									.a("value", "true")
-									.a("class", "valueBlockSaturday")
-									.a("name", "blockSaturday")
-									.a("id", "Recherche_blockSaturday")
-									;
-									if(o.getBlockSaturday() != null && o.getBlockSaturday())
-										a("checked", "checked");
-								fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "age")
+										.a("class", "valueObjectSuggest suggestAgeKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setAgeKey")
+										.a("id", "Recherche_ageKey")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolBlockAgeKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolBlockAgeKey'), $('#listSchoolBlockAgeKey')); ")
+									.fg();
 
+								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", siteRequest_.getRequestPk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolBlockBlockPricePerMonth").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("for", "Recherche_blockPricePerMonth").a("class", "").f().sx("price per month").g("label");
-						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "price per month")
-									.a("class", "valueBlockPricePerMonth w3-input w3-border ")
-									.a("name", "blockPricePerMonth")
-									.a("id", "Recherche_blockPricePerMonth")
-									.a("value", o.strBlockPricePerMonth())
-								.fg();
-
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+										.a("onclick", "postSchoolAgeVals({ blockKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_ageKey'); $e.html($e.val()); }, function() { addError($('#Recherche_ageKey')); }); ")
+										.f().sx("add an age")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2000,28 +1774,45 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		if(listSchoolBlock == null || listSchoolBlock.size() == 0) {
 
 			{ e("h1").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no block found").g("span");
-			} g("h1");
-		} else if(listSchoolBlock != null && listSchoolBlock.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/block").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("blocks").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("no block found").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listSchoolBlock != null && listSchoolBlock.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			SchoolBlock o = listSchoolBlock.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/block").a("class", "w3-bar-item w3-btn w3-center w3-block w3-indigo w3-hover-indigo ").f();
+						if(contextIconCssClasses != null)
+							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				SchoolBlock o = listSchoolBlock.get(0);
-				siteRequest_.setRequestPk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-indigo ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -2031,26 +1822,23 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("blocks").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
+						e("th").f().sx("age").g("th");
 						e("th").f().sx("start time").g("th");
 						e("th").f().sx("end time").g("th");
-						e("th").f().sx("sunday").g("th");
 						e("th").f().sx("monday").g("th");
-						e("th").f().sx("tuesday").g("th");
-						e("th").f().sx("wednesday").g("th");
-						e("th").f().sx("thursday").g("th");
-						e("th").f().sx("friday").g("th");
-						e("th").f().sx("saturday").g("th");
-						e("th").f().sx("price per month").g("th");
 						e("th").f().sx("primary key").g("th");
 						e("th").f().sx("created").g("th");
-						e("th").f().sx("school").g("th");
+						e("th").f().sx("price per month").g("th");
+						e("th").f().sx("tuesday").g("th");
 						e("th").f().sx("modified").g("th");
-						e("th").f().sx("key").g("th");
-						e("th").f().sx("enrollments").g("th");
+						e("th").f().sx("wednesday").g("th");
 						e("th").f().sx("ID").g("th");
+						e("th").f().sx("thursday").g("th");
+						e("th").f().sx("friday").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -2063,6 +1851,11 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
+									sx(o.getAgeKey());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
 									sx(o.getBlockTimeStart());
 								} g("a");
 							} g("td");
@@ -2073,42 +1866,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getBlockSunday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
 									sx(o.getBlockMonday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockTuesday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockWednesday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockThursday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockFriday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockSaturday());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlockPricePerMonth());
 								} g("a");
 							} g("td");
 							{ e("td").f();
@@ -2123,7 +1881,12 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSchoolKey());
+									sx(o.getBlockPricePerMonth());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlockTuesday());
 								} g("a");
 							} g("td");
 							{ e("td").f();
@@ -2133,17 +1896,22 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getBlockKey());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnrollmentKeys());
+									sx(o.getBlockWednesday());
 								} g("a");
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getBlocId());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlockThursday());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getBlockFriday());
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -2170,8 +1938,11 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsBlockGenPage();
+		htmlSuggestBlockGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsBlockGenPage() {
@@ -2238,7 +2009,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-						.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues')); ")
+						.a("onclick", "patchSchoolBlock($('#patchSchoolBlockFormFilters'), $('#patchSchoolBlockFormValues'), function() {}, function() {}); ")
 						.f().sx("Modify the blocks")
 					.g("button");
 
@@ -2276,6 +2047,55 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggestBlockGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/block").a("class", "").f();
+					e("i").a("class", "fad fa-bell-o w3-padding-small ").f().g("i");
+					sx("see all the blocks");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshBlockGenPage").a("href", "/block").a("class", "").a("onclick", "patchSchoolBlockVals([], {}, function() { addGlow($('#refreshBlockGenPage')); }, function() { addError($('#refreshBlockGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the blocks");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search blocks: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSchoolBlock").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestSchoolBlock w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSchoolBlock")
+							.a("id", "suggestSchoolBlock")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSchoolBlockObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolBlock')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchoolBlock").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

@@ -53,7 +53,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	public static final String SchoolYear_NomSingulier = "year";
 	public static final String SchoolYear_NomPluriel = "years";
 	public static final String SchoolYear_NomActuel = "current year";
-	public static final String SchoolYear_TousNom = "the years";
+	public static final String SchoolYear_TousNom = "all the years";
 	public static final String SchoolYear_RechercherTousNomPar = "search years by ";
 	public static final String SchoolYear_LesNoms = "the years";
 	public static final String SchoolYear_AucunNomTrouve = "no year found";
@@ -2062,9 +2062,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolYear.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchoolYear.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchoolYear.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -2291,9 +2290,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSchoolYear.setPageUrl(pageUrl);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchoolYear.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchoolYear.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

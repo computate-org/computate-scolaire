@@ -53,7 +53,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public static final String AnneeScolaire_NomSingulier = "année";
 	public static final String AnneeScolaire_NomPluriel = "années";
 	public static final String AnneeScolaire_NomActuel = "année actuelle";
-	public static final String AnneeScolaire_TousNom = "les années";
+	public static final String AnneeScolaire_Tous = "all ";
+	public static final String AnneeScolaire_TousNom = "toutes les années";
 	public static final String AnneeScolaire_RechercherTousNomPar = "rechercher années par ";
 	public static final String AnneeScolaire_RechercherTousNom = "rechercher années";
 	public static final String AnneeScolaire_LesNoms = "les années";
@@ -2062,9 +2063,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			}
 
 			if(sauvegardesAnneeScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-				if(objetSuggere != null)
-					oAnneeScolaire.setObjetSuggere(objetSuggere);
+				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+				oAnneeScolaire.setObjetSuggere(objetSuggere);
 			}
 		}
 
@@ -2291,9 +2291,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oAnneeScolaire.setPageUrl(pageUrl);
 
-		String objetSuggere = (String)solrDocument.get("objetSuggere_stored_string");
-		if(objetSuggere != null)
-			oAnneeScolaire.setObjetSuggere(objetSuggere);
+		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+		oAnneeScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

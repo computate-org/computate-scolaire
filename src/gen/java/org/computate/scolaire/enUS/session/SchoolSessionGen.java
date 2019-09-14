@@ -51,17 +51,20 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	public static final String SchoolSession_UnNom = "a session";
 	public static final String SchoolSession_Ce = "this ";
 	public static final String SchoolSession_CeNom = "this session";
-	public static final String SchoolSession_Un = "an ";
+	public static final String SchoolSession_Un = "a ";
 	public static final String SchoolSession_LeNom = "the session";
 	public static final String SchoolSession_NomSingulier = "session";
 	public static final String SchoolSession_NomPluriel = "sessions";
 	public static final String SchoolSession_NomActuel = "current session";
-	public static final String SchoolSession_TousNom = "the sessions";
+	public static final String SchoolSession_TousNom = "all the sessions";
 	public static final String SchoolSession_RechercherTousNomPar = "search sessions by ";
 	public static final String SchoolSession_LesNoms = "the sessions";
 	public static final String SchoolSession_AucunNomTrouve = "no session found";
 	public static final String SchoolSession_NomVar = "session";
 	public static final String SchoolSession_DeNom = "of session";
+	public static final String SchoolSession_UnNomAdjectif = "a session";
+	public static final String SchoolSession_NomAdjectifSingulier = "session";
+	public static final String SchoolSession_NomAdjectifPluriel = "sessions";
 	public static final String SchoolSession_Couleur = "green";
 	public static final String SchoolSession_IconeGroupe = "duotone";
 	public static final String SchoolSession_IconeNom = "graduation-cap";
@@ -3391,9 +3394,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolSession.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-				if(objectSuggest != null)
-					oSchoolSession.setObjectSuggest(objectSuggest);
+				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+				oSchoolSession.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -3700,9 +3702,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(pageUrl != null)
 			oSchoolSession.setPageUrl(pageUrl);
 
-		String objectSuggest = (String)solrDocument.get("objectSuggest_stored_string");
-		if(objectSuggest != null)
-			oSchoolSession.setObjectSuggest(objectSuggest);
+		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
+		oSchoolSession.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

@@ -45,12 +45,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(school != null && school.getSchoolNameComplete() != null)
-			c.o(school.getSchoolNameComplete());
-		else if(school != null)
-			c.o("a school");
-		else if(listSchool == null || listSchool.size() == 0)
-			c.o("no school found");
+			c.o("schools");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -98,7 +93,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSchoolGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "searchSchoolYearKeys($('#formSchoolYearKeys'), $('#listSchoolYearKeys')); ");
+		tl(1, "suggestSchoolYearKeys($('#formSchoolYearKeys'), $('#listSchoolYearKeys')); ");
 		l("});");
 	}
 
@@ -363,7 +358,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 								} g("a");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("href", "").a("class", "w3-cell ").f();
+								{ e("h5").a("class", "w3-cell ").f();
 									sx("relate years to this school");
 								} g("h5");
 							} g("div");
@@ -375,11 +370,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "years")
-											.a("class", "valueObjectSuggest suggereYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setYearKeys")
 											.a("id", "Page_yearKeys")
 											.a("autocomplete", "off")
-											.a("oninput", "searchSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
+											.a("oninput", "suggestSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
 										.fg();
 
 									} g("div");
@@ -626,7 +621,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate years to this school");
 							} g("h5");
 						} g("div");
@@ -638,11 +633,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "years")
-										.a("class", "valueObjectSuggest suggereYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKeys")
 										.a("id", "POST_yearKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
+										.a("oninput", "suggestSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
 									.fg();
 
 								} g("div");
@@ -889,7 +884,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate years to this school");
 							} g("h5");
 						} g("div");
@@ -901,11 +896,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "years")
-										.a("class", "valueObjectSuggest suggereYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKeys")
 										.a("id", "PATCH_yearKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
+										.a("oninput", "suggestSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1152,7 +1147,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("href", "").a("class", "w3-cell ").f();
+							{ e("h5").a("class", "w3-cell ").f();
 								sx("relate years to this school");
 							} g("h5");
 						} g("div");
@@ -1164,11 +1159,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									e("input")
 										.a("type", "text")
 										.a("placeholder", "years")
-										.a("class", "valueObjectSuggest suggereYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 										.a("name", "setYearKeys")
 										.a("id", "Recherche_yearKeys")
 										.a("autocomplete", "off")
-										.a("oninput", "searchSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
+										.a("oninput", "suggestSchoolYearKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); ")
 									.fg();
 
 								} g("div");
@@ -1201,28 +1196,45 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		if(listSchool == null || listSchool.size() == 0) {
 
 			{ e("h1").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no school found").g("span");
-			} g("h1");
-		} else if(listSchool != null && listSchool.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/school").a("class", "w3-bar-item w3-btn w3-center w3-block w3-pink w3-hover-pink ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("schools").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-pink ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("no school found").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listSchool != null && listSchool.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			School o = listSchool.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/school").a("class", "w3-bar-item w3-btn w3-center w3-block w3-pink w3-hover-pink ").f();
+						if(contextIconCssClasses != null)
+							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				School o = listSchool.get(0);
-				siteRequest_.setRequestPk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-pink ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-pink ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -1232,6 +1244,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("schools").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
@@ -1326,8 +1339,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					o.htmlBody();
 
 			} g("div");
+
 		}
 		htmlBodyFormsSchoolGenPage();
+		htmlSuggestSchoolGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsSchoolGenPage() {
@@ -1394,7 +1410,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-						.a("onclick", "patchSchool($('#patchSchoolFormFilters'), $('#patchSchoolFormValues')); ")
+						.a("onclick", "patchSchool($('#patchSchoolFormFilters'), $('#patchSchoolFormValues'), function() {}, function() {}); ")
 						.f().sx("Modify the schools")
 					.g("button");
 
@@ -1432,6 +1448,55 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	public void htmlSuggestSchoolGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/school").a("class", "").f();
+					e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+					sx("see all the schools");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshSchoolGenPage").a("href", "/school").a("class", "").a("onclick", "patchSchoolVals([], {}, function() { addGlow($('#refreshSchoolGenPage')); }, function() { addError($('#refreshSchoolGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the schools");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search schools: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSchool").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestSchool w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSchool")
+							.a("id", "suggestSchool")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSchoolObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchool')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchool").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }
