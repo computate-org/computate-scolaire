@@ -399,33 +399,33 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						}
 						break;
 					case "setSessionCle":
-						o2.setSessionCle(requeteJson.getLong(methodeNom));
+						o2.setSessionCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA2);
 						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
 						break;
 					case "removeSessionCle":
-						o2.setSessionCle(requeteJson.getLong(methodeNom));
+						o2.setSessionCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
 						break;
 					case "addBlocCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getLong(methodeNom), "blocCles", pk));
+						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getString(methodeNom), "blocCles", pk));
 						break;
 					case "addAllBlocCles":
 						JsonArray addAllBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllBlocClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageCle", addAllBlocClesValeurs.getLong(i), "blocCles", pk));
+							patchSqlParams.addAll(Arrays.asList("ageCle", addAllBlocClesValeurs.getString(i), "blocCles", pk));
 						}
 						break;
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getLong(methodeNom), "blocCles", pk));
+						patchSqlParams.addAll(Arrays.asList("ageCle", requeteJson.getString(methodeNom), "blocCles", pk));
 						for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageCle", setBlocClesValeurs.getLong(i), "blocCles", pk));
+							patchSqlParams.addAll(Arrays.asList("ageCle", setBlocClesValeurs.getString(i), "blocCles", pk));
 						}
 						break;
 					case "removeBlocCles":

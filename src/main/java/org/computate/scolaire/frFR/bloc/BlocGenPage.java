@@ -198,7 +198,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocHeureDebut')); $('#Page_blocHeureDebut').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', null, $('#Page_blocHeureDebut'), function() { ajouterLueur($('#Page_blocHeureDebut')); }, function() { ajouterErreur($('#Page_blocHeureDebut')); }); ")
+									.a("onclick", "enleverLueur($('#Page_blocHeureDebut')); $('#Page_blocHeureDebut').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureDebut', null, function() { ajouterLueur($('#Page_blocHeureDebut')); }, function() { ajouterErreur($('#Page_blocHeureDebut')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -241,7 +241,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocHeureFin')); $('#Page_blocHeureFin').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', null, $('#Page_blocHeureFin'), function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); ")
+									.a("onclick", "enleverLueur($('#Page_blocHeureFin')); $('#Page_blocHeureFin').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', null, function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -285,7 +285,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "enleverLueur($('#Page_blocPrixParMois')); $('#Page_blocPrixParMois').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', null, $('#Page_blocPrixParMois'), function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
+									.a("onclick", "enleverLueur($('#Page_blocPrixParMois')); $('#Page_blocPrixParMois').val(null); patchBlocScolaireVal([{ name: 'fq', value: 'pk:' + $('#BlocScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', null, function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

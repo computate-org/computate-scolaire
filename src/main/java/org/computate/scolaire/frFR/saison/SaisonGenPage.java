@@ -203,8 +203,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#Page_saisonJourDebut')); $('#Page_saisonJourDebut').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', null, $('#Page_saisonJourDebut'), function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); ")
+									.a("onclick", "enleverLueur($('#Page_saisonJourDebut')); $('#Page_saisonJourDebut').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonJourDebut', null, function() { ajouterLueur($('#Page_saisonJourDebut')); }, function() { ajouterErreur($('#Page_saisonJourDebut')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -318,8 +319,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#Page_saisonFraisInscription')); $('#Page_saisonFraisInscription').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonFraisInscription', null, $('#Page_saisonFraisInscription'), function() { ajouterLueur($('#Page_saisonFraisInscription')); }, function() { ajouterErreur($('#Page_saisonFraisInscription')); }); ")
+									.a("onclick", "enleverLueur($('#Page_saisonFraisInscription')); $('#Page_saisonFraisInscription').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=\"pk\"]').val() }], 'setSaisonFraisInscription', null, function() { ajouterLueur($('#Page_saisonFraisInscription')); }, function() { ajouterErreur($('#Page_saisonFraisInscription')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

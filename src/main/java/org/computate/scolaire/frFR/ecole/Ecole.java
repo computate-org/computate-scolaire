@@ -214,6 +214,22 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 3
+	 * HtmlColonne: 3
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolAddress
 	 * Definir: true
 	 * Indexe: true
@@ -267,9 +283,14 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: ecoleNom
 	 * r.enUS: schoolName
+	 * r: ecoleEmplacement
+	 * r.enUS: schoolLocation
 	 */   
 	protected void _ecoleNomCourt(Couverture<String> c) {
-		c.o(ecoleNom);
+		if(ecoleEmplacement != null)
+			c.o(ecoleEmplacement);
+		else 
+			c.o(ecoleNom);
 	}
 
 	/**
@@ -284,9 +305,16 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r: ecoleNom
 	 * r.enUS: schoolName
 	 * VarTitre: true
+	 * r: ecoleEmplacement
+	 * r.enUS: schoolLocation
+	 * r: "%s à %s"
+	 * r.enUS: "%s at %s"
 	 */    
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		c.o(ecoleNom);
+		if(ecoleEmplacement != null)
+			c.o(String.format("%s à %s", ecoleNom, ecoleEmplacement));
+		else 
+			c.o(ecoleNom);
 	}
 
 	/**   

@@ -397,20 +397,18 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * VarTitre: true
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
-	 * r: session scolaire qui commence %s à %s. 
-	 * r.enUS: school session starting %s at %s. 
 	 * r: strSessionJourDebut
 	 * r.enUS: strSessionStartDay
 	 * r: strSessionJourFin
 	 * r.enUS: strSessionEndDay
 	 * r: saisonNomComplet
 	 * r.enUS: seasonNameComplete
-	 * r: "%s - %s session d'été à %s. "
-	 * r.enUS: "%s - %s summer session at %s. "
-	 * r: "%s - %s session scolaire à %s. "
-	 * r.enUS: "%s - %s school session at %s. "
-	 * r: "%s - %s session à %s. "
-	 * r.enUS: "%s - %s session at %s. "
+	 * r: "%s - %s session d'été à %s"
+	 * r.enUS: "%s - %s summer session at %s"
+	 * r: "%s - %s session scolaire à %s"
+	 * r.enUS: "%s - %s school session at %s"
+	 * r: "%s - %s session à %s"
+	 * r.enUS: "%s - %s session at %s"
 	 * r: saisonEte
 	 * r.enUS: seasonSummer
 	 * r: saisonHiver
@@ -422,11 +420,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 		String o;
 
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("%s - %s session d'été à %s. ", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session d'été à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
 		if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("%s - %s session scolaire à %s. ", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session scolaire à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
 		else
-			o = String.format("%s - %s session à %s. ", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
 
 		c.o(o);
 

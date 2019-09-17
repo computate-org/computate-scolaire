@@ -127,7 +127,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */            
+	 */               
 	protected void _blocCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -204,16 +204,19 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * Var.enUS: ageSearch
-	 * r: saisonCles
-	 * r.enUS: seasonKeys
+	 * r: blocCles
+	 * r.enUS: blockKeys
 	 * r: AgeScolaire
 	 * r.enUS: SchoolAge
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * Ignorer: true
 	 */
 	protected void _ageRecherche(ListeRecherche<AgeScolaire> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("ageCles_indexed_longs:" + pk);
+		l.addFilterQuery("blocCles_indexed_longs:" + pk);
 		l.setC(AgeScolaire.class);
+		l.setStocker(true);
 	}
 
 	/**
@@ -597,14 +600,16 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
-	 * r: %s - %s %s %s/mois %s. 
-	 * r.enUS: %s - %s %s %s/month %s. 
+	 * r: %s - %s %s %s/mois %s
+	 * r.enUS: %s - %s %s %s/month %s
 	 * r: strBlocHeureDebut
 	 * r.enUS: strBlockTimeStart
 	 * r: strBlocHeureFin
 	 * r.enUS: strBlockTimeEnd
 	 * r: strBlocPrixParMois
 	 * r.enUS: strBlockPricePerMonth
+	 * r: blocPrixParMois
+	 * r.enUS: blockPricePerMonth
 	 * r: blocDimanche
 	 * r.enUS: blockSunday
 	 * r: blocLundi
@@ -631,7 +636,10 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(blocJeudi) weekdays += " Th";
 		if(blocVendredi) weekdays += " Fr";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
-		o = String.format("%s - %s %s %s/mois %s. ", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
+		if(blocPrixParMois == null)
+			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);
+		else
+			o = String.format("%s - %s %s %s/mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
 		c.o(o);
 	}
 
@@ -672,8 +680,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * VarUrl: true
 	 * r: blocId
 	 * r.enUS: blocId
-	 * r: /frFR/bloc/
-	 * r.enUS: /bloc/
+	 * r: /bloc/
+	 * r.enUS: /block/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -683,7 +691,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
 		if(blocId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/bloc/" + blocId;
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/bloc/" + blocId;
 			c.o(o);
 		}
 	}

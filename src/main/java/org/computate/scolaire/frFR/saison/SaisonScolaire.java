@@ -304,12 +304,12 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: seasonSummer
 	 * r: saisonHiver
 	 * r.enUS: seasonWinter
-	 * r: "%s saison d'été à %s. "
-	 * r.enUS: "%s summer season at %s. "
-	 * r: "%s saison scolaire à %s. "
-	 * r.enUS: "%s school season at %s. "
-	 * r: "%s saison à %s. "
-	 * r.enUS: "%s season at %s. "
+	 * r: "%s saison d'été à %s"
+	 * r.enUS: "%s summer season at %s"
+	 * r: "%s saison scolaire à %s"
+	 * r.enUS: "%s school season at %s"
+	 * r: "%s saison à %s"
+	 * r.enUS: "%s season at %s"
 	 * r: strSaisonJourDebut
 	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
@@ -319,11 +319,11 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		String o;
 		
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("%s saison d'été à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison d'été à %s", strSaisonJourDebut(), ecoleNomComplet);
 		if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("%s saison scolaire à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison scolaire à %s", strSaisonJourDebut(), ecoleNomComplet);
 		else
-			o = String.format("%s saison à %s. ", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
 		
 		c.o(o);
 	}

@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.ecrivain;
 
 import org.computate.scolaire.frFR.ecrivain.TousEcrivains;
+import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.apache.commons.text.StringEscapeUtils;
@@ -8,6 +9,7 @@ import org.computate.scolaire.frFR.vertx.AppliSwagger2;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -15,6 +17,7 @@ import java.util.List;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -145,6 +148,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiMethode == null ? "" : classeApiMethode;
 	}
 
+	public String jsonClasseApiMethode() {
+		return classeApiMethode == null ? "" : classeApiMethode;
+	}
+
 	public String nomAffichageClasseApiMethode() {
 		return null;
 	}
@@ -199,6 +206,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strOpenApiVersion() {
+		return openApiVersion == null ? "" : openApiVersion;
+	}
+
+	public String jsonOpenApiVersion() {
 		return openApiVersion == null ? "" : openApiVersion;
 	}
 
@@ -317,6 +328,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeUris == null ? "" : classeUris.toString();
 	}
 
+	public String jsonClasseUris() {
+		return classeUris == null ? "" : classeUris.toString();
+	}
+
 	public String nomAffichageClasseUris() {
 		return null;
 	}
@@ -357,7 +372,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		this.openApiVersionNumeroCouverture.dejaInitialise = true;
 	}
 	public ApiEcrivain setOpenApiVersionNumero(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.openApiVersionNumero = Integer.parseInt(o);
 		this.openApiVersionNumeroCouverture.dejaInitialise = true;
 		return (ApiEcrivain)this;
@@ -377,6 +392,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strOpenApiVersionNumero() {
+		return openApiVersionNumero == null ? "" : openApiVersionNumero.toString();
+	}
+
+	public String jsonOpenApiVersionNumero() {
 		return openApiVersionNumero == null ? "" : openApiVersionNumero.toString();
 	}
 
@@ -420,7 +439,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		this.tabsSchemaCouverture.dejaInitialise = true;
 	}
 	public ApiEcrivain setTabsSchema(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.tabsSchema = Integer.parseInt(o);
 		this.tabsSchemaCouverture.dejaInitialise = true;
 		return (ApiEcrivain)this;
@@ -440,6 +459,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strTabsSchema() {
+		return tabsSchema == null ? "" : tabsSchema.toString();
+	}
+
+	public String jsonTabsSchema() {
 		return tabsSchema == null ? "" : tabsSchema.toString();
 	}
 
@@ -483,7 +506,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		this.tabsReponsesCouverture.dejaInitialise = true;
 	}
 	public ApiEcrivain setTabsReponses(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.tabsReponses = Integer.parseInt(o);
 		this.tabsReponsesCouverture.dejaInitialise = true;
 		return (ApiEcrivain)this;
@@ -503,6 +526,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strTabsReponses() {
+		return tabsReponses == null ? "" : tabsReponses.toString();
+	}
+
+	public String jsonTabsReponses() {
 		return tabsReponses == null ? "" : tabsReponses.toString();
 	}
 
@@ -1070,6 +1097,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiTag == null ? "" : classeApiTag;
 	}
 
+	public String jsonClasseApiTag() {
+		return classeApiTag == null ? "" : classeApiTag;
+	}
+
 	public String nomAffichageClasseApiTag() {
 		return null;
 	}
@@ -1129,6 +1160,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseEtendBase() {
+		return classeEtendBase == null ? "" : classeEtendBase.toString();
+	}
+
+	public String jsonClasseEtendBase() {
 		return classeEtendBase == null ? "" : classeEtendBase.toString();
 	}
 
@@ -1194,6 +1229,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeEstBase == null ? "" : classeEstBase.toString();
 	}
 
+	public String jsonClasseEstBase() {
+		return classeEstBase == null ? "" : classeEstBase.toString();
+	}
+
 	public String nomAffichageClasseEstBase() {
 		return null;
 	}
@@ -1248,6 +1287,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseNomSimple() {
+		return classeNomSimple == null ? "" : classeNomSimple;
+	}
+
+	public String jsonClasseNomSimple() {
 		return classeNomSimple == null ? "" : classeNomSimple;
 	}
 
@@ -1308,6 +1351,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeCheminAbsolu == null ? "" : classeCheminAbsolu;
 	}
 
+	public String jsonClasseCheminAbsolu() {
+		return classeCheminAbsolu == null ? "" : classeCheminAbsolu;
+	}
+
 	public String nomAffichageClasseCheminAbsolu() {
 		return null;
 	}
@@ -1362,6 +1409,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseApiUriMethode() {
+		return classeApiUriMethode == null ? "" : classeApiUriMethode;
+	}
+
+	public String jsonClasseApiUriMethode() {
 		return classeApiUriMethode == null ? "" : classeApiUriMethode;
 	}
 
@@ -1422,6 +1473,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiMethodeMethode == null ? "" : classeApiMethodeMethode;
 	}
 
+	public String jsonClasseApiMethodeMethode() {
+		return classeApiMethodeMethode == null ? "" : classeApiMethodeMethode;
+	}
+
 	public String nomAffichageClasseApiMethodeMethode() {
 		return null;
 	}
@@ -1476,6 +1531,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseApiTypeMedia200Methode() {
+		return classeApiTypeMedia200Methode == null ? "" : classeApiTypeMedia200Methode;
+	}
+
+	public String jsonClasseApiTypeMedia200Methode() {
 		return classeApiTypeMedia200Methode == null ? "" : classeApiTypeMedia200Methode;
 	}
 
@@ -1536,6 +1595,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiOperationIdMethode == null ? "" : classeApiOperationIdMethode;
 	}
 
+	public String jsonClasseApiOperationIdMethode() {
+		return classeApiOperationIdMethode == null ? "" : classeApiOperationIdMethode;
+	}
+
 	public String nomAffichageClasseApiOperationIdMethode() {
 		return null;
 	}
@@ -1590,6 +1653,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseApiOperationIdMethodeRequete() {
+		return classeApiOperationIdMethodeRequete == null ? "" : classeApiOperationIdMethodeRequete;
+	}
+
+	public String jsonClasseApiOperationIdMethodeRequete() {
 		return classeApiOperationIdMethodeRequete == null ? "" : classeApiOperationIdMethodeRequete;
 	}
 
@@ -1650,6 +1717,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeApiOperationIdMethodeReponse == null ? "" : classeApiOperationIdMethodeReponse;
 	}
 
+	public String jsonClasseApiOperationIdMethodeReponse() {
+		return classeApiOperationIdMethodeReponse == null ? "" : classeApiOperationIdMethodeReponse;
+	}
+
 	public String nomAffichageClasseApiOperationIdMethodeReponse() {
 		return null;
 	}
@@ -1704,6 +1775,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseSuperApiOperationIdMethodeRequete() {
+		return classeSuperApiOperationIdMethodeRequete == null ? "" : classeSuperApiOperationIdMethodeRequete;
+	}
+
+	public String jsonClasseSuperApiOperationIdMethodeRequete() {
 		return classeSuperApiOperationIdMethodeRequete == null ? "" : classeSuperApiOperationIdMethodeRequete;
 	}
 
@@ -1764,6 +1839,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeSuperApiOperationIdMethodeReponse == null ? "" : classeSuperApiOperationIdMethodeReponse;
 	}
 
+	public String jsonClasseSuperApiOperationIdMethodeReponse() {
+		return classeSuperApiOperationIdMethodeReponse == null ? "" : classeSuperApiOperationIdMethodeReponse;
+	}
+
 	public String nomAffichageClasseSuperApiOperationIdMethodeReponse() {
 		return null;
 	}
@@ -1818,6 +1897,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClassePageNomCanoniqueMethode() {
+		return classePageNomCanoniqueMethode == null ? "" : classePageNomCanoniqueMethode;
+	}
+
+	public String jsonClassePageNomCanoniqueMethode() {
 		return classePageNomCanoniqueMethode == null ? "" : classePageNomCanoniqueMethode;
 	}
 
@@ -1880,6 +1963,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseMotsClesTrouves() {
+		return classeMotsClesTrouves == null ? "" : classeMotsClesTrouves.toString();
+	}
+
+	public String jsonClasseMotsClesTrouves() {
 		return classeMotsClesTrouves == null ? "" : classeMotsClesTrouves.toString();
 	}
 
@@ -1959,6 +2046,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeMotsCles == null ? "" : classeMotsCles.toString();
 	}
 
+	public String jsonClasseMotsCles() {
+		return classeMotsCles == null ? "" : classeMotsCles.toString();
+	}
+
 	public String nomAffichageClasseMotsCles() {
 		return null;
 	}
@@ -2018,6 +2109,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strClasseRolesTrouves() {
+		return classeRolesTrouves == null ? "" : classeRolesTrouves.toString();
+	}
+
+	public String jsonClasseRolesTrouves() {
 		return classeRolesTrouves == null ? "" : classeRolesTrouves.toString();
 	}
 
@@ -2097,6 +2192,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeRoles == null ? "" : classeRoles.toString();
 	}
 
+	public String jsonClasseRoles() {
+		return classeRoles == null ? "" : classeRoles.toString();
+	}
+
 	public String nomAffichageClasseRoles() {
 		return null;
 	}
@@ -2173,6 +2272,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeRolesLangue == null ? "" : classeRolesLangue.toString();
 	}
 
+	public String jsonClasseRolesLangue() {
+		return classeRolesLangue == null ? "" : classeRolesLangue.toString();
+	}
+
 	public String nomAffichageClasseRolesLangue() {
 		return null;
 	}
@@ -2227,6 +2330,10 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 	}
 
 	public String strLangueNom() {
+		return langueNom == null ? "" : langueNom;
+	}
+
+	public String jsonLangueNom() {
 		return langueNom == null ? "" : langueNom;
 	}
 

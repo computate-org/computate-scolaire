@@ -198,7 +198,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#Page_blockTimeStart')); $('#Page_blockTimeStart').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', null, $('#Page_blockTimeStart'), function() { addGlow($('#Page_blockTimeStart')); }, function() { addError($('#Page_blockTimeStart')); }); ")
+									.a("onclick", "removeGlow($('#Page_blockTimeStart')); $('#Page_blockTimeStart').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeStart', null, function() { addGlow($('#Page_blockTimeStart')); }, function() { addError($('#Page_blockTimeStart')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -241,7 +241,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#Page_blockTimeEnd')); $('#Page_blockTimeEnd').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', null, $('#Page_blockTimeEnd'), function() { addGlow($('#Page_blockTimeEnd')); }, function() { addError($('#Page_blockTimeEnd')); }); ")
+									.a("onclick", "removeGlow($('#Page_blockTimeEnd')); $('#Page_blockTimeEnd').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockTimeEnd', null, function() { addGlow($('#Page_blockTimeEnd')); }, function() { addError($('#Page_blockTimeEnd')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -285,7 +285,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-									.a("onclick", "removeGlow($('#Page_blockPricePerMonth')); $('#Page_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', null, $('#Page_blockPricePerMonth'), function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
+									.a("onclick", "removeGlow($('#Page_blockPricePerMonth')); $('#Page_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=\"pk\"]').val() }], 'setBlockPricePerMonth', null, function() { addGlow($('#Page_blockPricePerMonth')); }, function() { addError($('#Page_blockPricePerMonth')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

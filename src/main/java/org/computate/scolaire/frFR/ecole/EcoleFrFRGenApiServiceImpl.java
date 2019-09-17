@@ -206,6 +206,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", jsonObject.getString(entiteVar), pk));
 						break;
+					case "ecoleEmplacement":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleEmplacement", jsonObject.getString(entiteVar), pk));
+						break;
 					case "ecoleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
@@ -404,13 +408,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 					case "addAnneeCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getLong(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getString(methodeNom)));
 						break;
 					case "addAllAnneeCles":
 						JsonArray addAllAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllAnneeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", addAllAnneeClesValeurs.getString(i)));
 						}
 						break;
 					case "setAnneeCles":
@@ -419,7 +423,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getJsonArray(methodeNom)));
 						for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", setAnneeClesValeurs.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", setAnneeClesValeurs.getString(i)));
 						}
 						break;
 					case "removeAnneeCles":
@@ -454,6 +458,16 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.jsonEcoleAdministrateurNom(), pk));
+						}
+						break;
+					case "setEcoleEmplacement":
+						o2.setEcoleEmplacement(requeteJson.getString(methodeNom));
+						if(o2.getEcoleEmplacement() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleEmplacement"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("ecoleEmplacement", o2.jsonEcoleEmplacement(), pk));
 						}
 						break;
 					case "setEcoleAddresse":
@@ -803,6 +817,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "ecoleNumeroTelephone_indexed_string";
 			case "ecoleAdministrateurNom":
 				return "ecoleAdministrateurNom_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
 			case "ecoleAddresse":
 				return "ecoleAddresse_indexed_string";
 			case "objetSuggere":

@@ -2295,648 +2295,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/school:
-    post:
-      operationId: postSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSchoolRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHSchoolRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: searchSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/school/{id}:
-    get:
-      operationId: getSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    delete:
-      operationId: deleteSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/DELETESchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /school:
-    get:
-      operationId: searchpageSchool
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /school/{id}:
-    get:
-      operationId: searchpageSchoolId
-      x-vertx-event-bus: enUSSchool
-      description: >+
-      summary: >+
-      tags:
-        - School
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
   /api/mission:
     post:
       operationId: postMission
@@ -4598,6 +3956,648 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /api/school:
+    post:
+      operationId: postSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSchoolRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSchoolRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: searchSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/school/{id}:
+    get:
+      operationId: getSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETESchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /school:
+    get:
+      operationId: searchpageSchool
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /school/{id}:
+    get:
+      operationId: searchpageSchoolId
+      x-vertx-event-bus: enUSSchool
+      description: >+
+      summary: >+
+      tags:
+        - School
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
   /api/block:
     post:
       operationId: postSchoolBlock
@@ -5386,46 +5386,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolYearResponse'
-    POSTSchoolRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolRequest'
-    POSTSchoolResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolResponse'
-    PATCHSchoolRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolRequest'
-    PATCHSchoolResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolResponse'
-    SearchSchoolResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchSchoolResponse'
-    GETSchoolResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETSchoolResponse'
-    DELETESchoolResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DELETESchoolResponse'
-    SearchPageSchoolResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchPageSchoolResponse'
     POSTMissionRequest:
       content:
         application/json:
@@ -5541,6 +5501,46 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/DELETESchoolAgeResponse'
+    POSTSchoolRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolRequest'
+    POSTSchoolResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolResponse'
+    PATCHSchoolRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolRequest'
+    PATCHSchoolResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolResponse'
+    SearchSchoolResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSchoolResponse'
+    GETSchoolResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSchoolResponse'
+    DELETESchoolResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESchoolResponse'
+    SearchPageSchoolResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSchoolResponse'
     POSTSchoolBlockRequest:
       content:
         application/json:
@@ -5589,60 +5589,70 @@ components:
           properties:
             setUserId:
               type: string
+              nullable: true
             removeUserId:
               type: string
             removeAllUserId:
               type: string
             setUserName:
               type: string
+              nullable: true
             removeUserName:
               type: string
             removeAllUserName:
               type: string
             setUserEmail:
               type: string
+              nullable: true
             removeUserEmail:
               type: string
             removeAllUserEmail:
               type: string
             setUserFirstName:
               type: string
+              nullable: true
             removeUserFirstName:
               type: string
             removeAllUserFirstName:
               type: string
             setUserLastName:
               type: string
+              nullable: true
             removeUserLastName:
               type: string
             removeAllUserLastName:
               type: string
             setUserFullName:
               type: string
+              nullable: true
             removeUserFullName:
               type: string
             removeAllUserFullName:
               type: string
             setUserSite:
               type: string
+              nullable: true
             removeUserSite:
               type: string
             removeAllUserSite:
               type: string
             setUserReceiveEmails:
               type: boolean
+              nullable: true
             removeUserReceiveEmails:
               type: boolean
             removeAllUserReceiveEmails:
               type: boolean
             setSeeArchived:
               type: boolean
+              nullable: true
             removeSeeArchived:
               type: boolean
             removeAllSeeArchived:
               type: boolean
             setSeeDeleted:
               type: boolean
+              nullable: true
             removeSeeDeleted:
               type: boolean
             removeAllSeeDeleted:
@@ -5654,60 +5664,70 @@ components:
           properties:
             setUserId:
               type: string
+              nullable: true
             removeUserId:
               type: string
             removeAllUserId:
               type: string
             setUserName:
               type: string
+              nullable: true
             removeUserName:
               type: string
             removeAllUserName:
               type: string
             setUserEmail:
               type: string
+              nullable: true
             removeUserEmail:
               type: string
             removeAllUserEmail:
               type: string
             setUserFirstName:
               type: string
+              nullable: true
             removeUserFirstName:
               type: string
             removeAllUserFirstName:
               type: string
             setUserLastName:
               type: string
+              nullable: true
             removeUserLastName:
               type: string
             removeAllUserLastName:
               type: string
             setUserFullName:
               type: string
+              nullable: true
             removeUserFullName:
               type: string
             removeAllUserFullName:
               type: string
             setUserSite:
               type: string
+              nullable: true
             removeUserSite:
               type: string
             removeAllUserSite:
               type: string
             setUserReceiveEmails:
               type: boolean
+              nullable: true
             removeUserReceiveEmails:
               type: boolean
             removeAllUserReceiveEmails:
               type: boolean
             setSeeArchived:
               type: boolean
+              nullable: true
             removeSeeArchived:
               type: boolean
             removeAllSeeArchived:
               type: boolean
             setSeeDeleted:
               type: boolean
+              nullable: true
             removeSeeDeleted:
               type: boolean
             removeAllSeeDeleted:
@@ -5769,54 +5789,63 @@ components:
           properties:
             setPk:
               type: number
+              nullable: true
             removePk:
               type: number
             removeAllPk:
               type: number
             setId:
               type: string
+              nullable: true
             removeId:
               type: string
             removeAllId:
               type: string
             setCreated:
               type: string
+              nullable: true
             removeCreated:
               type: string
             removeAllCreated:
               type: string
             setModified:
               type: string
+              nullable: true
             removeModified:
               type: string
             removeAllModified:
               type: string
             setArchived:
               type: boolean
+              nullable: true
             removeArchived:
               type: boolean
             removeAllArchived:
               type: boolean
             setDeleted:
               type: boolean
+              nullable: true
             removeDeleted:
               type: boolean
             removeAllDeleted:
               type: boolean
             setClassCanonicalName:
               type: string
+              nullable: true
             removeClassCanonicalName:
               type: string
             removeAllClassCanonicalName:
               type: string
             setClassSimpleName:
               type: string
+              nullable: true
             removeClassSimpleName:
               type: string
             removeAllClassSimpleName:
               type: string
             setClassCanonicalNames:
               type: array
+              nullable: true
               items:
                 type: string
             removeClassCanonicalNames:
@@ -5837,54 +5866,63 @@ components:
           properties:
             setPk:
               type: number
+              nullable: true
             removePk:
               type: number
             removeAllPk:
               type: number
             setId:
               type: string
+              nullable: true
             removeId:
               type: string
             removeAllId:
               type: string
             setCreated:
               type: string
+              nullable: true
             removeCreated:
               type: string
             removeAllCreated:
               type: string
             setModified:
               type: string
+              nullable: true
             removeModified:
               type: string
             removeAllModified:
               type: string
             setArchived:
               type: boolean
+              nullable: true
             removeArchived:
               type: boolean
             removeAllArchived:
               type: boolean
             setDeleted:
               type: boolean
+              nullable: true
             removeDeleted:
               type: boolean
             removeAllDeleted:
               type: boolean
             setClassCanonicalName:
               type: string
+              nullable: true
             removeClassCanonicalName:
               type: string
             removeAllClassCanonicalName:
               type: string
             setClassSimpleName:
               type: string
+              nullable: true
             removeClassSimpleName:
               type: string
             removeAllClassSimpleName:
               type: string
             setClassCanonicalNames:
               type: array
+              nullable: true
               items:
                 type: string
             removeClassCanonicalNames:
@@ -6081,24 +6119,28 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setYearKey:
               type: number
+              nullable: true
             removeYearKey:
               type: number
             removeAllYearKey:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -6115,6 +6157,7 @@ components:
                 type: number
             setSessionKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeSessionKeys:
@@ -6131,90 +6174,105 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonId:
               type: string
+              nullable: true
             removeSeasonId:
               type: string
             removeAllSeasonId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -6226,24 +6284,28 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setYearKey:
               type: number
+              nullable: true
             removeYearKey:
               type: number
             removeAllYearKey:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -6260,6 +6322,7 @@ components:
                 type: number
             setSessionKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeSessionKeys:
@@ -6276,90 +6339,105 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonId:
               type: string
+              nullable: true
             removeSeasonId:
               type: string
             removeAllSeasonId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -6601,18 +6679,21 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setYearKey:
               type: number
+              nullable: true
             removeYearKey:
               type: number
             removeAllYearKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -6629,6 +6710,7 @@ components:
                 type: number
             setSeasonKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeSeasonKeys:
@@ -6645,66 +6727,77 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setYearNameShort:
               type: string
+              nullable: true
             removeYearNameShort:
               type: string
             removeAllYearNameShort:
               type: string
             setYearNameComplete:
               type: string
+              nullable: true
             removeYearNameComplete:
               type: string
             removeAllYearNameComplete:
               type: string
             setYearId:
               type: string
+              nullable: true
             removeYearId:
               type: string
             removeAllYearId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -6716,18 +6809,21 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setYearKey:
               type: number
+              nullable: true
             removeYearKey:
               type: number
             removeAllYearKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -6744,6 +6840,7 @@ components:
                 type: number
             setSeasonKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeSeasonKeys:
@@ -6760,66 +6857,77 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setYearNameShort:
               type: string
+              nullable: true
             removeYearNameShort:
               type: string
             removeAllYearNameShort:
               type: string
             setYearNameComplete:
               type: string
+              nullable: true
             removeYearNameComplete:
               type: string
             removeAllYearNameComplete:
               type: string
             setYearId:
               type: string
+              nullable: true
             removeYearId:
               type: string
             removeAllYearId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -6946,666 +7054,6 @@ components:
     SearchPageSchoolYearResponse:
       allOf:
         - type: string
-    POSTSchoolRequest:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequest"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            childKeys:
-              type: array
-              items:
-                type: number
-            blockKeys:
-              type: array
-              items:
-                type: number
-            ageGroupKeys:
-              type: array
-              items:
-                type: number
-            sessionKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            yearKeys:
-              type: array
-              items:
-                type: number
-            educationSort:
-              type: number
-            schoolSort:
-              type: number
-            schoolName:
-              type: string
-            schoolPhoneNumber:
-              type: string
-            schoolAdministratorName:
-              type: string
-            schoolAddress:
-              type: string
-            objectSuggestWeight:
-              type: number
-            objectSuggest:
-              type: string
-            schoolNameShort:
-              type: string
-            schoolNameComplete:
-              type: string
-            schoolId:
-              type: string
-            pageUrl:
-              type: string
-            pageH1:
-              type: string
-    POSTSchoolResponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            childKeys:
-              type: array
-              items:
-                type: number
-            blockKeys:
-              type: array
-              items:
-                type: number
-            ageGroupKeys:
-              type: array
-              items:
-                type: number
-            sessionKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            yearKeys:
-              type: array
-              items:
-                type: number
-            educationSort:
-              type: number
-            schoolSort:
-              type: number
-            schoolName:
-              type: string
-            schoolPhoneNumber:
-              type: string
-            schoolAdministratorName:
-              type: string
-            schoolAddress:
-              type: string
-            objectSuggestWeight:
-              type: number
-            objectSuggest:
-              type: string
-            schoolNameShort:
-              type: string
-            schoolNameComplete:
-              type: string
-            schoolId:
-              type: string
-            pageUrl:
-              type: string
-            pageH1:
-              type: string
-    PATCHSchoolRequest:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequest"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: number
-            removeSchoolKey:
-              type: number
-            removeAllSchoolKey:
-              type: number
-            setChildKeys:
-              type: array
-              items:
-                type: number
-            removeChildKeys:
-              type: number
-            removeAllChildKeys:
-              type: array
-              items:
-                type: number
-            addChildKeys:
-              type: number
-            addAllChildKeys:
-              type: array
-              items:
-                type: number
-            setBlockKeys:
-              type: array
-              items:
-                type: number
-            removeBlockKeys:
-              type: number
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: number
-            addBlockKeys:
-              type: number
-            addAllBlockKeys:
-              type: array
-              items:
-                type: number
-            setAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            removeAgeGroupKeys:
-              type: number
-            removeAllAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            addAgeGroupKeys:
-              type: number
-            addAllAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            setSessionKeys:
-              type: array
-              items:
-                type: number
-            removeSessionKeys:
-              type: number
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: number
-            addSessionKeys:
-              type: number
-            addAllSessionKeys:
-              type: array
-              items:
-                type: number
-            setSeasonKeys:
-              type: array
-              items:
-                type: number
-            removeSeasonKeys:
-              type: number
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            addSeasonKeys:
-              type: number
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            setYearKeys:
-              type: array
-              items:
-                type: number
-            removeYearKeys:
-              type: number
-            removeAllYearKeys:
-              type: array
-              items:
-                type: number
-            addYearKeys:
-              type: number
-            addAllYearKeys:
-              type: array
-              items:
-                type: number
-            setEducationSort:
-              type: number
-            removeEducationSort:
-              type: number
-            removeAllEducationSort:
-              type: number
-            setSchoolSort:
-              type: number
-            removeSchoolSort:
-              type: number
-            removeAllSchoolSort:
-              type: number
-            setSchoolName:
-              type: string
-            removeSchoolName:
-              type: string
-            removeAllSchoolName:
-              type: string
-            setSchoolPhoneNumber:
-              type: string
-            removeSchoolPhoneNumber:
-              type: string
-            removeAllSchoolPhoneNumber:
-              type: string
-            setSchoolAdministratorName:
-              type: string
-            removeSchoolAdministratorName:
-              type: string
-            removeAllSchoolAdministratorName:
-              type: string
-            setSchoolAddress:
-              type: string
-            removeSchoolAddress:
-              type: string
-            removeAllSchoolAddress:
-              type: string
-            setObjectSuggestWeight:
-              type: number
-            removeObjectSuggestWeight:
-              type: number
-            removeAllObjectSuggestWeight:
-              type: number
-            setObjectSuggest:
-              type: string
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
-            setSchoolNameShort:
-              type: string
-            removeSchoolNameShort:
-              type: string
-            removeAllSchoolNameShort:
-              type: string
-            setSchoolNameComplete:
-              type: string
-            removeSchoolNameComplete:
-              type: string
-            removeAllSchoolNameComplete:
-              type: string
-            setSchoolId:
-              type: string
-            removeSchoolId:
-              type: string
-            removeAllSchoolId:
-              type: string
-            setPageUrl:
-              type: string
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setPageH1:
-              type: string
-            removePageH1:
-              type: string
-            removeAllPageH1:
-              type: string
-    PATCHSchoolResponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterResponse"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: number
-            removeSchoolKey:
-              type: number
-            removeAllSchoolKey:
-              type: number
-            setChildKeys:
-              type: array
-              items:
-                type: number
-            removeChildKeys:
-              type: number
-            removeAllChildKeys:
-              type: array
-              items:
-                type: number
-            addChildKeys:
-              type: number
-            addAllChildKeys:
-              type: array
-              items:
-                type: number
-            setBlockKeys:
-              type: array
-              items:
-                type: number
-            removeBlockKeys:
-              type: number
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: number
-            addBlockKeys:
-              type: number
-            addAllBlockKeys:
-              type: array
-              items:
-                type: number
-            setAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            removeAgeGroupKeys:
-              type: number
-            removeAllAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            addAgeGroupKeys:
-              type: number
-            addAllAgeGroupKeys:
-              type: array
-              items:
-                type: number
-            setSessionKeys:
-              type: array
-              items:
-                type: number
-            removeSessionKeys:
-              type: number
-            removeAllSessionKeys:
-              type: array
-              items:
-                type: number
-            addSessionKeys:
-              type: number
-            addAllSessionKeys:
-              type: array
-              items:
-                type: number
-            setSeasonKeys:
-              type: array
-              items:
-                type: number
-            removeSeasonKeys:
-              type: number
-            removeAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            addSeasonKeys:
-              type: number
-            addAllSeasonKeys:
-              type: array
-              items:
-                type: number
-            setYearKeys:
-              type: array
-              items:
-                type: number
-            removeYearKeys:
-              type: number
-            removeAllYearKeys:
-              type: array
-              items:
-                type: number
-            addYearKeys:
-              type: number
-            addAllYearKeys:
-              type: array
-              items:
-                type: number
-            setEducationSort:
-              type: number
-            removeEducationSort:
-              type: number
-            removeAllEducationSort:
-              type: number
-            setSchoolSort:
-              type: number
-            removeSchoolSort:
-              type: number
-            removeAllSchoolSort:
-              type: number
-            setSchoolName:
-              type: string
-            removeSchoolName:
-              type: string
-            removeAllSchoolName:
-              type: string
-            setSchoolPhoneNumber:
-              type: string
-            removeSchoolPhoneNumber:
-              type: string
-            removeAllSchoolPhoneNumber:
-              type: string
-            setSchoolAdministratorName:
-              type: string
-            removeSchoolAdministratorName:
-              type: string
-            removeAllSchoolAdministratorName:
-              type: string
-            setSchoolAddress:
-              type: string
-            removeSchoolAddress:
-              type: string
-            removeAllSchoolAddress:
-              type: string
-            setObjectSuggestWeight:
-              type: number
-            removeObjectSuggestWeight:
-              type: number
-            removeAllObjectSuggestWeight:
-              type: number
-            setObjectSuggest:
-              type: string
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
-            setSchoolNameShort:
-              type: string
-            removeSchoolNameShort:
-              type: string
-            removeAllSchoolNameShort:
-              type: string
-            setSchoolNameComplete:
-              type: string
-            removeSchoolNameComplete:
-              type: string
-            removeAllSchoolNameComplete:
-              type: string
-            setSchoolId:
-              type: string
-            removeSchoolId:
-              type: string
-            removeAllSchoolId:
-              type: string
-            setPageUrl:
-              type: string
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setPageH1:
-              type: string
-            removePageH1:
-              type: string
-            removeAllPageH1:
-              type: string
-    SearchSchoolResponse:
-      allOf:
-        - $ref: "#/components/schemas/SearchClusterResponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              schoolKey:
-                type: number
-              childKeys:
-                type: array
-                items:
-                  type: number
-              blockKeys:
-                type: array
-                items:
-                  type: number
-              ageGroupKeys:
-                type: array
-                items:
-                  type: number
-              sessionKeys:
-                type: array
-                items:
-                  type: number
-              seasonKeys:
-                type: array
-                items:
-                  type: number
-              yearKeys:
-                type: array
-                items:
-                  type: number
-              educationSort:
-                type: number
-              schoolSort:
-                type: number
-              schoolName:
-                type: string
-              schoolPhoneNumber:
-                type: string
-              schoolAdministratorName:
-                type: string
-              schoolAddress:
-                type: string
-              objectSuggestWeight:
-                type: number
-              objectSuggest:
-                type: string
-              schoolNameShort:
-                type: string
-              schoolNameComplete:
-                type: string
-              schoolId:
-                type: string
-              pageUrl:
-                type: string
-              pageH1:
-                type: string
-    GETSchoolResponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            childKeys:
-              type: array
-              items:
-                type: number
-            blockKeys:
-              type: array
-              items:
-                type: number
-            ageGroupKeys:
-              type: array
-              items:
-                type: number
-            sessionKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            yearKeys:
-              type: array
-              items:
-                type: number
-            educationSort:
-              type: number
-            schoolSort:
-              type: number
-            schoolName:
-              type: string
-            schoolPhoneNumber:
-              type: string
-            schoolAdministratorName:
-              type: string
-            schoolAddress:
-              type: string
-            objectSuggestWeight:
-              type: number
-            objectSuggest:
-              type: string
-            schoolNameShort:
-              type: string
-            schoolNameComplete:
-              type: string
-            schoolId:
-              type: string
-            pageUrl:
-              type: string
-            pageH1:
-              type: string
-    DELETESchoolResponse:
-      allOf:
-        - $ref: "#/components/schemas/DELETEClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: number
-            childKeys:
-              type: array
-              items:
-                type: number
-            blockKeys:
-              type: array
-              items:
-                type: number
-            ageGroupKeys:
-              type: array
-              items:
-                type: number
-            sessionKeys:
-              type: array
-              items:
-                type: number
-            seasonKeys:
-              type: array
-              items:
-                type: number
-            yearKeys:
-              type: array
-              items:
-                type: number
-            educationSort:
-              type: number
-            schoolSort:
-              type: number
-            schoolName:
-              type: string
-            schoolPhoneNumber:
-              type: string
-            schoolAdministratorName:
-              type: string
-            schoolAddress:
-              type: string
-            objectSuggestWeight:
-              type: number
-            objectSuggest:
-              type: string
-            schoolNameShort:
-              type: string
-            schoolNameComplete:
-              type: string
-            schoolId:
-              type: string
-            pageUrl:
-              type: string
-            pageH1:
-              type: string
-    SearchPageSchoolResponse:
-      allOf:
-        - type: string
     POSTMissionRequest:
       allOf:
         - $ref: "#/components/schemas/POSTClusterRequest"
@@ -7639,24 +7087,28 @@ components:
           properties:
             setMissionNom:
               type: string
+              nullable: true
             removeMissionNom:
               type: string
             removeAllMissionNom:
               type: string
             setEcoleNumeroTelephone:
               type: string
+              nullable: true
             removeEcoleNumeroTelephone:
               type: string
             removeAllEcoleNumeroTelephone:
               type: string
             setMissionId:
               type: string
+              nullable: true
             removeMissionId:
               type: string
             removeAllMissionId:
               type: string
             setPageUri:
               type: string
+              nullable: true
             removePageUri:
               type: string
             removeAllPageUri:
@@ -7668,24 +7120,28 @@ components:
           properties:
             setMissionNom:
               type: string
+              nullable: true
             removeMissionNom:
               type: string
             removeAllMissionNom:
               type: string
             setEcoleNumeroTelephone:
               type: string
+              nullable: true
             removeEcoleNumeroTelephone:
               type: string
             removeAllEcoleNumeroTelephone:
               type: string
             setMissionId:
               type: string
+              nullable: true
             removeMissionId:
               type: string
             removeAllMissionId:
               type: string
             setPageUri:
               type: string
+              nullable: true
             removePageUri:
               type: string
             removeAllPageUri:
@@ -7858,30 +7314,35 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setAnneeCle:
               type: number
+              nullable: true
             removeAnneeCle:
               type: number
             removeAllAnneeCle:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setSessionKey:
               type: number
+              nullable: true
             removeSessionKey:
               type: number
             removeAllSessionKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -7898,6 +7359,7 @@ components:
                 type: number
             setAgeKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeAgeKeys:
@@ -7914,120 +7376,140 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSessionSort:
               type: number
+              nullable: true
             removeSessionSort:
               type: number
             removeAllSessionSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonEnd:
               type: string
+              nullable: true
             removeSeasonEnd:
               type: string
             removeAllSeasonEnd:
               type: string
             setSessionStartDay:
               type: string
+              nullable: true
             removeSessionStartDay:
               type: string
             removeAllSessionStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setSessionNameComplete:
               type: string
+              nullable: true
             removeSessionNameComplete:
               type: string
             removeAllSessionNameComplete:
               type: string
             setSessionId:
               type: string
+              nullable: true
             removeSessionId:
               type: string
             removeAllSessionId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -8039,30 +7521,35 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setAnneeCle:
               type: number
+              nullable: true
             removeAnneeCle:
               type: number
             removeAllAnneeCle:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setSessionKey:
               type: number
+              nullable: true
             removeSessionKey:
               type: number
             removeAllSessionKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -8079,6 +7566,7 @@ components:
                 type: number
             setAgeKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeAgeKeys:
@@ -8095,120 +7583,140 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSessionSort:
               type: number
+              nullable: true
             removeSessionSort:
               type: number
             removeAllSessionSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonEnd:
               type: string
+              nullable: true
             removeSeasonEnd:
               type: string
             removeAllSeasonEnd:
               type: string
             setSessionStartDay:
               type: string
+              nullable: true
             removeSessionStartDay:
               type: string
             removeAllSessionStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setSessionNameComplete:
               type: string
+              nullable: true
             removeSessionNameComplete:
               type: string
             removeAllSessionNameComplete:
               type: string
             setSessionId:
               type: string
+              nullable: true
             removeSessionId:
               type: string
             removeAllSessionId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -8549,36 +8057,42 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setAnneeCle:
               type: number
+              nullable: true
             removeAnneeCle:
               type: number
             removeAllAnneeCle:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setSessionKey:
               type: number
+              nullable: true
             removeSessionKey:
               type: number
             removeAllSessionKey:
               type: number
             setAgeKey:
               type: number
+              nullable: true
             removeAgeKey:
               type: number
             removeAllAgeKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -8595,6 +8109,7 @@ components:
                 type: number
             setBlockKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeBlockKeys:
@@ -8611,138 +8126,161 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSessionSort:
               type: number
+              nullable: true
             removeSessionSort:
               type: number
             removeAllSessionSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonEnd:
               type: string
+              nullable: true
             removeSeasonEnd:
               type: string
             removeAllSeasonEnd:
               type: string
             setSessionStartDay:
               type: string
+              nullable: true
             removeSessionStartDay:
               type: string
             removeAllSessionStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setSessionNameComplete:
               type: string
+              nullable: true
             removeSessionNameComplete:
               type: string
             removeAllSessionNameComplete:
               type: string
             setAgeStart:
               type: number
+              nullable: true
             removeAgeStart:
               type: number
             removeAllAgeStart:
               type: number
             setAgeEnd:
               type: number
+              nullable: true
             removeAgeEnd:
               type: number
             removeAllAgeEnd:
               type: number
             setAgeNameComplete:
               type: string
+              nullable: true
             removeAgeNameComplete:
               type: string
             removeAllAgeNameComplete:
               type: string
             setAgeId:
               type: string
+              nullable: true
             removeAgeId:
               type: string
             removeAllAgeId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -8754,36 +8292,42 @@ components:
           properties:
             setSchoolKey:
               type: number
+              nullable: true
             removeSchoolKey:
               type: number
             removeAllSchoolKey:
               type: number
             setAnneeCle:
               type: number
+              nullable: true
             removeAnneeCle:
               type: number
             removeAllAnneeCle:
               type: number
             setSeasonKey:
               type: number
+              nullable: true
             removeSeasonKey:
               type: number
             removeAllSeasonKey:
               type: number
             setSessionKey:
               type: number
+              nullable: true
             removeSessionKey:
               type: number
             removeAllSessionKey:
               type: number
             setAgeKey:
               type: number
+              nullable: true
             removeAgeKey:
               type: number
             removeAllAgeKey:
               type: number
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeEnrollmentKeys:
@@ -8800,6 +8344,7 @@ components:
                 type: number
             setBlockKeys:
               type: array
+              nullable: true
               items:
                 type: number
             removeBlockKeys:
@@ -8816,138 +8361,161 @@ components:
                 type: number
             setEducationSort:
               type: number
+              nullable: true
             removeEducationSort:
               type: number
             removeAllEducationSort:
               type: number
             setSchoolSort:
               type: number
+              nullable: true
             removeSchoolSort:
               type: number
             removeAllSchoolSort:
               type: number
             setYearSort:
               type: number
+              nullable: true
             removeYearSort:
               type: number
             removeAllYearSort:
               type: number
             setSeasonSort:
               type: number
+              nullable: true
             removeSeasonSort:
               type: number
             removeAllSeasonSort:
               type: number
             setSessionSort:
               type: number
+              nullable: true
             removeSessionSort:
               type: number
             removeAllSessionSort:
               type: number
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: number
+              nullable: true
             removeSeasonEnrollmentFee:
               type: number
             removeAllSeasonEnrollmentFee:
               type: number
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setSeasonEnd:
               type: string
+              nullable: true
             removeSeasonEnd:
               type: string
             removeAllSeasonEnd:
               type: string
             setSessionStartDay:
               type: string
+              nullable: true
             removeSessionStartDay:
               type: string
             removeAllSessionStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setSessionNameComplete:
               type: string
+              nullable: true
             removeSessionNameComplete:
               type: string
             removeAllSessionNameComplete:
               type: string
             setAgeStart:
               type: number
+              nullable: true
             removeAgeStart:
               type: number
             removeAllAgeStart:
               type: number
             setAgeEnd:
               type: number
+              nullable: true
             removeAgeEnd:
               type: number
             removeAllAgeEnd:
               type: number
             setAgeNameComplete:
               type: string
+              nullable: true
             removeAgeNameComplete:
               type: string
             removeAllAgeNameComplete:
               type: string
             setAgeId:
               type: string
+              nullable: true
             removeAgeId:
               type: string
             removeAllAgeId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -9161,6 +8729,730 @@ components:
               type: string
             objectSuggest:
               type: string
+    POSTSchoolRequest:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequest"
+        - type: object
+          properties:
+            schoolKey:
+              type: string
+            childKeys:
+              type: array
+              items:
+                type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            ageGroupKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            schoolName:
+              type: string
+            schoolPhoneNumber:
+              type: string
+            schoolAdministratorName:
+              type: string
+            schoolLocation:
+              type: string
+            schoolAddress:
+              type: string
+            objectSuggestWeight:
+              type: string
+            objectSuggest:
+              type: string
+            schoolNameShort:
+              type: string
+            schoolNameComplete:
+              type: string
+            schoolId:
+              type: string
+            pageUrl:
+              type: string
+            pageH1:
+              type: string
+    POSTSchoolResponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: string
+            childKeys:
+              type: array
+              items:
+                type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            ageGroupKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            schoolName:
+              type: string
+            schoolPhoneNumber:
+              type: string
+            schoolAdministratorName:
+              type: string
+            schoolLocation:
+              type: string
+            schoolAddress:
+              type: string
+            objectSuggestWeight:
+              type: string
+            objectSuggest:
+              type: string
+            schoolNameShort:
+              type: string
+            schoolNameComplete:
+              type: string
+            schoolId:
+              type: string
+            pageUrl:
+              type: string
+            pageH1:
+              type: string
+    PATCHSchoolRequest:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequest"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setChildKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeChildKeys:
+              type: string
+            removeAllChildKeys:
+              type: array
+              items:
+                type: string
+            addChildKeys:
+              type: string
+            addAllChildKeys:
+              type: array
+              items:
+                type: string
+            setBlockKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeBlockKeys:
+              type: string
+            removeAllBlockKeys:
+              type: array
+              items:
+                type: string
+            addBlockKeys:
+              type: string
+            addAllBlockKeys:
+              type: array
+              items:
+                type: string
+            setAgeGroupKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeGroupKeys:
+              type: string
+            removeAllAgeGroupKeys:
+              type: array
+              items:
+                type: string
+            addAgeGroupKeys:
+              type: string
+            addAllAgeGroupKeys:
+              type: array
+              items:
+                type: string
+            setSessionKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSessionKeys:
+              type: string
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: string
+            addSessionKeys:
+              type: string
+            addAllSessionKeys:
+              type: array
+              items:
+                type: string
+            setSeasonKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSeasonKeys:
+              type: string
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            addSeasonKeys:
+              type: string
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            setYearKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeYearKeys:
+              type: string
+            removeAllYearKeys:
+              type: array
+              items:
+                type: string
+            addYearKeys:
+              type: string
+            addAllYearKeys:
+              type: array
+              items:
+                type: string
+            setEducationSort:
+              type: string
+              nullable: true
+            removeEducationSort:
+              type: string
+            removeAllEducationSort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setSchoolName:
+              type: string
+              nullable: true
+            removeSchoolName:
+              type: string
+            removeAllSchoolName:
+              type: string
+            setSchoolPhoneNumber:
+              type: string
+              nullable: true
+            removeSchoolPhoneNumber:
+              type: string
+            removeAllSchoolPhoneNumber:
+              type: string
+            setSchoolAdministratorName:
+              type: string
+              nullable: true
+            removeSchoolAdministratorName:
+              type: string
+            removeAllSchoolAdministratorName:
+              type: string
+            setSchoolLocation:
+              type: string
+              nullable: true
+            removeSchoolLocation:
+              type: string
+            removeAllSchoolLocation:
+              type: string
+            setSchoolAddress:
+              type: string
+              nullable: true
+            removeSchoolAddress:
+              type: string
+            removeAllSchoolAddress:
+              type: string
+            setObjectSuggestWeight:
+              type: string
+              nullable: true
+            removeObjectSuggestWeight:
+              type: string
+            removeAllObjectSuggestWeight:
+              type: string
+            setObjectSuggest:
+              type: string
+              nullable: true
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+            setSchoolNameShort:
+              type: string
+              nullable: true
+            removeSchoolNameShort:
+              type: string
+            removeAllSchoolNameShort:
+              type: string
+            setSchoolNameComplete:
+              type: string
+              nullable: true
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setSchoolId:
+              type: string
+              nullable: true
+            removeSchoolId:
+              type: string
+            removeAllSchoolId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setPageH1:
+              type: string
+              nullable: true
+            removePageH1:
+              type: string
+            removeAllPageH1:
+              type: string
+    PATCHSchoolResponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterResponse"
+        - type: object
+          properties:
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setChildKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeChildKeys:
+              type: string
+            removeAllChildKeys:
+              type: array
+              items:
+                type: string
+            addChildKeys:
+              type: string
+            addAllChildKeys:
+              type: array
+              items:
+                type: string
+            setBlockKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeBlockKeys:
+              type: string
+            removeAllBlockKeys:
+              type: array
+              items:
+                type: string
+            addBlockKeys:
+              type: string
+            addAllBlockKeys:
+              type: array
+              items:
+                type: string
+            setAgeGroupKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeGroupKeys:
+              type: string
+            removeAllAgeGroupKeys:
+              type: array
+              items:
+                type: string
+            addAgeGroupKeys:
+              type: string
+            addAllAgeGroupKeys:
+              type: array
+              items:
+                type: string
+            setSessionKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSessionKeys:
+              type: string
+            removeAllSessionKeys:
+              type: array
+              items:
+                type: string
+            addSessionKeys:
+              type: string
+            addAllSessionKeys:
+              type: array
+              items:
+                type: string
+            setSeasonKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSeasonKeys:
+              type: string
+            removeAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            addSeasonKeys:
+              type: string
+            addAllSeasonKeys:
+              type: array
+              items:
+                type: string
+            setYearKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeYearKeys:
+              type: string
+            removeAllYearKeys:
+              type: array
+              items:
+                type: string
+            addYearKeys:
+              type: string
+            addAllYearKeys:
+              type: array
+              items:
+                type: string
+            setEducationSort:
+              type: string
+              nullable: true
+            removeEducationSort:
+              type: string
+            removeAllEducationSort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setSchoolName:
+              type: string
+              nullable: true
+            removeSchoolName:
+              type: string
+            removeAllSchoolName:
+              type: string
+            setSchoolPhoneNumber:
+              type: string
+              nullable: true
+            removeSchoolPhoneNumber:
+              type: string
+            removeAllSchoolPhoneNumber:
+              type: string
+            setSchoolAdministratorName:
+              type: string
+              nullable: true
+            removeSchoolAdministratorName:
+              type: string
+            removeAllSchoolAdministratorName:
+              type: string
+            setSchoolLocation:
+              type: string
+              nullable: true
+            removeSchoolLocation:
+              type: string
+            removeAllSchoolLocation:
+              type: string
+            setSchoolAddress:
+              type: string
+              nullable: true
+            removeSchoolAddress:
+              type: string
+            removeAllSchoolAddress:
+              type: string
+            setObjectSuggestWeight:
+              type: string
+              nullable: true
+            removeObjectSuggestWeight:
+              type: string
+            removeAllObjectSuggestWeight:
+              type: string
+            setObjectSuggest:
+              type: string
+              nullable: true
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+            setSchoolNameShort:
+              type: string
+              nullable: true
+            removeSchoolNameShort:
+              type: string
+            removeAllSchoolNameShort:
+              type: string
+            setSchoolNameComplete:
+              type: string
+              nullable: true
+            removeSchoolNameComplete:
+              type: string
+            removeAllSchoolNameComplete:
+              type: string
+            setSchoolId:
+              type: string
+              nullable: true
+            removeSchoolId:
+              type: string
+            removeAllSchoolId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setPageH1:
+              type: string
+              nullable: true
+            removePageH1:
+              type: string
+            removeAllPageH1:
+              type: string
+    SearchSchoolResponse:
+      allOf:
+        - $ref: "#/components/schemas/SearchClusterResponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              schoolKey:
+                type: string
+              childKeys:
+                type: array
+                items:
+                  type: string
+              blockKeys:
+                type: array
+                items:
+                  type: string
+              ageGroupKeys:
+                type: array
+                items:
+                  type: string
+              sessionKeys:
+                type: array
+                items:
+                  type: string
+              seasonKeys:
+                type: array
+                items:
+                  type: string
+              yearKeys:
+                type: array
+                items:
+                  type: string
+              educationSort:
+                type: string
+              schoolSort:
+                type: string
+              schoolName:
+                type: string
+              schoolPhoneNumber:
+                type: string
+              schoolAdministratorName:
+                type: string
+              schoolLocation:
+                type: string
+              schoolAddress:
+                type: string
+              objectSuggestWeight:
+                type: string
+              objectSuggest:
+                type: string
+              schoolNameShort:
+                type: string
+              schoolNameComplete:
+                type: string
+              schoolId:
+                type: string
+              pageUrl:
+                type: string
+              pageH1:
+                type: string
+    GETSchoolResponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: string
+            childKeys:
+              type: array
+              items:
+                type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            ageGroupKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            schoolName:
+              type: string
+            schoolPhoneNumber:
+              type: string
+            schoolAdministratorName:
+              type: string
+            schoolLocation:
+              type: string
+            schoolAddress:
+              type: string
+            objectSuggestWeight:
+              type: string
+            objectSuggest:
+              type: string
+            schoolNameShort:
+              type: string
+            schoolNameComplete:
+              type: string
+            schoolId:
+              type: string
+            pageUrl:
+              type: string
+            pageH1:
+              type: string
+    DELETESchoolResponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterResponse"
+        - type: object
+          properties:
+            schoolKey:
+              type: string
+            childKeys:
+              type: array
+              items:
+                type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            ageGroupKeys:
+              type: array
+              items:
+                type: string
+            sessionKeys:
+              type: array
+              items:
+                type: string
+            seasonKeys:
+              type: array
+              items:
+                type: string
+            yearKeys:
+              type: array
+              items:
+                type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            schoolName:
+              type: string
+            schoolPhoneNumber:
+              type: string
+            schoolAdministratorName:
+              type: string
+            schoolLocation:
+              type: string
+            schoolAddress:
+              type: string
+            objectSuggestWeight:
+              type: string
+            objectSuggest:
+              type: string
+            schoolNameShort:
+              type: string
+            schoolNameComplete:
+              type: string
+            schoolId:
+              type: string
+            pageUrl:
+              type: string
+            pageH1:
+              type: string
+    SearchPageSchoolResponse:
+      allOf:
+        - type: string
     POSTSchoolBlockRequest:
       allOf:
         - $ref: "#/components/schemas/POSTClusterRequest"
@@ -9342,42 +9634,49 @@ components:
           properties:
             setSchoolKey:
               type: string
+              nullable: true
             removeSchoolKey:
               type: string
             removeAllSchoolKey:
               type: string
             setAnneeCle:
               type: string
+              nullable: true
             removeAnneeCle:
               type: string
             removeAllAnneeCle:
               type: string
             setSeasonKey:
               type: string
+              nullable: true
             removeSeasonKey:
               type: string
             removeAllSeasonKey:
               type: string
             setSessionKey:
               type: string
+              nullable: true
             removeSessionKey:
               type: string
             removeAllSessionKey:
               type: string
             setAgeKey:
               type: string
+              nullable: true
             removeAgeKey:
               type: string
             removeAllAgeKey:
               type: string
             setBlockKey:
               type: string
+              nullable: true
             removeBlockKey:
               type: string
             removeAllBlockKey:
               type: string
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: string
             removeEnrollmentKeys:
@@ -9394,198 +9693,231 @@ components:
                 type: string
             setEducationSort:
               type: string
+              nullable: true
             removeEducationSort:
               type: string
             removeAllEducationSort:
               type: string
             setSchoolSort:
               type: string
+              nullable: true
             removeSchoolSort:
               type: string
             removeAllSchoolSort:
               type: string
             setYearSort:
               type: string
+              nullable: true
             removeYearSort:
               type: string
             removeAllYearSort:
               type: string
             setSeasonSort:
               type: string
+              nullable: true
             removeSeasonSort:
               type: string
             removeAllSeasonSort:
               type: string
             setSessionSort:
               type: string
+              nullable: true
             removeSessionSort:
               type: string
             removeAllSessionSort:
               type: string
             setAgeSort:
               type: string
+              nullable: true
             removeAgeSort:
               type: string
             removeAllAgeSort:
               type: string
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: string
+              nullable: true
             removeSeasonEnrollmentFee:
               type: string
             removeAllSeasonEnrollmentFee:
               type: string
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setAgeStartDay:
               type: string
+              nullable: true
             removeAgeStartDay:
               type: string
             removeAllAgeStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setAgeNameComplete:
               type: string
+              nullable: true
             removeAgeNameComplete:
               type: string
             removeAllAgeNameComplete:
               type: string
             setAgeStart:
               type: string
+              nullable: true
             removeAgeStart:
               type: string
             removeAllAgeStart:
               type: string
             setAgeEnd:
               type: string
+              nullable: true
             removeAgeEnd:
               type: string
             removeAllAgeEnd:
               type: string
             setBlockTimeStart:
               type: string
+              nullable: true
             removeBlockTimeStart:
               type: string
             removeAllBlockTimeStart:
               type: string
             setBlockTimeEnd:
               type: string
+              nullable: true
             removeBlockTimeEnd:
               type: string
             removeAllBlockTimeEnd:
               type: string
             setBlockPricePerMonth:
               type: string
+              nullable: true
             removeBlockPricePerMonth:
               type: string
             removeAllBlockPricePerMonth:
               type: string
             setBlockSunday:
               type: boolean
+              nullable: true
             removeBlockSunday:
               type: boolean
             removeAllBlockSunday:
               type: boolean
             setBlockMonday:
               type: boolean
+              nullable: true
             removeBlockMonday:
               type: boolean
             removeAllBlockMonday:
               type: boolean
             setBlockTuesday:
               type: boolean
+              nullable: true
             removeBlockTuesday:
               type: boolean
             removeAllBlockTuesday:
               type: boolean
             setBlockWednesday:
               type: boolean
+              nullable: true
             removeBlockWednesday:
               type: boolean
             removeAllBlockWednesday:
               type: boolean
             setBlockThursday:
               type: boolean
+              nullable: true
             removeBlockThursday:
               type: boolean
             removeAllBlockThursday:
               type: boolean
             setBlockFriday:
               type: boolean
+              nullable: true
             removeBlockFriday:
               type: boolean
             removeAllBlockFriday:
               type: boolean
             setBlockSaturday:
               type: boolean
+              nullable: true
             removeBlockSaturday:
               type: boolean
             removeAllBlockSaturday:
               type: boolean
             setBlocNameComplete:
               type: string
+              nullable: true
             removeBlocNameComplete:
               type: string
             removeAllBlocNameComplete:
               type: string
             setBlocId:
               type: string
+              nullable: true
             removeBlocId:
               type: string
             removeAllBlocId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:
@@ -9597,42 +9929,49 @@ components:
           properties:
             setSchoolKey:
               type: string
+              nullable: true
             removeSchoolKey:
               type: string
             removeAllSchoolKey:
               type: string
             setAnneeCle:
               type: string
+              nullable: true
             removeAnneeCle:
               type: string
             removeAllAnneeCle:
               type: string
             setSeasonKey:
               type: string
+              nullable: true
             removeSeasonKey:
               type: string
             removeAllSeasonKey:
               type: string
             setSessionKey:
               type: string
+              nullable: true
             removeSessionKey:
               type: string
             removeAllSessionKey:
               type: string
             setAgeKey:
               type: string
+              nullable: true
             removeAgeKey:
               type: string
             removeAllAgeKey:
               type: string
             setBlockKey:
               type: string
+              nullable: true
             removeBlockKey:
               type: string
             removeAllBlockKey:
               type: string
             setEnrollmentKeys:
               type: array
+              nullable: true
               items:
                 type: string
             removeEnrollmentKeys:
@@ -9649,198 +9988,231 @@ components:
                 type: string
             setEducationSort:
               type: string
+              nullable: true
             removeEducationSort:
               type: string
             removeAllEducationSort:
               type: string
             setSchoolSort:
               type: string
+              nullable: true
             removeSchoolSort:
               type: string
             removeAllSchoolSort:
               type: string
             setYearSort:
               type: string
+              nullable: true
             removeYearSort:
               type: string
             removeAllYearSort:
               type: string
             setSeasonSort:
               type: string
+              nullable: true
             removeSeasonSort:
               type: string
             removeAllSeasonSort:
               type: string
             setSessionSort:
               type: string
+              nullable: true
             removeSessionSort:
               type: string
             removeAllSessionSort:
               type: string
             setAgeSort:
               type: string
+              nullable: true
             removeAgeSort:
               type: string
             removeAllAgeSort:
               type: string
             setSchoolNameComplete:
               type: string
+              nullable: true
             removeSchoolNameComplete:
               type: string
             removeAllSchoolNameComplete:
               type: string
             setYearStart:
               type: string
+              nullable: true
             removeYearStart:
               type: string
             removeAllYearStart:
               type: string
             setYearEnd:
               type: string
+              nullable: true
             removeYearEnd:
               type: string
             removeAllYearEnd:
               type: string
             setSeasonStartDay:
               type: string
+              nullable: true
             removeSeasonStartDay:
               type: string
             removeAllSeasonStartDay:
               type: string
             setSeasonSummer:
               type: boolean
+              nullable: true
             removeSeasonSummer:
               type: boolean
             removeAllSeasonSummer:
               type: boolean
             setSeasonWinter:
               type: boolean
+              nullable: true
             removeSeasonWinter:
               type: boolean
             removeAllSeasonWinter:
               type: boolean
             setSeasonEnrollmentFee:
               type: string
+              nullable: true
             removeSeasonEnrollmentFee:
               type: string
             removeAllSeasonEnrollmentFee:
               type: string
             setSeasonNameComplete:
               type: string
+              nullable: true
             removeSeasonNameComplete:
               type: string
             removeAllSeasonNameComplete:
               type: string
             setAgeStartDay:
               type: string
+              nullable: true
             removeAgeStartDay:
               type: string
             removeAllAgeStartDay:
               type: string
             setSessionEndDay:
               type: string
+              nullable: true
             removeSessionEndDay:
               type: string
             removeAllSessionEndDay:
               type: string
             setAgeNameComplete:
               type: string
+              nullable: true
             removeAgeNameComplete:
               type: string
             removeAllAgeNameComplete:
               type: string
             setAgeStart:
               type: string
+              nullable: true
             removeAgeStart:
               type: string
             removeAllAgeStart:
               type: string
             setAgeEnd:
               type: string
+              nullable: true
             removeAgeEnd:
               type: string
             removeAllAgeEnd:
               type: string
             setBlockTimeStart:
               type: string
+              nullable: true
             removeBlockTimeStart:
               type: string
             removeAllBlockTimeStart:
               type: string
             setBlockTimeEnd:
               type: string
+              nullable: true
             removeBlockTimeEnd:
               type: string
             removeAllBlockTimeEnd:
               type: string
             setBlockPricePerMonth:
               type: string
+              nullable: true
             removeBlockPricePerMonth:
               type: string
             removeAllBlockPricePerMonth:
               type: string
             setBlockSunday:
               type: boolean
+              nullable: true
             removeBlockSunday:
               type: boolean
             removeAllBlockSunday:
               type: boolean
             setBlockMonday:
               type: boolean
+              nullable: true
             removeBlockMonday:
               type: boolean
             removeAllBlockMonday:
               type: boolean
             setBlockTuesday:
               type: boolean
+              nullable: true
             removeBlockTuesday:
               type: boolean
             removeAllBlockTuesday:
               type: boolean
             setBlockWednesday:
               type: boolean
+              nullable: true
             removeBlockWednesday:
               type: boolean
             removeAllBlockWednesday:
               type: boolean
             setBlockThursday:
               type: boolean
+              nullable: true
             removeBlockThursday:
               type: boolean
             removeAllBlockThursday:
               type: boolean
             setBlockFriday:
               type: boolean
+              nullable: true
             removeBlockFriday:
               type: boolean
             removeAllBlockFriday:
               type: boolean
             setBlockSaturday:
               type: boolean
+              nullable: true
             removeBlockSaturday:
               type: boolean
             removeAllBlockSaturday:
               type: boolean
             setBlocNameComplete:
               type: string
+              nullable: true
             removeBlocNameComplete:
               type: string
             removeAllBlocNameComplete:
               type: string
             setBlocId:
               type: string
+              nullable: true
             removeBlocId:
               type: string
             removeAllBlocId:
               type: string
             setPageUrl:
               type: string
+              nullable: true
             removePageUrl:
               type: string
             removeAllPageUrl:
               type: string
             setObjectSuggest:
               type: string
+              nullable: true
             removeObjectSuggest:
               type: string
             removeAllObjectSuggest:

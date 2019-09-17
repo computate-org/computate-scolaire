@@ -117,11 +117,11 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 		String o;
 
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s - %s summer session at %s. ", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s summer session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s - %s school session at %s. ", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s school session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
 		else
-			o = String.format("%s - %s session at %s. ", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
 
 		c.o(o);
 

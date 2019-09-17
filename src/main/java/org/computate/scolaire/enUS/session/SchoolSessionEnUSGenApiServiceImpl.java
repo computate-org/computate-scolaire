@@ -399,24 +399,24 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						}
 						break;
 					case "setSeasonKey":
-						o2.setSeasonKey(requestJson.getLong(methodName));
+						o2.setSeasonKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA1);
 						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
 						break;
 					case "removeSeasonKey":
-						o2.setSeasonKey(requestJson.getLong(methodName));
+						o2.setSeasonKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
 						break;
 					case "addAgeKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getLong(methodName)));
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getString(methodName)));
 						break;
 					case "addAllAgeKeys":
 						JsonArray addAllAgeKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllAgeKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", addAllAgeKeysValues.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", addAllAgeKeysValues.getString(i)));
 						}
 						break;
 					case "setAgeKeys":
@@ -425,7 +425,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getJsonArray(methodName)));
 						for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", setAgeKeysValues.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", setAgeKeysValues.getString(i)));
 						}
 						break;
 					case "removeAgeKeys":

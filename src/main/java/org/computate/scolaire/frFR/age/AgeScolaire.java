@@ -194,16 +194,19 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * Var.enUS: sessionSearch
-	 * r: saisonCles
-	 * r.enUS: seasonKeys
+	 * r: ageCles
+	 * r.enUS: ageKeys
 	 * r: SessionScolaire
 	 * r.enUS: SchoolSession
+	 * r: setStocker
+	 * r.enUS: setStore
 	 * Ignorer: true
 	 */
 	protected void _sessionRecherche(ListeRecherche<SessionScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("ageCles_indexed_longs:" + pk);
 		l.setC(SessionScolaire.class);
+		l.setStocker(true);
 	}
 
 	/**
@@ -457,8 +460,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * VarTitre: true
 	 * r: ageEte
 	 * r.enUS: ageSummer
-	 * r: âges %s - %s pendant %s. 
-	 * r.enUS: ages %s - %s during %s. 
+	 * r: âges %s - %s pendant %s
+	 * r.enUS: ages %s - %s during %s
 	 * r: strAgeDebut
 	 * r.enUS: strAgeStart
 	 * r: strAgeFin
@@ -468,7 +471,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 */
 	protected void _ageNomComplet(Couverture<String> c) {
 		String o;
-		o = String.format("âges %s - %s pendant %s. ", strAgeDebut(), strAgeFin(), sessionNomComplet);
+		o = String.format("âges %s - %s pendant %s", strAgeDebut(), strAgeFin(), sessionNomComplet);
 		c.o(o);
 	}
 

@@ -201,7 +201,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-									.a("onclick", "enleverLueur($('#Page_ageDebut')); $('#Page_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=\"pk\"]').val() }], 'setAgeDebut', null, $('#Page_ageDebut'), function() { ajouterLueur($('#Page_ageDebut')); }, function() { ajouterErreur($('#Page_ageDebut')); }); ")
+									.a("onclick", "enleverLueur($('#Page_ageDebut')); $('#Page_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=\"pk\"]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#Page_ageDebut')); }, function() { ajouterErreur($('#Page_ageDebut')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -245,7 +245,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-									.a("onclick", "enleverLueur($('#Page_ageFin')); $('#Page_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=\"pk\"]').val() }], 'setAgeFin', null, $('#Page_ageFin'), function() { ajouterLueur($('#Page_ageFin')); }, function() { ajouterErreur($('#Page_ageFin')); }); ")
+									.a("onclick", "enleverLueur($('#Page_ageFin')); $('#Page_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=\"pk\"]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#Page_ageFin')); }, function() { ajouterErreur($('#Page_ageFin')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

@@ -212,7 +212,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 					case "seasonEnrollmentFee":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", jsonObject.getDouble(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("seasonEnrollmentFee", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -407,33 +407,33 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						break;
 					case "setYearKey":
-						o2.setYearKey(requestJson.getLong(methodName));
+						o2.setYearKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA2);
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
 						break;
 					case "removeYearKey":
-						o2.setYearKey(requestJson.getLong(methodName));
+						o2.setYearKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
 						break;
 					case "addSessionKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getString(methodName), "sessionKeys", pk));
 						break;
 					case "addAllSessionKeys":
 						JsonArray addAllSessionKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllSessionKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("seasonKey", addAllSessionKeysValues.getLong(i), "sessionKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("seasonKey", addAllSessionKeysValues.getString(i), "sessionKeys", pk));
 						}
 						break;
 					case "setSessionKeys":
 						JsonArray setSessionKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getString(methodName), "sessionKeys", pk));
 						for(Integer i = 0; i <  setSessionKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("seasonKey", setSessionKeysValues.getLong(i), "sessionKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("seasonKey", setSessionKeysValues.getString(i), "sessionKeys", pk));
 						}
 						break;
 					case "removeSessionKeys":
@@ -471,7 +471,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						break;
 					case "setSeasonEnrollmentFee":
-						o2.setSeasonEnrollmentFee(requestJson.getDouble(methodName));
+						o2.setSeasonEnrollmentFee(requestJson.getString(methodName));
 						if(o2.getSeasonEnrollmentFee() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "seasonEnrollmentFee"));

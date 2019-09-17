@@ -203,8 +203,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonStartDay')); $('#Page_seasonStartDay').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', null, $('#Page_seasonStartDay'), function() { addGlow($('#Page_seasonStartDay')); }, function() { addError($('#Page_seasonStartDay')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonStartDay')); $('#Page_seasonStartDay').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonStartDay', null, function() { addGlow($('#Page_seasonStartDay')); }, function() { addError($('#Page_seasonStartDay')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -318,8 +319,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
+										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_seasonEnrollmentFee')); $('#Page_seasonEnrollmentFee').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', null, $('#Page_seasonEnrollmentFee'), function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { addError($('#Page_seasonEnrollmentFee')); }); ")
+									.a("onclick", "removeGlow($('#Page_seasonEnrollmentFee')); $('#Page_seasonEnrollmentFee').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=\"pk\"]').val() }], 'setSeasonEnrollmentFee', null, function() { addGlow($('#Page_seasonEnrollmentFee')); }, function() { addError($('#Page_seasonEnrollmentFee')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

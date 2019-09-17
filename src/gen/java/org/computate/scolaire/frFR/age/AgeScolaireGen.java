@@ -8,6 +8,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -20,6 +21,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -98,7 +100,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setEcoleCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleCle = Long.parseLong(o);
 		this.ecoleCleCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -206,7 +208,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setAnneeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeCle = Long.parseLong(o);
 		this.anneeCleCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -314,7 +316,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonCleCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSaisonCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonCle = Long.parseLong(o);
 		this.saisonCleCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -422,7 +424,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSessionCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionCle = Long.parseLong(o);
 		this.sessionCleCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -530,7 +532,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageCleCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setAgeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageCle = Long.parseLong(o);
 		this.ageCleCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -657,7 +659,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire addInscriptionCles(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addInscriptionCles(p);
 		}
@@ -783,7 +785,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire addBlocCles(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addBlocCles(p);
 		}
@@ -890,7 +892,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setScolaireTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.scolaireTri = Integer.parseInt(o);
 		this.scolaireTriCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -998,7 +1000,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setEcoleTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleTri = Integer.parseInt(o);
 		this.ecoleTriCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -1106,7 +1108,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setAnneeTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeTri = Integer.parseInt(o);
 		this.anneeTriCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -1214,7 +1216,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSaisonTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonTri = Integer.parseInt(o);
 		this.saisonTriCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -1322,7 +1324,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionTriCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSessionTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionTri = Integer.parseInt(o);
 		this.sessionTriCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -2177,18 +2179,19 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSaisonFraisInscription(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.saisonFraisInscription = new BigDecimal(o);
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire setSaisonFraisInscription(Double o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire setSaisonFraisInscription(Integer o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
@@ -2853,7 +2856,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageDebutCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setAgeDebut(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageDebut = Integer.parseInt(o);
 		this.ageDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -2961,7 +2964,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageFinCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setAgeFin(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageFin = Integer.parseInt(o);
 		this.ageFinCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
@@ -4011,8 +4014,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("saisonHiver_stored_boolean", saisonHiver);
 		}
 		if(saisonFraisInscription != null) {
-			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription);
-			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription);
+			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription.doubleValue());
+			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription.doubleValue());
 		}
 		if(saisonNomComplet != null) {
 			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);

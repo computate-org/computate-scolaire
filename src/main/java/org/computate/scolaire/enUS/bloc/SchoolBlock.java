@@ -60,8 +60,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _ageSearch(SearchList<SchoolAge> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("ageCles_indexed_longs:" + pk);
+		l.addFilterQuery("blockKeys_indexed_longs:" + pk);
 		l.setC(SchoolAge.class);
+		l.setStore(true);
 	}
 
 	protected void _age(Wrap<SchoolAge> c) {
@@ -181,7 +182,10 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		if(blockThursday) weekdays += " Th";
 		if(blockFriday) weekdays += " Fr";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
-		o = String.format("%s - %s %s %s/month %s. ", strBlockTimeStart(), strBlockTimeEnd(), weekdays, strBlockPricePerMonth(), ageNameComplete);
+		if(blockPricePerMonth == null)
+			o = String.format("%s - %s %s %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, ageNameComplete);
+		else
+			o = String.format("%s - %s %s %s/month %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, strBlockPricePerMonth(), ageNameComplete);
 		c.o(o);
 	}
 
@@ -202,7 +206,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(blocId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/bloc/" + blocId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/block/" + blocId;
 			c.o(o);
 		}
 	}

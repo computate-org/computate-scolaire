@@ -212,7 +212,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonFraisInscription":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("saisonFraisInscription", jsonObject.getDouble(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("saisonFraisInscription", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -407,33 +407,33 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setAnneeCle":
-						o2.setAnneeCle(requeteJson.getLong(methodeNom));
+						o2.setAnneeCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA1);
 						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", o2.getAnneeCle()));
 						break;
 					case "removeAnneeCle":
-						o2.setAnneeCle(requeteJson.getLong(methodeNom));
+						o2.setAnneeCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", o2.getAnneeCle()));
 						break;
 					case "addSessionCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getLong(methodeNom), "sessionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getString(methodeNom), "sessionCles", pk));
 						break;
 					case "addAllSessionCles":
 						JsonArray addAllSessionClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllSessionClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("saisonCle", addAllSessionClesValeurs.getLong(i), "sessionCles", pk));
+							patchSqlParams.addAll(Arrays.asList("saisonCle", addAllSessionClesValeurs.getString(i), "sessionCles", pk));
 						}
 						break;
 					case "setSessionCles":
 						JsonArray setSessionClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getLong(methodeNom), "sessionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getString(methodeNom), "sessionCles", pk));
 						for(Integer i = 0; i <  setSessionClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("saisonCle", setSessionClesValeurs.getLong(i), "sessionCles", pk));
+							patchSqlParams.addAll(Arrays.asList("saisonCle", setSessionClesValeurs.getString(i), "sessionCles", pk));
 						}
 						break;
 					case "removeSessionCles":
@@ -471,7 +471,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setSaisonFraisInscription":
-						o2.setSaisonFraisInscription(requeteJson.getDouble(methodeNom));
+						o2.setSaisonFraisInscription(requeteJson.getString(methodeNom));
 						if(o2.getSaisonFraisInscription() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "saisonFraisInscription"));

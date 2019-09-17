@@ -206,6 +206,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAdministratorName", jsonObject.getString(entityVar), pk));
 						break;
+					case "schoolLocation":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolLocation", jsonObject.getString(entityVar), pk));
+						break;
 					case "schoolAddress":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
@@ -404,22 +408,22 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						break;
 					case "addYearKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getString(methodName), "yearKeys", pk));
 						break;
 					case "addAllYearKeys":
 						JsonArray addAllYearKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllYearKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("schoolKey", addAllYearKeysValues.getLong(i), "yearKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("schoolKey", addAllYearKeysValues.getString(i), "yearKeys", pk));
 						}
 						break;
 					case "setYearKeys":
 						JsonArray setYearKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getLong(methodName), "yearKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("schoolKey", requestJson.getString(methodName), "yearKeys", pk));
 						for(Integer i = 0; i <  setYearKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("schoolKey", setYearKeysValues.getLong(i), "yearKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("schoolKey", setYearKeysValues.getString(i), "yearKeys", pk));
 						}
 						break;
 					case "removeYearKeys":
@@ -454,6 +458,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.jsonSchoolAdministratorName(), pk));
+						}
+						break;
+					case "setSchoolLocation":
+						o2.setSchoolLocation(requestJson.getString(methodName));
+						if(o2.getSchoolLocation() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolLocation"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolLocation", o2.jsonSchoolLocation(), pk));
 						}
 						break;
 					case "setSchoolAddress":
@@ -803,6 +817,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolPhoneNumber_indexed_string";
 			case "schoolAdministratorName":
 				return "schoolAdministratorName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "schoolAddress":
 				return "schoolAddress_indexed_string";
 			case "objectSuggest":

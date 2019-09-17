@@ -407,6 +407,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				// set //
 				w.tl(4 + tabsSchema + numberTabs, "set", entityVarCapitalized, ":");
 				w.tl(5 + tabsSchema + numberTabs, "type: ", entityJsonType);
+				w.tl(5 + tabsSchema + numberTabs, "nullable: true");
 				if(entityListJsonType == null && entityOptionsVar != null && entityOptionsDescription != null && entityOptionsVar.size() > 0 && entityOptionsDescription.size() == entityOptionsVar.size()) {
 					w.tl(5 + tabsSchema + numberTabs, "enum:");
 					for(String entiteOptionVar : entityOptionsVar) {

@@ -41,6 +41,9 @@ public class School extends SchoolGen<Cluster> {
 	protected void _schoolAdministratorName(Wrap<String> c) {
 	}
 
+	protected void _schoolLocation(Wrap<String> c) {
+	}
+
 	protected void _schoolAddress(Wrap<String> c) {
 	}
 
@@ -53,11 +56,17 @@ public class School extends SchoolGen<Cluster> {
 	}
 
 	protected void _schoolNameShort(Wrap<String> c) {
-		c.o(schoolName);
+		if(schoolLocation != null)
+			c.o(schoolLocation);
+		else 
+			c.o(schoolName);
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		c.o(schoolName);
+		if(schoolLocation != null)
+			c.o(String.format("%s at %s", schoolName, schoolLocation));
+		else 
+			c.o(schoolName);
 	}
 
 	protected void _schoolId(Wrap<String> c) {

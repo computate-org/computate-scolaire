@@ -83,11 +83,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		String o;
 		
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s summer season at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s summer season at %s", strSeasonStartDay(), schoolNameComplete);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s school season at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s school season at %s", strSeasonStartDay(), schoolNameComplete);
 		else
-			o = String.format("%s season at %s. ", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s season at %s", strSeasonStartDay(), schoolNameComplete);
 		
 		c.o(o);
 	}

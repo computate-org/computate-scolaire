@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.writer;
 
 import org.computate.scolaire.enUS.writer.AllWriters;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.apache.commons.text.StringEscapeUtils;
@@ -8,6 +9,7 @@ import org.computate.scolaire.enUS.vertx.AppSwagger2;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -15,6 +17,7 @@ import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -145,6 +148,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiMethod == null ? "" : classApiMethod;
 	}
 
+	public String jsonClassApiMethod() {
+		return classApiMethod == null ? "" : classApiMethod;
+	}
+
 	public String nomAffichageClassApiMethod() {
 		return null;
 	}
@@ -199,6 +206,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strOpenApiVersion() {
+		return openApiVersion == null ? "" : openApiVersion;
+	}
+
+	public String jsonOpenApiVersion() {
 		return openApiVersion == null ? "" : openApiVersion;
 	}
 
@@ -317,6 +328,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classUris == null ? "" : classUris.toString();
 	}
 
+	public String jsonClassUris() {
+		return classUris == null ? "" : classUris.toString();
+	}
+
 	public String nomAffichageClassUris() {
 		return null;
 	}
@@ -357,7 +372,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		this.openApiVersionNumberWrap.alreadyInitialized = true;
 	}
 	public ApiWriter setOpenApiVersionNumber(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.openApiVersionNumber = Integer.parseInt(o);
 		this.openApiVersionNumberWrap.alreadyInitialized = true;
 		return (ApiWriter)this;
@@ -377,6 +392,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strOpenApiVersionNumber() {
+		return openApiVersionNumber == null ? "" : openApiVersionNumber.toString();
+	}
+
+	public String jsonOpenApiVersionNumber() {
 		return openApiVersionNumber == null ? "" : openApiVersionNumber.toString();
 	}
 
@@ -420,7 +439,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		this.tabsSchemaWrap.alreadyInitialized = true;
 	}
 	public ApiWriter setTabsSchema(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.tabsSchema = Integer.parseInt(o);
 		this.tabsSchemaWrap.alreadyInitialized = true;
 		return (ApiWriter)this;
@@ -440,6 +459,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strTabsSchema() {
+		return tabsSchema == null ? "" : tabsSchema.toString();
+	}
+
+	public String jsonTabsSchema() {
 		return tabsSchema == null ? "" : tabsSchema.toString();
 	}
 
@@ -483,7 +506,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		this.tabsResponsesWrap.alreadyInitialized = true;
 	}
 	public ApiWriter setTabsResponses(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.tabsResponses = Integer.parseInt(o);
 		this.tabsResponsesWrap.alreadyInitialized = true;
 		return (ApiWriter)this;
@@ -503,6 +526,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strTabsResponses() {
+		return tabsResponses == null ? "" : tabsResponses.toString();
+	}
+
+	public String jsonTabsResponses() {
 		return tabsResponses == null ? "" : tabsResponses.toString();
 	}
 
@@ -1070,6 +1097,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiTag == null ? "" : classApiTag;
 	}
 
+	public String jsonClassApiTag() {
+		return classApiTag == null ? "" : classApiTag;
+	}
+
 	public String nomAffichageClassApiTag() {
 		return null;
 	}
@@ -1129,6 +1160,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassExtendsBase() {
+		return classExtendsBase == null ? "" : classExtendsBase.toString();
+	}
+
+	public String jsonClassExtendsBase() {
 		return classExtendsBase == null ? "" : classExtendsBase.toString();
 	}
 
@@ -1194,6 +1229,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classIsBase == null ? "" : classIsBase.toString();
 	}
 
+	public String jsonClassIsBase() {
+		return classIsBase == null ? "" : classIsBase.toString();
+	}
+
 	public String nomAffichageClassIsBase() {
 		return null;
 	}
@@ -1248,6 +1287,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassSimpleName() {
+		return classSimpleName == null ? "" : classSimpleName;
+	}
+
+	public String jsonClassSimpleName() {
 		return classSimpleName == null ? "" : classSimpleName;
 	}
 
@@ -1308,6 +1351,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classAbsolutePath == null ? "" : classAbsolutePath;
 	}
 
+	public String jsonClassAbsolutePath() {
+		return classAbsolutePath == null ? "" : classAbsolutePath;
+	}
+
 	public String nomAffichageClassAbsolutePath() {
 		return null;
 	}
@@ -1362,6 +1409,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassApiUriMethod() {
+		return classApiUriMethod == null ? "" : classApiUriMethod;
+	}
+
+	public String jsonClassApiUriMethod() {
 		return classApiUriMethod == null ? "" : classApiUriMethod;
 	}
 
@@ -1422,6 +1473,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiMethodMethod == null ? "" : classApiMethodMethod;
 	}
 
+	public String jsonClassApiMethodMethod() {
+		return classApiMethodMethod == null ? "" : classApiMethodMethod;
+	}
+
 	public String nomAffichageClassApiMethodMethod() {
 		return null;
 	}
@@ -1476,6 +1531,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassApiMediaType200Method() {
+		return classApiMediaType200Method == null ? "" : classApiMediaType200Method;
+	}
+
+	public String jsonClassApiMediaType200Method() {
 		return classApiMediaType200Method == null ? "" : classApiMediaType200Method;
 	}
 
@@ -1536,6 +1595,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiOperationIdMethod == null ? "" : classApiOperationIdMethod;
 	}
 
+	public String jsonClassApiOperationIdMethod() {
+		return classApiOperationIdMethod == null ? "" : classApiOperationIdMethod;
+	}
+
 	public String nomAffichageClassApiOperationIdMethod() {
 		return null;
 	}
@@ -1590,6 +1653,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassApiOperationIdMethodRequest() {
+		return classApiOperationIdMethodRequest == null ? "" : classApiOperationIdMethodRequest;
+	}
+
+	public String jsonClassApiOperationIdMethodRequest() {
 		return classApiOperationIdMethodRequest == null ? "" : classApiOperationIdMethodRequest;
 	}
 
@@ -1650,6 +1717,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classApiOperationIdMethodResponse == null ? "" : classApiOperationIdMethodResponse;
 	}
 
+	public String jsonClassApiOperationIdMethodResponse() {
+		return classApiOperationIdMethodResponse == null ? "" : classApiOperationIdMethodResponse;
+	}
+
 	public String nomAffichageClassApiOperationIdMethodResponse() {
 		return null;
 	}
@@ -1704,6 +1775,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassSuperApiOperationIdMethodRequest() {
+		return classSuperApiOperationIdMethodRequest == null ? "" : classSuperApiOperationIdMethodRequest;
+	}
+
+	public String jsonClassSuperApiOperationIdMethodRequest() {
 		return classSuperApiOperationIdMethodRequest == null ? "" : classSuperApiOperationIdMethodRequest;
 	}
 
@@ -1764,6 +1839,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classSuperApiOperationIdMethodResponse == null ? "" : classSuperApiOperationIdMethodResponse;
 	}
 
+	public String jsonClassSuperApiOperationIdMethodResponse() {
+		return classSuperApiOperationIdMethodResponse == null ? "" : classSuperApiOperationIdMethodResponse;
+	}
+
 	public String nomAffichageClassSuperApiOperationIdMethodResponse() {
 		return null;
 	}
@@ -1818,6 +1897,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassPageCanonicalNameMethod() {
+		return classPageCanonicalNameMethod == null ? "" : classPageCanonicalNameMethod;
+	}
+
+	public String jsonClassPageCanonicalNameMethod() {
 		return classPageCanonicalNameMethod == null ? "" : classPageCanonicalNameMethod;
 	}
 
@@ -1880,6 +1963,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassKeywordsFound() {
+		return classKeywordsFound == null ? "" : classKeywordsFound.toString();
+	}
+
+	public String jsonClassKeywordsFound() {
 		return classKeywordsFound == null ? "" : classKeywordsFound.toString();
 	}
 
@@ -1959,6 +2046,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classKeywords == null ? "" : classKeywords.toString();
 	}
 
+	public String jsonClassKeywords() {
+		return classKeywords == null ? "" : classKeywords.toString();
+	}
+
 	public String nomAffichageClassKeywords() {
 		return null;
 	}
@@ -2018,6 +2109,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strClassRolesFound() {
+		return classRolesFound == null ? "" : classRolesFound.toString();
+	}
+
+	public String jsonClassRolesFound() {
 		return classRolesFound == null ? "" : classRolesFound.toString();
 	}
 
@@ -2097,6 +2192,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classRoles == null ? "" : classRoles.toString();
 	}
 
+	public String jsonClassRoles() {
+		return classRoles == null ? "" : classRoles.toString();
+	}
+
 	public String nomAffichageClassRoles() {
 		return null;
 	}
@@ -2173,6 +2272,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classRolesLanguage == null ? "" : classRolesLanguage.toString();
 	}
 
+	public String jsonClassRolesLanguage() {
+		return classRolesLanguage == null ? "" : classRolesLanguage.toString();
+	}
+
 	public String nomAffichageClassRolesLanguage() {
 		return null;
 	}
@@ -2227,6 +2330,10 @@ public abstract class ApiWriterGen<DEV> extends Object {
 	}
 
 	public String strLanguageName() {
+		return languageName == null ? "" : languageName;
+	}
+
+	public String jsonLanguageName() {
 		return languageName == null ? "" : languageName;
 	}
 

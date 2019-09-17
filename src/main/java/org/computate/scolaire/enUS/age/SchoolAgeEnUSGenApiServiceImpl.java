@@ -399,33 +399,33 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						break;
 					case "setSessionKey":
-						o2.setSessionKey(requestJson.getLong(methodName));
+						o2.setSessionKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA2);
 						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
 						break;
 					case "removeSessionKey":
-						o2.setSessionKey(requestJson.getLong(methodName));
+						o2.setSessionKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
 						break;
 					case "addBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getString(methodName), "blockKeys", pk));
 						break;
 					case "addAllBlockKeys":
 						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageKey", addAllBlockKeysValues.getLong(i), "blockKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("ageKey", addAllBlockKeysValues.getString(i), "blockKeys", pk));
 						}
 						break;
 					case "setBlockKeys":
 						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getString(methodName), "blockKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("ageKey", setBlockKeysValues.getLong(i), "blockKeys", pk));
+							patchSqlParams.addAll(Arrays.asList("ageKey", setBlockKeysValues.getString(i), "blockKeys", pk));
 						}
 						break;
 					case "removeBlockKeys":

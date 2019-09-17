@@ -7,6 +7,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -20,6 +21,7 @@ import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -100,7 +102,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setEcoleCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleCle = Long.parseLong(o);
 		this.ecoleCleCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -208,7 +210,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setAnneeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeCle = Long.parseLong(o);
 		this.anneeCleCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -316,7 +318,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.saisonCleCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setSaisonCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonCle = Long.parseLong(o);
 		this.saisonCleCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -443,7 +445,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire addInscriptionCles(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addInscriptionCles(p);
 		}
@@ -569,7 +571,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire addSessionCles(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addSessionCles(p);
 		}
@@ -676,7 +678,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setScolaireTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.scolaireTri = Integer.parseInt(o);
 		this.scolaireTriCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -784,7 +786,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setEcoleTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ecoleTri = Integer.parseInt(o);
 		this.ecoleTriCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -892,7 +894,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setAnneeTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeTri = Integer.parseInt(o);
 		this.anneeTriCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -1000,7 +1002,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setSaisonTri(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.saisonTri = Integer.parseInt(o);
 		this.saisonTriCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
@@ -1853,18 +1855,19 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 	}
 	public SaisonScolaire setSaisonFraisInscription(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.saisonFraisInscription = new BigDecimal(o);
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setSaisonFraisInscription(Double o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
 	public SaisonScolaire setSaisonFraisInscription(Integer o) {
-			this.saisonFraisInscription = new BigDecimal(o);
+			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -2827,8 +2830,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 			document.addField("saisonHiver_stored_boolean", saisonHiver);
 		}
 		if(saisonFraisInscription != null) {
-			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription);
-			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription);
+			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription.doubleValue());
+			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription.doubleValue());
 		}
 		if(saisonNomComplet != null) {
 			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);

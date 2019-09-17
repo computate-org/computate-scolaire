@@ -208,7 +208,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#Page_sessionStartDay')); $('#Page_sessionStartDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', null, $('#Page_sessionStartDay'), function() { addGlow($('#Page_sessionStartDay')); }, function() { addError($('#Page_sessionStartDay')); }); ")
+									.a("onclick", "removeGlow($('#Page_sessionStartDay')); $('#Page_sessionStartDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionStartDay', null, function() { addGlow($('#Page_sessionStartDay')); }, function() { addError($('#Page_sessionStartDay')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -251,7 +251,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#Page_sessionEndDay')); $('#Page_sessionEndDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', null, $('#Page_sessionEndDay'), function() { addGlow($('#Page_sessionEndDay')); }, function() { addError($('#Page_sessionEndDay')); }); ")
+									.a("onclick", "removeGlow($('#Page_sessionEndDay')); $('#Page_sessionEndDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=\"pk\"]').val() }], 'setSessionEndDay', null, function() { addGlow($('#Page_sessionEndDay')); }, function() { addError($('#Page_sessionEndDay')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

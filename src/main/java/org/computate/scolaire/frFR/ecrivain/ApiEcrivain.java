@@ -1085,6 +1085,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				// set //
 				w.tl(4 + tabsSchema + nombreTabulations, "set", entiteVarCapitalise, ":");
 				w.tl(5 + tabsSchema + nombreTabulations, "type: ", entiteTypeJson);
+				w.tl(5 + tabsSchema + nombreTabulations, "nullable: true");
 				if(entiteListeTypeJson == null && entiteOptionsVar != null && entiteOptionsDescription != null && entiteOptionsVar.size() > 0 && entiteOptionsDescription.size() == entiteOptionsVar.size()) {
 					w.tl(5 + tabsSchema + nombreTabulations, "enum:");
 					for(String entiteOptionVar : entiteOptionsVar) {

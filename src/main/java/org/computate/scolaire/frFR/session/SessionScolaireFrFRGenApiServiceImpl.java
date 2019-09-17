@@ -399,24 +399,24 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						}
 						break;
 					case "setSaisonCle":
-						o2.setSaisonCle(requeteJson.getLong(methodeNom));
+						o2.setSaisonCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA1);
 						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
 						break;
 					case "removeSaisonCle":
-						o2.setSaisonCle(requeteJson.getLong(methodeNom));
+						o2.setSaisonCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
 						break;
 					case "addAgeCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getLong(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getString(methodeNom)));
 						break;
 					case "addAllAgeCles":
 						JsonArray addAllAgeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", addAllAgeClesValeurs.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", addAllAgeClesValeurs.getString(i)));
 						}
 						break;
 					case "setAgeCles":
@@ -425,7 +425,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", requeteJson.getJsonArray(methodeNom)));
 						for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", setAgeClesValeurs.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", setAgeClesValeurs.getString(i)));
 						}
 						break;
 					case "removeAgeCles":

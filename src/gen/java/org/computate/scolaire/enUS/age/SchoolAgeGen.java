@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -20,6 +21,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -97,7 +99,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSchoolKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolKey = Long.parseLong(o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -205,7 +207,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.anneeCleWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setAnneeCle(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.anneeCle = Long.parseLong(o);
 		this.anneeCleWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -313,7 +315,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSeasonKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.seasonKey = Long.parseLong(o);
 		this.seasonKeyWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -421,7 +423,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSessionKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionKey = Long.parseLong(o);
 		this.sessionKeyWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -529,7 +531,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setAgeKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageKey = Long.parseLong(o);
 		this.ageKeyWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -656,7 +658,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 	public SchoolAge addEnrollmentKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addEnrollmentKeys(p);
 		}
@@ -782,7 +784,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 	public SchoolAge addBlockKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addBlockKeys(p);
 		}
@@ -889,7 +891,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.educationSortWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setEducationSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.educationSort = Integer.parseInt(o);
 		this.educationSortWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -997,7 +999,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSchoolSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolSort = Integer.parseInt(o);
 		this.schoolSortWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -1105,7 +1107,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearSortWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setYearSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.yearSort = Integer.parseInt(o);
 		this.yearSortWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -1213,7 +1215,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonSortWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSeasonSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.seasonSort = Integer.parseInt(o);
 		this.seasonSortWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -1321,7 +1323,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionSortWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSessionSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sessionSort = Integer.parseInt(o);
 		this.sessionSortWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -2176,18 +2178,19 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSeasonEnrollmentFee(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
-			this.seasonEnrollmentFee = new BigDecimal(o);
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	public SchoolAge setSeasonEnrollmentFee(Double o) {
-			this.seasonEnrollmentFee = new BigDecimal(o);
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	public SchoolAge setSeasonEnrollmentFee(Integer o) {
-			this.seasonEnrollmentFee = new BigDecimal(o);
+			this.seasonEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
 		this.seasonEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2852,7 +2855,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageStartWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setAgeStart(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageStart = Integer.parseInt(o);
 		this.ageStartWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -2960,7 +2963,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageEndWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setAgeEnd(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.ageEnd = Integer.parseInt(o);
 		this.ageEndWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
@@ -4010,8 +4013,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("seasonWinter_stored_boolean", seasonWinter);
 		}
 		if(seasonEnrollmentFee != null) {
-			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee);
-			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee);
+			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee.doubleValue());
+			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee.doubleValue());
 		}
 		if(seasonNameComplete != null) {
 			document.addField("seasonNameComplete_indexed_string", seasonNameComplete);

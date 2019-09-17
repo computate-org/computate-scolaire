@@ -208,7 +208,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#Page_sessionJourDebut')); $('#Page_sessionJourDebut').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourDebut', null, $('#Page_sessionJourDebut'), function() { ajouterLueur($('#Page_sessionJourDebut')); }, function() { ajouterErreur($('#Page_sessionJourDebut')); }); ")
+									.a("onclick", "enleverLueur($('#Page_sessionJourDebut')); $('#Page_sessionJourDebut').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourDebut', null, function() { ajouterLueur($('#Page_sessionJourDebut')); }, function() { ajouterErreur($('#Page_sessionJourDebut')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -251,7 +251,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#Page_sessionJourFin')); $('#Page_sessionJourFin').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourFin', null, $('#Page_sessionJourFin'), function() { ajouterLueur($('#Page_sessionJourFin')); }, function() { ajouterErreur($('#Page_sessionJourFin')); }); ")
+									.a("onclick", "enleverLueur($('#Page_sessionJourFin')); $('#Page_sessionJourFin').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=\"pk\"]').val() }], 'setSessionJourFin', null, function() { ajouterLueur($('#Page_sessionJourFin')); }, function() { ajouterErreur($('#Page_sessionJourFin')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");

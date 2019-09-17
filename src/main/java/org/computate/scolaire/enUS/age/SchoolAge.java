@@ -55,8 +55,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _sessionSearch(SearchList<SchoolSession> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("ageCles_indexed_longs:" + pk);
+		l.addFilterQuery("ageKeys_indexed_longs:" + pk);
 		l.setC(SchoolSession.class);
+		l.setStore(true);
 	}
 
 	protected void _session(Wrap<SchoolSession> c) {
@@ -133,7 +134,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _ageNameComplete(Wrap<String> c) {
 		String o;
-		o = String.format("ages %s - %s during %s. ", strAgeStart(), strAgeEnd(), sessionNameComplete);
+		o = String.format("ages %s - %s during %s", strAgeStart(), strAgeEnd(), sessionNameComplete);
 		c.o(o);
 	}
 

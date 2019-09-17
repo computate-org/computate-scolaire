@@ -7,6 +7,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
@@ -15,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -26,6 +28,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -87,7 +90,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public School setSchoolKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolKey = Long.parseLong(o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (School)this;
@@ -214,7 +217,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addChildKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addChildKeys(p);
 		}
@@ -340,7 +343,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addBlockKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addBlockKeys(p);
 		}
@@ -466,7 +469,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addAgeGroupKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addAgeGroupKeys(p);
 		}
@@ -592,7 +595,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addSessionKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addSessionKeys(p);
 		}
@@ -718,7 +721,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addSeasonKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addSeasonKeys(p);
 		}
@@ -844,7 +847,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		return (School)this;
 	}
 	public School addYearKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addYearKeys(p);
 		}
@@ -951,7 +954,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		this.educationSortWrap.alreadyInitialized = true;
 	}
 	public School setEducationSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.educationSort = Integer.parseInt(o);
 		this.educationSortWrap.alreadyInitialized = true;
 		return (School)this;
@@ -1059,7 +1062,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
 	public School setSchoolSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolSort = Integer.parseInt(o);
 		this.schoolSortWrap.alreadyInitialized = true;
 		return (School)this;
@@ -1445,6 +1448,108 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////////
+	// schoolLocation //
+	////////////////////
+
+	/**	L'entité « schoolLocation »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolLocation;
+	@JsonIgnore
+	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
+
+	/**	<br/>L'entité « schoolLocation »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation(Wrap<String> c);
+
+	public String getSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public void setSchoolLocation(String schoolLocation) {
+		this.schoolLocation = schoolLocation;
+		this.schoolLocationWrap.alreadyInitialized = true;
+	}
+	protected School schoolLocationInit() {
+		if(!schoolLocationWrap.alreadyInitialized) {
+			_schoolLocation(schoolLocationWrap);
+			if(schoolLocation == null)
+				setSchoolLocation(schoolLocationWrap.o);
+		}
+		schoolLocationWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public String solrSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public String strSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String jsonSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String nomAffichageSchoolLocation() {
+		return "location";
+	}
+
+	public String htmTooltipSchoolLocation() {
+		return null;
+	}
+
+	public String htmSchoolLocation() {
+		return schoolLocation == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolLocation());
+	}
+
+	public void htmSchoolLocation(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchool", strPk(), "SchoolLocation\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchool", strPk(), "SchoolLocation() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolLocation\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolLocation()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolLocation\"");
+							r.s(" value=\"", htmSchoolLocation(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolLocation());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////
 	// schoolAddress //
 	///////////////////
@@ -1575,7 +1680,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		this.objectSuggestWeightWrap.alreadyInitialized = true;
 	}
 	public School setObjectSuggestWeight(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.objectSuggestWeight = Double.parseDouble(o);
 		this.objectSuggestWeightWrap.alreadyInitialized = true;
 		return (School)this;
@@ -2300,6 +2405,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolNameInit();
 		schoolPhoneNumberInit();
 		schoolAdministratorNameInit();
+		schoolLocationInit();
 		schoolAddressInit();
 		objectSuggestWeightInit();
 		objectSuggestInit();
@@ -2370,6 +2476,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolPhoneNumber;
 			case "schoolAdministratorName":
 				return oSchool.schoolAdministratorName;
+			case "schoolLocation":
+				return oSchool.schoolLocation;
 			case "schoolAddress":
 				return oSchool.schoolAddress;
 			case "objectSuggestWeight":
@@ -2450,6 +2558,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return val;
 			case "schoolAdministratorName":
 				setSchoolAdministratorName(val);
+				savesSchool.add(var);
+				return val;
+			case "schoolLocation":
+				setSchoolLocation(val);
 				savesSchool.add(var);
 				return val;
 			case "schoolAddress":
@@ -2547,6 +2659,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchool.setSchoolAdministratorName(schoolAdministratorName);
+			}
+
+			if(savesSchool.contains("schoolLocation")) {
+				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+				if(schoolLocation != null)
+					oSchool.setSchoolLocation(schoolLocation);
 			}
 
 			if(savesSchool.contains("schoolAddress")) {
@@ -2725,6 +2843,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolAdministratorName_indexed_string", schoolAdministratorName);
 			document.addField("schoolAdministratorName_stored_string", schoolAdministratorName);
 		}
+		if(schoolLocation != null) {
+			document.addField("schoolLocation_indexed_string", schoolLocation);
+			document.addField("schoolLocation_stored_string", schoolLocation);
+		}
 		if(schoolAddress != null) {
 			document.addField("schoolAddress_indexed_string", schoolAddress);
 			document.addField("schoolAddress_stored_string", schoolAddress);
@@ -2828,6 +2950,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolAdministratorName != null)
 			oSchool.setSchoolAdministratorName(schoolAdministratorName);
 
+		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+		if(schoolLocation != null)
+			oSchool.setSchoolLocation(schoolLocation);
+
 		String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 		if(schoolAddress != null)
 			oSchool.setSchoolAddress(schoolAddress);
@@ -2870,7 +2996,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolAddress);
+		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolAdministratorName, schoolLocation, schoolAddress);
 	}
 
 	////////////
@@ -2888,6 +3014,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				&& Objects.equals( schoolName, that.schoolName )
 				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
 				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
+				&& Objects.equals( schoolLocation, that.schoolLocation )
 				&& Objects.equals( schoolAddress, that.schoolAddress );
 	}
 
@@ -2903,6 +3030,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
 		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
 		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
+		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
