@@ -538,6 +538,22 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					} g("form");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("enfant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strEnfantCle()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -946,6 +962,22 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("enfant").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEnfantCle()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1358,6 +1390,22 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("enfant").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEnfantCle()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -1768,6 +1816,22 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("enfant").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEnfantCle()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 	}
 
@@ -1832,6 +1896,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					{ e("tr").f();
 						e("th").f().sx("âge").g("th");
 						e("th").f().sx("heure début").g("th");
+						e("th").f().sx("enfant").g("th");
 						e("th").f().sx("heure fin").g("th");
 						e("th").f().sx("lundi").g("th");
 						e("th").f().sx("clé primaire").g("th");
@@ -1861,6 +1926,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
 									sx(o.getBlocHeureDebut());
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									sx(o.getEnfantCle());
 								} g("a");
 							} g("td");
 							{ e("td").f();

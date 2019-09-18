@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;
+package org.computate.scolaire.frFR.enfant;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -74,39 +74,39 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 /**
  * Traduire: false
  **/
-public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApiService {
+public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(BlocScolaireFrFRGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(EnfantScolaireFrFRGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "BlocScolaireFrFRApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "EnfantScolaireFrFRApiServiceImpl";
 
 	protected SiteContexteFrFR siteContexte;
 
-	public BlocScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
+	public EnfantScolaireFrFRGenApiServiceImpl(SiteContexteFrFR siteContexte) {
 		this.siteContexte = siteContexte;
-		BlocScolaireFrFRGenApiService service = BlocScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
+		EnfantScolaireFrFRGenApiService service = EnfantScolaireFrFRGenApiService.creerProxy(siteContexte.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
 
 	@Override
-	public void postBlocScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void postEnfantScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-			sqlBlocScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete, body);
+			sqlEnfantScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					creerPOSTBlocScolaire(requeteSite, b -> {
+					creerPOSTEnfantScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							BlocScolaire blocScolaire = b.result();
-							sqlPOSTBlocScolaire(blocScolaire, c -> {
+							EnfantScolaire enfantScolaire = b.result();
+							sqlPOSTEnfantScolaire(enfantScolaire, c -> {
 								if(c.succeeded()) {
-									definirBlocScolaire(blocScolaire, d -> {
+									definirEnfantScolaire(enfantScolaire, d -> {
 										if(d.succeeded()) {
-											attribuerBlocScolaire(blocScolaire, e -> {
+											attribuerEnfantScolaire(enfantScolaire, e -> {
 												if(e.succeeded()) {
-													indexerBlocScolaire(blocScolaire, f -> {
+													indexerEnfantScolaire(enfantScolaire, f -> {
 														if(f.succeeded()) {
-															reponse200POSTBlocScolaire(blocScolaire, g -> {
+															reponse200POSTEnfantScolaire(enfantScolaire, g -> {
 																if(f.succeeded()) {
 																	SQLConnection connexionSql = requeteSite.getConnexionSql();
 																	connexionSql.commit(h -> {
@@ -115,59 +115,59 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 																				if(a.succeeded()) {
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					erreurBlocScolaire(requeteSite, gestionnaireEvenements, i);
+																					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, i);
 																				}
 																			});
 																		} else {
-																			erreurBlocScolaire(requeteSite, gestionnaireEvenements, h);
+																			erreurEnfantScolaire(requeteSite, gestionnaireEvenements, h);
 																		}
 																	});
 																} else {
-																	erreurBlocScolaire(requeteSite, gestionnaireEvenements, g);
+																	erreurEnfantScolaire(requeteSite, gestionnaireEvenements, g);
 																}
 															});
 														} else {
-															erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
+															erreurEnfantScolaire(requeteSite, gestionnaireEvenements, f);
 														}
 													});
 												} else {
-													erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+													erreurEnfantScolaire(requeteSite, gestionnaireEvenements, e);
 												}
 											});
 										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurEnfantScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurEnfantScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void creerPOSTBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
+	public void creerPOSTEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<EnfantScolaire>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 
 			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_creer
-					, new JsonArray(Arrays.asList(BlocScolaire.class.getCanonicalName(), utilisateurId))
+					, new JsonArray(Arrays.asList(EnfantScolaire.class.getCanonicalName(), utilisateurId))
 					, creerAsync
 			-> {
 				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = creerLigne.getLong(0);
-				BlocScolaire o = new BlocScolaire();
+				EnfantScolaire o = new EnfantScolaire();
 				o.setPk(pk);
 				o.setRequeteSite_(requeteSite);
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
@@ -177,7 +177,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void sqlPOSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlPOSTEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -190,49 +190,53 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "ageCle":
+					case "blocCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("blocCles", jsonObject.getLong(entiteVar), "blocCles", pk));
 						break;
-					case "blocHeureDebut":
+					case "personnePrenom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personnePrenom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocHeureFin":
+					case "familleNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocHeureFin", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("familleNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocPrixParMois":
+					case "personneNomComplet":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocPrixParMois", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneNomComplet", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocDimanche":
+					case "personneNomCompletPrefere":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocDimanche", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocLundi":
+					case "personneNomFormel":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocLundi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneNomFormel", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocMardi":
+					case "enfantConditionsMedicales":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocMardi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocMercredi":
+					case "enfantEcolesPrecedemmentFrequentees":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocMercredi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocJeudi":
+					case "enfantDescription":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocJeudi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantDescription", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocVendredi":
+					case "enfantObjectifs":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocVendredi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantObjectifs", jsonObject.getString(entiteVar), pk));
 						break;
-					case "blocSamedi":
+					case "enfantVaccinsAJour":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blocSamedi", jsonObject.getBoolean(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "enfantPropre":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantPropre", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					}
 				}
@@ -249,7 +253,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200POSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200POSTEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			JsonObject json = new JsonObject();
@@ -262,17 +266,17 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	// PATCH //
 
 	@Override
-	public void patchBlocScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void patchEnfantScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-			sqlBlocScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete, body);
+			sqlEnfantScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
+					utilisateurEnfantScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, null, c -> {
+							rechercheEnfantScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
-									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
-									listePATCHBlocScolaire(listeBlocScolaire, d -> {
+									ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
+									listePATCHEnfantScolaire(listeEnfantScolaire, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -284,85 +288,85 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurEnfantScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurEnfantScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurEnfantScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurEnfantScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void listePATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHEnfantScolaire(ListeRecherche<EnfantScolaire> listeEnfantScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-		listeBlocScolaire.getList().forEach(o -> {
+			RequeteSiteFrFR requeteSite = listeEnfantScolaire.getRequeteSite_();
+		listeEnfantScolaire.getList().forEach(o -> {
 			futures.add(
-				futurePATCHBlocScolaire(o, a -> {
+				futurePATCHEnfantScolaire(o, a -> {
 					if(a.succeeded()) {
 					} else {
-						erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 					}
 				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHBlocScolaire(listeBlocScolaire, gestionnaireEvenements);
+				reponse200PATCHEnfantScolaire(listeEnfantScolaire, gestionnaireEvenements);
 			} else {
-				erreurBlocScolaire(listeBlocScolaire.getRequeteSite_(), gestionnaireEvenements, a);
+				erreurEnfantScolaire(listeEnfantScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
 	}
 
-	public Future<BlocScolaire> futurePATCHBlocScolaire(BlocScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		Future<BlocScolaire> future = Future.future();
+	public Future<EnfantScolaire> futurePATCHEnfantScolaire(EnfantScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		Future<EnfantScolaire> future = Future.future();
 		try {
-			sqlPATCHBlocScolaire(o, a -> {
+			sqlPATCHEnfantScolaire(o, a -> {
 				if(a.succeeded()) {
-					BlocScolaire blocScolaire = a.result();
-					definirBlocScolaire(blocScolaire, b -> {
+					EnfantScolaire enfantScolaire = a.result();
+					definirEnfantScolaire(enfantScolaire, b -> {
 						if(b.succeeded()) {
-							attribuerBlocScolaire(blocScolaire, c -> {
+							attribuerEnfantScolaire(enfantScolaire, c -> {
 								if(c.succeeded()) {
-									indexerBlocScolaire(blocScolaire, d -> {
+									indexerEnfantScolaire(enfantScolaire, d -> {
 										if(d.succeeded()) {
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											erreurEnfantScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									erreurEnfantScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							erreurEnfantScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					erreurEnfantScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
 				}
 			});
 			return future;
@@ -371,7 +375,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void sqlPATCHBlocScolaire(BlocScolaire o, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
+	public void sqlPATCHEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<EnfantScolaire>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -380,10 +384,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = requeteJson.fieldNames();
-			BlocScolaire o2 = new BlocScolaire();
+			EnfantScolaire o2 = new EnfantScolaire();
 
 			patchSql.append(SiteContexteFrFR.SQL_modifier);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.bloc.BlocScolaire"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.enfant.EnfantScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
@@ -426,114 +430,124 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
-					case "setAgeCle":
-						o2.setAgeCle(requeteJson.getString(methodeNom));
+					case "setBlocCles":
+						o2.setBlocCles(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "blocCles", o2.getBlocCles()));
 						break;
-					case "removeAgeCle":
-						o2.setAgeCle(requeteJson.getString(methodeNom));
+					case "removeBlocCles":
+						o2.setBlocCles(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "blocCles", o2.getBlocCles()));
 						break;
-					case "setBlocHeureDebut":
-						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
-						if(o2.getBlocHeureDebut() == null) {
+					case "setPersonnePrenom":
+						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
+						if(o2.getPersonnePrenom() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenom"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.jsonBlocHeureDebut(), pk));
+							patchSqlParams.addAll(Arrays.asList("personnePrenom", o2.jsonPersonnePrenom(), pk));
 						}
 						break;
-					case "setBlocHeureFin":
-						o2.setBlocHeureFin(requeteJson.getString(methodeNom));
-						if(o2.getBlocHeureFin() == null) {
+					case "setFamilleNom":
+						o2.setFamilleNom(requeteJson.getString(methodeNom));
+						if(o2.getFamilleNom() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
+							patchSqlParams.addAll(Arrays.asList(pk, "familleNom"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.jsonBlocHeureFin(), pk));
+							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
-					case "setBlocPrixParMois":
-						o2.setBlocPrixParMois(requeteJson.getString(methodeNom));
-						if(o2.getBlocPrixParMois() == null) {
+					case "setPersonneNomComplet":
+						o2.setPersonneNomComplet(requeteJson.getString(methodeNom));
+						if(o2.getPersonneNomComplet() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneNomComplet"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneNomComplet", o2.jsonPersonneNomComplet(), pk));
 						}
 						break;
-					case "setBlocDimanche":
-						o2.setBlocDimanche(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocDimanche() == null) {
+					case "setPersonneNomCompletPrefere":
+						o2.setPersonneNomCompletPrefere(requeteJson.getString(methodeNom));
+						if(o2.getPersonneNomCompletPrefere() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocDimanche"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneNomCompletPrefere"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocDimanche", o2.jsonBlocDimanche(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", o2.jsonPersonneNomCompletPrefere(), pk));
 						}
 						break;
-					case "setBlocLundi":
-						o2.setBlocLundi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocLundi() == null) {
+					case "setPersonneNomFormel":
+						o2.setPersonneNomFormel(requeteJson.getString(methodeNom));
+						if(o2.getPersonneNomFormel() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneNomFormel"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocLundi", o2.jsonBlocLundi(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneNomFormel", o2.jsonPersonneNomFormel(), pk));
 						}
 						break;
-					case "setBlocMardi":
-						o2.setBlocMardi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocMardi() == null) {
+					case "setEnfantConditionsMedicales":
+						o2.setEnfantConditionsMedicales(requeteJson.getString(methodeNom));
+						if(o2.getEnfantConditionsMedicales() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocMardi", o2.jsonBlocMardi(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales(), pk));
 						}
 						break;
-					case "setBlocMercredi":
-						o2.setBlocMercredi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocMercredi() == null) {
+					case "setEnfantEcolesPrecedemmentFrequentees":
+						o2.setEnfantEcolesPrecedemmentFrequentees(requeteJson.getString(methodeNom));
+						if(o2.getEnfantEcolesPrecedemmentFrequentees() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocMercredi", o2.jsonBlocMercredi(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees(), pk));
 						}
 						break;
-					case "setBlocJeudi":
-						o2.setBlocJeudi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocJeudi() == null) {
+					case "setEnfantDescription":
+						o2.setEnfantDescription(requeteJson.getString(methodeNom));
+						if(o2.getEnfantDescription() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDescription"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocJeudi", o2.jsonBlocJeudi(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantDescription", o2.jsonEnfantDescription(), pk));
 						}
 						break;
-					case "setBlocVendredi":
-						o2.setBlocVendredi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocVendredi() == null) {
+					case "setEnfantObjectifs":
+						o2.setEnfantObjectifs(requeteJson.getString(methodeNom));
+						if(o2.getEnfantObjectifs() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocVendredi", o2.jsonBlocVendredi(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantObjectifs", o2.jsonEnfantObjectifs(), pk));
 						}
 						break;
-					case "setBlocSamedi":
-						o2.setBlocSamedi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocSamedi() == null) {
+					case "setEnfantVaccinsAJour":
+						o2.setEnfantVaccinsAJour(requeteJson.getBoolean(methodeNom));
+						if(o2.getEnfantVaccinsAJour() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocSamedi"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinsAJour"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.jsonBlocSamedi(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", o2.jsonEnfantVaccinsAJour(), pk));
+						}
+						break;
+					case "setEnfantPropre":
+						o2.setEnfantPropre(requeteJson.getBoolean(methodeNom));
+						if(o2.getEnfantPropre() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantPropre"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantPropre", o2.jsonEnfantPropre(), pk));
 						}
 						break;
 				}
@@ -543,7 +557,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				BlocScolaire o3 = new BlocScolaire();
+				EnfantScolaire o3 = new EnfantScolaire();
 				o3.setRequeteSite_(o.getRequeteSite_());
 				o3.setPk(pk);
 				gestionnaireEvenements.handle(Future.succeededFuture(o3));
@@ -553,9 +567,9 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200PATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHEnfantScolaire(ListeRecherche<EnfantScolaire> listeEnfantScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listeEnfantScolaire.getRequeteSite_();
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
@@ -566,34 +580,34 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	// GET //
 
 	@Override
-	public void getBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void getEnfantScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
-			rechercheBlocScolaire(requeteSite, false, true, null, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete);
+			rechercheEnfantScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<BlocScolaire> listeBlocScolaire = a.result();
-					reponse200GETBlocScolaire(listeBlocScolaire, b -> {
+					ListeRecherche<EnfantScolaire> listeEnfantScolaire = a.result();
+					reponse200GETEnfantScolaire(listeEnfantScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200GETBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200GETEnfantScolaire(ListeRecherche<EnfantScolaire> listeEnfantScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-			SolrDocumentList documentsSolr = listeBlocScolaire.getSolrDocumentList();
+			RequeteSiteFrFR requeteSite = listeEnfantScolaire.getRequeteSite_();
+			SolrDocumentList documentsSolr = listeEnfantScolaire.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listeBlocScolaire.get(0));
+			JsonObject json = JsonObject.mapFrom(listeEnfantScolaire.get(0));
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -603,17 +617,17 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	// DELETE //
 
 	@Override
-	public void deleteBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void deleteEnfantScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
-			sqlBlocScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete);
+			sqlEnfantScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					rechercheBlocScolaire(requeteSite, false, true, null, b -> {
+					rechercheEnfantScolaire(requeteSite, false, true, null, b -> {
 						if(b.succeeded()) {
-							ListeRecherche<BlocScolaire> listeBlocScolaire = b.result();
-							supprimerDELETEBlocScolaire(requeteSite, c -> {
+							ListeRecherche<EnfantScolaire> listeEnfantScolaire = b.result();
+							supprimerDELETEEnfantScolaire(requeteSite, c -> {
 								if(c.succeeded()) {
-									reponse200DELETEBlocScolaire(requeteSite, d -> {
+									reponse200DELETEEnfantScolaire(requeteSite, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -625,36 +639,36 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurEnfantScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurEnfantScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurEnfantScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurEnfantScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void supprimerDELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void supprimerDELETEEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -662,7 +676,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 			connexionSql.updateWithParams(
 					SiteContexteFrFR.SQL_supprimer
-					, new JsonArray(Arrays.asList(pk, BlocScolaire.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, EnfantScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
 			-> {
 				gestionnaireEvenements.handle(Future.succeededFuture());
@@ -672,7 +686,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200DELETEBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200DELETEEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
@@ -684,33 +698,33 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	// Recherche //
 
 	@Override
-	public void rechercheBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void rechercheEnfantScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
-			rechercheBlocScolaire(requeteSite, false, true, null, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete);
+			rechercheEnfantScolaire(requeteSite, false, true, null, a -> {
 				if(a.succeeded()) {
-					ListeRecherche<BlocScolaire> listeBlocScolaire = a.result();
-					reponse200RechercheBlocScolaire(listeBlocScolaire, b -> {
+					ListeRecherche<EnfantScolaire> listeEnfantScolaire = a.result();
+					reponse200RechercheEnfantScolaire(listeEnfantScolaire, b -> {
 						if(b.succeeded()) {
 							gestionnaireEvenements.handle(Future.succeededFuture(b.result()));
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200RechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200RechercheEnfantScolaire(ListeRecherche<EnfantScolaire> listeEnfantScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-			QueryResponse reponseRecherche = listeBlocScolaire.getQueryResponse();
-			SolrDocumentList documentsSolr = listeBlocScolaire.getSolrDocumentList();
+			RequeteSiteFrFR requeteSite = listeEnfantScolaire.getRequeteSite_();
+			QueryResponse reponseRecherche = listeEnfantScolaire.getQueryResponse();
+			SolrDocumentList documentsSolr = listeEnfantScolaire.getSolrDocumentList();
 			Long millisRecherche = Long.valueOf(reponseRecherche.getQTime());
 			Long millisTransmission = reponseRecherche.getElapsedTime();
 			Long numCommence = reponseRecherche.getResults().getStart();
@@ -727,9 +741,9 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			json.put("tempsRecherche", tempsRecherche);
 			json.put("tempsTransmission", tempsTransmission);
 			JsonArray l = new JsonArray();
-			listeBlocScolaire.getList().stream().forEach(o -> {
+			listeEnfantScolaire.getList().stream().forEach(o -> {
 				JsonObject json2 = JsonObject.mapFrom(o);
-				List<String> fls = listeBlocScolaire.getFields();
+				List<String> fls = listeEnfantScolaire.getFields();
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
@@ -753,22 +767,22 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	// PageRecherche //
 
 	@Override
-	public void pagerechercheBlocScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
-		pagerechercheBlocScolaire(operationRequete, gestionnaireEvenements);
+	public void pagerechercheEnfantScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		pagerechercheEnfantScolaire(operationRequete, gestionnaireEvenements);
 	}
 
 	@Override
-	public void pagerechercheBlocScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void pagerechercheEnfantScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete);
-			sqlBlocScolaire(requeteSite, a -> {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete);
+			sqlEnfantScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
+					utilisateurEnfantScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, "/bloc", c -> {
+							rechercheEnfantScolaire(requeteSite, false, true, "/enfant", c -> {
 								if(c.succeeded()) {
-									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
-									reponse200PageRechercheBlocScolaire(listeBlocScolaire, d -> {
+									ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
+									reponse200PageRechercheEnfantScolaire(listeEnfantScolaire, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -780,48 +794,48 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 															if(f.succeeded()) {
 																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 															} else {
-																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
+																erreurEnfantScolaire(requeteSite, gestionnaireEvenements, f);
 															}
 														});
 													} else {
-														erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+														erreurEnfantScolaire(requeteSite, gestionnaireEvenements, e);
 													}
 												});
 											}
 										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+											erreurEnfantScolaire(requeteSite, gestionnaireEvenements, d);
 										}
 									});
 								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurEnfantScolaire(requeteSite, gestionnaireEvenements, c);
 								}
 							});
 						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							erreurEnfantScolaire(requeteSite, gestionnaireEvenements, b);
 						}
 					});
 				} else {
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					erreurEnfantScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception e) {
-			erreurBlocScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+			erreurEnfantScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
 		}
 	}
 
-	public void reponse200PageRechercheBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PageRechercheEnfantScolaire(ListeRecherche<EnfantScolaire> listeEnfantScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
+			RequeteSiteFrFR requeteSite = listeEnfantScolaire.getRequeteSite_();
 			Buffer buffer = Buffer.buffer();
-			ToutEcrivain w = ToutEcrivain.creer(listeBlocScolaire.getRequeteSite_(), buffer);
-			BlocPage page = new BlocPage();
+			ToutEcrivain w = ToutEcrivain.creer(listeEnfantScolaire.getRequeteSite_(), buffer);
+			EnfantPage page = new EnfantPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/bloc");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/enfant");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
-			page.setListeBlocScolaire(listeBlocScolaire);
-			page.initLoinBlocPage(requeteSite);
+			page.setListeEnfantScolaire(listeEnfantScolaire);
+			page.initLoinEnfantPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -829,7 +843,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public String varIndexeBlocScolaire(String entiteVar) {
+	public String varIndexeEnfantScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -849,78 +863,48 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "sessionCle":
-				return "sessionCle_indexed_long";
-			case "ageCle":
-				return "ageCle_indexed_long";
-			case "blocCle":
-				return "blocCle_indexed_long";
+			case "blocCles":
+				return "blocCles_indexed_long";
 			case "enfantCle":
 				return "enfantCle_indexed_long";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "anneeTri":
-				return "anneeTri_indexed_int";
-			case "saisonTri":
-				return "saisonTri_indexed_int";
-			case "sessionTri":
-				return "sessionTri_indexed_int";
-			case "ageTri":
-				return "ageTri_indexed_int";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "anneeDebut":
-				return "anneeDebut_indexed_date";
-			case "anneeFin":
-				return "anneeFin_indexed_date";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
-			case "saisonEte":
-				return "saisonEte_indexed_boolean";
-			case "saisonHiver":
-				return "saisonHiver_indexed_boolean";
-			case "saisonFraisInscription":
-				return "saisonFraisInscription_indexed_double";
-			case "saisonNomComplet":
-				return "saisonNomComplet_indexed_string";
-			case "sessionJourDebut":
-				return "sessionJourDebut_indexed_date";
-			case "sessionJourFin":
-				return "sessionJourFin_indexed_date";
-			case "ageNomComplet":
-				return "ageNomComplet_indexed_string";
-			case "ageDebut":
-				return "ageDebut_indexed_int";
-			case "ageFin":
-				return "ageFin_indexed_int";
-			case "blocHeureDebut":
-				return "blocHeureDebut_indexed_string";
-			case "blocHeureFin":
-				return "blocHeureFin_indexed_string";
-			case "blocPrixParMois":
-				return "blocPrixParMois_indexed_double";
-			case "blocDimanche":
-				return "blocDimanche_indexed_boolean";
-			case "blocLundi":
-				return "blocLundi_indexed_boolean";
-			case "blocMardi":
-				return "blocMardi_indexed_boolean";
-			case "blocMercredi":
-				return "blocMercredi_indexed_boolean";
-			case "blocJeudi":
-				return "blocJeudi_indexed_boolean";
-			case "blocVendredi":
-				return "blocVendredi_indexed_boolean";
-			case "blocSamedi":
-				return "blocSamedi_indexed_boolean";
+			case "familleTri":
+				return "familleTri_indexed_int";
+			case "enfantTri":
+				return "enfantTri_indexed_int";
+			case "ecoleCles":
+				return "ecoleCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "ageCles":
+				return "ageCles_indexed_longs";
+			case "personnePrenom":
+				return "personnePrenom_indexed_string";
+			case "familleNom":
+				return "familleNom_indexed_string";
+			case "personneNomComplet":
+				return "personneNomComplet_indexed_string";
+			case "personneNomCompletPrefere":
+				return "personneNomCompletPrefere_indexed_string";
+			case "personneNomFormel":
+				return "personneNomFormel_indexed_string";
+			case "personneDateNaissance":
+				return "personneDateNaissance_indexed_date";
+			case "enfantConditionsMedicales":
+				return "enfantConditionsMedicales_indexed_string";
+			case "enfantEcolesPrecedemmentFrequentees":
+				return "enfantEcolesPrecedemmentFrequentees_indexed_string";
+			case "enfantDescription":
+				return "enfantDescription_indexed_string";
+			case "enfantObjectifs":
+				return "enfantObjectifs_indexed_string";
+			case "enfantVaccinsAJour":
+				return "enfantVaccinsAJour_indexed_boolean";
+			case "enfantPropre":
+				return "enfantPropre_indexed_boolean";
 			case "blocNomComplet":
 				return "blocNomComplet_indexed_string";
 			case "blocId":
@@ -934,7 +918,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public String varRechercheBlocScolaire(String entiteVar) {
+	public String varRechercheEnfantScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
@@ -943,7 +927,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public String varSuggereBlocScolaire(String entiteVar) {
+	public String varSuggereEnfantScolaire(String entiteVar) {
 		switch(entiteVar) {
 			case "objetSuggere":
 				return "objetSuggere_suggested";
@@ -954,7 +938,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 	// Partagé //
 
-	public void erreurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
+	public void erreurEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -991,7 +975,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void sqlBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
 
@@ -1019,11 +1003,11 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourBlocScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
-		return genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, null);
+	public RequeteSiteFrFR genererRequeteSiteFrFRPourEnfantScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete) {
+		return genererRequeteSiteFrFRPourEnfantScolaire(siteContexte, operationRequete, null);
 	}
 
-	public RequeteSiteFrFR genererRequeteSiteFrFRPourBlocScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
+	public RequeteSiteFrFR genererRequeteSiteFrFRPourEnfantScolaire(SiteContexteFrFR siteContexte, OperationRequest operationRequete, JsonObject body) {
 		Vertx vertx = siteContexte.getVertx();
 		RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
 		requeteSite.setObjetJson(body);
@@ -1036,7 +1020,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		return requeteSite;
 	}
 
-	public void utilisateurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void utilisateurEnfantScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
@@ -1136,21 +1120,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheBlocScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<BlocScolaire>>> gestionnaireEvenements) {
+	public void rechercheEnfantScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String classeApiUriMethode, Handler<AsyncResult<ListeRecherche<EnfantScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
 			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
+			ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
 			listeRecherche.setPeupler(peupler);
 			listeRecherche.setStocker(stocker);
 			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(BlocScolaire.class);
+			listeRecherche.setC(EnfantScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.bloc.BlocScolaire"));
+			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.enfant.EnfantScolaire"));
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1178,7 +1162,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheBlocScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheEnfantScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1192,13 +1176,13 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeBlocScolaire(entiteVar);
+								varIndexe = varIndexeEnfantScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeBlocScolaire(entiteVar);
+								varIndexe = varIndexeEnfantScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "start":
@@ -1222,7 +1206,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void definirBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void definirEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1250,7 +1234,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void attribuerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void attribuerEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			SQLConnection connexionSql = requeteSite.getConnexionSql();
@@ -1283,7 +1267,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void indexerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void indexerEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 		try {
 			o.initLoinPourClasse(requeteSite);

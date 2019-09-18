@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.bloc;
+package org.computate.scolaire.enUS.child;
 
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -9,129 +9,129 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.enUS.bloc.BlockGenPage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.enUS.child.ChildGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.bloc.BlockPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.child.ChildPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class BlockPageGen<DEV> extends BlockGenPage {
+public abstract class ChildPageGen<DEV> extends ChildGenPage {
 
 	//////////////
-	// initDeep //
+	// initLoin //
 	//////////////
 
-	protected boolean alreadyInitializedBlockPage = false;
+	protected boolean dejaInitialiseChildPage = false;
 
-	public BlockPage initDeepBlockPage(SiteRequestEnUS siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		if(!alreadyInitializedBlockPage) {
-			alreadyInitializedBlockPage = true;
-			initDeepBlockPage();
+	public ChildPage initLoinChildPage(SiteRequestEnUS requeteSite_) {
+		setRequeteSite_(requeteSite_);
+		if(!dejaInitialiseChildPage) {
+			dejaInitialiseChildPage = true;
+			initLoinChildPage();
 		}
-		return (BlockPage)this;
+		return (ChildPage)this;
 	}
 
-	public void initDeepBlockPage() {
-		super.initDeepBlockGenPage(siteRequest_);
-		initBlockPage();
+	public void initLoinChildPage() {
+		super.initLoinChildGenPage(requeteSite_);
+		initChildPage();
 	}
 
-	public void initBlockPage() {
+	public void initChildPage() {
 	}
 
-	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
-		initDeepBlockPage(siteRequest_);
+	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
+		initLoinChildPage(requeteSite_);
 	}
 
 	/////////////////
-	// siteRequest //
+	// requeteSite //
 	/////////////////
 
-	public void siteRequestBlockPage(SiteRequestEnUS siteRequest_) {
-			super.siteRequestBlockGenPage(siteRequest_);
+	public void requeteSiteChildPage(SiteRequestEnUS requeteSite_) {
+			super.requeteSiteChildGenPage(requeteSite_);
 	}
 
-	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestBlockPage(siteRequest_);
+	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
+		requeteSiteChildPage(requeteSite_);
 	}
 
 	/////////////
-	// obtain //
+	// obtenir //
 	/////////////
 
-	@Override public Object obtainForClass(String var) {
+	@Override public Object obtenirPourClasse(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainBlockPage(v);
+				o = obtenirChildPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtainForClass(v);
+				o = cluster.obtenirPourClasse(v);
 			}
 		}
 		return o;
 	}
-	public Object obtainBlockPage(String var) {
-		BlockPage oBlockPage = (BlockPage)this;
+	public Object obtenirChildPage(String var) {
+		ChildPage oChildPage = (ChildPage)this;
 		switch(var) {
 			default:
-				return super.obtainBlockGenPage(var);
+				return super.obtenirChildGenPage(var);
 		}
 	}
 
 	///////////////
-	// attribute //
+	// attribuer //
 	///////////////
 
-	@Override public boolean attributeForClass(String var, Object val) {
+	@Override public boolean attribuerPourClasse(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attributeBlockPage(v, val);
+				o = attribuerChildPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attributeForClass(v, val);
+				o = cluster.attribuerPourClasse(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attributeBlockPage(String var, Object val) {
-		BlockPage oBlockPage = (BlockPage)this;
+	public Object attribuerChildPage(String var, Object val) {
+		ChildPage oChildPage = (ChildPage)this;
 		switch(var) {
 			default:
-				return super.attributeBlockGenPage(var, val);
+				return super.attribuerChildGenPage(var, val);
 		}
 	}
 
 	/////////////
-	// define //
+	// definir //
 	/////////////
 
-	@Override public boolean defineForClass(String var, String val) {
+	@Override public boolean definirPourClasse(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = defineBlockPage(v, val);
+					o = definirChildPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					o = cluster.definirPourClasse(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object defineBlockPage(String var, String val) {
+	public Object definirChildPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineBlockGenPage(var, val);
+				return super.definirChildGenPage(var, val);
 		}
 	}
 
@@ -140,11 +140,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsBlockPage();
+		htmlScriptsChildPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsBlockPage() {
+	public void htmlScriptsChildPage() {
 	}
 
 	////////////////
@@ -152,11 +152,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptBlockPage();
+		htmlScriptChildPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptBlockPage() {
+	public void htmlScriptChildPage() {
 	}
 
 	//////////////
@@ -164,11 +164,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyBlockPage();
+		htmlBodyChildPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyBlockPage() {
+	public void htmlBodyChildPage() {
 	}
 
 	//////////
@@ -176,11 +176,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	//////////
 
 	@Override public void html() {
-		htmlBlockPage();
+		htmlChildPage();
 		super.html();
 	}
 
-	public void htmlBlockPage() {
+	public void htmlChildPage() {
 	}
 
 	//////////////
@@ -188,11 +188,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaBlockPage();
+		htmlMetaChildPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaBlockPage() {
+	public void htmlMetaChildPage() {
 	}
 
 	////////////////
@@ -200,11 +200,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesBlockPage();
+		htmlStylesChildPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesBlockPage() {
+	public void htmlStylesChildPage() {
 	}
 
 	///////////////
@@ -212,11 +212,11 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleBlockPage();
+		htmlStyleChildPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleBlockPage() {
+	public void htmlStyleChildPage() {
 	}
 
 	//////////////
@@ -234,9 +234,9 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof BlockPage))
+		if(!(o instanceof ChildPage))
 			return false;
-		BlockPage that = (BlockPage)o;
+		ChildPage that = (ChildPage)o;
 		return super.equals(o);
 	}
 
@@ -247,7 +247,7 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("BlockPage { ");
+		sb.append("ChildPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

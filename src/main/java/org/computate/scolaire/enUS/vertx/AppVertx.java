@@ -11,7 +11,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiService;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
-import org.computate.scolaire.enUS.bloc.SchoolBlockEnUSGenApiService;
+import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiService;
 import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;

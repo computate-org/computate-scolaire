@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.bloc;
+package org.computate.scolaire.enUS.block;
 
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import io.vertx.codegen.annotations.ProxyGen;

@@ -1,62 +1,62 @@
-package org.computate.scolaire.enUS.school;
+package org.computate.scolaire.frFR.enfant;
 
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.frFR.enfant.EnfantGenPage;
 import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.school.SchoolGenPage;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.school.SchoolPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
+public abstract class EnfantPageGen<DEV> extends EnfantGenPage {
 
 	//////////////
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseSchoolPage = false;
+	protected boolean dejaInitialiseEnfantPage = false;
 
-	public SchoolPage initLoinSchoolPage(SiteRequestEnUS requeteSite_) {
+	public EnfantPage initLoinEnfantPage(RequeteSiteFrFR requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseSchoolPage) {
-			dejaInitialiseSchoolPage = true;
-			initLoinSchoolPage();
+		if(!dejaInitialiseEnfantPage) {
+			dejaInitialiseEnfantPage = true;
+			initLoinEnfantPage();
 		}
-		return (SchoolPage)this;
+		return (EnfantPage)this;
 	}
 
-	public void initLoinSchoolPage() {
-		super.initLoinSchoolGenPage(requeteSite_);
-		initSchoolPage();
+	public void initLoinEnfantPage() {
+		super.initLoinEnfantGenPage(requeteSite_);
+		initEnfantPage();
 	}
 
-	public void initSchoolPage() {
+	public void initEnfantPage() {
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinSchoolPage(requeteSite_);
+	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
+		initLoinEnfantPage(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteSchoolPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteSchoolGenPage(requeteSite_);
+	public void requeteSiteEnfantPage(RequeteSiteFrFR requeteSite_) {
+			super.requeteSiteEnfantGenPage(requeteSite_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteSchoolPage(requeteSite_);
+	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
+		requeteSiteEnfantPage(requeteSite_);
 	}
 
 	/////////////
@@ -68,7 +68,7 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirSchoolPage(v);
+				o = obtenirEnfantPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -76,11 +76,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		}
 		return o;
 	}
-	public Object obtenirSchoolPage(String var) {
-		SchoolPage oSchoolPage = (SchoolPage)this;
+	public Object obtenirEnfantPage(String var) {
+		EnfantPage oEnfantPage = (EnfantPage)this;
 		switch(var) {
 			default:
-				return super.obtenirSchoolGenPage(var);
+				return super.obtenirEnfantGenPage(var);
 		}
 	}
 
@@ -93,7 +93,7 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerSchoolPage(v, val);
+				o = attribuerEnfantPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -101,11 +101,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		}
 		return o != null;
 	}
-	public Object attribuerSchoolPage(String var, Object val) {
-		SchoolPage oSchoolPage = (SchoolPage)this;
+	public Object attribuerEnfantPage(String var, Object val) {
+		EnfantPage oEnfantPage = (EnfantPage)this;
 		switch(var) {
 			default:
-				return super.attribuerSchoolGenPage(var, val);
+				return super.attribuerEnfantGenPage(var, val);
 		}
 	}
 
@@ -119,7 +119,7 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirSchoolPage(v, val);
+					o = definirEnfantPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -128,10 +128,10 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 		}
 		return o != null;
 	}
-	public Object definirSchoolPage(String var, String val) {
+	public Object definirEnfantPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirSchoolGenPage(var, val);
+				return super.definirEnfantGenPage(var, val);
 		}
 	}
 
@@ -140,11 +140,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsSchoolPage();
+		htmlScriptsEnfantPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsSchoolPage() {
+	public void htmlScriptsEnfantPage() {
 	}
 
 	////////////////
@@ -152,11 +152,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptSchoolPage();
+		htmlScriptEnfantPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptSchoolPage() {
+	public void htmlScriptEnfantPage() {
 	}
 
 	//////////////
@@ -164,11 +164,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodySchoolPage();
+		htmlBodyEnfantPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodySchoolPage() {
+	public void htmlBodyEnfantPage() {
 	}
 
 	//////////
@@ -176,11 +176,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	//////////
 
 	@Override public void html() {
-		htmlSchoolPage();
+		htmlEnfantPage();
 		super.html();
 	}
 
-	public void htmlSchoolPage() {
+	public void htmlEnfantPage() {
 	}
 
 	//////////////
@@ -188,11 +188,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaSchoolPage();
+		htmlMetaEnfantPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaSchoolPage() {
+	public void htmlMetaEnfantPage() {
 	}
 
 	////////////////
@@ -200,11 +200,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesSchoolPage();
+		htmlStylesEnfantPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesSchoolPage() {
+	public void htmlStylesEnfantPage() {
 	}
 
 	///////////////
@@ -212,11 +212,11 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleSchoolPage();
+		htmlStyleEnfantPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleSchoolPage() {
+	public void htmlStyleEnfantPage() {
 	}
 
 	//////////////
@@ -234,9 +234,9 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof SchoolPage))
+		if(!(o instanceof EnfantPage))
 			return false;
-		SchoolPage that = (SchoolPage)o;
+		EnfantPage that = (EnfantPage)o;
 		return super.equals(o);
 	}
 
@@ -247,7 +247,7 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("SchoolPage { ");
+		sb.append("EnfantPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

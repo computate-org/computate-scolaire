@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.bloc;
+package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -7,11 +7,12 @@ import java.time.LocalTime;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.age.SchoolAge;
+import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
 
-public class SchoolBlock extends SchoolBlockGen<Cluster> {
+public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _schoolKey(Wrap<Long> c) {
 	}
@@ -32,7 +33,20 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(pk);
 	}
 
-	protected void _enrollmentKeys(List<Long> o) {}
+	protected void _blockKeys(List<Long> o) {}
+
+	protected void _childKeys(List<Long> o) {}
+
+	protected void _momKeys(List<Long> o) {}
+
+	protected void _dadKeys(List<Long> o) {}
+
+	protected void _guardianKeys(List<Long> o) {}
+
+	protected void _contactKeys(List<Long> o) {}
+
+	protected void _familyKey(Wrap<Long> c) {
+	}
 
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(6);
@@ -58,119 +72,138 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(6);
 	}
 
-	protected void _ageSearch(SearchList<SchoolAge> l) {
+	protected void _blockSearch(SearchList<SchoolBlock> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("blockKeys_indexed_longs:" + pk);
-		l.setC(SchoolAge.class);
+		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+		l.setC(BlockAge.class);
 		l.setStore(true);
 	}
 
-	protected void _age(Wrap<SchoolAge> c) {
-		if(ageSearch.size() > 0) {
-			c.o(ageSearch.get(0));
+	protected void _block(Wrap<SchoolBlock> c) {
+		if(blockSearch.size() > 0) {
+			c.o(blockSearch.get(0));
 		}
 	}
 
 	protected void _schoolNameComplete(Wrap<String> c) {
-		if(age != null)
-			c.o((String)age.getSchoolNameComplete());
+		if(block != null)
+			c.o((String)block.getSchoolNameComplete());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getYearStart());
+		if(block != null)
+			c.o((LocalDate)block.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<LocalDate> c) {
-		if(age != null)
-			c.o(age.getYearStart());
+		if(block != null)
+			c.o(block.getYearStart());
 	}
 
 	protected void _seasonStartDay(Wrap<LocalDate> c) {
-		if(age != null)
-			c.o(age.getSeasonStartDay());
+		if(block != null)
+			c.o(block.getSeasonStartDay());
 	}
 
 	protected void _seasonSummer(Wrap<Boolean> c) {
-		if(age != null)
-			c.o(age.getSeasonSummer());
+		if(block != null)
+			c.o(block.getSeasonSummer());
 	}
 
 	protected void _seasonWinter(Wrap<Boolean> c) {
-		if(age != null)
-			c.o(age.getSeasonWinter());
+		if(block != null)
+			c.o(block.getSeasonWinter());
 	}
 
 	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
-		if(age != null)
-			c.o(age.getSeasonEnrollmentFee());
+		if(block != null)
+			c.o(block.getSeasonEnrollmentFee());
 	}
 
 	protected void _seasonNameComplete(Wrap<String> c) {
-		if(age != null)
-			c.o(age.getSeasonNameComplete());
+		if(block != null)
+			c.o(block.getSeasonNameComplete());
 	}
 
 	protected void _ageStartDay(Wrap<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getSessionStartDay());
+		if(block != null)
+			c.o((LocalDate)block.getSessionStartDay());
 	}
 
 	protected void _sessionEndDay(Wrap<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getSessionEndDay());
+		if(block != null)
+			c.o((LocalDate)block.getSessionEndDay());
 	}
 
 	protected void _ageNameComplete(Wrap<String> c) {
-		if(age != null)
-			c.o(age.getAgeNameComplete());
+		if(block != null)
+			c.o(block.getAgeNameComplete());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
-		if(age != null)
-			c.o(age.getAgeStart());
+		if(block != null)
+			c.o(block.getAgeStart());
 	}
 
 	protected void _ageEnd(Wrap<Integer> c) {
-		if(age != null)
-			c.o(age.getAgeEnd());
+		if(block != null)
+			c.o(block.getAgeEnd());
 	}
 
 	protected void _blockTimeStart(Wrap<LocalTime> c) {
+		if(bloc != null)
+			c.o(bloc.getBlockStartTime());
 	}
 
 	protected void _blockTimeEnd(Wrap<LocalTime> c) {
+		if(block != null)
+			c.o(block.getBlockEndTime());
 	}
 
 	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
+		if(block != null)
+			c.o(block.getBlockPricePerMonth());
 	}
 
 	protected void _blockSunday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockSunday());
 	}
 
 	protected void _blockMonday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockMonday());
 	}
 
 	protected void _blockTuesday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockTuesday());
 	}
 
 	protected void _blockWednesday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockWednesday());
 	}
 
 	protected void _blockThursday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockThursday());
 	}
 
 	protected void _blockFriday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockFriday());
 	}
 
 	protected void _blockSaturday(Wrap<Boolean> c) {
-		c.o(false);
+		if(block != null)
+			c.o(block.getBlockSaturday());
+	}
+
+	protected void _enrollmentApproved(Wrap<Boolean> c) {
+	}
+
+	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
 	}
 
 	protected void _blocNameComplete(Wrap<String> c) {

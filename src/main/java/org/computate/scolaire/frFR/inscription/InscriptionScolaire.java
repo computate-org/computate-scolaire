@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;
+package org.computate.scolaire.frFR.inscription;
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -8,22 +8,23 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.age.AgeScolaire;
+import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
- * NomCanonique.enUS: org.computate.scolaire.enUS.block.SchoolBlock
+ * NomCanonique.enUS: org.computate.scolaire.enUS.enrollment.SchoolEnrollment
  * Modele: true
  * Api: true
  * Indexe: true
  * Sauvegarde: true
  * 
- * ApiTag.frFR: Bloc
- * ApiUri.frFR: /api/bloc
+ * ApiTag.frFR: Inscription
+ * ApiUri.frFR: /api/inscription
  * 
- * ApiTag.enUS: Block
- * ApiUri.enUS: /api/block
+ * ApiTag.enUS: Enrollment
+ * ApiUri.enUS: /api/enrollment
  * 
  * ApiMethode: POST
  * ApiMethode: PATCH
@@ -33,22 +34,22 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiMethode.enUS: Search
  * 
  * ApiMethode.frFR: PageRecherche
- * PagePageRecherche.frFR: BlocPage
+ * PagePageRecherche.frFR: InscriptionPage
  * PageSuperPageRecherche.frFR: ClusterPage
- * ApiUriPageRecherche.frFR: /bloc
+ * ApiUriPageRecherche.frFR: /inscription
  * 
  * ApiMethode.enUS: SearchPage
- * PageSearchPage.enUS: BlockPage
+ * PageSearchPage.enUS: EnrollmentPage
  * PageSuperSearchPage.enUS: ClusterPage
- * ApiUriSearchPage.enUS: /block
+ * ApiUriSearchPage.enUS: /enrollment
  * 
- * UnNom.frFR: un bloc
- * UnNom.enUS: a block
- * Couleur: indigo
- * IconeGroupe: duotone
- * IconeNom: bell-o
+ * UnNom.frFR: une inscription
+ * UnNom.enUS: an enrollment
+ * Couleur: purple
+ * IconeGroupe: solid
+ * IconeNom: pencil-square
 */    
-public class BlocScolaire extends BlocScolaireGen<Cluster> {
+public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
@@ -68,7 +69,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: L'année scolaire du bloc scolaire. 
+	 * Description.frFR: L'année scolaire de l'inscription scolaire. 
 	 * Description.enUS: The school year of the school block. 
 	 * NomAffichage.frFR: année
 	 * NomAffichage.enUS: year
@@ -81,7 +82,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: seasonKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La saison scolaire du bloc scolaire. 
+	 * Description.frFR: La saison scolaire de l'inscription scolaire. 
 	 * Description.enUS: The school season of the school block. 
 	 * NomAffichage.frFR: saison
 	 * NomAffichage.enUS: season
@@ -96,8 +97,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Description.frFR: La clé primaire de la session dans la base de données. 
 	 * Description.enUS: The primary key of the school block in the database. 
-	 * NomAffichage.frFR: clé
-	 * NomAffichage.enUS: key
+	 * NomAffichage.frFR: session
+	 * NomAffichage.enUS: session
 	 */          
 	protected void _sessionCle(Couverture<Long> c) {
 	}
@@ -107,9 +108,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: ageKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: AgeScolaire.blocCles
-	 * HtmlLigne: 5
-	 * HtmlColonne: 1
 	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
 	 * Description.enUS: The primary key of the age in the database. 
 	 * NomAffichage.frFR: âge
@@ -123,40 +121,120 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: blockKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire du bloc dans la base de données. 
-	 * Description.enUS: The primary key of the school block in the database. 
+	 * Description.frFR: La clé primaire de l'inscription dans la base de données. 
+	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
 	 */               
-	protected void _blocCle(Couverture<Long> c) {
+	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: childKey
+	 * Var.enUS: blockKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: EnfantScolaire.blocCles
+	 * Attribuer: BlocScolaire.inscriptionCles
 	 * HtmlLigne: 5
-	 * HtmlColonne: 2
-	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
-	 * Description.enUS: The primary key of the age in the database. 
-	 * NomAffichage.frFR: enfant
-	 * NomAffichage.enUS: child
-	 */                  
-	protected void _enfantCle(Couverture<Long> c) {
-	}
+	 * HtmlColonne: 1
+	 * Description.frFR: La clé primaire des blocs dans la base de données. 
+	 * Description.enUS: The primary key of the school blocks in the database. 
+	 * NomAffichage.frFR: blocs
+	 * NomAffichage.enUS: blocks
+	 */               
+	protected void _blocCles(List<Long> o) {}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentKeys
+	 * Var.enUS: childKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: inscriptions
-	 * NomAffichage.enUS: enrollments
+	 * Attribuer: EnfantScolaire.inscriptionCles
+	 * HtmlLigne: 5
+	 * HtmlColonne: 2
+	 * Description.frFR: La clé primaire des enfants dans la base de données. 
+	 * Description.enUS: The primary key of the school children in the database. 
+	 * NomAffichage.frFR: enfants
+	 * NomAffichage.enUS: children
 	 */               
-	protected void _inscriptionCles(List<Long> o) {}
+	protected void _enfantCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: MereScolaire.inscriptionCles
+	 * HtmlLigne: 6
+	 * HtmlColonne: 1
+	 * Description.frFR: La clé primaire des mères dans la base de données. 
+	 * Description.enUS: The primary key of the school moms in the database. 
+	 * NomAffichage.frFR: mères
+	 * NomAffichage.enUS: moms
+	 */               
+	protected void _mereCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: PereScolaire.inscriptionCles
+	 * HtmlLigne: 6
+	 * HtmlColonne: 2
+	 * Description.frFR: La clé primaire des pères dans la base de données. 
+	 * Description.enUS: The primary key of the school dads in the database. 
+	 * NomAffichage.frFR: pères
+	 * NomAffichage.enUS: dads
+	 */               
+	protected void _pereCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: guardianKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: GardienScolaire.inscriptionCles
+	 * HtmlLigne: 7
+	 * HtmlColonne: 1
+	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
+	 * Description.enUS: The primary key of the school gardians in the database. 
+	 * NomAffichage.frFR: gardiens
+	 * NomAffichage.enUS: guardians
+	 */               
+	protected void _gardienCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: contactKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: ContactScolaire.inscriptionCles
+	 * HtmlLigne: 7
+	 * HtmlColonne: 2
+	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
+	 * Description.enUS: The primary key of the school emergency contacts in the database. 
+	 * NomAffichage.frFR: contacts d'urgence
+	 * NomAffichage.enUS: emergency contacts
+	 */               
+	protected void _contactCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: FamilleScolaire.inscriptionCles
+	 * HtmlLigne: 8
+	 * HtmlColonne: 1
+	 * Description.frFR: La clé primaire de la famille dans la base de données. 
+	 * Description.enUS: The primary key of the school family in the database. 
+	 * NomAffichage.frFR: famille
+	 * NomAffichage.enUS: family
+	 */          
+	protected void _familleCle(Couverture<Long> c) {
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -219,32 +297,32 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: ageSearch
-	 * r: blocCles
-	 * r.enUS: blockKeys
-	 * r: AgeScolaire
-	 * r.enUS: SchoolAge
+	 * Var.enUS: blockSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: BlocScolaire
+	 * r.enUS: BlockAge
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
 	 */
-	protected void _ageRecherche(ListeRecherche<AgeScolaire> l) {
+	protected void _blocRecherche(ListeRecherche<BlocScolaire> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("blocCles_indexed_longs:" + pk);
-		l.setC(AgeScolaire.class);
+		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+		l.setC(BlocScolaire.class);
 		l.setStocker(true);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: age
-	 * r: ageRecherche
-	 * r.enUS: ageSearch
+	 * Var.enUS: block
+	 * r: blocRecherche
+	 * r.enUS: blockSearch
 	 * Ignorer: true
 	 */   
-	protected void _age(Couverture<AgeScolaire> c) {
-		if(ageRecherche.size() > 0) {
-			c.o(ageRecherche.get(0));
+	protected void _bloc(Couverture<BlocScolaire> c) {
+		if(blocRecherche.size() > 0) {
+			c.o(blocRecherche.get(0));
 		}
 	}
 
@@ -259,12 +337,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
 	 * r.enUS: SchoolNameComplete
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(age != null)
-			c.o((String)age.getEcoleNomComplet());
+		if(bloc != null)
+			c.o((String)bloc.getEcoleNomComplet());
 	}
 
 	/**
@@ -276,12 +354,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of year
 	 * r: AnneeDebut
 	 * r.enUS: YearStart
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _anneeDebut(Couverture<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getAnneeDebut());
+		if(bloc != null)
+			c.o((LocalDate)bloc.getAnneeDebut());
 	}
 
 	/**
@@ -293,12 +371,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
 	 * r.enUS: YearStart
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                     
 	protected void _anneeFin(Couverture<LocalDate> c) {
-		if(age != null)
-			c.o(age.getAnneeFin());
+		if(bloc != null)
+			c.o(bloc.getAnneeFin());
 	}
 
 	/**
@@ -310,12 +388,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of season
 	 * r: SaisonJourDebut
 	 * r.enUS: SeasonStartDay
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                  
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {
-		if(age != null)
-			c.o(age.getSaisonJourDebut());
+		if(bloc != null)
+			c.o(bloc.getSaisonJourDebut());
 	}
 
 	/**
@@ -327,12 +405,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: summer
 	 * r: SaisonEte
 	 * r.enUS: SeasonSummer
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _saisonEte(Couverture<Boolean> c) {
-		if(age != null)
-			c.o(age.getSaisonEte());
+		if(bloc != null)
+			c.o(bloc.getSaisonEte());
 	}
 
 	/**
@@ -344,12 +422,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: winter
 	 * r: SaisonHiver
 	 * r.enUS: SeasonWinter
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _saisonHiver(Couverture<Boolean> c) {
-		if(age != null)
-			c.o(age.getSaisonHiver());
+		if(bloc != null)
+			c.o(bloc.getSaisonHiver());
 	}
 
 	/**
@@ -361,12 +439,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: enrollment fee
 	 * r: SaisonFraisInscription
 	 * r.enUS: SeasonEnrollmentFee
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
-		if(age != null)
-			c.o(age.getSaisonFraisInscription());
+		if(bloc != null)
+			c.o(bloc.getSaisonFraisInscription());
 	}
 
 	/**   
@@ -376,12 +454,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * r: SaisonNomComplet
 	 * r.enUS: SeasonNameComplete
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */
 	protected void _saisonNomComplet(Couverture<String> c) {
-		if(age != null)
-			c.o(age.getSaisonNomComplet());
+		if(bloc != null)
+			c.o(bloc.getSaisonNomComplet());
 	}
 
 	/**
@@ -393,12 +471,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of the session
 	 * r: SessionJourDebut
 	 * r.enUS: SessionStartDay
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _sessionJourDebut(Couverture<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getSessionJourDebut());
+		if(bloc != null)
+			c.o((LocalDate)bloc.getSessionJourDebut());
 	}
 
 	/**
@@ -410,12 +488,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of the session
 	 * r: SessionJourFin
 	 * r.enUS: SessionEndDay
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _sessionJourFin(Couverture<LocalDate> c) {
-		if(age != null)
-			c.o((LocalDate)age.getSessionJourFin());
+		if(bloc != null)
+			c.o((LocalDate)bloc.getSessionJourFin());
 	}
 
 	/**
@@ -425,12 +503,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * r: AgeNomComplet
 	 * r.enUS: AgeNameComplete
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _ageNomComplet(Couverture<String> c) {
-		if(age != null)
-			c.o(age.getAgeNomComplet());
+		if(bloc != null)
+			c.o(bloc.getAgeNomComplet());
 	}
 
 	/**
@@ -442,12 +520,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of the age group
 	 * r: AgeDebut
 	 * r.enUS: AgeStart
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _ageDebut(Couverture<Integer> c) {
-		if(age != null)
-			c.o(age.getAgeDebut());
+		if(bloc != null)
+			c.o(bloc.getAgeDebut());
 	}
 
 	/**
@@ -459,12 +537,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of the age group
 	 * r: AgeFin
 	 * r.enUS: AgeEnd
-	 * r: age
-	 * r.enUS: age
+	 * r: bloc
+	 * r.enUS: block
 	 */                   
 	protected void _ageFin(Couverture<Integer> c) {
-		if(age != null)
-			c.o(age.getAgeFin());
+		if(bloc != null)
+			c.o(bloc.getAgeFin());
 	}
 
 	/**
@@ -477,8 +555,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlColonne: 1
+	 * r: BlocHeureDebut
+	 * r.enUS: BlockStartTime
 	 */                   
 	protected void _blocHeureDebut(Couverture<LocalTime> c) {
+		if(bloc != null)
+			c.o(bloc.getBlocHeureDebut());
 	}
 
 	/**
@@ -488,11 +570,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: heure fin
 	 * NomAffichage.enUS: end time
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocHeureFin
+	 * r.enUS: BlockEndTime
 	 */                   
 	protected void _blocHeureFin(Couverture<LocalTime> c) {
+		if(bloc != null)
+			c.o(bloc.getBlocHeureFin());
 	}
 
 	/**
@@ -502,11 +587,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: prix par mois
 	 * NomAffichage.enUS: price per month
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocPrixParMois
+	 * r.enUS: BlockPricePerMonth
 	 */                   
 	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
+		if(bloc != null)
+			c.o(bloc.getBlocPrixParMois());
 	}
 
 	/**
@@ -516,10 +604,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: dimanche
 	 * NomAffichage.enUS: sunday
-	 * Definir: true
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocDimanche
+	 * r.enUS: BlockSunday
 	 */                   
 	protected void _blocDimanche(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocDimanche());
 	}
 
 	/**
@@ -529,12 +621,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: lundi
 	 * NomAffichage.enUS: monday
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocLundi
+	 * r.enUS: BlockMonday
 	 */                   
 	protected void _blocLundi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocLundi());
 	}
 
 	/**
@@ -544,12 +638,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: mardi
 	 * NomAffichage.enUS: tuesday
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlColonne: 3
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocMardi
+	 * r.enUS: BlockTuesday
 	 */                   
 	protected void _blocMardi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocMardi());
 	}
 
 	/**
@@ -559,12 +655,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: mercredi
 	 * NomAffichage.enUS: wednesday
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlColonne: 4
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocMercredi
+	 * r.enUS: BlockWednesday
 	 */                   
 	protected void _blocMercredi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocMercredi());
 	}
 
 	/**
@@ -574,12 +672,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: jeudi
 	 * NomAffichage.enUS: thursday
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlColonne: 5
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocJeudi
+	 * r.enUS: BlockThursday
 	 */                   
 	protected void _blocJeudi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocJeudi());
 	}
 
 	/**
@@ -589,12 +689,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: vendredi
 	 * NomAffichage.enUS: friday
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlColonne: 6
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocVendredi
+	 * r.enUS: BlockFriday
 	 */                   
 	protected void _blocVendredi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocVendredi());
 	}
 
 	/**
@@ -604,10 +706,42 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: samedi
 	 * NomAffichage.enUS: saturday
-	 * Definir: true
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocSamedi
+	 * r.enUS: BlockSaturday
 	 */                   
 	protected void _blocSamedi(Couverture<Boolean> c) {
-		c.o(false);
+		if(bloc != null)
+			c.o(bloc.getBlocSamedi());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentApproved
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: approuvé
+	 * NomAffichage.enUS: approved
+	 * Definir: true
+	 * HtmlLigne: 9
+	 * HtmlColonne: 1
+	 */                   
+	protected void _inscriptionApprouve(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentImmunizations
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: vacciné
+	 * NomAffichage.enUS: immunized
+	 * Definir: true
+	 * HtmlLigne: 9
+	 * HtmlColonne: 2
+	 */                   
+	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
 	}
 
 	/**    

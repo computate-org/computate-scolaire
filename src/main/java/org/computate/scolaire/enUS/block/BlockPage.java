@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.bloc;
+package org.computate.scolaire.enUS.block;
 
 /**
  * Translate: false

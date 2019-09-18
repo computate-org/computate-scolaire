@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.bloc;
+package org.computate.scolaire.enUS.child;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -74,39 +74,39 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 /**
  * Translate: false
  **/
-public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiService {
+public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiService {
 
-	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolBlockEnUSGenApiServiceImpl.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolChildEnUSGenApiServiceImpl.class);
 
-	protected static final String SERVICE_ADDRESS = "SchoolBlockEnUSApiServiceImpl";
+	protected static final String SERVICE_ADDRESS = "SchoolChildEnUSApiServiceImpl";
 
 	protected SiteContextEnUS siteContext;
 
-	public SchoolBlockEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
+	public SchoolChildEnUSGenApiServiceImpl(SiteContextEnUS siteContext) {
 		this.siteContext = siteContext;
-		SchoolBlockEnUSGenApiService service = SchoolBlockEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
+		SchoolChildEnUSGenApiService service = SchoolChildEnUSGenApiService.createProxy(siteContext.getVertx(), SERVICE_ADDRESS);
 	}
 
 	// POST //
 
 	@Override
-	public void postSchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void postSchoolChild(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, body);
-			sqlSchoolBlock(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest, body);
+			sqlSchoolChild(siteRequest, a -> {
 				if(a.succeeded()) {
-					createPOSTSchoolBlock(siteRequest, b -> {
+					createPOSTSchoolChild(siteRequest, b -> {
 						if(b.succeeded()) {
-							SchoolBlock schoolBlock = b.result();
-							sqlPOSTSchoolBlock(schoolBlock, c -> {
+							SchoolChild schoolChild = b.result();
+							sqlPOSTSchoolChild(schoolChild, c -> {
 								if(c.succeeded()) {
-									defineSchoolBlock(schoolBlock, d -> {
+									defineSchoolChild(schoolChild, d -> {
 										if(d.succeeded()) {
-											attributeSchoolBlock(schoolBlock, e -> {
+											attributeSchoolChild(schoolChild, e -> {
 												if(e.succeeded()) {
-													indexSchoolBlock(schoolBlock, f -> {
+													indexSchoolChild(schoolChild, f -> {
 														if(f.succeeded()) {
-															response200POSTSchoolBlock(schoolBlock, g -> {
+															response200POSTSchoolChild(schoolChild, g -> {
 																if(f.succeeded()) {
 																	SQLConnection sqlConnection = siteRequest.getSqlConnection();
 																	sqlConnection.commit(h -> {
@@ -115,59 +115,59 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 																				if(a.succeeded()) {
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
-																					errorSchoolBlock(siteRequest, eventHandler, i);
+																					errorSchoolChild(siteRequest, eventHandler, i);
 																				}
 																			});
 																		} else {
-																			errorSchoolBlock(siteRequest, eventHandler, h);
+																			errorSchoolChild(siteRequest, eventHandler, h);
 																		}
 																	});
 																} else {
-																	errorSchoolBlock(siteRequest, eventHandler, g);
+																	errorSchoolChild(siteRequest, eventHandler, g);
 																}
 															});
 														} else {
-															errorSchoolBlock(siteRequest, eventHandler, f);
+															errorSchoolChild(siteRequest, eventHandler, f);
 														}
 													});
 												} else {
-													errorSchoolBlock(siteRequest, eventHandler, e);
+													errorSchoolChild(siteRequest, eventHandler, e);
 												}
 											});
 										} else {
-											errorSchoolBlock(siteRequest, eventHandler, d);
+											errorSchoolChild(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolBlock(siteRequest, eventHandler, c);
+									errorSchoolChild(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void createPOSTSchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+	public void createPOSTSchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolChild>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 
 			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(SchoolBlock.class.getCanonicalName(), userId))
+					, new JsonArray(Arrays.asList(SchoolChild.class.getCanonicalName(), userId))
 					, createAsync
 			-> {
 				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
-				SchoolBlock o = new SchoolBlock();
+				SchoolChild o = new SchoolChild();
 				o.setPk(pk);
 				o.setSiteRequest_(siteRequest);
 				eventHandler.handle(Future.succeededFuture(o));
@@ -177,7 +177,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void sqlPOSTSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlPOSTSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -190,49 +190,53 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "ageKey":
+					case "blockKeys":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", jsonObject.getLong(entityVar)));
+						postSqlParams.addAll(Arrays.asList("blockKeys", jsonObject.getLong(entityVar), "blockKeys", pk));
 						break;
-					case "blockTimeStart":
+					case "personFirstName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockTimeStart", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockTimeEnd":
+					case "familyName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockTimeEnd", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockPricePerMonth":
+					case "personCompleteName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personCompleteName", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockSunday":
+					case "personCompleteNamePreferred":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockSunday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockMonday":
+					case "personFormalName":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockMonday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personFormalName", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockTuesday":
+					case "childMedicalConditions":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockTuesday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("childMedicalConditions", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockWednesday":
+					case "childPreviousSchoolsAttended":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockWednesday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("childPreviousSchoolsAttended", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockThursday":
+					case "childDescription":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockThursday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("childDescription", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockFriday":
+					case "childObjectives":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockFriday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("childObjectives", jsonObject.getString(entityVar), pk));
 						break;
-					case "blockSaturday":
+					case "enfantVaccinsAJour":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockSaturday", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "childPottyTrained":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("childPottyTrained", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
@@ -249,7 +253,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void response200POSTSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200POSTSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			JsonObject json = new JsonObject();
@@ -262,17 +266,17 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	// PATCH //
 
 	@Override
-	public void patchSchoolBlock(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void patchSchoolChild(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, body);
-			sqlSchoolBlock(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest, body);
+			sqlSchoolChild(siteRequest, a -> {
 				if(a.succeeded()) {
-					userSchoolBlock(siteRequest, b -> {
+					userSchoolChild(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolBlock(siteRequest, false, true, null, c -> {
+							aSearchSchoolChild(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolBlock> listSchoolBlock = c.result();
-									listPATCHSchoolBlock(listSchoolBlock, d -> {
+									SearchList<SchoolChild> listSchoolChild = c.result();
+									listPATCHSchoolChild(listSchoolChild, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -284,85 +288,85 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolBlock(siteRequest, eventHandler, f);
+																errorSchoolChild(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolBlock(siteRequest, eventHandler, e);
+														errorSchoolChild(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolBlock(siteRequest, eventHandler, d);
+											errorSchoolChild(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolBlock(siteRequest, eventHandler, c);
+									errorSchoolChild(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void listPATCHSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
-		listSchoolBlock.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
+		listSchoolChild.getList().forEach(o -> {
 			futures.add(
-				futurePATCHSchoolBlock(o, a -> {
+				futurePATCHSchoolChild(o, a -> {
 					if(a.succeeded()) {
 					} else {
-						errorSchoolBlock(siteRequest, eventHandler, a);
+						errorSchoolChild(siteRequest, eventHandler, a);
 					}
 				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolBlock(listSchoolBlock, eventHandler);
+				response200PATCHSchoolChild(listSchoolChild, eventHandler);
 			} else {
-				errorSchoolBlock(listSchoolBlock.getSiteRequest_(), eventHandler, a);
+				errorSchoolChild(listSchoolChild.getSiteRequest_(), eventHandler, a);
 			}
 		});
 	}
 
-	public Future<SchoolBlock> futurePATCHSchoolBlock(SchoolBlock o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
-		Future<SchoolBlock> future = Future.future();
+	public Future<SchoolChild> futurePATCHSchoolChild(SchoolChild o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
+		Future<SchoolChild> future = Future.future();
 		try {
-			sqlPATCHSchoolBlock(o, a -> {
+			sqlPATCHSchoolChild(o, a -> {
 				if(a.succeeded()) {
-					SchoolBlock schoolBlock = a.result();
-					defineSchoolBlock(schoolBlock, b -> {
+					SchoolChild schoolChild = a.result();
+					defineSchoolChild(schoolChild, b -> {
 						if(b.succeeded()) {
-							attributeSchoolBlock(schoolBlock, c -> {
+							attributeSchoolChild(schoolChild, c -> {
 								if(c.succeeded()) {
-									indexSchoolBlock(schoolBlock, d -> {
+									indexSchoolChild(schoolChild, d -> {
 										if(d.succeeded()) {
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolBlock(o.getSiteRequest_(), eventHandler, d);
+											errorSchoolChild(o.getSiteRequest_(), eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolBlock(o.getSiteRequest_(), eventHandler, c);
+									errorSchoolChild(o.getSiteRequest_(), eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolBlock(o.getSiteRequest_(), eventHandler, b);
+							errorSchoolChild(o.getSiteRequest_(), eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(o.getSiteRequest_(), eventHandler, a);
+					errorSchoolChild(o.getSiteRequest_(), eventHandler, a);
 				}
 			});
 			return future;
@@ -371,7 +375,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void sqlPATCHSchoolBlock(SchoolBlock o, Handler<AsyncResult<SchoolBlock>> eventHandler) {
+	public void sqlPATCHSchoolChild(SchoolChild o, Handler<AsyncResult<SchoolChild>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -380,10 +384,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			StringBuilder patchSql = new StringBuilder();
 			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = requestJson.fieldNames();
-			SchoolBlock o2 = new SchoolBlock();
+			SchoolChild o2 = new SchoolChild();
 
 			patchSql.append(SiteContextEnUS.SQL_modify);
-			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.bloc.SchoolBlock"));
+			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.child.SchoolChild"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
@@ -426,114 +430,124 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
-					case "setAgeKey":
-						o2.setAgeKey(requestJson.getString(methodName));
+					case "setBlockKeys":
+						o2.setBlockKeys(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "blockKeys", o2.getBlockKeys()));
 						break;
-					case "removeAgeKey":
-						o2.setAgeKey(requestJson.getString(methodName));
+					case "removeBlockKeys":
+						o2.setBlockKeys(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
+						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "blockKeys", o2.getBlockKeys()));
 						break;
-					case "setBlockTimeStart":
-						o2.setBlockTimeStart(requestJson.getString(methodName));
-						if(o2.getBlockTimeStart() == null) {
+					case "setPersonFirstName":
+						o2.setPersonFirstName(requestJson.getString(methodName));
+						if(o2.getPersonFirstName() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeStart"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personFirstName"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTimeStart", o2.jsonBlockTimeStart(), pk));
+							patchSqlParams.addAll(Arrays.asList("personFirstName", o2.jsonPersonFirstName(), pk));
 						}
 						break;
-					case "setBlockTimeEnd":
-						o2.setBlockTimeEnd(requestJson.getString(methodName));
-						if(o2.getBlockTimeEnd() == null) {
+					case "setFamilyName":
+						o2.setFamilyName(requestJson.getString(methodName));
+						if(o2.getFamilyName() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeEnd"));
+							patchSqlParams.addAll(Arrays.asList(pk, "familyName"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTimeEnd", o2.jsonBlockTimeEnd(), pk));
+							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
 						}
 						break;
-					case "setBlockPricePerMonth":
-						o2.setBlockPricePerMonth(requestJson.getString(methodName));
-						if(o2.getBlockPricePerMonth() == null) {
+					case "setPersonCompleteName":
+						o2.setPersonCompleteName(requestJson.getString(methodName));
+						if(o2.getPersonCompleteName() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteName"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
+							patchSqlParams.addAll(Arrays.asList("personCompleteName", o2.jsonPersonCompleteName(), pk));
 						}
 						break;
-					case "setBlockSunday":
-						o2.setBlockSunday(requestJson.getBoolean(methodName));
-						if(o2.getBlockSunday() == null) {
+					case "setPersonCompleteNamePreferred":
+						o2.setPersonCompleteNamePreferred(requestJson.getString(methodName));
+						if(o2.getPersonCompleteNamePreferred() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockSunday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteNamePreferred"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockSunday", o2.jsonBlockSunday(), pk));
+							patchSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", o2.jsonPersonCompleteNamePreferred(), pk));
 						}
 						break;
-					case "setBlockMonday":
-						o2.setBlockMonday(requestJson.getBoolean(methodName));
-						if(o2.getBlockMonday() == null) {
+					case "setPersonFormalName":
+						o2.setPersonFormalName(requestJson.getString(methodName));
+						if(o2.getPersonFormalName() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockMonday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personFormalName"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockMonday", o2.jsonBlockMonday(), pk));
+							patchSqlParams.addAll(Arrays.asList("personFormalName", o2.jsonPersonFormalName(), pk));
 						}
 						break;
-					case "setBlockTuesday":
-						o2.setBlockTuesday(requestJson.getBoolean(methodName));
-						if(o2.getBlockTuesday() == null) {
+					case "setChildMedicalConditions":
+						o2.setChildMedicalConditions(requestJson.getString(methodName));
+						if(o2.getChildMedicalConditions() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockTuesday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTuesday", o2.jsonBlockTuesday(), pk));
+							patchSqlParams.addAll(Arrays.asList("childMedicalConditions", o2.jsonChildMedicalConditions(), pk));
 						}
 						break;
-					case "setBlockWednesday":
-						o2.setBlockWednesday(requestJson.getBoolean(methodName));
-						if(o2.getBlockWednesday() == null) {
+					case "setChildPreviousSchoolsAttended":
+						o2.setChildPreviousSchoolsAttended(requestJson.getString(methodName));
+						if(o2.getChildPreviousSchoolsAttended() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockWednesday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockWednesday", o2.jsonBlockWednesday(), pk));
+							patchSqlParams.addAll(Arrays.asList("childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended(), pk));
 						}
 						break;
-					case "setBlockThursday":
-						o2.setBlockThursday(requestJson.getBoolean(methodName));
-						if(o2.getBlockThursday() == null) {
+					case "setChildDescription":
+						o2.setChildDescription(requestJson.getString(methodName));
+						if(o2.getChildDescription() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockThursday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "childDescription"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockThursday", o2.jsonBlockThursday(), pk));
+							patchSqlParams.addAll(Arrays.asList("childDescription", o2.jsonChildDescription(), pk));
 						}
 						break;
-					case "setBlockFriday":
-						o2.setBlockFriday(requestJson.getBoolean(methodName));
-						if(o2.getBlockFriday() == null) {
+					case "setChildObjectives":
+						o2.setChildObjectives(requestJson.getString(methodName));
+						if(o2.getChildObjectives() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockFriday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockFriday", o2.jsonBlockFriday(), pk));
+							patchSqlParams.addAll(Arrays.asList("childObjectives", o2.jsonChildObjectives(), pk));
 						}
 						break;
-					case "setBlockSaturday":
-						o2.setBlockSaturday(requestJson.getBoolean(methodName));
-						if(o2.getBlockSaturday() == null) {
+					case "setEnfantVaccinsAJour":
+						o2.setEnfantVaccinsAJour(requestJson.getBoolean(methodName));
+						if(o2.getEnfantVaccinsAJour() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockSaturday"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinsAJour"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.jsonBlockSaturday(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", o2.jsonEnfantVaccinsAJour(), pk));
+						}
+						break;
+					case "setChildPottyTrained":
+						o2.setChildPottyTrained(requestJson.getBoolean(methodName));
+						if(o2.getChildPottyTrained() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("childPottyTrained", o2.jsonChildPottyTrained(), pk));
 						}
 						break;
 				}
@@ -543,7 +557,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolBlock o3 = new SchoolBlock();
+				SchoolChild o3 = new SchoolChild();
 				o3.setSiteRequest_(o.getSiteRequest_());
 				o3.setPk(pk);
 				eventHandler.handle(Future.succeededFuture(o3));
@@ -553,9 +567,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void response200PATCHSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
@@ -566,34 +580,34 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	// GET //
 
 	@Override
-	public void getSchoolBlock(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void getSchoolChild(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest);
-			aSearchSchoolBlock(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest);
+			aSearchSchoolChild(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolBlock> listSchoolBlock = a.result();
-					response200GETSchoolBlock(listSchoolBlock, b -> {
+					SearchList<SchoolChild> listSchoolChild = a.result();
+					response200GETSchoolChild(listSchoolChild, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200GETSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200GETSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
-			SolrDocumentList solrDocuments = listSchoolBlock.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
+			SolrDocumentList solrDocuments = listSchoolChild.getSolrDocumentList();
 
-			JsonObject json = JsonObject.mapFrom(listSchoolBlock.get(0));
+			JsonObject json = JsonObject.mapFrom(listSchoolChild.get(0));
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -603,17 +617,17 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	// DELETE //
 
 	@Override
-	public void deleteSchoolBlock(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteSchoolChild(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest);
-			sqlSchoolBlock(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest);
+			sqlSchoolChild(siteRequest, a -> {
 				if(a.succeeded()) {
-					aSearchSchoolBlock(siteRequest, false, true, null, b -> {
+					aSearchSchoolChild(siteRequest, false, true, null, b -> {
 						if(b.succeeded()) {
-							SearchList<SchoolBlock> listSchoolBlock = b.result();
-							deleteDELETESchoolBlock(siteRequest, c -> {
+							SearchList<SchoolChild> listSchoolChild = b.result();
+							deleteDELETESchoolChild(siteRequest, c -> {
 								if(c.succeeded()) {
-									response200DELETESchoolBlock(siteRequest, d -> {
+									response200DELETESchoolChild(siteRequest, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -625,36 +639,36 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolBlock(siteRequest, eventHandler, f);
+																errorSchoolChild(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolBlock(siteRequest, eventHandler, e);
+														errorSchoolChild(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolBlock(siteRequest, eventHandler, d);
+											errorSchoolChild(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolBlock(siteRequest, eventHandler, c);
+									errorSchoolChild(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void deleteDELETESchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void deleteDELETESchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -662,7 +676,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 			sqlConnection.updateWithParams(
 					SiteContextEnUS.SQL_delete
-					, new JsonArray(Arrays.asList(pk, SchoolBlock.class.getCanonicalName(), pk, pk, pk, pk))
+					, new JsonArray(Arrays.asList(pk, SchoolChild.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
 			-> {
 				eventHandler.handle(Future.succeededFuture());
@@ -672,7 +686,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void response200DELETESchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200DELETESchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
@@ -684,33 +698,33 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	// Search //
 
 	@Override
-	public void searchSchoolBlock(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchSchoolChild(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest);
-			aSearchSchoolBlock(siteRequest, false, true, null, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest);
+			aSearchSchoolChild(siteRequest, false, true, null, a -> {
 				if(a.succeeded()) {
-					SearchList<SchoolBlock> listSchoolBlock = a.result();
-					response200SearchSchoolBlock(listSchoolBlock, b -> {
+					SearchList<SchoolChild> listSchoolChild = a.result();
+					response200SearchSchoolChild(listSchoolChild, b -> {
 						if(b.succeeded()) {
 							eventHandler.handle(Future.succeededFuture(b.result()));
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
-			QueryResponse responseSearch = listSchoolBlock.getQueryResponse();
-			SolrDocumentList solrDocuments = listSchoolBlock.getSolrDocumentList();
+			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolChild.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolChild.getSolrDocumentList();
 			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
 			Long transmissionInMillis = responseSearch.getElapsedTime();
 			Long startNum = responseSearch.getResults().getStart();
@@ -727,9 +741,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			json.put("searchTime", searchTime);
 			json.put("transmissionTime", transmissionTime);
 			JsonArray l = new JsonArray();
-			listSchoolBlock.getList().stream().forEach(o -> {
+			listSchoolChild.getList().stream().forEach(o -> {
 				JsonObject json2 = JsonObject.mapFrom(o);
-				List<String> fls = listSchoolBlock.getFields();
+				List<String> fls = listSchoolChild.getFields();
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					fieldNames.addAll(json2.fieldNames());
@@ -753,22 +767,22 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	// SearchPage //
 
 	@Override
-	public void searchpageSchoolBlockId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		searchpageSchoolBlock(operationRequest, eventHandler);
+	public void searchpageSchoolChildId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		searchpageSchoolChild(operationRequest, eventHandler);
 	}
 
 	@Override
-	public void searchpageSchoolBlock(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void searchpageSchoolChild(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest);
-			sqlSchoolBlock(siteRequest, a -> {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest);
+			sqlSchoolChild(siteRequest, a -> {
 				if(a.succeeded()) {
-					userSchoolBlock(siteRequest, b -> {
+					userSchoolChild(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolBlock(siteRequest, false, true, "/block", c -> {
+							aSearchSchoolChild(siteRequest, false, true, "/child", c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolBlock> listSchoolBlock = c.result();
-									response200SearchPageSchoolBlock(listSchoolBlock, d -> {
+									SearchList<SchoolChild> listSchoolChild = c.result();
+									response200SearchPageSchoolChild(listSchoolChild, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -780,48 +794,48 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 															if(f.succeeded()) {
 																eventHandler.handle(Future.succeededFuture(d.result()));
 															} else {
-																errorSchoolBlock(siteRequest, eventHandler, f);
+																errorSchoolChild(siteRequest, eventHandler, f);
 															}
 														});
 													} else {
-														errorSchoolBlock(siteRequest, eventHandler, e);
+														errorSchoolChild(siteRequest, eventHandler, e);
 													}
 												});
 											}
 										} else {
-											errorSchoolBlock(siteRequest, eventHandler, d);
+											errorSchoolChild(siteRequest, eventHandler, d);
 										}
 									});
 								} else {
-									errorSchoolBlock(siteRequest, eventHandler, c);
+									errorSchoolChild(siteRequest, eventHandler, c);
 								}
 							});
 						} else {
-							errorSchoolBlock(siteRequest, eventHandler, b);
+							errorSchoolChild(siteRequest, eventHandler, b);
 						}
 					});
 				} else {
-					errorSchoolBlock(siteRequest, eventHandler, a);
+					errorSchoolChild(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolBlock(null, eventHandler, Future.failedFuture(e));
+			errorSchoolChild(null, eventHandler, Future.failedFuture(e));
 		}
 	}
 
-	public void response200SearchPageSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200SearchPageSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
+			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
 			Buffer buffer = Buffer.buffer();
-			AllWriter w = AllWriter.create(listSchoolBlock.getSiteRequest_(), buffer);
-			BlockPage page = new BlockPage();
+			AllWriter w = AllWriter.create(listSchoolChild.getSiteRequest_(), buffer);
+			ChildPage page = new ChildPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/block");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/child");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
-			page.setListSchoolBlock(listSchoolBlock);
-			page.initDeepBlockPage(siteRequest);
+			page.setListSchoolChild(listSchoolChild);
+			page.initDeepChildPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -829,7 +843,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public String varIndexedSchoolBlock(String entityVar) {
+	public String varIndexedSchoolChild(String entityVar) {
 		switch(entityVar) {
 			case "pk":
 				return "pk_indexed_long";
@@ -849,76 +863,48 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "ageKey":
-				return "ageKey_indexed_long";
-			case "blockKey":
-				return "blockKey_indexed_long";
+			case "blockKeys":
+				return "blockKeys_indexed_long";
+			case "childKey":
+				return "childKey_indexed_long";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
+			case "familySort":
+				return "familySort_indexed_int";
 			case "schoolSort":
 				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "sessionSort":
-				return "sessionSort_indexed_int";
-			case "ageSort":
-				return "ageSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_date";
-			case "yearEnd":
-				return "yearEnd_indexed_date";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonNameComplete":
-				return "seasonNameComplete_indexed_string";
-			case "ageStartDay":
-				return "ageStartDay_indexed_date";
-			case "sessionEndDay":
-				return "sessionEndDay_indexed_date";
-			case "ageNameComplete":
-				return "ageNameComplete_indexed_string";
-			case "ageStart":
-				return "ageStart_indexed_int";
-			case "ageEnd":
-				return "ageEnd_indexed_int";
-			case "blockTimeStart":
-				return "blockTimeStart_indexed_string";
-			case "blockTimeEnd":
-				return "blockTimeEnd_indexed_string";
-			case "blockPricePerMonth":
-				return "blockPricePerMonth_indexed_double";
-			case "blockSunday":
-				return "blockSunday_indexed_boolean";
-			case "blockMonday":
-				return "blockMonday_indexed_boolean";
-			case "blockTuesday":
-				return "blockTuesday_indexed_boolean";
-			case "blockWednesday":
-				return "blockWednesday_indexed_boolean";
-			case "blockThursday":
-				return "blockThursday_indexed_boolean";
-			case "blockFriday":
-				return "blockFriday_indexed_boolean";
-			case "blockSaturday":
-				return "blockSaturday_indexed_boolean";
+			case "schoolKeys":
+				return "schoolKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageKeys":
+				return "ageKeys_indexed_longs";
+			case "personFirstName":
+				return "personFirstName_indexed_string";
+			case "familyName":
+				return "familyName_indexed_string";
+			case "personCompleteName":
+				return "personCompleteName_indexed_string";
+			case "personCompleteNamePreferred":
+				return "personCompleteNamePreferred_indexed_string";
+			case "personFormalName":
+				return "personFormalName_indexed_string";
+			case "personBirthdate":
+				return "personBirthdate_indexed_date";
+			case "childMedicalConditions":
+				return "childMedicalConditions_indexed_string";
+			case "childPreviousSchoolsAttended":
+				return "childPreviousSchoolsAttended_indexed_string";
+			case "childDescription":
+				return "childDescription_indexed_string";
+			case "childObjectives":
+				return "childObjectives_indexed_string";
+			case "enfantVaccinsAJour":
+				return "enfantVaccinsAJour_indexed_boolean";
+			case "childPottyTrained":
+				return "childPottyTrained_indexed_boolean";
 			case "blocNameComplete":
 				return "blocNameComplete_indexed_string";
 			case "blocId":
@@ -932,7 +918,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public String varSearchSchoolBlock(String entityVar) {
+	public String varSearchSchoolChild(String entityVar) {
 		switch(entityVar) {
 			case "objectSuggest":
 				return "objectSuggest_suggested";
@@ -941,7 +927,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public String varSuggereSchoolBlock(String entityVar) {
+	public String varSuggereSchoolChild(String entityVar) {
 		switch(entityVar) {
 			case "objectSuggest":
 				return "objectSuggest_suggested";
@@ -952,7 +938,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 	// Partagé //
 
-	public void errorSchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
+	public void errorSchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
@@ -989,7 +975,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void sqlSchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlSchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
 
@@ -1017,11 +1003,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForSchoolBlock(SiteContextEnUS siteContext, OperationRequest operationRequest) {
-		return generateSiteRequestEnUSForSchoolBlock(siteContext, operationRequest, null);
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolChild(SiteContextEnUS siteContext, OperationRequest operationRequest) {
+		return generateSiteRequestEnUSForSchoolChild(siteContext, operationRequest, null);
 	}
 
-	public SiteRequestEnUS generateSiteRequestEnUSForSchoolBlock(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
+	public SiteRequestEnUS generateSiteRequestEnUSForSchoolChild(SiteContextEnUS siteContext, OperationRequest operationRequest, JsonObject body) {
 		Vertx vertx = siteContext.getVertx();
 		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 		siteRequest.setJsonObject(body);
@@ -1034,7 +1020,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		return siteRequest;
 	}
 
-	public void userSchoolBlock(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void userSchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
@@ -1134,21 +1120,21 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void aSearchSchoolBlock(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolBlock>>> eventHandler) {
+	public void aSearchSchoolChild(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String classApiUriMethod, Handler<AsyncResult<SearchList<SchoolChild>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolBlock> listSearch = new SearchList<SchoolBlock>();
+			SearchList<SchoolChild> listSearch = new SearchList<SchoolChild>();
 			listSearch.setPopulate(populate);
 			listSearch.setStore(store);
 			listSearch.setQuery("*:*");
-			listSearch.setC(SchoolBlock.class);
+			listSearch.setC(SchoolChild.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.bloc.SchoolBlock"));
+			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.child.SchoolChild"));
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1176,7 +1162,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolBlock(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolChild(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1190,13 +1176,13 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolBlock(entityVar);
+								varIndexed = varIndexedSchoolChild(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolBlock(entityVar);
+								varIndexed = varIndexedSchoolChild(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":
@@ -1220,7 +1206,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void defineSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void defineSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1248,7 +1234,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void attributeSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void attributeSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
@@ -1281,7 +1267,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void indexSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void indexSchoolChild(SchoolChild o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			o.initDeepForClass(siteRequest);
