@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                                
+package org.computate.scolaire.frFR.annee;                       
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -55,7 +55,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: Ecole.anneeCles
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
@@ -93,7 +93,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: SaisonScolaire.anneeCle
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCelulle: 2
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: saisons
@@ -163,7 +163,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -171,7 +171,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: ecole
 	 * r.enUS: school
 	 */  
@@ -187,7 +187,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
 	 */                   
@@ -200,7 +200,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * HtmlCelulle: 2
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: anneeDebut
@@ -213,7 +213,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: yearNameShort
+	 * Var.enUS: yearShortName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: anneeDebut
@@ -242,10 +242,11 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: yearNameComplete
+	 * Var.enUS: yearCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 1
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 * r: anneeFin
@@ -263,7 +264,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r: "année"
 	 * r.enUS: "year"
 	 * r: ecoleNomComplet
-	 * r.enUS: schoolNameComplete
+	 * r.enUS: schoolCompleteName
 	 */                  
 	protected void _anneeNomComplet(Couverture<String> c) {
 		String o = "année";
@@ -288,13 +289,13 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCelulle: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: anneeNomComplet
-	 * r.enUS: yearNameComplete
+	 * r.enUS: yearCompleteName
 	 */            
 	protected void _anneeId(Couverture<String> c) {
 		if(anneeNomComplet != null) {
@@ -339,7 +340,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: anneeNomComplet
-	 * r.enUS: yearNameComplete
+	 * r.enUS: yearCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(anneeNomComplet);

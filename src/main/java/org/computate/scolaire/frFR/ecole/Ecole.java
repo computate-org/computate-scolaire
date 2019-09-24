@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;                  
+package org.computate.scolaire.frFR.ecole;             
 
 import java.text.Normalizer;
 import java.util.List;
@@ -128,7 +128,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.ecoleCle
 	 * HtmlLigne: 5
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: années
@@ -171,7 +171,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: nom de l'école
 	 * NomAffichage.enUS: name of the school
 	 * Description.frFR: Nom de l'école. 
@@ -187,7 +187,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: numéro de téléphone
 	 * NomAffichage.enUS: phone number
 	 * Description.frFR: Numéro de téléphone de l'école. 
@@ -203,7 +203,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * NomAffichage.enUS: administrator of the school
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
@@ -219,7 +219,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * HtmlCellule: 3
 	 * NomAffichage.enUS: location
 	 * NomAffichage.frFR: l'emplacement
 	 * Description.frFR: 
@@ -235,7 +235,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Multiligne: true
 	 * NomAffichage.frFR: addresse
 	 * NomAffichage.enUS: address
@@ -274,7 +274,7 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameShort
+	 * Var.enUS: schoolShortName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -295,13 +295,12 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
+	 * HtmlColonne: 1
 	 * r: ecoleNom
 	 * r.enUS: schoolName
 	 * VarTitre: true
@@ -309,7 +308,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: schoolLocation
 	 * r: "%s à %s"
 	 * r.enUS: "%s at %s"
-	 */    
+	 */        
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(ecoleEmplacement != null)
 			c.o(String.format("%s à %s", ecoleNom, ecoleEmplacement));
@@ -324,7 +323,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID

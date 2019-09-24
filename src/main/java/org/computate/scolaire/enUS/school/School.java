@@ -55,14 +55,14 @@ public class School extends SchoolGen<Cluster> {
 		c.o(schoolName);
 	}
 
-	protected void _schoolNameShort(Wrap<String> c) {
+	protected void _schoolShortName(Wrap<String> c) {
 		if(schoolLocation != null)
 			c.o(schoolLocation);
 		else 
 			c.o(schoolName);
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(schoolLocation != null)
 			c.o(String.format("%s at %s", schoolName, schoolLocation));
 		else 

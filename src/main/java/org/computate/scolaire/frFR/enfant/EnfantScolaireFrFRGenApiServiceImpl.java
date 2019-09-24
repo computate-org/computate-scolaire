@@ -190,10 +190,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "blocCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("blocCles", jsonObject.getLong(entiteVar), "blocCles", pk));
-						break;
 					case "personnePrenom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personnePrenom", jsonObject.getString(entiteVar), pk));
@@ -429,16 +425,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
-						break;
-					case "setBlocCles":
-						o2.setBlocCles(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "blocCles", o2.getBlocCles()));
-						break;
-					case "removeBlocCles":
-						o2.setBlocCles(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "blocCles", o2.getBlocCles()));
 						break;
 					case "setPersonnePrenom":
 						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
@@ -863,8 +849,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "blocCles":
-				return "blocCles_indexed_long";
 			case "enfantCle":
 				return "enfantCle_indexed_long";
 			case "inscriptionCles":
@@ -875,6 +859,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "enfantTri_indexed_int";
 			case "ecoleCles":
 				return "ecoleCles_indexed_longs";
+			case "anneeCles":
+				return "anneeCles_indexed_longs";
 			case "saisonCles":
 				return "saisonCles_indexed_longs";
 			case "sessionCles":
@@ -905,10 +891,10 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "enfantVaccinsAJour_indexed_boolean";
 			case "enfantPropre":
 				return "enfantPropre_indexed_boolean";
-			case "blocNomComplet":
-				return "blocNomComplet_indexed_string";
-			case "blocId":
-				return "blocId_indexed_string";
+			case "enfantNomComplet":
+				return "enfantNomComplet_indexed_string";
+			case "enfantId":
+				return "enfantId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
@@ -1143,7 +1129,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR blocId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR enfantId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

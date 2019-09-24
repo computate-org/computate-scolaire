@@ -17,7 +17,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
@@ -35,7 +35,7 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 
 	/**	<br/>L'entité « listSchoolEnrollment »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listSchoolEnrollment">Trouver l'entité listSchoolEnrollment dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolEnrollment">Trouver l'entité listSchoolEnrollment dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -47,15 +47,15 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 
 	public void setListSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment) {
 		this.listSchoolEnrollment = listSchoolEnrollment;
-		this.listSchoolEnrollmentWrap.dejaInitialise = true;
+		this.listSchoolEnrollmentWrap.alreadyInitialized = true;
 	}
 	protected EnrollmentGenPage listSchoolEnrollmentInit() {
-		if(!listSchoolEnrollmentWrap.dejaInitialise) {
+		if(!listSchoolEnrollmentWrap.alreadyInitialized) {
 			_listSchoolEnrollment(listSchoolEnrollmentWrap);
 			if(listSchoolEnrollment == null)
 				setListSchoolEnrollment(listSchoolEnrollmentWrap.o);
 		}
-		listSchoolEnrollmentWrap.dejaInitialise(true);
+		listSchoolEnrollmentWrap.alreadyInitialized(true);
 		return (EnrollmentGenPage)this;
 	}
 
@@ -72,7 +72,7 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 
 	/**	<br/>L'entité « schoolEnrollment »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:schoolEnrollment">Trouver l'entité schoolEnrollment dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEnrollment">Trouver l'entité schoolEnrollment dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -84,35 +84,35 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 
 	public void setSchoolEnrollment(SchoolEnrollment schoolEnrollment) {
 		this.schoolEnrollment = schoolEnrollment;
-		this.schoolEnrollmentWrap.dejaInitialise = true;
+		this.schoolEnrollmentWrap.alreadyInitialized = true;
 	}
 	protected EnrollmentGenPage schoolEnrollmentInit() {
-		if(!schoolEnrollmentWrap.dejaInitialise) {
+		if(!schoolEnrollmentWrap.alreadyInitialized) {
 			_schoolEnrollment(schoolEnrollmentWrap);
 			if(schoolEnrollment == null)
 				setSchoolEnrollment(schoolEnrollmentWrap.o);
 		}
-		schoolEnrollmentWrap.dejaInitialise(true);
+		schoolEnrollmentWrap.alreadyInitialized(true);
 		return (EnrollmentGenPage)this;
 	}
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseEnrollmentGenPage = false;
+	protected boolean alreadyInitializedEnrollmentGenPage = false;
 
-	public EnrollmentGenPage initLoinEnrollmentGenPage(SiteRequestEnUS requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseEnrollmentGenPage) {
-			dejaInitialiseEnrollmentGenPage = true;
-			initLoinEnrollmentGenPage();
+	public EnrollmentGenPage initDeepEnrollmentGenPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedEnrollmentGenPage) {
+			alreadyInitializedEnrollmentGenPage = true;
+			initDeepEnrollmentGenPage();
 		}
 		return (EnrollmentGenPage)this;
 	}
 
-	public void initLoinEnrollmentGenPage() {
-		super.initLoinClusterPage(requeteSite_);
+	public void initDeepEnrollmentGenPage() {
+		super.initDeepClusterPage(siteRequest_);
 		initEnrollmentGenPage();
 	}
 
@@ -121,40 +121,40 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 		schoolEnrollmentInit();
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinEnrollmentGenPage(requeteSite_);
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepEnrollmentGenPage(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteEnrollmentGenPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteClusterPage(requeteSite_);
+	public void siteRequestEnrollmentGenPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterPage(siteRequest_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteEnrollmentGenPage(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestEnrollmentGenPage(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirEnrollmentGenPage(v);
+				o = obtainEnrollmentGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirEnrollmentGenPage(String var) {
+	public Object obtainEnrollmentGenPage(String var) {
 		EnrollmentGenPage oEnrollmentGenPage = (EnrollmentGenPage)this;
 		switch(var) {
 			case "listSchoolEnrollment":
@@ -162,58 +162,58 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 			case "schoolEnrollment":
 				return oEnrollmentGenPage.schoolEnrollment;
 			default:
-				return super.obtenirClusterPage(var);
+				return super.obtainClusterPage(var);
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	@Override public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerEnrollmentGenPage(v, val);
+				o = attributeEnrollmentGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerEnrollmentGenPage(String var, Object val) {
+	public Object attributeEnrollmentGenPage(String var, Object val) {
 		EnrollmentGenPage oEnrollmentGenPage = (EnrollmentGenPage)this;
 		switch(var) {
 			default:
-				return super.attribuerClusterPage(var, val);
+				return super.attributeClusterPage(var, val);
 		}
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	@Override public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirEnrollmentGenPage(v, val);
+					o = defineEnrollmentGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirEnrollmentGenPage(String var, String val) {
+	public Object defineEnrollmentGenPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirClusterPage(var, val);
+				return super.defineClusterPage(var, val);
 		}
 	}
 

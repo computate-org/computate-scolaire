@@ -47,9 +47,9 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(school_ != null)
-			c.o((String)school_.getSchoolNameComplete());
+			c.o((String)school_.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {}
@@ -59,7 +59,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 			c.o(yearStart.plusYears(1));
 	}
 
-	protected void _yearNameShort(Wrap<String> c) {
+	protected void _yearShortName(Wrap<String> c) {
 		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
@@ -72,7 +72,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _yearNameComplete(Wrap<String> c) {
+	protected void _yearCompleteName(Wrap<String> c) {
 		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
@@ -82,15 +82,15 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		else if(yearEnd != null)
 			o = String.format("%d school year", yearEnd.getYear());
 
-		if(schoolNameComplete != null)
-			o += String.format(" at %s", schoolNameComplete);
+		if(schoolCompleteName != null)
+			o += String.format(" at %s", schoolCompleteName);
 
 		c.o(o);
 	}
 
 	protected void _yearId(Wrap<String> c) {
-		if(yearNameComplete != null) {
-			String s = Normalizer.normalize(yearNameComplete, Normalizer.Form.NFD);
+		if(yearCompleteName != null) {
+			String s = Normalizer.normalize(yearCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -111,7 +111,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(yearNameComplete);
+		c.o(yearCompleteName);
 	}
 
 	@Override()

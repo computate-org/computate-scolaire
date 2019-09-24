@@ -15,123 +15,123 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.school.SchoolPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseSchoolPage = false;
+	protected boolean alreadyInitializedSchoolPage = false;
 
-	public SchoolPage initLoinSchoolPage(SiteRequestEnUS requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseSchoolPage) {
-			dejaInitialiseSchoolPage = true;
-			initLoinSchoolPage();
+	public SchoolPage initDeepSchoolPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedSchoolPage) {
+			alreadyInitializedSchoolPage = true;
+			initDeepSchoolPage();
 		}
 		return (SchoolPage)this;
 	}
 
-	public void initLoinSchoolPage() {
-		super.initLoinSchoolGenPage(requeteSite_);
+	public void initDeepSchoolPage() {
+		super.initDeepSchoolGenPage(siteRequest_);
 		initSchoolPage();
 	}
 
 	public void initSchoolPage() {
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinSchoolPage(requeteSite_);
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepSchoolPage(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteSchoolPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteSchoolGenPage(requeteSite_);
+	public void siteRequestSchoolPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestSchoolGenPage(siteRequest_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteSchoolPage(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestSchoolPage(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirSchoolPage(v);
+				o = obtainSchoolPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirSchoolPage(String var) {
+	public Object obtainSchoolPage(String var) {
 		SchoolPage oSchoolPage = (SchoolPage)this;
 		switch(var) {
 			default:
-				return super.obtenirSchoolGenPage(var);
+				return super.obtainSchoolGenPage(var);
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	@Override public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerSchoolPage(v, val);
+				o = attributeSchoolPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerSchoolPage(String var, Object val) {
+	public Object attributeSchoolPage(String var, Object val) {
 		SchoolPage oSchoolPage = (SchoolPage)this;
 		switch(var) {
 			default:
-				return super.attribuerSchoolGenPage(var, val);
+				return super.attributeSchoolGenPage(var, val);
 		}
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	@Override public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirSchoolPage(v, val);
+					o = defineSchoolPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirSchoolPage(String var, String val) {
+	public Object defineSchoolPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirSchoolGenPage(var, val);
+				return super.defineSchoolGenPage(var, val);
 		}
 	}
 

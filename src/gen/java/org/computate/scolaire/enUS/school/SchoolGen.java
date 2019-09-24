@@ -1863,73 +1863,73 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
-	// schoolNameShort //
+	// schoolShortName //
 	/////////////////////
 
-	/**	L'entité « schoolNameShort »
+	/**	L'entité « schoolShortName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String schoolNameShort;
+	protected String schoolShortName;
 	@JsonIgnore
-	public Wrap<String> schoolNameShortWrap = new Wrap<String>().p(this).c(String.class).var("schoolNameShort").o(schoolNameShort);
+	public Wrap<String> schoolShortNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolShortName").o(schoolShortName);
 
-	/**	<br/>L'entité « schoolNameShort »
+	/**	<br/>L'entité « schoolShortName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNameShort">Trouver l'entité schoolNameShort dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolShortName">Trouver l'entité schoolShortName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _schoolNameShort(Wrap<String> c);
+	protected abstract void _schoolShortName(Wrap<String> c);
 
-	public String getSchoolNameShort() {
-		return schoolNameShort;
+	public String getSchoolShortName() {
+		return schoolShortName;
 	}
 
-	public void setSchoolNameShort(String schoolNameShort) {
-		this.schoolNameShort = schoolNameShort;
-		this.schoolNameShortWrap.alreadyInitialized = true;
+	public void setSchoolShortName(String schoolShortName) {
+		this.schoolShortName = schoolShortName;
+		this.schoolShortNameWrap.alreadyInitialized = true;
 	}
-	protected School schoolNameShortInit() {
-		if(!schoolNameShortWrap.alreadyInitialized) {
-			_schoolNameShort(schoolNameShortWrap);
-			if(schoolNameShort == null)
-				setSchoolNameShort(schoolNameShortWrap.o);
+	protected School schoolShortNameInit() {
+		if(!schoolShortNameWrap.alreadyInitialized) {
+			_schoolShortName(schoolShortNameWrap);
+			if(schoolShortName == null)
+				setSchoolShortName(schoolShortNameWrap.o);
 		}
-		schoolNameShortWrap.alreadyInitialized(true);
+		schoolShortNameWrap.alreadyInitialized(true);
 		return (School)this;
 	}
 
-	public String solrSchoolNameShort() {
-		return schoolNameShort;
+	public String solrSchoolShortName() {
+		return schoolShortName;
 	}
 
-	public String strSchoolNameShort() {
-		return schoolNameShort == null ? "" : schoolNameShort;
+	public String strSchoolShortName() {
+		return schoolShortName == null ? "" : schoolShortName;
 	}
 
-	public String jsonSchoolNameShort() {
-		return schoolNameShort == null ? "" : schoolNameShort;
+	public String jsonSchoolShortName() {
+		return schoolShortName == null ? "" : schoolShortName;
 	}
 
-	public String nomAffichageSchoolNameShort() {
+	public String nomAffichageSchoolShortName() {
 		return "r: ecoleNom";
 	}
 
-	public String htmTooltipSchoolNameShort() {
+	public String htmTooltipSchoolShortName() {
 		return null;
 	}
 
-	public String htmSchoolNameShort() {
-		return schoolNameShort == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolNameShort());
+	public String htmSchoolShortName() {
+		return schoolShortName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolShortName());
 	}
 
-	public void htmSchoolNameShort(AllWriter r, Boolean patchRights) {
+	public void htmSchoolShortName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "SchoolNameShort\">");
+			r.s("<div id=\"patchSchool", strPk(), "SchoolShortName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "SchoolNameShort() {");
+				r.l("		function patchSchool", strPk(), "SchoolShortName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1942,96 +1942,96 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSchoolNameShort\": this.value },");
+				r.l("				data: {\"setSchoolShortName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolNameShort()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolShortName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"schoolNameShort\"");
-							r.s(" value=\"", htmSchoolNameShort(), "\");");
+							r.s(" name=\"schoolShortName\"");
+							r.s(" value=\"", htmSchoolShortName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSchoolNameShort());
+				r.s(htmSchoolShortName());
 			}
 			r.l("</div>");
 		}
 	}
 
 	////////////////////////
-	// schoolNameComplete //
+	// schoolCompleteName //
 	////////////////////////
 
-	/**	L'entité « schoolNameComplete »
+	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String schoolNameComplete;
+	protected String schoolCompleteName;
 	@JsonIgnore
-	public Wrap<String> schoolNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("schoolNameComplete").o(schoolNameComplete);
+	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
 
-	/**	<br/>L'entité « schoolNameComplete »
+	/**	<br/>L'entité « schoolCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNameComplete">Trouver l'entité schoolNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _schoolNameComplete(Wrap<String> c);
+	protected abstract void _schoolCompleteName(Wrap<String> c);
 
-	public String getSchoolNameComplete() {
-		return schoolNameComplete;
+	public String getSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public void setSchoolNameComplete(String schoolNameComplete) {
-		this.schoolNameComplete = schoolNameComplete;
-		this.schoolNameCompleteWrap.alreadyInitialized = true;
+	public void setSchoolCompleteName(String schoolCompleteName) {
+		this.schoolCompleteName = schoolCompleteName;
+		this.schoolCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected School schoolNameCompleteInit() {
-		if(!schoolNameCompleteWrap.alreadyInitialized) {
-			_schoolNameComplete(schoolNameCompleteWrap);
-			if(schoolNameComplete == null)
-				setSchoolNameComplete(schoolNameCompleteWrap.o);
+	protected School schoolCompleteNameInit() {
+		if(!schoolCompleteNameWrap.alreadyInitialized) {
+			_schoolCompleteName(schoolCompleteNameWrap);
+			if(schoolCompleteName == null)
+				setSchoolCompleteName(schoolCompleteNameWrap.o);
 		}
-		schoolNameCompleteWrap.alreadyInitialized(true);
+		schoolCompleteNameWrap.alreadyInitialized(true);
 		return (School)this;
 	}
 
-	public String solrSchoolNameComplete() {
-		return schoolNameComplete;
+	public String solrSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public String strSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String strSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String jsonSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String jsonSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String nomAffichageSchoolNameComplete() {
-		return "r: ecoleNom";
+	public String nomAffichageSchoolCompleteName() {
+		return "name";
 	}
 
-	public String htmTooltipSchoolNameComplete() {
+	public String htmTooltipSchoolCompleteName() {
 		return null;
 	}
 
-	public String htmSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolNameComplete());
+	public String htmSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolCompleteName());
 	}
 
-	public void htmSchoolNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmSchoolCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "SchoolNameComplete\">");
+			r.s("<div id=\"patchSchool", strPk(), "SchoolCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "SchoolNameComplete() {");
+				r.l("		function patchSchool", strPk(), "SchoolCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2044,23 +2044,23 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSchoolNameComplete\": this.value },");
+				r.l("				data: {\"setSchoolCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"schoolNameComplete\"");
-							r.s(" value=\"", htmSchoolNameComplete(), "\");");
+							r.s(" name=\"schoolCompleteName\"");
+							r.s(" value=\"", htmSchoolCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSchoolNameComplete());
+				r.s(htmSchoolCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -2409,8 +2409,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolAddressInit();
 		objectSuggestWeightInit();
 		objectSuggestInit();
-		schoolNameShortInit();
-		schoolNameCompleteInit();
+		schoolShortNameInit();
+		schoolCompleteNameInit();
 		schoolIdInit();
 		pageUrlInit();
 		pageH1Init();
@@ -2484,10 +2484,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.objectSuggestWeight;
 			case "objectSuggest":
 				return oSchool.objectSuggest;
-			case "schoolNameShort":
-				return oSchool.schoolNameShort;
-			case "schoolNameComplete":
-				return oSchool.schoolNameComplete;
+			case "schoolShortName":
+				return oSchool.schoolShortName;
+			case "schoolCompleteName":
+				return oSchool.schoolCompleteName;
 			case "schoolId":
 				return oSchool.schoolId;
 			case "pageUrl":
@@ -2678,16 +2678,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				oSchool.setObjectSuggest(objectSuggest);
 			}
 
-			if(savesSchool.contains("schoolNameShort")) {
-				String schoolNameShort = (String)solrDocument.get("schoolNameShort_stored_string");
-				if(schoolNameShort != null)
-					oSchool.setSchoolNameShort(schoolNameShort);
+			if(savesSchool.contains("schoolShortName")) {
+				String schoolShortName = (String)solrDocument.get("schoolShortName_stored_string");
+				if(schoolShortName != null)
+					oSchool.setSchoolShortName(schoolShortName);
 			}
 
-			if(savesSchool.contains("schoolNameComplete")) {
-				String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-				if(schoolNameComplete != null)
-					oSchool.setSchoolNameComplete(schoolNameComplete);
+			if(savesSchool.contains("schoolCompleteName")) {
+				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+				if(schoolCompleteName != null)
+					oSchool.setSchoolCompleteName(schoolCompleteName);
 			}
 
 			if(savesSchool.contains("schoolId")) {
@@ -2855,13 +2855,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("objectSuggest_suggested", objectSuggest);
 			document.addField("objectSuggest_indexed_string", objectSuggest);
 		}
-		if(schoolNameShort != null) {
-			document.addField("schoolNameShort_indexed_string", schoolNameShort);
-			document.addField("schoolNameShort_stored_string", schoolNameShort);
+		if(schoolShortName != null) {
+			document.addField("schoolShortName_indexed_string", schoolShortName);
+			document.addField("schoolShortName_stored_string", schoolShortName);
 		}
-		if(schoolNameComplete != null) {
-			document.addField("schoolNameComplete_indexed_string", schoolNameComplete);
-			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
+		if(schoolCompleteName != null) {
+			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
+			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
 		if(schoolId != null) {
 			document.addField("schoolId_indexed_string", schoolId);
@@ -2961,13 +2961,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
 		oSchool.setObjectSuggest(objectSuggest);
 
-		String schoolNameShort = (String)solrDocument.get("schoolNameShort_stored_string");
-		if(schoolNameShort != null)
-			oSchool.setSchoolNameShort(schoolNameShort);
+		String schoolShortName = (String)solrDocument.get("schoolShortName_stored_string");
+		if(schoolShortName != null)
+			oSchool.setSchoolShortName(schoolShortName);
 
-		String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-		if(schoolNameComplete != null)
-			oSchool.setSchoolNameComplete(schoolNameComplete);
+		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+		if(schoolCompleteName != null)
+			oSchool.setSchoolCompleteName(schoolCompleteName);
 
 		String schoolId = (String)solrDocument.get("schoolId_stored_string");
 		if(schoolId != null)

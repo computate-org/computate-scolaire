@@ -1371,73 +1371,73 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	////////////////////////
-	// schoolNameComplete //
+	// schoolCompleteName //
 	////////////////////////
 
-	/**	L'entité « schoolNameComplete »
+	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String schoolNameComplete;
+	protected String schoolCompleteName;
 	@JsonIgnore
-	public Wrap<String> schoolNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("schoolNameComplete").o(schoolNameComplete);
+	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
 
-	/**	<br/>L'entité « schoolNameComplete »
+	/**	<br/>L'entité « schoolCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNameComplete">Trouver l'entité schoolNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _schoolNameComplete(Wrap<String> c);
+	protected abstract void _schoolCompleteName(Wrap<String> c);
 
-	public String getSchoolNameComplete() {
-		return schoolNameComplete;
+	public String getSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public void setSchoolNameComplete(String schoolNameComplete) {
-		this.schoolNameComplete = schoolNameComplete;
-		this.schoolNameCompleteWrap.alreadyInitialized = true;
+	public void setSchoolCompleteName(String schoolCompleteName) {
+		this.schoolCompleteName = schoolCompleteName;
+		this.schoolCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolSession schoolNameCompleteInit() {
-		if(!schoolNameCompleteWrap.alreadyInitialized) {
-			_schoolNameComplete(schoolNameCompleteWrap);
-			if(schoolNameComplete == null)
-				setSchoolNameComplete(schoolNameCompleteWrap.o);
+	protected SchoolSession schoolCompleteNameInit() {
+		if(!schoolCompleteNameWrap.alreadyInitialized) {
+			_schoolCompleteName(schoolCompleteNameWrap);
+			if(schoolCompleteName == null)
+				setSchoolCompleteName(schoolCompleteNameWrap.o);
 		}
-		schoolNameCompleteWrap.alreadyInitialized(true);
+		schoolCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
-	public String solrSchoolNameComplete() {
-		return schoolNameComplete;
+	public String solrSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public String strSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String strSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String jsonSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String jsonSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String nomAffichageSchoolNameComplete() {
+	public String nomAffichageSchoolCompleteName() {
 		return "r: EcoleNomComplet";
 	}
 
-	public String htmTooltipSchoolNameComplete() {
+	public String htmTooltipSchoolCompleteName() {
 		return null;
 	}
 
-	public String htmSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolNameComplete());
+	public String htmSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolCompleteName());
 	}
 
-	public void htmSchoolNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmSchoolCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSession", strPk(), "SchoolNameComplete\">");
+			r.s("<div id=\"patchSchoolSession", strPk(), "SchoolCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSession", strPk(), "SchoolNameComplete() {");
+				r.l("		function patchSchoolSession", strPk(), "SchoolCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1450,23 +1450,23 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSchoolNameComplete\": this.value },");
+				r.l("				data: {\"setSchoolCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"schoolNameComplete\"");
-							r.s(" value=\"", htmSchoolNameComplete(), "\");");
+							r.s(" name=\"schoolCompleteName\"");
+							r.s(" value=\"", htmSchoolCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSchoolNameComplete());
+				r.s(htmSchoolCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -2160,73 +2160,73 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	////////////////////////
-	// seasonNameComplete //
+	// seasonCompleteName //
 	////////////////////////
 
-	/**	L'entité « seasonNameComplete »
+	/**	L'entité « seasonCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String seasonNameComplete;
+	protected String seasonCompleteName;
 	@JsonIgnore
-	public Wrap<String> seasonNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("seasonNameComplete").o(seasonNameComplete);
+	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);
 
-	/**	<br/>L'entité « seasonNameComplete »
+	/**	<br/>L'entité « seasonCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonNameComplete">Trouver l'entité seasonNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonCompleteName">Trouver l'entité seasonCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _seasonNameComplete(Wrap<String> c);
+	protected abstract void _seasonCompleteName(Wrap<String> c);
 
-	public String getSeasonNameComplete() {
-		return seasonNameComplete;
+	public String getSeasonCompleteName() {
+		return seasonCompleteName;
 	}
 
-	public void setSeasonNameComplete(String seasonNameComplete) {
-		this.seasonNameComplete = seasonNameComplete;
-		this.seasonNameCompleteWrap.alreadyInitialized = true;
+	public void setSeasonCompleteName(String seasonCompleteName) {
+		this.seasonCompleteName = seasonCompleteName;
+		this.seasonCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolSession seasonNameCompleteInit() {
-		if(!seasonNameCompleteWrap.alreadyInitialized) {
-			_seasonNameComplete(seasonNameCompleteWrap);
-			if(seasonNameComplete == null)
-				setSeasonNameComplete(seasonNameCompleteWrap.o);
+	protected SchoolSession seasonCompleteNameInit() {
+		if(!seasonCompleteNameWrap.alreadyInitialized) {
+			_seasonCompleteName(seasonCompleteNameWrap);
+			if(seasonCompleteName == null)
+				setSeasonCompleteName(seasonCompleteNameWrap.o);
 		}
-		seasonNameCompleteWrap.alreadyInitialized(true);
+		seasonCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
-	public String solrSeasonNameComplete() {
-		return seasonNameComplete;
+	public String solrSeasonCompleteName() {
+		return seasonCompleteName;
 	}
 
-	public String strSeasonNameComplete() {
-		return seasonNameComplete == null ? "" : seasonNameComplete;
+	public String strSeasonCompleteName() {
+		return seasonCompleteName == null ? "" : seasonCompleteName;
 	}
 
-	public String jsonSeasonNameComplete() {
-		return seasonNameComplete == null ? "" : seasonNameComplete;
+	public String jsonSeasonCompleteName() {
+		return seasonCompleteName == null ? "" : seasonCompleteName;
 	}
 
-	public String nomAffichageSeasonNameComplete() {
+	public String nomAffichageSeasonCompleteName() {
 		return null;
 	}
 
-	public String htmTooltipSeasonNameComplete() {
+	public String htmTooltipSeasonCompleteName() {
 		return null;
 	}
 
-	public String htmSeasonNameComplete() {
-		return seasonNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonNameComplete());
+	public String htmSeasonCompleteName() {
+		return seasonCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonCompleteName());
 	}
 
-	public void htmSeasonNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmSeasonCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSession", strPk(), "SeasonNameComplete\">");
+			r.s("<div id=\"patchSchoolSession", strPk(), "SeasonCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSession", strPk(), "SeasonNameComplete() {");
+				r.l("		function patchSchoolSession", strPk(), "SeasonCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2239,23 +2239,23 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSeasonNameComplete\": this.value },");
+				r.l("				data: {\"setSeasonCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"seasonNameComplete\"");
-							r.s(" value=\"", htmSeasonNameComplete(), "\");");
+							r.s(" name=\"seasonCompleteName\"");
+							r.s(" value=\"", htmSeasonCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSeasonNameComplete());
+				r.s(htmSeasonCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -2616,73 +2616,73 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	/////////////////////////
-	// sessionNameComplete //
+	// sessionCompleteName //
 	/////////////////////////
 
-	/**	L'entité « sessionNameComplete »
+	/**	L'entité « sessionCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String sessionNameComplete;
+	protected String sessionCompleteName;
 	@JsonIgnore
-	public Wrap<String> sessionNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("sessionNameComplete").o(sessionNameComplete);
+	public Wrap<String> sessionCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("sessionCompleteName").o(sessionCompleteName);
 
-	/**	<br/>L'entité « sessionNameComplete »
+	/**	<br/>L'entité « sessionCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionNameComplete">Trouver l'entité sessionNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionCompleteName">Trouver l'entité sessionCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionNameComplete(Wrap<String> c);
+	protected abstract void _sessionCompleteName(Wrap<String> c);
 
-	public String getSessionNameComplete() {
-		return sessionNameComplete;
+	public String getSessionCompleteName() {
+		return sessionCompleteName;
 	}
 
-	public void setSessionNameComplete(String sessionNameComplete) {
-		this.sessionNameComplete = sessionNameComplete;
-		this.sessionNameCompleteWrap.alreadyInitialized = true;
+	public void setSessionCompleteName(String sessionCompleteName) {
+		this.sessionCompleteName = sessionCompleteName;
+		this.sessionCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolSession sessionNameCompleteInit() {
-		if(!sessionNameCompleteWrap.alreadyInitialized) {
-			_sessionNameComplete(sessionNameCompleteWrap);
-			if(sessionNameComplete == null)
-				setSessionNameComplete(sessionNameCompleteWrap.o);
+	protected SchoolSession sessionCompleteNameInit() {
+		if(!sessionCompleteNameWrap.alreadyInitialized) {
+			_sessionCompleteName(sessionCompleteNameWrap);
+			if(sessionCompleteName == null)
+				setSessionCompleteName(sessionCompleteNameWrap.o);
 		}
-		sessionNameCompleteWrap.alreadyInitialized(true);
+		sessionCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
-	public String solrSessionNameComplete() {
-		return sessionNameComplete;
+	public String solrSessionCompleteName() {
+		return sessionCompleteName;
 	}
 
-	public String strSessionNameComplete() {
-		return sessionNameComplete == null ? "" : sessionNameComplete;
+	public String strSessionCompleteName() {
+		return sessionCompleteName == null ? "" : sessionCompleteName;
 	}
 
-	public String jsonSessionNameComplete() {
-		return sessionNameComplete == null ? "" : sessionNameComplete;
+	public String jsonSessionCompleteName() {
+		return sessionCompleteName == null ? "" : sessionCompleteName;
 	}
 
-	public String nomAffichageSessionNameComplete() {
+	public String nomAffichageSessionCompleteName() {
 		return null;
 	}
 
-	public String htmTooltipSessionNameComplete() {
+	public String htmTooltipSessionCompleteName() {
 		return null;
 	}
 
-	public String htmSessionNameComplete() {
-		return sessionNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strSessionNameComplete());
+	public String htmSessionCompleteName() {
+		return sessionCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCompleteName());
 	}
 
-	public void htmSessionNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmSessionCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSession", strPk(), "SessionNameComplete\">");
+			r.s("<div id=\"patchSchoolSession", strPk(), "SessionCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSession", strPk(), "SessionNameComplete() {");
+				r.l("		function patchSchoolSession", strPk(), "SessionCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2695,23 +2695,23 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSessionNameComplete\": this.value },");
+				r.l("				data: {\"setSessionCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"sessionNameComplete\"");
-							r.s(" value=\"", htmSessionNameComplete(), "\");");
+							r.s(" name=\"sessionCompleteName\"");
+							r.s(" value=\"", htmSessionCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSessionNameComplete());
+				r.s(htmSessionCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -3057,18 +3057,18 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		sessionSortInit();
 		seasonSearchInit();
 		season_Init();
-		schoolNameCompleteInit();
+		schoolCompleteNameInit();
 		yearStartInit();
 		yearEndInit();
 		seasonStartDayInit();
 		seasonSummerInit();
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
-		seasonNameCompleteInit();
+		seasonCompleteNameInit();
 		seasonEndInit();
 		sessionStartDayInit();
 		sessionEndDayInit();
-		sessionNameCompleteInit();
+		sessionCompleteNameInit();
 		sessionIdInit();
 		pageUrlInit();
 		objectSuggestInit();
@@ -3138,8 +3138,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.seasonSearch;
 			case "season_":
 				return oSchoolSession.season_;
-			case "schoolNameComplete":
-				return oSchoolSession.schoolNameComplete;
+			case "schoolCompleteName":
+				return oSchoolSession.schoolCompleteName;
 			case "yearStart":
 				return oSchoolSession.yearStart;
 			case "yearEnd":
@@ -3152,16 +3152,16 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.seasonWinter;
 			case "seasonEnrollmentFee":
 				return oSchoolSession.seasonEnrollmentFee;
-			case "seasonNameComplete":
-				return oSchoolSession.seasonNameComplete;
+			case "seasonCompleteName":
+				return oSchoolSession.seasonCompleteName;
 			case "seasonEnd":
 				return oSchoolSession.seasonEnd;
 			case "sessionStartDay":
 				return oSchoolSession.sessionStartDay;
 			case "sessionEndDay":
 				return oSchoolSession.sessionEndDay;
-			case "sessionNameComplete":
-				return oSchoolSession.sessionNameComplete;
+			case "sessionCompleteName":
+				return oSchoolSession.sessionCompleteName;
 			case "sessionId":
 				return oSchoolSession.sessionId;
 			case "pageUrl":
@@ -3312,10 +3312,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.setSessionSort(sessionSort);
 			}
 
-			if(savesSchoolSession.contains("schoolNameComplete")) {
-				String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-				if(schoolNameComplete != null)
-					oSchoolSession.setSchoolNameComplete(schoolNameComplete);
+			if(savesSchoolSession.contains("schoolCompleteName")) {
+				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+				if(schoolCompleteName != null)
+					oSchoolSession.setSchoolCompleteName(schoolCompleteName);
 			}
 
 			if(savesSchoolSession.contains("yearStart")) {
@@ -3354,10 +3354,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.setSeasonEnrollmentFee(seasonEnrollmentFee);
 			}
 
-			if(savesSchoolSession.contains("seasonNameComplete")) {
-				String seasonNameComplete = (String)solrDocument.get("seasonNameComplete_stored_string");
-				if(seasonNameComplete != null)
-					oSchoolSession.setSeasonNameComplete(seasonNameComplete);
+			if(savesSchoolSession.contains("seasonCompleteName")) {
+				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
+				if(seasonCompleteName != null)
+					oSchoolSession.setSeasonCompleteName(seasonCompleteName);
 			}
 
 			if(savesSchoolSession.contains("seasonEnd")) {
@@ -3378,10 +3378,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.setSessionEndDay(sessionEndDay);
 			}
 
-			if(savesSchoolSession.contains("sessionNameComplete")) {
-				String sessionNameComplete = (String)solrDocument.get("sessionNameComplete_stored_string");
-				if(sessionNameComplete != null)
-					oSchoolSession.setSessionNameComplete(sessionNameComplete);
+			if(savesSchoolSession.contains("sessionCompleteName")) {
+				String sessionCompleteName = (String)solrDocument.get("sessionCompleteName_stored_string");
+				if(sessionCompleteName != null)
+					oSchoolSession.setSessionCompleteName(sessionCompleteName);
 			}
 
 			if(savesSchoolSession.contains("sessionId")) {
@@ -3518,9 +3518,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("sessionSort_indexed_int", sessionSort);
 			document.addField("sessionSort_stored_int", sessionSort);
 		}
-		if(schoolNameComplete != null) {
-			document.addField("schoolNameComplete_indexed_string", schoolNameComplete);
-			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
+		if(schoolCompleteName != null) {
+			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
+			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
@@ -3546,9 +3546,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee.doubleValue());
 			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee.doubleValue());
 		}
-		if(seasonNameComplete != null) {
-			document.addField("seasonNameComplete_indexed_string", seasonNameComplete);
-			document.addField("seasonNameComplete_stored_string", seasonNameComplete);
+		if(seasonCompleteName != null) {
+			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
+			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
 		}
 		if(seasonEnd != null) {
 			document.addField("seasonEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(seasonEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
@@ -3562,9 +3562,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("sessionEndDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("sessionEndDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(sessionNameComplete != null) {
-			document.addField("sessionNameComplete_indexed_string", sessionNameComplete);
-			document.addField("sessionNameComplete_stored_string", sessionNameComplete);
+		if(sessionCompleteName != null) {
+			document.addField("sessionCompleteName_indexed_string", sessionCompleteName);
+			document.addField("sessionCompleteName_stored_string", sessionCompleteName);
 		}
 		if(sessionId != null) {
 			document.addField("sessionId_indexed_string", sessionId);
@@ -3649,9 +3649,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(sessionSort != null)
 			oSchoolSession.setSessionSort(sessionSort);
 
-		String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-		if(schoolNameComplete != null)
-			oSchoolSession.setSchoolNameComplete(schoolNameComplete);
+		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+		if(schoolCompleteName != null)
+			oSchoolSession.setSchoolCompleteName(schoolCompleteName);
 
 		Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
 		if(yearStart != null)
@@ -3677,9 +3677,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(seasonEnrollmentFee != null)
 			oSchoolSession.setSeasonEnrollmentFee(seasonEnrollmentFee);
 
-		String seasonNameComplete = (String)solrDocument.get("seasonNameComplete_stored_string");
-		if(seasonNameComplete != null)
-			oSchoolSession.setSeasonNameComplete(seasonNameComplete);
+		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
+		if(seasonCompleteName != null)
+			oSchoolSession.setSeasonCompleteName(seasonCompleteName);
 
 		Date seasonEnd = (Date)solrDocument.get("seasonEnd_stored_date");
 		if(seasonEnd != null)
@@ -3693,9 +3693,9 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(sessionEndDay != null)
 			oSchoolSession.setSessionEndDay(sessionEndDay);
 
-		String sessionNameComplete = (String)solrDocument.get("sessionNameComplete_stored_string");
-		if(sessionNameComplete != null)
-			oSchoolSession.setSessionNameComplete(sessionNameComplete);
+		String sessionCompleteName = (String)solrDocument.get("sessionCompleteName_stored_string");
+		if(sessionCompleteName != null)
+			oSchoolSession.setSessionCompleteName(sessionCompleteName);
 
 		String sessionId = (String)solrDocument.get("sessionId_stored_string");
 		if(sessionId != null)

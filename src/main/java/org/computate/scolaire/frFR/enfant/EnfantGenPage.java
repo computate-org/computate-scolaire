@@ -57,8 +57,8 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(enfantScolaire != null && enfantScolaire.getBlocNomComplet() != null)
-			c.o(enfantScolaire.getBlocNomComplet());
+		if(enfantScolaire != null && enfantScolaire.getEnfantNomComplet() != null)
+			c.o(enfantScolaire.getEnfantNomComplet());
 		else if(enfantScolaire != null)
 			c.o("");
 		else if(listeEnfantScolaire == null || listeEnfantScolaire.size() == 0)
@@ -88,12 +88,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsEnfantGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptEnfantGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereEnfantScolaireBlocCles($('#formEnfantScolaireBlocCles'), $('#listEnfantScolaireBlocCles')); ");
 		l("});");
 	}
 
@@ -156,7 +155,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strBlocId()).g("span");
+									e("span").f().sx(o.strEnfantId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -592,67 +591,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valeurBlocCles")
-							.a("class", "valeurBlocCles ")
-							.a("value", requeteSite_.getRequetePk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggereEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-									e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
-									sx("blocs");
-								} g("a");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("class", "w3-cell ").f();
-									sx("relier un âge a cet enfant");
-								} g("h5");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-									{ e("div").a("class", "w3-cell-row ").f();
-
-									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-										e("input")
-											.a("type", "text")
-											.a("placeholder", "blocs")
-											.a("title", "La clé primaire du bloc dans la base de données. ")
-											.a("class", "valeurObjetSuggere suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-											.a("name", "setBlocCles")
-											.a("id", "Page_blocCles")
-											.a("autocomplete", "off")
-											.a("oninput", "suggereEnfantScolaireBlocCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'EnfantScolaireBlocCles'), $('#listEnfantScolaireBlocCles')); ")
-										.fg();
-
-									} g("div");
-								} g("div");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnfantScolaireBlocCles").f();
-									} g("ul");
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-											.a("onclick", "postAgeScolaireVals({ blocCles: ", o.getPk(), " }, function() { var $e = $('#Page_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_blocCles')); }); ")
-											.f().sx("ajouter un âge")
-										.g("button");
-									} g("div");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("form");
-				} g("div");
-			} g("div");
-		} g("div");
 	}
 
 	public void htmlFormPOSTEnfantScolaire(EnfantScolaire o) {
@@ -714,7 +652,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strEnfantId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1060,67 +998,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurBlocCles")
-						.a("class", "valeurBlocCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
-								sx("blocs");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier un âge a cet enfant");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "blocs")
-										.a("title", "La clé primaire du bloc dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setBlocCles")
-										.a("id", "POST_blocCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereEnfantScolaireBlocCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'EnfantScolaireBlocCles'), $('#listEnfantScolaireBlocCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnfantScolaireBlocCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postAgeScolaireVals({ blocCles: ", o.getPk(), " }, function() { var $e = $('#POST_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_blocCles')); }); ")
-										.f().sx("ajouter un âge")
-									.g("button");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-		} g("div");
 	}
 
 	public void htmlFormPATCHEnfantScolaire(EnfantScolaire o) {
@@ -1182,7 +1059,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strEnfantId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1531,61 +1408,15 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurBlocCles")
-						.a("class", "valeurBlocCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
-								sx("blocs");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier un âge a cet enfant");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "blocs")
-										.a("title", "La clé primaire du bloc dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setBlocCles")
-										.a("id", "PATCH_blocCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereEnfantScolaireBlocCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'EnfantScolaireBlocCles'), $('#listEnfantScolaireBlocCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnfantScolaireBlocCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postAgeScolaireVals({ blocCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_blocCles')); }); ")
-										.f().sx("ajouter un âge")
-									.g("button");
-								} g("div");
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEnfantNomComplet()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("form");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1650,7 +1481,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strEnfantId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1999,61 +1830,15 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurBlocCles")
-						.a("class", "valeurBlocCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireBlocCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
-								e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
-								sx("blocs");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier un âge a cet enfant");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "blocs")
-										.a("title", "La clé primaire du bloc dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setBlocCles")
-										.a("id", "Recherche_blocCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereEnfantScolaireBlocCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'EnfantScolaireBlocCles'), $('#listEnfantScolaireBlocCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnfantScolaireBlocCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postAgeScolaireVals({ blocCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_blocCles')); }); ")
-										.f().sx("ajouter un âge")
-									.g("button");
-								} g("div");
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEnfantNomComplet()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("form");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -2118,21 +1903,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("blocs").g("th");
-						e("th").f().sx("prénom").g("th");
-						e("th").f().sx("nom de famille").g("th");
-						e("th").f().sx("nom complèt").g("th");
-						e("th").f().sx("nom complèt préferé").g("th");
-						e("th").f().sx("nom formel").g("th");
-						e("th").f().sx("conditions médicales").g("th");
-						e("th").f().sx("écoles précedemment fréqentées").g("th");
-						e("th").f().sx("vaccins à jour").g("th");
-						e("th").f().sx("clé primaire").g("th");
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("description").g("th");
-						e("th").f().sx("propre").g("th");
-						e("th").f().sx("modifié").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -2145,77 +1916,10 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getBlocCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPersonnePrenom());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getFamilleNom());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPersonneNomComplet());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPersonneNomCompletPrefere());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPersonneNomFormel());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantConditionsMedicales());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantEcolesPrecedemmentFrequentees());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantVaccinsAJour());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantDescription());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantPropre());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlocId());
+									e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getEnfantNomComplet());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -2353,6 +2057,43 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	 * Var.enUS: htmlSuggestChildGenPage
+	 * r: "/enfant"
+	 * r.enUS: "/child"
+	 * r: "voir tous les enfants"
+	 * r.enUS: "see all the childs"
+	 * r: "rechargerEnfantGenPage"
+	 * r.enUS: "refreshChildGenPage"
+	 * r: "recharger tous les enfants"
+	 * r.enUS: "refresh all the childs"
+	 * r: "rechercher enfants : "
+	 * r.enUS: "search childs: "
+	 * r: "suggereFormEnfantScolaire"
+	 * r.enUS: "suggestFormSchoolChild"
+	 * r: "rechercher enfants"
+	 * r.enUS: "search childs"
+	 * r: "suggereEnfantScolaire w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSchoolChild w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereEnfantScolaire"
+	 * r.enUS: "suggestSchoolChild"
+	 * r: patchEnfantScolaireVals
+	 * r.enUS: patchSchoolChildVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerEnfantGenPage
+	 * r.enUS: refreshChildGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereEnfantScolaireObjetSuggere
+	 * r.enUS: suggestSchoolChildObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
+	 * r: '#suggereListEnfantScolaire'
+	 * r.enUS: '#suggestListSchoolChild'
+	 * r: "suggereListEnfantScolaire"
+	 * r.enUS: "suggestListSchoolChild"
+	**/
 	public void htmlSuggereEnfantGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

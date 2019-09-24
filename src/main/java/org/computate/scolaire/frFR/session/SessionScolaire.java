@@ -83,7 +83,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: SaisonScolaire.sessionCles
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La saison scolaire de la session scolaire. 
 	 * Description.enUS: The school season of the school session. 
 	 * NomAffichage.frFR: saison
@@ -121,7 +121,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: AgeScolaire.sessionCle
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: Les âges scolaires de la session scolaire. 
 	 * Description.enUS: The school age of the school session. 
 	 * NomAffichage.frFR: âges
@@ -212,7 +212,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -220,7 +220,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: saison
 	 * r.enUS: season
 	 */   
@@ -333,11 +333,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: seasonNameComplete
+	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: SaisonNomComplet
-	 * r.enUS: SeasonNameComplete
+	 * r.enUS: SeasonCompleteName
 	 * r: saison
 	 * r.enUS: season
 	 */
@@ -370,7 +370,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
 	 */                   
@@ -383,7 +383,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
 	 */                   
@@ -391,10 +391,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: sessionNameComplete
+	 * Var.enUS: sessionCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 1
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
 	 * r: strSessionJourDebut
@@ -402,7 +403,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: strSessionJourFin
 	 * r.enUS: strSessionEndDay
 	 * r: saisonNomComplet
-	 * r.enUS: seasonNameComplete
+	 * r.enUS: seasonCompleteName
 	 * r: "%s - %s session d'été à %s"
 	 * r.enUS: "%s - %s summer session at %s"
 	 * r: "%s - %s session scolaire à %s"
@@ -414,7 +415,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: saisonHiver
 	 * r.enUS: seasonWinter
 	 * r: ecoleNomComplet
-	 * r.enUS: schoolNameComplete
+	 * r.enUS: schoolCompleteName
 	 */
 	protected void _sessionNomComplet(Couverture<String> c) {
 		String o;
@@ -437,14 +438,14 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: sessionNomComplet
-	 * r.enUS: sessionNameComplete
-	 */            
+	 * r.enUS: sessionCompleteName
+	 */          
 	protected void _sessionId(Couverture<String> c) {
 		if(sessionNomComplet != null) {
 			String s = Normalizer.normalize(sessionNomComplet, Normalizer.Form.NFD);
@@ -488,7 +489,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: sessionNomComplet
-	 * r.enUS: sessionNameComplete
+	 * r.enUS: sessionCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(sessionNomComplet);

@@ -192,11 +192,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					switch(entityVar) {
 					case "sessionKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKeys", jsonObject.getLong(entityVar), "sessionKey", pk));
+						postSqlParams.addAll(Arrays.asList("ageKeys", Long.parseLong(jsonObject.getString(entityVar)), "sessionKey", pk));
 						break;
 					case "blockKeys":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKey", jsonObject.getLong(entityVar), "blockKeys", pk));
+						postSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(jsonObject.getString(entityVar)), "blockKeys", pk));
 						break;
 					case "ageStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -209,7 +209,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -260,7 +260,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolAge(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -322,19 +322,19 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolAge(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolAge(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolAge(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolAge(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -410,7 +410,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "addBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getString(methodName), "blockKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
 						break;
 					case "addAllBlockKeys":
 						JsonArray addAllBlockKeysValues = requestJson.getJsonArray(methodName);
@@ -422,7 +422,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					case "setBlockKeys":
 						JsonArray setBlockKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getString(methodName), "blockKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
 						for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("ageKey", setBlockKeysValues.getString(i), "blockKeys", pk));
@@ -430,7 +430,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "removeBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", requestJson.getLong(methodName), "blockKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
 						break;
 					case "setAgeStart":
 						o2.setAgeStart(requestJson.getString(methodName));
@@ -454,15 +454,19 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolAge o3 = new SchoolAge();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolAge o3 = new SchoolAge();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -545,7 +549,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolAge(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +580,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolAge.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -700,7 +704,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolAge(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -787,8 +791,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_date";
 			case "yearEnd":
@@ -801,22 +805,22 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "seasonWinter_indexed_boolean";
 			case "seasonEnrollmentFee":
 				return "seasonEnrollmentFee_indexed_double";
-			case "seasonNameComplete":
-				return "seasonNameComplete_indexed_string";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
 			case "seasonEnd":
 				return "seasonEnd_indexed_date";
 			case "sessionStartDay":
 				return "sessionStartDay_indexed_date";
 			case "sessionEndDay":
 				return "sessionEndDay_indexed_date";
-			case "sessionNameComplete":
-				return "sessionNameComplete_indexed_string";
+			case "sessionCompleteName":
+				return "sessionCompleteName_indexed_string";
 			case "ageStart":
 				return "ageStart_indexed_int";
 			case "ageEnd":
 				return "ageEnd_indexed_int";
-			case "ageNameComplete":
-				return "ageNameComplete_indexed_string";
+			case "ageCompleteName":
+				return "ageCompleteName_indexed_string";
 			case "ageId":
 				return "ageId_indexed_string";
 			case "pageUrl":
@@ -904,7 +908,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -983,7 +987,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -1016,12 +1020,12 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1136,7 +1140,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1166,7 +1170,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

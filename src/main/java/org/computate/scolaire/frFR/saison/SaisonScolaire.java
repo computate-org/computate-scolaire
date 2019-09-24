@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison;  
+package org.computate.scolaire.frFR.saison; 
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -72,7 +72,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.saisonCles
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
@@ -110,7 +110,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: SessionScolaire.saisonCle
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCelulle: 2
 	 * Description.frFR: Les sessions scolaires de la saison scolaire. 
 	 * Description.enUS: The school sessions of the school season. 
 	 * NomAffichage.frFR: sessions
@@ -190,7 +190,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -198,7 +198,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: annee
 	 * r.enUS: year
 	 */   
@@ -248,7 +248,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: début de la saison
 	 * NomAffichage.enUS: start of the season
 	 */                   
@@ -261,7 +261,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: été
 	 * NomAffichage.enUS: summer
 	 */                   
@@ -274,7 +274,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: hiver
 	 * NomAffichage.enUS: winter
 	 */                   
@@ -287,7 +287,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: frais d'inscription
 	 * NomAffichage.enUS: enrollment fee
 	 */         
@@ -295,11 +295,12 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: seasonNameComplete
+	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
 	 * VarH2: true
+	 * HtmlColonne: 1
 	 * r: saisonEte
 	 * r.enUS: seasonSummer
 	 * r: saisonHiver
@@ -313,7 +314,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: strSaisonJourDebut
 	 * r.enUS: strSeasonStartDay
 	 * r: ecoleNomComplet
-	 * r.enUS: schoolNameComplete
+	 * r.enUS: schoolCompleteName
 	 */              
 	protected void _saisonNomComplet(Couverture<String> c) {
 		String o;
@@ -335,13 +336,13 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCelulle: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: saisonNomComplet
-	 * r.enUS: seasonNameComplete
+	 * r.enUS: seasonCompleteName
 	 */            
 	protected void _saisonId(Couverture<String> c) {
 		if(saisonNomComplet != null) {
@@ -386,7 +387,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: saisonNomComplet
-	 * r.enUS: seasonNameComplete
+	 * r.enUS: seasonCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(saisonNomComplet);

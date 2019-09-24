@@ -194,9 +194,37 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
 						break;
+					case "enfantCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
+						break;
+					case "mereCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "mereCles", pk));
+						break;
+					case "pereCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "pereCles", pk));
+						break;
+					case "gardienCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
+						break;
+					case "paiementCles":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "paiementCles", pk));
+						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
+						break;
+					case "blocHeureFin":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocHeureFin", jsonObject.getString(entiteVar), pk));
+						break;
+					case "blocPrixParMois":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blocPrixParMois", jsonObject.getString(entiteVar), pk));
 						break;
 					case "inscriptionApprouve":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -422,6 +450,112 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", requeteJson.getLong(methodeNom)));
 						break;
+					case "setEnfantCle":
+						o2.setEnfantCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", o2.getEnfantCle()));
+						break;
+					case "removeEnfantCle":
+						o2.setEnfantCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", o2.getEnfantCle()));
+						break;
+					case "addMereCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "mereCles", pk));
+						break;
+					case "addAllMereCles":
+						JsonArray addAllMereClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllMereClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllMereClesValeurs.getString(i), "mereCles", pk));
+						}
+						break;
+					case "setMereCles":
+						JsonArray setMereClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "mereCles", pk));
+						for(Integer i = 0; i <  setMereClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setMereClesValeurs.getString(i), "mereCles", pk));
+						}
+						break;
+					case "removeMereCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "mereCles", pk));
+						break;
+					case "addPereCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "pereCles", pk));
+						break;
+					case "addAllPereCles":
+						JsonArray addAllPereClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllPereClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllPereClesValeurs.getString(i), "pereCles", pk));
+						}
+						break;
+					case "setPereCles":
+						JsonArray setPereClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "pereCles", pk));
+						for(Integer i = 0; i <  setPereClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPereClesValeurs.getString(i), "pereCles", pk));
+						}
+						break;
+					case "removePereCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "pereCles", pk));
+						break;
+					case "addGardienCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getString(methodeNom)));
+						break;
+					case "addAllGardienCles":
+						JsonArray addAllGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllGardienClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", addAllGardienClesValeurs.getString(i)));
+						}
+						break;
+					case "setGardienCles":
+						JsonArray setGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getJsonArray(methodeNom)));
+						for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", setGardienClesValeurs.getString(i)));
+						}
+						break;
+					case "removeGardienCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getLong(methodeNom)));
+						break;
+					case "addPaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "paiementCles", pk));
+						break;
+					case "addAllPaiementCles":
+						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllPaiementClesValeurs.getString(i), "paiementCles", pk));
+						}
+						break;
+					case "setPaiementCles":
+						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "paiementCles", pk));
+						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPaiementClesValeurs.getString(i), "paiementCles", pk));
+						}
+						break;
+					case "removePaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "paiementCles", pk));
+						break;
 					case "setBlocHeureDebut":
 						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
 						if(o2.getBlocHeureDebut() == null) {
@@ -430,6 +564,26 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.jsonBlocHeureDebut(), pk));
+						}
+						break;
+					case "setBlocHeureFin":
+						o2.setBlocHeureFin(requeteJson.getString(methodeNom));
+						if(o2.getBlocHeureFin() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.jsonBlocHeureFin(), pk));
+						}
+						break;
+					case "setBlocPrixParMois":
+						o2.setBlocPrixParMois(requeteJson.getString(methodeNom));
+						if(o2.getBlocPrixParMois() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
 						}
 						break;
 					case "setInscriptionApprouve":
@@ -777,16 +931,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "inscriptionCle_indexed_long";
 			case "blocCles":
 				return "blocCles_indexed_longs";
-			case "enfantCles":
-				return "enfantCles_indexed_longs";
+			case "enfantCle":
+				return "enfantCle_indexed_long";
 			case "mereCles":
 				return "mereCles_indexed_longs";
 			case "pereCles":
 				return "pereCles_indexed_longs";
 			case "gardienCles":
 				return "gardienCles_indexed_longs";
-			case "contactCles":
-				return "contactCles_indexed_longs";
+			case "paiementCles":
+				return "paiementCles_indexed_longs";
 			case "familleCle":
 				return "familleCle_indexed_long";
 			case "scolaireTri":
@@ -801,6 +955,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "sessionTri_indexed_int";
 			case "ageTri":
 				return "ageTri_indexed_int";
+			case "enfantNomComplet":
+				return "enfantNomComplet_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "anneeDebut":

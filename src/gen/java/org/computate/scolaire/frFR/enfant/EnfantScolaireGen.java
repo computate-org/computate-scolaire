@@ -9,6 +9,7 @@ import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
@@ -38,7 +39,6 @@ import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
-import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -70,114 +70,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public static final String EnfantScolaire_Couleur = "green";
 	public static final String EnfantScolaire_IconeGroupe = "regular";
 	public static final String EnfantScolaire_IconeNom = "child";
-
-	//////////////
-	// blocCles //
-	//////////////
-
-	/**	L'entité « blocCles »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long blocCles;
-	@JsonIgnore
-	public Couverture<Long> blocClesCouverture = new Couverture<Long>().p(this).c(Long.class).var("blocCles").o(blocCles);
-
-	/**	<br/>L'entité « blocCles »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocCles">Trouver l'entité blocCles dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _blocCles(Couverture<Long> c);
-
-	public Long getBlocCles() {
-		return blocCles;
-	}
-
-	public void setBlocCles(Long blocCles) {
-		this.blocCles = blocCles;
-		this.blocClesCouverture.dejaInitialise = true;
-	}
-	public EnfantScolaire setBlocCles(String o) {
-		if(NumberUtils.isParsable(o))
-			this.blocCles = Long.parseLong(o);
-		this.blocClesCouverture.dejaInitialise = true;
-		return (EnfantScolaire)this;
-	}
-	protected EnfantScolaire blocClesInit() {
-		if(!blocClesCouverture.dejaInitialise) {
-			_blocCles(blocClesCouverture);
-			if(blocCles == null)
-				setBlocCles(blocClesCouverture.o);
-		}
-		blocClesCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public Long solrBlocCles() {
-		return blocCles;
-	}
-
-	public String strBlocCles() {
-		return blocCles == null ? "" : blocCles.toString();
-	}
-
-	public String jsonBlocCles() {
-		return blocCles == null ? "" : blocCles.toString();
-	}
-
-	public String nomAffichageBlocCles() {
-		return "blocs";
-	}
-
-	public String htmTooltipBlocCles() {
-		return null;
-	}
-
-	public String htmBlocCles() {
-		return blocCles == null ? "" : StringEscapeUtils.escapeHtml4(strBlocCles());
-	}
-
-	public void htmBlocCles(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnfantScolaire", strPk(), "BlocCles\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnfantScolaire", strPk(), "BlocCles() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setBlocCles\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocCles()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"blocCles\"");
-							r.s(" value=\"", htmBlocCles(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmBlocCles());
-			}
-			r.l("</div>");
-		}
-	}
 
 	///////////////
 	// enfantCle //
@@ -629,87 +521,87 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////////
-	// blocRecherche //
-	///////////////////
+	//////////////////////////
+	// inscriptionRecherche //
+	//////////////////////////
 
-	/**	L'entité « blocRecherche »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<BlocScolaire>(). 
+	/**	L'entité « inscriptionRecherche »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
 	 */
 	@JsonIgnore
-	protected ListeRecherche<BlocScolaire> blocRecherche = new ListeRecherche<BlocScolaire>();
+	protected ListeRecherche<InscriptionScolaire> inscriptionRecherche = new ListeRecherche<InscriptionScolaire>();
 	@JsonIgnore
-	public Couverture<ListeRecherche<BlocScolaire>> blocRechercheCouverture = new Couverture<ListeRecherche<BlocScolaire>>().p(this).c(ListeRecherche.class).var("blocRecherche").o(blocRecherche);
+	public Couverture<ListeRecherche<InscriptionScolaire>> inscriptionRechercheCouverture = new Couverture<ListeRecherche<InscriptionScolaire>>().p(this).c(ListeRecherche.class).var("inscriptionRecherche").o(inscriptionRecherche);
 
-	/**	<br/>L'entité « blocRecherche »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<BlocScolaire>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocRecherche">Trouver l'entité blocRecherche dans Solr</a>
+	/**	<br/>L'entité « inscriptionRecherche »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionRecherche">Trouver l'entité inscriptionRecherche dans Solr</a>
 	 * <br/>
-	 * @param blocRecherche est l'entité déjà construit. 
+	 * @param inscriptionRecherche est l'entité déjà construit. 
 	 **/
-	protected abstract void _blocRecherche(ListeRecherche<BlocScolaire> l);
+	protected abstract void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l);
 
-	public ListeRecherche<BlocScolaire> getBlocRecherche() {
-		return blocRecherche;
+	public ListeRecherche<InscriptionScolaire> getInscriptionRecherche() {
+		return inscriptionRecherche;
 	}
 
-	public void setBlocRecherche(ListeRecherche<BlocScolaire> blocRecherche) {
-		this.blocRecherche = blocRecherche;
-		this.blocRechercheCouverture.dejaInitialise = true;
+	public void setInscriptionRecherche(ListeRecherche<InscriptionScolaire> inscriptionRecherche) {
+		this.inscriptionRecherche = inscriptionRecherche;
+		this.inscriptionRechercheCouverture.dejaInitialise = true;
 	}
-	protected EnfantScolaire blocRechercheInit() {
-		if(!blocRechercheCouverture.dejaInitialise) {
-			_blocRecherche(blocRecherche);
+	protected EnfantScolaire inscriptionRechercheInit() {
+		if(!inscriptionRechercheCouverture.dejaInitialise) {
+			_inscriptionRecherche(inscriptionRecherche);
 		}
-		blocRecherche.initLoinPourClasse(requeteSite_);
-		blocRechercheCouverture.dejaInitialise(true);
+		inscriptionRecherche.initLoinPourClasse(requeteSite_);
+		inscriptionRechercheCouverture.dejaInitialise(true);
 		return (EnfantScolaire)this;
 	}
 
-	///////////
-	// blocs //
-	///////////
+	//////////////////
+	// inscriptions //
+	//////////////////
 
-	/**	L'entité « blocs »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<BlocScolaire>(). 
+	/**	L'entité « inscriptions »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
 	 */
 	@JsonIgnore
-	protected List<BlocScolaire> blocs = new java.util.ArrayList<org.computate.scolaire.frFR.bloc.BlocScolaire>();
+	protected List<InscriptionScolaire> inscriptions = new java.util.ArrayList<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 	@JsonIgnore
-	public Couverture<List<BlocScolaire>> blocsCouverture = new Couverture<List<BlocScolaire>>().p(this).c(List.class).var("blocs").o(blocs);
+	public Couverture<List<InscriptionScolaire>> inscriptionsCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptions").o(inscriptions);
 
-	/**	<br/>L'entité « blocs »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<BlocScolaire>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocs">Trouver l'entité blocs dans Solr</a>
+	/**	<br/>L'entité « inscriptions »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptions">Trouver l'entité inscriptions dans Solr</a>
 	 * <br/>
-	 * @param blocs est l'entité déjà construit. 
+	 * @param inscriptions est l'entité déjà construit. 
 	 **/
-	protected abstract void _blocs(List<BlocScolaire> c);
+	protected abstract void _inscriptions(List<InscriptionScolaire> l);
 
-	public List<BlocScolaire> getBlocs() {
-		return blocs;
+	public List<InscriptionScolaire> getInscriptions() {
+		return inscriptions;
 	}
 
-	public void setBlocs(List<BlocScolaire> blocs) {
-		this.blocs = blocs;
-		this.blocsCouverture.dejaInitialise = true;
+	public void setInscriptions(List<InscriptionScolaire> inscriptions) {
+		this.inscriptions = inscriptions;
+		this.inscriptionsCouverture.dejaInitialise = true;
 	}
-	public EnfantScolaire addBlocs(BlocScolaire...objets) {
-		for(BlocScolaire o : objets) {
-			addBlocs(o);
+	public EnfantScolaire addInscriptions(InscriptionScolaire...objets) {
+		for(InscriptionScolaire o : objets) {
+			addInscriptions(o);
 		}
 		return (EnfantScolaire)this;
 	}
-	public EnfantScolaire addBlocs(BlocScolaire o) {
-		if(o != null && !blocs.contains(o))
-			this.blocs.add(o);
+	public EnfantScolaire addInscriptions(InscriptionScolaire o) {
+		if(o != null && !inscriptions.contains(o))
+			this.inscriptions.add(o);
 		return (EnfantScolaire)this;
 	}
-	protected EnfantScolaire blocsInit() {
-		if(!blocsCouverture.dejaInitialise) {
-			_blocs(blocs);
+	protected EnfantScolaire inscriptionsInit() {
+		if(!inscriptionsCouverture.dejaInitialise) {
+			_inscriptions(inscriptions);
 		}
-		blocsCouverture.dejaInitialise(true);
+		inscriptionsCouverture.dejaInitialise(true);
 		return (EnfantScolaire)this;
 	}
 
@@ -913,7 +805,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAnneeCles() {
-		return null;
+		return "années";
 	}
 
 	public String htmTooltipAnneeCles() {
@@ -2593,74 +2485,74 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////////
-	// blocNomComplet //
-	////////////////////
+	//////////////////////
+	// enfantNomComplet //
+	//////////////////////
 
-	/**	L'entité « blocNomComplet »
+	/**	L'entité « enfantNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String blocNomComplet;
+	protected String enfantNomComplet;
 	@JsonIgnore
-	public Couverture<String> blocNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomComplet").o(blocNomComplet);
+	public Couverture<String> enfantNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomComplet").o(enfantNomComplet);
 
-	/**	<br/>L'entité « blocNomComplet »
+	/**	<br/>L'entité « enfantNomComplet »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocNomComplet">Trouver l'entité blocNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantNomComplet">Trouver l'entité enfantNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _blocNomComplet(Couverture<String> c);
+	protected abstract void _enfantNomComplet(Couverture<String> c);
 
-	public String getBlocNomComplet() {
-		return blocNomComplet;
+	public String getEnfantNomComplet() {
+		return enfantNomComplet;
 	}
 
-	public void setBlocNomComplet(String blocNomComplet) {
-		this.blocNomComplet = blocNomComplet;
-		this.blocNomCompletCouverture.dejaInitialise = true;
+	public void setEnfantNomComplet(String enfantNomComplet) {
+		this.enfantNomComplet = enfantNomComplet;
+		this.enfantNomCompletCouverture.dejaInitialise = true;
 	}
-	protected EnfantScolaire blocNomCompletInit() {
-		if(!blocNomCompletCouverture.dejaInitialise) {
-			_blocNomComplet(blocNomCompletCouverture);
-			if(blocNomComplet == null)
-				setBlocNomComplet(blocNomCompletCouverture.o);
+	protected EnfantScolaire enfantNomCompletInit() {
+		if(!enfantNomCompletCouverture.dejaInitialise) {
+			_enfantNomComplet(enfantNomCompletCouverture);
+			if(enfantNomComplet == null)
+				setEnfantNomComplet(enfantNomCompletCouverture.o);
 		}
-		blocNomCompletCouverture.dejaInitialise(true);
+		enfantNomCompletCouverture.dejaInitialise(true);
 		return (EnfantScolaire)this;
 	}
 
-	public String solrBlocNomComplet() {
-		return blocNomComplet;
+	public String solrEnfantNomComplet() {
+		return enfantNomComplet;
 	}
 
-	public String strBlocNomComplet() {
-		return blocNomComplet == null ? "" : blocNomComplet;
+	public String strEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : enfantNomComplet;
 	}
 
-	public String jsonBlocNomComplet() {
-		return blocNomComplet == null ? "" : blocNomComplet;
+	public String jsonEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : enfantNomComplet;
 	}
 
-	public String nomAffichageBlocNomComplet() {
+	public String nomAffichageEnfantNomComplet() {
 		return null;
 	}
 
-	public String htmTooltipBlocNomComplet() {
+	public String htmTooltipEnfantNomComplet() {
 		return null;
 	}
 
-	public String htmBlocNomComplet() {
-		return blocNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomComplet());
+	public String htmEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantNomComplet());
 	}
 
-	public void htmBlocNomComplet(ToutEcrivain r, Boolean patchDroits) {
+	public void htmEnfantNomComplet(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchEnfantScolaire", strPk(), "BlocNomComplet\">");
+			r.s("<div id=\"patchEnfantScolaire", strPk(), "EnfantNomComplet\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnfantScolaire", strPk(), "BlocNomComplet() {");
+				r.l("		function patchEnfantScolaire", strPk(), "EnfantNomComplet() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2673,96 +2565,96 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setBlocNomComplet\": this.value },");
+				r.l("				data: {\"setEnfantNomComplet\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocNomComplet()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantNomComplet()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"blocNomComplet\"");
-							r.s(" value=\"", htmBlocNomComplet(), "\");");
+							r.s(" name=\"enfantNomComplet\"");
+							r.s(" value=\"", htmEnfantNomComplet(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmBlocNomComplet());
+				r.s(htmEnfantNomComplet());
 			}
 			r.l("</div>");
 		}
 	}
 
-	////////////
-	// blocId //
-	////////////
+	//////////////
+	// enfantId //
+	//////////////
 
-	/**	L'entité « blocId »
+	/**	L'entité « enfantId »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String blocId;
+	protected String enfantId;
 	@JsonIgnore
-	public Couverture<String> blocIdCouverture = new Couverture<String>().p(this).c(String.class).var("blocId").o(blocId);
+	public Couverture<String> enfantIdCouverture = new Couverture<String>().p(this).c(String.class).var("enfantId").o(enfantId);
 
-	/**	<br/>L'entité « blocId »
+	/**	<br/>L'entité « enfantId »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocId">Trouver l'entité blocId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantId">Trouver l'entité enfantId dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _blocId(Couverture<String> c);
+	protected abstract void _enfantId(Couverture<String> c);
 
-	public String getBlocId() {
-		return blocId;
+	public String getEnfantId() {
+		return enfantId;
 	}
 
-	public void setBlocId(String blocId) {
-		this.blocId = blocId;
-		this.blocIdCouverture.dejaInitialise = true;
+	public void setEnfantId(String enfantId) {
+		this.enfantId = enfantId;
+		this.enfantIdCouverture.dejaInitialise = true;
 	}
-	protected EnfantScolaire blocIdInit() {
-		if(!blocIdCouverture.dejaInitialise) {
-			_blocId(blocIdCouverture);
-			if(blocId == null)
-				setBlocId(blocIdCouverture.o);
+	protected EnfantScolaire enfantIdInit() {
+		if(!enfantIdCouverture.dejaInitialise) {
+			_enfantId(enfantIdCouverture);
+			if(enfantId == null)
+				setEnfantId(enfantIdCouverture.o);
 		}
-		blocIdCouverture.dejaInitialise(true);
+		enfantIdCouverture.dejaInitialise(true);
 		return (EnfantScolaire)this;
 	}
 
-	public String solrBlocId() {
-		return blocId;
+	public String solrEnfantId() {
+		return enfantId;
 	}
 
-	public String strBlocId() {
-		return blocId == null ? "" : blocId;
+	public String strEnfantId() {
+		return enfantId == null ? "" : enfantId;
 	}
 
-	public String jsonBlocId() {
-		return blocId == null ? "" : blocId;
+	public String jsonEnfantId() {
+		return enfantId == null ? "" : enfantId;
 	}
 
-	public String nomAffichageBlocId() {
+	public String nomAffichageEnfantId() {
 		return "ID";
 	}
 
-	public String htmTooltipBlocId() {
+	public String htmTooltipEnfantId() {
 		return null;
 	}
 
-	public String htmBlocId() {
-		return blocId == null ? "" : StringEscapeUtils.escapeHtml4(strBlocId());
+	public String htmEnfantId() {
+		return enfantId == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantId());
 	}
 
-	public void htmBlocId(ToutEcrivain r, Boolean patchDroits) {
+	public void htmEnfantId(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchEnfantScolaire", strPk(), "BlocId\">");
+			r.s("<div id=\"patchEnfantScolaire", strPk(), "EnfantId\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnfantScolaire", strPk(), "BlocId() {");
+				r.l("		function patchEnfantScolaire", strPk(), "EnfantId() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2775,23 +2667,23 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setBlocId\": this.value },");
+				r.l("				data: {\"setEnfantId\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocId()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantId()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"blocId\"");
-							r.s(" value=\"", htmBlocId(), "\");");
+							r.s(" name=\"enfantId\"");
+							r.s(" value=\"", htmEnfantId(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmBlocId());
+				r.s(htmEnfantId());
 			}
 			r.l("</div>");
 		}
@@ -3022,13 +2914,12 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initEnfantScolaire() {
-		blocClesInit();
 		enfantCleInit();
 		inscriptionClesInit();
 		familleTriInit();
 		enfantTriInit();
-		blocRechercheInit();
-		blocsInit();
+		inscriptionRechercheInit();
+		inscriptionsInit();
 		ecoleClesInit();
 		anneeClesInit();
 		saisonClesInit();
@@ -3046,8 +2937,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		enfantObjectifsInit();
 		enfantVaccinsAJourInit();
 		enfantPropreInit();
-		blocNomCompletInit();
-		blocIdInit();
+		enfantNomCompletInit();
+		enfantIdInit();
 		pageUrlInit();
 		objetSuggereInit();
 	}
@@ -3062,8 +2953,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public void requeteSiteEnfantScolaire(RequeteSiteFrFR requeteSite_) {
 			super.requeteSiteCluster(requeteSite_);
-		if(blocRecherche != null)
-			blocRecherche.setRequeteSite_(requeteSite_);
+		if(inscriptionRecherche != null)
+			inscriptionRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -3090,8 +2981,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public Object obtenirEnfantScolaire(String var) {
 		EnfantScolaire oEnfantScolaire = (EnfantScolaire)this;
 		switch(var) {
-			case "blocCles":
-				return oEnfantScolaire.blocCles;
 			case "enfantCle":
 				return oEnfantScolaire.enfantCle;
 			case "inscriptionCles":
@@ -3100,10 +2989,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.familleTri;
 			case "enfantTri":
 				return oEnfantScolaire.enfantTri;
-			case "blocRecherche":
-				return oEnfantScolaire.blocRecherche;
-			case "blocs":
-				return oEnfantScolaire.blocs;
+			case "inscriptionRecherche":
+				return oEnfantScolaire.inscriptionRecherche;
+			case "inscriptions":
+				return oEnfantScolaire.inscriptions;
 			case "ecoleCles":
 				return oEnfantScolaire.ecoleCles;
 			case "anneeCles":
@@ -3138,10 +3027,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.enfantVaccinsAJour;
 			case "enfantPropre":
 				return oEnfantScolaire.enfantPropre;
-			case "blocNomComplet":
-				return oEnfantScolaire.blocNomComplet;
-			case "blocId":
-				return oEnfantScolaire.blocId;
+			case "enfantNomComplet":
+				return oEnfantScolaire.enfantNomComplet;
+			case "enfantId":
+				return oEnfantScolaire.enfantId;
 			case "pageUrl":
 				return oEnfantScolaire.pageUrl;
 			case "objetSuggere":
@@ -3171,9 +3060,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public Object attribuerEnfantScolaire(String var, Object val) {
 		EnfantScolaire oEnfantScolaire = (EnfantScolaire)this;
 		switch(var) {
-			case "blocCles":
-				oEnfantScolaire.setBlocCles((Long)val);
-				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -3267,10 +3153,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		sauvegardesEnfantScolaire = (List<String>)solrDocument.get("sauvegardesEnfantScolaire_stored_strings");
 		if(sauvegardesEnfantScolaire != null) {
 
-			Long blocCles = (Long)solrDocument.get("blocCles_stored_long");
-			if(blocCles != null)
-				oEnfantScolaire.setBlocCles(blocCles);
-
 			if(sauvegardesEnfantScolaire.contains("enfantCle")) {
 				Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
 				if(enfantCle != null)
@@ -3299,6 +3181,12 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
 				if(ecoleCles != null)
 					oEnfantScolaire.ecoleCles.addAll(ecoleCles);
+			}
+
+			if(sauvegardesEnfantScolaire.contains("anneeCles")) {
+				List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
+				if(anneeCles != null)
+					oEnfantScolaire.anneeCles.addAll(anneeCles);
 			}
 
 			if(sauvegardesEnfantScolaire.contains("saisonCles")) {
@@ -3391,16 +3279,16 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 					oEnfantScolaire.setEnfantPropre(enfantPropre);
 			}
 
-			if(sauvegardesEnfantScolaire.contains("blocNomComplet")) {
-				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
-				if(blocNomComplet != null)
-					oEnfantScolaire.setBlocNomComplet(blocNomComplet);
+			if(sauvegardesEnfantScolaire.contains("enfantNomComplet")) {
+				String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
+				if(enfantNomComplet != null)
+					oEnfantScolaire.setEnfantNomComplet(enfantNomComplet);
 			}
 
-			if(sauvegardesEnfantScolaire.contains("blocId")) {
-				String blocId = (String)solrDocument.get("blocId_stored_string");
-				if(blocId != null)
-					oEnfantScolaire.setBlocId(blocId);
+			if(sauvegardesEnfantScolaire.contains("enfantId")) {
+				String enfantId = (String)solrDocument.get("enfantId_stored_string");
+				if(enfantId != null)
+					oEnfantScolaire.setEnfantId(enfantId);
 			}
 
 			if(sauvegardesEnfantScolaire.contains("pageUrl")) {
@@ -3483,10 +3371,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		if(sauvegardesEnfantScolaire != null)
 			document.addField("sauvegardesEnfantScolaire_stored_strings", sauvegardesEnfantScolaire);
 
-		if(blocCles != null) {
-			document.addField("blocCles_indexed_long", blocCles);
-			document.addField("blocCles_stored_long", blocCles);
-		}
 		if(enfantCle != null) {
 			document.addField("enfantCle_indexed_long", enfantCle);
 			document.addField("enfantCle_stored_long", enfantCle);
@@ -3513,6 +3397,14 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			}
 			for(java.lang.Long o : ecoleCles) {
 				document.addField("ecoleCles_stored_longs", o);
+			}
+		}
+		if(anneeCles != null) {
+			for(java.lang.Long o : anneeCles) {
+				document.addField("anneeCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : anneeCles) {
+				document.addField("anneeCles_stored_longs", o);
 			}
 		}
 		if(saisonCles != null) {
@@ -3587,13 +3479,13 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("enfantPropre_indexed_boolean", enfantPropre);
 			document.addField("enfantPropre_stored_boolean", enfantPropre);
 		}
-		if(blocNomComplet != null) {
-			document.addField("blocNomComplet_indexed_string", blocNomComplet);
-			document.addField("blocNomComplet_stored_string", blocNomComplet);
+		if(enfantNomComplet != null) {
+			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
+			document.addField("enfantNomComplet_stored_string", enfantNomComplet);
 		}
-		if(blocId != null) {
-			document.addField("blocId_indexed_string", blocId);
-			document.addField("blocId_stored_string", blocId);
+		if(enfantId != null) {
+			document.addField("enfantId_indexed_string", enfantId);
+			document.addField("enfantId_stored_string", enfantId);
 		}
 		if(pageUrl != null) {
 			document.addField("pageUrl_indexed_string", pageUrl);
@@ -3634,10 +3526,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public void stockerEnfantScolaire(SolrDocument solrDocument) {
 		EnfantScolaire oEnfantScolaire = (EnfantScolaire)this;
 
-		Long blocCles = (Long)solrDocument.get("blocCles_stored_long");
-		if(blocCles != null)
-			oEnfantScolaire.setBlocCles(blocCles);
-
 		Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
 		if(enfantCle != null)
 			oEnfantScolaire.setEnfantCle(enfantCle);
@@ -3657,6 +3545,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
 		if(ecoleCles != null)
 			oEnfantScolaire.ecoleCles.addAll(ecoleCles);
+
+		List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
+		if(anneeCles != null)
+			oEnfantScolaire.anneeCles.addAll(anneeCles);
 
 		List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
 		if(saisonCles != null)
@@ -3718,13 +3610,13 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		if(enfantPropre != null)
 			oEnfantScolaire.setEnfantPropre(enfantPropre);
 
-		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
-		if(blocNomComplet != null)
-			oEnfantScolaire.setBlocNomComplet(blocNomComplet);
+		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
+		if(enfantNomComplet != null)
+			oEnfantScolaire.setEnfantNomComplet(enfantNomComplet);
 
-		String blocId = (String)solrDocument.get("blocId_stored_string");
-		if(blocId != null)
-			oEnfantScolaire.setBlocId(blocId);
+		String enfantId = (String)solrDocument.get("enfantId_stored_string");
+		if(enfantId != null)
+			oEnfantScolaire.setEnfantId(enfantId);
 
 		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
 		if(pageUrl != null)
@@ -3741,7 +3633,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, personnePrenom, familleNom, personneNomComplet, personneNomCompletPrefere, personneNomFormel, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantVaccinsAJour, enfantPropre);
+		return Objects.hash(super.hashCode(), personnePrenom, familleNom, personneNomComplet, personneNomCompletPrefere, personneNomFormel, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantVaccinsAJour, enfantPropre);
 	}
 
 	////////////
@@ -3755,7 +3647,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			return false;
 		EnfantScolaire that = (EnfantScolaire)o;
 		return super.equals(o)
-				&& Objects.equals( blocCles, that.blocCles )
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( familleNom, that.familleNom )
 				&& Objects.equals( personneNomComplet, that.personneNomComplet )
@@ -3777,8 +3668,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("EnfantScolaire { ");
-		sb.append( "blocCles: " ).append(blocCles);
-		sb.append( ", personnePrenom: \"" ).append(personnePrenom).append( "\"" );
+		sb.append( "personnePrenom: \"" ).append(personnePrenom).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
 		sb.append( ", personneNomComplet: \"" ).append(personneNomComplet).append( "\"" );
 		sb.append( ", personneNomCompletPrefere: \"" ).append(personneNomCompletPrefere).append( "\"" );

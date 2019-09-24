@@ -65,8 +65,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolSession != null && schoolSession.getSessionNameComplete() != null)
-			c.o(schoolSession.getSessionNameComplete());
+		if(schoolSession != null && schoolSession.getSessionCompleteName() != null)
+			c.o(schoolSession.getSessionCompleteName());
 		else if(schoolSession != null)
 			c.o("");
 		else if(listSchoolSession == null || listSchoolSession.size() == 0)
@@ -894,6 +894,21 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSessionCompleteName()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	public void htmlFormSearchSchoolSession(SchoolSession o) {
@@ -1151,6 +1166,21 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSessionCompleteName()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodySessionGenPage() {
@@ -1212,14 +1242,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("season").g("th");
-						e("th").f().sx("start of the session").g("th");
-						e("th").f().sx("end of the session").g("th");
-						e("th").f().sx("ages").g("th");
-						e("th").f().sx("primary key").g("th");
-						e("th").f().sx("created").g("th");
-						e("th").f().sx("modified").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1232,42 +1255,10 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSeasonKey());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionStartDay());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionEndDay());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getAgeKeys());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCreated());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModified());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionId());
+									e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getSessionCompleteName());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -1405,6 +1396,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	**/
 	public void htmlSuggestSessionGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

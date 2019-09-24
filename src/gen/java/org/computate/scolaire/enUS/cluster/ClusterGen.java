@@ -7,6 +7,7 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -49,17 +52,20 @@ public abstract class ClusterGen<DEV> extends Object {
 	public static final String Cluster_UnNom = "a cluster";
 	public static final String Cluster_Ce = "this ";
 	public static final String Cluster_CeNom = "this cluster";
-	public static final String Cluster_Un = "an ";
+	public static final String Cluster_Un = "a ";
 	public static final String Cluster_LeNom = "the cluster";
 	public static final String Cluster_NomSingulier = "cluster";
 	public static final String Cluster_NomPluriel = "clusters";
 	public static final String Cluster_NomActuel = "current cluster";
-	public static final String Cluster_TousNom = "the clusters";
+	public static final String Cluster_TousNom = "all the clusters";
 	public static final String Cluster_RechercherTousNomPar = "search clusters by ";
 	public static final String Cluster_LesNoms = "the clusters";
 	public static final String Cluster_AucunNomTrouve = "no cluster found";
 	public static final String Cluster_NomVar = "cluster";
 	public static final String Cluster_DeNom = "of cluster";
+	public static final String Cluster_UnNomAdjectif = "a cluster";
+	public static final String Cluster_NomAdjectifSingulier = "cluster";
+	public static final String Cluster_NomAdjectifPluriel = "clusters";
 	public static final String Cluster_Couleur = "green";
 	public static final String Cluster_IconeGroupe = "regular";
 	public static final String Cluster_IconeNom = "fort-awesome";
@@ -177,7 +183,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.pkWrap.alreadyInitialized = true;
 	}
 	public Cluster setPk(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pk = Long.parseLong(o);
 		this.pkWrap.alreadyInitialized = true;
 		return (Cluster)this;

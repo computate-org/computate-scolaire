@@ -194,9 +194,37 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", jsonObject.getLong(entityVar)));
 						break;
-					case "blockTimeStart":
+					case "childKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", jsonObject.getLong(entityVar)));
+						break;
+					case "momKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getLong(entityVar), "momKeys", pk));
+						break;
+					case "dadKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", jsonObject.getLong(entityVar)));
+						break;
+					case "guardianKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getLong(entityVar), "guardianKeys", pk));
+						break;
+					case "paymentKeys":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getLong(entityVar), "paymentKeys", pk));
+						break;
+					case "blockStartTime":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("blockTimeStart", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("blockStartTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockEndTime":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockEndTime", jsonObject.getString(entityVar), pk));
+						break;
+					case "blockPricePerMonth":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("blockPricePerMonth", jsonObject.getString(entityVar), pk));
 						break;
 					case "enrollmentApproved":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -422,14 +450,140 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", requestJson.getLong(methodName)));
 						break;
-					case "setBlockTimeStart":
-						o2.setBlockTimeStart(requestJson.getString(methodName));
-						if(o2.getBlockTimeStart() == null) {
+					case "setChildKey":
+						o2.setChildKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						break;
+					case "removeChildKey":
+						o2.setChildKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", o2.getChildKey()));
+						break;
+					case "addMomKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "momKeys", pk));
+						break;
+					case "addAllMomKeys":
+						JsonArray addAllMomKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllMomKeysValues.getString(i), "momKeys", pk));
+						}
+						break;
+					case "setMomKeys":
+						JsonArray setMomKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "momKeys", pk));
+						for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setMomKeysValues.getString(i), "momKeys", pk));
+						}
+						break;
+					case "removeMomKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getLong(methodName), "momKeys", pk));
+						break;
+					case "addDadKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", requestJson.getString(methodName)));
+						break;
+					case "addAllDadKeys":
+						JsonArray addAllDadKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", addAllDadKeysValues.getString(i)));
+						}
+						break;
+					case "setDadKeys":
+						JsonArray setDadKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", requestJson.getJsonArray(methodName)));
+						for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", setDadKeysValues.getString(i)));
+						}
+						break;
+					case "removeDadKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", requestJson.getLong(methodName)));
+						break;
+					case "addGuardianKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "guardianKeys", pk));
+						break;
+					case "addAllGuardianKeys":
+						JsonArray addAllGuardianKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllGuardianKeysValues.getString(i), "guardianKeys", pk));
+						}
+						break;
+					case "setGuardianKeys":
+						JsonArray setGuardianKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "guardianKeys", pk));
+						for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setGuardianKeysValues.getString(i), "guardianKeys", pk));
+						}
+						break;
+					case "removeGuardianKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getLong(methodName), "guardianKeys", pk));
+						break;
+					case "addPaymentKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "paymentKeys", pk));
+						break;
+					case "addAllPaymentKeys":
+						JsonArray addAllPaymentKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", addAllPaymentKeysValues.getString(i), "paymentKeys", pk));
+						}
+						break;
+					case "setPaymentKeys":
+						JsonArray setPaymentKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getString(methodName), "paymentKeys", pk));
+						for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentKeys", setPaymentKeysValues.getString(i), "paymentKeys", pk));
+						}
+						break;
+					case "removePaymentKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", requestJson.getLong(methodName), "paymentKeys", pk));
+						break;
+					case "setBlockStartTime":
+						o2.setBlockStartTime(requestJson.getString(methodName));
+						if(o2.getBlockStartTime() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blockTimeStart"));
+							patchSqlParams.addAll(Arrays.asList(pk, "blockStartTime"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("blockTimeStart", o2.jsonBlockTimeStart(), pk));
+							patchSqlParams.addAll(Arrays.asList("blockStartTime", o2.jsonBlockStartTime(), pk));
+						}
+						break;
+					case "setBlockEndTime":
+						o2.setBlockEndTime(requestJson.getString(methodName));
+						if(o2.getBlockEndTime() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockEndTime"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockEndTime", o2.jsonBlockEndTime(), pk));
+						}
+						break;
+					case "setBlockPricePerMonth":
+						o2.setBlockPricePerMonth(requestJson.getString(methodName));
+						if(o2.getBlockPricePerMonth() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
 						}
 						break;
 					case "setEnrollmentApproved":
@@ -777,16 +931,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "blockKey_indexed_long";
 			case "blockKeys":
 				return "blockKeys_indexed_longs";
-			case "childKeys":
-				return "childKeys_indexed_longs";
+			case "childKey":
+				return "childKey_indexed_long";
 			case "momKeys":
 				return "momKeys_indexed_longs";
 			case "dadKeys":
 				return "dadKeys_indexed_longs";
 			case "guardianKeys":
 				return "guardianKeys_indexed_longs";
-			case "contactKeys":
-				return "contactKeys_indexed_longs";
+			case "paymentKeys":
+				return "paymentKeys_indexed_longs";
 			case "familyKey":
 				return "familyKey_indexed_long";
 			case "educationSort":
@@ -801,8 +955,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "sessionSort_indexed_int";
 			case "ageSort":
 				return "ageSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
+			case "childCompleteName":
+				return "childCompleteName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_date";
 			case "yearEnd":
@@ -815,22 +971,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "seasonWinter_indexed_boolean";
 			case "seasonEnrollmentFee":
 				return "seasonEnrollmentFee_indexed_double";
-			case "seasonNameComplete":
-				return "seasonNameComplete_indexed_string";
-			case "ageStartDay":
-				return "ageStartDay_indexed_date";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
+			case "sessionStartDay":
+				return "sessionStartDay_indexed_date";
 			case "sessionEndDay":
 				return "sessionEndDay_indexed_date";
-			case "ageNameComplete":
-				return "ageNameComplete_indexed_string";
+			case "ageCompleteName":
+				return "ageCompleteName_indexed_string";
 			case "ageStart":
 				return "ageStart_indexed_int";
 			case "ageEnd":
 				return "ageEnd_indexed_int";
-			case "blockTimeStart":
-				return "blockTimeStart_indexed_string";
-			case "blockTimeEnd":
-				return "blockTimeEnd_indexed_string";
+			case "blockStartTime":
+				return "blockStartTime_indexed_string";
+			case "blockEndTime":
+				return "blockEndTime_indexed_string";
 			case "blockPricePerMonth":
 				return "blockPricePerMonth_indexed_double";
 			case "blockSunday":
@@ -851,8 +1007,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "enrollmentApproved_indexed_boolean";
 			case "enrollmentImmunizations":
 				return "enrollmentImmunizations_indexed_boolean";
-			case "blocNameComplete":
-				return "blocNameComplete_indexed_string";
+			case "blocCompleteName":
+				return "blocCompleteName_indexed_string";
 			case "blocId":
 				return "blocId_indexed_string";
 			case "pageUrl":

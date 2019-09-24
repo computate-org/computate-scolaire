@@ -44,10 +44,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(cluster != null)
-			c.o("a cluster");
-		else if(listCluster == null || listCluster.size() == 0)
-			c.o("no cluster found");
+			c.o("clusters");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -314,28 +311,45 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		if(listCluster == null || listCluster.size() == 0) {
 
 			{ e("h1").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no cluster found").g("span");
-			} g("h1");
-		} else if(listCluster != null && listCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/cluster").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("clusters").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("no cluster found").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listCluster != null && listCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			Cluster o = listCluster.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/cluster").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contextIconCssClasses != null)
+							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				Cluster o = listCluster.get(0);
-				siteRequest_.setRequestPk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -345,12 +359,10 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("clusters").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("primary key").g("th");
-						e("th").f().sx("created").g("th");
-						e("th").f().sx("modified").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -361,21 +373,6 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/cluster/" + o.getPk();
 						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCreated());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModified());
-								} g("a");
-							} g("td");
 						} g("tr");
 					}
 				} g("tbody");
@@ -400,8 +397,11 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsClusterGenPage();
+		htmlSuggestClusterGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsClusterGenPage() {
@@ -468,7 +468,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues')); ")
+						.a("onclick", "patchCluster($('#patchClusterFormFilters'), $('#patchClusterFormValues'), function() {}, function() {}); ")
 						.f().sx("Modify the clusters")
 					.g("button");
 
@@ -506,6 +506,57 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		} g("div");
 
 		g("div");
+	}
+
+	/**
+	**/
+	public void htmlSuggestClusterGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/cluster").a("class", "").f();
+					e("i").a("class", "far fa-fort-awesome w3-padding-small ").f().g("i");
+					sx("see all the clusters");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshClusterGenPage").a("href", "/cluster").a("class", "").a("onclick", "patchClusterVals([], {}, function() { addGlow($('#refreshClusterGenPage')); }, function() { addError($('#refreshClusterGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the clusters");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search clusters: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormCluster").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestCluster w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestCluster")
+							.a("id", "suggestCluster")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestCluster( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListCluster')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListCluster").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

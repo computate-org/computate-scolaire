@@ -2,28 +2,31 @@ package org.computate.scolaire.enUS.page;
 
 import java.util.Date;
 import java.time.ZonedDateTime;
-import org.computate.scolaire.enUS.cluster.Cluster;
 import java.time.LocalDateTime;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import java.time.Instant;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import java.util.Locale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
+import java.time.ZoneOffset;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import java.time.Instant;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import java.util.Locale;
 import java.time.format.DateTimeFormatter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
-import java.time.ZoneOffset;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.PageLayout&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1461,7 +1464,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageImageWidthWrap.alreadyInitialized = true;
 	}
 	public PageLayout setPageImageWidth(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pageImageWidth = Integer.parseInt(o);
 		this.pageImageWidthWrap.alreadyInitialized = true;
 		return (PageLayout)this;
@@ -1528,7 +1531,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageImageHeightWrap.alreadyInitialized = true;
 	}
 	public PageLayout setPageImageHeight(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pageImageHeight = Integer.parseInt(o);
 		this.pageImageHeightWrap.alreadyInitialized = true;
 		return (PageLayout)this;

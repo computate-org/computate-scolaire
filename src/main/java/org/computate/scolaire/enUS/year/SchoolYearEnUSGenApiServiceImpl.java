@@ -399,24 +399,24 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						}
 						break;
 					case "setSchoolKey":
-						o2.setSchoolKey(requestJson.getLong(methodName));
+						o2.setSchoolKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_setA1);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
 						break;
 					case "removeSchoolKey":
-						o2.setSchoolKey(requestJson.getLong(methodName));
+						o2.setSchoolKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", o2.getSchoolKey()));
 						break;
 					case "addSeasonKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getLong(methodName)));
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getString(methodName)));
 						break;
 					case "addAllSeasonKeys":
 						JsonArray addAllSeasonKeysValues = requestJson.getJsonArray(methodName);
 						for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", addAllSeasonKeysValues.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", addAllSeasonKeysValues.getString(i)));
 						}
 						break;
 					case "setSeasonKeys":
@@ -425,7 +425,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getJsonArray(methodName)));
 						for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
-							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", setSeasonKeysValues.getLong(i)));
+							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", setSeasonKeysValues.getString(i)));
 						}
 						break;
 					case "removeSeasonKeys":
@@ -779,16 +779,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "schoolSort_indexed_int";
 			case "yearSort":
 				return "yearSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_date";
 			case "yearEnd":
 				return "yearEnd_indexed_date";
-			case "yearNameShort":
-				return "yearNameShort_indexed_string";
-			case "yearNameComplete":
-				return "yearNameComplete_indexed_string";
+			case "yearShortName":
+				return "yearShortName_indexed_string";
+			case "yearCompleteName":
+				return "yearCompleteName_indexed_string";
 			case "yearId":
 				return "yearId_indexed_string";
 			case "pageUrl":

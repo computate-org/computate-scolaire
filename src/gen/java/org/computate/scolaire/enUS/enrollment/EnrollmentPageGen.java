@@ -15,123 +15,123 @@ import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseEnrollmentPage = false;
+	protected boolean alreadyInitializedEnrollmentPage = false;
 
-	public EnrollmentPage initLoinEnrollmentPage(SiteRequestEnUS requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseEnrollmentPage) {
-			dejaInitialiseEnrollmentPage = true;
-			initLoinEnrollmentPage();
+	public EnrollmentPage initDeepEnrollmentPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedEnrollmentPage) {
+			alreadyInitializedEnrollmentPage = true;
+			initDeepEnrollmentPage();
 		}
 		return (EnrollmentPage)this;
 	}
 
-	public void initLoinEnrollmentPage() {
-		super.initLoinEnrollmentGenPage(requeteSite_);
+	public void initDeepEnrollmentPage() {
+		super.initDeepEnrollmentGenPage(siteRequest_);
 		initEnrollmentPage();
 	}
 
 	public void initEnrollmentPage() {
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinEnrollmentPage(requeteSite_);
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepEnrollmentPage(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteEnrollmentPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteEnrollmentGenPage(requeteSite_);
+	public void siteRequestEnrollmentPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestEnrollmentGenPage(siteRequest_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteEnrollmentPage(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestEnrollmentPage(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirEnrollmentPage(v);
+				o = obtainEnrollmentPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirEnrollmentPage(String var) {
+	public Object obtainEnrollmentPage(String var) {
 		EnrollmentPage oEnrollmentPage = (EnrollmentPage)this;
 		switch(var) {
 			default:
-				return super.obtenirEnrollmentGenPage(var);
+				return super.obtainEnrollmentGenPage(var);
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	@Override public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerEnrollmentPage(v, val);
+				o = attributeEnrollmentPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerEnrollmentPage(String var, Object val) {
+	public Object attributeEnrollmentPage(String var, Object val) {
 		EnrollmentPage oEnrollmentPage = (EnrollmentPage)this;
 		switch(var) {
 			default:
-				return super.attribuerEnrollmentGenPage(var, val);
+				return super.attributeEnrollmentGenPage(var, val);
 		}
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	@Override public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirEnrollmentPage(v, val);
+					o = defineEnrollmentPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirEnrollmentPage(String var, String val) {
+	public Object defineEnrollmentPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirEnrollmentGenPage(var, val);
+				return super.defineEnrollmentGenPage(var, val);
 		}
 	}
 

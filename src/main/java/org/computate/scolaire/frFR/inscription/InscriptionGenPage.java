@@ -89,11 +89,21 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsInscriptionGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/MerePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PerePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/GardienPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PaiementPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptInscriptionGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereInscriptionScolaireBlocCles($('#formInscriptionScolaireBlocCles'), $('#listInscriptionScolaireBlocCles')); ");
+		tl(1, "suggereInscriptionScolaireEnfantCle($('#formInscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle')); ");
+		tl(1, "suggereInscriptionScolaireMereCles($('#formInscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles')); ");
+		tl(1, "suggereInscriptionScolairePereCles($('#formInscriptionScolairePereCles'), $('#listInscriptionScolairePereCles')); ");
+		tl(1, "suggereInscriptionScolaireGardienCles($('#formInscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles')); ");
+		tl(1, "suggereInscriptionScolairePaiementCles($('#formInscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles')); ");
 		l("});");
 	}
 
@@ -208,6 +218,93 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					} g("form");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							LocalTime val = o.getBlocHeureFin();
+
+							{ e("div").a("class", "w3-cell-row w3-purple ").f();
+								e("label").a("for", "Page_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "text")
+										.a("class", "w3-input w3-border timepicker ")
+										.a("placeholder", "HH:MM AM")
+										.a("id", "Page_blocHeureFin")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $(\"#InscriptionScolaireForm :input[name='pk']\").val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); } ")
+										.fg();
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#Page_blocHeureFin')); $('#Page_blocHeureFin').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=\"pk\"]').val() }], 'setBlocHeureFin', null, function() { ajouterLueur($('#Page_blocHeureFin')); }, function() { ajouterErreur($('#Page_blocHeureFin')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-purple ").f();
+								e("label").a("for", "Page_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "prix par mois")
+										.a("class", "setBlocPrixParMois w3-input w3-border ")
+										.a("name", "setBlocPrixParMois")
+										.a("id", "Page_blocPrixParMois")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', $(this).val(), function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
+										.a("value", o.strBlocPrixParMois())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#Page_blocPrixParMois')); $('#Page_blocPrixParMois').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=\"pk\"]').val() }], 'setBlocPrixParMois', null, function() { ajouterLueur($('#Page_blocPrixParMois')); }, function() { ajouterErreur($('#Page_blocPrixParMois')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -271,86 +368,301 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("enfants").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strEnfantCles()).g("span");
+					{ e("form").a("action", "").a("id", "formInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurInscriptionCles")
+							.a("class", "valeurInscriptionCles ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+									e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+									sx("enfants");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier un enfant a cette inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "enfants")
+											.a("title", "La clé primaire des enfants dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setEnfantCle")
+											.a("id", "Page_enfantCle")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereInscriptionScolaireEnfantCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_enfantCle')); }); ")
+											.f().sx("ajouter un enfant")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
+					} g("form");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("mères").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strMereCles()).g("span");
+					{ e("form").a("action", "").a("id", "formInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurInscriptionCles")
+							.a("class", "valeurInscriptionCles ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+									e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+									sx("mères");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier  a cette inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "mères")
+											.a("title", "La clé primaire des mères dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setMereCles")
+											.a("id", "Page_mereCles")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereInscriptionScolaireMereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+											.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_mereCles')); }); ")
+											.f().sx("ajouter une mère")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
+					} g("form");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("pères").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strPereCles()).g("span");
+					{ e("form").a("action", "").a("id", "formInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurInscriptionCles")
+							.a("class", "valeurInscriptionCles ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+									e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+									sx("pères");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier  a cette inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "pères")
+											.a("title", "La clé primaire des pères dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setPereCles")
+											.a("id", "Page_pereCles")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereInscriptionScolairePereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePereCles'), $('#listInscriptionScolairePereCles')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+											.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_pereCles')); }); ")
+											.f().sx("ajouter un père")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
+					} g("form");
 				} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("gardiens").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strGardienCles()).g("span");
+					{ e("form").a("action", "").a("id", "formInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurInscriptionCles")
+							.a("class", "valeurInscriptionCles ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+									e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
+									sx("gardiens");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier  a cette inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "gardiens")
+											.a("title", "La clé primaire des gardiens dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setGardienCles")
+											.a("id", "Page_gardienCles")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereInscriptionScolaireGardienCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_gardienCles')); }); ")
+											.f().sx("ajouter un gardien")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
+					} g("form");
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-purple ").f();
-							e("label").a("class", "").f().sx("contacts d'urgence").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strContactCles()).g("span");
+					{ e("form").a("action", "").a("id", "formInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurInscriptionCles")
+							.a("class", "valeurInscriptionCles ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+									e("i").a("class", "fas fa-dollar w3-padding-small ").f().g("i");
+									sx("paiements");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier  a cette inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "paiements")
+											.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+											.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setPaiementCles")
+											.a("id", "Page_paiementCles")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereInscriptionScolairePaiementCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePaiementCles").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+											.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_paiementCles')); }); ")
+											.f().sx("ajouter un paiement")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("div");
+					} g("form");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -550,6 +862,73 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "POST_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "POST_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $(\"#InscriptionScolaireForm :input[name='pk']\").val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#POST_blocHeureFin')); }, function() { ajouterErreur($('#POST_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "POST_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "valeurBlocPrixParMois w3-input w3-border ")
+									.a("name", "blocPrixParMois")
+									.a("id", "POST_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -613,86 +992,301 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("enfants").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+								sx("enfants");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier un enfant a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enfants")
+										.a("title", "La clé primaire des enfants dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnfantCle")
+										.a("id", "POST_enfantCle")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireEnfantCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_enfantCle')); }); ")
+										.f().sx("ajouter un enfant")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("mères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strMereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+								e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+								sx("mères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "mères")
+										.a("title", "La clé primaire des mères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setMereCles")
+										.a("id", "POST_mereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireMereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_mereCles')); }); ")
+										.f().sx("ajouter une mère")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("pères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strPereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+								e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+								sx("pères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "pères")
+										.a("title", "La clé primaire des pères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPereCles")
+										.a("id", "POST_pereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePereCles'), $('#listInscriptionScolairePereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_pereCles')); }); ")
+										.f().sx("ajouter un père")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("gardiens").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGardienCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+								e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
+								sx("gardiens");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "gardiens")
+										.a("title", "La clé primaire des gardiens dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setGardienCles")
+										.a("id", "POST_gardienCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireGardienCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_gardienCles')); }); ")
+										.f().sx("ajouter un gardien")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("contacts d'urgence").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strContactCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fas fa-dollar w3-padding-small ").f().g("i");
+								sx("paiements");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "paiements")
+										.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPaiementCles")
+										.a("id", "POST_paiementCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePaiementCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePaiementCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_paiementCles')); }); ")
+										.f().sx("ajouter un paiement")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -890,6 +1484,73 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "PATCH_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "PATCH_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $(\"#InscriptionScolaireForm :input[name='pk']\").val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#PATCH_blocHeureFin')); }, function() { ajouterErreur($('#PATCH_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "PATCH_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "setBlocPrixParMois w3-input w3-border ")
+									.a("name", "setBlocPrixParMois")
+									.a("id", "PATCH_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -953,86 +1614,301 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("enfants").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+								sx("enfants");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier un enfant a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enfants")
+										.a("title", "La clé primaire des enfants dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnfantCle")
+										.a("id", "PATCH_enfantCle")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireEnfantCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_enfantCle')); }); ")
+										.f().sx("ajouter un enfant")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("mères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strMereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+								e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+								sx("mères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "mères")
+										.a("title", "La clé primaire des mères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setMereCles")
+										.a("id", "PATCH_mereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireMereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_mereCles')); }); ")
+										.f().sx("ajouter une mère")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("pères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strPereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+								e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+								sx("pères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "pères")
+										.a("title", "La clé primaire des pères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPereCles")
+										.a("id", "PATCH_pereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePereCles'), $('#listInscriptionScolairePereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_pereCles')); }); ")
+										.f().sx("ajouter un père")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("gardiens").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGardienCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+								e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
+								sx("gardiens");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "gardiens")
+										.a("title", "La clé primaire des gardiens dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setGardienCles")
+										.a("id", "PATCH_gardienCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireGardienCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_gardienCles')); }); ")
+										.f().sx("ajouter un gardien")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("contacts d'urgence").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strContactCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fas fa-dollar w3-padding-small ").f().g("i");
+								sx("paiements");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "paiements")
+										.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPaiementCles")
+										.a("id", "PATCH_paiementCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePaiementCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePaiementCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_paiementCles')); }); ")
+										.f().sx("ajouter un paiement")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1123,6 +1999,21 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strBlocNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1230,6 +2121,73 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocHeureFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						LocalTime val = o.getBlocHeureFin();
+
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "Recherche_blocHeureFin").a("class", "").f().sx("heure fin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border timepicker ")
+									.a("placeholder", "HH:MM AM")
+									.a("id", "Recherche_blocHeureFin")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $(\"#InscriptionScolaireForm :input[name='pk']\").val() }], 'setBlocHeureFin', s, function() { ajouterLueur($('#Recherche_blocHeureFin')); }, function() { ajouterErreur($('#Recherche_blocHeureFin')); }); } ")
+									.fg();
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireBlocPrixParMois").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", "Recherche_blocPrixParMois").a("class", "").f().sx("prix par mois").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "prix par mois")
+									.a("class", "valeurBlocPrixParMois w3-input w3-border ")
+									.a("name", "blocPrixParMois")
+									.a("id", "Recherche_blocPrixParMois")
+									.a("value", o.strBlocPrixParMois())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -1293,86 +2251,301 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("enfants").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireEnfantCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+								sx("enfants");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier un enfant a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enfants")
+										.a("title", "La clé primaire des enfants dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnfantCle")
+										.a("id", "Recherche_enfantCle")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireEnfantCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_enfantCle')); }); ")
+										.f().sx("ajouter un enfant")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("mères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strMereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireMereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+								e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+								sx("mères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "mères")
+										.a("title", "La clé primaire des mères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setMereCles")
+										.a("id", "Recherche_mereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireMereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_mereCles')); }); ")
+										.f().sx("ajouter une mère")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("pères").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strPereCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePereCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+								e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+								sx("pères");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "pères")
+										.a("title", "La clé primaire des pères dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPereCles")
+										.a("id", "Recherche_pereCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePereCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePereCles'), $('#listInscriptionScolairePereCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_pereCles')); }); ")
+										.f().sx("ajouter un père")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("gardiens").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGardienCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolaireGardienCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+								e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
+								sx("gardiens");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "gardiens")
+										.a("title", "La clé primaire des gardiens dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setGardienCles")
+										.a("id", "Recherche_gardienCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolaireGardienCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_gardienCles')); }); ")
+										.f().sx("ajouter un gardien")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-purple ").f();
-						e("label").a("class", "").f().sx("contacts d'urgence").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strContactCles()).g("span");
+				{ e("form").a("action", "").a("id", "formInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurInscriptionCles")
+						.a("class", "valeurInscriptionCles ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereInscriptionScolairePaiementCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fas fa-dollar w3-padding-small ").f().g("i");
+								sx("paiements");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "paiements")
+										.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+										.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPaiementCles")
+										.a("id", "Recherche_paiementCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereInscriptionScolairePaiementCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePaiementCles").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_paiementCles')); }); ")
+										.f().sx("ajouter un paiement")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1466,6 +2639,21 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strBlocNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodyInscriptionGenPage() {
@@ -1527,20 +2715,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("blocs").g("th");
-						e("th").f().sx("mères").g("th");
-						e("th").f().sx("gardiens").g("th");
-						e("th").f().sx("famille").g("th");
-						e("th").f().sx("heure début").g("th");
-						e("th").f().sx("approuvé").g("th");
-						e("th").f().sx("enfants").g("th");
-						e("th").f().sx("pères").g("th");
-						e("th").f().sx("contacts d'urgence").g("th");
-						e("th").f().sx("vacciné").g("th");
-						e("th").f().sx("clé primaire").g("th");
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("modifié").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1553,72 +2728,10 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getBlocCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getMereCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getGardienCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getFamilleCle());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlocHeureDebut());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getInscriptionApprouve());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEnfantCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPereCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getContactCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getInscriptionImmunisations());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getBlocId());
+									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getBlocNomComplet());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -1756,6 +2869,43 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	 * Var.enUS: htmlSuggestEnrollmentGenPage
+	 * r: "/inscription"
+	 * r.enUS: "/enrollment"
+	 * r: "voir toutes les inscriptions"
+	 * r.enUS: "see all the enrollments"
+	 * r: "rechargerInscriptionGenPage"
+	 * r.enUS: "refreshEnrollmentGenPage"
+	 * r: "recharger toutes les inscriptions"
+	 * r.enUS: "refresh all the enrollments"
+	 * r: "rechercher inscriptions : "
+	 * r.enUS: "search enrollments: "
+	 * r: "suggereFormInscriptionScolaire"
+	 * r.enUS: "suggestFormSchoolEnrollment"
+	 * r: "rechercher inscriptions"
+	 * r.enUS: "search enrollments"
+	 * r: "suggereInscriptionScolaire w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSchoolEnrollment w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereInscriptionScolaire"
+	 * r.enUS: "suggestSchoolEnrollment"
+	 * r: patchInscriptionScolaireVals
+	 * r.enUS: patchSchoolEnrollmentVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerInscriptionGenPage
+	 * r.enUS: refreshEnrollmentGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereInscriptionScolaireObjetSuggere
+	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
+	 * r: '#suggereListInscriptionScolaire'
+	 * r.enUS: '#suggestListSchoolEnrollment'
+	 * r: "suggereListInscriptionScolaire"
+	 * r.enUS: "suggestListSchoolEnrollment"
+	**/
 	public void htmlSuggereInscriptionGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

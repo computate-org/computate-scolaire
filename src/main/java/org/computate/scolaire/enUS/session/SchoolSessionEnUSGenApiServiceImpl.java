@@ -785,8 +785,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_date";
 			case "yearEnd":
@@ -799,16 +799,16 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "seasonWinter_indexed_boolean";
 			case "seasonEnrollmentFee":
 				return "seasonEnrollmentFee_indexed_double";
-			case "seasonNameComplete":
-				return "seasonNameComplete_indexed_string";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
 			case "seasonEnd":
 				return "seasonEnd_indexed_date";
 			case "sessionStartDay":
 				return "sessionStartDay_indexed_date";
 			case "sessionEndDay":
 				return "sessionEndDay_indexed_date";
-			case "sessionNameComplete":
-				return "sessionNameComplete_indexed_string";
+			case "sessionCompleteName":
+				return "sessionCompleteName_indexed_string";
 			case "sessionId":
 				return "sessionId_indexed_string";
 			case "pageUrl":

@@ -334,19 +334,24 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public void  menu() {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageHomeUri).f();
-	//				e("img").a("alt", "").a("src", staticBaseUrl, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-					e("br").fg();
+				e("a").a("class", "").a("href", pageHomeUri).f();
 					e("span").a("class", "site-menu-item").f();
 						sx("Home");
 					g("span");
 				g("a");
 			g("div");
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+						e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+						sx("Schools");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					htmlSuggestSchoolGenPage();
+				} g("div");
+			} g("div");
 			if(siteRequest_.getUserId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUserUri).f(); 
-	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
 						e("span").a("class", "site-menu-item").f();
 							sx("Login");
 						g("span");
@@ -355,18 +360,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 			}
 			if(siteRequest_.getUserId() != null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUserUri).f(); 
-	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
 						e("span").a("class", "site-menu-item").f();
 							sx(siteRequest_.getUserName());
 						g("span");
 					g("a");
 				g("div");
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageLogoutUri).f();
-	//					e("img").a("alt", "").a("src", staticBaseUrl, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageLogoutUri).f();
 						e("span").a("class", "site-menu-item").f();
 							sx("Logout");
 						g("span");
@@ -374,6 +375,56 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("div");
 			}
 		g("div");
+	}
+
+	public void  htmlSuggestSchoolGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/school").a("class", "").f();
+					e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+					sx("see all the schools");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshSchoolGenPage").a("href", "/school").a("class", "").a("onclick", "patchSchoolVals([], {}, function() { addGlow($('#refreshSchoolGenPage')); }, function() { addError($('#refreshSchoolGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the schools");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search schools: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSchool").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "search schools")
+							.a("class", "suggestSchool w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSchool")
+							.a("id", "suggestSchool")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSchoolObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchool')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchool").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 	public void  partagerPage() {

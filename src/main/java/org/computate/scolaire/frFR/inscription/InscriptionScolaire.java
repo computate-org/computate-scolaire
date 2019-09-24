@@ -11,6 +11,7 @@ import org.computate.scolaire.frFR.age.AgeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -137,7 +138,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.inscriptionCles
 	 * HtmlLigne: 5
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des blocs dans la base de données. 
 	 * Description.enUS: The primary key of the school blocks in the database. 
 	 * NomAffichage.frFR: blocs
@@ -147,18 +148,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: childKeys
+	 * Var.enUS: childKey
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: EnfantScolaire.inscriptionCles
 	 * HtmlLigne: 5
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: enfants
 	 * NomAffichage.enUS: children
-	 */               
-	protected void _enfantCles(List<Long> o) {}
+	 */              
+	protected void _enfantCle(Couverture<Long> c) {}
 
 	/**
 	 * {@inheritDoc}
@@ -167,7 +168,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: MereScolaire.inscriptionCles
 	 * HtmlLigne: 6
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des mères dans la base de données. 
 	 * Description.enUS: The primary key of the school moms in the database. 
 	 * NomAffichage.frFR: mères
@@ -182,7 +183,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: PereScolaire.inscriptionCles
 	 * HtmlLigne: 6
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des pères dans la base de données. 
 	 * Description.enUS: The primary key of the school dads in the database. 
 	 * NomAffichage.frFR: pères
@@ -197,7 +198,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: GardienScolaire.inscriptionCles
 	 * HtmlLigne: 7
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
 	 * Description.enUS: The primary key of the school gardians in the database. 
 	 * NomAffichage.frFR: gardiens
@@ -207,18 +208,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: contactKeys
+	 * Var.enUS: paymentKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: ContactScolaire.inscriptionCles
+	 * Attribuer: PaiementScolaire.inscriptionCles
 	 * HtmlLigne: 7
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
-	 * NomAffichage.frFR: contacts d'urgence
-	 * NomAffichage.enUS: emergency contacts
+	 * NomAffichage.frFR: paiements
+	 * NomAffichage.enUS: payments
 	 */               
-	protected void _contactCles(List<Long> o) {}
+	protected void _paiementCles(List<Long> o) {}
 
 	/**
 	 * {@inheritDoc}
@@ -227,7 +228,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: FamilleScolaire.inscriptionCles
 	 * HtmlLigne: 8
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire de la famille dans la base de données. 
 	 * Description.enUS: The primary key of the school family in the database. 
 	 * NomAffichage.frFR: famille
@@ -301,7 +302,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: inscriptionCles
 	 * r.enUS: enrollmentKeys
 	 * r: BlocScolaire
-	 * r.enUS: BlockAge
+	 * r.enUS: SchoolBlock
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
@@ -327,8 +328,62 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	}
 
 	/**
+	 * Var.enUS: childSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: EnfantScolaire
+	 * r.enUS: SchoolChild
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: enfantCle
+	 * r.enUS: childKey
+	 * Ignorer: true
+	 */
+	protected void _enfantRecherche(ListeRecherche<EnfantScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+		l.addFilterQuery("pk_indexed_long:" + enfantCle);
+		l.setC(EnfantScolaire.class);
+		l.setStocker(true);
+	}
+
+	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: child_
+	 * r: enfantRecherche
+	 * r.enUS: childSearch
+	 * Ignorer: true
+	 */   
+	protected void _enfant_(Couverture<EnfantScolaire> c) {
+		if(enfantRecherche.size() > 0) {
+			c.o(enfantRecherche.get(0));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childCompleteName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EnfantNomComplet
+	 * r.enUS: ChildCompleteName
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: PersonneNomComplet
+	 * r.enUS: PersonCompleteName
+	 */   
+	protected void _enfantNomComplet(Couverture<String> c) {
+		if(enfant_ != null)
+			c.o((String)enfant_.getPersonneNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -336,7 +391,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: bloc
 	 * r.enUS: block
 	 */   
@@ -449,11 +504,11 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: seasonNameComplete
+	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: SaisonNomComplet
-	 * r.enUS: SeasonNameComplete
+	 * r.enUS: SeasonCompleteName
 	 * r: bloc
 	 * r.enUS: block
 	 */
@@ -464,7 +519,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ageStartDay
+	 * Var.enUS: sessionStartDay
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
@@ -498,11 +553,11 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ageNameComplete
+	 * Var.enUS: ageCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: AgeNomComplet
-	 * r.enUS: AgeNameComplete
+	 * r.enUS: AgeCompleteName
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
@@ -547,14 +602,16 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blockTimeStart
+	 * Var.enUS: blockStartTime
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: heure début
 	 * NomAffichage.enUS: start time
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
+	 * r: bloc
+	 * r.enUS: block
 	 * r: BlocHeureDebut
 	 * r.enUS: BlockStartTime
 	 */                   
@@ -565,11 +622,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blockTimeEnd
+	 * Var.enUS: blockEndTime
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: heure fin
 	 * NomAffichage.enUS: end time
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 2
 	 * r: bloc
 	 * r.enUS: block
 	 * r: BlocHeureFin
@@ -587,6 +647,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: prix par mois
 	 * NomAffichage.enUS: price per month
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
 	 * r: bloc
 	 * r.enUS: block
 	 * r: BlocPrixParMois
@@ -725,7 +788,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: approved
 	 * Definir: true
 	 * HtmlLigne: 9
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 */                   
 	protected void _inscriptionApprouve(Couverture<Boolean> c) {
 	}
@@ -739,23 +802,24 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: immunized
 	 * Definir: true
 	 * HtmlLigne: 9
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
 	}
 
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: blocNameComplete
+	 * Var.enUS: blocCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 1
 	 * r: %s - %s %s %s/mois %s
 	 * r.enUS: %s - %s %s %s/month %s
 	 * r: strBlocHeureDebut
-	 * r.enUS: strBlockTimeStart
+	 * r.enUS: strBlockStartTime
 	 * r: strBlocHeureFin
-	 * r.enUS: strBlockTimeEnd
+	 * r.enUS: strBlockEndTime
 	 * r: strBlocPrixParMois
 	 * r.enUS: strBlockPricePerMonth
 	 * r: blocPrixParMois
@@ -775,7 +839,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: blocSamedi
 	 * r.enUS: blockSaturday
 	 * r: ageNomComplet
-	 * r.enUS: ageNameComplete
+	 * r.enUS: ageCompleteName
 	 */  
 	protected void _blocNomComplet(Couverture<String> c) {
 		String o;
@@ -800,13 +864,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r.enUS: blocCompleteName
 	 */            
 	protected void _blocId(Couverture<String> c) {
 		if(blocNomComplet != null) {
@@ -851,7 +915,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r.enUS: blocCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(blocNomComplet);

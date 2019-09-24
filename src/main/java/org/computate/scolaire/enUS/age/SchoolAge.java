@@ -66,9 +66,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(session != null)
-			c.o((String)session.getSchoolNameComplete());
+			c.o((String)session.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
@@ -101,9 +101,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session.getSeasonEnrollmentFee());
 	}
 
-	protected void _seasonNameComplete(Wrap<String> c) {
+	protected void _seasonCompleteName(Wrap<String> c) {
 		if(session != null)
-			c.o(session.getSeasonNameComplete());
+			c.o(session.getSeasonCompleteName());
 	}
 
 	protected void _seasonEnd(Wrap<LocalDate> c) {
@@ -121,9 +121,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o((LocalDate)session.getSessionEndDay());
 	}
 
-	protected void _sessionNameComplete(Wrap<String> c) {
+	protected void _sessionCompleteName(Wrap<String> c) {
 		if(session != null)
-			c.o(session.getSessionNameComplete());
+			c.o(session.getSessionCompleteName());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
@@ -132,15 +132,15 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 	protected void _ageEnd(Wrap<Integer> c) {
 	}
 
-	protected void _ageNameComplete(Wrap<String> c) {
+	protected void _ageCompleteName(Wrap<String> c) {
 		String o;
-		o = String.format("ages %s - %s during %s", strAgeStart(), strAgeEnd(), sessionNameComplete);
+		o = String.format("ages %s - %s during %s", strAgeStart(), strAgeEnd(), sessionCompleteName);
 		c.o(o);
 	}
 
 	protected void _ageId(Wrap<String> c) {
-		if(ageNameComplete != null) {
-			String s = Normalizer.normalize(ageNameComplete, Normalizer.Form.NFD);
+		if(ageCompleteName != null) {
+			String s = Normalizer.normalize(ageCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -161,7 +161,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(ageNameComplete);
+		c.o(ageCompleteName);
 	}
 
 	@Override()

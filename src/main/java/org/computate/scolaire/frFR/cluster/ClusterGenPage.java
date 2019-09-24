@@ -44,10 +44,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(cluster != null)
-			c.o("un cluster");
-		else if(listeCluster == null || listeCluster.size() == 0)
-			c.o("aucun cluster trouvé");
+			c.o("clusters");
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
@@ -314,28 +311,45 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 		if(listeCluster == null || listeCluster.size() == 0) {
 
 			{ e("h1").f();
-				if(contexteIconeClassesCss != null)
-					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("aucun cluster trouvé").g("span");
-			} g("h1");
-		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/cluster").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("clusters").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("aucun cluster trouvé").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			Cluster o = listeCluster.get(0);
+			requeteSite_.setRequetePk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/cluster").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contexteIconeClassesCss != null)
+							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				Cluster o = listeCluster.get(0);
-				requeteSite_.setRequetePk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -345,12 +359,10 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("clusters").g("span");
 			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("clé primaire").g("th");
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("modifié").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -361,21 +373,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
 						String uri = "/cluster/" + o.getPk();
 						{ e("tr").f();
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
-								} g("a");
-							} g("td");
 						} g("tr");
 					}
 				} g("tbody");
@@ -400,8 +397,11 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				}
 
 			} g("div");
+
 		}
 		htmlBodyFormsClusterGenPage();
+		htmlSuggereClusterGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsClusterGenPage() {
@@ -468,7 +468,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchCluster($('#patchClusterFormulaireFiltres'), $('#patchClusterFormulaireValeurs')); ")
+						.a("onclick", "patchCluster($('#patchClusterFormulaireFiltres'), $('#patchClusterFormulaireValeurs'), function() {}, function() {}); ")
 						.f().sx("Modifier des clusters")
 					.g("button");
 
@@ -506,6 +506,93 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	/**
+	 * Var.enUS: htmlSuggestClusterGenPage
+	 * r: "/cluster"
+	 * r.enUS: "/cluster"
+	 * r: "voir tous les clusters"
+	 * r.enUS: "see all the clusters"
+	 * r: "rechargerClusterGenPage"
+	 * r.enUS: "refreshClusterGenPage"
+	 * r: "recharger tous les clusters"
+	 * r.enUS: "refresh all the clusters"
+	 * r: "rechercher clusters : "
+	 * r.enUS: "search clusters: "
+	 * r: "suggereFormCluster"
+	 * r.enUS: "suggestFormCluster"
+	 * r: "rechercher clusters"
+	 * r.enUS: "search clusters"
+	 * r: "suggereCluster w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestCluster w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereCluster"
+	 * r.enUS: "suggestCluster"
+	 * r: patchClusterVals
+	 * r.enUS: patchClusterVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerClusterGenPage
+	 * r.enUS: refreshClusterGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereCluster
+	 * r.enUS: suggestCluster
+	 * r: ':'
+	 * r.enUS: ':'
+	 * r: '#suggereListCluster'
+	 * r.enUS: '#suggestListCluster'
+	 * r: "suggereListCluster"
+	 * r.enUS: "suggestListCluster"
+	**/
+	public void htmlSuggereClusterGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/cluster").a("class", "").f();
+					e("i").a("class", "far fa-fort-awesome w3-padding-small ").f().g("i");
+					sx("voir tous les clusters");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "rechargerClusterGenPage").a("href", "/cluster").a("class", "").a("onclick", "patchClusterVals([], {}, function() { ajouterLueur($('#rechargerClusterGenPage')); }, function() { ajouterErreur($('#rechargerClusterGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("recharger tous les clusters");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("rechercher clusters : ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggereFormCluster").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "rechercher clusters")
+							.a("class", "suggereCluster w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggereCluster")
+							.a("id", "suggereCluster")
+							.a("autocomplete", "off")
+							.a("oninput", "suggereCluster( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggereListCluster')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListCluster").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

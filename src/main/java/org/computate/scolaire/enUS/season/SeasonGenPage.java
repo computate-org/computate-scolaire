@@ -53,8 +53,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolSeason != null && schoolSeason.getSeasonNameComplete() != null)
-			c.o(schoolSeason.getSeasonNameComplete());
+		if(schoolSeason != null && schoolSeason.getSeasonCompleteName() != null)
+			c.o(schoolSeason.getSeasonCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -62,8 +62,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolSeason != null && schoolSeason.getSeasonNameComplete() != null)
-			c.o(schoolSeason.getSeasonNameComplete());
+		if(schoolSeason != null && schoolSeason.getSeasonCompleteName() != null)
+			c.o(schoolSeason.getSeasonCompleteName());
 		else if(schoolSeason != null)
 			c.o("");
 		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
@@ -1102,6 +1102,21 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSeasonCompleteName()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	public void htmlFormSearchSchoolSeason(SchoolSeason o) {
@@ -1428,6 +1443,21 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSeasonCompleteName()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodySeasonGenPage() {
@@ -1489,16 +1519,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("year").g("th");
-						e("th").f().sx("start of the season").g("th");
-						e("th").f().sx("summer").g("th");
-						e("th").f().sx("winter").g("th");
-						e("th").f().sx("enrollment fee").g("th");
-						e("th").f().sx("sessions").g("th");
-						e("th").f().sx("primary key").g("th");
-						e("th").f().sx("created").g("th");
-						e("th").f().sx("modified").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1511,52 +1532,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getYearKey());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSeasonStartDay());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSeasonSummer());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSeasonWinter());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSeasonEnrollmentFee());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionKeys());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCreated());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModified());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSeasonId());
+									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getSeasonCompleteName());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -1694,6 +1673,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	**/
 	public void htmlSuggestSeasonGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

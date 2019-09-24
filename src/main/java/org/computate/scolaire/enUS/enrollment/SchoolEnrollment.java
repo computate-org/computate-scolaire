@@ -10,6 +10,7 @@ import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
@@ -35,7 +36,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _blockKeys(List<Long> o) {}
 
-	protected void _childKeys(List<Long> o) {}
+	protected void _childKey(Wrap<Long> c) {}
 
 	protected void _momKeys(List<Long> o) {}
 
@@ -43,7 +44,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _guardianKeys(List<Long> o) {}
 
-	protected void _contactKeys(List<Long> o) {}
+	protected void _paymentKeys(List<Long> o) {}
 
 	protected void _familyKey(Wrap<Long> c) {
 	}
@@ -75,7 +76,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _blockSearch(SearchList<SchoolBlock> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
-		l.setC(BlockAge.class);
+		l.setC(SchoolBlock.class);
 		l.setStore(true);
 	}
 
@@ -85,9 +86,28 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _childSearch(SearchList<SchoolChild> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+		l.addFilterQuery("pk_indexed_long:" + childKey);
+		l.setC(SchoolChild.class);
+		l.setStore(true);
+	}
+
+	protected void _child_(Wrap<SchoolChild> c) {
+		if(childSearch.size() > 0) {
+			c.o(childSearch.get(0));
+		}
+	}
+
+	protected void _childCompleteName(Wrap<String> c) {
+		if(child_ != null)
+			c.o((String)child_.getPersonCompleteName());
+	}
+
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(block != null)
-			c.o((String)block.getSchoolNameComplete());
+			c.o((String)block.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
@@ -120,12 +140,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block.getSeasonEnrollmentFee());
 	}
 
-	protected void _seasonNameComplete(Wrap<String> c) {
+	protected void _seasonCompleteName(Wrap<String> c) {
 		if(block != null)
-			c.o(block.getSeasonNameComplete());
+			c.o(block.getSeasonCompleteName());
 	}
 
-	protected void _ageStartDay(Wrap<LocalDate> c) {
+	protected void _sessionStartDay(Wrap<LocalDate> c) {
 		if(block != null)
 			c.o((LocalDate)block.getSessionStartDay());
 	}
@@ -135,9 +155,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o((LocalDate)block.getSessionEndDay());
 	}
 
-	protected void _ageNameComplete(Wrap<String> c) {
+	protected void _ageCompleteName(Wrap<String> c) {
 		if(block != null)
-			c.o(block.getAgeNameComplete());
+			c.o(block.getAgeCompleteName());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
@@ -150,12 +170,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block.getAgeEnd());
 	}
 
-	protected void _blockTimeStart(Wrap<LocalTime> c) {
-		if(bloc != null)
-			c.o(bloc.getBlockStartTime());
+	protected void _blockStartTime(Wrap<LocalTime> c) {
+		if(block != null)
+			c.o(block.getBlockStartTime());
 	}
 
-	protected void _blockTimeEnd(Wrap<LocalTime> c) {
+	protected void _blockEndTime(Wrap<LocalTime> c) {
 		if(block != null)
 			c.o(block.getBlockEndTime());
 	}
@@ -206,7 +226,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
 	}
 
-	protected void _blocNameComplete(Wrap<String> c) {
+	protected void _blocCompleteName(Wrap<String> c) {
 		String o;
 		String weekdays = "";
 		if(blockMonday) weekdays += " Mo";
@@ -216,15 +236,15 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		if(blockFriday) weekdays += " Fr";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
 		if(blockPricePerMonth == null)
-			o = String.format("%s - %s %s %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, ageNameComplete);
+			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);
 		else
-			o = String.format("%s - %s %s %s/month %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, strBlockPricePerMonth(), ageNameComplete);
+			o = String.format("%s - %s %s %s/month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
 		c.o(o);
 	}
 
 	protected void _blocId(Wrap<String> c) {
-		if(blocNameComplete != null) {
-			String s = Normalizer.normalize(blocNameComplete, Normalizer.Form.NFD);
+		if(blocCompleteName != null) {
+			String s = Normalizer.normalize(blocCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -245,7 +265,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(blocNameComplete);
+		c.o(blocCompleteName);
 	}
 
 	@Override()

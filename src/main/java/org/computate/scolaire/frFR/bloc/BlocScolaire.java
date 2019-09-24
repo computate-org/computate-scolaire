@@ -98,7 +98,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */          
+	 */    
 	protected void _sessionCle(Couverture<Long> c) {
 	}
 
@@ -109,12 +109,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: AgeScolaire.blocCles
 	 * HtmlLigne: 5
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
 	 * Description.enUS: The primary key of the age in the database. 
 	 * NomAffichage.frFR: âge
 	 * NomAffichage.enUS: age
-	 */                  
+	 */             
 	protected void _ageCle(Couverture<Long> c) {
 	}
 
@@ -139,12 +139,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: EnfantScolaire.blocCles
 	 * HtmlLigne: 5
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
 	 * Description.enUS: The primary key of the age in the database. 
 	 * NomAffichage.frFR: enfant
 	 * NomAffichage.enUS: child
-	 */                  
+	 */                 
 	protected void _enfantCle(Couverture<Long> c) {
 	}
 
@@ -250,7 +250,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -258,7 +258,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: age
 	 * r.enUS: age
 	 */   
@@ -371,11 +371,11 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: seasonNameComplete
+	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: SaisonNomComplet
-	 * r.enUS: SeasonNameComplete
+	 * r.enUS: SeasonCompleteName
 	 * r: age
 	 * r.enUS: age
 	 */
@@ -386,7 +386,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ageStartDay
+	 * Var.enUS: sessionStartDay
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
@@ -420,11 +420,11 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ageNameComplete
+	 * Var.enUS: ageCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: AgeNomComplet
-	 * r.enUS: AgeNameComplete
+	 * r.enUS: AgeCompleteName
 	 * r: age
 	 * r.enUS: age
 	 */                   
@@ -469,28 +469,28 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blockTimeStart
+	 * Var.enUS: blockStartTime
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: heure début
 	 * NomAffichage.enUS: start time
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 */                   
 	protected void _blocHeureDebut(Couverture<LocalTime> c) {
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blockTimeEnd
+	 * Var.enUS: blockEndTime
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: heure fin
 	 * NomAffichage.enUS: end time
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 */                   
 	protected void _blocHeureFin(Couverture<LocalTime> c) {
 	}
@@ -504,7 +504,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: price per month
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * HtmlCellule: 3
 	 */                   
 	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
 	}
@@ -531,7 +531,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: monday
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 */                   
 	protected void _blocLundi(Couverture<Boolean> c) {
 		c.o(false);
@@ -546,7 +546,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: tuesday
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 3
+	 * HtmlCellule: 3
 	 */                   
 	protected void _blocMardi(Couverture<Boolean> c) {
 		c.o(false);
@@ -561,7 +561,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: wednesday
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 */                   
 	protected void _blocMercredi(Couverture<Boolean> c) {
 		c.o(false);
@@ -576,7 +576,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: thursday
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 5
+	 * HtmlCellule: 5
 	 */                   
 	protected void _blocJeudi(Couverture<Boolean> c) {
 		c.o(false);
@@ -591,7 +591,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: friday
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 6
+	 * HtmlCellule: 6
 	 */                   
 	protected void _blocVendredi(Couverture<Boolean> c) {
 		c.o(false);
@@ -612,16 +612,17 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: blocNameComplete
+	 * Var.enUS: blocCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 1
 	 * r: %s - %s %s %s/mois %s
 	 * r.enUS: %s - %s %s %s/month %s
 	 * r: strBlocHeureDebut
-	 * r.enUS: strBlockTimeStart
+	 * r.enUS: strBlockStartTime
 	 * r: strBlocHeureFin
-	 * r.enUS: strBlockTimeEnd
+	 * r.enUS: strBlockEndTime
 	 * r: strBlocPrixParMois
 	 * r.enUS: strBlockPricePerMonth
 	 * r: blocPrixParMois
@@ -641,7 +642,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: blocSamedi
 	 * r.enUS: blockSaturday
 	 * r: ageNomComplet
-	 * r.enUS: ageNameComplete
+	 * r.enUS: ageCompleteName
 	 */  
 	protected void _blocNomComplet(Couverture<String> c) {
 		String o;
@@ -666,13 +667,13 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r.enUS: blocCompleteName
 	 */            
 	protected void _blocId(Couverture<String> c) {
 		if(blocNomComplet != null) {
@@ -717,7 +718,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r.enUS: blocCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(blocNomComplet);

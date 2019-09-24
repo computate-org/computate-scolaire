@@ -399,33 +399,33 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						break;
 					case "setEcoleCle":
-						o2.setEcoleCle(requeteJson.getLong(methodeNom));
+						o2.setEcoleCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA2);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
 						break;
 					case "removeEcoleCle":
-						o2.setEcoleCle(requeteJson.getLong(methodeNom));
+						o2.setEcoleCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("anneeCles", o2.getEcoleCle(), "ecoleCle", pk));
 						break;
 					case "addSaisonCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getString(methodeNom), "saisonCles", pk));
 						break;
 					case "addAllSaisonCles":
 						JsonArray addAllSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
 						for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("anneeCle", addAllSaisonClesValeurs.getLong(i), "saisonCles", pk));
+							patchSqlParams.addAll(Arrays.asList("anneeCle", addAllSaisonClesValeurs.getString(i), "saisonCles", pk));
 						}
 						break;
 					case "setSaisonCles":
 						JsonArray setSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getString(methodeNom), "saisonCles", pk));
 						for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("anneeCle", setSaisonClesValeurs.getLong(i), "saisonCles", pk));
+							patchSqlParams.addAll(Arrays.asList("anneeCle", setSaisonClesValeurs.getString(i), "saisonCles", pk));
 						}
 						break;
 					case "removeSaisonCles":

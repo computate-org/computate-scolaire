@@ -190,10 +190,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "blockKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("blockKeys", jsonObject.getLong(entityVar), "blockKeys", pk));
-						break;
 					case "personFirstName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
@@ -429,16 +425,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
-						break;
-					case "setBlockKeys":
-						o2.setBlockKeys(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "blockKeys", o2.getBlockKeys()));
-						break;
-					case "removeBlockKeys":
-						o2.setBlockKeys(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("blockKeys", pk, "blockKeys", o2.getBlockKeys()));
 						break;
 					case "setPersonFirstName":
 						o2.setPersonFirstName(requestJson.getString(methodName));
@@ -863,8 +849,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "blockKeys":
-				return "blockKeys_indexed_long";
 			case "childKey":
 				return "childKey_indexed_long";
 			case "enrollmentKeys":
@@ -875,6 +859,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "schoolSort_indexed_int";
 			case "schoolKeys":
 				return "schoolKeys_indexed_longs";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
 			case "seasonKeys":
 				return "seasonKeys_indexed_longs";
 			case "sessionKeys":
@@ -905,10 +891,10 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "enfantVaccinsAJour_indexed_boolean";
 			case "childPottyTrained":
 				return "childPottyTrained_indexed_boolean";
-			case "blocNameComplete":
-				return "blocNameComplete_indexed_string";
-			case "blocId":
-				return "blocId_indexed_string";
+			case "childCompleteName":
+				return "childCompleteName_indexed_string";
+			case "childId":
+				return "childId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
@@ -1143,7 +1129,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR blocId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR childId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

@@ -56,9 +56,9 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(year_ != null)
-			c.o((String)year_.getSchoolNameComplete());
+			c.o((String)year_.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
@@ -79,22 +79,22 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {}
 
-	protected void _seasonNameComplete(Wrap<String> c) {
+	protected void _seasonCompleteName(Wrap<String> c) {
 		String o;
 		
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s summer season at %s", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s summer season at %s", strSeasonStartDay(), schoolCompleteName);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s school season at %s", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s school season at %s", strSeasonStartDay(), schoolCompleteName);
 		else
-			o = String.format("%s season at %s", strSeasonStartDay(), schoolNameComplete);
+			o = String.format("%s season at %s", strSeasonStartDay(), schoolCompleteName);
 		
 		c.o(o);
 	}
 
 	protected void _seasonId(Wrap<String> c) {
-		if(seasonNameComplete != null) {
-			String s = Normalizer.normalize(seasonNameComplete, Normalizer.Form.NFD);
+		if(seasonCompleteName != null) {
+			String s = Normalizer.normalize(seasonCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -115,7 +115,7 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(seasonNameComplete);
+		c.o(seasonCompleteName);
 	}
 
 	@Override()

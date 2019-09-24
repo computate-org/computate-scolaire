@@ -711,23 +711,32 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
 	 * r.enUS: "Login"
-	 */
+	 * r: "Écoles"
+	 * r.enUS: "Schools"
+	 * r: htmlSuggereEcoleGenPage
+	 * r.enUS: htmlSuggestSchoolGenPage
+	 */ 
 	public void menu()  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
-				e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageAccueilUri).f();
-	//				e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/computate-keys.svg").a("style", "width: 250px; ").fg();
-					e("br").fg();
+				e("a").a("class", "").a("href", pageAccueilUri).f();
 					e("span").a("class", "site-menu-item").f();
 						sx("Accueil");
 					g("span");
 				g("a");
 			g("div");
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+						e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+						sx("Écoles");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					htmlSuggereEcoleGenPage();
+				} g("div");
+			} g("div");
 			if(requeteSite_.getUtilisateurId() == null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
 						e("span").a("class", "site-menu-item").f();
 							sx("Connexion");
 						g("span");
@@ -736,18 +745,14 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			}
 			if(requeteSite_.getUtilisateurId() != null) {
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageUtilisateurUri).f(); 
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/astronaut-helmet.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
 						e("span").a("class", "site-menu-item").f();
 							sx(requeteSite_.getUtilisateurNom());
 						g("span");
 					g("a");
 				g("div");
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "header-icon-a grow-30 w3-hover-opacity w3-center ").a("href", pageDeconnexionUri).f();
-	//					e("img").a("alt", "").a("src", statiqueUrlBase, "/svg/light-speed.svg").a("style", "height: 50px; ").fg();
-						e("br").fg();
+					e("a").a("class", "w3-padding ").a("href", pageDeconnexionUri).f();
 						e("span").a("class", "site-menu-item").f();
 							sx("Déconnexion");
 						g("span");
@@ -756,6 +761,93 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			}
 		g("div");
 	} 
+
+	/**
+	 * Var.enUS: htmlSuggestSchoolGenPage
+	 * r: "/ecole"
+	 * r.enUS: "/school"
+	 * r: "voir toutes les écoles"
+	 * r.enUS: "see all the schools"
+	 * r: "rechargerEcoleGenPage"
+	 * r.enUS: "refreshSchoolGenPage"
+	 * r: "recharger toutes les écoles"
+	 * r.enUS: "refresh all the schools"
+	 * r: "rechercher écoles : "
+	 * r.enUS: "search schools: "
+	 * r: "suggereFormEcole"
+	 * r.enUS: "suggestFormSchool"
+	 * r: "rechercher écoles"
+	 * r.enUS: "search schools"
+	 * r: "suggereEcole w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSchool w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereEcole"
+	 * r.enUS: "suggestSchool"
+	 * r: patchEcoleVals
+	 * r.enUS: patchSchoolVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerEcoleGenPage
+	 * r.enUS: refreshSchoolGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereEcoleObjetSuggere
+	 * r.enUS: suggestSchoolObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
+	 * r: '#suggereListEcole'
+	 * r.enUS: '#suggestListSchool'
+	 * r: "suggereListEcole"
+	 * r.enUS: "suggestListSchool"
+	**/
+	public void htmlSuggereEcoleGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/ecole").a("class", "").f();
+					e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+					sx("voir toutes les écoles");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "rechargerEcoleGenPage").a("href", "/ecole").a("class", "").a("onclick", "patchEcoleVals([], {}, function() { ajouterLueur($('#rechargerEcoleGenPage')); }, function() { ajouterErreur($('#rechargerEcoleGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("recharger toutes les écoles");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("rechercher écoles : ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggereFormEcole").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "rechercher écoles")
+							.a("class", "suggereEcole w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggereEcole")
+							.a("id", "suggereEcole")
+							.a("autocomplete", "off")
+							.a("oninput", "suggereEcoleObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEcole')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEcole").f();
+				} g("ul");
+			} g("div");
+		} g("div");
+	}
 
 	/**  
 	 * var.enUS: sharePage

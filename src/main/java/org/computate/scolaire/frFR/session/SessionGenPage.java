@@ -900,6 +900,21 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSessionNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	public void htmlFormRechercheSessionScolaire(SessionScolaire o) {
@@ -1159,6 +1174,21 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strSessionNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodySessionGenPage() {
@@ -1220,14 +1250,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("saison").g("th");
-						e("th").f().sx("début de la session").g("th");
-						e("th").f().sx("fin de la session").g("th");
-						e("th").f().sx("âges").g("th");
-						e("th").f().sx("clé primaire").g("th");
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("modifié").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1240,42 +1263,10 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getSaisonCle());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionJourDebut());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionJourFin());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getAgeCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getSessionId());
+									e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getSessionNomComplet());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -1413,6 +1404,43 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	 * Var.enUS: htmlSuggestSessionGenPage
+	 * r: "/session"
+	 * r.enUS: "/session"
+	 * r: "voir toutes les sessions"
+	 * r.enUS: "see all the sessions"
+	 * r: "rechargerSessionGenPage"
+	 * r.enUS: "refreshSessionGenPage"
+	 * r: "recharger toutes les sessions"
+	 * r.enUS: "refresh all the sessions"
+	 * r: "rechercher sessions : "
+	 * r.enUS: "search sessions: "
+	 * r: "suggereFormSessionScolaire"
+	 * r.enUS: "suggestFormSchoolSession"
+	 * r: "rechercher sessions"
+	 * r.enUS: "search sessions"
+	 * r: "suggereSessionScolaire w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSchoolSession w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereSessionScolaire"
+	 * r.enUS: "suggestSchoolSession"
+	 * r: patchSessionScolaireVals
+	 * r.enUS: patchSchoolSessionVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerSessionGenPage
+	 * r.enUS: refreshSessionGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereSessionScolaireObjetSuggere
+	 * r.enUS: suggestSchoolSessionObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
+	 * r: '#suggereListSessionScolaire'
+	 * r.enUS: '#suggestListSchoolSession'
+	 * r: "suggereListSessionScolaire"
+	 * r.enUS: "suggestListSchoolSession"
+	**/
 	public void htmlSuggereSessionGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

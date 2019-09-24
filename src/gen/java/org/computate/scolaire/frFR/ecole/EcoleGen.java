@@ -2015,7 +2015,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleNomComplet() {
-		return "NomAffichage.enUS: ";
+		return "nom";
 	}
 
 	public String htmTooltipEcoleNomComplet() {

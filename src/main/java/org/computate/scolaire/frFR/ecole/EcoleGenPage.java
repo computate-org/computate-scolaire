@@ -1056,6 +1056,24 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-pink ").f();
+						e("label").a("class", "").f().sx("nom").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEcoleNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	public void htmlFormRechercheEcole(Ecole o) {
@@ -1358,6 +1376,24 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 			} g("div");
 			} g("div");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-pink ").f();
+						e("label").a("class", "").f().sx("nom").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strEcoleNomComplet()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	@Override public void htmlBodyEcoleGenPage() {
@@ -1419,16 +1455,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("années").g("th");
-						e("th").f().sx("nom de l'école").g("th");
-						e("th").f().sx("numéro de téléphone").g("th");
-						e("th").f().sx("administrateur de l'école").g("th");
-						e("th").f().sx("addresse").g("th");
-						e("th").f().sx("clé primaire").g("th");
-						e("th").f().sx("crée").g("th");
-						e("th").f().sx("l'emplacement").g("th");
-						e("th").f().sx("modifié").g("th");
-						e("th").f().sx("ID").g("th");
+						e("th").f().sx("nom").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1441,52 +1468,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getAnneeCles());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleNom());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleNumeroTelephone());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleAdministrateurNom());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleAddresse());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleEmplacement());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getEcoleId());
+									e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.getEcoleNomComplet());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -1627,6 +1612,43 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		g("div");
 	}
 
+	/**
+	 * Var.enUS: htmlSuggestSchoolGenPage
+	 * r: "/ecole"
+	 * r.enUS: "/school"
+	 * r: "voir toutes les écoles"
+	 * r.enUS: "see all the schools"
+	 * r: "rechargerEcoleGenPage"
+	 * r.enUS: "refreshSchoolGenPage"
+	 * r: "recharger toutes les écoles"
+	 * r.enUS: "refresh all the schools"
+	 * r: "rechercher écoles : "
+	 * r.enUS: "search schools: "
+	 * r: "suggereFormEcole"
+	 * r.enUS: "suggestFormSchool"
+	 * r: "rechercher écoles"
+	 * r.enUS: "search schools"
+	 * r: "suggereEcole w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSchool w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereEcole"
+	 * r.enUS: "suggestSchool"
+	 * r: patchEcoleVals
+	 * r.enUS: patchSchoolVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerEcoleGenPage
+	 * r.enUS: refreshSchoolGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereEcoleObjetSuggere
+	 * r.enUS: suggestSchoolObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
+	 * r: '#suggereListEcole'
+	 * r.enUS: '#suggestListSchool'
+	 * r: "suggereListEcole"
+	 * r.enUS: "suggestListSchool"
+	**/
 	public void htmlSuggereEcoleGenPage() {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell ").f();

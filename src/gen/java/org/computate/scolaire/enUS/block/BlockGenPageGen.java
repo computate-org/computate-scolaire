@@ -17,7 +17,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class BlockGenPageGen<DEV> extends ClusterPage {
@@ -35,7 +35,7 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	/**	<br/>L'entité « listSchoolBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listSchoolBlock">Trouver l'entité listSchoolBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolBlock">Trouver l'entité listSchoolBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -47,15 +47,15 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	public void setListSchoolBlock(SearchList<SchoolBlock> listSchoolBlock) {
 		this.listSchoolBlock = listSchoolBlock;
-		this.listSchoolBlockWrap.dejaInitialise = true;
+		this.listSchoolBlockWrap.alreadyInitialized = true;
 	}
 	protected BlockGenPage listSchoolBlockInit() {
-		if(!listSchoolBlockWrap.dejaInitialise) {
+		if(!listSchoolBlockWrap.alreadyInitialized) {
 			_listSchoolBlock(listSchoolBlockWrap);
 			if(listSchoolBlock == null)
 				setListSchoolBlock(listSchoolBlockWrap.o);
 		}
-		listSchoolBlockWrap.dejaInitialise(true);
+		listSchoolBlockWrap.alreadyInitialized(true);
 		return (BlockGenPage)this;
 	}
 
@@ -72,7 +72,7 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	/**	<br/>L'entité « schoolBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:schoolBlock">Trouver l'entité schoolBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolBlock">Trouver l'entité schoolBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -84,35 +84,35 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	public void setSchoolBlock(SchoolBlock schoolBlock) {
 		this.schoolBlock = schoolBlock;
-		this.schoolBlockWrap.dejaInitialise = true;
+		this.schoolBlockWrap.alreadyInitialized = true;
 	}
 	protected BlockGenPage schoolBlockInit() {
-		if(!schoolBlockWrap.dejaInitialise) {
+		if(!schoolBlockWrap.alreadyInitialized) {
 			_schoolBlock(schoolBlockWrap);
 			if(schoolBlock == null)
 				setSchoolBlock(schoolBlockWrap.o);
 		}
-		schoolBlockWrap.dejaInitialise(true);
+		schoolBlockWrap.alreadyInitialized(true);
 		return (BlockGenPage)this;
 	}
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseBlockGenPage = false;
+	protected boolean alreadyInitializedBlockGenPage = false;
 
-	public BlockGenPage initLoinBlockGenPage(SiteRequestEnUS requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseBlockGenPage) {
-			dejaInitialiseBlockGenPage = true;
-			initLoinBlockGenPage();
+	public BlockGenPage initDeepBlockGenPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedBlockGenPage) {
+			alreadyInitializedBlockGenPage = true;
+			initDeepBlockGenPage();
 		}
 		return (BlockGenPage)this;
 	}
 
-	public void initLoinBlockGenPage() {
-		super.initLoinClusterPage(requeteSite_);
+	public void initDeepBlockGenPage() {
+		super.initDeepClusterPage(siteRequest_);
 		initBlockGenPage();
 	}
 
@@ -121,40 +121,40 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 		schoolBlockInit();
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinBlockGenPage(requeteSite_);
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepBlockGenPage(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteBlockGenPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteClusterPage(requeteSite_);
+	public void siteRequestBlockGenPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestClusterPage(siteRequest_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteBlockGenPage(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestBlockGenPage(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirBlockGenPage(v);
+				o = obtainBlockGenPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirBlockGenPage(String var) {
+	public Object obtainBlockGenPage(String var) {
 		BlockGenPage oBlockGenPage = (BlockGenPage)this;
 		switch(var) {
 			case "listSchoolBlock":
@@ -162,58 +162,58 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 			case "schoolBlock":
 				return oBlockGenPage.schoolBlock;
 			default:
-				return super.obtenirClusterPage(var);
+				return super.obtainClusterPage(var);
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	@Override public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerBlockGenPage(v, val);
+				o = attributeBlockGenPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerBlockGenPage(String var, Object val) {
+	public Object attributeBlockGenPage(String var, Object val) {
 		BlockGenPage oBlockGenPage = (BlockGenPage)this;
 		switch(var) {
 			default:
-				return super.attribuerClusterPage(var, val);
+				return super.attributeClusterPage(var, val);
 		}
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	@Override public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirBlockGenPage(v, val);
+					o = defineBlockGenPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirBlockGenPage(String var, String val) {
+	public Object defineBlockGenPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirClusterPage(var, val);
+				return super.defineClusterPage(var, val);
 		}
 	}
 

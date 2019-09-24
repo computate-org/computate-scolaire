@@ -17,8 +17,11 @@ import org.computate.scolaire.frFR.cluster.ClusterFrFRGenApiService;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
+import org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.java.LocalDateSerializer;
 import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
+import org.computate.scolaire.frFR.mere.MereScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.session.SessionScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSiteFrFRGenApiService;
@@ -643,6 +646,18 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolAgeEnUSGenApiService
 	 * r: BlocScolaireFrFRGenApiService
 	 * r.enUS: SchoolBlockEnUSGenApiService
+	 * r: InscriptionScolaireFrFRGenApiService
+	 * r.enUS: SchoolEnrollmentEnUSGenApiService
+	 * r: EnfantScolaireFrFRGenApiService
+	 * r.enUS: SchoolChildEnUSGenApiService
+	 * r: MereScolaireFrFRGenApiService
+	 * r.enUS: SchoolMomEnUSGenApiService
+	 * r: PereScolaireFrFRGenApiService
+	 * r.enUS: SchoolDadEnUSGenApiService
+	 * r: ContactScolaireFrFRGenApiService
+	 * r.enUS: SchoolContactEnUSGenApiService
+	 * r: GardienScolaireFrFRGenApiService
+	 * r.enUS: SchoolGuardianEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */   
@@ -658,6 +673,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		SessionScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		AgeScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		BlocScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		InscriptionScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		EnfantScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		MereScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

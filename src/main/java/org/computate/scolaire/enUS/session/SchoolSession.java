@@ -64,9 +64,9 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(season_ != null)
-			c.o((String)season_.getSchoolNameComplete());
+			c.o((String)season_.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
@@ -99,9 +99,9 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getSeasonEnrollmentFee());
 	}
 
-	protected void _seasonNameComplete(Wrap<String> c) {
+	protected void _seasonCompleteName(Wrap<String> c) {
 		if(season_ != null)
-			c.o(season_.getSeasonNameComplete());
+			c.o(season_.getSeasonCompleteName());
 	}
 
 	protected void _seasonEnd(Wrap<LocalDate> c) {
@@ -113,23 +113,23 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	protected void _sessionEndDay(Wrap<LocalDate> c) {}
 
-	protected void _sessionNameComplete(Wrap<String> c) {
+	protected void _sessionCompleteName(Wrap<String> c) {
 		String o;
 
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s - %s summer session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s summer session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s - %s school session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s school session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
 		else
-			o = String.format("%s - %s session at %s", strSessionStartDay(), strSessionEndDay(), schoolNameComplete);
+			o = String.format("%s - %s session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
 
 		c.o(o);
 
 	}
 
 	protected void _sessionId(Wrap<String> c) {
-		if(sessionNameComplete != null) {
-			String s = Normalizer.normalize(sessionNameComplete, Normalizer.Form.NFD);
+		if(sessionCompleteName != null) {
+			String s = Normalizer.normalize(sessionCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -150,7 +150,7 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(sessionNameComplete);
+		c.o(sessionCompleteName);
 	}
 
 	@Override()

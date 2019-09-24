@@ -74,9 +74,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		}
 	}
 
-	protected void _schoolNameComplete(Wrap<String> c) {
+	protected void _schoolCompleteName(Wrap<String> c) {
 		if(age != null)
-			c.o((String)age.getSchoolNameComplete());
+			c.o((String)age.getSchoolCompleteName());
 	}
 
 	protected void _yearStart(Wrap<LocalDate> c) {
@@ -109,12 +109,12 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age.getSeasonEnrollmentFee());
 	}
 
-	protected void _seasonNameComplete(Wrap<String> c) {
+	protected void _seasonCompleteName(Wrap<String> c) {
 		if(age != null)
-			c.o(age.getSeasonNameComplete());
+			c.o(age.getSeasonCompleteName());
 	}
 
-	protected void _ageStartDay(Wrap<LocalDate> c) {
+	protected void _sessionStartDay(Wrap<LocalDate> c) {
 		if(age != null)
 			c.o((LocalDate)age.getSessionStartDay());
 	}
@@ -124,9 +124,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o((LocalDate)age.getSessionEndDay());
 	}
 
-	protected void _ageNameComplete(Wrap<String> c) {
+	protected void _ageCompleteName(Wrap<String> c) {
 		if(age != null)
-			c.o(age.getAgeNameComplete());
+			c.o(age.getAgeCompleteName());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
@@ -139,10 +139,10 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age.getAgeEnd());
 	}
 
-	protected void _blockTimeStart(Wrap<LocalTime> c) {
+	protected void _blockStartTime(Wrap<LocalTime> c) {
 	}
 
-	protected void _blockTimeEnd(Wrap<LocalTime> c) {
+	protected void _blockEndTime(Wrap<LocalTime> c) {
 	}
 
 	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
@@ -176,7 +176,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(false);
 	}
 
-	protected void _blocNameComplete(Wrap<String> c) {
+	protected void _blocCompleteName(Wrap<String> c) {
 		String o;
 		String weekdays = "";
 		if(blockMonday) weekdays += " Mo";
@@ -186,15 +186,15 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		if(blockFriday) weekdays += " Fr";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
 		if(blockPricePerMonth == null)
-			o = String.format("%s - %s %s %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, ageNameComplete);
+			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);
 		else
-			o = String.format("%s - %s %s %s/month %s", strBlockTimeStart(), strBlockTimeEnd(), weekdays, strBlockPricePerMonth(), ageNameComplete);
+			o = String.format("%s - %s %s %s/month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
 		c.o(o);
 	}
 
 	protected void _blocId(Wrap<String> c) {
-		if(blocNameComplete != null) {
-			String s = Normalizer.normalize(blocNameComplete, Normalizer.Form.NFD);
+		if(blocCompleteName != null) {
+			String s = Normalizer.normalize(blocCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -215,7 +215,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(blocNameComplete);
+		c.o(blocCompleteName);
 	}
 
 	@Override()

@@ -21,6 +21,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -847,98 +848,80 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////
-	// enfantCles //
-	////////////////
+	///////////////
+	// enfantCle //
+	///////////////
 
-	/**	L'entité « enfantCles »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	/**	L'entité « enfantCle »
+	 *	 is defined as null before being initialized. 
 	 */
-	protected List<Long> enfantCles = new java.util.ArrayList<java.lang.Long>();
+	protected Long enfantCle;
 	@JsonIgnore
-	public Couverture<List<Long>> enfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("enfantCles").o(enfantCles);
+	public Couverture<Long> enfantCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("enfantCle").o(enfantCle);
 
-	/**	<br/>L'entité « enfantCles »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCles">Trouver l'entité enfantCles dans Solr</a>
+	/**	<br/>L'entité « enfantCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCle">Trouver l'entité enfantCle dans Solr</a>
 	 * <br/>
-	 * @param enfantCles est l'entité déjà construit. 
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _enfantCles(List<Long> o);
+	protected abstract void _enfantCle(Couverture<Long> c);
 
-	public List<Long> getEnfantCles() {
-		return enfantCles;
+	public Long getEnfantCle() {
+		return enfantCle;
 	}
 
-	public void setEnfantCles(List<Long> enfantCles) {
-		this.enfantCles = enfantCles;
-		this.enfantClesCouverture.dejaInitialise = true;
+	public void setEnfantCle(Long enfantCle) {
+		this.enfantCle = enfantCle;
+		this.enfantCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire addEnfantCles(Long...objets) {
-		for(Long o : objets) {
-			addEnfantCles(o);
+	public InscriptionScolaire setEnfantCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enfantCle = Long.parseLong(o);
+		this.enfantCleCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire enfantCleInit() {
+		if(!enfantCleCouverture.dejaInitialise) {
+			_enfantCle(enfantCleCouverture);
+			if(enfantCle == null)
+				setEnfantCle(enfantCleCouverture.o);
 		}
-		return (InscriptionScolaire)this;
-	}
-	public InscriptionScolaire addEnfantCles(Long o) {
-		if(o != null && !enfantCles.contains(o))
-			this.enfantCles.add(o);
-		return (InscriptionScolaire)this;
-	}
-	public InscriptionScolaire setEnfantCles(JsonArray objets) {
-		enfantCles.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addEnfantCles(o);
-		}
-		return (InscriptionScolaire)this;
-	}
-	public InscriptionScolaire addEnfantCles(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addEnfantCles(p);
-		}
-		return (InscriptionScolaire)this;
-	}
-	protected InscriptionScolaire enfantClesInit() {
-		if(!enfantClesCouverture.dejaInitialise) {
-			_enfantCles(enfantCles);
-		}
-		enfantClesCouverture.dejaInitialise(true);
+		enfantCleCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public List<Long> solrEnfantCles() {
-		return enfantCles;
+	public Long solrEnfantCle() {
+		return enfantCle;
 	}
 
-	public String strEnfantCles() {
-		return enfantCles == null ? "" : enfantCles.toString();
+	public String strEnfantCle() {
+		return enfantCle == null ? "" : enfantCle.toString();
 	}
 
-	public String jsonEnfantCles() {
-		return enfantCles == null ? "" : enfantCles.toString();
+	public String jsonEnfantCle() {
+		return enfantCle == null ? "" : enfantCle.toString();
 	}
 
-	public String nomAffichageEnfantCles() {
+	public String nomAffichageEnfantCle() {
 		return "enfants";
 	}
 
-	public String htmTooltipEnfantCles() {
+	public String htmTooltipEnfantCle() {
 		return null;
 	}
 
-	public String htmEnfantCles() {
-		return enfantCles == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantCles());
+	public String htmEnfantCle() {
+		return enfantCle == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantCle());
 	}
 
-	public void htmEnfantCles(ToutEcrivain r, Boolean patchDroits) {
+	public void htmEnfantCle(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "EnfantCles\">");
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "EnfantCle\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "EnfantCles() {");
+				r.l("		function patchInscriptionScolaire", strPk(), "EnfantCle() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -951,23 +934,23 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setEnfantCles\": this.value },");
+				r.l("				data: {\"setEnfantCle\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantCles()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantCle()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"enfantCles\"");
-							r.s(" value=\"", htmEnfantCles(), "\");");
+							r.s(" name=\"enfantCle\"");
+							r.s(" value=\"", htmEnfantCle(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmEnfantCles());
+				r.s(htmEnfantCle());
 			}
 			r.l("</div>");
 		}
@@ -1351,98 +1334,98 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////////
-	// contactCles //
-	/////////////////
+	//////////////////
+	// paiementCles //
+	//////////////////
 
-	/**	L'entité « contactCles »
+	/**	L'entité « paiementCles »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	protected List<Long> contactCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> paiementCles = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
-	public Couverture<List<Long>> contactClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("contactCles").o(contactCles);
+	public Couverture<List<Long>> paiementClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("paiementCles").o(paiementCles);
 
-	/**	<br/>L'entité « contactCles »
+	/**	<br/>L'entité « paiementCles »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contactCles">Trouver l'entité contactCles dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementCles">Trouver l'entité paiementCles dans Solr</a>
 	 * <br/>
-	 * @param contactCles est l'entité déjà construit. 
+	 * @param paiementCles est l'entité déjà construit. 
 	 **/
-	protected abstract void _contactCles(List<Long> o);
+	protected abstract void _paiementCles(List<Long> o);
 
-	public List<Long> getContactCles() {
-		return contactCles;
+	public List<Long> getPaiementCles() {
+		return paiementCles;
 	}
 
-	public void setContactCles(List<Long> contactCles) {
-		this.contactCles = contactCles;
-		this.contactClesCouverture.dejaInitialise = true;
+	public void setPaiementCles(List<Long> paiementCles) {
+		this.paiementCles = paiementCles;
+		this.paiementClesCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire addContactCles(Long...objets) {
+	public InscriptionScolaire addPaiementCles(Long...objets) {
 		for(Long o : objets) {
-			addContactCles(o);
+			addPaiementCles(o);
 		}
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire addContactCles(Long o) {
-		if(o != null && !contactCles.contains(o))
-			this.contactCles.add(o);
+	public InscriptionScolaire addPaiementCles(Long o) {
+		if(o != null && !paiementCles.contains(o))
+			this.paiementCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setContactCles(JsonArray objets) {
-		contactCles.clear();
+	public InscriptionScolaire setPaiementCles(JsonArray objets) {
+		paiementCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
-			addContactCles(o);
+			addPaiementCles(o);
 		}
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire addContactCles(String o) {
+	public InscriptionScolaire addPaiementCles(String o) {
 		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
-			addContactCles(p);
+			addPaiementCles(p);
 		}
 		return (InscriptionScolaire)this;
 	}
-	protected InscriptionScolaire contactClesInit() {
-		if(!contactClesCouverture.dejaInitialise) {
-			_contactCles(contactCles);
+	protected InscriptionScolaire paiementClesInit() {
+		if(!paiementClesCouverture.dejaInitialise) {
+			_paiementCles(paiementCles);
 		}
-		contactClesCouverture.dejaInitialise(true);
+		paiementClesCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public List<Long> solrContactCles() {
-		return contactCles;
+	public List<Long> solrPaiementCles() {
+		return paiementCles;
 	}
 
-	public String strContactCles() {
-		return contactCles == null ? "" : contactCles.toString();
+	public String strPaiementCles() {
+		return paiementCles == null ? "" : paiementCles.toString();
 	}
 
-	public String jsonContactCles() {
-		return contactCles == null ? "" : contactCles.toString();
+	public String jsonPaiementCles() {
+		return paiementCles == null ? "" : paiementCles.toString();
 	}
 
-	public String nomAffichageContactCles() {
-		return "contacts d'urgence";
+	public String nomAffichagePaiementCles() {
+		return "paiements";
 	}
 
-	public String htmTooltipContactCles() {
+	public String htmTooltipPaiementCles() {
 		return null;
 	}
 
-	public String htmContactCles() {
-		return contactCles == null ? "" : StringEscapeUtils.escapeHtml4(strContactCles());
+	public String htmPaiementCles() {
+		return paiementCles == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementCles());
 	}
 
-	public void htmContactCles(ToutEcrivain r, Boolean patchDroits) {
+	public void htmPaiementCles(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "ContactCles\">");
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "PaiementCles\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "ContactCles() {");
+				r.l("		function patchInscriptionScolaire", strPk(), "PaiementCles() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1455,23 +1438,23 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setContactCles\": this.value },");
+				r.l("				data: {\"setPaiementCles\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageContactCles()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaiementCles()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"contactCles\"");
-							r.s(" value=\"", htmContactCles(), "\");");
+							r.s(" name=\"paiementCles\"");
+							r.s(" value=\"", htmPaiementCles(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmContactCles());
+				r.s(htmPaiementCles());
 			}
 			r.l("</div>");
 		}
@@ -2308,6 +2291,183 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			bloc.initLoinPourClasse(requeteSite_);
 		blocCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
+	}
+
+	/////////////////////
+	// enfantRecherche //
+	/////////////////////
+
+	/**	L'entité « enfantRecherche »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<EnfantScolaire>(). 
+	 */
+	@JsonIgnore
+	protected ListeRecherche<EnfantScolaire> enfantRecherche = new ListeRecherche<EnfantScolaire>();
+	@JsonIgnore
+	public Couverture<ListeRecherche<EnfantScolaire>> enfantRechercheCouverture = new Couverture<ListeRecherche<EnfantScolaire>>().p(this).c(ListeRecherche.class).var("enfantRecherche").o(enfantRecherche);
+
+	/**	<br/>L'entité « enfantRecherche »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<EnfantScolaire>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantRecherche">Trouver l'entité enfantRecherche dans Solr</a>
+	 * <br/>
+	 * @param enfantRecherche est l'entité déjà construit. 
+	 **/
+	protected abstract void _enfantRecherche(ListeRecherche<EnfantScolaire> l);
+
+	public ListeRecherche<EnfantScolaire> getEnfantRecherche() {
+		return enfantRecherche;
+	}
+
+	public void setEnfantRecherche(ListeRecherche<EnfantScolaire> enfantRecherche) {
+		this.enfantRecherche = enfantRecherche;
+		this.enfantRechercheCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantRechercheInit() {
+		if(!enfantRechercheCouverture.dejaInitialise) {
+			_enfantRecherche(enfantRecherche);
+		}
+		enfantRecherche.initLoinPourClasse(requeteSite_);
+		enfantRechercheCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	/////////////
+	// enfant_ //
+	/////////////
+
+	/**	L'entité « enfant_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected EnfantScolaire enfant_;
+	@JsonIgnore
+	public Couverture<EnfantScolaire> enfant_Couverture = new Couverture<EnfantScolaire>().p(this).c(EnfantScolaire.class).var("enfant_").o(enfant_);
+
+	/**	<br/>L'entité « enfant_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfant_">Trouver l'entité enfant_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfant_(Couverture<EnfantScolaire> c);
+
+	public EnfantScolaire getEnfant_() {
+		return enfant_;
+	}
+
+	public void setEnfant_(EnfantScolaire enfant_) {
+		this.enfant_ = enfant_;
+		this.enfant_Couverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfant_Init() {
+		if(!enfant_Couverture.dejaInitialise) {
+			_enfant_(enfant_Couverture);
+			if(enfant_ == null)
+				setEnfant_(enfant_Couverture.o);
+		}
+		enfant_Couverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	//////////////////////
+	// enfantNomComplet //
+	//////////////////////
+
+	/**	L'entité « enfantNomComplet »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantNomComplet;
+	@JsonIgnore
+	public Couverture<String> enfantNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomComplet").o(enfantNomComplet);
+
+	/**	<br/>L'entité « enfantNomComplet »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantNomComplet">Trouver l'entité enfantNomComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantNomComplet(Couverture<String> c);
+
+	public String getEnfantNomComplet() {
+		return enfantNomComplet;
+	}
+
+	public void setEnfantNomComplet(String enfantNomComplet) {
+		this.enfantNomComplet = enfantNomComplet;
+		this.enfantNomCompletCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantNomCompletInit() {
+		if(!enfantNomCompletCouverture.dejaInitialise) {
+			_enfantNomComplet(enfantNomCompletCouverture);
+			if(enfantNomComplet == null)
+				setEnfantNomComplet(enfantNomCompletCouverture.o);
+		}
+		enfantNomCompletCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantNomComplet() {
+		return enfantNomComplet;
+	}
+
+	public String strEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : enfantNomComplet;
+	}
+
+	public String jsonEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : enfantNomComplet;
+	}
+
+	public String nomAffichageEnfantNomComplet() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEnfantNomComplet() {
+		return null;
+	}
+
+	public String htmEnfantNomComplet() {
+		return enfantNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantNomComplet());
+	}
+
+	public void htmEnfantNomComplet(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "EnfantNomComplet\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "EnfantNomComplet() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnfantNomComplet\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantNomComplet()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enfantNomComplet\"");
+							r.s(" value=\"", htmEnfantNomComplet(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnfantNomComplet());
+			}
+			r.l("</div>");
+		}
 	}
 
 	/////////////////////
@@ -5495,11 +5655,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		ageCleInit();
 		inscriptionCleInit();
 		blocClesInit();
-		enfantClesInit();
+		enfantCleInit();
 		mereClesInit();
 		pereClesInit();
 		gardienClesInit();
-		contactClesInit();
+		paiementClesInit();
 		familleCleInit();
 		scolaireTriInit();
 		ecoleTriInit();
@@ -5509,6 +5669,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		ageTriInit();
 		blocRechercheInit();
 		blocInit();
+		enfantRechercheInit();
+		enfant_Init();
+		enfantNomCompletInit();
 		ecoleNomCompletInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -5554,6 +5717,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			blocRecherche.setRequeteSite_(requeteSite_);
 		if(bloc != null)
 			bloc.setRequeteSite_(requeteSite_);
+		if(enfantRecherche != null)
+			enfantRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -5594,16 +5759,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionCle;
 			case "blocCles":
 				return oInscriptionScolaire.blocCles;
-			case "enfantCles":
-				return oInscriptionScolaire.enfantCles;
+			case "enfantCle":
+				return oInscriptionScolaire.enfantCle;
 			case "mereCles":
 				return oInscriptionScolaire.mereCles;
 			case "pereCles":
 				return oInscriptionScolaire.pereCles;
 			case "gardienCles":
 				return oInscriptionScolaire.gardienCles;
-			case "contactCles":
-				return oInscriptionScolaire.contactCles;
+			case "paiementCles":
+				return oInscriptionScolaire.paiementCles;
 			case "familleCle":
 				return oInscriptionScolaire.familleCle;
 			case "scolaireTri":
@@ -5622,6 +5787,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.blocRecherche;
 			case "bloc":
 				return oInscriptionScolaire.bloc;
+			case "enfantRecherche":
+				return oInscriptionScolaire.enfantRecherche;
+			case "enfant_":
+				return oInscriptionScolaire.enfant_;
+			case "enfantNomComplet":
+				return oInscriptionScolaire.enfantNomComplet;
 			case "ecoleNomComplet":
 				return oInscriptionScolaire.ecoleNomComplet;
 			case "anneeDebut":
@@ -5708,6 +5879,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			case "blocCles":
 				oInscriptionScolaire.addBlocCles((Long)val);
 				return val;
+			case "enfantCle":
+				oInscriptionScolaire.setEnfantCle((Long)val);
+				return val;
+			case "mereCles":
+				oInscriptionScolaire.addMereCles((Long)val);
+				return val;
+			case "pereCles":
+				oInscriptionScolaire.addPereCles((Long)val);
+				return val;
+			case "gardienCles":
+				oInscriptionScolaire.addGardienCles((Long)val);
+				return val;
+			case "paiementCles":
+				oInscriptionScolaire.addPaiementCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -5736,6 +5922,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "blocHeureDebut":
 				setBlocHeureDebut(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "blocHeureFin":
+				setBlocHeureFin(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "blocPrixParMois":
+				setBlocPrixParMois(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionApprouve":
@@ -5803,35 +5997,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			if(blocCles != null)
 				oInscriptionScolaire.blocCles.addAll(blocCles);
 
-			if(sauvegardesInscriptionScolaire.contains("enfantCles")) {
-				List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
-				if(enfantCles != null)
-					oInscriptionScolaire.enfantCles.addAll(enfantCles);
-			}
+			Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
+			if(enfantCle != null)
+				oInscriptionScolaire.setEnfantCle(enfantCle);
 
-			if(sauvegardesInscriptionScolaire.contains("mereCles")) {
-				List<Long> mereCles = (List<Long>)solrDocument.get("mereCles_stored_longs");
-				if(mereCles != null)
-					oInscriptionScolaire.mereCles.addAll(mereCles);
-			}
+			List<Long> mereCles = (List<Long>)solrDocument.get("mereCles_stored_longs");
+			if(mereCles != null)
+				oInscriptionScolaire.mereCles.addAll(mereCles);
 
-			if(sauvegardesInscriptionScolaire.contains("pereCles")) {
-				List<Long> pereCles = (List<Long>)solrDocument.get("pereCles_stored_longs");
-				if(pereCles != null)
-					oInscriptionScolaire.pereCles.addAll(pereCles);
-			}
+			List<Long> pereCles = (List<Long>)solrDocument.get("pereCles_stored_longs");
+			if(pereCles != null)
+				oInscriptionScolaire.pereCles.addAll(pereCles);
 
-			if(sauvegardesInscriptionScolaire.contains("gardienCles")) {
-				List<Long> gardienCles = (List<Long>)solrDocument.get("gardienCles_stored_longs");
-				if(gardienCles != null)
-					oInscriptionScolaire.gardienCles.addAll(gardienCles);
-			}
+			List<Long> gardienCles = (List<Long>)solrDocument.get("gardienCles_stored_longs");
+			if(gardienCles != null)
+				oInscriptionScolaire.gardienCles.addAll(gardienCles);
 
-			if(sauvegardesInscriptionScolaire.contains("contactCles")) {
-				List<Long> contactCles = (List<Long>)solrDocument.get("contactCles_stored_longs");
-				if(contactCles != null)
-					oInscriptionScolaire.contactCles.addAll(contactCles);
-			}
+			List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
+			if(paiementCles != null)
+				oInscriptionScolaire.paiementCles.addAll(paiementCles);
 
 			if(sauvegardesInscriptionScolaire.contains("familleCle")) {
 				Long familleCle = (Long)solrDocument.get("familleCle_stored_long");
@@ -5873,6 +6057,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Integer ageTri = (Integer)solrDocument.get("ageTri_stored_int");
 				if(ageTri != null)
 					oInscriptionScolaire.setAgeTri(ageTri);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantNomComplet")) {
+				String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
+				if(enfantNomComplet != null)
+					oInscriptionScolaire.setEnfantNomComplet(enfantNomComplet);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("ecoleNomComplet")) {
@@ -6145,13 +6335,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				document.addField("blocCles_stored_longs", o);
 			}
 		}
-		if(enfantCles != null) {
-			for(java.lang.Long o : enfantCles) {
-				document.addField("enfantCles_indexed_longs", o);
-			}
-			for(java.lang.Long o : enfantCles) {
-				document.addField("enfantCles_stored_longs", o);
-			}
+		if(enfantCle != null) {
+			document.addField("enfantCle_indexed_long", enfantCle);
+			document.addField("enfantCle_stored_long", enfantCle);
 		}
 		if(mereCles != null) {
 			for(java.lang.Long o : mereCles) {
@@ -6177,12 +6363,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				document.addField("gardienCles_stored_longs", o);
 			}
 		}
-		if(contactCles != null) {
-			for(java.lang.Long o : contactCles) {
-				document.addField("contactCles_indexed_longs", o);
+		if(paiementCles != null) {
+			for(java.lang.Long o : paiementCles) {
+				document.addField("paiementCles_indexed_longs", o);
 			}
-			for(java.lang.Long o : contactCles) {
-				document.addField("contactCles_stored_longs", o);
+			for(java.lang.Long o : paiementCles) {
+				document.addField("paiementCles_stored_longs", o);
 			}
 		}
 		if(familleCle != null) {
@@ -6212,6 +6398,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(ageTri != null) {
 			document.addField("ageTri_indexed_int", ageTri);
 			document.addField("ageTri_stored_int", ageTri);
+		}
+		if(enfantNomComplet != null) {
+			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
+			document.addField("enfantNomComplet_stored_string", enfantNomComplet);
 		}
 		if(ecoleNomComplet != null) {
 			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
@@ -6384,9 +6574,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(blocCles != null)
 			oInscriptionScolaire.blocCles.addAll(blocCles);
 
-		List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
-		if(enfantCles != null)
-			oInscriptionScolaire.enfantCles.addAll(enfantCles);
+		Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
+		if(enfantCle != null)
+			oInscriptionScolaire.setEnfantCle(enfantCle);
 
 		List<Long> mereCles = (List<Long>)solrDocument.get("mereCles_stored_longs");
 		if(mereCles != null)
@@ -6400,9 +6590,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(gardienCles != null)
 			oInscriptionScolaire.gardienCles.addAll(gardienCles);
 
-		List<Long> contactCles = (List<Long>)solrDocument.get("contactCles_stored_longs");
-		if(contactCles != null)
-			oInscriptionScolaire.contactCles.addAll(contactCles);
+		List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
+		if(paiementCles != null)
+			oInscriptionScolaire.paiementCles.addAll(paiementCles);
 
 		Long familleCle = (Long)solrDocument.get("familleCle_stored_long");
 		if(familleCle != null)
@@ -6431,6 +6621,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Integer ageTri = (Integer)solrDocument.get("ageTri_stored_int");
 		if(ageTri != null)
 			oInscriptionScolaire.setAgeTri(ageTri);
+
+		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
+		if(enfantNomComplet != null)
+			oInscriptionScolaire.setEnfantNomComplet(enfantNomComplet);
 
 		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 		if(ecoleNomComplet != null)
@@ -6555,7 +6749,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, blocHeureDebut, inscriptionApprouve, inscriptionImmunisations);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, blocHeureDebut, blocHeureFin, blocPrixParMois, inscriptionApprouve, inscriptionImmunisations);
 	}
 
 	////////////
@@ -6570,7 +6764,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire that = (InscriptionScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( blocCles, that.blocCles )
+				&& Objects.equals( enfantCle, that.enfantCle )
+				&& Objects.equals( mereCles, that.mereCles )
+				&& Objects.equals( pereCles, that.pereCles )
+				&& Objects.equals( gardienCles, that.gardienCles )
+				&& Objects.equals( paiementCles, that.paiementCles )
 				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
+				&& Objects.equals( blocHeureFin, that.blocHeureFin )
+				&& Objects.equals( blocPrixParMois, that.blocPrixParMois )
 				&& Objects.equals( inscriptionApprouve, that.inscriptionApprouve )
 				&& Objects.equals( inscriptionImmunisations, that.inscriptionImmunisations );
 	}
@@ -6584,7 +6785,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("InscriptionScolaire { ");
 		sb.append( "blocCles: " ).append(blocCles);
+		sb.append( ", enfantCle: " ).append(enfantCle);
+		sb.append( ", mereCles: " ).append(mereCles);
+		sb.append( ", pereCles: " ).append(pereCles);
+		sb.append( ", gardienCles: " ).append(gardienCles);
+		sb.append( ", paiementCles: " ).append(paiementCles);
 		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
+		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
+		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
 		sb.append( ", inscriptionApprouve: " ).append(inscriptionApprouve);
 		sb.append( ", inscriptionImmunisations: " ).append(inscriptionImmunisations);
 		sb.append(" }");

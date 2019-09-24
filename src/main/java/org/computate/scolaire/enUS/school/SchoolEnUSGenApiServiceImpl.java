@@ -823,10 +823,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolAddress_indexed_string";
 			case "objectSuggest":
 				return "objectSuggest_indexed_string";
-			case "schoolNameShort":
-				return "schoolNameShort_indexed_string";
-			case "schoolNameComplete":
-				return "schoolNameComplete_indexed_string";
+			case "schoolShortName":
+				return "schoolShortName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
 			case "schoolId":
 				return "schoolId_indexed_string";
 			case "pageUrl":

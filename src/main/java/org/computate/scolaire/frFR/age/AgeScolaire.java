@@ -96,7 +96,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: SessionScolaire.ageCles
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire de la session dans la base de données. 
 	 * Description.enUS: The primary key of the session in the database. 
 	 * NomAffichage.frFR: session
@@ -114,7 +114,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the age in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */          
+	 */ 
 	protected void _ageCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -127,14 +127,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionCles(List<Long> o) {}
 
-	/**
+	/**         
 	 * {@inheritDoc}
 	 * Var.enUS: blockKeys
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.ageCle
 	 * HtmlLigne: 4
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: Les blocs scolaires de l'âge scolaire. 
 	 * Description.enUS: The school blocks of the school age. 
 	 * NomAffichage.frFR: blocs
@@ -224,7 +224,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolNameComplete
+	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: 
@@ -232,7 +232,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * NomAffichage.frFR: 
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
-	 * r.enUS: SchoolNameComplete
+	 * r.enUS: SchoolCompleteName
 	 * r: session
 	 * r.enUS: session
 	 */   
@@ -345,11 +345,11 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: seasonNameComplete
+	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: SaisonNomComplet
-	 * r.enUS: SeasonNameComplete
+	 * r.enUS: SeasonCompleteName
 	 * r: session
 	 * r.enUS: session
 	 */
@@ -411,11 +411,11 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionNameComplete
+	 * Var.enUS: sessionCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * r: SessionNomComplet
-	 * r.enUS: SessionNameComplete
+	 * r.enUS: SessionCompleteName
 	 * r: session
 	 * r.enUS: session
 	 */                   
@@ -431,7 +431,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: début du groupe d'âge
 	 * NomAffichage.enUS: start of the age group
 	 */                   
@@ -445,19 +445,20 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: fin du groupe d'âge
 	 * NomAffichage.enUS: end of the age group
-	 */                   
+	 */                  
 	protected void _ageFin(Couverture<Integer> c) {
 	}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: ageNameComplete
+	 * Var.enUS: ageCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
+	 * HtmlColonne: 1
 	 * r: ageEte
 	 * r.enUS: ageSummer
 	 * r: âges %s - %s pendant %s
@@ -467,7 +468,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r: strAgeFin
 	 * r.enUS: strAgeEnd
 	 * r: sessionNomComplet
-	 * r.enUS: sessionNameComplete
+	 * r.enUS: sessionCompleteName
 	 */
 	protected void _ageNomComplet(Couverture<String> c) {
 		String o;
@@ -482,13 +483,13 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: ageNomComplet
-	 * r.enUS: ageNameComplete
+	 * r.enUS: ageCompleteName
 	 */            
 	protected void _ageId(Couverture<String> c) {
 		if(ageNomComplet != null) {
@@ -533,7 +534,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: ageNomComplet
-	 * r.enUS: ageNameComplete
+	 * r.enUS: ageCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(ageNomComplet);

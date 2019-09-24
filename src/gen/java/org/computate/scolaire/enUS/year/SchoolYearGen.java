@@ -8,6 +8,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
@@ -18,6 +19,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -33,6 +35,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -94,7 +97,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolYear setSchoolKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolKey = Long.parseLong(o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
@@ -202,7 +205,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.yearKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolYear setYearKey(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.yearKey = Long.parseLong(o);
 		this.yearKeyWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
@@ -329,7 +332,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear addEnrollmentKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addEnrollmentKeys(p);
 		}
@@ -455,7 +458,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 	public SchoolYear addSeasonKeys(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o)) {
+		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addSeasonKeys(p);
 		}
@@ -562,7 +565,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.educationSortWrap.alreadyInitialized = true;
 	}
 	public SchoolYear setEducationSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.educationSort = Integer.parseInt(o);
 		this.educationSortWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
@@ -670,7 +673,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
 	public SchoolYear setSchoolSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.schoolSort = Integer.parseInt(o);
 		this.schoolSortWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
@@ -778,7 +781,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.yearSortWrap.alreadyInitialized = true;
 	}
 	public SchoolYear setYearSort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.yearSort = Integer.parseInt(o);
 		this.yearSortWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
@@ -934,73 +937,73 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	////////////////////////
-	// schoolNameComplete //
+	// schoolCompleteName //
 	////////////////////////
 
-	/**	L'entité « schoolNameComplete »
+	/**	L'entité « schoolCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String schoolNameComplete;
+	protected String schoolCompleteName;
 	@JsonIgnore
-	public Wrap<String> schoolNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("schoolNameComplete").o(schoolNameComplete);
+	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
 
-	/**	<br/>L'entité « schoolNameComplete »
+	/**	<br/>L'entité « schoolCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNameComplete">Trouver l'entité schoolNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _schoolNameComplete(Wrap<String> c);
+	protected abstract void _schoolCompleteName(Wrap<String> c);
 
-	public String getSchoolNameComplete() {
-		return schoolNameComplete;
+	public String getSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public void setSchoolNameComplete(String schoolNameComplete) {
-		this.schoolNameComplete = schoolNameComplete;
-		this.schoolNameCompleteWrap.alreadyInitialized = true;
+	public void setSchoolCompleteName(String schoolCompleteName) {
+		this.schoolCompleteName = schoolCompleteName;
+		this.schoolCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolYear schoolNameCompleteInit() {
-		if(!schoolNameCompleteWrap.alreadyInitialized) {
-			_schoolNameComplete(schoolNameCompleteWrap);
-			if(schoolNameComplete == null)
-				setSchoolNameComplete(schoolNameCompleteWrap.o);
+	protected SchoolYear schoolCompleteNameInit() {
+		if(!schoolCompleteNameWrap.alreadyInitialized) {
+			_schoolCompleteName(schoolCompleteNameWrap);
+			if(schoolCompleteName == null)
+				setSchoolCompleteName(schoolCompleteNameWrap.o);
 		}
-		schoolNameCompleteWrap.alreadyInitialized(true);
+		schoolCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolYear)this;
 	}
 
-	public String solrSchoolNameComplete() {
-		return schoolNameComplete;
+	public String solrSchoolCompleteName() {
+		return schoolCompleteName;
 	}
 
-	public String strSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String strSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String jsonSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : schoolNameComplete;
+	public String jsonSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
-	public String nomAffichageSchoolNameComplete() {
+	public String nomAffichageSchoolCompleteName() {
 		return "r: EcoleNomComplet";
 	}
 
-	public String htmTooltipSchoolNameComplete() {
+	public String htmTooltipSchoolCompleteName() {
 		return null;
 	}
 
-	public String htmSchoolNameComplete() {
-		return schoolNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolNameComplete());
+	public String htmSchoolCompleteName() {
+		return schoolCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolCompleteName());
 	}
 
-	public void htmSchoolNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmSchoolCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolYear", strPk(), "SchoolNameComplete\">");
+			r.s("<div id=\"patchSchoolYear", strPk(), "SchoolCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolYear", strPk(), "SchoolNameComplete() {");
+				r.l("		function patchSchoolYear", strPk(), "SchoolCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1013,23 +1016,23 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSchoolNameComplete\": this.value },");
+				r.l("				data: {\"setSchoolCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"schoolNameComplete\"");
-							r.s(" value=\"", htmSchoolNameComplete(), "\");");
+							r.s(" name=\"schoolCompleteName\"");
+							r.s(" value=\"", htmSchoolCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSchoolNameComplete());
+				r.s(htmSchoolCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -1272,73 +1275,73 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	///////////////////
-	// yearNameShort //
+	// yearShortName //
 	///////////////////
 
-	/**	L'entité « yearNameShort »
+	/**	L'entité « yearShortName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String yearNameShort;
+	protected String yearShortName;
 	@JsonIgnore
-	public Wrap<String> yearNameShortWrap = new Wrap<String>().p(this).c(String.class).var("yearNameShort").o(yearNameShort);
+	public Wrap<String> yearShortNameWrap = new Wrap<String>().p(this).c(String.class).var("yearShortName").o(yearShortName);
 
-	/**	<br/>L'entité « yearNameShort »
+	/**	<br/>L'entité « yearShortName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearNameShort">Trouver l'entité yearNameShort dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearShortName">Trouver l'entité yearShortName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearNameShort(Wrap<String> c);
+	protected abstract void _yearShortName(Wrap<String> c);
 
-	public String getYearNameShort() {
-		return yearNameShort;
+	public String getYearShortName() {
+		return yearShortName;
 	}
 
-	public void setYearNameShort(String yearNameShort) {
-		this.yearNameShort = yearNameShort;
-		this.yearNameShortWrap.alreadyInitialized = true;
+	public void setYearShortName(String yearShortName) {
+		this.yearShortName = yearShortName;
+		this.yearShortNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolYear yearNameShortInit() {
-		if(!yearNameShortWrap.alreadyInitialized) {
-			_yearNameShort(yearNameShortWrap);
-			if(yearNameShort == null)
-				setYearNameShort(yearNameShortWrap.o);
+	protected SchoolYear yearShortNameInit() {
+		if(!yearShortNameWrap.alreadyInitialized) {
+			_yearShortName(yearShortNameWrap);
+			if(yearShortName == null)
+				setYearShortName(yearShortNameWrap.o);
 		}
-		yearNameShortWrap.alreadyInitialized(true);
+		yearShortNameWrap.alreadyInitialized(true);
 		return (SchoolYear)this;
 	}
 
-	public String solrYearNameShort() {
-		return yearNameShort;
+	public String solrYearShortName() {
+		return yearShortName;
 	}
 
-	public String strYearNameShort() {
-		return yearNameShort == null ? "" : yearNameShort;
+	public String strYearShortName() {
+		return yearShortName == null ? "" : yearShortName;
 	}
 
-	public String jsonYearNameShort() {
-		return yearNameShort == null ? "" : yearNameShort;
+	public String jsonYearShortName() {
+		return yearShortName == null ? "" : yearShortName;
 	}
 
-	public String nomAffichageYearNameShort() {
+	public String nomAffichageYearShortName() {
 		return null;
 	}
 
-	public String htmTooltipYearNameShort() {
+	public String htmTooltipYearShortName() {
 		return null;
 	}
 
-	public String htmYearNameShort() {
-		return yearNameShort == null ? "" : StringEscapeUtils.escapeHtml4(strYearNameShort());
+	public String htmYearShortName() {
+		return yearShortName == null ? "" : StringEscapeUtils.escapeHtml4(strYearShortName());
 	}
 
-	public void htmYearNameShort(AllWriter r, Boolean patchRights) {
+	public void htmYearShortName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolYear", strPk(), "YearNameShort\">");
+			r.s("<div id=\"patchSchoolYear", strPk(), "YearShortName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolYear", strPk(), "YearNameShort() {");
+				r.l("		function patchSchoolYear", strPk(), "YearShortName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1351,96 +1354,96 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setYearNameShort\": this.value },");
+				r.l("				data: {\"setYearShortName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearNameShort()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearShortName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"yearNameShort\"");
-							r.s(" value=\"", htmYearNameShort(), "\");");
+							r.s(" name=\"yearShortName\"");
+							r.s(" value=\"", htmYearShortName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmYearNameShort());
+				r.s(htmYearShortName());
 			}
 			r.l("</div>");
 		}
 	}
 
 	//////////////////////
-	// yearNameComplete //
+	// yearCompleteName //
 	//////////////////////
 
-	/**	L'entité « yearNameComplete »
+	/**	L'entité « yearCompleteName »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String yearNameComplete;
+	protected String yearCompleteName;
 	@JsonIgnore
-	public Wrap<String> yearNameCompleteWrap = new Wrap<String>().p(this).c(String.class).var("yearNameComplete").o(yearNameComplete);
+	public Wrap<String> yearCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("yearCompleteName").o(yearCompleteName);
 
-	/**	<br/>L'entité « yearNameComplete »
+	/**	<br/>L'entité « yearCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearNameComplete">Trouver l'entité yearNameComplete dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearCompleteName">Trouver l'entité yearCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearNameComplete(Wrap<String> c);
+	protected abstract void _yearCompleteName(Wrap<String> c);
 
-	public String getYearNameComplete() {
-		return yearNameComplete;
+	public String getYearCompleteName() {
+		return yearCompleteName;
 	}
 
-	public void setYearNameComplete(String yearNameComplete) {
-		this.yearNameComplete = yearNameComplete;
-		this.yearNameCompleteWrap.alreadyInitialized = true;
+	public void setYearCompleteName(String yearCompleteName) {
+		this.yearCompleteName = yearCompleteName;
+		this.yearCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolYear yearNameCompleteInit() {
-		if(!yearNameCompleteWrap.alreadyInitialized) {
-			_yearNameComplete(yearNameCompleteWrap);
-			if(yearNameComplete == null)
-				setYearNameComplete(yearNameCompleteWrap.o);
+	protected SchoolYear yearCompleteNameInit() {
+		if(!yearCompleteNameWrap.alreadyInitialized) {
+			_yearCompleteName(yearCompleteNameWrap);
+			if(yearCompleteName == null)
+				setYearCompleteName(yearCompleteNameWrap.o);
 		}
-		yearNameCompleteWrap.alreadyInitialized(true);
+		yearCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolYear)this;
 	}
 
-	public String solrYearNameComplete() {
-		return yearNameComplete;
+	public String solrYearCompleteName() {
+		return yearCompleteName;
 	}
 
-	public String strYearNameComplete() {
-		return yearNameComplete == null ? "" : yearNameComplete;
+	public String strYearCompleteName() {
+		return yearCompleteName == null ? "" : yearCompleteName;
 	}
 
-	public String jsonYearNameComplete() {
-		return yearNameComplete == null ? "" : yearNameComplete;
+	public String jsonYearCompleteName() {
+		return yearCompleteName == null ? "" : yearCompleteName;
 	}
 
-	public String nomAffichageYearNameComplete() {
+	public String nomAffichageYearCompleteName() {
 		return null;
 	}
 
-	public String htmTooltipYearNameComplete() {
+	public String htmTooltipYearCompleteName() {
 		return null;
 	}
 
-	public String htmYearNameComplete() {
-		return yearNameComplete == null ? "" : StringEscapeUtils.escapeHtml4(strYearNameComplete());
+	public String htmYearCompleteName() {
+		return yearCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strYearCompleteName());
 	}
 
-	public void htmYearNameComplete(AllWriter r, Boolean patchRights) {
+	public void htmYearCompleteName(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolYear", strPk(), "YearNameComplete\">");
+			r.s("<div id=\"patchSchoolYear", strPk(), "YearCompleteName\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolYear", strPk(), "YearNameComplete() {");
+				r.l("		function patchSchoolYear", strPk(), "YearCompleteName() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1453,23 +1456,23 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setYearNameComplete\": this.value },");
+				r.l("				data: {\"setYearCompleteName\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearNameComplete()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearCompleteName()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"yearNameComplete\"");
-							r.s(" value=\"", htmYearNameComplete(), "\");");
+							r.s(" name=\"yearCompleteName\"");
+							r.s(" value=\"", htmYearCompleteName(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmYearNameComplete());
+				r.s(htmYearCompleteName());
 			}
 			r.l("</div>");
 		}
@@ -1811,11 +1814,11 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		yearSortInit();
 		schoolSearchInit();
 		school_Init();
-		schoolNameCompleteInit();
+		schoolCompleteNameInit();
 		yearStartInit();
 		yearEndInit();
-		yearNameShortInit();
-		yearNameCompleteInit();
+		yearShortNameInit();
+		yearCompleteNameInit();
 		yearIdInit();
 		pageUrlInit();
 		objectSuggestInit();
@@ -1877,16 +1880,16 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.schoolSearch;
 			case "school_":
 				return oSchoolYear.school_;
-			case "schoolNameComplete":
-				return oSchoolYear.schoolNameComplete;
+			case "schoolCompleteName":
+				return oSchoolYear.schoolCompleteName;
 			case "yearStart":
 				return oSchoolYear.yearStart;
 			case "yearEnd":
 				return oSchoolYear.yearEnd;
-			case "yearNameShort":
-				return oSchoolYear.yearNameShort;
-			case "yearNameComplete":
-				return oSchoolYear.yearNameComplete;
+			case "yearShortName":
+				return oSchoolYear.yearShortName;
+			case "yearCompleteName":
+				return oSchoolYear.yearCompleteName;
 			case "yearId":
 				return oSchoolYear.yearId;
 			case "pageUrl":
@@ -2019,10 +2022,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					oSchoolYear.setYearSort(yearSort);
 			}
 
-			if(savesSchoolYear.contains("schoolNameComplete")) {
-				String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-				if(schoolNameComplete != null)
-					oSchoolYear.setSchoolNameComplete(schoolNameComplete);
+			if(savesSchoolYear.contains("schoolCompleteName")) {
+				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+				if(schoolCompleteName != null)
+					oSchoolYear.setSchoolCompleteName(schoolCompleteName);
 			}
 
 			if(savesSchoolYear.contains("yearStart")) {
@@ -2037,16 +2040,16 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					oSchoolYear.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolYear.contains("yearNameShort")) {
-				String yearNameShort = (String)solrDocument.get("yearNameShort_stored_string");
-				if(yearNameShort != null)
-					oSchoolYear.setYearNameShort(yearNameShort);
+			if(savesSchoolYear.contains("yearShortName")) {
+				String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
+				if(yearShortName != null)
+					oSchoolYear.setYearShortName(yearShortName);
 			}
 
-			if(savesSchoolYear.contains("yearNameComplete")) {
-				String yearNameComplete = (String)solrDocument.get("yearNameComplete_stored_string");
-				if(yearNameComplete != null)
-					oSchoolYear.setYearNameComplete(yearNameComplete);
+			if(savesSchoolYear.contains("yearCompleteName")) {
+				String yearCompleteName = (String)solrDocument.get("yearCompleteName_stored_string");
+				if(yearCompleteName != null)
+					oSchoolYear.setYearCompleteName(yearCompleteName);
 			}
 
 			if(savesSchoolYear.contains("yearId")) {
@@ -2171,9 +2174,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("yearSort_indexed_int", yearSort);
 			document.addField("yearSort_stored_int", yearSort);
 		}
-		if(schoolNameComplete != null) {
-			document.addField("schoolNameComplete_indexed_string", schoolNameComplete);
-			document.addField("schoolNameComplete_stored_string", schoolNameComplete);
+		if(schoolCompleteName != null) {
+			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
+			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
@@ -2183,13 +2186,13 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(yearNameShort != null) {
-			document.addField("yearNameShort_indexed_string", yearNameShort);
-			document.addField("yearNameShort_stored_string", yearNameShort);
+		if(yearShortName != null) {
+			document.addField("yearShortName_indexed_string", yearShortName);
+			document.addField("yearShortName_stored_string", yearShortName);
 		}
-		if(yearNameComplete != null) {
-			document.addField("yearNameComplete_indexed_string", yearNameComplete);
-			document.addField("yearNameComplete_stored_string", yearNameComplete);
+		if(yearCompleteName != null) {
+			document.addField("yearCompleteName_indexed_string", yearCompleteName);
+			document.addField("yearCompleteName_stored_string", yearCompleteName);
 		}
 		if(yearId != null) {
 			document.addField("yearId_indexed_string", yearId);
@@ -2262,9 +2265,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(yearSort != null)
 			oSchoolYear.setYearSort(yearSort);
 
-		String schoolNameComplete = (String)solrDocument.get("schoolNameComplete_stored_string");
-		if(schoolNameComplete != null)
-			oSchoolYear.setSchoolNameComplete(schoolNameComplete);
+		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
+		if(schoolCompleteName != null)
+			oSchoolYear.setSchoolCompleteName(schoolCompleteName);
 
 		Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
 		if(yearStart != null)
@@ -2274,13 +2277,13 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(yearEnd != null)
 			oSchoolYear.setYearEnd(yearEnd);
 
-		String yearNameShort = (String)solrDocument.get("yearNameShort_stored_string");
-		if(yearNameShort != null)
-			oSchoolYear.setYearNameShort(yearNameShort);
+		String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
+		if(yearShortName != null)
+			oSchoolYear.setYearShortName(yearShortName);
 
-		String yearNameComplete = (String)solrDocument.get("yearNameComplete_stored_string");
-		if(yearNameComplete != null)
-			oSchoolYear.setYearNameComplete(yearNameComplete);
+		String yearCompleteName = (String)solrDocument.get("yearCompleteName_stored_string");
+		if(yearCompleteName != null)
+			oSchoolYear.setYearCompleteName(yearCompleteName);
 
 		String yearId = (String)solrDocument.get("yearId_stored_string");
 		if(yearId != null)

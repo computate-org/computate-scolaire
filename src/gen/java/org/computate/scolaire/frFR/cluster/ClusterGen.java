@@ -7,6 +7,7 @@ import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
@@ -18,6 +19,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -54,6 +57,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	public static final String Cluster_NomSingulier = "cluster";
 	public static final String Cluster_NomPluriel = "clusters";
 	public static final String Cluster_NomActuel = "cluster actuel";
+	public static final String Cluster_Tous = "all ";
 	public static final String Cluster_TousNom = "tous les clusters";
 	public static final String Cluster_RechercherTousNomPar = "rechercher clusters par ";
 	public static final String Cluster_RechercherTousNom = "rechercher clusters";
@@ -61,6 +65,8 @@ public abstract class ClusterGen<DEV> extends Object {
 	public static final String Cluster_AucunNomTrouve = "aucun cluster trouvé";
 	public static final String Cluster_NomVar = "cluster";
 	public static final String Cluster_DeNom = "de cluster";
+	public static final String Cluster_NomAdjectifSingulier = "cluster";
+	public static final String Cluster_NomAdjectifPluriel = "clusters";
 	public static final String Cluster_Couleur = "green";
 	public static final String Cluster_IconeGroupe = "regular";
 	public static final String Cluster_IconeNom = "fort-awesome";
@@ -178,7 +184,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.pkCouverture.dejaInitialise = true;
 	}
 	public Cluster setPk(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pk = Long.parseLong(o);
 		this.pkCouverture.dejaInitialise = true;
 		return (Cluster)this;

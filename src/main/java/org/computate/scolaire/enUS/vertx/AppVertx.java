@@ -16,8 +16,11 @@ import org.computate.scolaire.enUS.cluster.ClusterEnUSGenApiService;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
+import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiService;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
+import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiService;
 import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiService;
 import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
@@ -365,6 +368,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SchoolSessionEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolAgeEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolBlockEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolEnrollmentEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolChildEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		SchoolMomEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
 		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 

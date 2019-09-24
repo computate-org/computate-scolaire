@@ -1,18 +1,15 @@
 package org.computate.scolaire.frFR.enfant;
 
-import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.computate.scolaire.frFR.age.AgeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -55,18 +52,18 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blockKeys
+	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: AgeScolaire.blocCles
+	 * Attribuer: InscriptionScolaire.enfantCle
 	 * HtmlLigne: 5
-	 * HtmlColonne: 1
-	 * Description.frFR: La clé primaire du bloc dans la base de données. 
-	 * Description.enUS: The primary key of the school block in the database. 
-	 * NomAffichage.frFR: blocs
-	 * NomAffichage.enUS: blocks
+	 * HtmlCellule: 1
+	 * Description.frFR: La clé primaire du inscription dans la base de données. 
+	 * Description.enUS: The primary key of the school enrollment in the database. 
+	 * NomAffichage.frFR: inscriptions
+	 * NomAffichage.enUS: enrollments
 	 */               
-	protected void _blocCles(Couverture<Long> c) {
+	protected void _inscriptionCles(Couverture<Long> c) {
 	}
 
 	/**
@@ -74,8 +71,8 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: childKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire du bloc dans la base de données. 
-	 * Description.enUS: The primary key of the school block in the database. 
+	 * Description.frFR: La clé primaire du inscription dans la base de données. 
+	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
 	 */               
@@ -114,19 +111,19 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: blockSearch
+	 * Var.enUS: enrollmentSearch
 	 * r: enfantCle
 	 * r.enUS: childKey
-	 * r: BlocScolaire
-	 * r.enUS: SchoolBlock
+	 * r: InscriptionScolaire
+	 * r.enUS: SchoolEnrollment
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
 	 */
-	protected void _blocRecherche(ListeRecherche<BlocScolaire> l) {
+	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("enfantCle_indexed_long:" + pk);
-		l.setC(BlocScolaire.class);
+		l.setC(InscriptionScolaire.class);
 		l.setStocker(true);
 		l.setFacet(true);
 		l.addFacetField("ecoleCle_indexed_long");
@@ -138,15 +135,15 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: blocs
-	 * r: blocRecherche
-	 * r.enUS: blockSearch
-	 * r: blocs
-	 * r.enUS: blocks
+	 * Var.enUS: inscriptions
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
+	 * r: inscriptions
+	 * r.enUS: enrollments
 	 * Ignorer: true
-	 */   
-	protected void _blocs(List<BlocScolaire> c) {
-		blocs.addAll(blocRecherche.getList());
+	 */  
+	protected void _inscriptions(List<InscriptionScolaire> l) {
+		l.addAll(inscriptionRecherche.getList());
 	}
 
 	/**
@@ -160,25 +157,29 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: schools
 	 * r: ecoleCle
 	 * r.enUS: schoolKey
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
 	 */                  
 	protected void _ecoleCles(List<Long> l) {
-		l.addAll(blocRecherche.getQueryResponse().getFacetField("ecoleCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("ecoleCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
-	/*
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: L'année scolaire du bloc scolaire. 
-	 * Description.enUS: The school year of the school block. 
+	 * Description.frFR: L'année scolaire du inscription scolaire. 
+	 * Description.enUS: The school year of the school enrollment. 
 	 * NomAffichage.frFR: années
 	 * NomAffichage.enUS: years
 	 * r: anneeCle
 	 * r.enUS: yearKey
-	 */          
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
+	 */
 	protected void _anneeCles(List<Long> l) {
-		l.addAll(blocRecherche.getQueryResponse().getFacetField("anneeCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("anneeCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**
@@ -186,15 +187,17 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: seasonKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La saison scolaire du bloc scolaire. 
-	 * Description.enUS: The school season of the school block. 
+	 * Description.frFR: La saison scolaire du inscription scolaire. 
+	 * Description.enUS: The school season of the school enrollment. 
 	 * NomAffichage.frFR: saisons
 	 * NomAffichage.enUS: seasons
 	 * r: saisonCle
 	 * r.enUS: seasonKey
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
 	 */          
 	protected void _saisonCles(List<Long> l) {
-		l.addAll(blocRecherche.getQueryResponse().getFacetField("saisonCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("saisonCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**
@@ -203,14 +206,16 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Description.frFR: La clé primaire de la session dans la base de données. 
-	 * Description.enUS: The primary key of the school block in the database. 
+	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: sessions
 	 * NomAffichage.enUS: sessions
 	 * r: sessionCle
 	 * r.enUS: sessionKey
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
 	 */          
 	protected void _sessionCles(List<Long> l) {
-		l.addAll(blocRecherche.getQueryResponse().getFacetField("sessionCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("sessionCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**
@@ -224,9 +229,11 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: ages
 	 * r: ageCle
 	 * r.enUS: ageKey
+	 * r: inscriptionRecherche
+	 * r.enUS: enrollmentSearch
 	 */                  
 	protected void _ageCles(List<Long> l) {
-		l.addAll(blocRecherche.getQueryResponse().getFacetField("ageCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
+		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("ageCle_indexed_long").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
 
 	/**
@@ -238,7 +245,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: first name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 */                   
 	protected void _personnePrenom(Couverture<String> c) {
 	}
@@ -252,7 +259,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: last name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 */                   
 	protected void _familleNom(Couverture<String> c) {
 	}
@@ -266,7 +273,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: complete name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * r: personnePrenom
 	 * r.enUS: personFirstName
 	 * r: familleNom
@@ -285,7 +292,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: complete name preferred
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * r: personnePrenom
 	 * r.enUS: personFirstName
 	 * r: familleNom
@@ -304,7 +311,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: formal name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 * r: personnePrenom
 	 * r.enUS: personFirstName
 	 * r: familleNom
@@ -334,7 +341,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: medical conditions
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 1
+	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantConditionsMedicales(Couverture<String> c) {
 	}
@@ -348,7 +355,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: schools previously attended
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
 	}
@@ -362,7 +369,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: description
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlColonne: 3
+	 * HtmlCellule: 3
 	 */                   
 	protected void _enfantDescription(Couverture<String> c) {
 	}
@@ -388,7 +395,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: current vaccines
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 2
+	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantVaccinsAJour(Couverture<Boolean> c) {
 		c.o(false);
@@ -403,7 +410,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: potty trained
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlColonne: 3
+	 * HtmlCellule: 3
 	 */                   
 	protected void _enfantPropre(Couverture<Boolean> c) {
 		c.o(false);
@@ -411,71 +418,36 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: blocNameComplete
+	 * Var.enUS: childCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
-	 * r: %s - %s %s %s/mois %s
-	 * r.enUS: %s - %s %s %s/month %s
-	 * r: strBlocHeureDebut
-	 * r.enUS: strBlockTimeStart
-	 * r: strBlocHeureFin
-	 * r.enUS: strBlockTimeEnd
-	 * r: strBlocPrixParMois
-	 * r.enUS: strBlockPricePerMonth
-	 * r: blocPrixParMois
-	 * r.enUS: blockPricePerMonth
-	 * r: blocDimanche
-	 * r.enUS: blockSunday
-	 * r: blocLundi
-	 * r.enUS: blockMonday
-	 * r: blocMardi
-	 * r.enUS: blockTuesday
-	 * r: blocMercredi
-	 * r.enUS: blockWednesday
-	 * r: blocJeudi
-	 * r.enUS: blockThursday
-	 * r: blocVendredi
-	 * r.enUS: blockFriday
-	 * r: blocSamedi
-	 * r.enUS: blockSaturday
-	 * r: ageNomComplet
-	 * r.enUS: ageNameComplete
+	 * HtmlColonne: 1
+	 * r: personneNomComplet
+	 * r.enUS: personCompleteName
 	 */  
-	protected void _blocNomComplet(Couverture<String> c) {
-		String o;
-		String weekdays = "";
-		if(blocLundi) weekdays += " Mo";
-		if(blocMardi) weekdays += " Tu";
-		if(blocMercredi) weekdays += " We";
-		if(blocJeudi) weekdays += " Th";
-		if(blocVendredi) weekdays += " Fr";
-		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
-		if(blocPrixParMois == null)
-			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);
-		else
-			o = String.format("%s - %s %s %s/mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
-		c.o(o);
+	protected void _enfantNomComplet(Couverture<String> c) {
+		c.o(personneNomComplet);
 	}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: blocId
+	 * Var.enUS: childId
 	 * Indexe: true
 	 * Stocke: true
 	 * VarId: true
 	 * HtmlLigne: 1
-	 * HtmlColonne: 4
+	 * HtmlCellule: 4
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
-	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r: enfantNomComplet
+	 * r.enUS: childCompleteName
 	 */            
-	protected void _blocId(Couverture<String> c) {
-		if(blocNomComplet != null) {
-			String s = Normalizer.normalize(blocNomComplet, Normalizer.Form.NFD);
+	protected void _enfantId(Couverture<String> c) {
+		if(enfantNomComplet != null) {
+			String s = Normalizer.normalize(enfantNomComplet, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -493,10 +465,10 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarUrl: true
-	 * r: blocId
-	 * r.enUS: blocId
-	 * r: /bloc/
-	 * r.enUS: /block/
+	 * r: enfantId
+	 * r.enUS: childId
+	 * r: /enfant/
+	 * r.enUS: /chilc/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -505,8 +477,8 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * r.enUS: SiteBaseUrl
 	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
-		if(blocId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/bloc/" + blocId;
+		if(enfantId != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/enfant/" + enfantId;
 			c.o(o);
 		}
 	}
@@ -515,11 +487,11 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
-	 * r: blocNomComplet
-	 * r.enUS: blocNameComplete
+	 * r: enfantNomComplet
+	 * r.enUS: childCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(blocNomComplet);
+		c.o(enfantNomComplet);
 	}
 
 	/**
@@ -527,13 +499,13 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: _classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
-	 * r: BlocScolaire
-	 * r.enUS: SchoolBlock
+	 * r: EnfantScolaire
+	 * r.enUS: SchoolChild
 	 * r: classeNomsCanoniques
 	 * r.enUS: classCanonicalNames
 	 **/      
 	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(BlocScolaire.class.getCanonicalName());
+		l.add(EnfantScolaire.class.getCanonicalName());
 		super._classeNomsCanoniques(l);
 	}
 }

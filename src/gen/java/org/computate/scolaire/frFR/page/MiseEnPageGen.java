@@ -2,28 +2,31 @@ package org.computate.scolaire.frFR.page;
 
 import java.util.Date;
 import java.time.ZonedDateTime;
-import org.computate.scolaire.frFR.cluster.Cluster;
 import java.time.LocalDateTime;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.time.Instant;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import java.util.Locale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
+import java.time.ZoneOffset;
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import java.time.Instant;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import java.util.Locale;
 import java.time.format.DateTimeFormatter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
-import java.time.ZoneOffset;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1461,7 +1464,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageLargeurCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageImageLargeur(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pageImageLargeur = Integer.parseInt(o);
 		this.pageImageLargeurCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
@@ -1528,7 +1531,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageHauteurCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageImageHauteur(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.pageImageHauteur = Integer.parseInt(o);
 		this.pageImageHauteurCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;

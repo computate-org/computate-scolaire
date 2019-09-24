@@ -15,123 +15,123 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.enUS.block.BlockPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class BlockPageGen<DEV> extends BlockGenPage {
 
 	//////////////
-	// initLoin //
+	// initDeep //
 	//////////////
 
-	protected boolean dejaInitialiseBlockPage = false;
+	protected boolean alreadyInitializedBlockPage = false;
 
-	public BlockPage initLoinBlockPage(SiteRequestEnUS requeteSite_) {
-		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseBlockPage) {
-			dejaInitialiseBlockPage = true;
-			initLoinBlockPage();
+	public BlockPage initDeepBlockPage(SiteRequestEnUS siteRequest_) {
+		setSiteRequest_(siteRequest_);
+		if(!alreadyInitializedBlockPage) {
+			alreadyInitializedBlockPage = true;
+			initDeepBlockPage();
 		}
 		return (BlockPage)this;
 	}
 
-	public void initLoinBlockPage() {
-		super.initLoinBlockGenPage(requeteSite_);
+	public void initDeepBlockPage() {
+		super.initDeepBlockGenPage(siteRequest_);
 		initBlockPage();
 	}
 
 	public void initBlockPage() {
 	}
 
-	@Override public void initLoinPourClasse(SiteRequestEnUS requeteSite_) {
-		initLoinBlockPage(requeteSite_);
+	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
+		initDeepBlockPage(siteRequest_);
 	}
 
 	/////////////////
-	// requeteSite //
+	// siteRequest //
 	/////////////////
 
-	public void requeteSiteBlockPage(SiteRequestEnUS requeteSite_) {
-			super.requeteSiteBlockGenPage(requeteSite_);
+	public void siteRequestBlockPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestBlockGenPage(siteRequest_);
 	}
 
-	public void requeteSitePourClasse(SiteRequestEnUS requeteSite_) {
-		requeteSiteBlockPage(requeteSite_);
+	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
+		siteRequestBlockPage(siteRequest_);
 	}
 
 	/////////////
-	// obtenir //
+	// obtain //
 	/////////////
 
-	@Override public Object obtenirPourClasse(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirBlockPage(v);
+				o = obtainBlockPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.obtenirPourClasse(v);
+				o = cluster.obtainForClass(v);
 			}
 		}
 		return o;
 	}
-	public Object obtenirBlockPage(String var) {
+	public Object obtainBlockPage(String var) {
 		BlockPage oBlockPage = (BlockPage)this;
 		switch(var) {
 			default:
-				return super.obtenirBlockGenPage(var);
+				return super.obtainBlockGenPage(var);
 		}
 	}
 
 	///////////////
-	// attribuer //
+	// attribute //
 	///////////////
 
-	@Override public boolean attribuerPourClasse(String var, Object val) {
+	@Override public boolean attributeForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerBlockPage(v, val);
+				o = attributeBlockPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
-				o = cluster.attribuerPourClasse(v, val);
+				o = cluster.attributeForClass(v, val);
 			}
 		}
 		return o != null;
 	}
-	public Object attribuerBlockPage(String var, Object val) {
+	public Object attributeBlockPage(String var, Object val) {
 		BlockPage oBlockPage = (BlockPage)this;
 		switch(var) {
 			default:
-				return super.attribuerBlockGenPage(var, val);
+				return super.attributeBlockGenPage(var, val);
 		}
 	}
 
 	/////////////
-	// definir //
+	// define //
 	/////////////
 
-	@Override public boolean definirPourClasse(String var, String val) {
+	@Override public boolean defineForClass(String var, String val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirBlockPage(v, val);
+					o = defineBlockPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					o = cluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
-	public Object definirBlockPage(String var, String val) {
+	public Object defineBlockPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.definirBlockGenPage(var, val);
+				return super.defineBlockGenPage(var, val);
 		}
 	}
 
