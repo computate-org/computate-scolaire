@@ -5,6 +5,7 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -179,11 +180,13 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	protected void _blocCompleteName(Wrap<String> c) {
 		String o;
 		String weekdays = "";
-		if(blockMonday) weekdays += " Mo";
-		if(blockTuesday) weekdays += " Tu";
-		if(blockWednesday) weekdays += " We";
-		if(blockThursday) weekdays += " Th";
-		if(blockFriday) weekdays += " Fr";
+		if(BooleanUtils.isTrue(blockSunday)) weekdays += " Su";
+		if(BooleanUtils.isTrue(blockMonday)) weekdays += " Mo";
+		if(BooleanUtils.isTrue(blockTuesday)) weekdays += " Tu";
+		if(BooleanUtils.isTrue(blockWednesday)) weekdays += " We";
+		if(BooleanUtils.isTrue(blockThursday)) weekdays += " Th";
+		if(BooleanUtils.isTrue(blockFriday)) weekdays += " Fr";
+		if(BooleanUtils.isTrue(blockSaturday)) weekdays += " Sa";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
 		if(blockPricePerMonth == null)
 			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);

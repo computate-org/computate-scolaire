@@ -57,8 +57,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolEnrollment != null && schoolEnrollment.getBlocCompleteName() != null)
-			c.o(schoolEnrollment.getBlocCompleteName());
+		if(schoolEnrollment != null && schoolEnrollment.getInscriptionCompleteName() != null)
+			c.o(schoolEnrollment.getInscriptionCompleteName());
 		else if(schoolEnrollment != null)
 			c.o("");
 		else if(listSchoolEnrollment == null || listSchoolEnrollment.size() == 0)
@@ -166,7 +166,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strBlocId()).g("span");
+									e("span").f().sx(o.strInscriptionId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -355,7 +355,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postSchoolBlockVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_blockKeys'); $e.html($e.val()); }, function() { addError($('#Page_blockKeys')); }); ")
+											.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_blockKeys'); $e.html($e.val()); }, function() { addError($('#Page_blockKeys')); }); ")
 											.f().sx("add a block")
 										.g("button");
 									} g("div");
@@ -413,7 +413,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolChildVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_childKey'); $e.html($e.val()); }, function() { addError($('#Page_childKey')); }); ")
+											.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", o.getPk(), "\" }, function() { var $e = $('#Page_childKey'); $e.html($e.val()); }, function() { addError($('#Page_childKey')); }); ")
 											.f().sx("add a child")
 										.g("button");
 									} g("div");
@@ -473,7 +473,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postSchoolMomVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_momKeys'); $e.html($e.val()); }, function() { addError($('#Page_momKeys')); }); ")
+											.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_momKeys'); $e.html($e.val()); }, function() { addError($('#Page_momKeys')); }); ")
 											.f().sx("add a mom")
 										.g("button");
 									} g("div");
@@ -531,7 +531,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-											.a("onclick", "postSchoolDadVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_dadKeys'); $e.html($e.val()); }, function() { addError($('#Page_dadKeys')); }); ")
+											.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_dadKeys'); $e.html($e.val()); }, function() { addError($('#Page_dadKeys')); }); ")
 											.f().sx("add a dad")
 										.g("button");
 									} g("div");
@@ -591,7 +591,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_guardianKeys'); $e.html($e.val()); }, function() { addError($('#Page_guardianKeys')); }); ")
+											.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_guardianKeys'); $e.html($e.val()); }, function() { addError($('#Page_guardianKeys')); }); ")
 											.f().sx("add a guardian")
 										.g("button");
 									} g("div");
@@ -649,7 +649,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Page_paymentKeys'); $e.html($e.val()); }, function() { addError($('#Page_paymentKeys')); }); ")
+											.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_paymentKeys'); $e.html($e.val()); }, function() { addError($('#Page_paymentKeys')); }); ")
 											.f().sx("add a payment")
 										.g("button");
 									} g("div");
@@ -813,7 +813,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -973,7 +973,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_blockKeys'); $e.html($e.val()); }, function() { addError($('#POST_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_blockKeys'); $e.html($e.val()); }, function() { addError($('#POST_blockKeys')); }); ")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -1031,7 +1031,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_childKey'); $e.html($e.val()); }, function() { addError($('#POST_childKey')); }); ")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", o.getPk(), "\" }, function() { var $e = $('#POST_childKey'); $e.html($e.val()); }, function() { addError($('#POST_childKey')); }); ")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -1091,7 +1091,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_momKeys'); $e.html($e.val()); }, function() { addError($('#POST_momKeys')); }); ")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_momKeys'); $e.html($e.val()); }, function() { addError($('#POST_momKeys')); }); ")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -1149,7 +1149,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_dadKeys'); $e.html($e.val()); }, function() { addError($('#POST_dadKeys')); }); ")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_dadKeys'); $e.html($e.val()); }, function() { addError($('#POST_dadKeys')); }); ")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -1209,7 +1209,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_guardianKeys'); $e.html($e.val()); }, function() { addError($('#POST_guardianKeys')); }); ")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_guardianKeys'); $e.html($e.val()); }, function() { addError($('#POST_guardianKeys')); }); ")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -1267,7 +1267,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#POST_paymentKeys'); $e.html($e.val()); }, function() { addError($('#POST_paymentKeys')); }); ")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_paymentKeys'); $e.html($e.val()); }, function() { addError($('#POST_paymentKeys')); }); ")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -1429,7 +1429,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1589,7 +1589,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_blockKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_blockKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_blockKeys')); }); ")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -1647,7 +1647,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_childKey'); $e.html($e.val()); }, function() { addError($('#PATCH_childKey')); }); ")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", o.getPk(), "\" }, function() { var $e = $('#PATCH_childKey'); $e.html($e.val()); }, function() { addError($('#PATCH_childKey')); }); ")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -1707,7 +1707,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_momKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_momKeys')); }); ")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_momKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_momKeys')); }); ")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -1765,7 +1765,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_dadKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_dadKeys')); }); ")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_dadKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_dadKeys')); }); ")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -1825,7 +1825,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_guardianKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_guardianKeys')); }); ")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_guardianKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_guardianKeys')); }); ")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -1883,7 +1883,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#PATCH_paymentKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_paymentKeys')); }); ")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_paymentKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_paymentKeys')); }); ")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -1991,7 +1991,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocCompleteName()).g("span");
+								e("span").f().sx(o.strInscriptionCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2060,7 +2060,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2220,7 +2220,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_blockKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_blockKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_blockKeys')); }); ")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -2278,7 +2278,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_childKey'); $e.html($e.val()); }, function() { addError($('#Recherche_childKey')); }); ")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: \"", o.getPk(), "\" }, function() { var $e = $('#Recherche_childKey'); $e.html($e.val()); }, function() { addError($('#Recherche_childKey')); }); ")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -2338,7 +2338,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_momKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_momKeys')); }); ")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_momKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_momKeys')); }); ")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -2396,7 +2396,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_dadKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_dadKeys')); }); ")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_dadKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_dadKeys')); }); ")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -2456,7 +2456,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_guardianKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_guardianKeys')); }); ")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_guardianKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_guardianKeys')); }); ")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -2514,7 +2514,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: ", o.getPk(), " }, function() { var $e = $('#Recherche_paymentKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_paymentKeys')); }); ")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_paymentKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_paymentKeys')); }); ")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -2622,7 +2622,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocCompleteName()).g("span");
+								e("span").f().sx(o.strInscriptionCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2706,7 +2706,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.getBlocCompleteName());
+										sx(o.getInscriptionCompleteName());
 									} g("span");
 								} g("a");
 							} g("td");

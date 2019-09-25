@@ -4843,6 +4843,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			case "ageCle":
 				oBlocScolaire.setAgeCle((Long)val);
 				return val;
+			case "inscriptionCles":
+				oBlocScolaire.addInscriptionCles((Long)val);
+				return val;
 			default:
 				return super.attribuerCluster(var, val);
 		}
@@ -4966,11 +4969,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setEnfantCle(enfantCle);
 			}
 
-			if(sauvegardesBlocScolaire.contains("inscriptionCles")) {
-				List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
-				if(inscriptionCles != null)
-					oBlocScolaire.inscriptionCles.addAll(inscriptionCles);
-			}
+			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
+			if(inscriptionCles != null)
+				oBlocScolaire.inscriptionCles.addAll(inscriptionCles);
 
 			if(sauvegardesBlocScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -5600,7 +5601,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageCle, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi);
+		return Objects.hash(super.hashCode(), ageCle, inscriptionCles, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi);
 	}
 
 	////////////
@@ -5615,6 +5616,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		BlocScolaire that = (BlocScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( ageCle, that.ageCle )
+				&& Objects.equals( inscriptionCles, that.inscriptionCles )
 				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
 				&& Objects.equals( blocHeureFin, that.blocHeureFin )
 				&& Objects.equals( blocPrixParMois, that.blocPrixParMois )
@@ -5636,6 +5638,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("BlocScolaire { ");
 		sb.append( "ageCle: " ).append(ageCle);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
 		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
 		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
 		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);

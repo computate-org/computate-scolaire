@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.age.AgeScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -137,14 +138,11 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: childKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: EnfantScolaire.blocCles
-	 * HtmlLigne: 5
-	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
 	 * Description.enUS: The primary key of the age in the database. 
 	 * NomAffichage.frFR: enfant
 	 * NomAffichage.enUS: child
-	 */                 
+	 */                
 	protected void _enfantCle(Couverture<Long> c) {
 	}
 
@@ -153,9 +151,12 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.blocCles
+	 * HtmlLigne: 5
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
-	 */               
+	 */            
 	protected void _inscriptionCles(List<Long> o) {}
 
 	/**
@@ -643,15 +644,31 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r.enUS: blockSaturday
 	 * r: ageNomComplet
 	 * r.enUS: ageCompleteName
-	 */  
+	 * r: " Dim"
+	 * r.enUS: " Su"
+	 * r: " Lun"
+	 * r.enUS: " Mo"
+	 * r: " Mar"
+	 * r.enUS: " Tu"
+	 * r: " Mer"
+	 * r.enUS: " We"
+	 * r: " Jeu"
+	 * r.enUS: " Th"
+	 * r: " Ven"
+	 * r.enUS: " Fr"
+	 * r: " Sam"
+	 * r.enUS: " Sa"
+	 */ 
 	protected void _blocNomComplet(Couverture<String> c) {
 		String o;
 		String weekdays = "";
-		if(blocLundi) weekdays += " Mo";
-		if(blocMardi) weekdays += " Tu";
-		if(blocMercredi) weekdays += " We";
-		if(blocJeudi) weekdays += " Th";
-		if(blocVendredi) weekdays += " Fr";
+		if(BooleanUtils.isTrue(blocDimanche)) weekdays += " Dim";
+		if(BooleanUtils.isTrue(blocLundi)) weekdays += " Lun";
+		if(BooleanUtils.isTrue(blocMardi)) weekdays += " Mar";
+		if(BooleanUtils.isTrue(blocMercredi)) weekdays += " Mer";
+		if(BooleanUtils.isTrue(blocJeudi)) weekdays += " Jeu";
+		if(BooleanUtils.isTrue(blocVendredi)) weekdays += " Ven";
+		if(BooleanUtils.isTrue(blocSamedi)) weekdays += " Sam";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
 		if(blocPrixParMois == null)
 			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);

@@ -80,11 +80,13 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * r.enUS: SolrClient
 	 **/
 	protected void _queryResponse(Couverture<QueryResponse> c) {
-		try {
-			QueryResponse o = requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery);
-			c.o(o);
-		} catch (SolrServerException | IOException e) {
-			ExceptionUtils.rethrow(e);
+		if(solrQuery.getQuery() != null) {
+			try {
+				QueryResponse o = requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery);
+				c.o(o);
+			} catch (SolrServerException | IOException e) {
+				ExceptionUtils.rethrow(e);
+			}
 		}
 	}
 
@@ -93,8 +95,10 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * 
 	 **/ 
 	protected void _solrDocumentList(Couverture<SolrDocumentList> c) {
-		SolrDocumentList o = queryResponse.getResults();
-		c.o(o);
+		if(solrQuery.getQuery() != null) {
+			SolrDocumentList o = queryResponse.getResults();
+			c.o(o);
+		}
 	}
 
 	/**
@@ -114,19 +118,21 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * r.enUS: SiteRequest
 	 */
 	protected void _list(List<DEV> l) {
-		for(SolrDocument solrDocument : solrDocumentList) {
-			try {
-				DEV o = c.newInstance();
-				MethodUtils.invokeMethod(o, "setRequeteSite_", requeteSite_);
-				if(peupler)
-					MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
-				if(stocker)
-					MethodUtils.invokeMethod(o, "stockerPourClasse", solrDocument);
-//				MethodUtils.invokeMethod(o, "initLoinPourClasse", requeteSite_);
-				l.add(o);
-			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
-					| InvocationTargetException e) {
-				ExceptionUtils.rethrow(e);
+		if(solrQuery.getQuery() != null) {
+			for(SolrDocument solrDocument : solrDocumentList) {
+				try {
+					DEV o = c.newInstance();
+					MethodUtils.invokeMethod(o, "setRequeteSite_", requeteSite_);
+					if(peupler)
+						MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
+					if(stocker)
+						MethodUtils.invokeMethod(o, "stockerPourClasse", solrDocument);
+	//				MethodUtils.invokeMethod(o, "initLoinPourClasse", requeteSite_);
+					l.add(o);
+				} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+						| InvocationTargetException e) {
+					ExceptionUtils.rethrow(e);
+				}
 			}
 		}
 	}

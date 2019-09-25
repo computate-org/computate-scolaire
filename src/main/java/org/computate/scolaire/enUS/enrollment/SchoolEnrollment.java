@@ -87,11 +87,16 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _childSearch(SearchList<SchoolChild> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
-		l.addFilterQuery("pk_indexed_long:" + childKey);
-		l.setC(SchoolChild.class);
-		l.setStore(true);
+		if(childKey == null) {
+			l.setQuery(null);
+		}
+		else {
+			l.setQuery("*:*");
+			l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+			l.addFilterQuery("pk_indexed_long:" + childKey);
+			l.setC(SchoolChild.class);
+			l.setStore(true);
+		}
 	}
 
 	protected void _child_(Wrap<SchoolChild> c) {
@@ -226,25 +231,18 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
 	}
 
-	protected void _blocCompleteName(Wrap<String> c) {
+	protected void _inscriptionCompleteName(Wrap<String> c) {
 		String o;
-		String weekdays = "";
-		if(blockMonday) weekdays += " Mo";
-		if(blockTuesday) weekdays += " Tu";
-		if(blockWednesday) weekdays += " We";
-		if(blockThursday) weekdays += " Th";
-		if(blockFriday) weekdays += " Fr";
-		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
-		if(blockPricePerMonth == null)
-			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);
+		if(child_ != null)
+			o = String.format("enrollment for the child %s", child_.getPersonCompleteNamePreferred());
 		else
-			o = String.format("%s - %s %s %s/month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
+			o = "enrollment";
 		c.o(o);
 	}
 
-	protected void _blocId(Wrap<String> c) {
-		if(blocCompleteName != null) {
-			String s = Normalizer.normalize(blocCompleteName, Normalizer.Form.NFD);
+	protected void _inscriptionId(Wrap<String> c) {
+		if(inscriptionCompleteName != null) {
+			String s = Normalizer.normalize(inscriptionCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -258,14 +256,14 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _pageUrl(Wrap<String> c) {
-		if(blocId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/block/" + blocId;
+		if(inscriptionId != null) {
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enrollment/" + inscriptionId;
 			c.o(o);
 		}
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(blocCompleteName);
+		c.o(inscriptionCompleteName);
 	}
 
 	@Override()

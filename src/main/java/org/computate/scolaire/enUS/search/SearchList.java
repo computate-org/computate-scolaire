@@ -46,33 +46,39 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 	}
 
 	protected void _queryResponse(Wrap<QueryResponse> c) {
-		try {
-			QueryResponse o = siteRequest_.getSiteContext_().getSolrClient().query(solrQuery);
-			c.o(o);
-		} catch (SolrServerException | IOException e) {
-			ExceptionUtils.rethrow(e);
+		if(solrQuery.getQuery() != null) {
+			try {
+				QueryResponse o = siteRequest_.getSiteContext_().getSolrClient().query(solrQuery);
+				c.o(o);
+			} catch (SolrServerException | IOException e) {
+				ExceptionUtils.rethrow(e);
+			}
 		}
 	}
 
 	protected void _solrDocumentList(Wrap<SolrDocumentList> c) {
-		SolrDocumentList o = queryResponse.getResults();
-		c.o(o);
+		if(solrQuery.getQuery() != null) {
+			SolrDocumentList o = queryResponse.getResults();
+			c.o(o);
+		}
 	}
 
 	protected void _list(List<DEV> l) {
-		for(SolrDocument solrDocument : solrDocumentList) {
-			try {
-				DEV o = c.newInstance();
-				MethodUtils.invokeMethod(o, "setSiteRequest_", siteRequest_);
-				if(populate)
-					MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
-				if(store)
-					MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
-//				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
-				l.add(o);
-			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
-					| InvocationTargetException e) {
-				ExceptionUtils.rethrow(e);
+		if(solrQuery.getQuery() != null) {
+			for(SolrDocument solrDocument : solrDocumentList) {
+				try {
+					DEV o = c.newInstance();
+					MethodUtils.invokeMethod(o, "setSiteRequest_", siteRequest_);
+					if(populate)
+						MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
+					if(store)
+						MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
+	//				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
+					l.add(o);
+				} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+						| InvocationTargetException e) {
+					ExceptionUtils.rethrow(e);
+				}
 			}
 		}
 	}

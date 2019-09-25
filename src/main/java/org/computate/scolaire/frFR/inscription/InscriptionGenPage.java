@@ -57,8 +57,8 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(inscriptionScolaire != null && inscriptionScolaire.getBlocNomComplet() != null)
-			c.o(inscriptionScolaire.getBlocNomComplet());
+		if(inscriptionScolaire != null && inscriptionScolaire.getInscriptionNomComplet() != null)
+			c.o(inscriptionScolaire.getInscriptionNomComplet());
 		else if(inscriptionScolaire != null)
 			c.o("");
 		else if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0)
@@ -166,7 +166,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strBlocId()).g("span");
+									e("span").f().sx(o.strInscriptionId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -356,7 +356,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postBlocScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_blocCles')); }); ")
+											.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_blocCles')); }); ")
 											.f().sx("ajouter un bloc")
 										.g("button");
 									} g("div");
@@ -415,7 +415,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_enfantCle')); }); ")
+											.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", o.getPk(), "\" }, function() { var $e = $('#Page_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_enfantCle')); }); ")
 											.f().sx("ajouter un enfant")
 										.g("button");
 									} g("div");
@@ -476,7 +476,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_mereCles')); }); ")
+											.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_mereCles')); }); ")
 											.f().sx("ajouter une mère")
 										.g("button");
 									} g("div");
@@ -535,7 +535,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-											.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_pereCles')); }); ")
+											.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_pereCles')); }); ")
 											.f().sx("ajouter un père")
 										.g("button");
 									} g("div");
@@ -596,7 +596,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_gardienCles')); }); ")
+											.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_gardienCles')); }); ")
 											.f().sx("ajouter un gardien")
 										.g("button");
 									} g("div");
@@ -655,7 +655,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Page_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_paiementCles')); }); ")
+											.a("onclick", "postPaiementScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Page_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_paiementCles')); }); ")
 											.f().sx("ajouter un paiement")
 										.g("button");
 									} g("div");
@@ -819,7 +819,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -980,7 +980,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_blocCles')); }); ")
+										.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_blocCles')); }); ")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -1039,7 +1039,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_enfantCle')); }); ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", o.getPk(), "\" }, function() { var $e = $('#POST_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_enfantCle')); }); ")
 										.f().sx("ajouter un enfant")
 									.g("button");
 								} g("div");
@@ -1100,7 +1100,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_mereCles')); }); ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_mereCles')); }); ")
 										.f().sx("ajouter une mère")
 									.g("button");
 								} g("div");
@@ -1159,7 +1159,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_pereCles')); }); ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_pereCles')); }); ")
 										.f().sx("ajouter un père")
 									.g("button");
 								} g("div");
@@ -1220,7 +1220,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_gardienCles')); }); ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_gardienCles')); }); ")
 										.f().sx("ajouter un gardien")
 									.g("button");
 								} g("div");
@@ -1279,7 +1279,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#POST_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_paiementCles')); }); ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#POST_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_paiementCles')); }); ")
 										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
@@ -1441,7 +1441,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1602,7 +1602,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_blocCles')); }); ")
+										.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_blocCles')); }); ")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -1661,7 +1661,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_enfantCle')); }); ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", o.getPk(), "\" }, function() { var $e = $('#PATCH_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_enfantCle')); }); ")
 										.f().sx("ajouter un enfant")
 									.g("button");
 								} g("div");
@@ -1722,7 +1722,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_mereCles')); }); ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_mereCles')); }); ")
 										.f().sx("ajouter une mère")
 									.g("button");
 								} g("div");
@@ -1781,7 +1781,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_pereCles')); }); ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_pereCles')); }); ")
 										.f().sx("ajouter un père")
 									.g("button");
 								} g("div");
@@ -1842,7 +1842,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_gardienCles')); }); ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_gardienCles')); }); ")
 										.f().sx("ajouter un gardien")
 									.g("button");
 								} g("div");
@@ -1901,7 +1901,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_paiementCles')); }); ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#PATCH_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_paiementCles')); }); ")
 										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
@@ -2009,7 +2009,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocNomComplet()).g("span");
+								e("span").f().sx(o.strInscriptionNomComplet()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2078,7 +2078,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocId()).g("span");
+								e("span").f().sx(o.strInscriptionId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2239,7 +2239,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_blocCles')); }); ")
+										.a("onclick", "postBlocScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_blocCles')); }); ")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -2298,7 +2298,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_enfantCle')); }); ")
+										.a("onclick", "postEnfantScolaireVals({ inscriptionCles: \"", o.getPk(), "\" }, function() { var $e = $('#Recherche_enfantCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_enfantCle')); }); ")
 										.f().sx("ajouter un enfant")
 									.g("button");
 								} g("div");
@@ -2359,7 +2359,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postMereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_mereCles')); }); ")
+										.a("onclick", "postMereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_mereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_mereCles')); }); ")
 										.f().sx("ajouter une mère")
 									.g("button");
 								} g("div");
@@ -2418,7 +2418,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postPereScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_pereCles')); }); ")
+										.a("onclick", "postPereScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_pereCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_pereCles')); }); ")
 										.f().sx("ajouter un père")
 									.g("button");
 								} g("div");
@@ -2479,7 +2479,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postGardienScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_gardienCles')); }); ")
+										.a("onclick", "postGardienScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_gardienCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_gardienCles')); }); ")
 										.f().sx("ajouter un gardien")
 									.g("button");
 								} g("div");
@@ -2538,7 +2538,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_paiementCles')); }); ")
+										.a("onclick", "postPaiementScolaireVals({ inscriptionCles: [ \"", o.getPk(), "\" ] }, function() { var $e = $('#Recherche_paiementCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_paiementCles')); }); ")
 										.f().sx("ajouter un paiement")
 									.g("button");
 								} g("div");
@@ -2646,7 +2646,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocNomComplet()).g("span");
+								e("span").f().sx(o.strInscriptionNomComplet()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2730,7 +2730,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.getBlocNomComplet());
+										sx(o.getInscriptionNomComplet());
 									} g("span");
 								} g("a");
 							} g("td");

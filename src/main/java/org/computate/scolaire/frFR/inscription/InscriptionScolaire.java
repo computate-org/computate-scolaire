@@ -126,7 +126,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */               
+	 */              
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -143,7 +143,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school blocks in the database. 
 	 * NomAffichage.frFR: blocs
 	 * NomAffichage.enUS: blocks
-	 */               
+	 */    
 	protected void _blocCles(List<Long> o) {}
 
 	/**
@@ -340,11 +340,16 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Ignorer: true
 	 */
 	protected void _enfantRecherche(ListeRecherche<EnfantScolaire> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
-		l.addFilterQuery("pk_indexed_long:" + enfantCle);
-		l.setC(EnfantScolaire.class);
-		l.setStocker(true);
+		if(enfantCle == null) {
+			l.setQuery(null);
+		}
+		else {
+			l.setQuery("*:*");
+			l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+			l.addFilterQuery("pk_indexed_long:" + enfantCle);
+			l.setC(EnfantScolaire.class);
+			l.setStocker(true);
+		}
 	}
 
 	/**
@@ -809,57 +814,32 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: blocCompleteName
+	 * Var.enUS: inscriptionCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
-	 * r: %s - %s %s %s/mois %s
-	 * r.enUS: %s - %s %s %s/month %s
-	 * r: strBlocHeureDebut
-	 * r.enUS: strBlockStartTime
-	 * r: strBlocHeureFin
-	 * r.enUS: strBlockEndTime
-	 * r: strBlocPrixParMois
-	 * r.enUS: strBlockPricePerMonth
-	 * r: blocPrixParMois
-	 * r.enUS: blockPricePerMonth
-	 * r: blocDimanche
-	 * r.enUS: blockSunday
-	 * r: blocLundi
-	 * r.enUS: blockMonday
-	 * r: blocMardi
-	 * r.enUS: blockTuesday
-	 * r: blocMercredi
-	 * r.enUS: blockWednesday
-	 * r: blocJeudi
-	 * r.enUS: blockThursday
-	 * r: blocVendredi
-	 * r.enUS: blockFriday
-	 * r: blocSamedi
-	 * r.enUS: blockSaturday
-	 * r: ageNomComplet
-	 * r.enUS: ageCompleteName
+	 * r: "inscription pour l'enfant %s"
+	 * r.enUS: "enrollment for the child %s"
+	 * r: "inscription"
+	 * r.enUS: "enrollment"
+	 * r: getPersonneNomCompletPrefere
+	 * r.enUS: getPersonCompleteNamePreferred
+	 * r: enfant_
+	 * r.enUS: child_
 	 */  
-	protected void _blocNomComplet(Couverture<String> c) {
+	protected void _inscriptionNomComplet(Couverture<String> c) {
 		String o;
-		String weekdays = "";
-		if(blocLundi) weekdays += " Mo";
-		if(blocMardi) weekdays += " Tu";
-		if(blocMercredi) weekdays += " We";
-		if(blocJeudi) weekdays += " Th";
-		if(blocVendredi) weekdays += " Fr";
-		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
-		if(blocPrixParMois == null)
-			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);
+		if(enfant_ != null)
+			o = String.format("inscription pour l'enfant %s", enfant_.getPersonneNomCompletPrefere());
 		else
-			o = String.format("%s - %s %s %s/mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
+			o = "inscription";
 		c.o(o);
 	}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: blocId
+	 * Var.enUS: inscriptionId
 	 * Indexe: true
 	 * Stocke: true
 	 * VarId: true
@@ -869,12 +849,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
-	 * r: blocNomComplet
-	 * r.enUS: blocCompleteName
+	 * r: inscriptionNomComplet
+	 * r.enUS: inscriptionCompleteName
 	 */            
-	protected void _blocId(Couverture<String> c) {
-		if(blocNomComplet != null) {
-			String s = Normalizer.normalize(blocNomComplet, Normalizer.Form.NFD);
+	protected void _inscriptionId(Couverture<String> c) {
+		if(inscriptionNomComplet != null) {
+			String s = Normalizer.normalize(inscriptionNomComplet, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -892,10 +872,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * VarUrl: true
-	 * r: blocId
-	 * r.enUS: blocId
-	 * r: /bloc/
-	 * r.enUS: /block/
+	 * r: inscriptionId
+	 * r.enUS: inscriptionId
+	 * r: /inscription/
+	 * r.enUS: /enrollment/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -904,8 +884,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SiteBaseUrl
 	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
-		if(blocId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/bloc/" + blocId;
+		if(inscriptionId != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/inscription/" + inscriptionId;
 			c.o(o);
 		}
 	}
@@ -914,11 +894,11 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
-	 * r: blocNomComplet
-	 * r.enUS: blocCompleteName
+	 * r: inscriptionNomComplet
+	 * r.enUS: inscriptionCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(blocNomComplet);
+		c.o(inscriptionNomComplet);
 	}
 
 	/**

@@ -192,27 +192,27 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					switch(entiteVar) {
 					case "blocCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
 						break;
 					case "enfantCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
 					case "mereCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "mereCles", pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "mereCles", pk));
 						break;
 					case "pereCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "pereCles", pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "pereCles", pk));
 						break;
 					case "gardienCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
 						break;
 					case "paiementCles":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getLong(entiteVar), "paiementCles", pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "paiementCles", pk));
 						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -237,7 +237,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
@@ -288,7 +288,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 															}
 														});
 													} else {
-														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -350,19 +350,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurInscriptionScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurInscriptionScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurInscriptionScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurInscriptionScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -428,7 +428,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "addBlocCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", requeteJson.getString(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "addAllBlocCles":
 						JsonArray addAllBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -440,7 +440,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setBlocCles":
 						JsonArray setBlocClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", requeteJson.getJsonArray(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", setBlocClesValeurs.getString(i)));
@@ -448,7 +448,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeBlocCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", requeteJson.getLong(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setEnfantCle":
 						o2.setEnfantCle(requeteJson.getString(methodeNom));
@@ -462,7 +462,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "addMereCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "mereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "mereCles", pk));
 						break;
 					case "addAllMereCles":
 						JsonArray addAllMereClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -474,7 +474,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setMereCles":
 						JsonArray setMereClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "mereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "mereCles", pk));
 						for(Integer i = 0; i <  setMereClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setMereClesValeurs.getString(i), "mereCles", pk));
@@ -482,11 +482,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeMereCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "mereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "mereCles", pk));
 						break;
 					case "addPereCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "pereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "pereCles", pk));
 						break;
 					case "addAllPereCles":
 						JsonArray addAllPereClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -498,7 +498,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setPereCles":
 						JsonArray setPereClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "pereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "pereCles", pk));
 						for(Integer i = 0; i <  setPereClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPereClesValeurs.getString(i), "pereCles", pk));
@@ -506,11 +506,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removePereCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "pereCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "pereCles", pk));
 						break;
 					case "addGardienCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getString(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "addAllGardienCles":
 						JsonArray addAllGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -522,7 +522,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setGardienCles":
 						JsonArray setGardienClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getJsonArray(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles"));
 						for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", setGardienClesValeurs.getString(i)));
@@ -530,11 +530,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeGardienCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", requeteJson.getLong(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "addPaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						break;
 					case "addAllPaiementCles":
 						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -546,7 +546,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getString(methodeNom), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPaiementClesValeurs.getString(i), "paiementCles", pk));
@@ -554,7 +554,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removePaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", requeteJson.getLong(methodeNom), "paiementCles", pk));
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						break;
 					case "setBlocHeureDebut":
 						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
@@ -608,15 +608,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				InscriptionScolaire o3 = new InscriptionScolaire();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					InscriptionScolaire o3 = new InscriptionScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -699,7 +703,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 															}
 														});
 													} else {
-														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -730,7 +734,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, InscriptionScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -854,7 +858,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 															}
 														});
 													} else {
-														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -1007,10 +1011,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "inscriptionApprouve_indexed_boolean";
 			case "inscriptionImmunisations":
 				return "inscriptionImmunisations_indexed_boolean";
-			case "blocNomComplet":
-				return "blocNomComplet_indexed_string";
-			case "blocId":
-				return "blocId_indexed_string";
+			case "inscriptionNomComplet":
+				return "inscriptionNomComplet_indexed_string";
+			case "inscriptionId":
+				return "inscriptionId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objetSuggere":
@@ -1096,7 +1100,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -1175,7 +1179,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -1208,12 +1212,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1245,7 +1249,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR blocId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR inscriptionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
@@ -1328,7 +1332,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1358,7 +1362,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

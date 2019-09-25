@@ -4842,6 +4842,9 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			case "ageKey":
 				oSchoolBlock.setAgeKey((Long)val);
 				return val;
+			case "enrollmentKeys":
+				oSchoolBlock.addEnrollmentKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -4965,11 +4968,9 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					oSchoolBlock.setChildKey(childKey);
 			}
 
-			if(savesSchoolBlock.contains("enrollmentKeys")) {
-				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
-				if(enrollmentKeys != null)
-					oSchoolBlock.enrollmentKeys.addAll(enrollmentKeys);
-			}
+			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
+			if(enrollmentKeys != null)
+				oSchoolBlock.enrollmentKeys.addAll(enrollmentKeys);
 
 			if(savesSchoolBlock.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -5599,7 +5600,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageKey, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
+		return Objects.hash(super.hashCode(), ageKey, enrollmentKeys, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
 	}
 
 	////////////
@@ -5614,6 +5615,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		SchoolBlock that = (SchoolBlock)o;
 		return super.equals(o)
 				&& Objects.equals( ageKey, that.ageKey )
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( blockStartTime, that.blockStartTime )
 				&& Objects.equals( blockEndTime, that.blockEndTime )
 				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
@@ -5635,6 +5637,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolBlock { ");
 		sb.append( "ageKey: " ).append(ageKey);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
 		sb.append( ", blockStartTime: " ).append(blockStartTime);
 		sb.append( ", blockEndTime: " ).append(blockEndTime);
 		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);

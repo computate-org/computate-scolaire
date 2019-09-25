@@ -5219,74 +5219,74 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////////
-	// blocNomComplet //
-	////////////////////
+	///////////////////////////
+	// inscriptionNomComplet //
+	///////////////////////////
 
-	/**	L'entité « blocNomComplet »
+	/**	L'entité « inscriptionNomComplet »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String blocNomComplet;
+	protected String inscriptionNomComplet;
 	@JsonIgnore
-	public Couverture<String> blocNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomComplet").o(blocNomComplet);
+	public Couverture<String> inscriptionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomComplet").o(inscriptionNomComplet);
 
-	/**	<br/>L'entité « blocNomComplet »
+	/**	<br/>L'entité « inscriptionNomComplet »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocNomComplet">Trouver l'entité blocNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNomComplet">Trouver l'entité inscriptionNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _blocNomComplet(Couverture<String> c);
+	protected abstract void _inscriptionNomComplet(Couverture<String> c);
 
-	public String getBlocNomComplet() {
-		return blocNomComplet;
+	public String getInscriptionNomComplet() {
+		return inscriptionNomComplet;
 	}
 
-	public void setBlocNomComplet(String blocNomComplet) {
-		this.blocNomComplet = blocNomComplet;
-		this.blocNomCompletCouverture.dejaInitialise = true;
+	public void setInscriptionNomComplet(String inscriptionNomComplet) {
+		this.inscriptionNomComplet = inscriptionNomComplet;
+		this.inscriptionNomCompletCouverture.dejaInitialise = true;
 	}
-	protected InscriptionScolaire blocNomCompletInit() {
-		if(!blocNomCompletCouverture.dejaInitialise) {
-			_blocNomComplet(blocNomCompletCouverture);
-			if(blocNomComplet == null)
-				setBlocNomComplet(blocNomCompletCouverture.o);
+	protected InscriptionScolaire inscriptionNomCompletInit() {
+		if(!inscriptionNomCompletCouverture.dejaInitialise) {
+			_inscriptionNomComplet(inscriptionNomCompletCouverture);
+			if(inscriptionNomComplet == null)
+				setInscriptionNomComplet(inscriptionNomCompletCouverture.o);
 		}
-		blocNomCompletCouverture.dejaInitialise(true);
+		inscriptionNomCompletCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public String solrBlocNomComplet() {
-		return blocNomComplet;
+	public String solrInscriptionNomComplet() {
+		return inscriptionNomComplet;
 	}
 
-	public String strBlocNomComplet() {
-		return blocNomComplet == null ? "" : blocNomComplet;
+	public String strInscriptionNomComplet() {
+		return inscriptionNomComplet == null ? "" : inscriptionNomComplet;
 	}
 
-	public String jsonBlocNomComplet() {
-		return blocNomComplet == null ? "" : blocNomComplet;
+	public String jsonInscriptionNomComplet() {
+		return inscriptionNomComplet == null ? "" : inscriptionNomComplet;
 	}
 
-	public String nomAffichageBlocNomComplet() {
+	public String nomAffichageInscriptionNomComplet() {
 		return null;
 	}
 
-	public String htmTooltipBlocNomComplet() {
+	public String htmTooltipInscriptionNomComplet() {
 		return null;
 	}
 
-	public String htmBlocNomComplet() {
-		return blocNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomComplet());
+	public String htmInscriptionNomComplet() {
+		return inscriptionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomComplet());
 	}
 
-	public void htmBlocNomComplet(ToutEcrivain r, Boolean patchDroits) {
+	public void htmInscriptionNomComplet(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "BlocNomComplet\">");
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionNomComplet\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "BlocNomComplet() {");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionNomComplet() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -5299,96 +5299,96 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setBlocNomComplet\": this.value },");
+				r.l("				data: {\"setInscriptionNomComplet\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocNomComplet()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionNomComplet()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"blocNomComplet\"");
-							r.s(" value=\"", htmBlocNomComplet(), "\");");
+							r.s(" name=\"inscriptionNomComplet\"");
+							r.s(" value=\"", htmInscriptionNomComplet(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmBlocNomComplet());
+				r.s(htmInscriptionNomComplet());
 			}
 			r.l("</div>");
 		}
 	}
 
-	////////////
-	// blocId //
-	////////////
+	///////////////////
+	// inscriptionId //
+	///////////////////
 
-	/**	L'entité « blocId »
+	/**	L'entité « inscriptionId »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String blocId;
+	protected String inscriptionId;
 	@JsonIgnore
-	public Couverture<String> blocIdCouverture = new Couverture<String>().p(this).c(String.class).var("blocId").o(blocId);
+	public Couverture<String> inscriptionIdCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionId").o(inscriptionId);
 
-	/**	<br/>L'entité « blocId »
+	/**	<br/>L'entité « inscriptionId »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocId">Trouver l'entité blocId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionId">Trouver l'entité inscriptionId dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _blocId(Couverture<String> c);
+	protected abstract void _inscriptionId(Couverture<String> c);
 
-	public String getBlocId() {
-		return blocId;
+	public String getInscriptionId() {
+		return inscriptionId;
 	}
 
-	public void setBlocId(String blocId) {
-		this.blocId = blocId;
-		this.blocIdCouverture.dejaInitialise = true;
+	public void setInscriptionId(String inscriptionId) {
+		this.inscriptionId = inscriptionId;
+		this.inscriptionIdCouverture.dejaInitialise = true;
 	}
-	protected InscriptionScolaire blocIdInit() {
-		if(!blocIdCouverture.dejaInitialise) {
-			_blocId(blocIdCouverture);
-			if(blocId == null)
-				setBlocId(blocIdCouverture.o);
+	protected InscriptionScolaire inscriptionIdInit() {
+		if(!inscriptionIdCouverture.dejaInitialise) {
+			_inscriptionId(inscriptionIdCouverture);
+			if(inscriptionId == null)
+				setInscriptionId(inscriptionIdCouverture.o);
 		}
-		blocIdCouverture.dejaInitialise(true);
+		inscriptionIdCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public String solrBlocId() {
-		return blocId;
+	public String solrInscriptionId() {
+		return inscriptionId;
 	}
 
-	public String strBlocId() {
-		return blocId == null ? "" : blocId;
+	public String strInscriptionId() {
+		return inscriptionId == null ? "" : inscriptionId;
 	}
 
-	public String jsonBlocId() {
-		return blocId == null ? "" : blocId;
+	public String jsonInscriptionId() {
+		return inscriptionId == null ? "" : inscriptionId;
 	}
 
-	public String nomAffichageBlocId() {
+	public String nomAffichageInscriptionId() {
 		return "ID";
 	}
 
-	public String htmTooltipBlocId() {
+	public String htmTooltipInscriptionId() {
 		return null;
 	}
 
-	public String htmBlocId() {
-		return blocId == null ? "" : StringEscapeUtils.escapeHtml4(strBlocId());
+	public String htmInscriptionId() {
+		return inscriptionId == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionId());
 	}
 
-	public void htmBlocId(ToutEcrivain r, Boolean patchDroits) {
+	public void htmInscriptionId(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "BlocId\">");
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionId\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "BlocId() {");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionId() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -5401,23 +5401,23 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setBlocId\": this.value },");
+				r.l("				data: {\"setInscriptionId\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocId()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionId()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"blocId\"");
-							r.s(" value=\"", htmBlocId(), "\");");
+							r.s(" name=\"inscriptionId\"");
+							r.s(" value=\"", htmInscriptionId(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmBlocId());
+				r.s(htmInscriptionId());
 			}
 			r.l("</div>");
 		}
@@ -5697,8 +5697,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		blocSamediInit();
 		inscriptionApprouveInit();
 		inscriptionImmunisationsInit();
-		blocNomCompletInit();
-		blocIdInit();
+		inscriptionNomCompletInit();
+		inscriptionIdInit();
 		pageUrlInit();
 		objetSuggereInit();
 	}
@@ -5843,10 +5843,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionApprouve;
 			case "inscriptionImmunisations":
 				return oInscriptionScolaire.inscriptionImmunisations;
-			case "blocNomComplet":
-				return oInscriptionScolaire.blocNomComplet;
-			case "blocId":
-				return oInscriptionScolaire.blocId;
+			case "inscriptionNomComplet":
+				return oInscriptionScolaire.inscriptionNomComplet;
+			case "inscriptionId":
+				return oInscriptionScolaire.inscriptionId;
 			case "pageUrl":
 				return oInscriptionScolaire.pageUrl;
 			case "objetSuggere":
@@ -6215,16 +6215,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionImmunisations(inscriptionImmunisations);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocNomComplet")) {
-				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
-				if(blocNomComplet != null)
-					oInscriptionScolaire.setBlocNomComplet(blocNomComplet);
+			if(sauvegardesInscriptionScolaire.contains("inscriptionNomComplet")) {
+				String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
+				if(inscriptionNomComplet != null)
+					oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocId")) {
-				String blocId = (String)solrDocument.get("blocId_stored_string");
-				if(blocId != null)
-					oInscriptionScolaire.setBlocId(blocId);
+			if(sauvegardesInscriptionScolaire.contains("inscriptionId")) {
+				String inscriptionId = (String)solrDocument.get("inscriptionId_stored_string");
+				if(inscriptionId != null)
+					oInscriptionScolaire.setInscriptionId(inscriptionId);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("pageUrl")) {
@@ -6503,13 +6503,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionImmunisations_indexed_boolean", inscriptionImmunisations);
 			document.addField("inscriptionImmunisations_stored_boolean", inscriptionImmunisations);
 		}
-		if(blocNomComplet != null) {
-			document.addField("blocNomComplet_indexed_string", blocNomComplet);
-			document.addField("blocNomComplet_stored_string", blocNomComplet);
+		if(inscriptionNomComplet != null) {
+			document.addField("inscriptionNomComplet_indexed_string", inscriptionNomComplet);
+			document.addField("inscriptionNomComplet_stored_string", inscriptionNomComplet);
 		}
-		if(blocId != null) {
-			document.addField("blocId_indexed_string", blocId);
-			document.addField("blocId_stored_string", blocId);
+		if(inscriptionId != null) {
+			document.addField("inscriptionId_indexed_string", inscriptionId);
+			document.addField("inscriptionId_stored_string", inscriptionId);
 		}
 		if(pageUrl != null) {
 			document.addField("pageUrl_indexed_string", pageUrl);
@@ -6726,13 +6726,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionImmunisations != null)
 			oInscriptionScolaire.setInscriptionImmunisations(inscriptionImmunisations);
 
-		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
-		if(blocNomComplet != null)
-			oInscriptionScolaire.setBlocNomComplet(blocNomComplet);
+		String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
+		if(inscriptionNomComplet != null)
+			oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
 
-		String blocId = (String)solrDocument.get("blocId_stored_string");
-		if(blocId != null)
-			oInscriptionScolaire.setBlocId(blocId);
+		String inscriptionId = (String)solrDocument.get("inscriptionId_stored_string");
+		if(inscriptionId != null)
+			oInscriptionScolaire.setInscriptionId(inscriptionId);
 
 		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
 		if(pageUrl != null)
