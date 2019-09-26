@@ -71,6 +71,28 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	}
 
 	/**
+	 * r: Couverture
+	 * r.enUS: Wrap
+	 * r: modifie_
+	 * r.enUS: modified_
+	 */
+	public boolean next(String dt) {
+		boolean next = false;
+		long numFound = getSolrDocumentList().getNumFound();
+		if(numFound > 0) {
+			addFilterQuery(String.format("modifie_indexed_date:[* TO %s-1MILLI]", dt));
+			_queryResponse(queryResponseCouverture);
+			setQueryResponse(queryResponseCouverture.o);
+			_solrDocumentList(solrDocumentListCouverture);
+			setSolrDocumentList(solrDocumentListCouverture.o);
+			list.clear();
+			_list(list);
+			next = true;
+		}
+		return next;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * r: requeteSite
 	 * r.enUS: siteRequest

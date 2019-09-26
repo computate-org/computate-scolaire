@@ -57,8 +57,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolEnrollment != null && schoolEnrollment.getInscriptionCompleteName() != null)
-			c.o(schoolEnrollment.getInscriptionCompleteName());
+		if(schoolEnrollment != null && schoolEnrollment.getEnrollmentCompleteName() != null)
+			c.o(schoolEnrollment.getEnrollmentCompleteName());
 		else if(schoolEnrollment != null)
 			c.o("");
 		else if(listSchoolEnrollment == null || listSchoolEnrollment.size() == 0)
@@ -166,7 +166,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strInscriptionId()).g("span");
+									e("span").f().sx(o.strEnrollmentId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -813,7 +813,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strInscriptionId()).g("span");
+								e("span").f().sx(o.strEnrollmentId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1429,7 +1429,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strInscriptionId()).g("span");
+								e("span").f().sx(o.strEnrollmentId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1991,7 +1991,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strInscriptionCompleteName()).g("span");
+								e("span").f().sx(o.strEnrollmentCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2060,7 +2060,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strInscriptionId()).g("span");
+								e("span").f().sx(o.strEnrollmentId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2622,7 +2622,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strInscriptionCompleteName()).g("span");
+								e("span").f().sx(o.strEnrollmentCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2706,7 +2706,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.getInscriptionCompleteName());
+										sx(o.getEnrollmentCompleteName());
 									} g("span");
 								} g("a");
 							} g("td");

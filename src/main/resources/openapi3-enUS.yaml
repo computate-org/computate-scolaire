@@ -3956,648 +3956,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /api/enrollment:
-    post:
-      operationId: postSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSchoolEnrollmentRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHSchoolEnrollmentRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: searchSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/enrollment/{id}:
-    get:
-      operationId: getSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    delete:
-      operationId: deleteSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/DELETESchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /enrollment:
-    get:
-      operationId: searchpageSchoolEnrollment
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /enrollment/{id}:
-    get:
-      operationId: searchpageSchoolEnrollmentId
-      x-vertx-event-bus: enUSSchoolEnrollment
-      description: >+
-      summary: >+
-      tags:
-        - Enrollment
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 1
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/SearchPageSchoolEnrollmentResponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
   /api/child:
     post:
       operationId: postSchoolChild
@@ -9092,6 +8450,648 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /api/enrollment:
+    post:
+      operationId: postSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSchoolEnrollmentRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSchoolEnrollmentRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: searchSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/enrollment/{id}:
+    get:
+      operationId: getSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETESchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enrollment:
+    get:
+      operationId: searchpageSchoolEnrollment
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /enrollment/{id}:
+    get:
+      operationId: searchpageSchoolEnrollmentId
+      x-vertx-event-bus: enUSSchoolEnrollment
+      description: >+
+      summary: >+
+      tags:
+        - Enrollment
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/SearchPageSchoolEnrollmentResponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
 components:
   securitySchemes:
     openIdConnect:
@@ -9353,46 +9353,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolSessionResponse'
-    POSTSchoolEnrollmentRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolEnrollmentRequest'
-    POSTSchoolEnrollmentResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSchoolEnrollmentResponse'
-    PATCHSchoolEnrollmentRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolEnrollmentRequest'
-    PATCHSchoolEnrollmentResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHSchoolEnrollmentResponse'
-    SearchSchoolEnrollmentResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchSchoolEnrollmentResponse'
-    GETSchoolEnrollmentResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETSchoolEnrollmentResponse'
-    DELETESchoolEnrollmentResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DELETESchoolEnrollmentResponse'
-    SearchPageSchoolEnrollmentResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchPageSchoolEnrollmentResponse'
     POSTSchoolChildRequest:
       content:
         application/json:
@@ -9673,6 +9633,46 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSchoolBlockResponse'
+    POSTSchoolEnrollmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolEnrollmentRequest'
+    POSTSchoolEnrollmentResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSchoolEnrollmentResponse'
+    PATCHSchoolEnrollmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolEnrollmentRequest'
+    PATCHSchoolEnrollmentResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSchoolEnrollmentResponse'
+    SearchSchoolEnrollmentResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSchoolEnrollmentResponse'
+    GETSchoolEnrollmentResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSchoolEnrollmentResponse'
+    DELETESchoolEnrollmentResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESchoolEnrollmentResponse'
+    SearchPageSchoolEnrollmentResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSchoolEnrollmentResponse'
   schemas:
     PATCHSiteUserRequest:
       allOf:
@@ -12723,1372 +12723,6 @@ components:
             objectSuggest:
               type: string
     SearchPageSchoolSessionResponse:
-      allOf:
-        - type: string
-    POSTSchoolEnrollmentRequest:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequest"
-        - type: object
-          properties:
-            schoolKey:
-              type: string
-            anneeCle:
-              type: string
-            seasonKey:
-              type: string
-            sessionKey:
-              type: string
-            ageKey:
-              type: string
-            blockKey:
-              type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            childKey:
-              type: string
-            momKeys:
-              type: array
-              items:
-                type: string
-            dadKeys:
-              type: array
-              items:
-                type: string
-            guardianKeys:
-              type: array
-              items:
-                type: string
-            paymentKeys:
-              type: array
-              items:
-                type: string
-            familyKey:
-              type: string
-            educationSort:
-              type: string
-            schoolSort:
-              type: string
-            yearSort:
-              type: string
-            seasonSort:
-              type: string
-            sessionSort:
-              type: string
-            ageSort:
-              type: string
-            childCompleteName:
-              type: string
-            schoolCompleteName:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            seasonStartDay:
-              type: string
-            seasonSummer:
-              type: boolean
-            seasonWinter:
-              type: boolean
-            seasonEnrollmentFee:
-              type: string
-            seasonCompleteName:
-              type: string
-            sessionStartDay:
-              type: string
-            sessionEndDay:
-              type: string
-            ageCompleteName:
-              type: string
-            ageStart:
-              type: string
-            ageEnd:
-              type: string
-            blockStartTime:
-              type: string
-            blockEndTime:
-              type: string
-            blockPricePerMonth:
-              type: string
-            blockSunday:
-              type: boolean
-            blockMonday:
-              type: boolean
-            blockTuesday:
-              type: boolean
-            blockWednesday:
-              type: boolean
-            blockThursday:
-              type: boolean
-            blockFriday:
-              type: boolean
-            blockSaturday:
-              type: boolean
-            enrollmentApproved:
-              type: boolean
-            enrollmentImmunizations:
-              type: boolean
-            blocCompleteName:
-              type: string
-            blocId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
-    POSTSchoolEnrollmentResponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: string
-            anneeCle:
-              type: string
-            seasonKey:
-              type: string
-            sessionKey:
-              type: string
-            ageKey:
-              type: string
-            blockKey:
-              type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            childKey:
-              type: string
-            momKeys:
-              type: array
-              items:
-                type: string
-            dadKeys:
-              type: array
-              items:
-                type: string
-            guardianKeys:
-              type: array
-              items:
-                type: string
-            paymentKeys:
-              type: array
-              items:
-                type: string
-            familyKey:
-              type: string
-            educationSort:
-              type: string
-            schoolSort:
-              type: string
-            yearSort:
-              type: string
-            seasonSort:
-              type: string
-            sessionSort:
-              type: string
-            ageSort:
-              type: string
-            childCompleteName:
-              type: string
-            schoolCompleteName:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            seasonStartDay:
-              type: string
-            seasonSummer:
-              type: boolean
-            seasonWinter:
-              type: boolean
-            seasonEnrollmentFee:
-              type: string
-            seasonCompleteName:
-              type: string
-            sessionStartDay:
-              type: string
-            sessionEndDay:
-              type: string
-            ageCompleteName:
-              type: string
-            ageStart:
-              type: string
-            ageEnd:
-              type: string
-            blockStartTime:
-              type: string
-            blockEndTime:
-              type: string
-            blockPricePerMonth:
-              type: string
-            blockSunday:
-              type: boolean
-            blockMonday:
-              type: boolean
-            blockTuesday:
-              type: boolean
-            blockWednesday:
-              type: boolean
-            blockThursday:
-              type: boolean
-            blockFriday:
-              type: boolean
-            blockSaturday:
-              type: boolean
-            enrollmentApproved:
-              type: boolean
-            enrollmentImmunizations:
-              type: boolean
-            blocCompleteName:
-              type: string
-            blocId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
-    PATCHSchoolEnrollmentRequest:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequest"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: string
-              nullable: true
-            removeSchoolKey:
-              type: string
-            removeAllSchoolKey:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setSeasonKey:
-              type: string
-              nullable: true
-            removeSeasonKey:
-              type: string
-            removeAllSeasonKey:
-              type: string
-            setSessionKey:
-              type: string
-              nullable: true
-            removeSessionKey:
-              type: string
-            removeAllSessionKey:
-              type: string
-            setAgeKey:
-              type: string
-              nullable: true
-            removeAgeKey:
-              type: string
-            removeAllAgeKey:
-              type: string
-            setBlockKey:
-              type: string
-              nullable: true
-            removeBlockKey:
-              type: string
-            removeAllBlockKey:
-              type: string
-            setBlockKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeBlockKeys:
-              type: string
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: string
-            addBlockKeys:
-              type: string
-            addAllBlockKeys:
-              type: array
-              items:
-                type: string
-            setChildKey:
-              type: string
-              nullable: true
-            removeChildKey:
-              type: string
-            removeAllChildKey:
-              type: string
-            setMomKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeMomKeys:
-              type: string
-            removeAllMomKeys:
-              type: array
-              items:
-                type: string
-            addMomKeys:
-              type: string
-            addAllMomKeys:
-              type: array
-              items:
-                type: string
-            setDadKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeDadKeys:
-              type: string
-            removeAllDadKeys:
-              type: array
-              items:
-                type: string
-            addDadKeys:
-              type: string
-            addAllDadKeys:
-              type: array
-              items:
-                type: string
-            setGuardianKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeGuardianKeys:
-              type: string
-            removeAllGuardianKeys:
-              type: array
-              items:
-                type: string
-            addGuardianKeys:
-              type: string
-            addAllGuardianKeys:
-              type: array
-              items:
-                type: string
-            setPaymentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removePaymentKeys:
-              type: string
-            removeAllPaymentKeys:
-              type: array
-              items:
-                type: string
-            addPaymentKeys:
-              type: string
-            addAllPaymentKeys:
-              type: array
-              items:
-                type: string
-            setFamilyKey:
-              type: string
-              nullable: true
-            removeFamilyKey:
-              type: string
-            removeAllFamilyKey:
-              type: string
-            setEducationSort:
-              type: string
-              nullable: true
-            removeEducationSort:
-              type: string
-            removeAllEducationSort:
-              type: string
-            setSchoolSort:
-              type: string
-              nullable: true
-            removeSchoolSort:
-              type: string
-            removeAllSchoolSort:
-              type: string
-            setYearSort:
-              type: string
-              nullable: true
-            removeYearSort:
-              type: string
-            removeAllYearSort:
-              type: string
-            setSeasonSort:
-              type: string
-              nullable: true
-            removeSeasonSort:
-              type: string
-            removeAllSeasonSort:
-              type: string
-            setSessionSort:
-              type: string
-              nullable: true
-            removeSessionSort:
-              type: string
-            removeAllSessionSort:
-              type: string
-            setAgeSort:
-              type: string
-              nullable: true
-            removeAgeSort:
-              type: string
-            removeAllAgeSort:
-              type: string
-            setChildCompleteName:
-              type: string
-              nullable: true
-            removeChildCompleteName:
-              type: string
-            removeAllChildCompleteName:
-              type: string
-            setSchoolCompleteName:
-              type: string
-              nullable: true
-            removeSchoolCompleteName:
-              type: string
-            removeAllSchoolCompleteName:
-              type: string
-            setYearStart:
-              type: string
-              nullable: true
-            removeYearStart:
-              type: string
-            removeAllYearStart:
-              type: string
-            setYearEnd:
-              type: string
-              nullable: true
-            removeYearEnd:
-              type: string
-            removeAllYearEnd:
-              type: string
-            setSeasonStartDay:
-              type: string
-              nullable: true
-            removeSeasonStartDay:
-              type: string
-            removeAllSeasonStartDay:
-              type: string
-            setSeasonSummer:
-              type: boolean
-              nullable: true
-            removeSeasonSummer:
-              type: boolean
-            removeAllSeasonSummer:
-              type: boolean
-            setSeasonWinter:
-              type: boolean
-              nullable: true
-            removeSeasonWinter:
-              type: boolean
-            removeAllSeasonWinter:
-              type: boolean
-            setSeasonEnrollmentFee:
-              type: string
-              nullable: true
-            removeSeasonEnrollmentFee:
-              type: string
-            removeAllSeasonEnrollmentFee:
-              type: string
-            setSeasonCompleteName:
-              type: string
-              nullable: true
-            removeSeasonCompleteName:
-              type: string
-            removeAllSeasonCompleteName:
-              type: string
-            setSessionStartDay:
-              type: string
-              nullable: true
-            removeSessionStartDay:
-              type: string
-            removeAllSessionStartDay:
-              type: string
-            setSessionEndDay:
-              type: string
-              nullable: true
-            removeSessionEndDay:
-              type: string
-            removeAllSessionEndDay:
-              type: string
-            setAgeCompleteName:
-              type: string
-              nullable: true
-            removeAgeCompleteName:
-              type: string
-            removeAllAgeCompleteName:
-              type: string
-            setAgeStart:
-              type: string
-              nullable: true
-            removeAgeStart:
-              type: string
-            removeAllAgeStart:
-              type: string
-            setAgeEnd:
-              type: string
-              nullable: true
-            removeAgeEnd:
-              type: string
-            removeAllAgeEnd:
-              type: string
-            setBlockStartTime:
-              type: string
-              nullable: true
-            removeBlockStartTime:
-              type: string
-            removeAllBlockStartTime:
-              type: string
-            setBlockEndTime:
-              type: string
-              nullable: true
-            removeBlockEndTime:
-              type: string
-            removeAllBlockEndTime:
-              type: string
-            setBlockPricePerMonth:
-              type: string
-              nullable: true
-            removeBlockPricePerMonth:
-              type: string
-            removeAllBlockPricePerMonth:
-              type: string
-            setBlockSunday:
-              type: boolean
-              nullable: true
-            removeBlockSunday:
-              type: boolean
-            removeAllBlockSunday:
-              type: boolean
-            setBlockMonday:
-              type: boolean
-              nullable: true
-            removeBlockMonday:
-              type: boolean
-            removeAllBlockMonday:
-              type: boolean
-            setBlockTuesday:
-              type: boolean
-              nullable: true
-            removeBlockTuesday:
-              type: boolean
-            removeAllBlockTuesday:
-              type: boolean
-            setBlockWednesday:
-              type: boolean
-              nullable: true
-            removeBlockWednesday:
-              type: boolean
-            removeAllBlockWednesday:
-              type: boolean
-            setBlockThursday:
-              type: boolean
-              nullable: true
-            removeBlockThursday:
-              type: boolean
-            removeAllBlockThursday:
-              type: boolean
-            setBlockFriday:
-              type: boolean
-              nullable: true
-            removeBlockFriday:
-              type: boolean
-            removeAllBlockFriday:
-              type: boolean
-            setBlockSaturday:
-              type: boolean
-              nullable: true
-            removeBlockSaturday:
-              type: boolean
-            removeAllBlockSaturday:
-              type: boolean
-            setEnrollmentApproved:
-              type: boolean
-              nullable: true
-            removeEnrollmentApproved:
-              type: boolean
-            removeAllEnrollmentApproved:
-              type: boolean
-            setEnrollmentImmunizations:
-              type: boolean
-              nullable: true
-            removeEnrollmentImmunizations:
-              type: boolean
-            removeAllEnrollmentImmunizations:
-              type: boolean
-            setBlocCompleteName:
-              type: string
-              nullable: true
-            removeBlocCompleteName:
-              type: string
-            removeAllBlocCompleteName:
-              type: string
-            setBlocId:
-              type: string
-              nullable: true
-            removeBlocId:
-              type: string
-            removeAllBlocId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjectSuggest:
-              type: string
-              nullable: true
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
-    PATCHSchoolEnrollmentResponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterResponse"
-        - type: object
-          properties:
-            setSchoolKey:
-              type: string
-              nullable: true
-            removeSchoolKey:
-              type: string
-            removeAllSchoolKey:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setSeasonKey:
-              type: string
-              nullable: true
-            removeSeasonKey:
-              type: string
-            removeAllSeasonKey:
-              type: string
-            setSessionKey:
-              type: string
-              nullable: true
-            removeSessionKey:
-              type: string
-            removeAllSessionKey:
-              type: string
-            setAgeKey:
-              type: string
-              nullable: true
-            removeAgeKey:
-              type: string
-            removeAllAgeKey:
-              type: string
-            setBlockKey:
-              type: string
-              nullable: true
-            removeBlockKey:
-              type: string
-            removeAllBlockKey:
-              type: string
-            setBlockKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeBlockKeys:
-              type: string
-            removeAllBlockKeys:
-              type: array
-              items:
-                type: string
-            addBlockKeys:
-              type: string
-            addAllBlockKeys:
-              type: array
-              items:
-                type: string
-            setChildKey:
-              type: string
-              nullable: true
-            removeChildKey:
-              type: string
-            removeAllChildKey:
-              type: string
-            setMomKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeMomKeys:
-              type: string
-            removeAllMomKeys:
-              type: array
-              items:
-                type: string
-            addMomKeys:
-              type: string
-            addAllMomKeys:
-              type: array
-              items:
-                type: string
-            setDadKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeDadKeys:
-              type: string
-            removeAllDadKeys:
-              type: array
-              items:
-                type: string
-            addDadKeys:
-              type: string
-            addAllDadKeys:
-              type: array
-              items:
-                type: string
-            setGuardianKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeGuardianKeys:
-              type: string
-            removeAllGuardianKeys:
-              type: array
-              items:
-                type: string
-            addGuardianKeys:
-              type: string
-            addAllGuardianKeys:
-              type: array
-              items:
-                type: string
-            setPaymentKeys:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removePaymentKeys:
-              type: string
-            removeAllPaymentKeys:
-              type: array
-              items:
-                type: string
-            addPaymentKeys:
-              type: string
-            addAllPaymentKeys:
-              type: array
-              items:
-                type: string
-            setFamilyKey:
-              type: string
-              nullable: true
-            removeFamilyKey:
-              type: string
-            removeAllFamilyKey:
-              type: string
-            setEducationSort:
-              type: string
-              nullable: true
-            removeEducationSort:
-              type: string
-            removeAllEducationSort:
-              type: string
-            setSchoolSort:
-              type: string
-              nullable: true
-            removeSchoolSort:
-              type: string
-            removeAllSchoolSort:
-              type: string
-            setYearSort:
-              type: string
-              nullable: true
-            removeYearSort:
-              type: string
-            removeAllYearSort:
-              type: string
-            setSeasonSort:
-              type: string
-              nullable: true
-            removeSeasonSort:
-              type: string
-            removeAllSeasonSort:
-              type: string
-            setSessionSort:
-              type: string
-              nullable: true
-            removeSessionSort:
-              type: string
-            removeAllSessionSort:
-              type: string
-            setAgeSort:
-              type: string
-              nullable: true
-            removeAgeSort:
-              type: string
-            removeAllAgeSort:
-              type: string
-            setChildCompleteName:
-              type: string
-              nullable: true
-            removeChildCompleteName:
-              type: string
-            removeAllChildCompleteName:
-              type: string
-            setSchoolCompleteName:
-              type: string
-              nullable: true
-            removeSchoolCompleteName:
-              type: string
-            removeAllSchoolCompleteName:
-              type: string
-            setYearStart:
-              type: string
-              nullable: true
-            removeYearStart:
-              type: string
-            removeAllYearStart:
-              type: string
-            setYearEnd:
-              type: string
-              nullable: true
-            removeYearEnd:
-              type: string
-            removeAllYearEnd:
-              type: string
-            setSeasonStartDay:
-              type: string
-              nullable: true
-            removeSeasonStartDay:
-              type: string
-            removeAllSeasonStartDay:
-              type: string
-            setSeasonSummer:
-              type: boolean
-              nullable: true
-            removeSeasonSummer:
-              type: boolean
-            removeAllSeasonSummer:
-              type: boolean
-            setSeasonWinter:
-              type: boolean
-              nullable: true
-            removeSeasonWinter:
-              type: boolean
-            removeAllSeasonWinter:
-              type: boolean
-            setSeasonEnrollmentFee:
-              type: string
-              nullable: true
-            removeSeasonEnrollmentFee:
-              type: string
-            removeAllSeasonEnrollmentFee:
-              type: string
-            setSeasonCompleteName:
-              type: string
-              nullable: true
-            removeSeasonCompleteName:
-              type: string
-            removeAllSeasonCompleteName:
-              type: string
-            setSessionStartDay:
-              type: string
-              nullable: true
-            removeSessionStartDay:
-              type: string
-            removeAllSessionStartDay:
-              type: string
-            setSessionEndDay:
-              type: string
-              nullable: true
-            removeSessionEndDay:
-              type: string
-            removeAllSessionEndDay:
-              type: string
-            setAgeCompleteName:
-              type: string
-              nullable: true
-            removeAgeCompleteName:
-              type: string
-            removeAllAgeCompleteName:
-              type: string
-            setAgeStart:
-              type: string
-              nullable: true
-            removeAgeStart:
-              type: string
-            removeAllAgeStart:
-              type: string
-            setAgeEnd:
-              type: string
-              nullable: true
-            removeAgeEnd:
-              type: string
-            removeAllAgeEnd:
-              type: string
-            setBlockStartTime:
-              type: string
-              nullable: true
-            removeBlockStartTime:
-              type: string
-            removeAllBlockStartTime:
-              type: string
-            setBlockEndTime:
-              type: string
-              nullable: true
-            removeBlockEndTime:
-              type: string
-            removeAllBlockEndTime:
-              type: string
-            setBlockPricePerMonth:
-              type: string
-              nullable: true
-            removeBlockPricePerMonth:
-              type: string
-            removeAllBlockPricePerMonth:
-              type: string
-            setBlockSunday:
-              type: boolean
-              nullable: true
-            removeBlockSunday:
-              type: boolean
-            removeAllBlockSunday:
-              type: boolean
-            setBlockMonday:
-              type: boolean
-              nullable: true
-            removeBlockMonday:
-              type: boolean
-            removeAllBlockMonday:
-              type: boolean
-            setBlockTuesday:
-              type: boolean
-              nullable: true
-            removeBlockTuesday:
-              type: boolean
-            removeAllBlockTuesday:
-              type: boolean
-            setBlockWednesday:
-              type: boolean
-              nullable: true
-            removeBlockWednesday:
-              type: boolean
-            removeAllBlockWednesday:
-              type: boolean
-            setBlockThursday:
-              type: boolean
-              nullable: true
-            removeBlockThursday:
-              type: boolean
-            removeAllBlockThursday:
-              type: boolean
-            setBlockFriday:
-              type: boolean
-              nullable: true
-            removeBlockFriday:
-              type: boolean
-            removeAllBlockFriday:
-              type: boolean
-            setBlockSaturday:
-              type: boolean
-              nullable: true
-            removeBlockSaturday:
-              type: boolean
-            removeAllBlockSaturday:
-              type: boolean
-            setEnrollmentApproved:
-              type: boolean
-              nullable: true
-            removeEnrollmentApproved:
-              type: boolean
-            removeAllEnrollmentApproved:
-              type: boolean
-            setEnrollmentImmunizations:
-              type: boolean
-              nullable: true
-            removeEnrollmentImmunizations:
-              type: boolean
-            removeAllEnrollmentImmunizations:
-              type: boolean
-            setBlocCompleteName:
-              type: string
-              nullable: true
-            removeBlocCompleteName:
-              type: string
-            removeAllBlocCompleteName:
-              type: string
-            setBlocId:
-              type: string
-              nullable: true
-            removeBlocId:
-              type: string
-            removeAllBlocId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjectSuggest:
-              type: string
-              nullable: true
-            removeObjectSuggest:
-              type: string
-            removeAllObjectSuggest:
-              type: string
-    SearchSchoolEnrollmentResponse:
-      allOf:
-        - $ref: "#/components/schemas/SearchClusterResponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              schoolKey:
-                type: string
-              anneeCle:
-                type: string
-              seasonKey:
-                type: string
-              sessionKey:
-                type: string
-              ageKey:
-                type: string
-              blockKey:
-                type: string
-              blockKeys:
-                type: array
-                items:
-                  type: string
-              childKey:
-                type: string
-              momKeys:
-                type: array
-                items:
-                  type: string
-              dadKeys:
-                type: array
-                items:
-                  type: string
-              guardianKeys:
-                type: array
-                items:
-                  type: string
-              paymentKeys:
-                type: array
-                items:
-                  type: string
-              familyKey:
-                type: string
-              educationSort:
-                type: string
-              schoolSort:
-                type: string
-              yearSort:
-                type: string
-              seasonSort:
-                type: string
-              sessionSort:
-                type: string
-              ageSort:
-                type: string
-              childCompleteName:
-                type: string
-              schoolCompleteName:
-                type: string
-              yearStart:
-                type: string
-              yearEnd:
-                type: string
-              seasonStartDay:
-                type: string
-              seasonSummer:
-                type: boolean
-              seasonWinter:
-                type: boolean
-              seasonEnrollmentFee:
-                type: string
-              seasonCompleteName:
-                type: string
-              sessionStartDay:
-                type: string
-              sessionEndDay:
-                type: string
-              ageCompleteName:
-                type: string
-              ageStart:
-                type: string
-              ageEnd:
-                type: string
-              blockStartTime:
-                type: string
-              blockEndTime:
-                type: string
-              blockPricePerMonth:
-                type: string
-              blockSunday:
-                type: boolean
-              blockMonday:
-                type: boolean
-              blockTuesday:
-                type: boolean
-              blockWednesday:
-                type: boolean
-              blockThursday:
-                type: boolean
-              blockFriday:
-                type: boolean
-              blockSaturday:
-                type: boolean
-              enrollmentApproved:
-                type: boolean
-              enrollmentImmunizations:
-                type: boolean
-              blocCompleteName:
-                type: string
-              blocId:
-                type: string
-              pageUrl:
-                type: string
-              objectSuggest:
-                type: string
-    GETSchoolEnrollmentResponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: string
-            anneeCle:
-              type: string
-            seasonKey:
-              type: string
-            sessionKey:
-              type: string
-            ageKey:
-              type: string
-            blockKey:
-              type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            childKey:
-              type: string
-            momKeys:
-              type: array
-              items:
-                type: string
-            dadKeys:
-              type: array
-              items:
-                type: string
-            guardianKeys:
-              type: array
-              items:
-                type: string
-            paymentKeys:
-              type: array
-              items:
-                type: string
-            familyKey:
-              type: string
-            educationSort:
-              type: string
-            schoolSort:
-              type: string
-            yearSort:
-              type: string
-            seasonSort:
-              type: string
-            sessionSort:
-              type: string
-            ageSort:
-              type: string
-            childCompleteName:
-              type: string
-            schoolCompleteName:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            seasonStartDay:
-              type: string
-            seasonSummer:
-              type: boolean
-            seasonWinter:
-              type: boolean
-            seasonEnrollmentFee:
-              type: string
-            seasonCompleteName:
-              type: string
-            sessionStartDay:
-              type: string
-            sessionEndDay:
-              type: string
-            ageCompleteName:
-              type: string
-            ageStart:
-              type: string
-            ageEnd:
-              type: string
-            blockStartTime:
-              type: string
-            blockEndTime:
-              type: string
-            blockPricePerMonth:
-              type: string
-            blockSunday:
-              type: boolean
-            blockMonday:
-              type: boolean
-            blockTuesday:
-              type: boolean
-            blockWednesday:
-              type: boolean
-            blockThursday:
-              type: boolean
-            blockFriday:
-              type: boolean
-            blockSaturday:
-              type: boolean
-            enrollmentApproved:
-              type: boolean
-            enrollmentImmunizations:
-              type: boolean
-            blocCompleteName:
-              type: string
-            blocId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
-    DELETESchoolEnrollmentResponse:
-      allOf:
-        - $ref: "#/components/schemas/DELETEClusterResponse"
-        - type: object
-          properties:
-            schoolKey:
-              type: string
-            anneeCle:
-              type: string
-            seasonKey:
-              type: string
-            sessionKey:
-              type: string
-            ageKey:
-              type: string
-            blockKey:
-              type: string
-            blockKeys:
-              type: array
-              items:
-                type: string
-            childKey:
-              type: string
-            momKeys:
-              type: array
-              items:
-                type: string
-            dadKeys:
-              type: array
-              items:
-                type: string
-            guardianKeys:
-              type: array
-              items:
-                type: string
-            paymentKeys:
-              type: array
-              items:
-                type: string
-            familyKey:
-              type: string
-            educationSort:
-              type: string
-            schoolSort:
-              type: string
-            yearSort:
-              type: string
-            seasonSort:
-              type: string
-            sessionSort:
-              type: string
-            ageSort:
-              type: string
-            childCompleteName:
-              type: string
-            schoolCompleteName:
-              type: string
-            yearStart:
-              type: string
-            yearEnd:
-              type: string
-            seasonStartDay:
-              type: string
-            seasonSummer:
-              type: boolean
-            seasonWinter:
-              type: boolean
-            seasonEnrollmentFee:
-              type: string
-            seasonCompleteName:
-              type: string
-            sessionStartDay:
-              type: string
-            sessionEndDay:
-              type: string
-            ageCompleteName:
-              type: string
-            ageStart:
-              type: string
-            ageEnd:
-              type: string
-            blockStartTime:
-              type: string
-            blockEndTime:
-              type: string
-            blockPricePerMonth:
-              type: string
-            blockSunday:
-              type: boolean
-            blockMonday:
-              type: boolean
-            blockTuesday:
-              type: boolean
-            blockWednesday:
-              type: boolean
-            blockThursday:
-              type: boolean
-            blockFriday:
-              type: boolean
-            blockSaturday:
-              type: boolean
-            enrollmentApproved:
-              type: boolean
-            enrollmentImmunizations:
-              type: boolean
-            blocCompleteName:
-              type: string
-            blocId:
-              type: string
-            pageUrl:
-              type: string
-            objectSuggest:
-              type: string
-    SearchPageSchoolEnrollmentResponse:
       allOf:
         - type: string
     POSTSchoolChildRequest:
@@ -20267,6 +18901,1396 @@ components:
             objectSuggest:
               type: string
     SearchPageSchoolBlockResponse:
+      allOf:
+        - type: string
+    POSTSchoolEnrollmentRequest:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequest"
+        - type: object
+          properties:
+            enrollmentKey:
+              type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            schoolKey:
+              type: string
+            anneeCle:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
+            momKeys:
+              type: array
+              items:
+                type: string
+            dadKeys:
+              type: array
+              items:
+                type: string
+            guardianKeys:
+              type: array
+              items:
+                type: string
+            paymentKeys:
+              type: array
+              items:
+                type: string
+            familyKey:
+              type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            yearSort:
+              type: string
+            seasonSort:
+              type: string
+            sessionSort:
+              type: string
+            ageSort:
+              type: string
+            childCompleteName:
+              type: string
+            schoolCompleteName:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonEnrollmentFee:
+              type: string
+            seasonCompleteName:
+              type: string
+            sessionStartDay:
+              type: string
+            sessionEndDay:
+              type: string
+            ageCompleteName:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockSunday:
+              type: boolean
+            blockMonday:
+              type: boolean
+            blockTuesday:
+              type: boolean
+            blockWednesday:
+              type: boolean
+            blockThursday:
+              type: boolean
+            blockFriday:
+              type: boolean
+            blockSaturday:
+              type: boolean
+            enrollmentApproved:
+              type: boolean
+            enrollmentImmunizations:
+              type: boolean
+            enrollmentCompleteName:
+              type: string
+            enrollmentId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    POSTSchoolEnrollmentResponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterResponse"
+        - type: object
+          properties:
+            enrollmentKey:
+              type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            schoolKey:
+              type: string
+            anneeCle:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
+            momKeys:
+              type: array
+              items:
+                type: string
+            dadKeys:
+              type: array
+              items:
+                type: string
+            guardianKeys:
+              type: array
+              items:
+                type: string
+            paymentKeys:
+              type: array
+              items:
+                type: string
+            familyKey:
+              type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            yearSort:
+              type: string
+            seasonSort:
+              type: string
+            sessionSort:
+              type: string
+            ageSort:
+              type: string
+            childCompleteName:
+              type: string
+            schoolCompleteName:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonEnrollmentFee:
+              type: string
+            seasonCompleteName:
+              type: string
+            sessionStartDay:
+              type: string
+            sessionEndDay:
+              type: string
+            ageCompleteName:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockSunday:
+              type: boolean
+            blockMonday:
+              type: boolean
+            blockTuesday:
+              type: boolean
+            blockWednesday:
+              type: boolean
+            blockThursday:
+              type: boolean
+            blockFriday:
+              type: boolean
+            blockSaturday:
+              type: boolean
+            enrollmentApproved:
+              type: boolean
+            enrollmentImmunizations:
+              type: boolean
+            enrollmentCompleteName:
+              type: string
+            enrollmentId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    PATCHSchoolEnrollmentRequest:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequest"
+        - type: object
+          properties:
+            setEnrollmentKey:
+              type: string
+              nullable: true
+            removeEnrollmentKey:
+              type: string
+            removeAllEnrollmentKey:
+              type: string
+            setBlockKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeBlockKeys:
+              type: string
+            removeAllBlockKeys:
+              type: array
+              items:
+                type: string
+            addBlockKeys:
+              type: string
+            addAllBlockKeys:
+              type: array
+              items:
+                type: string
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setSeasonKey:
+              type: string
+              nullable: true
+            removeSeasonKey:
+              type: string
+            removeAllSeasonKey:
+              type: string
+            setSessionKey:
+              type: string
+              nullable: true
+            removeSessionKey:
+              type: string
+            removeAllSessionKey:
+              type: string
+            setAgeKey:
+              type: string
+              nullable: true
+            removeAgeKey:
+              type: string
+            removeAllAgeKey:
+              type: string
+            setBlockKey:
+              type: string
+              nullable: true
+            removeBlockKey:
+              type: string
+            removeAllBlockKey:
+              type: string
+            setChildKey:
+              type: string
+              nullable: true
+            removeChildKey:
+              type: string
+            removeAllChildKey:
+              type: string
+            setMomKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeMomKeys:
+              type: string
+            removeAllMomKeys:
+              type: array
+              items:
+                type: string
+            addMomKeys:
+              type: string
+            addAllMomKeys:
+              type: array
+              items:
+                type: string
+            setDadKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeDadKeys:
+              type: string
+            removeAllDadKeys:
+              type: array
+              items:
+                type: string
+            addDadKeys:
+              type: string
+            addAllDadKeys:
+              type: array
+              items:
+                type: string
+            setGuardianKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeGuardianKeys:
+              type: string
+            removeAllGuardianKeys:
+              type: array
+              items:
+                type: string
+            addGuardianKeys:
+              type: string
+            addAllGuardianKeys:
+              type: array
+              items:
+                type: string
+            setPaymentKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removePaymentKeys:
+              type: string
+            removeAllPaymentKeys:
+              type: array
+              items:
+                type: string
+            addPaymentKeys:
+              type: string
+            addAllPaymentKeys:
+              type: array
+              items:
+                type: string
+            setFamilyKey:
+              type: string
+              nullable: true
+            removeFamilyKey:
+              type: string
+            removeAllFamilyKey:
+              type: string
+            setEducationSort:
+              type: string
+              nullable: true
+            removeEducationSort:
+              type: string
+            removeAllEducationSort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setYearSort:
+              type: string
+              nullable: true
+            removeYearSort:
+              type: string
+            removeAllYearSort:
+              type: string
+            setSeasonSort:
+              type: string
+              nullable: true
+            removeSeasonSort:
+              type: string
+            removeAllSeasonSort:
+              type: string
+            setSessionSort:
+              type: string
+              nullable: true
+            removeSessionSort:
+              type: string
+            removeAllSessionSort:
+              type: string
+            setAgeSort:
+              type: string
+              nullable: true
+            removeAgeSort:
+              type: string
+            removeAllAgeSort:
+              type: string
+            setChildCompleteName:
+              type: string
+              nullable: true
+            removeChildCompleteName:
+              type: string
+            removeAllChildCompleteName:
+              type: string
+            setSchoolCompleteName:
+              type: string
+              nullable: true
+            removeSchoolCompleteName:
+              type: string
+            removeAllSchoolCompleteName:
+              type: string
+            setYearStart:
+              type: string
+              nullable: true
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+              nullable: true
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDay:
+              type: string
+              nullable: true
+            removeSeasonStartDay:
+              type: string
+            removeAllSeasonStartDay:
+              type: string
+            setSeasonSummer:
+              type: boolean
+              nullable: true
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+              nullable: true
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setSeasonEnrollmentFee:
+              type: string
+              nullable: true
+            removeSeasonEnrollmentFee:
+              type: string
+            removeAllSeasonEnrollmentFee:
+              type: string
+            setSeasonCompleteName:
+              type: string
+              nullable: true
+            removeSeasonCompleteName:
+              type: string
+            removeAllSeasonCompleteName:
+              type: string
+            setSessionStartDay:
+              type: string
+              nullable: true
+            removeSessionStartDay:
+              type: string
+            removeAllSessionStartDay:
+              type: string
+            setSessionEndDay:
+              type: string
+              nullable: true
+            removeSessionEndDay:
+              type: string
+            removeAllSessionEndDay:
+              type: string
+            setAgeCompleteName:
+              type: string
+              nullable: true
+            removeAgeCompleteName:
+              type: string
+            removeAllAgeCompleteName:
+              type: string
+            setAgeStart:
+              type: string
+              nullable: true
+            removeAgeStart:
+              type: string
+            removeAllAgeStart:
+              type: string
+            setAgeEnd:
+              type: string
+              nullable: true
+            removeAgeEnd:
+              type: string
+            removeAllAgeEnd:
+              type: string
+            setBlockStartTime:
+              type: string
+              nullable: true
+            removeBlockStartTime:
+              type: string
+            removeAllBlockStartTime:
+              type: string
+            setBlockEndTime:
+              type: string
+              nullable: true
+            removeBlockEndTime:
+              type: string
+            removeAllBlockEndTime:
+              type: string
+            setBlockPricePerMonth:
+              type: string
+              nullable: true
+            removeBlockPricePerMonth:
+              type: string
+            removeAllBlockPricePerMonth:
+              type: string
+            setBlockSunday:
+              type: boolean
+              nullable: true
+            removeBlockSunday:
+              type: boolean
+            removeAllBlockSunday:
+              type: boolean
+            setBlockMonday:
+              type: boolean
+              nullable: true
+            removeBlockMonday:
+              type: boolean
+            removeAllBlockMonday:
+              type: boolean
+            setBlockTuesday:
+              type: boolean
+              nullable: true
+            removeBlockTuesday:
+              type: boolean
+            removeAllBlockTuesday:
+              type: boolean
+            setBlockWednesday:
+              type: boolean
+              nullable: true
+            removeBlockWednesday:
+              type: boolean
+            removeAllBlockWednesday:
+              type: boolean
+            setBlockThursday:
+              type: boolean
+              nullable: true
+            removeBlockThursday:
+              type: boolean
+            removeAllBlockThursday:
+              type: boolean
+            setBlockFriday:
+              type: boolean
+              nullable: true
+            removeBlockFriday:
+              type: boolean
+            removeAllBlockFriday:
+              type: boolean
+            setBlockSaturday:
+              type: boolean
+              nullable: true
+            removeBlockSaturday:
+              type: boolean
+            removeAllBlockSaturday:
+              type: boolean
+            setEnrollmentApproved:
+              type: boolean
+              nullable: true
+            removeEnrollmentApproved:
+              type: boolean
+            removeAllEnrollmentApproved:
+              type: boolean
+            setEnrollmentImmunizations:
+              type: boolean
+              nullable: true
+            removeEnrollmentImmunizations:
+              type: boolean
+            removeAllEnrollmentImmunizations:
+              type: boolean
+            setEnrollmentCompleteName:
+              type: string
+              nullable: true
+            removeEnrollmentCompleteName:
+              type: string
+            removeAllEnrollmentCompleteName:
+              type: string
+            setEnrollmentId:
+              type: string
+              nullable: true
+            removeEnrollmentId:
+              type: string
+            removeAllEnrollmentId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+              nullable: true
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    PATCHSchoolEnrollmentResponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterResponse"
+        - type: object
+          properties:
+            setEnrollmentKey:
+              type: string
+              nullable: true
+            removeEnrollmentKey:
+              type: string
+            removeAllEnrollmentKey:
+              type: string
+            setBlockKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeBlockKeys:
+              type: string
+            removeAllBlockKeys:
+              type: array
+              items:
+                type: string
+            addBlockKeys:
+              type: string
+            addAllBlockKeys:
+              type: array
+              items:
+                type: string
+            setSchoolKey:
+              type: string
+              nullable: true
+            removeSchoolKey:
+              type: string
+            removeAllSchoolKey:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setSeasonKey:
+              type: string
+              nullable: true
+            removeSeasonKey:
+              type: string
+            removeAllSeasonKey:
+              type: string
+            setSessionKey:
+              type: string
+              nullable: true
+            removeSessionKey:
+              type: string
+            removeAllSessionKey:
+              type: string
+            setAgeKey:
+              type: string
+              nullable: true
+            removeAgeKey:
+              type: string
+            removeAllAgeKey:
+              type: string
+            setBlockKey:
+              type: string
+              nullable: true
+            removeBlockKey:
+              type: string
+            removeAllBlockKey:
+              type: string
+            setChildKey:
+              type: string
+              nullable: true
+            removeChildKey:
+              type: string
+            removeAllChildKey:
+              type: string
+            setMomKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeMomKeys:
+              type: string
+            removeAllMomKeys:
+              type: array
+              items:
+                type: string
+            addMomKeys:
+              type: string
+            addAllMomKeys:
+              type: array
+              items:
+                type: string
+            setDadKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeDadKeys:
+              type: string
+            removeAllDadKeys:
+              type: array
+              items:
+                type: string
+            addDadKeys:
+              type: string
+            addAllDadKeys:
+              type: array
+              items:
+                type: string
+            setGuardianKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeGuardianKeys:
+              type: string
+            removeAllGuardianKeys:
+              type: array
+              items:
+                type: string
+            addGuardianKeys:
+              type: string
+            addAllGuardianKeys:
+              type: array
+              items:
+                type: string
+            setPaymentKeys:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removePaymentKeys:
+              type: string
+            removeAllPaymentKeys:
+              type: array
+              items:
+                type: string
+            addPaymentKeys:
+              type: string
+            addAllPaymentKeys:
+              type: array
+              items:
+                type: string
+            setFamilyKey:
+              type: string
+              nullable: true
+            removeFamilyKey:
+              type: string
+            removeAllFamilyKey:
+              type: string
+            setEducationSort:
+              type: string
+              nullable: true
+            removeEducationSort:
+              type: string
+            removeAllEducationSort:
+              type: string
+            setSchoolSort:
+              type: string
+              nullable: true
+            removeSchoolSort:
+              type: string
+            removeAllSchoolSort:
+              type: string
+            setYearSort:
+              type: string
+              nullable: true
+            removeYearSort:
+              type: string
+            removeAllYearSort:
+              type: string
+            setSeasonSort:
+              type: string
+              nullable: true
+            removeSeasonSort:
+              type: string
+            removeAllSeasonSort:
+              type: string
+            setSessionSort:
+              type: string
+              nullable: true
+            removeSessionSort:
+              type: string
+            removeAllSessionSort:
+              type: string
+            setAgeSort:
+              type: string
+              nullable: true
+            removeAgeSort:
+              type: string
+            removeAllAgeSort:
+              type: string
+            setChildCompleteName:
+              type: string
+              nullable: true
+            removeChildCompleteName:
+              type: string
+            removeAllChildCompleteName:
+              type: string
+            setSchoolCompleteName:
+              type: string
+              nullable: true
+            removeSchoolCompleteName:
+              type: string
+            removeAllSchoolCompleteName:
+              type: string
+            setYearStart:
+              type: string
+              nullable: true
+            removeYearStart:
+              type: string
+            removeAllYearStart:
+              type: string
+            setYearEnd:
+              type: string
+              nullable: true
+            removeYearEnd:
+              type: string
+            removeAllYearEnd:
+              type: string
+            setSeasonStartDay:
+              type: string
+              nullable: true
+            removeSeasonStartDay:
+              type: string
+            removeAllSeasonStartDay:
+              type: string
+            setSeasonSummer:
+              type: boolean
+              nullable: true
+            removeSeasonSummer:
+              type: boolean
+            removeAllSeasonSummer:
+              type: boolean
+            setSeasonWinter:
+              type: boolean
+              nullable: true
+            removeSeasonWinter:
+              type: boolean
+            removeAllSeasonWinter:
+              type: boolean
+            setSeasonEnrollmentFee:
+              type: string
+              nullable: true
+            removeSeasonEnrollmentFee:
+              type: string
+            removeAllSeasonEnrollmentFee:
+              type: string
+            setSeasonCompleteName:
+              type: string
+              nullable: true
+            removeSeasonCompleteName:
+              type: string
+            removeAllSeasonCompleteName:
+              type: string
+            setSessionStartDay:
+              type: string
+              nullable: true
+            removeSessionStartDay:
+              type: string
+            removeAllSessionStartDay:
+              type: string
+            setSessionEndDay:
+              type: string
+              nullable: true
+            removeSessionEndDay:
+              type: string
+            removeAllSessionEndDay:
+              type: string
+            setAgeCompleteName:
+              type: string
+              nullable: true
+            removeAgeCompleteName:
+              type: string
+            removeAllAgeCompleteName:
+              type: string
+            setAgeStart:
+              type: string
+              nullable: true
+            removeAgeStart:
+              type: string
+            removeAllAgeStart:
+              type: string
+            setAgeEnd:
+              type: string
+              nullable: true
+            removeAgeEnd:
+              type: string
+            removeAllAgeEnd:
+              type: string
+            setBlockStartTime:
+              type: string
+              nullable: true
+            removeBlockStartTime:
+              type: string
+            removeAllBlockStartTime:
+              type: string
+            setBlockEndTime:
+              type: string
+              nullable: true
+            removeBlockEndTime:
+              type: string
+            removeAllBlockEndTime:
+              type: string
+            setBlockPricePerMonth:
+              type: string
+              nullable: true
+            removeBlockPricePerMonth:
+              type: string
+            removeAllBlockPricePerMonth:
+              type: string
+            setBlockSunday:
+              type: boolean
+              nullable: true
+            removeBlockSunday:
+              type: boolean
+            removeAllBlockSunday:
+              type: boolean
+            setBlockMonday:
+              type: boolean
+              nullable: true
+            removeBlockMonday:
+              type: boolean
+            removeAllBlockMonday:
+              type: boolean
+            setBlockTuesday:
+              type: boolean
+              nullable: true
+            removeBlockTuesday:
+              type: boolean
+            removeAllBlockTuesday:
+              type: boolean
+            setBlockWednesday:
+              type: boolean
+              nullable: true
+            removeBlockWednesday:
+              type: boolean
+            removeAllBlockWednesday:
+              type: boolean
+            setBlockThursday:
+              type: boolean
+              nullable: true
+            removeBlockThursday:
+              type: boolean
+            removeAllBlockThursday:
+              type: boolean
+            setBlockFriday:
+              type: boolean
+              nullable: true
+            removeBlockFriday:
+              type: boolean
+            removeAllBlockFriday:
+              type: boolean
+            setBlockSaturday:
+              type: boolean
+              nullable: true
+            removeBlockSaturday:
+              type: boolean
+            removeAllBlockSaturday:
+              type: boolean
+            setEnrollmentApproved:
+              type: boolean
+              nullable: true
+            removeEnrollmentApproved:
+              type: boolean
+            removeAllEnrollmentApproved:
+              type: boolean
+            setEnrollmentImmunizations:
+              type: boolean
+              nullable: true
+            removeEnrollmentImmunizations:
+              type: boolean
+            removeAllEnrollmentImmunizations:
+              type: boolean
+            setEnrollmentCompleteName:
+              type: string
+              nullable: true
+            removeEnrollmentCompleteName:
+              type: string
+            removeAllEnrollmentCompleteName:
+              type: string
+            setEnrollmentId:
+              type: string
+              nullable: true
+            removeEnrollmentId:
+              type: string
+            removeAllEnrollmentId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjectSuggest:
+              type: string
+              nullable: true
+            removeObjectSuggest:
+              type: string
+            removeAllObjectSuggest:
+              type: string
+    SearchSchoolEnrollmentResponse:
+      allOf:
+        - $ref: "#/components/schemas/SearchClusterResponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              enrollmentKey:
+                type: string
+              blockKeys:
+                type: array
+                items:
+                  type: string
+              schoolKey:
+                type: string
+              anneeCle:
+                type: string
+              seasonKey:
+                type: string
+              sessionKey:
+                type: string
+              ageKey:
+                type: string
+              blockKey:
+                type: string
+              childKey:
+                type: string
+              momKeys:
+                type: array
+                items:
+                  type: string
+              dadKeys:
+                type: array
+                items:
+                  type: string
+              guardianKeys:
+                type: array
+                items:
+                  type: string
+              paymentKeys:
+                type: array
+                items:
+                  type: string
+              familyKey:
+                type: string
+              educationSort:
+                type: string
+              schoolSort:
+                type: string
+              yearSort:
+                type: string
+              seasonSort:
+                type: string
+              sessionSort:
+                type: string
+              ageSort:
+                type: string
+              childCompleteName:
+                type: string
+              schoolCompleteName:
+                type: string
+              yearStart:
+                type: string
+              yearEnd:
+                type: string
+              seasonStartDay:
+                type: string
+              seasonSummer:
+                type: boolean
+              seasonWinter:
+                type: boolean
+              seasonEnrollmentFee:
+                type: string
+              seasonCompleteName:
+                type: string
+              sessionStartDay:
+                type: string
+              sessionEndDay:
+                type: string
+              ageCompleteName:
+                type: string
+              ageStart:
+                type: string
+              ageEnd:
+                type: string
+              blockStartTime:
+                type: string
+              blockEndTime:
+                type: string
+              blockPricePerMonth:
+                type: string
+              blockSunday:
+                type: boolean
+              blockMonday:
+                type: boolean
+              blockTuesday:
+                type: boolean
+              blockWednesday:
+                type: boolean
+              blockThursday:
+                type: boolean
+              blockFriday:
+                type: boolean
+              blockSaturday:
+                type: boolean
+              enrollmentApproved:
+                type: boolean
+              enrollmentImmunizations:
+                type: boolean
+              enrollmentCompleteName:
+                type: string
+              enrollmentId:
+                type: string
+              pageUrl:
+                type: string
+              objectSuggest:
+                type: string
+    GETSchoolEnrollmentResponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterResponse"
+        - type: object
+          properties:
+            enrollmentKey:
+              type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            schoolKey:
+              type: string
+            anneeCle:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
+            momKeys:
+              type: array
+              items:
+                type: string
+            dadKeys:
+              type: array
+              items:
+                type: string
+            guardianKeys:
+              type: array
+              items:
+                type: string
+            paymentKeys:
+              type: array
+              items:
+                type: string
+            familyKey:
+              type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            yearSort:
+              type: string
+            seasonSort:
+              type: string
+            sessionSort:
+              type: string
+            ageSort:
+              type: string
+            childCompleteName:
+              type: string
+            schoolCompleteName:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonEnrollmentFee:
+              type: string
+            seasonCompleteName:
+              type: string
+            sessionStartDay:
+              type: string
+            sessionEndDay:
+              type: string
+            ageCompleteName:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockSunday:
+              type: boolean
+            blockMonday:
+              type: boolean
+            blockTuesday:
+              type: boolean
+            blockWednesday:
+              type: boolean
+            blockThursday:
+              type: boolean
+            blockFriday:
+              type: boolean
+            blockSaturday:
+              type: boolean
+            enrollmentApproved:
+              type: boolean
+            enrollmentImmunizations:
+              type: boolean
+            enrollmentCompleteName:
+              type: string
+            enrollmentId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    DELETESchoolEnrollmentResponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterResponse"
+        - type: object
+          properties:
+            enrollmentKey:
+              type: string
+            blockKeys:
+              type: array
+              items:
+                type: string
+            schoolKey:
+              type: string
+            anneeCle:
+              type: string
+            seasonKey:
+              type: string
+            sessionKey:
+              type: string
+            ageKey:
+              type: string
+            blockKey:
+              type: string
+            childKey:
+              type: string
+            momKeys:
+              type: array
+              items:
+                type: string
+            dadKeys:
+              type: array
+              items:
+                type: string
+            guardianKeys:
+              type: array
+              items:
+                type: string
+            paymentKeys:
+              type: array
+              items:
+                type: string
+            familyKey:
+              type: string
+            educationSort:
+              type: string
+            schoolSort:
+              type: string
+            yearSort:
+              type: string
+            seasonSort:
+              type: string
+            sessionSort:
+              type: string
+            ageSort:
+              type: string
+            childCompleteName:
+              type: string
+            schoolCompleteName:
+              type: string
+            yearStart:
+              type: string
+            yearEnd:
+              type: string
+            seasonStartDay:
+              type: string
+            seasonSummer:
+              type: boolean
+            seasonWinter:
+              type: boolean
+            seasonEnrollmentFee:
+              type: string
+            seasonCompleteName:
+              type: string
+            sessionStartDay:
+              type: string
+            sessionEndDay:
+              type: string
+            ageCompleteName:
+              type: string
+            ageStart:
+              type: string
+            ageEnd:
+              type: string
+            blockStartTime:
+              type: string
+            blockEndTime:
+              type: string
+            blockPricePerMonth:
+              type: string
+            blockSunday:
+              type: boolean
+            blockMonday:
+              type: boolean
+            blockTuesday:
+              type: boolean
+            blockWednesday:
+              type: boolean
+            blockThursday:
+              type: boolean
+            blockFriday:
+              type: boolean
+            blockSaturday:
+              type: boolean
+            enrollmentApproved:
+              type: boolean
+            enrollmentImmunizations:
+              type: boolean
+            enrollmentCompleteName:
+              type: string
+            enrollmentId:
+              type: string
+            pageUrl:
+              type: string
+            objectSuggest:
+              type: string
+    SearchPageSchoolEnrollmentResponse:
       allOf:
         - type: string
     ErrorResponse:

@@ -15,6 +15,30 @@ import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
+	protected void _enrollmentKey(Wrap<Long> c) {
+		c.o(pk);
+	}
+
+	protected void _blockKeys(List<Long> o) {}
+
+	protected void _blockSearch(SearchList<SchoolBlock> l) {
+		if(blockKeys.size() > 0) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:(" + StringUtils.join(blockKeys, " ") + ")");
+			l.setC(SchoolBlock.class);
+			l.setStore(true);
+		}
+		else {
+			l.setQuery(null);
+		}
+	}
+
+	protected void _block(Wrap<SchoolBlock> c) {
+		if(blockSearch.size() > 0) {
+			c.o(blockSearch.get(0));
+		}
+	}
+
 	protected void _schoolKey(Wrap<Long> c) {
 	}
 
@@ -31,10 +55,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _blockKey(Wrap<Long> c) {
-		c.o(pk);
 	}
-
-	protected void _blockKeys(List<Long> o) {}
 
 	protected void _childKey(Wrap<Long> c) {}
 
@@ -71,19 +92,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _ageSort(Wrap<Integer> c) {
 		c.o(6);
-	}
-
-	protected void _blockSearch(SearchList<SchoolBlock> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
-		l.setC(SchoolBlock.class);
-		l.setStore(true);
-	}
-
-	protected void _block(Wrap<SchoolBlock> c) {
-		if(blockSearch.size() > 0) {
-			c.o(blockSearch.get(0));
-		}
 	}
 
 	protected void _childSearch(SearchList<SchoolChild> l) {
@@ -231,18 +239,18 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
 	}
 
-	protected void _inscriptionCompleteName(Wrap<String> c) {
+	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;
 		if(child_ != null)
 			o = String.format("enrollment for the child %s", child_.getPersonCompleteNamePreferred());
 		else
-			o = "enrollment";
+			o = String.format("enrollment %s", pk);
 		c.o(o);
 	}
 
-	protected void _inscriptionId(Wrap<String> c) {
-		if(inscriptionCompleteName != null) {
-			String s = Normalizer.normalize(inscriptionCompleteName, Normalizer.Form.NFD);
+	protected void _enrollmentId(Wrap<String> c) {
+		if(enrollmentCompleteName != null) {
+			String s = Normalizer.normalize(enrollmentCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -256,19 +264,19 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _pageUrl(Wrap<String> c) {
-		if(inscriptionId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enrollment/" + inscriptionId;
+		if(enrollmentId != null) {
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enrollment/" + enrollmentId;
 			c.o(o);
 		}
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(inscriptionCompleteName);
+		c.o(enrollmentCompleteName);
 	}
 
 	@Override()
 	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolBlock.class.getCanonicalName());
+		l.add(SchoolEnrollment.class.getCanonicalName());
 		super._classCanonicalNames(l);
 	}
 }

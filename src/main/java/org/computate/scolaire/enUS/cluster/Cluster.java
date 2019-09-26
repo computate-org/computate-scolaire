@@ -33,7 +33,8 @@ public class Cluster extends ClusterGen<Object> {
 
 	protected void _created(Wrap<ZonedDateTime> c) {}
 
-	protected void _modified(Wrap<ZonedDateTime> c) {}
+	protected void _modified(Wrap<ZonedDateTime> c) {
+	}
 
 	protected void _archived(Wrap<Boolean> c) {
 		c.o(false);

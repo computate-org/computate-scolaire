@@ -49,8 +49,74 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: purple
  * IconeGroupe: solid
  * IconeNom: pencil-square
-*/    
+*/   
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'inscription dans la base de données. 
+	 * Description.enUS: The primary key of the school enrollment in the database. 
+	 * NomAffichage.frFR: clé
+	 * NomAffichage.enUS: key
+	 */            
+	protected void _inscriptionCle(Couverture<Long> c) {
+		c.o(pk);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: BlocScolaire.inscriptionCles
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
+	 * Description.frFR: La clé primaire des blocs dans la base de données. 
+	 * Description.enUS: The primary key of the school blocks in the database. 
+	 * NomAffichage.frFR: blocs
+	 * NomAffichage.enUS: blocks
+	 */   
+	protected void _blocCles(List<Long> o) {}
+
+	/**
+	 * Var.enUS: blockSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: BlocScolaire
+	 * r.enUS: SchoolBlock
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * Ignorer: true
+	 * r: blocCles
+	 * r.enUS: blockKeys
+	 */
+	protected void _blocRecherche(ListeRecherche<BlocScolaire> l) {
+		if(blocCles.size() > 0) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:(" + StringUtils.join(blocCles, " ") + ")");
+			l.setC(BlocScolaire.class);
+			l.setStocker(true);
+		}
+		else {
+			l.setQuery(null);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: block
+	 * r: blocRecherche
+	 * r.enUS: blockSearch
+	 * Ignorer: true
+	 */   
+	protected void _bloc(Couverture<BlocScolaire> c) {
+		if(blocRecherche.size() > 0) {
+			c.o(blocRecherche.get(0));
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -122,29 +188,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: blockKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'inscription dans la base de données. 
-	 * Description.enUS: The primary key of the school enrollment in the database. 
+	 * Description.frFR: La clé primaire du bloc dans la base de données. 
+	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
 	 */              
-	protected void _inscriptionCle(Couverture<Long> c) {
-		c.o(pk);
+	protected void _blocCle(Couverture<Long> c) {
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: blockKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: BlocScolaire.inscriptionCles
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
-	 * Description.frFR: La clé primaire des blocs dans la base de données. 
-	 * Description.enUS: The primary key of the school blocks in the database. 
-	 * NomAffichage.frFR: blocs
-	 * NomAffichage.enUS: blocks
-	 */    
-	protected void _blocCles(List<Long> o) {}
 
 	/**
 	 * {@inheritDoc}
@@ -295,36 +345,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _ageTri(Couverture<Integer> c) {
 		c.o(6);
-	}
-
-	/**
-	 * Var.enUS: blockSearch
-	 * r: inscriptionCles
-	 * r.enUS: enrollmentKeys
-	 * r: BlocScolaire
-	 * r.enUS: SchoolBlock
-	 * r: setStocker
-	 * r.enUS: setStore
-	 * Ignorer: true
-	 */
-	protected void _blocRecherche(ListeRecherche<BlocScolaire> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
-		l.setC(BlocScolaire.class);
-		l.setStocker(true);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: block
-	 * r: blocRecherche
-	 * r.enUS: blockSearch
-	 * Ignorer: true
-	 */   
-	protected void _bloc(Couverture<BlocScolaire> c) {
-		if(blocRecherche.size() > 0) {
-			c.o(blocRecherche.get(0));
-		}
 	}
 
 	/**
@@ -814,15 +834,15 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: inscriptionCompleteName
+	 * Var.enUS: enrollmentCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
 	 * r: "inscription pour l'enfant %s"
 	 * r.enUS: "enrollment for the child %s"
-	 * r: "inscription"
-	 * r.enUS: "enrollment"
+	 * r: "inscription %s"
+	 * r.enUS: "enrollment %s"
 	 * r: getPersonneNomCompletPrefere
 	 * r.enUS: getPersonCompleteNamePreferred
 	 * r: enfant_
@@ -833,13 +853,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		if(enfant_ != null)
 			o = String.format("inscription pour l'enfant %s", enfant_.getPersonneNomCompletPrefere());
 		else
-			o = "inscription";
+			o = String.format("inscription %s", pk);
 		c.o(o);
 	}
 
 	/**   
 	 * {@inheritDoc}
-	 * Var.enUS: inscriptionId
+	 * Var.enUS: enrollmentId
 	 * Indexe: true
 	 * Stocke: true
 	 * VarId: true
@@ -850,7 +870,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: inscriptionNomComplet
-	 * r.enUS: inscriptionCompleteName
+	 * r.enUS: enrollmentCompleteName
 	 */            
 	protected void _inscriptionId(Couverture<String> c) {
 		if(inscriptionNomComplet != null) {
@@ -873,7 +893,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * VarUrl: true
 	 * r: inscriptionId
-	 * r.enUS: inscriptionId
+	 * r.enUS: enrollmentId
 	 * r: /inscription/
 	 * r.enUS: /enrollment/
 	 * r: requeteSite
@@ -882,7 +902,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: SiteUrlBase
 	 * r.enUS: SiteBaseUrl
-	 * **/   
+	 * **/  
 	protected void _pageUrl(Couverture<String> c)  {
 		if(inscriptionId != null) {
 			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/inscription/" + inscriptionId;
@@ -895,7 +915,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: inscriptionNomComplet
-	 * r.enUS: inscriptionCompleteName
+	 * r.enUS: enrollmentCompleteName
 	 */         
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(inscriptionNomComplet);
@@ -906,13 +926,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: _classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
-	 * r: BlocScolaire
-	 * r.enUS: SchoolBlock
+	 * r: InscriptionScolaire
+	 * r.enUS: SchoolEnrollment
 	 * r: classeNomsCanoniques
 	 * r.enUS: classCanonicalNames
 	 **/      
 	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(BlocScolaire.class.getCanonicalName());
+		l.add(InscriptionScolaire.class.getCanonicalName());
 		super._classeNomsCanoniques(l);
 	}
 }

@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */                  
+ */               
 public class Cluster extends ClusterGen<Object> {   
 
 	/**
@@ -126,7 +126,8 @@ public class Cluster extends ClusterGen<Object> {
 	 * NomAffichage.frFR: modifié
 	 * NomAffichage.enUS: modified
 	 */
-	protected void _modifie(Couverture<ZonedDateTime> c) {}
+	protected void _modifie(Couverture<ZonedDateTime> c) {
+	}
 	
 	/**
 	 * {@inheritDoc}

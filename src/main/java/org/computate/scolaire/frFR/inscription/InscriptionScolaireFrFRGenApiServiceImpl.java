@@ -67,6 +67,7 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -191,28 +192,38 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "blocCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", l));
+						}
 						break;
 					case "enfantCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("enfantCle", pk, "inscriptionCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
 					case "mereCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "mereCles", pk));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "mereCles", pk));
+						}
 						break;
 					case "pereCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "pereCles", pk));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "pereCles", pk));
+						}
 						break;
 					case "gardienCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", l));
+						}
 						break;
 					case "paiementCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("inscriptionCles", jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "paiementCles", pk));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "paiementCles", pk));
+						}
 						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -242,7 +253,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -272,7 +287,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							rechercheInscriptionScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-									listePATCHInscriptionScolaire(listeInscriptionScolaire, d -> {
+									String dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")));
+									listePATCHInscriptionScolaire(listeInscriptionScolaire, dt, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -313,9 +329,9 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	public void listePATCHInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		listeInscriptionScolaire.getList().forEach(o -> {
 			futures.add(
 				futurePATCHInscriptionScolaire(o, a -> {
@@ -328,7 +344,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHInscriptionScolaire(listeInscriptionScolaire, gestionnaireEvenements);
+				if(listeInscriptionScolaire.next(dt)) {
+					listePATCHInscriptionScolaire(listeInscriptionScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHInscriptionScolaire(listeInscriptionScolaire, gestionnaireEvenements);
+				}
 			} else {
 				erreurInscriptionScolaire(listeInscriptionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -386,16 +406,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						o2.setModifie(requeteJson.getString(methodeNom));
 						if(o2.getModifie() == null) {
@@ -424,6 +434,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						o2.setCree(requeteJson.getString(methodeNom));
+						if(o2.getCree() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "addBlocCles":
@@ -905,12 +925,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 	public String varIndexeInscriptionScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
 			case "modifie":
 				return "modifie_indexed_date";
 			case "archive":
@@ -923,6 +937,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "pk":
+				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
+			case "cree":
+				return "cree_indexed_date";
+			case "inscriptionCle":
+				return "inscriptionCle_indexed_long";
+			case "blocCles":
+				return "blocCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "saisonCle":
@@ -931,10 +955,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "sessionCle_indexed_long";
 			case "ageCle":
 				return "ageCle_indexed_long";
-			case "inscriptionCle":
-				return "inscriptionCle_indexed_long";
-			case "blocCles":
-				return "blocCles_indexed_longs";
+			case "blocCle":
+				return "blocCle_indexed_long";
 			case "enfantCle":
 				return "enfantCle_indexed_long";
 			case "mereCles":

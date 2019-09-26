@@ -69,7 +69,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: Locale.FRANCE
 	 * r.enUS: Locale.US
 	 */
-	public static DateTimeFormatter FORMATDateHeureAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm", Locale.FRANCE);
+	public static DateTimeFormatter FORMATDateHeureAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm:ss.SSS", Locale.FRANCE);
 
 	/**
 	 * Var.enUS: FORMATZonedDateTimeDisplay
@@ -78,7 +78,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: Locale.FRANCE
 	 * r.enUS: Locale.US
 	 */
-	public static DateTimeFormatter FORMATDateHeureZoneeAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm zz VV", Locale.FRANCE);
+	public static DateTimeFormatter FORMATDateHeureZoneeAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE);
 
 	protected void _pageParts(List<PagePart> l) {
 	}

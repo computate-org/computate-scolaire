@@ -45,6 +45,22 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		return list.get(index);
 	}
 
+	public boolean next(String dt) {
+		boolean next = false;
+		long numFound = getSolrDocumentList().getNumFound();
+		if(numFound > 0) {
+			addFilterQuery(String.format("modified_indexed_date:[* TO %s-1MILLI]", dt));
+			_queryResponse(queryResponseWrap);
+			setQueryResponse(queryResponseWrap.o);
+			_solrDocumentList(solrDocumentListWrap);
+			setSolrDocumentList(solrDocumentListWrap.o);
+			list.clear();
+			_list(list);
+			next = true;
+		}
+		return next;
+	}
+
 	protected void _queryResponse(Wrap<QueryResponse> c) {
 		if(solrQuery.getQuery() != null) {
 			try {

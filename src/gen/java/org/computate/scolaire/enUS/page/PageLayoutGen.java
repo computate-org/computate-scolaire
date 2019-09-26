@@ -1750,11 +1750,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public String strPageCreated() {
-		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
 	}
 
 	public String jsonPageCreated() {
-		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
 	}
 
 	public String nomAffichagePageCreated() {
@@ -1827,11 +1827,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public String strPageModified() {
-		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
 	}
 
 	public String jsonPageModified() {
-		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss a zz VV", Locale.US));
+		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
 	}
 
 	public String nomAffichagePageModified() {

@@ -156,7 +156,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
-	 */            
+	 */           
 	protected void _inscriptionCles(List<Long> o) {}
 
 	/**
@@ -658,7 +658,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r.enUS: " Fr"
 	 * r: " Sam"
 	 * r.enUS: " Sa"
-	 */ 
+	 */  
 	protected void _blocNomComplet(Couverture<String> c) {
 		String o;
 		String weekdays = "";

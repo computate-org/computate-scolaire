@@ -67,6 +67,7 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -191,28 +192,38 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
 					case "blockKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("blockKeys", pk, "enrollmentKeys", l));
+						}
 						break;
 					case "childKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", Long.parseLong(jsonObject.getString(entityVar))));
 						break;
 					case "momKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "momKeys", pk));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
+						}
 						break;
 					case "dadKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("dadKeys", pk, "enrollmentKeys", l));
+						}
 						break;
 					case "guardianKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "guardianKeys", pk));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
+						}
 						break;
 					case "paymentKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("enrollmentKeys", jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList()), "paymentKeys", pk));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "paymentKeys", pk));
+						}
 						break;
 					case "blockStartTime":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -242,7 +253,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -272,7 +287,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							aSearchSchoolEnrollment(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									listPATCHSchoolEnrollment(listSchoolEnrollment, d -> {
+									String dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolEnrollment(listSchoolEnrollment, dt, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -313,12 +329,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void listPATCHSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolEnrollment(o, a -> {
+					String dt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(o.getModified().toInstant(), ZoneId.of("UTC")));
+					System.out.println(o.getPk() + " " + dt2);
 					if(a.succeeded()) {
 					} else {
 						errorSchoolEnrollment(siteRequest, eventHandler, a);
@@ -328,7 +346,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolEnrollment(listSchoolEnrollment, eventHandler);
+				if(listSchoolEnrollment.next(dt)) {
+					listPATCHSchoolEnrollment(listSchoolEnrollment, dt, eventHandler);
+				} else {
+					response200PATCHSchoolEnrollment(listSchoolEnrollment, eventHandler);
+				}
 			} else {
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
 			}
@@ -386,16 +408,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.SchoolEnrollment"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
-					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
-						}
-						break;
 					case "setModified":
 						o2.setModified(requestJson.getString(methodName));
 						if(o2.getModified() == null) {
@@ -424,6 +436,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
+					case "setCreated":
+						o2.setCreated(requestJson.getString(methodName));
+						if(o2.getCreated() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "addBlockKeys":
@@ -905,12 +927,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public String varIndexedSchoolEnrollment(String entityVar) {
 		switch(entityVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "created":
-				return "created_indexed_date";
 			case "modified":
 				return "modified_indexed_date";
 			case "archived":
@@ -923,6 +939,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "pk":
+				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
+			case "created":
+				return "created_indexed_date";
+			case "enrollmentKey":
+				return "enrollmentKey_indexed_long";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "seasonKey":
@@ -933,8 +959,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "ageKey_indexed_long";
 			case "blockKey":
 				return "blockKey_indexed_long";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
 			case "childKey":
 				return "childKey_indexed_long";
 			case "momKeys":
@@ -1011,10 +1035,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "enrollmentApproved_indexed_boolean";
 			case "enrollmentImmunizations":
 				return "enrollmentImmunizations_indexed_boolean";
-			case "inscriptionCompleteName":
-				return "inscriptionCompleteName_indexed_string";
-			case "inscriptionId":
-				return "inscriptionId_indexed_string";
+			case "enrollmentCompleteName":
+				return "enrollmentCompleteName_indexed_string";
+			case "enrollmentId":
+				return "enrollmentId_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
 			case "objectSuggest":
@@ -1249,7 +1273,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR inscriptionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR enrollmentId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
