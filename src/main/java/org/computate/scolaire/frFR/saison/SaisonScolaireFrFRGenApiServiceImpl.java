@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -192,11 +194,13 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					switch(entiteVar) {
 					case "anneeCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", jsonObject.getLong(entiteVar)));
+						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
 					case "sessionCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("saisonCle", jsonObject.getLong(entiteVar), "sessionCles", pk));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("saisonCle", l, "sessionCles", pk));
+						}
 						break;
 					case "saisonJourDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -217,12 +221,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -252,7 +260,14 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							rechercheSaisonScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
-									listePATCHSaisonScolaire(listeSaisonScolaire, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listeSaisonScolaire.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHSaisonScolaire(listeSaisonScolaire, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -268,7 +283,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 															}
 														});
 													} else {
-														erreurSaisonScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -293,9 +308,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
-	public void listePATCHSaisonScolaire(ListeRecherche<SaisonScolaire> listeSaisonScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHSaisonScolaire(ListeRecherche<SaisonScolaire> listeSaisonScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
 		listeSaisonScolaire.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSaisonScolaire(o, a -> {
@@ -308,7 +323,11 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHSaisonScolaire(listeSaisonScolaire, gestionnaireEvenements);
+				if(listeSaisonScolaire.next(dt)) {
+					listePATCHSaisonScolaire(listeSaisonScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHSaisonScolaire(listeSaisonScolaire, gestionnaireEvenements);
+				}
 			} else {
 				erreurSaisonScolaire(listeSaisonScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -330,19 +349,19 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurSaisonScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurSaisonScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurSaisonScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurSaisonScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -418,7 +437,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "addSessionCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getString(methodeNom), "sessionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCle", Long.parseLong(requeteJson.getString(methodeNom)), "sessionCles", pk));
 						break;
 					case "addAllSessionCles":
 						JsonArray addAllSessionClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -430,7 +449,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSessionCles":
 						JsonArray setSessionClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getString(methodeNom), "sessionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCle", Long.parseLong(requeteJson.getString(methodeNom)), "sessionCles", pk));
 						for(Integer i = 0; i <  setSessionClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("saisonCle", setSessionClesValeurs.getString(i), "sessionCles", pk));
@@ -438,7 +457,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "removeSessionCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("saisonCle", requeteJson.getLong(methodeNom), "sessionCles", pk));
+						patchSqlParams.addAll(Arrays.asList("saisonCle", Long.parseLong(requeteJson.getString(methodeNom)), "sessionCles", pk));
 						break;
 					case "setSaisonJourDebut":
 						o2.setSaisonJourDebut(requeteJson.getString(methodeNom));
@@ -482,15 +501,19 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SaisonScolaire o3 = new SaisonScolaire();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SaisonScolaire o3 = new SaisonScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -573,7 +596,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 															}
 														});
 													} else {
-														erreurSaisonScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -604,7 +627,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, SaisonScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -728,7 +751,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 															}
 														});
 													} else {
-														erreurSaisonScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -914,7 +937,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -993,7 +1016,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -1026,12 +1049,12 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1054,7 +1077,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.saison.SaisonScolaire"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1146,7 +1171,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1176,7 +1201,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

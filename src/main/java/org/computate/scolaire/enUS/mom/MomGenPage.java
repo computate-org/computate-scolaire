@@ -93,6 +93,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptMomGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "suggestSchoolMomEnrollmentKeys($('#formSchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); ");
 		l("});");
 	}
 
@@ -254,7 +255,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -262,23 +263,23 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-pink ").f();
-								e("label").a("for", "Page_personCompleteName").a("class", "").f().sx("complete name").g("label");
+								e("label").a("for", "Page_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "complete name")
-										.a("class", "setPersonCompleteName w3-input w3-border ")
-										.a("name", "setPersonCompleteName")
-										.a("id", "Page_personCompleteName")
+										.a("placeholder", "preferred first name")
+										.a("class", "setPersonFirstNamePreferred w3-input w3-border ")
+										.a("name", "setPersonFirstNamePreferred")
+										.a("id", "Page_personFirstNamePreferred")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonCompleteName', $(this).val(), function() { addGlow($('#Page_personCompleteName')); }, function() { addError($('#Page_personCompleteName')); }); ")
-										.a("value", o.strPersonCompleteName())
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonFirstNamePreferred', $(this).val(), function() { addGlow($('#Page_personFirstNamePreferred')); }, function() { addError($('#Page_personFirstNamePreferred')); }); ")
+										.a("value", o.strPersonFirstNamePreferred())
 									.fg();
 
 								} g("div");
@@ -286,7 +287,53 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#Page_personCompleteName')); $('#Page_personCompleteName').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonCompleteName', null, function() { addGlow($('#Page_personCompleteName')); }, function() { addError($('#Page_personCompleteName')); }); ")
+									.a("onclick", "removeGlow($('#Page_personFirstNamePreferred')); $('#Page_personFirstNamePreferred').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonFirstNamePreferred', null, function() { addGlow($('#Page_personFirstNamePreferred')); }, function() { addError($('#Page_personFirstNamePreferred')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-pink ").f();
+								e("label").a("for", "Page_personEmail").a("class", "").f().sx("email").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "email")
+										.a("class", "setPersonEmail w3-input w3-border ")
+										.a("name", "setPersonEmail")
+										.a("id", "Page_personEmail")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonEmail', $(this).val(), function() { addGlow($('#Page_personEmail')); }, function() { addError($('#Page_personEmail')); }); ")
+										.a("value", o.strPersonEmail())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+									.a("onclick", "removeGlow($('#Page_personEmail')); $('#Page_personEmail').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonEmail', null, function() { addGlow($('#Page_personEmail')); }, function() { addError($('#Page_personEmail')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -298,7 +345,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -306,23 +353,23 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-pink ").f();
-								e("label").a("for", "Page_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+								e("label").a("for", "Page_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "complete name preferred")
-										.a("class", "setPersonCompleteNamePreferred w3-input w3-border ")
-										.a("name", "setPersonCompleteNamePreferred")
-										.a("id", "Page_personCompleteNamePreferred")
+										.a("placeholder", "phone number")
+										.a("class", "setPersonPhoneNumber w3-input w3-border ")
+										.a("name", "setPersonPhoneNumber")
+										.a("id", "Page_personPhoneNumber")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonCompleteNamePreferred', $(this).val(), function() { addGlow($('#Page_personCompleteNamePreferred')); }, function() { addError($('#Page_personCompleteNamePreferred')); }); ")
-										.a("value", o.strPersonCompleteNamePreferred())
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonPhoneNumber', $(this).val(), function() { addGlow($('#Page_personPhoneNumber')); }, function() { addError($('#Page_personPhoneNumber')); }); ")
+										.a("value", o.strPersonPhoneNumber())
 									.fg();
 
 								} g("div");
@@ -330,7 +377,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#Page_personCompleteNamePreferred')); $('#Page_personCompleteNamePreferred').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonCompleteNamePreferred', null, function() { addGlow($('#Page_personCompleteNamePreferred')); }, function() { addError($('#Page_personCompleteNamePreferred')); }); ")
+									.a("onclick", "removeGlow($('#Page_personPhoneNumber')); $('#Page_personPhoneNumber').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonPhoneNumber', null, function() { addGlow($('#Page_personPhoneNumber')); }, function() { addError($('#Page_personPhoneNumber')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -342,7 +389,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -350,23 +397,23 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-pink ").f();
-								e("label").a("for", "Page_personFormalName").a("class", "").f().sx("formal name").g("label");
+								e("label").a("for", "Page_personOccupation").a("class", "").f().sx("occupation").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "formal name")
-										.a("class", "setPersonFormalName w3-input w3-border ")
-										.a("name", "setPersonFormalName")
-										.a("id", "Page_personFormalName")
+										.a("placeholder", "occupation")
+										.a("class", "setPersonOccupation w3-input w3-border ")
+										.a("name", "setPersonOccupation")
+										.a("id", "Page_personOccupation")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonFormalName', $(this).val(), function() { addGlow($('#Page_personFormalName')); }, function() { addError($('#Page_personFormalName')); }); ")
-										.a("value", o.strPersonFormalName())
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonOccupation', $(this).val(), function() { addGlow($('#Page_personOccupation')); }, function() { addError($('#Page_personOccupation')); }); ")
+										.a("value", o.strPersonOccupation())
 									.fg();
 
 								} g("div");
@@ -374,10 +421,216 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-									.a("onclick", "removeGlow($('#Page_personFormalName')); $('#Page_personFormalName').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonFormalName', null, function() { addGlow($('#Page_personFormalName')); }, function() { addError($('#Page_personFormalName')); }); ")
+									.a("onclick", "removeGlow($('#Page_personOccupation')); $('#Page_personOccupation').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonOccupation', null, function() { addGlow($('#Page_personOccupation')); }, function() { addError($('#Page_personOccupation')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-pink ").f();
+								e("label").a("for", "Page_personSms").a("class", "").f().sx("text me").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPersonSms")
+										.a("name", "setPersonSms")
+										.a("id", "Page_personSms")
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonSms', $(this).prop('checked'), function() { addGlow($('#Page_personSms')); }, function() { addError($('#Page_personSms')); }); ")
+										;
+										if(o.getPersonSms() != null && o.getPersonSms())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-pink ").f();
+								e("label").a("for", "Page_personReceiveEmail").a("class", "").f().sx("receive email").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPersonReceiveEmail")
+										.a("name", "setPersonReceiveEmail")
+										.a("id", "Page_personReceiveEmail")
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonReceiveEmail', $(this).prop('checked'), function() { addGlow($('#Page_personReceiveEmail')); }, function() { addError($('#Page_personReceiveEmail')); }); ")
+										;
+										if(o.getPersonReceiveEmail() != null && o.getPersonReceiveEmail())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-pink ").f();
+								e("label").a("for", "Page_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPersonEmergencyContact")
+										.a("name", "setPersonEmergencyContact")
+										.a("id", "Page_personEmergencyContact")
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#Page_personEmergencyContact')); }, function() { addError($('#Page_personEmergencyContact')); }); ")
+										;
+										if(o.getPersonEmergencyContact() != null && o.getPersonEmergencyContact())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-pink ").f();
+								e("label").a("for", "Page_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPersonPickup")
+										.a("name", "setPersonPickup")
+										.a("id", "Page_personPickup")
+										.a("onchange", "patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=\"pk\"]').val() }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#Page_personPickup')); }, function() { addError($('#Page_personPickup')); }); ")
+										;
+										if(o.getPersonPickup() != null && o.getPersonPickup())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valueMomKeys")
+							.a("class", "valueMomKeys ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+									sx("enrollments");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relate enrollments to this mom");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "enrollments")
+											.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setEnrollmentKeys")
+											.a("id", "Page_enrollmentKeys")
+											.a("autocomplete", "off")
+											.a("oninput", "suggestSchoolMomEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolMomEnrollmentKeys").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postSchoolEnrollmentVals({ momKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolMomVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolMomEnrollmentKeys($('#' + ($('#Page_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); var $e = $('#Page_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#Page_enrollmentKeys')); }); }, function() { addError($('#Page_enrollmentKeys')); });")
+											.f().sx("add an enrollment")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -523,7 +776,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -531,21 +784,56 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "POST_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "POST_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "valuePersonCompleteName w3-input w3-border ")
-									.a("name", "personCompleteName")
-									.a("id", "POST_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "valuePersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "personFirstNamePreferred")
+									.a("id", "POST_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "POST_personEmail").a("class", "").f().sx("email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "email")
+									.a("class", "valuePersonEmail w3-input w3-border ")
+									.a("name", "personEmail")
+									.a("id", "POST_personEmail")
+									.a("value", o.strPersonEmail())
 								.fg();
 
 							} g("div");
@@ -556,7 +844,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -564,21 +852,21 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "POST_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "POST_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "valuePersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "personCompleteNamePreferred")
-									.a("id", "POST_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "phone number")
+									.a("class", "valuePersonPhoneNumber w3-input w3-border ")
+									.a("name", "personPhoneNumber")
+									.a("id", "POST_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -589,7 +877,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -597,23 +885,225 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "POST_personFormalName").a("class", "").f().sx("formal name").g("label");
+							e("label").a("for", "POST_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "valuePersonFormalName w3-input w3-border ")
-									.a("name", "personFormalName")
-									.a("id", "POST_personFormalName")
-									.a("value", o.strPersonFormalName())
+									.a("placeholder", "occupation")
+									.a("class", "valuePersonOccupation w3-input w3-border ")
+									.a("name", "personOccupation")
+									.a("id", "POST_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "POST_personSms").a("class", "").f().sx("text me").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonSms")
+									.a("name", "personSms")
+									.a("id", "POST_personSms")
+									;
+									if(o.getPersonSms() != null && o.getPersonSms())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "POST_personReceiveEmail").a("class", "").f().sx("receive email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonReceiveEmail")
+									.a("name", "personReceiveEmail")
+									.a("id", "POST_personReceiveEmail")
+									;
+									if(o.getPersonReceiveEmail() != null && o.getPersonReceiveEmail())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "POST_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonEmergencyContact")
+									.a("name", "personEmergencyContact")
+									.a("id", "POST_personEmergencyContact")
+									;
+									if(o.getPersonEmergencyContact() != null && o.getPersonEmergencyContact())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "POST_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonPickup")
+									.a("name", "personPickup")
+									.a("id", "POST_personPickup")
+									;
+									if(o.getPersonPickup() != null && o.getPersonPickup())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueMomKeys")
+						.a("class", "valueMomKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this mom");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "POST_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolMomEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolMomEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ momKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolMomVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolMomEnrollmentKeys($('#' + ($('#POST_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); var $e = $('#POST_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#POST_enrollmentKeys')); }); }, function() { addError($('#POST_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -759,7 +1249,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -767,21 +1257,56 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "PATCH_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "PATCH_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "setPersonCompleteName w3-input w3-border ")
-									.a("name", "setPersonCompleteName")
-									.a("id", "PATCH_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "setPersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "setPersonFirstNamePreferred")
+									.a("id", "PATCH_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "PATCH_personEmail").a("class", "").f().sx("email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "email")
+									.a("class", "setPersonEmail w3-input w3-border ")
+									.a("name", "setPersonEmail")
+									.a("id", "PATCH_personEmail")
+									.a("value", o.strPersonEmail())
 								.fg();
 
 							} g("div");
@@ -792,7 +1317,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -800,21 +1325,21 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "PATCH_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "PATCH_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "setPersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "setPersonCompleteNamePreferred")
-									.a("id", "PATCH_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "phone number")
+									.a("class", "setPersonPhoneNumber w3-input w3-border ")
+									.a("name", "setPersonPhoneNumber")
+									.a("id", "PATCH_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -825,7 +1350,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -833,23 +1358,225 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "PATCH_personFormalName").a("class", "").f().sx("formal name").g("label");
+							e("label").a("for", "PATCH_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "setPersonFormalName w3-input w3-border ")
-									.a("name", "setPersonFormalName")
-									.a("id", "PATCH_personFormalName")
-									.a("value", o.strPersonFormalName())
+									.a("placeholder", "occupation")
+									.a("class", "setPersonOccupation w3-input w3-border ")
+									.a("name", "setPersonOccupation")
+									.a("id", "PATCH_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "PATCH_personSms").a("class", "").f().sx("text me").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPersonSms")
+									.a("name", "setPersonSms")
+									.a("id", "PATCH_personSms")
+									;
+									if(o.getPersonSms() != null && o.getPersonSms())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "PATCH_personReceiveEmail").a("class", "").f().sx("receive email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPersonReceiveEmail")
+									.a("name", "setPersonReceiveEmail")
+									.a("id", "PATCH_personReceiveEmail")
+									;
+									if(o.getPersonReceiveEmail() != null && o.getPersonReceiveEmail())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "PATCH_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPersonEmergencyContact")
+									.a("name", "setPersonEmergencyContact")
+									.a("id", "PATCH_personEmergencyContact")
+									;
+									if(o.getPersonEmergencyContact() != null && o.getPersonEmergencyContact())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "PATCH_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPersonPickup")
+									.a("name", "setPersonPickup")
+									.a("id", "PATCH_personPickup")
+									;
+									if(o.getPersonPickup() != null && o.getPersonPickup())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueMomKeys")
+						.a("class", "valueMomKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this mom");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "PATCH_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolMomEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolMomEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ momKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolMomVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolMomEnrollmentKeys($('#' + ($('#PATCH_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); var $e = $('#PATCH_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_enrollmentKeys')); }); }, function() { addError($('#PATCH_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1010,7 +1737,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1018,21 +1745,56 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "Recherche_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "Recherche_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "valuePersonCompleteName w3-input w3-border ")
-									.a("name", "personCompleteName")
-									.a("id", "Recherche_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "valuePersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "personFirstNamePreferred")
+									.a("id", "Recherche_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "Recherche_personEmail").a("class", "").f().sx("email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "email")
+									.a("class", "valuePersonEmail w3-input w3-border ")
+									.a("name", "personEmail")
+									.a("id", "Recherche_personEmail")
+									.a("value", o.strPersonEmail())
 								.fg();
 
 							} g("div");
@@ -1043,7 +1805,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1051,21 +1813,21 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "Recherche_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "Recherche_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "valuePersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "personCompleteNamePreferred")
-									.a("id", "Recherche_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "phone number")
+									.a("class", "valuePersonPhoneNumber w3-input w3-border ")
+									.a("name", "personPhoneNumber")
+									.a("id", "Recherche_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -1076,7 +1838,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1084,23 +1846,225 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-pink ").f();
-							e("label").a("for", "Recherche_personFormalName").a("class", "").f().sx("formal name").g("label");
+							e("label").a("for", "Recherche_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "valuePersonFormalName w3-input w3-border ")
-									.a("name", "personFormalName")
-									.a("id", "Recherche_personFormalName")
-									.a("value", o.strPersonFormalName())
+									.a("placeholder", "occupation")
+									.a("class", "valuePersonOccupation w3-input w3-border ")
+									.a("name", "personOccupation")
+									.a("id", "Recherche_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonSms").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "Recherche_personSms").a("class", "").f().sx("text me").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonSms")
+									.a("name", "personSms")
+									.a("id", "Recherche_personSms")
+									;
+									if(o.getPersonSms() != null && o.getPersonSms())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonReceiveEmail").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "Recherche_personReceiveEmail").a("class", "").f().sx("receive email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonReceiveEmail")
+									.a("name", "personReceiveEmail")
+									.a("id", "Recherche_personReceiveEmail")
+									;
+									if(o.getPersonReceiveEmail() != null && o.getPersonReceiveEmail())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonEmergencyContact").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "Recherche_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonEmergencyContact")
+									.a("name", "personEmergencyContact")
+									.a("id", "Recherche_personEmergencyContact")
+									;
+									if(o.getPersonEmergencyContact() != null && o.getPersonEmergencyContact())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomPersonPickup").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", "Recherche_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valuePersonPickup")
+									.a("name", "personPickup")
+									.a("id", "Recherche_personPickup")
+									;
+									if(o.getPersonPickup() != null && o.getPersonPickup())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueMomKeys")
+						.a("class", "valueMomKeys ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolMomEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this mom");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "Recherche_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolMomEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolMomEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ momKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolMomVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolMomEnrollmentKeys($('#' + ($('#Recherche_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys')); var $e = $('#Recherche_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_enrollmentKeys')); }); }, function() { addError($('#Recherche_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");

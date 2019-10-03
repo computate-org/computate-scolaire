@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -190,35 +192,65 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("dadKeys", l, "enrollmentKeys", pk));
+						}
+						break;
 					case "personFirstName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personFirstNamePreferred":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
 						break;
 					case "familyName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
 						break;
-					case "personCompleteName":
+					case "personOccupation":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personCompleteName", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personOccupation", jsonObject.getString(entityVar), pk));
 						break;
-					case "personCompleteNamePreferred":
+					case "personPhoneNumber":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personPhoneNumber", jsonObject.getString(entityVar), pk));
 						break;
-					case "personFormalName":
+					case "personEmail":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFormalName", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("personEmail", jsonObject.getString(entityVar), pk));
+						break;
+					case "personSms":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personSms", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personReceiveEmail":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personReceiveEmail", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personEmergencyContact":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personEmergencyContact", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "personPickup":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personPickup", jsonObject.getBoolean(entityVar), pk));
 						break;
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -248,7 +280,14 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							aSearchSchoolDad(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolDad> listSchoolDad = c.result();
-									listPATCHSchoolDad(listSchoolDad, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolDad.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modified");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolDad(listSchoolDad, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -264,7 +303,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolDad(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -289,9 +328,9 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		}
 	}
 
-	public void listPATCHSchoolDad(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolDad(SearchList<SchoolDad> listSchoolDad, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
 		listSchoolDad.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolDad(o, a -> {
@@ -304,7 +343,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolDad(listSchoolDad, eventHandler);
+				if(listSchoolDad.next(dt)) {
+					listPATCHSchoolDad(listSchoolDad, dt, eventHandler);
+				} else {
+					response200PATCHSchoolDad(listSchoolDad, eventHandler);
+				}
 			} else {
 				errorSchoolDad(listSchoolDad.getSiteRequest_(), eventHandler, a);
 			}
@@ -326,19 +369,19 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolDad(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolDad(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolDad(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolDad(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -402,6 +445,30 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
+					case "addEnrollmentKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						break;
+					case "addAllEnrollmentKeys":
+						JsonArray addAllEnrollmentKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", addAllEnrollmentKeysValues.getString(i), "enrollmentKeys", pk));
+						}
+						break;
+					case "setEnrollmentKeys":
+						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("dadKeys", setEnrollmentKeysValues.getString(i), "enrollmentKeys", pk));
+						}
+						break;
+					case "removeEnrollmentKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("dadKeys", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						break;
 					case "setPersonFirstName":
 						o2.setPersonFirstName(requestJson.getString(methodName));
 						if(o2.getPersonFirstName() == null) {
@@ -410,6 +477,16 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personFirstName", o2.jsonPersonFirstName(), pk));
+						}
+						break;
+					case "setPersonFirstNamePreferred":
+						o2.setPersonFirstNamePreferred(requestJson.getString(methodName));
+						if(o2.getPersonFirstNamePreferred() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personFirstNamePreferred", o2.jsonPersonFirstNamePreferred(), pk));
 						}
 						break;
 					case "setFamilyName":
@@ -422,47 +499,91 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
 						}
 						break;
-					case "setPersonCompleteName":
-						o2.setPersonCompleteName(requestJson.getString(methodName));
-						if(o2.getPersonCompleteName() == null) {
+					case "setPersonOccupation":
+						o2.setPersonOccupation(requestJson.getString(methodName));
+						if(o2.getPersonOccupation() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteName"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personOccupation"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personCompleteName", o2.jsonPersonCompleteName(), pk));
+							patchSqlParams.addAll(Arrays.asList("personOccupation", o2.jsonPersonOccupation(), pk));
 						}
 						break;
-					case "setPersonCompleteNamePreferred":
-						o2.setPersonCompleteNamePreferred(requestJson.getString(methodName));
-						if(o2.getPersonCompleteNamePreferred() == null) {
+					case "setPersonPhoneNumber":
+						o2.setPersonPhoneNumber(requestJson.getString(methodName));
+						if(o2.getPersonPhoneNumber() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteNamePreferred"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personPhoneNumber"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", o2.jsonPersonCompleteNamePreferred(), pk));
+							patchSqlParams.addAll(Arrays.asList("personPhoneNumber", o2.jsonPersonPhoneNumber(), pk));
 						}
 						break;
-					case "setPersonFormalName":
-						o2.setPersonFormalName(requestJson.getString(methodName));
-						if(o2.getPersonFormalName() == null) {
+					case "setPersonEmail":
+						o2.setPersonEmail(requestJson.getString(methodName));
+						if(o2.getPersonEmail() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personFormalName"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personEmail"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personFormalName", o2.jsonPersonFormalName(), pk));
+							patchSqlParams.addAll(Arrays.asList("personEmail", o2.jsonPersonEmail(), pk));
+						}
+						break;
+					case "setPersonSms":
+						o2.setPersonSms(requestJson.getBoolean(methodName));
+						if(o2.getPersonSms() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personSms"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personSms", o2.jsonPersonSms(), pk));
+						}
+						break;
+					case "setPersonReceiveEmail":
+						o2.setPersonReceiveEmail(requestJson.getBoolean(methodName));
+						if(o2.getPersonReceiveEmail() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personReceiveEmail"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personReceiveEmail", o2.jsonPersonReceiveEmail(), pk));
+						}
+						break;
+					case "setPersonEmergencyContact":
+						o2.setPersonEmergencyContact(requestJson.getBoolean(methodName));
+						if(o2.getPersonEmergencyContact() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personEmergencyContact"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personEmergencyContact", o2.jsonPersonEmergencyContact(), pk));
+						}
+						break;
+					case "setPersonPickup":
+						o2.setPersonPickup(requestJson.getBoolean(methodName));
+						if(o2.getPersonPickup() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personPickup"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personPickup", o2.jsonPersonPickup(), pk));
 						}
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolDad o3 = new SchoolDad();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolDad o3 = new SchoolDad();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -545,7 +666,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolDad(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +697,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolDad.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -700,7 +821,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 															}
 														});
 													} else {
-														errorSchoolDad(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -785,6 +906,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				return "ageKeys_indexed_longs";
 			case "personFirstName":
 				return "personFirstName_indexed_string";
+			case "personFirstNamePreferred":
+				return "personFirstNamePreferred_indexed_string";
 			case "familyName":
 				return "familyName_indexed_string";
 			case "personCompleteName":
@@ -898,7 +1021,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -977,7 +1100,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -1010,12 +1133,12 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1038,7 +1161,9 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.dad.SchoolDad"));
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1130,7 +1255,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1160,7 +1285,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

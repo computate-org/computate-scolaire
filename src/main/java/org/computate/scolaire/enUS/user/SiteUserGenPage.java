@@ -45,10 +45,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH1(Wrap<String> c) {
-		if(siteUser != null)
-			c.o("a site user");
-		else if(listSiteUser == null || listSiteUser.size() == 0)
-			c.o("no site user found");
+			c.o("site users");
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
@@ -515,28 +512,45 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		if(listSiteUser == null || listSiteUser.size() == 0) {
 
 			{ e("h1").f();
-				if(contextIconCssClasses != null)
-					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("no site user found").g("span");
-			} g("h1");
-		} else if(listSiteUser != null && listSiteUser.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("site users").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("no site user found").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listSiteUser != null && listSiteUser.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			SiteUser o = listSiteUser.get(0);
+			siteRequest_.setRequestPk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contextIconCssClasses != null)
+							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				SiteUser o = listSiteUser.get(0);
-				siteRequest_.setRequestPk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -546,12 +560,50 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("site users").g("span");
 			} g("h1");
+			e("div").a("class", "").f();
+				{ e("div").f();
+					Long num = listSiteUser.getQueryResponse().getResults().getNumFound();
+					Integer rows1 = listSiteUser.getRows();
+					Integer start1 = listSiteUser.getStart();
+					Integer start2 = start1 - rows1;
+					Integer start3 = start1 + rows1;
+					Integer rows2 = rows1 / 2;
+					Integer rows3 = rows1 * 2;
+					start2 = start2 < 0 ? 0 : start2;
+
+					if(start1 == 0) {
+						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/user?start=", start2, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
+						} g("a");
+					}
+
+					if(rows1 <= 1) {
+						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/user?start=", start1, "&rows=", rows2).f();
+							e("i").a("class", "fas fa-minus-square ").f().g("i");
+						} g("a");
+					}
+
+					{ e("a").a("href", "/user?start=", start1, "&rows=", rows3).f();
+						e("i").a("class", "fas fa-plus-square ").f().g("i");
+					} g("a");
+
+					if(start3 >= num) {
+						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/user?start=", start3, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
+						} g("a");
+					}
+						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
+				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("primary key").g("th");
 						e("th").f().sx("created").g("th");
-						e("th").f().sx("modified").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -564,17 +616,10 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCreated());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModified());
+									e("i").a("class", "far fa-book w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strCreated());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -604,8 +649,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					o.htmlBody();
 
 			} g("div");
+
 		}
 		htmlBodyFormsSiteUserGenPage();
+		htmlSuggestSiteUserGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsSiteUserGenPage() {
@@ -643,7 +691,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchSiteUser($('#patchSiteUserFormFilters'), $('#patchSiteUserFormValues')); ")
+						.a("onclick", "patchSiteUser($('#patchSiteUserFormFilters'), $('#patchSiteUserFormValues'), function() {}, function() {}); ")
 						.f().sx("Modify the site users")
 					.g("button");
 
@@ -652,6 +700,57 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		} g("div");
 
 		g("div");
+	}
+
+	/**
+	**/
+	public void htmlSuggestSiteUserGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/user").a("class", "").f();
+					e("i").a("class", "far fa-book w3-padding-small ").f().g("i");
+					sx("see all the site users");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "refreshSiteUserGenPage").a("href", "/user").a("class", "").a("onclick", "patchSiteUserVals([], {}, function() { addGlow($('#refreshSiteUserGenPage')); }, function() { addError($('#refreshSiteUserGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("refresh all the site users");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("search site users: ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggestFormSiteUser").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("class", "suggestSiteUser w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggestSiteUser")
+							.a("id", "suggestSiteUser")
+							.a("autocomplete", "off")
+							.a("oninput", "suggestSiteUser( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSiteUser')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSiteUser").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

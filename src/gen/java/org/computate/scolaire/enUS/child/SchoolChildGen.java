@@ -1336,6 +1336,108 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////////////////////
+	// personFirstNamePreferred //
+	//////////////////////////////
+
+	/**	L'entité « personFirstNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String personFirstNamePreferred;
+	@JsonIgnore
+	public Wrap<String> personFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("personFirstNamePreferred").o(personFirstNamePreferred);
+
+	/**	<br/>L'entité « personFirstNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:personFirstNamePreferred">Trouver l'entité personFirstNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personFirstNamePreferred(Wrap<String> c);
+
+	public String getPersonFirstNamePreferred() {
+		return personFirstNamePreferred;
+	}
+
+	public void setPersonFirstNamePreferred(String personFirstNamePreferred) {
+		this.personFirstNamePreferred = personFirstNamePreferred;
+		this.personFirstNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolChild personFirstNamePreferredInit() {
+		if(!personFirstNamePreferredWrap.alreadyInitialized) {
+			_personFirstNamePreferred(personFirstNamePreferredWrap);
+			if(personFirstNamePreferred == null)
+				setPersonFirstNamePreferred(personFirstNamePreferredWrap.o);
+		}
+		personFirstNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolChild)this;
+	}
+
+	public String solrPersonFirstNamePreferred() {
+		return personFirstNamePreferred;
+	}
+
+	public String strPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : personFirstNamePreferred;
+	}
+
+	public String jsonPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : personFirstNamePreferred;
+	}
+
+	public String nomAffichagePersonFirstNamePreferred() {
+		return "preferred first name";
+	}
+
+	public String htmTooltipPersonFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strPersonFirstNamePreferred());
+	}
+
+	public void htmPersonFirstNamePreferred(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolChild", strPk(), "PersonFirstNamePreferred\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolChild", strPk(), "PersonFirstNamePreferred() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPersonFirstNamePreferred\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonFirstNamePreferred()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"personFirstNamePreferred\"");
+							r.s(" value=\"", htmPersonFirstNamePreferred(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPersonFirstNamePreferred());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// familyName //
 	////////////////
@@ -1745,89 +1847,89 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
-	// personBirthdate //
+	// personBirthDate //
 	/////////////////////
 
-	/**	L'entité « personBirthdate »
+	/**	L'entité « personBirthDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate personBirthdate;
+	protected LocalDate personBirthDate;
 	@JsonIgnore
-	public Wrap<LocalDate> personBirthdateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("personBirthdate").o(personBirthdate);
+	public Wrap<LocalDate> personBirthDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("personBirthDate").o(personBirthDate);
 
-	/**	<br/>L'entité « personBirthdate »
+	/**	<br/>L'entité « personBirthDate »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:personBirthdate">Trouver l'entité personBirthdate dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:personBirthDate">Trouver l'entité personBirthDate dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _personBirthdate(Wrap<LocalDate> c);
+	protected abstract void _personBirthDate(Wrap<LocalDate> c);
 
-	public LocalDate getPersonBirthdate() {
-		return personBirthdate;
+	public LocalDate getPersonBirthDate() {
+		return personBirthDate;
 	}
 
-	public void setPersonBirthdate(LocalDate personBirthdate) {
-		this.personBirthdate = personBirthdate;
-		this.personBirthdateWrap.alreadyInitialized = true;
+	public void setPersonBirthDate(LocalDate personBirthDate) {
+		this.personBirthDate = personBirthDate;
+		this.personBirthDateWrap.alreadyInitialized = true;
 	}
-	public SchoolChild setPersonBirthdate(Instant o) {
-		this.personBirthdate = LocalDate.from(o);
-		this.personBirthdateWrap.alreadyInitialized = true;
+	public SchoolChild setPersonBirthDate(Instant o) {
+		this.personBirthDate = LocalDate.from(o);
+		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolChild setPersonBirthdate(String o) {
-		this.personBirthdate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.personBirthdateWrap.alreadyInitialized = true;
+	public SchoolChild setPersonBirthDate(String o) {
+		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
-	public SchoolChild setPersonBirthdate(Date o) {
-		this.personBirthdate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
-		this.personBirthdateWrap.alreadyInitialized = true;
+	public SchoolChild setPersonBirthDate(Date o) {
+		this.personBirthDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
-	protected SchoolChild personBirthdateInit() {
-		if(!personBirthdateWrap.alreadyInitialized) {
-			_personBirthdate(personBirthdateWrap);
-			if(personBirthdate == null)
-				setPersonBirthdate(personBirthdateWrap.o);
+	protected SchoolChild personBirthDateInit() {
+		if(!personBirthDateWrap.alreadyInitialized) {
+			_personBirthDate(personBirthDateWrap);
+			if(personBirthDate == null)
+				setPersonBirthDate(personBirthDateWrap.o);
 		}
-		personBirthdateWrap.alreadyInitialized(true);
+		personBirthDateWrap.alreadyInitialized(true);
 		return (SchoolChild)this;
 	}
 
-	public Date solrPersonBirthdate() {
-		return personBirthdate == null ? null : Date.from(personBirthdate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrPersonBirthDate() {
+		return personBirthDate == null ? null : Date.from(personBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strPersonBirthdate() {
-		return personBirthdate == null ? "" : personBirthdate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	public String strPersonBirthDate() {
+		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
 	}
 
-	public String jsonPersonBirthdate() {
-		return personBirthdate == null ? "" : personBirthdate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	public String jsonPersonBirthDate() {
+		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
 	}
 
-	public String nomAffichagePersonBirthdate() {
+	public String nomAffichagePersonBirthDate() {
 		return "birth date";
 	}
 
-	public String htmTooltipPersonBirthdate() {
+	public String htmTooltipPersonBirthDate() {
 		return null;
 	}
 
-	public String htmPersonBirthdate() {
-		return personBirthdate == null ? "" : StringEscapeUtils.escapeHtml4(strPersonBirthdate());
+	public String htmPersonBirthDate() {
+		return personBirthDate == null ? "" : StringEscapeUtils.escapeHtml4(strPersonBirthDate());
 	}
 
-	public void htmPersonBirthdate(AllWriter r, Boolean patchRights) {
+	public void htmPersonBirthDate(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonBirthdate\">");
+			r.s("<div id=\"patchSchoolChild", strPk(), "PersonBirthDate\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonBirthdate() {");
+				r.l("		function patchSchoolChild", strPk(), "PersonBirthDate() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -1840,23 +1942,23 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setPersonBirthdate\": this.value },");
+				r.l("				data: {\"setPersonBirthDate\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonBirthdate()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonBirthDate()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"personBirthdate\"");
-							r.s(" value=\"", htmPersonBirthdate(), "\");");
+							r.s(" name=\"personBirthDate\"");
+							r.s(" value=\"", htmPersonBirthDate(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmPersonBirthdate());
+				r.s(htmPersonBirthDate());
 			}
 			r.l("</div>");
 		}
@@ -2270,79 +2372,79 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////////////
-	// enfantVaccinsAJour //
-	////////////////////////
+	///////////////////////////
+	// enfantVaccinesCurrent //
+	///////////////////////////
 
-	/**	L'entité « enfantVaccinsAJour »
+	/**	L'entité « enfantVaccinesCurrent »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Boolean enfantVaccinsAJour;
+	protected Boolean enfantVaccinesCurrent;
 	@JsonIgnore
-	public Wrap<Boolean> enfantVaccinsAJourWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enfantVaccinsAJour").o(enfantVaccinsAJour);
+	public Wrap<Boolean> enfantVaccinesCurrentWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enfantVaccinesCurrent").o(enfantVaccinesCurrent);
 
-	/**	<br/>L'entité « enfantVaccinsAJour »
+	/**	<br/>L'entité « enfantVaccinesCurrent »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enfantVaccinsAJour">Trouver l'entité enfantVaccinsAJour dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enfantVaccinesCurrent">Trouver l'entité enfantVaccinesCurrent dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _enfantVaccinsAJour(Wrap<Boolean> c);
+	protected abstract void _enfantVaccinesCurrent(Wrap<Boolean> c);
 
-	public Boolean getEnfantVaccinsAJour() {
-		return enfantVaccinsAJour;
+	public Boolean getEnfantVaccinesCurrent() {
+		return enfantVaccinesCurrent;
 	}
 
-	public void setEnfantVaccinsAJour(Boolean enfantVaccinsAJour) {
-		this.enfantVaccinsAJour = enfantVaccinsAJour;
-		this.enfantVaccinsAJourWrap.alreadyInitialized = true;
+	public void setEnfantVaccinesCurrent(Boolean enfantVaccinesCurrent) {
+		this.enfantVaccinesCurrent = enfantVaccinesCurrent;
+		this.enfantVaccinesCurrentWrap.alreadyInitialized = true;
 	}
-	public SchoolChild setEnfantVaccinsAJour(String o) {
-		this.enfantVaccinsAJour = Boolean.parseBoolean(o);
-		this.enfantVaccinsAJourWrap.alreadyInitialized = true;
+	public SchoolChild setEnfantVaccinesCurrent(String o) {
+		this.enfantVaccinesCurrent = Boolean.parseBoolean(o);
+		this.enfantVaccinesCurrentWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
-	protected SchoolChild enfantVaccinsAJourInit() {
-		if(!enfantVaccinsAJourWrap.alreadyInitialized) {
-			_enfantVaccinsAJour(enfantVaccinsAJourWrap);
-			if(enfantVaccinsAJour == null)
-				setEnfantVaccinsAJour(enfantVaccinsAJourWrap.o);
+	protected SchoolChild enfantVaccinesCurrentInit() {
+		if(!enfantVaccinesCurrentWrap.alreadyInitialized) {
+			_enfantVaccinesCurrent(enfantVaccinesCurrentWrap);
+			if(enfantVaccinesCurrent == null)
+				setEnfantVaccinesCurrent(enfantVaccinesCurrentWrap.o);
 		}
-		enfantVaccinsAJourWrap.alreadyInitialized(true);
+		enfantVaccinesCurrentWrap.alreadyInitialized(true);
 		return (SchoolChild)this;
 	}
 
-	public Boolean solrEnfantVaccinsAJour() {
-		return enfantVaccinsAJour;
+	public Boolean solrEnfantVaccinesCurrent() {
+		return enfantVaccinesCurrent;
 	}
 
-	public String strEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : enfantVaccinsAJour.toString();
+	public String strEnfantVaccinesCurrent() {
+		return enfantVaccinesCurrent == null ? "" : enfantVaccinesCurrent.toString();
 	}
 
-	public String jsonEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : enfantVaccinsAJour.toString();
+	public String jsonEnfantVaccinesCurrent() {
+		return enfantVaccinesCurrent == null ? "" : enfantVaccinesCurrent.toString();
 	}
 
-	public String nomAffichageEnfantVaccinsAJour() {
+	public String nomAffichageEnfantVaccinesCurrent() {
 		return "current vaccines";
 	}
 
-	public String htmTooltipEnfantVaccinsAJour() {
+	public String htmTooltipEnfantVaccinesCurrent() {
 		return null;
 	}
 
-	public String htmEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantVaccinsAJour());
+	public String htmEnfantVaccinesCurrent() {
+		return enfantVaccinesCurrent == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantVaccinesCurrent());
 	}
 
-	public void htmEnfantVaccinsAJour(AllWriter r, Boolean patchRights) {
+	public void htmEnfantVaccinesCurrent(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "EnfantVaccinsAJour\">");
+			r.s("<div id=\"patchSchoolChild", strPk(), "EnfantVaccinesCurrent\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "EnfantVaccinsAJour() {");
+				r.l("		function patchSchoolChild", strPk(), "EnfantVaccinesCurrent() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2355,23 +2457,23 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setEnfantVaccinsAJour\": this.value },");
+				r.l("				data: {\"setEnfantVaccinesCurrent\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantVaccinsAJour()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantVaccinesCurrent()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"enfantVaccinsAJour\"");
-							r.s(" value=\"", htmEnfantVaccinsAJour(), "\");");
+							r.s(" name=\"enfantVaccinesCurrent\"");
+							r.s(" value=\"", htmEnfantVaccinesCurrent(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmEnfantVaccinsAJour());
+				r.s(htmEnfantVaccinesCurrent());
 			}
 			r.l("</div>");
 		}
@@ -2925,16 +3027,17 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		sessionKeysInit();
 		ageKeysInit();
 		personFirstNameInit();
+		personFirstNamePreferredInit();
 		familyNameInit();
 		personCompleteNameInit();
 		personCompleteNamePreferredInit();
 		personFormalNameInit();
-		personBirthdateInit();
+		personBirthDateInit();
 		childMedicalConditionsInit();
 		childPreviousSchoolsAttendedInit();
 		childDescriptionInit();
 		childObjectivesInit();
-		enfantVaccinsAJourInit();
+		enfantVaccinesCurrentInit();
 		childPottyTrainedInit();
 		childCompleteNameInit();
 		childIdInit();
@@ -3004,6 +3107,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.ageKeys;
 			case "personFirstName":
 				return oSchoolChild.personFirstName;
+			case "personFirstNamePreferred":
+				return oSchoolChild.personFirstNamePreferred;
 			case "familyName":
 				return oSchoolChild.familyName;
 			case "personCompleteName":
@@ -3012,8 +3117,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.personCompleteNamePreferred;
 			case "personFormalName":
 				return oSchoolChild.personFormalName;
-			case "personBirthdate":
-				return oSchoolChild.personBirthdate;
+			case "personBirthDate":
+				return oSchoolChild.personBirthDate;
 			case "childMedicalConditions":
 				return oSchoolChild.childMedicalConditions;
 			case "childPreviousSchoolsAttended":
@@ -3022,8 +3127,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.childDescription;
 			case "childObjectives":
 				return oSchoolChild.childObjectives;
-			case "enfantVaccinsAJour":
-				return oSchoolChild.enfantVaccinsAJour;
+			case "enfantVaccinesCurrent":
+				return oSchoolChild.enfantVaccinesCurrent;
 			case "childPottyTrained":
 				return oSchoolChild.childPottyTrained;
 			case "childCompleteName":
@@ -3059,6 +3164,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public Object attributeSchoolChild(String var, Object val) {
 		SchoolChild oSchoolChild = (SchoolChild)this;
 		switch(var) {
+			case "enrollmentKeys":
+				oSchoolChild.addEnrollmentKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -3089,20 +3197,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				setPersonFirstName(val);
 				savesSchoolChild.add(var);
 				return val;
+			case "personFirstNamePreferred":
+				setPersonFirstNamePreferred(val);
+				savesSchoolChild.add(var);
+				return val;
 			case "familyName":
 				setFamilyName(val);
-				savesSchoolChild.add(var);
-				return val;
-			case "personCompleteName":
-				setPersonCompleteName(val);
-				savesSchoolChild.add(var);
-				return val;
-			case "personCompleteNamePreferred":
-				setPersonCompleteNamePreferred(val);
-				savesSchoolChild.add(var);
-				return val;
-			case "personFormalName":
-				setPersonFormalName(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "childMedicalConditions":
@@ -3121,8 +3221,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				setChildObjectives(val);
 				savesSchoolChild.add(var);
 				return val;
-			case "enfantVaccinsAJour":
-				setEnfantVaccinsAJour(val);
+			case "enfantVaccinesCurrent":
+				setEnfantVaccinesCurrent(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "childPottyTrained":
@@ -3158,11 +3258,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 					oSchoolChild.setChildKey(childKey);
 			}
 
-			if(savesSchoolChild.contains("enrollmentKeys")) {
-				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
-				if(enrollmentKeys != null)
-					oSchoolChild.enrollmentKeys.addAll(enrollmentKeys);
-			}
+			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
+			if(enrollmentKeys != null)
+				oSchoolChild.enrollmentKeys.addAll(enrollmentKeys);
 
 			if(savesSchoolChild.contains("familySort")) {
 				Integer familySort = (Integer)solrDocument.get("familySort_stored_int");
@@ -3212,6 +3310,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 					oSchoolChild.setPersonFirstName(personFirstName);
 			}
 
+			if(savesSchoolChild.contains("personFirstNamePreferred")) {
+				String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
+				if(personFirstNamePreferred != null)
+					oSchoolChild.setPersonFirstNamePreferred(personFirstNamePreferred);
+			}
+
 			if(savesSchoolChild.contains("familyName")) {
 				String familyName = (String)solrDocument.get("familyName_stored_string");
 				if(familyName != null)
@@ -3236,10 +3340,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 					oSchoolChild.setPersonFormalName(personFormalName);
 			}
 
-			if(savesSchoolChild.contains("personBirthdate")) {
-				Date personBirthdate = (Date)solrDocument.get("personBirthdate_stored_date");
-				if(personBirthdate != null)
-					oSchoolChild.setPersonBirthdate(personBirthdate);
+			if(savesSchoolChild.contains("personBirthDate")) {
+				Date personBirthDate = (Date)solrDocument.get("personBirthDate_stored_date");
+				if(personBirthDate != null)
+					oSchoolChild.setPersonBirthDate(personBirthDate);
 			}
 
 			if(savesSchoolChild.contains("childMedicalConditions")) {
@@ -3266,10 +3370,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 					oSchoolChild.setChildObjectives(childObjectives);
 			}
 
-			if(savesSchoolChild.contains("enfantVaccinsAJour")) {
-				Boolean enfantVaccinsAJour = (Boolean)solrDocument.get("enfantVaccinsAJour_stored_boolean");
-				if(enfantVaccinsAJour != null)
-					oSchoolChild.setEnfantVaccinsAJour(enfantVaccinsAJour);
+			if(savesSchoolChild.contains("enfantVaccinesCurrent")) {
+				Boolean enfantVaccinesCurrent = (Boolean)solrDocument.get("enfantVaccinesCurrent_stored_boolean");
+				if(enfantVaccinesCurrent != null)
+					oSchoolChild.setEnfantVaccinesCurrent(enfantVaccinesCurrent);
 			}
 
 			if(savesSchoolChild.contains("childPottyTrained")) {
@@ -3434,6 +3538,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("personFirstName_indexed_string", personFirstName);
 			document.addField("personFirstName_stored_string", personFirstName);
 		}
+		if(personFirstNamePreferred != null) {
+			document.addField("personFirstNamePreferred_indexed_string", personFirstNamePreferred);
+			document.addField("personFirstNamePreferred_stored_string", personFirstNamePreferred);
+		}
 		if(familyName != null) {
 			document.addField("familyName_indexed_string", familyName);
 			document.addField("familyName_stored_string", familyName);
@@ -3450,9 +3558,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("personFormalName_indexed_string", personFormalName);
 			document.addField("personFormalName_stored_string", personFormalName);
 		}
-		if(personBirthdate != null) {
-			document.addField("personBirthdate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(personBirthdate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("personBirthdate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(personBirthdate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(personBirthDate != null) {
+			document.addField("personBirthDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("personBirthDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(childMedicalConditions != null) {
 			document.addField("childMedicalConditions_indexed_string", childMedicalConditions);
@@ -3470,9 +3578,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("childObjectives_indexed_string", childObjectives);
 			document.addField("childObjectives_stored_string", childObjectives);
 		}
-		if(enfantVaccinsAJour != null) {
-			document.addField("enfantVaccinsAJour_indexed_boolean", enfantVaccinsAJour);
-			document.addField("enfantVaccinsAJour_stored_boolean", enfantVaccinsAJour);
+		if(enfantVaccinesCurrent != null) {
+			document.addField("enfantVaccinesCurrent_indexed_boolean", enfantVaccinesCurrent);
+			document.addField("enfantVaccinesCurrent_stored_boolean", enfantVaccinesCurrent);
 		}
 		if(childPottyTrained != null) {
 			document.addField("childPottyTrained_indexed_boolean", childPottyTrained);
@@ -3565,6 +3673,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(personFirstName != null)
 			oSchoolChild.setPersonFirstName(personFirstName);
 
+		String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
+		if(personFirstNamePreferred != null)
+			oSchoolChild.setPersonFirstNamePreferred(personFirstNamePreferred);
+
 		String familyName = (String)solrDocument.get("familyName_stored_string");
 		if(familyName != null)
 			oSchoolChild.setFamilyName(familyName);
@@ -3581,9 +3693,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(personFormalName != null)
 			oSchoolChild.setPersonFormalName(personFormalName);
 
-		Date personBirthdate = (Date)solrDocument.get("personBirthdate_stored_date");
-		if(personBirthdate != null)
-			oSchoolChild.setPersonBirthdate(personBirthdate);
+		Date personBirthDate = (Date)solrDocument.get("personBirthDate_stored_date");
+		if(personBirthDate != null)
+			oSchoolChild.setPersonBirthDate(personBirthDate);
 
 		String childMedicalConditions = (String)solrDocument.get("childMedicalConditions_stored_string");
 		if(childMedicalConditions != null)
@@ -3601,9 +3713,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(childObjectives != null)
 			oSchoolChild.setChildObjectives(childObjectives);
 
-		Boolean enfantVaccinsAJour = (Boolean)solrDocument.get("enfantVaccinsAJour_stored_boolean");
-		if(enfantVaccinsAJour != null)
-			oSchoolChild.setEnfantVaccinsAJour(enfantVaccinsAJour);
+		Boolean enfantVaccinesCurrent = (Boolean)solrDocument.get("enfantVaccinesCurrent_stored_boolean");
+		if(enfantVaccinesCurrent != null)
+			oSchoolChild.setEnfantVaccinesCurrent(enfantVaccinesCurrent);
 
 		Boolean childPottyTrained = (Boolean)solrDocument.get("childPottyTrained_stored_boolean");
 		if(childPottyTrained != null)
@@ -3632,7 +3744,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), personFirstName, familyName, personCompleteName, personCompleteNamePreferred, personFormalName, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, enfantVaccinsAJour, childPottyTrained);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, enfantVaccinesCurrent, childPottyTrained);
 	}
 
 	////////////
@@ -3646,16 +3758,15 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			return false;
 		SchoolChild that = (SchoolChild)o;
 		return super.equals(o)
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( personFirstName, that.personFirstName )
+				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
-				&& Objects.equals( personCompleteName, that.personCompleteName )
-				&& Objects.equals( personCompleteNamePreferred, that.personCompleteNamePreferred )
-				&& Objects.equals( personFormalName, that.personFormalName )
 				&& Objects.equals( childMedicalConditions, that.childMedicalConditions )
 				&& Objects.equals( childPreviousSchoolsAttended, that.childPreviousSchoolsAttended )
 				&& Objects.equals( childDescription, that.childDescription )
 				&& Objects.equals( childObjectives, that.childObjectives )
-				&& Objects.equals( enfantVaccinsAJour, that.enfantVaccinsAJour )
+				&& Objects.equals( enfantVaccinesCurrent, that.enfantVaccinesCurrent )
 				&& Objects.equals( childPottyTrained, that.childPottyTrained );
 	}
 
@@ -3667,16 +3778,15 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolChild { ");
-		sb.append( "personFirstName: \"" ).append(personFirstName).append( "\"" );
+		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", personFirstName: \"" ).append(personFirstName).append( "\"" );
+		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
-		sb.append( ", personCompleteName: \"" ).append(personCompleteName).append( "\"" );
-		sb.append( ", personCompleteNamePreferred: \"" ).append(personCompleteNamePreferred).append( "\"" );
-		sb.append( ", personFormalName: \"" ).append(personFormalName).append( "\"" );
 		sb.append( ", childMedicalConditions: \"" ).append(childMedicalConditions).append( "\"" );
 		sb.append( ", childPreviousSchoolsAttended: \"" ).append(childPreviousSchoolsAttended).append( "\"" );
 		sb.append( ", childDescription: \"" ).append(childDescription).append( "\"" );
 		sb.append( ", childObjectives: \"" ).append(childObjectives).append( "\"" );
-		sb.append( ", enfantVaccinsAJour: " ).append(enfantVaccinsAJour);
+		sb.append( ", enfantVaccinesCurrent: " ).append(enfantVaccinesCurrent);
 		sb.append( ", childPottyTrained: " ).append(childPottyTrained);
 		sb.append(" }");
 		return sb.toString();

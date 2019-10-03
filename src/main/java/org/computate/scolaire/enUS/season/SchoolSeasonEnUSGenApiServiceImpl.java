@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import org.computate.scolaire.enUS.recherche.ResultatRecherche;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -192,11 +194,13 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					switch(entityVar) {
 					case "yearKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("seasonKeys", jsonObject.getLong(entityVar), "yearKey", pk));
+						postSqlParams.addAll(Arrays.asList("seasonKeys", Long.parseLong(jsonObject.getString(entityVar)), "yearKey", pk));
 						break;
 					case "sessionKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("seasonKey", jsonObject.getLong(entityVar), "sessionKeys", pk));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
+						}
 						break;
 					case "seasonStartDay":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -217,12 +221,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -252,7 +260,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							aSearchSchoolSeason(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolSeason> listSchoolSeason = c.result();
-									listPATCHSchoolSeason(listSchoolSeason, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolSeason.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modified");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolSeason(listSchoolSeason, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -268,7 +283,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 															}
 														});
 													} else {
-														errorSchoolSeason(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -293,9 +308,9 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		}
 	}
 
-	public void listPATCHSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolSeason(SearchList<SchoolSeason> listSchoolSeason, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		listSchoolSeason.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolSeason(o, a -> {
@@ -308,7 +323,11 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolSeason(listSchoolSeason, eventHandler);
+				if(listSchoolSeason.next(dt)) {
+					listPATCHSchoolSeason(listSchoolSeason, dt, eventHandler);
+				} else {
+					response200PATCHSchoolSeason(listSchoolSeason, eventHandler);
+				}
 			} else {
 				errorSchoolSeason(listSchoolSeason.getSiteRequest_(), eventHandler, a);
 			}
@@ -330,19 +349,19 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolSeason(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolSeason(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolSeason(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolSeason(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -418,7 +437,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 					case "addSessionKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getString(methodName), "sessionKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKey", Long.parseLong(requestJson.getString(methodName)), "sessionKeys", pk));
 						break;
 					case "addAllSessionKeys":
 						JsonArray addAllSessionKeysValues = requestJson.getJsonArray(methodName);
@@ -430,7 +449,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					case "setSessionKeys":
 						JsonArray setSessionKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getString(methodName), "sessionKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKey", Long.parseLong(requestJson.getString(methodName)), "sessionKeys", pk));
 						for(Integer i = 0; i <  setSessionKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("seasonKey", setSessionKeysValues.getString(i), "sessionKeys", pk));
@@ -438,7 +457,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 					case "removeSessionKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", requestJson.getLong(methodName), "sessionKeys", pk));
+						patchSqlParams.addAll(Arrays.asList("seasonKey", Long.parseLong(requestJson.getString(methodName)), "sessionKeys", pk));
 						break;
 					case "setSeasonStartDay":
 						o2.setSeasonStartDay(requestJson.getString(methodName));
@@ -482,15 +501,19 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolSeason o3 = new SchoolSeason();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolSeason o3 = new SchoolSeason();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -573,7 +596,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 															}
 														});
 													} else {
-														errorSchoolSeason(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -604,7 +627,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolSeason.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -728,7 +751,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 															}
 														});
 													} else {
-														errorSchoolSeason(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -914,7 +937,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -993,7 +1016,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -1026,12 +1049,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1054,7 +1077,9 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.season.SchoolSeason"));
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1146,7 +1171,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1176,7 +1201,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

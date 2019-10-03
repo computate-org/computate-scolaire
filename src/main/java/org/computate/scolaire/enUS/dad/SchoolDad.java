@@ -32,11 +32,11 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 		l.setC(SchoolEnrollment.class);
 		l.setStore(true);
 		l.setFacet(true);
-		l.addFacetField("ecoleCle_indexed_long");
-		l.addFacetField("anneeCle_indexed_long");
-		l.addFacetField("saisonCle_indexed_long");
-		l.addFacetField("sessionCle_indexed_long");
-		l.addFacetField("ageCle_indexed_long");
+		l.addFacetField("schoolKey_indexed_long");
+		l.addFacetField("yearKey_indexed_long");
+		l.addFacetField("seasonKey_indexed_long");
+		l.addFacetField("sessionKey_indexed_long");
+		l.addFacetField("ageKey_indexed_long");
 	}
 
 	protected void _inscriptions(List<SchoolEnrollment> l) {
@@ -66,15 +66,24 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 	protected void _personFirstName(Wrap<String> c) {
 	}
 
+	protected void _personFirstNamePreferred(Wrap<String> c) {
+		c.o(personFirstName);
+	}
+
 	protected void _familyName(Wrap<String> c) {
 	}
 
 	protected void _personCompleteName(Wrap<String> c) {
-		c.o(String.format("%s %s", personFirstName, familyName));
+		if(personFirstNamePreferred != null && familyName != null)
+			c.o(String.format("%s %s", personFirstNamePreferred, familyName));
+		else if(personFirstNamePreferred != null)
+			c.o(personFirstNamePreferred);
+		else if(familyName != null)
+			c.o(familyName);
 	}
 
 	protected void _personCompleteNamePreferred(Wrap<String> c) {
-		c.o(String.format("%s %s", personFirstName, familyName));
+		c.o(personCompleteName);
 	}
 
 	protected void _personFormalName(Wrap<String> c) {

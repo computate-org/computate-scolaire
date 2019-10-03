@@ -49,7 +49,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: purple
  * IconeGroupe: solid
  * IconeNom: pencil-square
-*/   
+*/              
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
@@ -61,7 +61,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */            
+	 */                  
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -153,7 +153,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The school season of the school block. 
 	 * NomAffichage.frFR: saison
 	 * NomAffichage.enUS: season
-	 */          
+	 */           
 	protected void _saisonCle(Couverture<Long> c) {
 	}
 
@@ -208,7 +208,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: enfants
 	 * NomAffichage.enUS: children
-	 */              
+	 */               
 	protected void _enfantCle(Couverture<Long> c) {}
 
 	/**
@@ -223,7 +223,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school moms in the database. 
 	 * NomAffichage.frFR: mères
 	 * NomAffichage.enUS: moms
-	 */               
+	 */             
 	protected void _mereCles(List<Long> o) {}
 
 	/**
@@ -270,22 +270,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: payments
 	 */               
 	protected void _paiementCles(List<Long> o) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: familyKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: FamilleScolaire.inscriptionCles
-	 * HtmlLigne: 8
-	 * HtmlCellule: 1
-	 * Description.frFR: La clé primaire de la famille dans la base de données. 
-	 * Description.enUS: The primary key of the school family in the database. 
-	 * NomAffichage.frFR: famille
-	 * NomAffichage.enUS: family
-	 */          
-	protected void _familleCle(Couverture<Long> c) {
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -632,9 +616,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: heure début
 	 * NomAffichage.enUS: start time
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
 	 * r: bloc
 	 * r.enUS: block
 	 * r: BlocHeureDebut
@@ -652,9 +633,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: heure fin
 	 * NomAffichage.enUS: end time
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 2
 	 * r: bloc
 	 * r.enUS: block
 	 * r: BlocHeureFin
@@ -672,9 +650,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: prix par mois
 	 * NomAffichage.enUS: price per month
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 3
 	 * r: bloc
 	 * r.enUS: block
 	 * r: BlocPrixParMois
@@ -812,7 +787,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: approuvé
 	 * NomAffichage.enUS: approved
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 2
 	 * HtmlCellule: 1
 	 */                   
 	protected void _inscriptionApprouve(Couverture<Boolean> c) {
@@ -826,10 +801,136 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: vacciné
 	 * NomAffichage.enUS: immunized
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 2
 	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyMarried
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: marié
+	 * NomAffichage.enUS: married
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 3
+	 */                   
+	protected void _familleMarie(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familySeparated
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: séparé
+	 * NomAffichage.enUS: separated
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 4
+	 */                   
+	protected void _familleSepare(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyDivorced
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: divorcé
+	 * NomAffichage.enUS: divorced
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 5
+	 */                   
+	protected void _familleDivorce(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyAddress
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: addresse de la famille
+	 * NomAffichage.enUS: family address
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 6
+	 */                   
+	protected void _familleAddresse(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyHowDoYouKnowTheSchool
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: comment vous connaissez l'école ? 
+	 * NomAffichage.enUS: how do you know the school? 
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 7
+	 */                   
+	protected void _familleCommentVousConnaissezEcole(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSpecialConsiderations
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: considérations spéciale
+	 * NomAffichage.enUS: special considerations
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 7
+	 */                   
+	protected void _inscriptionConsiderationsSpeciales(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentGroupName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: nom du groupe
+	 * NomAffichage.enUS: group name
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 7
+	 */                   
+	protected void _inscriptionNomGroupe(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentEachMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement chaque mois
+	 * NomAffichage.enUS: payment each month
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 5
+	 */                   
+	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentComplete
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement complet
+	 * NomAffichage.enUS: complete payment
+	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 5
+	 */                   
+	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
 	}
 
 	/**    

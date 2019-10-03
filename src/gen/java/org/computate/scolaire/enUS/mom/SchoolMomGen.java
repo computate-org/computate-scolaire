@@ -1330,6 +1330,108 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////////////////////
+	// personFirstNamePreferred //
+	//////////////////////////////
+
+	/**	L'entité « personFirstNamePreferred »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String personFirstNamePreferred;
+	@JsonIgnore
+	public Wrap<String> personFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("personFirstNamePreferred").o(personFirstNamePreferred);
+
+	/**	<br/>L'entité « personFirstNamePreferred »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.SchoolMom&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:personFirstNamePreferred">Trouver l'entité personFirstNamePreferred dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personFirstNamePreferred(Wrap<String> c);
+
+	public String getPersonFirstNamePreferred() {
+		return personFirstNamePreferred;
+	}
+
+	public void setPersonFirstNamePreferred(String personFirstNamePreferred) {
+		this.personFirstNamePreferred = personFirstNamePreferred;
+		this.personFirstNamePreferredWrap.alreadyInitialized = true;
+	}
+	protected SchoolMom personFirstNamePreferredInit() {
+		if(!personFirstNamePreferredWrap.alreadyInitialized) {
+			_personFirstNamePreferred(personFirstNamePreferredWrap);
+			if(personFirstNamePreferred == null)
+				setPersonFirstNamePreferred(personFirstNamePreferredWrap.o);
+		}
+		personFirstNamePreferredWrap.alreadyInitialized(true);
+		return (SchoolMom)this;
+	}
+
+	public String solrPersonFirstNamePreferred() {
+		return personFirstNamePreferred;
+	}
+
+	public String strPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : personFirstNamePreferred;
+	}
+
+	public String jsonPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : personFirstNamePreferred;
+	}
+
+	public String nomAffichagePersonFirstNamePreferred() {
+		return "preferred first name";
+	}
+
+	public String htmTooltipPersonFirstNamePreferred() {
+		return null;
+	}
+
+	public String htmPersonFirstNamePreferred() {
+		return personFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strPersonFirstNamePreferred());
+	}
+
+	public void htmPersonFirstNamePreferred(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolMom", strPk(), "PersonFirstNamePreferred\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolMom", strPk(), "PersonFirstNamePreferred() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPersonFirstNamePreferred\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonFirstNamePreferred()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"personFirstNamePreferred\"");
+							r.s(" value=\"", htmPersonFirstNamePreferred(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPersonFirstNamePreferred());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// familyName //
 	////////////////
@@ -2201,7 +2303,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePersonSms() {
-		return "envoyer SMS";
+		return "text me";
 	}
 
 	public String htmTooltipPersonSms() {
@@ -3015,6 +3117,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		sessionKeysInit();
 		ageKeysInit();
 		personFirstNameInit();
+		personFirstNamePreferredInit();
 		familyNameInit();
 		personCompleteNameInit();
 		personCompleteNamePreferredInit();
@@ -3095,6 +3198,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				return oSchoolMom.ageKeys;
 			case "personFirstName":
 				return oSchoolMom.personFirstName;
+			case "personFirstNamePreferred":
+				return oSchoolMom.personFirstNamePreferred;
 			case "familyName":
 				return oSchoolMom.familyName;
 			case "personCompleteName":
@@ -3152,6 +3257,9 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	public Object attributeSchoolMom(String var, Object val) {
 		SchoolMom oSchoolMom = (SchoolMom)this;
 		switch(var) {
+			case "enrollmentKeys":
+				oSchoolMom.addEnrollmentKeys((Long)val);
+				return val;
 			default:
 				return super.attributeCluster(var, val);
 		}
@@ -3182,20 +3290,40 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				setPersonFirstName(val);
 				savesSchoolMom.add(var);
 				return val;
+			case "personFirstNamePreferred":
+				setPersonFirstNamePreferred(val);
+				savesSchoolMom.add(var);
+				return val;
 			case "familyName":
 				setFamilyName(val);
 				savesSchoolMom.add(var);
 				return val;
-			case "personCompleteName":
-				setPersonCompleteName(val);
+			case "personOccupation":
+				setPersonOccupation(val);
 				savesSchoolMom.add(var);
 				return val;
-			case "personCompleteNamePreferred":
-				setPersonCompleteNamePreferred(val);
+			case "personPhoneNumber":
+				setPersonPhoneNumber(val);
 				savesSchoolMom.add(var);
 				return val;
-			case "personFormalName":
-				setPersonFormalName(val);
+			case "personEmail":
+				setPersonEmail(val);
+				savesSchoolMom.add(var);
+				return val;
+			case "personSms":
+				setPersonSms(val);
+				savesSchoolMom.add(var);
+				return val;
+			case "personReceiveEmail":
+				setPersonReceiveEmail(val);
+				savesSchoolMom.add(var);
+				return val;
+			case "personEmergencyContact":
+				setPersonEmergencyContact(val);
+				savesSchoolMom.add(var);
+				return val;
+			case "personPickup":
+				setPersonPickup(val);
 				savesSchoolMom.add(var);
 				return val;
 			default:
@@ -3227,11 +3355,9 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 					oSchoolMom.setMomKey(momKey);
 			}
 
-			if(savesSchoolMom.contains("enrollmentKeys")) {
-				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
-				if(enrollmentKeys != null)
-					oSchoolMom.enrollmentKeys.addAll(enrollmentKeys);
-			}
+			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
+			if(enrollmentKeys != null)
+				oSchoolMom.enrollmentKeys.addAll(enrollmentKeys);
 
 			if(savesSchoolMom.contains("familySort")) {
 				Integer familySort = (Integer)solrDocument.get("familySort_stored_int");
@@ -3279,6 +3405,12 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				String personFirstName = (String)solrDocument.get("personFirstName_stored_string");
 				if(personFirstName != null)
 					oSchoolMom.setPersonFirstName(personFirstName);
+			}
+
+			if(savesSchoolMom.contains("personFirstNamePreferred")) {
+				String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
+				if(personFirstNamePreferred != null)
+					oSchoolMom.setPersonFirstNamePreferred(personFirstNamePreferred);
 			}
 
 			if(savesSchoolMom.contains("familyName")) {
@@ -3509,6 +3641,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			document.addField("personFirstName_indexed_string", personFirstName);
 			document.addField("personFirstName_stored_string", personFirstName);
 		}
+		if(personFirstNamePreferred != null) {
+			document.addField("personFirstNamePreferred_indexed_string", personFirstNamePreferred);
+			document.addField("personFirstNamePreferred_stored_string", personFirstNamePreferred);
+		}
 		if(familyName != null) {
 			document.addField("familyName_indexed_string", familyName);
 			document.addField("familyName_stored_string", familyName);
@@ -3644,6 +3780,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		if(personFirstName != null)
 			oSchoolMom.setPersonFirstName(personFirstName);
 
+		String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
+		if(personFirstNamePreferred != null)
+			oSchoolMom.setPersonFirstNamePreferred(personFirstNamePreferred);
+
 		String familyName = (String)solrDocument.get("familyName_stored_string");
 		if(familyName != null)
 			oSchoolMom.setFamilyName(familyName);
@@ -3715,7 +3855,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), personFirstName, familyName, personCompleteName, personCompleteNamePreferred, personFormalName);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personOccupation, personPhoneNumber, personEmail, personSms, personReceiveEmail, personEmergencyContact, personPickup);
 	}
 
 	////////////
@@ -3729,11 +3869,17 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			return false;
 		SchoolMom that = (SchoolMom)o;
 		return super.equals(o)
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( personFirstName, that.personFirstName )
+				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
-				&& Objects.equals( personCompleteName, that.personCompleteName )
-				&& Objects.equals( personCompleteNamePreferred, that.personCompleteNamePreferred )
-				&& Objects.equals( personFormalName, that.personFormalName );
+				&& Objects.equals( personOccupation, that.personOccupation )
+				&& Objects.equals( personPhoneNumber, that.personPhoneNumber )
+				&& Objects.equals( personEmail, that.personEmail )
+				&& Objects.equals( personSms, that.personSms )
+				&& Objects.equals( personReceiveEmail, that.personReceiveEmail )
+				&& Objects.equals( personEmergencyContact, that.personEmergencyContact )
+				&& Objects.equals( personPickup, that.personPickup );
 	}
 
 	//////////////
@@ -3744,11 +3890,17 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolMom { ");
-		sb.append( "personFirstName: \"" ).append(personFirstName).append( "\"" );
+		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", personFirstName: \"" ).append(personFirstName).append( "\"" );
+		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
-		sb.append( ", personCompleteName: \"" ).append(personCompleteName).append( "\"" );
-		sb.append( ", personCompleteNamePreferred: \"" ).append(personCompleteNamePreferred).append( "\"" );
-		sb.append( ", personFormalName: \"" ).append(personFormalName).append( "\"" );
+		sb.append( ", personOccupation: \"" ).append(personOccupation).append( "\"" );
+		sb.append( ", personPhoneNumber: \"" ).append(personPhoneNumber).append( "\"" );
+		sb.append( ", personEmail: \"" ).append(personEmail).append( "\"" );
+		sb.append( ", personSms: " ).append(personSms);
+		sb.append( ", personReceiveEmail: " ).append(personReceiveEmail);
+		sb.append( ", personEmergencyContact: " ).append(personEmergencyContact);
+		sb.append( ", personPickup: " ).append(personPickup);
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -45,10 +45,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	@Override protected void _pageH1(Couverture<String> c) {
-		if(utilisateurSite != null)
-			c.o("un utilisateur du site");
-		else if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0)
-			c.o("aucun utilisateur du site trouvé");
+			c.o("utilisateurs du site");
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
@@ -515,28 +512,45 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0) {
 
 			{ e("h1").f();
-				if(contexteIconeClassesCss != null)
-					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("aucun utilisateur du site trouvé").g("span");
-			} g("h1");
-		} else if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
-			if(pageH1 != null) {
-				{ e("h1").f();
+				{ e("a").a("href", "/utilisateur").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-					e("span").a("class", " ").f().sx(pageH1).g("span");
+					e("span").a("class", " ").f().sx("utilisateurs du site").g("span");
+				} g("a");
+			} g("h1");
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			{ e("h2").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+					if(contexteIconeClassesCss != null)
+						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("aucun utilisateur du site trouvé").g("span");
+				} g("span");
+			} g("h2");
+		} else if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
+			UtilisateurSite o = listeUtilisateurSite.get(0);
+			requeteSite_.setRequetePk(o.getPk());
+			if(StringUtils.isNotEmpty(pageH1)) {
+				{ e("h1").f();
+					{ e("a").a("href", "/utilisateur").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contexteIconeClassesCss != null)
+							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
 				} g("h1");
-				UtilisateurSite o = listeUtilisateurSite.get(0);
-				requeteSite_.setRequetePk(o.getPk());
 			}
-			if(pageH2 != null) {
+			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					e("span").a("class", " ").f().sx(pageH2).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH2).g("span");
+					} g("span");
 				} g("h2");
 			}
-			if(pageH3 != null) {
+			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					e("span").a("class", " ").f().sx(pageH3).g("span");
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-green ").f();
+						e("span").a("class", " ").f().sx(pageH3).g("span");
+					} g("span");
 				} g("h3");
 			}
 		} else {
@@ -546,12 +560,50 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("utilisateurs du site").g("span");
 			} g("h1");
+			e("div").a("class", "").f();
+				{ e("div").f();
+					Long num = listeUtilisateurSite.getQueryResponse().getResults().getNumFound();
+					Integer rows1 = listeUtilisateurSite.getRows();
+					Integer start1 = listeUtilisateurSite.getStart();
+					Integer start2 = start1 - rows1;
+					Integer start3 = start1 + rows1;
+					Integer rows2 = rows1 / 2;
+					Integer rows3 = rows1 * 2;
+					start2 = start2 < 0 ? 0 : start2;
+
+					if(start1 == 0) {
+						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/utilisateur?start=", start2, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
+						} g("a");
+					}
+
+					if(rows1 <= 1) {
+						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/utilisateur?start=", start1, "&rows=", rows2).f();
+							e("i").a("class", "fas fa-minus-square ").f().g("i");
+						} g("a");
+					}
+
+					{ e("a").a("href", "/utilisateur?start=", start1, "&rows=", rows3).f();
+						e("i").a("class", "fas fa-plus-square ").f().g("i");
+					} g("a");
+
+					if(start3 >= num) {
+						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/utilisateur?start=", start3, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
+						} g("a");
+					}
+						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
+				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
-						e("th").f().sx("clé primaire").g("th");
 						e("th").f().sx("crée").g("th");
-						e("th").f().sx("modifié").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -564,17 +616,10 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									sx(o.getPk());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getCree());
-								} g("a");
-							} g("td");
-							{ e("td").f();
-								{ e("a").a("href", uri).f();
-									sx(o.getModifie());
+									e("i").a("class", "far fa-book w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strCree());
+									} g("span");
 								} g("a");
 							} g("td");
 						} g("tr");
@@ -604,8 +649,11 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					o.htmlBody();
 
 			} g("div");
+
 		}
 		htmlBodyFormsUtilisateurSiteGenPage();
+		htmlSuggereUtilisateurSiteGenPage();
+		g("div");
 	}
 
 	public void htmlBodyFormsUtilisateurSiteGenPage() {
@@ -643,7 +691,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					} g("form");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs')); ")
+						.a("onclick", "patchUtilisateurSite($('#patchUtilisateurSiteFormulaireFiltres'), $('#patchUtilisateurSiteFormulaireValeurs'), function() {}, function() {}); ")
 						.f().sx("Modifier des utilisateurs du site")
 					.g("button");
 
@@ -652,6 +700,93 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		} g("div");
 
 		g("div");
+	}
+
+	/**
+	 * Var.enUS: htmlSuggestSiteUserGenPage
+	 * r: "/utilisateur"
+	 * r.enUS: "/user"
+	 * r: "voir tous les utilisateurs du site"
+	 * r.enUS: "see all the site users"
+	 * r: "rechargerUtilisateurSiteGenPage"
+	 * r.enUS: "refreshSiteUserGenPage"
+	 * r: "recharger tous les utilisateurs du site"
+	 * r.enUS: "refresh all the site users"
+	 * r: "rechercher utilisateurs du site : "
+	 * r.enUS: "search site users: "
+	 * r: "suggereFormUtilisateurSite"
+	 * r.enUS: "suggestFormSiteUser"
+	 * r: "rechercher utilisateurs du site"
+	 * r.enUS: "search site users"
+	 * r: "suggereUtilisateurSite w3-input w3-border w3-cell w3-cell-middle "
+	 * r.enUS: "suggestSiteUser w3-input w3-border w3-cell w3-cell-middle "
+	 * r: "suggereUtilisateurSite"
+	 * r.enUS: "suggestSiteUser"
+	 * r: patchUtilisateurSiteVals
+	 * r.enUS: patchSiteUserVals
+	 * r: ajouterLueur
+	 * r.enUS: addGlow
+	 * r: rechargerUtilisateurSiteGenPage
+	 * r.enUS: refreshSiteUserGenPage
+	 * r: ajouterErreur
+	 * r.enUS: addError
+	 * r: suggereUtilisateurSite
+	 * r.enUS: suggestSiteUser
+	 * r: ':'
+	 * r.enUS: ':'
+	 * r: '#suggereListUtilisateurSite'
+	 * r.enUS: '#suggestListSiteUser'
+	 * r: "suggereListUtilisateurSite"
+	 * r.enUS: "suggestListSiteUser"
+	**/
+	public void htmlSuggereUtilisateurSiteGenPage() {
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("href", "/utilisateur").a("class", "").f();
+					e("i").a("class", "far fa-book w3-padding-small ").f().g("i");
+					sx("voir tous les utilisateurs du site");
+				} g("a");
+			} g("div");
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("a").a("id", "rechargerUtilisateurSiteGenPage").a("href", "/utilisateur").a("class", "").a("onclick", "patchUtilisateurSiteVals([], {}, function() { ajouterLueur($('#rechargerUtilisateurSiteGenPage')); }, function() { ajouterErreur($('#rechargerUtilisateurSiteGenPage')); }); return false; ").f();
+					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					sx("recharger tous les utilisateurs du site");
+				} g("a");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("span").f();
+					sx("rechercher utilisateurs du site : ");
+				} g("span");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell ").f();
+				{ e("div").a("class", "w3-cell-row ").f();
+
+					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ e("form").a("action", "").a("id", "suggereFormUtilisateurSite").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "text")
+							.a("placeholder", "rechercher utilisateurs du site")
+							.a("class", "suggereUtilisateurSite w3-input w3-border w3-cell w3-cell-middle ")
+							.a("name", "suggereUtilisateurSite")
+							.a("id", "suggereUtilisateurSite")
+							.a("autocomplete", "off")
+							.a("oninput", "suggereUtilisateurSite( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggereListUtilisateurSite')); ")
+							.fg();
+
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListUtilisateurSite").f();
+				} g("ul");
+			} g("div");
+		} g("div");
 	}
 
 }

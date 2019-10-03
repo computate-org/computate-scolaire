@@ -52,22 +52,6 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: InscriptionScolaire.enfantCle
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
-	 * Description.frFR: La clé primaire du inscription dans la base de données. 
-	 * Description.enUS: The primary key of the school enrollment in the database. 
-	 * NomAffichage.frFR: inscriptions
-	 * NomAffichage.enUS: enrollments
-	 */               
-	protected void _inscriptionCles(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: childKey
 	 * Indexe: true
 	 * Stocke: true
@@ -85,9 +69,12 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.enfantCle
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
-	 */               
+	 */              
 	protected void _inscriptionCles(List<Long> o) {}
 
 	/**
@@ -119,6 +106,16 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
+	 * r: ecoleCle
+	 * r.enUS: schoolKey
+	 * r: anneeCle
+	 * r.enUS: yearKey
+	 * r: saisonCle
+	 * r.enUS: seasonKey
+	 * r: sessionCle
+	 * r.enUS: sessionKey
+	 * r: ageCle
+	 * r.enUS: ageKey
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
@@ -245,9 +242,26 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: first name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 */                   
 	protected void _personnePrenom(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personFirstNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prénom préferé
+	 * NomAffichage.enUS: preferred first name
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
+	 * r: personnePrenom
+	 * r.enUS: personFirstName
+	 */                   
+	protected void _personnePrenomPrefere(Couverture<String> c) {
+		c.o(personnePrenom);
 	}
 
 	/**
@@ -259,7 +273,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: last name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 */                   
 	protected void _familleNom(Couverture<String> c) {
 	}
@@ -271,16 +285,18 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom complèt
 	 * NomAffichage.enUS: complete name
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
-	 * r: personnePrenom
-	 * r.enUS: personFirstName
+	 * r: personnePrenomPrefere
+	 * r.enUS: personFirstNamePreferred
 	 * r: familleNom
 	 * r.enUS: familyName
 	 */                   
 	protected void _personneNomComplet(Couverture<String> c) {
-		c.o(String.format("%s %s", personnePrenom, familleNom));
+		if(personnePrenomPrefere != null && familleNom != null)
+			c.o(String.format("%s %s", personnePrenomPrefere, familleNom));
+		else if(personnePrenomPrefere != null)
+			c.o(personnePrenomPrefere);
+		else if(familleNom != null)
+			c.o(familleNom);
 	}
 
 	/**
@@ -290,16 +306,11 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom complèt préferé
 	 * NomAffichage.enUS: complete name preferred
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
-	 * r: personnePrenom
-	 * r.enUS: personFirstName
-	 * r: familleNom
-	 * r.enUS: familyName
+	 * r: personneNomComplet
+	 * r.enUS: personCompleteName
 	 */                   
 	protected void _personneNomCompletPrefere(Couverture<String> c) {
-		c.o(String.format("%s %s", personnePrenom, familleNom));
+		c.o(personneNomComplet);
 	}
 
 	/**
@@ -309,9 +320,6 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom formel
 	 * NomAffichage.enUS: formal name
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
 	 * r: personnePrenom
 	 * r.enUS: personFirstName
 	 * r: familleNom
@@ -323,7 +331,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: personBirthdate
+	 * Var.enUS: personBirthDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: date de naissance
@@ -388,7 +396,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: enfantVaccinsAJour
+	 * Var.enUS: enfantVaccinesCurrent
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: vaccins à jour
@@ -411,7 +419,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 3
-	 */                   
+	 */                  
 	protected void _enfantPropre(Couverture<Boolean> c) {
 		c.o(false);
 	}

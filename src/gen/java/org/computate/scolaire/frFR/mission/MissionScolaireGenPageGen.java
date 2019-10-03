@@ -1,17 +1,21 @@
 package org.computate.scolaire.frFR.mission;
 
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.page.MiseEnPage;
+import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.mission.MissionScolaire;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import java.lang.String;
 import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.page.MiseEnPage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mission.MissionScolaireGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -27,6 +31,7 @@ public abstract class MissionScolaireGenPageGen<DEV> extends MiseEnPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ListeRecherche<MissionScolaire> listeMissionScolaire;
+	@JsonIgnore
 	public Couverture<ListeRecherche<MissionScolaire>> listeMissionScolaireCouverture = new Couverture<ListeRecherche<MissionScolaire>>().p(this).c(ListeRecherche.class).var("listeMissionScolaire").o(listeMissionScolaire);
 
 	/**	<br/>L'entité « listeMissionScolaire »
@@ -65,6 +70,7 @@ public abstract class MissionScolaireGenPageGen<DEV> extends MiseEnPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected MissionScolaire missionScolaire;
+	@JsonIgnore
 	public Couverture<MissionScolaire> missionScolaireCouverture = new Couverture<MissionScolaire>().p(this).c(MissionScolaire.class).var("missionScolaire").o(missionScolaire);
 
 	/**	<br/>L'entité « missionScolaire »
@@ -103,6 +109,7 @@ public abstract class MissionScolaireGenPageGen<DEV> extends MiseEnPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUriMissionScolaire;
+	@JsonIgnore
 	public Couverture<String> pageUriMissionScolaireCouverture = new Couverture<String>().p(this).c(String.class).var("pageUriMissionScolaire").o(pageUriMissionScolaire);
 
 	/**	<br/>L'entité « pageUriMissionScolaire »
@@ -136,6 +143,10 @@ public abstract class MissionScolaireGenPageGen<DEV> extends MiseEnPage {
 	}
 
 	public String strPageUriMissionScolaire() {
+		return pageUriMissionScolaire == null ? "" : pageUriMissionScolaire;
+	}
+
+	public String jsonPageUriMissionScolaire() {
 		return pageUriMissionScolaire == null ? "" : pageUriMissionScolaire;
 	}
 
@@ -393,7 +404,7 @@ public abstract class MissionScolaireGenPageGen<DEV> extends MiseEnPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("MissionScolaireGenPage {");
+		sb.append("MissionScolaireGenPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

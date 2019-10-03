@@ -424,7 +424,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
 	}
 
 	public String jsonCree() {
@@ -542,7 +542,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModifie() {
-		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
 	}
 
 	public String jsonModifie() {

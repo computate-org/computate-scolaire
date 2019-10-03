@@ -435,7 +435,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#Page_yearKeys'); $e.html($e.val()); }, function() { addError($('#Page_yearKeys')); }); ")
+											.a("onclick", "postSchoolYearVals({ schoolKey: \"", o.getPk(), "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolYearKeys($('#' + ($('#Page_yearKeys').val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); var $e = $('#Page_yearKeys'); $e.html($e.val()); }, function() { addError($('#Page_yearKeys')); }); }, function() { addError($('#Page_yearKeys')); });")
 											.f().sx("add a year")
 										.g("button");
 									} g("div");
@@ -731,7 +731,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#POST_yearKeys'); $e.html($e.val()); }, function() { addError($('#POST_yearKeys')); }); ")
+										.a("onclick", "postSchoolYearVals({ schoolKey: \"", o.getPk(), "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolYearKeys($('#' + ($('#POST_yearKeys').val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); var $e = $('#POST_yearKeys'); $e.html($e.val()); }, function() { addError($('#POST_yearKeys')); }); }, function() { addError($('#POST_yearKeys')); });")
 										.f().sx("add a year")
 									.g("button");
 								} g("div");
@@ -1027,7 +1027,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#PATCH_yearKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_yearKeys')); }); ")
+										.a("onclick", "postSchoolYearVals({ schoolKey: \"", o.getPk(), "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolYearKeys($('#' + ($('#PATCH_yearKeys').val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); var $e = $('#PATCH_yearKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_yearKeys')); }); }, function() { addError($('#PATCH_yearKeys')); });")
 										.f().sx("add a year")
 									.g("button");
 								} g("div");
@@ -1341,7 +1341,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ schoolKey: ", o.getPk(), " }, function() { var $e = $('#Recherche_yearKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_yearKeys')); }); ")
+										.a("onclick", "postSchoolYearVals({ schoolKey: \"", o.getPk(), "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolYearKeys($('#' + ($('#Recherche_yearKeys').val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys')); var $e = $('#Recherche_yearKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_yearKeys')); }); }, function() { addError($('#Recherche_yearKeys')); });")
 										.f().sx("add a year")
 									.g("button");
 								} g("div");

@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -190,35 +192,65 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "inscriptionCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", l));
+						}
+						break;
 					case "personnePrenom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personnePrenom", jsonObject.getString(entiteVar), pk));
+						break;
+					case "personnePrenomPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personnePrenomPrefere", jsonObject.getString(entiteVar), pk));
 						break;
 					case "familleNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familleNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "personneNomComplet":
+					case "personneOccupation":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomComplet", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneOccupation", jsonObject.getString(entiteVar), pk));
 						break;
-					case "personneNomCompletPrefere":
+					case "personneNumeroTelephone":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneNumeroTelephone", jsonObject.getString(entiteVar), pk));
 						break;
-					case "personneNomFormel":
+					case "personneMail":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomFormel", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneMail", jsonObject.getString(entiteVar), pk));
+						break;
+					case "personneSms":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personneSms", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "personneRecevoirMail":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personneRecevoirMail", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "personneContactUrgence":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personneContactUrgence", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "personneChercher":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personneChercher", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -248,7 +280,14 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							recherchePereScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<PereScolaire> listePereScolaire = c.result();
-									listePATCHPereScolaire(listePereScolaire, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listePereScolaire.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHPereScolaire(listePereScolaire, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -264,7 +303,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 															}
 														});
 													} else {
-														erreurPereScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -289,9 +328,9 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		}
 	}
 
-	public void listePATCHPereScolaire(ListeRecherche<PereScolaire> listePereScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHPereScolaire(ListeRecherche<PereScolaire> listePereScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listePereScolaire.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listePereScolaire.getRequeteSite_();
 		listePereScolaire.getList().forEach(o -> {
 			futures.add(
 				futurePATCHPereScolaire(o, a -> {
@@ -304,7 +343,11 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHPereScolaire(listePereScolaire, gestionnaireEvenements);
+				if(listePereScolaire.next(dt)) {
+					listePATCHPereScolaire(listePereScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHPereScolaire(listePereScolaire, gestionnaireEvenements);
+				}
 			} else {
 				erreurPereScolaire(listePereScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -326,19 +369,19 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurPereScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurPereScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurPereScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurPereScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -402,6 +445,30 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "addInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "addAllInscriptionCles":
+						JsonArray addAllInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", addAllInscriptionClesValeurs.getString(i)));
+						}
+						break;
+					case "setInscriptionCles":
+						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA1);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles"));
+						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_addA);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", setInscriptionClesValeurs.getString(i)));
+						}
+						break;
+					case "removeInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
 					case "setPersonnePrenom":
 						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
 						if(o2.getPersonnePrenom() == null) {
@@ -410,6 +477,16 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenom", o2.jsonPersonnePrenom(), pk));
+						}
+						break;
+					case "setPersonnePrenomPrefere":
+						o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
+						if(o2.getPersonnePrenomPrefere() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenomPrefere"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personnePrenomPrefere", o2.jsonPersonnePrenomPrefere(), pk));
 						}
 						break;
 					case "setFamilleNom":
@@ -422,47 +499,91 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
-					case "setPersonneNomComplet":
-						o2.setPersonneNomComplet(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomComplet() == null) {
+					case "setPersonneOccupation":
+						o2.setPersonneOccupation(requeteJson.getString(methodeNom));
+						if(o2.getPersonneOccupation() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomComplet"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneOccupation"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomComplet", o2.jsonPersonneNomComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneOccupation", o2.jsonPersonneOccupation(), pk));
 						}
 						break;
-					case "setPersonneNomCompletPrefere":
-						o2.setPersonneNomCompletPrefere(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomCompletPrefere() == null) {
+					case "setPersonneNumeroTelephone":
+						o2.setPersonneNumeroTelephone(requeteJson.getString(methodeNom));
+						if(o2.getPersonneNumeroTelephone() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomCompletPrefere"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneNumeroTelephone"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", o2.jsonPersonneNomCompletPrefere(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneNumeroTelephone", o2.jsonPersonneNumeroTelephone(), pk));
 						}
 						break;
-					case "setPersonneNomFormel":
-						o2.setPersonneNomFormel(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomFormel() == null) {
+					case "setPersonneMail":
+						o2.setPersonneMail(requeteJson.getString(methodeNom));
+						if(o2.getPersonneMail() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomFormel"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneMail"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomFormel", o2.jsonPersonneNomFormel(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneMail", o2.jsonPersonneMail(), pk));
+						}
+						break;
+					case "setPersonneSms":
+						o2.setPersonneSms(requeteJson.getBoolean(methodeNom));
+						if(o2.getPersonneSms() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneSms"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneSms", o2.jsonPersonneSms(), pk));
+						}
+						break;
+					case "setPersonneRecevoirMail":
+						o2.setPersonneRecevoirMail(requeteJson.getBoolean(methodeNom));
+						if(o2.getPersonneRecevoirMail() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneRecevoirMail"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneRecevoirMail", o2.jsonPersonneRecevoirMail(), pk));
+						}
+						break;
+					case "setPersonneContactUrgence":
+						o2.setPersonneContactUrgence(requeteJson.getBoolean(methodeNom));
+						if(o2.getPersonneContactUrgence() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneContactUrgence"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneContactUrgence", o2.jsonPersonneContactUrgence(), pk));
+						}
+						break;
+					case "setPersonneChercher":
+						o2.setPersonneChercher(requeteJson.getBoolean(methodeNom));
+						if(o2.getPersonneChercher() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneChercher"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneChercher", o2.jsonPersonneChercher(), pk));
 						}
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				PereScolaire o3 = new PereScolaire();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					PereScolaire o3 = new PereScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -545,7 +666,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 															}
 														});
 													} else {
-														erreurPereScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +697,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, PereScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -700,7 +821,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 															}
 														});
 													} else {
-														erreurPereScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -785,6 +906,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				return "ageCles_indexed_longs";
 			case "personnePrenom":
 				return "personnePrenom_indexed_string";
+			case "personnePrenomPrefere":
+				return "personnePrenomPrefere_indexed_string";
 			case "familleNom":
 				return "familleNom_indexed_string";
 			case "personneNomComplet":
@@ -898,7 +1021,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -977,7 +1100,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -1010,12 +1133,12 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1038,7 +1161,9 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.pere.PereScolaire"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1130,7 +1255,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1160,7 +1285,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

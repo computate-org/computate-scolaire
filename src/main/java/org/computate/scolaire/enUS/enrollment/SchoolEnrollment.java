@@ -67,9 +67,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _paymentKeys(List<Long> o) {}
 
-	protected void _familyKey(Wrap<Long> c) {
-	}
-
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(6);
 	}
@@ -237,6 +234,33 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
+	}
+
+	protected void _familyMarried(Wrap<Boolean> c) {
+	}
+
+	protected void _familySeparated(Wrap<Boolean> c) {
+	}
+
+	protected void _familyDivorced(Wrap<Boolean> c) {
+	}
+
+	protected void _familyAddress(Wrap<String> c) {
+	}
+
+	protected void _familyHowDoYouKnowTheSchool(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSpecialConsiderations(Wrap<String> c) {
+	}
+
+	protected void _enrollmentGroupName(Wrap<String> c) {
+	}
+
+	protected void _enrollmentPaymentEachMonth(Wrap<Boolean> c) {
+	}
+
+	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
 	}
 
 	protected void _enrollmentCompleteName(Wrap<String> c) {

@@ -441,7 +441,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Page_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCles')); }); ")
+											.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", o.getPk(), "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereEcoleAnneeCles($('#' + ($('#Page_anneeCles').val() ? 'suggere' : 'form') + 'EcoleAnneeCles'), $('#listEcoleAnneeCles')); var $e = $('#Page_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_anneeCles')); }); }, function() { ajouterErreur($('#Page_anneeCles')); });")
 											.f().sx("ajouter une année")
 										.g("button");
 									} g("div");
@@ -743,7 +743,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#POST_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCles')); }); ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", o.getPk(), "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereEcoleAnneeCles($('#' + ($('#POST_anneeCles').val() ? 'suggere' : 'form') + 'EcoleAnneeCles'), $('#listEcoleAnneeCles')); var $e = $('#POST_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_anneeCles')); }); }, function() { ajouterErreur($('#POST_anneeCles')); });")
 										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
@@ -1045,7 +1045,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCles')); }); ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", o.getPk(), "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereEcoleAnneeCles($('#' + ($('#PATCH_anneeCles').val() ? 'suggere' : 'form') + 'EcoleAnneeCles'), $('#listEcoleAnneeCles')); var $e = $('#PATCH_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_anneeCles')); }); }, function() { ajouterErreur($('#PATCH_anneeCles')); });")
 										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
@@ -1365,7 +1365,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCles')); }); ")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", o.getPk(), "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereEcoleAnneeCles($('#' + ($('#Recherche_anneeCles').val() ? 'suggere' : 'form') + 'EcoleAnneeCles'), $('#listEcoleAnneeCles')); var $e = $('#Recherche_anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_anneeCles')); }); }, function() { ajouterErreur($('#Recherche_anneeCles')); });")
 										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");

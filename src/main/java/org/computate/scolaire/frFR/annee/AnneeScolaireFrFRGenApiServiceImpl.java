@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -192,11 +194,13 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					switch(entiteVar) {
 					case "ecoleCle":
 						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCles", jsonObject.getLong(entiteVar), "ecoleCle", pk));
+						postSqlParams.addAll(Arrays.asList("anneeCles", Long.parseLong(jsonObject.getString(entiteVar)), "ecoleCle", pk));
 						break;
 					case "saisonCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCle", jsonObject.getLong(entiteVar), "saisonCles", pk));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("anneeCle", l, "saisonCles", pk));
+						}
 						break;
 					case "anneeDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -209,12 +213,16 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -244,7 +252,14 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							rechercheAnneeScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
-									listePATCHAnneeScolaire(listeAnneeScolaire, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listeAnneeScolaire.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHAnneeScolaire(listeAnneeScolaire, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -260,7 +275,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 															}
 														});
 													} else {
-														erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -285,9 +300,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
-	public void listePATCHAnneeScolaire(ListeRecherche<AnneeScolaire> listeAnneeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHAnneeScolaire(ListeRecherche<AnneeScolaire> listeAnneeScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeAnneeScolaire.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listeAnneeScolaire.getRequeteSite_();
 		listeAnneeScolaire.getList().forEach(o -> {
 			futures.add(
 				futurePATCHAnneeScolaire(o, a -> {
@@ -300,7 +315,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHAnneeScolaire(listeAnneeScolaire, gestionnaireEvenements);
+				if(listeAnneeScolaire.next(dt)) {
+					listePATCHAnneeScolaire(listeAnneeScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHAnneeScolaire(listeAnneeScolaire, gestionnaireEvenements);
+				}
 			} else {
 				erreurAnneeScolaire(listeAnneeScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -322,19 +341,19 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurAnneeScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -410,7 +429,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "addSaisonCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getString(methodeNom), "saisonCles", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCle", Long.parseLong(requeteJson.getString(methodeNom)), "saisonCles", pk));
 						break;
 					case "addAllSaisonCles":
 						JsonArray addAllSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -422,7 +441,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setSaisonCles":
 						JsonArray setSaisonClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getString(methodeNom), "saisonCles", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCle", Long.parseLong(requeteJson.getString(methodeNom)), "saisonCles", pk));
 						for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_setA2);
 							patchSqlParams.addAll(Arrays.asList("anneeCle", setSaisonClesValeurs.getString(i), "saisonCles", pk));
@@ -430,7 +449,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "removeSaisonCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", requeteJson.getLong(methodeNom), "saisonCles", pk));
+						patchSqlParams.addAll(Arrays.asList("anneeCle", Long.parseLong(requeteJson.getString(methodeNom)), "saisonCles", pk));
 						break;
 					case "setAnneeDebut":
 						o2.setAnneeDebut(requeteJson.getString(methodeNom));
@@ -454,15 +473,19 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				AnneeScolaire o3 = new AnneeScolaire();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					AnneeScolaire o3 = new AnneeScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -545,7 +568,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 															}
 														});
 													} else {
-														erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +599,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, AnneeScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -700,7 +723,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 															}
 														});
 													} else {
-														erreurAnneeScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -876,7 +899,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -955,7 +978,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -988,12 +1011,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1016,7 +1039,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.annee.AnneeScolaire"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1108,7 +1133,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1138,7 +1163,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -192,11 +194,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					switch(entityVar) {
 					case "seasonKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", jsonObject.getLong(entityVar)));
+						postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", Long.parseLong(jsonObject.getString(entityVar))));
 						break;
 					case "ageKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", jsonObject.getLong(entityVar)));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", l));
+						}
 						break;
 					case "sessionStartDay":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -209,12 +213,16 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -244,7 +252,14 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							aSearchSchoolSession(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolSession> listSchoolSession = c.result();
-									listPATCHSchoolSession(listSchoolSession, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolSession.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modified");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolSession(listSchoolSession, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -260,7 +275,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -285,9 +300,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void listPATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
 		listSchoolSession.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolSession(o, a -> {
@@ -300,7 +315,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolSession(listSchoolSession, eventHandler);
+				if(listSchoolSession.next(dt)) {
+					listPATCHSchoolSession(listSchoolSession, dt, eventHandler);
+				} else {
+					response200PATCHSchoolSession(listSchoolSession, eventHandler);
+				}
 			} else {
 				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
 			}
@@ -322,19 +341,19 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolSession(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolSession(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolSession(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolSession(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -410,7 +429,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "addAgeKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getString(methodName)));
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "addAllAgeKeys":
 						JsonArray addAllAgeKeysValues = requestJson.getJsonArray(methodName);
@@ -422,7 +441,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					case "setAgeKeys":
 						JsonArray setAgeKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getJsonArray(methodName)));
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey"));
 						for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", setAgeKeysValues.getString(i)));
@@ -430,7 +449,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "removeAgeKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", requestJson.getLong(methodName)));
+						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setSessionStartDay":
 						o2.setSessionStartDay(requestJson.getString(methodName));
@@ -454,15 +473,19 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolSession o3 = new SchoolSession();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolSession o3 = new SchoolSession();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -545,7 +568,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +599,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolSession.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -700,7 +723,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 															}
 														});
 													} else {
-														errorSchoolSession(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -896,7 +919,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -975,7 +998,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -1008,12 +1031,12 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1036,7 +1059,9 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.session.SchoolSession"));
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1128,7 +1153,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1158,7 +1183,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

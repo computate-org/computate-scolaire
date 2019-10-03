@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -190,25 +192,23 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "enrollmentKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("childKey", l, "enrollmentKeys", pk));
+						}
+						break;
 					case "personFirstName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personFirstName", jsonObject.getString(entityVar), pk));
 						break;
+					case "personFirstNamePreferred":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personFirstNamePreferred", jsonObject.getString(entityVar), pk));
+						break;
 					case "familyName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
-						break;
-					case "personCompleteName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personCompleteName", jsonObject.getString(entityVar), pk));
-						break;
-					case "personCompleteNamePreferred":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", jsonObject.getString(entityVar), pk));
-						break;
-					case "personFormalName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personFormalName", jsonObject.getString(entityVar), pk));
 						break;
 					case "childMedicalConditions":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -226,9 +226,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("childObjectives", jsonObject.getString(entityVar), pk));
 						break;
-					case "enfantVaccinsAJour":
+					case "enfantVaccinesCurrent":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", jsonObject.getBoolean(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("enfantVaccinesCurrent", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "childPottyTrained":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -237,12 +237,16 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -272,7 +276,14 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							aSearchSchoolChild(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolChild> listSchoolChild = c.result();
-									listPATCHSchoolChild(listSchoolChild, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolChild.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modified");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolChild(listSchoolChild, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -288,7 +299,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 															}
 														});
 													} else {
-														errorSchoolChild(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -313,9 +324,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		}
 	}
 
-	public void listPATCHSchoolChild(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolChild(SearchList<SchoolChild> listSchoolChild, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
 		listSchoolChild.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolChild(o, a -> {
@@ -328,7 +339,11 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolChild(listSchoolChild, eventHandler);
+				if(listSchoolChild.next(dt)) {
+					listPATCHSchoolChild(listSchoolChild, dt, eventHandler);
+				} else {
+					response200PATCHSchoolChild(listSchoolChild, eventHandler);
+				}
 			} else {
 				errorSchoolChild(listSchoolChild.getSiteRequest_(), eventHandler, a);
 			}
@@ -350,19 +365,19 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolChild(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolChild(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolChild(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolChild(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -426,6 +441,30 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
+					case "addEnrollmentKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						break;
+					case "addAllEnrollmentKeys":
+						JsonArray addAllEnrollmentKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("childKey", addAllEnrollmentKeysValues.getString(i), "enrollmentKeys", pk));
+						}
+						break;
+					case "setEnrollmentKeys":
+						JsonArray setEnrollmentKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("childKey", setEnrollmentKeysValues.getString(i), "enrollmentKeys", pk));
+						}
+						break;
+					case "removeEnrollmentKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("childKey", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
+						break;
 					case "setPersonFirstName":
 						o2.setPersonFirstName(requestJson.getString(methodName));
 						if(o2.getPersonFirstName() == null) {
@@ -436,6 +475,16 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList("personFirstName", o2.jsonPersonFirstName(), pk));
 						}
 						break;
+					case "setPersonFirstNamePreferred":
+						o2.setPersonFirstNamePreferred(requestJson.getString(methodName));
+						if(o2.getPersonFirstNamePreferred() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personFirstNamePreferred", o2.jsonPersonFirstNamePreferred(), pk));
+						}
+						break;
 					case "setFamilyName":
 						o2.setFamilyName(requestJson.getString(methodName));
 						if(o2.getFamilyName() == null) {
@@ -444,36 +493,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
-						}
-						break;
-					case "setPersonCompleteName":
-						o2.setPersonCompleteName(requestJson.getString(methodName));
-						if(o2.getPersonCompleteName() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteName"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personCompleteName", o2.jsonPersonCompleteName(), pk));
-						}
-						break;
-					case "setPersonCompleteNamePreferred":
-						o2.setPersonCompleteNamePreferred(requestJson.getString(methodName));
-						if(o2.getPersonCompleteNamePreferred() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personCompleteNamePreferred"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personCompleteNamePreferred", o2.jsonPersonCompleteNamePreferred(), pk));
-						}
-						break;
-					case "setPersonFormalName":
-						o2.setPersonFormalName(requestJson.getString(methodName));
-						if(o2.getPersonFormalName() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personFormalName"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personFormalName", o2.jsonPersonFormalName(), pk));
 						}
 						break;
 					case "setChildMedicalConditions":
@@ -516,14 +535,14 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							patchSqlParams.addAll(Arrays.asList("childObjectives", o2.jsonChildObjectives(), pk));
 						}
 						break;
-					case "setEnfantVaccinsAJour":
-						o2.setEnfantVaccinsAJour(requestJson.getBoolean(methodName));
-						if(o2.getEnfantVaccinsAJour() == null) {
+					case "setEnfantVaccinesCurrent":
+						o2.setEnfantVaccinesCurrent(requestJson.getBoolean(methodName));
+						if(o2.getEnfantVaccinesCurrent() == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinsAJour"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinesCurrent"));
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", o2.jsonEnfantVaccinsAJour(), pk));
+							patchSqlParams.addAll(Arrays.asList("enfantVaccinesCurrent", o2.jsonEnfantVaccinesCurrent(), pk));
 						}
 						break;
 					case "setChildPottyTrained":
@@ -538,15 +557,19 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolChild o3 = new SchoolChild();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolChild o3 = new SchoolChild();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -629,7 +652,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 															}
 														});
 													} else {
-														errorSchoolChild(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -660,7 +683,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolChild.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -784,7 +807,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 															}
 														});
 													} else {
-														errorSchoolChild(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -869,6 +892,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "ageKeys_indexed_longs";
 			case "personFirstName":
 				return "personFirstName_indexed_string";
+			case "personFirstNamePreferred":
+				return "personFirstNamePreferred_indexed_string";
 			case "familyName":
 				return "familyName_indexed_string";
 			case "personCompleteName":
@@ -877,8 +902,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "personCompleteNamePreferred_indexed_string";
 			case "personFormalName":
 				return "personFormalName_indexed_string";
-			case "personBirthdate":
-				return "personBirthdate_indexed_date";
+			case "personBirthDate":
+				return "personBirthDate_indexed_date";
 			case "childMedicalConditions":
 				return "childMedicalConditions_indexed_string";
 			case "childPreviousSchoolsAttended":
@@ -887,8 +912,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "childDescription_indexed_string";
 			case "childObjectives":
 				return "childObjectives_indexed_string";
-			case "enfantVaccinsAJour":
-				return "enfantVaccinsAJour_indexed_boolean";
+			case "enfantVaccinesCurrent":
+				return "enfantVaccinesCurrent_indexed_boolean";
 			case "childPottyTrained":
 				return "childPottyTrained_indexed_boolean";
 			case "childCompleteName":
@@ -980,7 +1005,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -1059,7 +1084,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -1092,12 +1117,12 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1120,7 +1145,9 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.child.SchoolChild"));
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1212,7 +1239,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1242,7 +1269,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

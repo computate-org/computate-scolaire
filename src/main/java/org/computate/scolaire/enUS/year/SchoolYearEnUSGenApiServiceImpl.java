@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -192,11 +194,13 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					switch(entityVar) {
 					case "schoolKey":
 						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", jsonObject.getLong(entityVar)));
+						postSqlParams.addAll(Arrays.asList("schoolKey", pk, "yearKeys", Long.parseLong(jsonObject.getString(entityVar))));
 						break;
 					case "seasonKeys":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", jsonObject.getLong(entityVar)));
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", l));
+						}
 						break;
 					case "yearStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -209,12 +213,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					}
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				eventHandler.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					eventHandler.handle(Future.succeededFuture());
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -244,7 +252,14 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							aSearchSchoolYear(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
-									listPATCHSchoolYear(listSchoolYear, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolYear.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modified");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listPATCHSchoolYear(listSchoolYear, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
@@ -260,7 +275,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 															}
 														});
 													} else {
-														errorSchoolYear(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -285,9 +300,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void listPATCHSchoolYear(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolYear(SearchList<SchoolYear> listSchoolYear, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
-			SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
+		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
 		listSchoolYear.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolYear(o, a -> {
@@ -300,7 +315,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				response200PATCHSchoolYear(listSchoolYear, eventHandler);
+				if(listSchoolYear.next(dt)) {
+					listPATCHSchoolYear(listSchoolYear, dt, eventHandler);
+				} else {
+					response200PATCHSchoolYear(listSchoolYear, eventHandler);
+				}
 			} else {
 				errorSchoolYear(listSchoolYear.getSiteRequest_(), eventHandler, a);
 			}
@@ -322,19 +341,19 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
-											errorSchoolYear(o.getSiteRequest_(), eventHandler, d);
+											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									errorSchoolYear(o.getSiteRequest_(), eventHandler, c);
+									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							errorSchoolYear(o.getSiteRequest_(), eventHandler, b);
+							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					errorSchoolYear(o.getSiteRequest_(), eventHandler, a);
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -410,7 +429,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "addSeasonKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getString(methodName)));
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "addAllSeasonKeys":
 						JsonArray addAllSeasonKeysValues = requestJson.getJsonArray(methodName);
@@ -422,7 +441,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setSeasonKeys":
 						JsonArray setSeasonKeysValues = requestJson.getJsonArray(methodName);
 						patchSql.append(SiteContextEnUS.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getJsonArray(methodName)));
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey"));
 						for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
 							patchSql.append(SiteContextEnUS.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", setSeasonKeysValues.getString(i)));
@@ -430,7 +449,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "removeSeasonKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", requestJson.getLong(methodName)));
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setYearStart":
 						o2.setYearStart(requestJson.getString(methodName));
@@ -454,15 +473,19 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 				}
 			}
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				SchoolYear o3 = new SchoolYear();
-				o3.setSiteRequest_(o.getSiteRequest_());
-				o3.setPk(pk);
-				eventHandler.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					SchoolYear o3 = new SchoolYear();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					eventHandler.handle(Future.succeededFuture(o3));
+				} else {
+					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -545,7 +568,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 															}
 														});
 													} else {
-														errorSchoolYear(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +599,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			String userId = siteRequest.getUserId();
 			Long pk = siteRequest.getRequestPk();
 
-			sqlConnection.updateWithParams(
+			sqlConnection.queryWithParams(
 					SiteContextEnUS.SQL_delete
 					, new JsonArray(Arrays.asList(pk, SchoolYear.class.getCanonicalName(), pk, pk, pk, pk))
 					, deleteAsync
@@ -700,7 +723,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 															}
 														});
 													} else {
-														errorSchoolYear(siteRequest, eventHandler, e);
+														eventHandler.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -876,7 +899,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							}
 						});
 					} else {
-						eventHandler.handle(Future.failedFuture(sqlAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -955,7 +978,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 											eventHandler.handle(Future.failedFuture(e));
 										}
 									} else {
-										eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+										eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 									}
 								});
 							});
@@ -988,12 +1011,12 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									siteRequest.setUserId(jsonPrincipal.getString("sub"));
 									eventHandler.handle(Future.succeededFuture());
 								} else {
-									eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+									eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 								}
 							});
 						}
 					} else {
-						eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1016,7 +1039,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				listSearch.addFields(entityList);
 			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
 			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.year.SchoolYear"));
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			SiteUser siteUser = siteRequest.getSiteUser();
 			if(siteUser != null && !siteUser.getSeeDeleted())
 				listSearch.addFilterQuery("deleted_indexed_boolean:false");
@@ -1108,7 +1133,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1138,7 +1163,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
 					}
 				} catch(Exception e) {
 					eventHandler.handle(Future.failedFuture(e));

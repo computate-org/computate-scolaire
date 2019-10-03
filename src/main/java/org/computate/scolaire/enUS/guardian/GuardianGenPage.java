@@ -93,6 +93,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGuardianGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "suggestSchoolGuardianEnrollmentKeys($('#formSchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); ");
 		l("});");
 	}
 
@@ -166,7 +167,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -210,7 +211,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -254,7 +255,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -262,23 +263,23 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_personCompleteName").a("class", "").f().sx("complete name").g("label");
+								e("label").a("for", "Page_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "complete name")
-										.a("class", "setPersonCompleteName w3-input w3-border ")
-										.a("name", "setPersonCompleteName")
-										.a("id", "Page_personCompleteName")
+										.a("placeholder", "preferred first name")
+										.a("class", "setPersonFirstNamePreferred w3-input w3-border ")
+										.a("name", "setPersonFirstNamePreferred")
+										.a("id", "Page_personFirstNamePreferred")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonCompleteName', $(this).val(), function() { addGlow($('#Page_personCompleteName')); }, function() { addError($('#Page_personCompleteName')); }); ")
-										.a("value", o.strPersonCompleteName())
+										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonFirstNamePreferred', $(this).val(), function() { addGlow($('#Page_personFirstNamePreferred')); }, function() { addError($('#Page_personFirstNamePreferred')); }); ")
+										.a("value", o.strPersonFirstNamePreferred())
 									.fg();
 
 								} g("div");
@@ -286,7 +287,53 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_personCompleteName')); $('#Page_personCompleteName').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonCompleteName', null, function() { addGlow($('#Page_personCompleteName')); }, function() { addError($('#Page_personCompleteName')); }); ")
+									.a("onclick", "removeGlow($('#Page_personFirstNamePreferred')); $('#Page_personFirstNamePreferred').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonFirstNamePreferred', null, function() { addGlow($('#Page_personFirstNamePreferred')); }, function() { addError($('#Page_personFirstNamePreferred')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonPhoneNumber").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "value")
+							.a("class", "value ")
+							.a("value", siteRequest_.getRequestPk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+								e("label").a("for", "Page_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "phone number")
+										.a("class", "setPersonPhoneNumber w3-input w3-border ")
+										.a("name", "setPersonPhoneNumber")
+										.a("id", "Page_personPhoneNumber")
+										.a("onclick", "removeGlow($(this)); ")
+										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonPhoneNumber', $(this).val(), function() { addGlow($('#Page_personPhoneNumber')); }, function() { addError($('#Page_personPhoneNumber')); }); ")
+										.a("value", o.strPersonPhoneNumber())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#Page_personPhoneNumber')); $('#Page_personPhoneNumber').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonPhoneNumber', null, function() { addGlow($('#Page_personPhoneNumber')); }, function() { addError($('#Page_personPhoneNumber')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -298,7 +345,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonOccupation").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -306,23 +353,23 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+								e("label").a("for", "Page_personOccupation").a("class", "").f().sx("occupation").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "complete name preferred")
-										.a("class", "setPersonCompleteNamePreferred w3-input w3-border ")
-										.a("name", "setPersonCompleteNamePreferred")
-										.a("id", "Page_personCompleteNamePreferred")
+										.a("placeholder", "occupation")
+										.a("class", "setPersonOccupation w3-input w3-border ")
+										.a("name", "setPersonOccupation")
+										.a("id", "Page_personOccupation")
 										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonCompleteNamePreferred', $(this).val(), function() { addGlow($('#Page_personCompleteNamePreferred')); }, function() { addError($('#Page_personCompleteNamePreferred')); }); ")
-										.a("value", o.strPersonCompleteNamePreferred())
+										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonOccupation', $(this).val(), function() { addGlow($('#Page_personOccupation')); }, function() { addError($('#Page_personOccupation')); }); ")
+										.a("value", o.strPersonOccupation())
 									.fg();
 
 								} g("div");
@@ -330,7 +377,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_personCompleteNamePreferred')); $('#Page_personCompleteNamePreferred').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonCompleteNamePreferred', null, function() { addGlow($('#Page_personCompleteNamePreferred')); }, function() { addError($('#Page_personCompleteNamePreferred')); }); ")
+									.a("onclick", "removeGlow($('#Page_personOccupation')); $('#Page_personOccupation').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonOccupation', null, function() { addGlow($('#Page_personOccupation')); }, function() { addError($('#Page_personOccupation')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -340,44 +387,60 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					} g("form");
 				} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolGuardianEnrollmentKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
-							.a("name", "value")
-							.a("class", "value ")
+							.a("name", "valueGuardianKeys")
+							.a("class", "valueGuardianKeys ")
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggestSchoolGuardianEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-								e("label").a("for", "Page_personFormalName").a("class", "").f().sx("formal name").g("label");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+									sx("enrollments");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relate enrollments to this guardian");
+								} g("h5");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
 
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "formal name")
-										.a("class", "setPersonFormalName w3-input w3-border ")
-										.a("name", "setPersonFormalName")
-										.a("id", "Page_personFormalName")
-										.a("onclick", "removeGlow($(this)); ")
-										.a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonFormalName', $(this).val(), function() { addGlow($('#Page_personFormalName')); }, function() { addError($('#Page_personFormalName')); }); ")
-										.a("value", o.strPersonFormalName())
-									.fg();
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "enrollments")
+											.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setEnrollmentKeys")
+											.a("id", "Page_enrollmentKeys")
+											.a("autocomplete", "off")
+											.a("oninput", "suggestSchoolGuardianEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); ")
+										.fg();
 
+									} g("div");
 								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#Page_personFormalName')); $('#Page_personFormalName').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=\"pk\"]').val() }], 'setPersonFormalName', null, function() { addGlow($('#Page_personFormalName')); }, function() { addError($('#Page_personFormalName')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolGuardianEnrollmentKeys").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+											.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolGuardianEnrollmentKeys($('#' + ($('#Page_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); var $e = $('#Page_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#Page_enrollmentKeys')); }); }, function() { addError($('#Page_enrollmentKeys')); });")
+											.f().sx("add an enrollment")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -457,7 +520,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -490,7 +553,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -523,7 +586,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -531,21 +594,56 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "POST_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "valuePersonCompleteName w3-input w3-border ")
-									.a("name", "personCompleteName")
-									.a("id", "POST_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "valuePersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "personFirstNamePreferred")
+									.a("id", "POST_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonPhoneNumber").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "POST_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "phone number")
+									.a("class", "valuePersonPhoneNumber w3-input w3-border ")
+									.a("name", "personPhoneNumber")
+									.a("id", "POST_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -556,7 +654,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonOccupation").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -564,21 +662,21 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "POST_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "valuePersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "personCompleteNamePreferred")
-									.a("id", "POST_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "occupation")
+									.a("class", "valuePersonOccupation w3-input w3-border ")
+									.a("name", "personOccupation")
+									.a("id", "POST_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
 							} g("div");
@@ -587,33 +685,60 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianEnrollmentKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueGuardianKeys")
+						.a("class", "valueGuardianKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "POST_personFormalName").a("class", "").f().sx("formal name").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this guardian");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "valuePersonFormalName w3-input w3-border ")
-									.a("name", "personFormalName")
-									.a("id", "POST_personFormalName")
-									.a("value", o.strPersonFormalName())
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "POST_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolGuardianEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); ")
+									.fg();
 
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolGuardianEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolGuardianEnrollmentKeys($('#' + ($('#POST_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); var $e = $('#POST_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#POST_enrollmentKeys')); }); }, function() { addError($('#POST_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -693,7 +818,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -726,7 +851,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -759,7 +884,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -767,21 +892,56 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "PATCH_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "setPersonCompleteName w3-input w3-border ")
-									.a("name", "setPersonCompleteName")
-									.a("id", "PATCH_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "setPersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "setPersonFirstNamePreferred")
+									.a("id", "PATCH_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonPhoneNumber").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "PATCH_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "phone number")
+									.a("class", "setPersonPhoneNumber w3-input w3-border ")
+									.a("name", "setPersonPhoneNumber")
+									.a("id", "PATCH_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -792,7 +952,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonOccupation").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -800,21 +960,21 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "PATCH_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "setPersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "setPersonCompleteNamePreferred")
-									.a("id", "PATCH_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "occupation")
+									.a("class", "setPersonOccupation w3-input w3-border ")
+									.a("name", "setPersonOccupation")
+									.a("id", "PATCH_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
 							} g("div");
@@ -823,33 +983,60 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianEnrollmentKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueGuardianKeys")
+						.a("class", "valueGuardianKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "PATCH_personFormalName").a("class", "").f().sx("formal name").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this guardian");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "setPersonFormalName w3-input w3-border ")
-									.a("name", "setPersonFormalName")
-									.a("id", "PATCH_personFormalName")
-									.a("value", o.strPersonFormalName())
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "PATCH_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolGuardianEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); ")
+									.fg();
 
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolGuardianEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolGuardianEnrollmentKeys($('#' + ($('#PATCH_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); var $e = $('#PATCH_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_enrollmentKeys')); }); }, function() { addError($('#PATCH_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -944,7 +1131,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -977,7 +1164,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianFamilyName").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1010,7 +1197,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1018,21 +1205,56 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFirstNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_personCompleteName").a("class", "").f().sx("complete name").g("label");
+							e("label").a("for", "Recherche_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name")
-									.a("class", "valuePersonCompleteName w3-input w3-border ")
-									.a("name", "personCompleteName")
-									.a("id", "Recherche_personCompleteName")
-									.a("value", o.strPersonCompleteName())
+									.a("placeholder", "preferred first name")
+									.a("class", "valuePersonFirstNamePreferred w3-input w3-border ")
+									.a("name", "personFirstNamePreferred")
+									.a("id", "Recherche_personFirstNamePreferred")
+									.a("value", o.strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonPhoneNumber").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonPhoneNumber").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_personPhoneNumber").a("class", "").f().sx("phone number").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "phone number")
+									.a("class", "valuePersonPhoneNumber w3-input w3-border ")
+									.a("name", "personPhoneNumber")
+									.a("id", "Recherche_personPhoneNumber")
+									.a("value", o.strPersonPhoneNumber())
 								.fg();
 
 							} g("div");
@@ -1043,7 +1265,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonOccupation").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1051,21 +1273,21 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonCompleteNamePreferred").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonOccupation").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_personCompleteNamePreferred").a("class", "").f().sx("complete name preferred").g("label");
+							e("label").a("for", "Recherche_personOccupation").a("class", "").f().sx("occupation").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "complete name preferred")
-									.a("class", "valuePersonCompleteNamePreferred w3-input w3-border ")
-									.a("name", "personCompleteNamePreferred")
-									.a("id", "Recherche_personCompleteNamePreferred")
-									.a("value", o.strPersonCompleteNamePreferred())
+									.a("placeholder", "occupation")
+									.a("class", "valuePersonOccupation w3-input w3-border ")
+									.a("name", "personOccupation")
+									.a("id", "Recherche_personOccupation")
+									.a("value", o.strPersonOccupation())
 								.fg();
 
 							} g("div");
@@ -1074,33 +1296,60 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolGuardianEnrollmentKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
+						.a("name", "valueGuardianKeys")
+						.a("class", "valueGuardianKeys ")
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestSchoolGuardianPersonFormalName").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggestSchoolGuardianEnrollmentKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", "Recherche_personFormalName").a("class", "").f().sx("formal name").g("label");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/enrollment").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this guardian");
+							} g("h5");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "formal name")
-									.a("class", "valuePersonFormalName w3-input w3-border ")
-									.a("name", "personFormalName")
-									.a("id", "Recherche_personFormalName")
-									.a("value", o.strPersonFormalName())
-								.fg();
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", "Recherche_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolGuardianEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); ")
+									.fg();
 
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolGuardianEnrollmentKeys").f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolGuardianEnrollmentKeys($('#' + ($('#Recherche_enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys')); var $e = $('#Recherche_enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_enrollmentKeys')); }); }, function() { addError($('#Recherche_enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1180,11 +1429,51 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("guardians").g("span");
 			} g("h1");
-			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			e("div").a("class", "").f();
+				{ e("div").f();
+					Long num = listSchoolGuardian.getQueryResponse().getResults().getNumFound();
+					Integer rows1 = listSchoolGuardian.getRows();
+					Integer start1 = listSchoolGuardian.getStart();
+					Integer start2 = start1 - rows1;
+					Integer start3 = start1 + rows1;
+					Integer rows2 = rows1 / 2;
+					Integer rows3 = rows1 * 2;
+					start2 = start2 < 0 ? 0 : start2;
+
+					if(start1 == 0) {
+						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/guardian?start=", start2, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
+						} g("a");
+					}
+
+					if(rows1 <= 1) {
+						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/guardian?start=", start1, "&rows=", rows2).f();
+							e("i").a("class", "fas fa-minus-square ").f().g("i");
+						} g("a");
+					}
+
+					{ e("a").a("href", "/guardian?start=", start1, "&rows=", rows3).f();
+						e("i").a("class", "fas fa-plus-square ").f().g("i");
+					} g("a");
+
+					if(start3 >= num) {
+						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/guardian?start=", start3, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
+						} g("a");
+					}
+						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
+				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
 						e("th").f().sx("").g("th");
+						e("th").f().sx("created").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1199,7 +1488,15 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.getGuardianCompleteName());
+										sx(o.strGuardianCompleteName());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "far fa-chevron-right w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strCreated());
 									} g("span");
 								} g("a");
 							} g("td");

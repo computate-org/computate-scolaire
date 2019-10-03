@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -100,7 +102,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							rechercheUtilisateurSite(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
-									listePATCHUtilisateurSite(listeUtilisateurSite, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listeUtilisateurSite.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHUtilisateurSite(listeUtilisateurSite, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -116,7 +125,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 															}
 														});
 													} else {
-														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -141,16 +150,26 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void listePATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHUtilisateurSite(ListeRecherche<UtilisateurSite> listeUtilisateurSite, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
+		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
 		listeUtilisateurSite.getList().forEach(o -> {
 			futures.add(
-				futurePATCHUtilisateurSite(o, gestionnaireEvenements)
+				futurePATCHUtilisateurSite(o, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+					}
+				})
 			);
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHUtilisateurSite(listeUtilisateurSite, gestionnaireEvenements);
+				if(listeUtilisateurSite.next(dt)) {
+					listePATCHUtilisateurSite(listeUtilisateurSite, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHUtilisateurSite(listeUtilisateurSite, gestionnaireEvenements);
+				}
 			} else {
 				erreurUtilisateurSite(listeUtilisateurSite.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -172,19 +191,19 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurUtilisateurSite(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -250,15 +269,19 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				UtilisateurSite o3 = new UtilisateurSite();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					UtilisateurSite o3 = new UtilisateurSite();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -309,7 +332,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 															}
 														});
 													} else {
-														erreurUtilisateurSite(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -471,7 +494,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -550,7 +573,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -583,12 +606,12 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -611,7 +634,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -703,7 +728,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -733,7 +758,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

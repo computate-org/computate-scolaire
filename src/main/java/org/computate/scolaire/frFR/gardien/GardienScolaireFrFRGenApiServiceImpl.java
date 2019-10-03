@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -190,35 +192,45 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "inscriptionCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("gardienCles", l, "inscriptionCles", pk));
+						}
+						break;
 					case "personnePrenom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("personnePrenom", jsonObject.getString(entiteVar), pk));
+						break;
+					case "personnePrenomPrefere":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personnePrenomPrefere", jsonObject.getString(entiteVar), pk));
 						break;
 					case "familleNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familleNom", jsonObject.getString(entiteVar), pk));
 						break;
-					case "personneNomComplet":
+					case "personneOccupation":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomComplet", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneOccupation", jsonObject.getString(entiteVar), pk));
 						break;
-					case "personneNomCompletPrefere":
+					case "personneNumeroTelephone":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", jsonObject.getString(entiteVar), pk));
-						break;
-					case "personneNomFormel":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("personneNomFormel", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("personneNumeroTelephone", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -248,7 +260,14 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							rechercheGardienScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-									listePATCHGardienScolaire(listeGardienScolaire, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listeGardienScolaire.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHGardienScolaire(listeGardienScolaire, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -264,7 +283,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 															}
 														});
 													} else {
-														erreurGardienScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -289,9 +308,9 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void listePATCHGardienScolaire(ListeRecherche<GardienScolaire> listeGardienScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHGardienScolaire(ListeRecherche<GardienScolaire> listeGardienScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
 		listeGardienScolaire.getList().forEach(o -> {
 			futures.add(
 				futurePATCHGardienScolaire(o, a -> {
@@ -304,7 +323,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHGardienScolaire(listeGardienScolaire, gestionnaireEvenements);
+				if(listeGardienScolaire.next(dt)) {
+					listePATCHGardienScolaire(listeGardienScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHGardienScolaire(listeGardienScolaire, gestionnaireEvenements);
+				}
 			} else {
 				erreurGardienScolaire(listeGardienScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -326,19 +349,19 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurGardienScolaire(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurGardienScolaire(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurGardienScolaire(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurGardienScolaire(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -402,6 +425,30 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
+					case "addInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
+						break;
+					case "addAllInscriptionCles":
+						JsonArray addAllInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("gardienCles", addAllInscriptionClesValeurs.getString(i), "inscriptionCles", pk));
+						}
+						break;
+					case "setInscriptionCles":
+						JsonArray setInscriptionClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
+						for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("gardienCles", setInscriptionClesValeurs.getString(i), "inscriptionCles", pk));
+						}
+						break;
+					case "removeInscriptionCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("gardienCles", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
+						break;
 					case "setPersonnePrenom":
 						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
 						if(o2.getPersonnePrenom() == null) {
@@ -410,6 +457,16 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenom", o2.jsonPersonnePrenom(), pk));
+						}
+						break;
+					case "setPersonnePrenomPrefere":
+						o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
+						if(o2.getPersonnePrenomPrefere() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenomPrefere"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personnePrenomPrefere", o2.jsonPersonnePrenomPrefere(), pk));
 						}
 						break;
 					case "setFamilleNom":
@@ -422,47 +479,41 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
-					case "setPersonneNomComplet":
-						o2.setPersonneNomComplet(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomComplet() == null) {
+					case "setPersonneOccupation":
+						o2.setPersonneOccupation(requeteJson.getString(methodeNom));
+						if(o2.getPersonneOccupation() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomComplet"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneOccupation"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomComplet", o2.jsonPersonneNomComplet(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneOccupation", o2.jsonPersonneOccupation(), pk));
 						}
 						break;
-					case "setPersonneNomCompletPrefere":
-						o2.setPersonneNomCompletPrefere(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomCompletPrefere() == null) {
+					case "setPersonneNumeroTelephone":
+						o2.setPersonneNumeroTelephone(requeteJson.getString(methodeNom));
+						if(o2.getPersonneNumeroTelephone() == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomCompletPrefere"));
+							patchSqlParams.addAll(Arrays.asList(pk, "personneNumeroTelephone"));
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomCompletPrefere", o2.jsonPersonneNomCompletPrefere(), pk));
-						}
-						break;
-					case "setPersonneNomFormel":
-						o2.setPersonneNomFormel(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNomFormel() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "personneNomFormel"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("personneNomFormel", o2.jsonPersonneNomFormel(), pk));
+							patchSqlParams.addAll(Arrays.asList("personneNumeroTelephone", o2.jsonPersonneNumeroTelephone(), pk));
 						}
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				GardienScolaire o3 = new GardienScolaire();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					GardienScolaire o3 = new GardienScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -545,7 +596,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 															}
 														});
 													} else {
-														erreurGardienScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -576,7 +627,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, GardienScolaire.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -700,7 +751,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 															}
 														});
 													} else {
-														erreurGardienScolaire(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -785,6 +836,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				return "ageCles_indexed_longs";
 			case "personnePrenom":
 				return "personnePrenom_indexed_string";
+			case "personnePrenomPrefere":
+				return "personnePrenomPrefere_indexed_string";
 			case "familleNom":
 				return "familleNom_indexed_string";
 			case "personneNomComplet":
@@ -898,7 +951,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -977,7 +1030,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -1010,12 +1063,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1038,7 +1091,9 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.gardien.GardienScolaire"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1130,7 +1185,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1160,7 +1215,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

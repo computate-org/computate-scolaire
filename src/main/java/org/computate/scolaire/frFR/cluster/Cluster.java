@@ -103,13 +103,15 @@ public class Cluster extends ClusterGen<Object> {
 	 * Stocke: true
 	 * Definir: true
 	 * Modifier: false
+	 * VarCree: true
 	 * HtmlLigne: 1
 	 * HtmlCellule: 3
 	 * Description.frFR: La date et l'heure créées. 
 	 * Description.enUS: The date and time created. 
 	 * NomAffichage.frFR: crée
 	 * NomAffichage.enUS: created
-	 */    
+	 * HtmlColonne: 2
+	 */   
 	protected void _cree(Couverture<ZonedDateTime> c) {}
 
 	/**
@@ -119,6 +121,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Stocke: true
 	 * Definir: true
 	 * Modifier: false
+	 * VarModifie: true
 	 * HtmlLigne: 1
 	 * HtmlCellule: 4
 	 * Description.frFR: La date et l'heure modifiéés. 

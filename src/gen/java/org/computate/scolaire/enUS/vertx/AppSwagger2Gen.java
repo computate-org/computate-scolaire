@@ -1,17 +1,20 @@
 package org.computate.scolaire.enUS.vertx;
 
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.io.File;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -179,6 +182,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		return appPath == null ? "" : appPath;
 	}
 
+	public String jsonAppPath() {
+		return appPath == null ? "" : appPath;
+	}
+
 	public String nomAffichageAppPath() {
 		return null;
 	}
@@ -236,6 +243,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		return openApiVersion == null ? "" : openApiVersion;
 	}
 
+	public String jsonOpenApiVersion() {
+		return openApiVersion == null ? "" : openApiVersion;
+	}
+
 	public String nomAffichageOpenApiVersion() {
 		return null;
 	}
@@ -276,7 +287,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		this.openApiVersionNumberWrap.alreadyInitialized = true;
 	}
 	public AppSwagger2 setOpenApiVersionNumber(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.openApiVersionNumber = Integer.parseInt(o);
 		this.openApiVersionNumberWrap.alreadyInitialized = true;
 		return (AppSwagger2)this;
@@ -296,6 +307,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	}
 
 	public String strOpenApiVersionNumber() {
+		return openApiVersionNumber == null ? "" : openApiVersionNumber.toString();
+	}
+
+	public String jsonOpenApiVersionNumber() {
 		return openApiVersionNumber == null ? "" : openApiVersionNumber.toString();
 	}
 
@@ -339,7 +354,7 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		this.tabsSchemaWrap.alreadyInitialized = true;
 	}
 	public AppSwagger2 setTabsSchema(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.tabsSchema = Integer.parseInt(o);
 		this.tabsSchemaWrap.alreadyInitialized = true;
 		return (AppSwagger2)this;
@@ -359,6 +374,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	}
 
 	public String strTabsSchema() {
+		return tabsSchema == null ? "" : tabsSchema.toString();
+	}
+
+	public String jsonTabsSchema() {
 		return tabsSchema == null ? "" : tabsSchema.toString();
 	}
 
@@ -419,6 +438,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 		return apiVersion == null ? "" : apiVersion;
 	}
 
+	public String jsonApiVersion() {
+		return apiVersion == null ? "" : apiVersion;
+	}
+
 	public String nomAffichageApiVersion() {
 		return null;
 	}
@@ -473,6 +496,10 @@ public abstract class AppSwagger2Gen<DEV> extends Object {
 	}
 
 	public String strOpenApiYamlPath() {
+		return openApiYamlPath == null ? "" : openApiYamlPath;
+	}
+
+	public String jsonOpenApiYamlPath() {
 		return openApiYamlPath == null ? "" : openApiYamlPath;
 	}
 

@@ -67,6 +67,8 @@ import io.vertx.ext.auth.oauth2.KeycloakHelper;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
+import java.time.ZonedDateTime;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -191,8 +193,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "anneeCles":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", jsonObject.getLong(entiteVar)));
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", l));
+						}
 						break;
 					case "ecoleNom":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -217,12 +221,16 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					}
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					postSql.toString()
 					, new JsonArray(postSqlParams)
 					, postAsync
 			-> {
-				gestionnaireEvenements.handle(Future.succeededFuture());
+				if(postAsync.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture());
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -252,7 +260,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							rechercheEcole(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Ecole> listeEcole = c.result();
-									listePATCHEcole(listeEcole, d -> {
+									SimpleOrderedMap facets = (SimpleOrderedMap)listeEcole.getQueryResponse().getResponse().get("facets");
+									Date date = (Date)facets.get("max_modifie");
+									String dateStr;
+									if(date == null)
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+									else
+										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listePATCHEcole(listeEcole, dateStr, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -268,7 +283,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 															}
 														});
 													} else {
-														erreurEcole(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -293,9 +308,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
-	public void listePATCHEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHEcole(ListeRecherche<Ecole> listeEcole, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
-			RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
+		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
 		listeEcole.getList().forEach(o -> {
 			futures.add(
 				futurePATCHEcole(o, a -> {
@@ -308,7 +323,11 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				reponse200PATCHEcole(listeEcole, gestionnaireEvenements);
+				if(listeEcole.next(dt)) {
+					listePATCHEcole(listeEcole, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHEcole(listeEcole, gestionnaireEvenements);
+				}
 			} else {
 				erreurEcole(listeEcole.getRequeteSite_(), gestionnaireEvenements, a);
 			}
@@ -330,19 +349,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
-											erreurEcole(o.getRequeteSite_(), gestionnaireEvenements, d);
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
-									erreurEcole(o.getRequeteSite_(), gestionnaireEvenements, c);
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
-							erreurEcole(o.getRequeteSite_(), gestionnaireEvenements, b);
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
-					erreurEcole(o.getRequeteSite_(), gestionnaireEvenements, a);
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 			return future;
@@ -408,7 +427,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 					case "addAnneeCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getString(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "addAllAnneeCles":
 						JsonArray addAllAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
@@ -420,7 +439,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					case "setAnneeCles":
 						JsonArray setAnneeClesValeurs = requeteJson.getJsonArray(methodeNom);
 						patchSql.append(SiteContexteFrFR.SQL_clearA1);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getJsonArray(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle"));
 						for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
 							patchSql.append(SiteContexteFrFR.SQL_addA);
 							patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", setAnneeClesValeurs.getString(i)));
@@ -428,7 +447,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 					case "removeAnneeCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", requeteJson.getLong(methodeNom)));
+						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setEcoleNom":
 						o2.setEcoleNom(requeteJson.getString(methodeNom));
@@ -482,15 +501,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 				}
 			}
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					patchSql.toString()
 					, new JsonArray(patchSqlParams)
 					, patchAsync
 			-> {
-				Ecole o3 = new Ecole();
-				o3.setRequeteSite_(o.getRequeteSite_());
-				o3.setPk(pk);
-				gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				if(patchAsync.succeeded()) {
+					Ecole o3 = new Ecole();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+				}
 			});
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -573,7 +596,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 															}
 														});
 													} else {
-														erreurEcole(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -604,7 +627,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			String utilisateurId = requeteSite.getUtilisateurId();
 			Long pk = requeteSite.getRequetePk();
 
-			connexionSql.updateWithParams(
+			connexionSql.queryWithParams(
 					SiteContexteFrFR.SQL_supprimer
 					, new JsonArray(Arrays.asList(pk, Ecole.class.getCanonicalName(), pk, pk, pk, pk))
 					, supprimerAsync
@@ -728,7 +751,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 															}
 														});
 													} else {
-														erreurEcole(requeteSite, gestionnaireEvenements, e);
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 													}
 												});
 											}
@@ -912,7 +935,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							}
 						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(sqlAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
 				});
 			}
@@ -991,7 +1014,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 											gestionnaireEvenements.handle(Future.failedFuture(e));
 										}
 									} else {
-										gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 									}
 								});
 							});
@@ -1024,12 +1047,12 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									requeteSite.setUtilisateurId(principalJson.getString("sub"));
 									gestionnaireEvenements.handle(Future.succeededFuture());
 								} else {
-									gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 								}
 							});
 						}
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
 					}
 				});
 			}
@@ -1052,7 +1075,9 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				listeRecherche.addFields(entiteListe);
 			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.ecole.Ecole"));
+			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
 			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
 				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
@@ -1144,7 +1169,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
 				}
 			});
 		} catch(Exception e) {
@@ -1174,7 +1199,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
 					}
 				} catch(Exception e) {
 					gestionnaireEvenements.handle(Future.failedFuture(e));

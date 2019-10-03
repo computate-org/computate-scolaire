@@ -156,7 +156,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
-	 */           
+	 */               
 	protected void _inscriptionCles(List<Long> o) {}
 
 	/**

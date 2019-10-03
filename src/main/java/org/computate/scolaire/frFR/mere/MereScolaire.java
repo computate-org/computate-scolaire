@@ -51,22 +51,6 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: InscriptionScolaire.mereCles
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
-	 * Description.frFR: La clé primaire du mère dans la base de données. 
-	 * Description.enUS: The primary key of the school mom in the database. 
-	 * NomAffichage.frFR: inscriptions
-	 * NomAffichage.enUS: enrollments
-	 */               
-	protected void _inscriptionCles(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: momKey
 	 * Indexe: true
 	 * Stocke: true
@@ -84,6 +68,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.mereCles
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
 	 */               
@@ -118,6 +105,16 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
+	 * r: ecoleCle
+	 * r.enUS: schoolKey
+	 * r: anneeCle
+	 * r.enUS: yearKey
+	 * r: saisonCle
+	 * r.enUS: seasonKey
+	 * r: sessionCle
+	 * r.enUS: sessionKey
+	 * r: ageCle
+	 * r.enUS: ageKey
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
@@ -244,9 +241,26 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * NomAffichage.enUS: first name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 */                   
 	protected void _personnePrenom(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personFirstNamePreferred
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prénom préferé
+	 * NomAffichage.enUS: preferred first name
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
+	 * r: personnePrenom
+	 * r.enUS: personFirstName
+	 */                   
+	protected void _personnePrenomPrefere(Couverture<String> c) {
+		c.o(personnePrenom);
 	}
 
 	/**
@@ -258,7 +272,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * NomAffichage.enUS: last name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 */                   
 	protected void _familleNom(Couverture<String> c) {
 	}
@@ -270,16 +284,18 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom complèt
 	 * NomAffichage.enUS: complete name
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
-	 * r: personnePrenom
-	 * r.enUS: personFirstName
+	 * r: personnePrenomPrefere
+	 * r.enUS: personFirstNamePreferred
 	 * r: familleNom
 	 * r.enUS: familyName
 	 */                   
 	protected void _personneNomComplet(Couverture<String> c) {
-		c.o(String.format("%s %s", personnePrenom, familleNom));
+		if(personnePrenomPrefere != null && familleNom != null)
+			c.o(String.format("%s %s", personnePrenomPrefere, familleNom));
+		else if(personnePrenomPrefere != null)
+			c.o(personnePrenomPrefere);
+		else if(familleNom != null)
+			c.o(familleNom);
 	}
 
 	/**
@@ -289,16 +305,11 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom complèt préferé
 	 * NomAffichage.enUS: complete name preferred
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
-	 * r: personnePrenom
-	 * r.enUS: personFirstName
-	 * r: familleNom
-	 * r.enUS: familyName
+	 * r: personneNomComplet
+	 * r.enUS: personCompleteName
 	 */                   
 	protected void _personneNomCompletPrefere(Couverture<String> c) {
-		c.o(String.format("%s %s", personnePrenom, familleNom));
+		c.o(personneNomComplet);
 	}
 
 	/**
@@ -308,9 +319,6 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: nom formel
 	 * NomAffichage.enUS: formal name
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
 	 * r: personnePrenom
 	 * r.enUS: personFirstName
 	 * r: familleNom
@@ -327,6 +335,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: occupation
 	 * NomAffichage.enUS: occupation
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
 	 */                   
 	protected void _personneOccupation(Couverture<String> c) {
 	}
@@ -338,6 +349,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: numéro de téléphone
 	 * NomAffichage.enUS: phone number
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
 	 */                   
 	protected void _personneNumeroTelephone(Couverture<String> c) {
 	}
@@ -349,6 +363,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: mail
 	 * NomAffichage.enUS: email
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 */                   
 	protected void _personneMail(Couverture<String> c) {
 	}
@@ -372,8 +389,11 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Var.enUS: personSms
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: text me
-	 * NomAffichage.enUS: envoyer SMS
+	 * NomAffichage.frFR: envoyer SMS
+	 * NomAffichage.enUS: text me
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 */                   
 	protected void _personneSms(Couverture<Boolean> c) {
 		c.o(true);
@@ -386,6 +406,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: recevoir des mails
 	 * NomAffichage.enUS: receive email
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 2
 	 */                   
 	protected void _personneRecevoirMail(Couverture<Boolean> c) {
 		c.o(true);
@@ -398,6 +421,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: contacter en cas d'urgence
 	 * NomAffichage.enUS: contact in case of emergency
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 3
 	 */                  
 	protected void _personneContactUrgence(Couverture<Boolean> c) {
 		c.o(true);
@@ -410,6 +436,9 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: autorisé à venir chercher
 	 * NomAffichage.enUS: authorized to pickup
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 4
 	 */                   
 	protected void _personneChercher(Couverture<Boolean> c) {
 		c.o(true);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -80,7 +81,7 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		boolean next = false;
 		long numFound = getSolrDocumentList().getNumFound();
 		if(numFound > 0) {
-			addFilterQuery(String.format("modifie_indexed_date:[* TO %s-1MILLI]", dt));
+			addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 			_queryResponse(queryResponseCouverture);
 			setQueryResponse(queryResponseCouverture.o);
 			_solrDocumentList(solrDocumentListCouverture);
@@ -1006,6 +1007,18 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		return solrQuery.setShowDebugInfo(showDebugInfo);
 	}
 
+	public void set(String name, boolean val) {
+		solrQuery.set(name, val);
+	}
+
+	public void set(String name, int val) {
+		solrQuery.set(name, val);
+	}
+
+	public void set(String name, String vals) {
+		solrQuery.set(name, vals);
+	}
+
 	public void setDistrib(boolean val) {
 		solrQuery.setDistrib(val);
 	}
@@ -1078,5 +1091,16 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 */
 	public Integer getTimeAllowed() {
 		return solrQuery.getTimeAllowed();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ListeRecherche { ");
+		list.stream().forEach(o -> {
+			sb.append(o);
+		});
+		sb.append(" }");
+		return sb.toString();
 	}
 }

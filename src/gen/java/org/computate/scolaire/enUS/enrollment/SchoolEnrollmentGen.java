@@ -1644,114 +1644,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////
-	// familyKey //
-	///////////////
-
-	/**	L'entité « familyKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long familyKey;
-	@JsonIgnore
-	public Wrap<Long> familyKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("familyKey").o(familyKey);
-
-	/**	<br/>L'entité « familyKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyKey">Trouver l'entité familyKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _familyKey(Wrap<Long> c);
-
-	public Long getFamilyKey() {
-		return familyKey;
-	}
-
-	public void setFamilyKey(Long familyKey) {
-		this.familyKey = familyKey;
-		this.familyKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolEnrollment setFamilyKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.familyKey = Long.parseLong(o);
-		this.familyKeyWrap.alreadyInitialized = true;
-		return (SchoolEnrollment)this;
-	}
-	protected SchoolEnrollment familyKeyInit() {
-		if(!familyKeyWrap.alreadyInitialized) {
-			_familyKey(familyKeyWrap);
-			if(familyKey == null)
-				setFamilyKey(familyKeyWrap.o);
-		}
-		familyKeyWrap.alreadyInitialized(true);
-		return (SchoolEnrollment)this;
-	}
-
-	public Long solrFamilyKey() {
-		return familyKey;
-	}
-
-	public String strFamilyKey() {
-		return familyKey == null ? "" : familyKey.toString();
-	}
-
-	public String jsonFamilyKey() {
-		return familyKey == null ? "" : familyKey.toString();
-	}
-
-	public String nomAffichageFamilyKey() {
-		return "family";
-	}
-
-	public String htmTooltipFamilyKey() {
-		return null;
-	}
-
-	public String htmFamilyKey() {
-		return familyKey == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyKey());
-	}
-
-	public void htmFamilyKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilyKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolEnrollment", strPk(), "FamilyKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setFamilyKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"familyKey\"");
-							r.s(" value=\"", htmFamilyKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmFamilyKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// educationSort //
 	///////////////////
@@ -5326,6 +5218,949 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////
+	// familyMarried //
+	///////////////////
+
+	/**	L'entité « familyMarried »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familyMarried;
+	@JsonIgnore
+	public Wrap<Boolean> familyMarriedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyMarried").o(familyMarried);
+
+	/**	<br/>L'entité « familyMarried »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyMarried">Trouver l'entité familyMarried dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familyMarried(Wrap<Boolean> c);
+
+	public Boolean getFamilyMarried() {
+		return familyMarried;
+	}
+
+	public void setFamilyMarried(Boolean familyMarried) {
+		this.familyMarried = familyMarried;
+		this.familyMarriedWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setFamilyMarried(String o) {
+		this.familyMarried = Boolean.parseBoolean(o);
+		this.familyMarriedWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment familyMarriedInit() {
+		if(!familyMarriedWrap.alreadyInitialized) {
+			_familyMarried(familyMarriedWrap);
+			if(familyMarried == null)
+				setFamilyMarried(familyMarriedWrap.o);
+		}
+		familyMarriedWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrFamilyMarried() {
+		return familyMarried;
+	}
+
+	public String strFamilyMarried() {
+		return familyMarried == null ? "" : familyMarried.toString();
+	}
+
+	public String jsonFamilyMarried() {
+		return familyMarried == null ? "" : familyMarried.toString();
+	}
+
+	public String nomAffichageFamilyMarried() {
+		return "married";
+	}
+
+	public String htmTooltipFamilyMarried() {
+		return null;
+	}
+
+	public String htmFamilyMarried() {
+		return familyMarried == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyMarried());
+	}
+
+	public void htmFamilyMarried(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilyMarried\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "FamilyMarried() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilyMarried\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyMarried()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familyMarried\"");
+							r.s(" value=\"", htmFamilyMarried(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilyMarried());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////
+	// familySeparated //
+	/////////////////////
+
+	/**	L'entité « familySeparated »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familySeparated;
+	@JsonIgnore
+	public Wrap<Boolean> familySeparatedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familySeparated").o(familySeparated);
+
+	/**	<br/>L'entité « familySeparated »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familySeparated">Trouver l'entité familySeparated dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familySeparated(Wrap<Boolean> c);
+
+	public Boolean getFamilySeparated() {
+		return familySeparated;
+	}
+
+	public void setFamilySeparated(Boolean familySeparated) {
+		this.familySeparated = familySeparated;
+		this.familySeparatedWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setFamilySeparated(String o) {
+		this.familySeparated = Boolean.parseBoolean(o);
+		this.familySeparatedWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment familySeparatedInit() {
+		if(!familySeparatedWrap.alreadyInitialized) {
+			_familySeparated(familySeparatedWrap);
+			if(familySeparated == null)
+				setFamilySeparated(familySeparatedWrap.o);
+		}
+		familySeparatedWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrFamilySeparated() {
+		return familySeparated;
+	}
+
+	public String strFamilySeparated() {
+		return familySeparated == null ? "" : familySeparated.toString();
+	}
+
+	public String jsonFamilySeparated() {
+		return familySeparated == null ? "" : familySeparated.toString();
+	}
+
+	public String nomAffichageFamilySeparated() {
+		return "separated";
+	}
+
+	public String htmTooltipFamilySeparated() {
+		return null;
+	}
+
+	public String htmFamilySeparated() {
+		return familySeparated == null ? "" : StringEscapeUtils.escapeHtml4(strFamilySeparated());
+	}
+
+	public void htmFamilySeparated(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilySeparated\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "FamilySeparated() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilySeparated\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilySeparated()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familySeparated\"");
+							r.s(" value=\"", htmFamilySeparated(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilySeparated());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////
+	// familyDivorced //
+	////////////////////
+
+	/**	L'entité « familyDivorced »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familyDivorced;
+	@JsonIgnore
+	public Wrap<Boolean> familyDivorcedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyDivorced").o(familyDivorced);
+
+	/**	<br/>L'entité « familyDivorced »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyDivorced">Trouver l'entité familyDivorced dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familyDivorced(Wrap<Boolean> c);
+
+	public Boolean getFamilyDivorced() {
+		return familyDivorced;
+	}
+
+	public void setFamilyDivorced(Boolean familyDivorced) {
+		this.familyDivorced = familyDivorced;
+		this.familyDivorcedWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setFamilyDivorced(String o) {
+		this.familyDivorced = Boolean.parseBoolean(o);
+		this.familyDivorcedWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment familyDivorcedInit() {
+		if(!familyDivorcedWrap.alreadyInitialized) {
+			_familyDivorced(familyDivorcedWrap);
+			if(familyDivorced == null)
+				setFamilyDivorced(familyDivorcedWrap.o);
+		}
+		familyDivorcedWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrFamilyDivorced() {
+		return familyDivorced;
+	}
+
+	public String strFamilyDivorced() {
+		return familyDivorced == null ? "" : familyDivorced.toString();
+	}
+
+	public String jsonFamilyDivorced() {
+		return familyDivorced == null ? "" : familyDivorced.toString();
+	}
+
+	public String nomAffichageFamilyDivorced() {
+		return "divorced";
+	}
+
+	public String htmTooltipFamilyDivorced() {
+		return null;
+	}
+
+	public String htmFamilyDivorced() {
+		return familyDivorced == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyDivorced());
+	}
+
+	public void htmFamilyDivorced(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilyDivorced\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "FamilyDivorced() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilyDivorced\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyDivorced()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familyDivorced\"");
+							r.s(" value=\"", htmFamilyDivorced(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilyDivorced());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////
+	// familyAddress //
+	///////////////////
+
+	/**	L'entité « familyAddress »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String familyAddress;
+	@JsonIgnore
+	public Wrap<String> familyAddressWrap = new Wrap<String>().p(this).c(String.class).var("familyAddress").o(familyAddress);
+
+	/**	<br/>L'entité « familyAddress »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyAddress">Trouver l'entité familyAddress dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familyAddress(Wrap<String> c);
+
+	public String getFamilyAddress() {
+		return familyAddress;
+	}
+
+	public void setFamilyAddress(String familyAddress) {
+		this.familyAddress = familyAddress;
+		this.familyAddressWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment familyAddressInit() {
+		if(!familyAddressWrap.alreadyInitialized) {
+			_familyAddress(familyAddressWrap);
+			if(familyAddress == null)
+				setFamilyAddress(familyAddressWrap.o);
+		}
+		familyAddressWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrFamilyAddress() {
+		return familyAddress;
+	}
+
+	public String strFamilyAddress() {
+		return familyAddress == null ? "" : familyAddress;
+	}
+
+	public String jsonFamilyAddress() {
+		return familyAddress == null ? "" : familyAddress;
+	}
+
+	public String nomAffichageFamilyAddress() {
+		return "family address";
+	}
+
+	public String htmTooltipFamilyAddress() {
+		return null;
+	}
+
+	public String htmFamilyAddress() {
+		return familyAddress == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyAddress());
+	}
+
+	public void htmFamilyAddress(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilyAddress\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "FamilyAddress() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilyAddress\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyAddress()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familyAddress\"");
+							r.s(" value=\"", htmFamilyAddress(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilyAddress());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////////////////
+	// familyHowDoYouKnowTheSchool //
+	/////////////////////////////////
+
+	/**	L'entité « familyHowDoYouKnowTheSchool »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String familyHowDoYouKnowTheSchool;
+	@JsonIgnore
+	public Wrap<String> familyHowDoYouKnowTheSchoolWrap = new Wrap<String>().p(this).c(String.class).var("familyHowDoYouKnowTheSchool").o(familyHowDoYouKnowTheSchool);
+
+	/**	<br/>L'entité « familyHowDoYouKnowTheSchool »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyHowDoYouKnowTheSchool">Trouver l'entité familyHowDoYouKnowTheSchool dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familyHowDoYouKnowTheSchool(Wrap<String> c);
+
+	public String getFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool;
+	}
+
+	public void setFamilyHowDoYouKnowTheSchool(String familyHowDoYouKnowTheSchool) {
+		this.familyHowDoYouKnowTheSchool = familyHowDoYouKnowTheSchool;
+		this.familyHowDoYouKnowTheSchoolWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment familyHowDoYouKnowTheSchoolInit() {
+		if(!familyHowDoYouKnowTheSchoolWrap.alreadyInitialized) {
+			_familyHowDoYouKnowTheSchool(familyHowDoYouKnowTheSchoolWrap);
+			if(familyHowDoYouKnowTheSchool == null)
+				setFamilyHowDoYouKnowTheSchool(familyHowDoYouKnowTheSchoolWrap.o);
+		}
+		familyHowDoYouKnowTheSchoolWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool;
+	}
+
+	public String strFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool == null ? "" : familyHowDoYouKnowTheSchool;
+	}
+
+	public String jsonFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool == null ? "" : familyHowDoYouKnowTheSchool;
+	}
+
+	public String nomAffichageFamilyHowDoYouKnowTheSchool() {
+		return "how do you know the school? ";
+	}
+
+	public String htmTooltipFamilyHowDoYouKnowTheSchool() {
+		return null;
+	}
+
+	public String htmFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyHowDoYouKnowTheSchool());
+	}
+
+	public void htmFamilyHowDoYouKnowTheSchool(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "FamilyHowDoYouKnowTheSchool\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "FamilyHowDoYouKnowTheSchool() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilyHowDoYouKnowTheSchool\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyHowDoYouKnowTheSchool()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familyHowDoYouKnowTheSchool\"");
+							r.s(" value=\"", htmFamilyHowDoYouKnowTheSchool(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilyHowDoYouKnowTheSchool());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////////////////////
+	// enrollmentSpecialConsiderations //
+	/////////////////////////////////////
+
+	/**	L'entité « enrollmentSpecialConsiderations »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enrollmentSpecialConsiderations;
+	@JsonIgnore
+	public Wrap<String> enrollmentSpecialConsiderationsWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSpecialConsiderations").o(enrollmentSpecialConsiderations);
+
+	/**	<br/>L'entité « enrollmentSpecialConsiderations »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSpecialConsiderations">Trouver l'entité enrollmentSpecialConsiderations dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentSpecialConsiderations(Wrap<String> c);
+
+	public String getEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations;
+	}
+
+	public void setEnrollmentSpecialConsiderations(String enrollmentSpecialConsiderations) {
+		this.enrollmentSpecialConsiderations = enrollmentSpecialConsiderations;
+		this.enrollmentSpecialConsiderationsWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentSpecialConsiderationsInit() {
+		if(!enrollmentSpecialConsiderationsWrap.alreadyInitialized) {
+			_enrollmentSpecialConsiderations(enrollmentSpecialConsiderationsWrap);
+			if(enrollmentSpecialConsiderations == null)
+				setEnrollmentSpecialConsiderations(enrollmentSpecialConsiderationsWrap.o);
+		}
+		enrollmentSpecialConsiderationsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations;
+	}
+
+	public String strEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations == null ? "" : enrollmentSpecialConsiderations;
+	}
+
+	public String jsonEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations == null ? "" : enrollmentSpecialConsiderations;
+	}
+
+	public String nomAffichageEnrollmentSpecialConsiderations() {
+		return "special considerations";
+	}
+
+	public String htmTooltipEnrollmentSpecialConsiderations() {
+		return null;
+	}
+
+	public String htmEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentSpecialConsiderations());
+	}
+
+	public void htmEnrollmentSpecialConsiderations(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "EnrollmentSpecialConsiderations\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "EnrollmentSpecialConsiderations() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentSpecialConsiderations\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentSpecialConsiderations()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentSpecialConsiderations\"");
+							r.s(" value=\"", htmEnrollmentSpecialConsiderations(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentSpecialConsiderations());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////////
+	// enrollmentGroupName //
+	/////////////////////////
+
+	/**	L'entité « enrollmentGroupName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enrollmentGroupName;
+	@JsonIgnore
+	public Wrap<String> enrollmentGroupNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentGroupName").o(enrollmentGroupName);
+
+	/**	<br/>L'entité « enrollmentGroupName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroupName">Trouver l'entité enrollmentGroupName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentGroupName(Wrap<String> c);
+
+	public String getEnrollmentGroupName() {
+		return enrollmentGroupName;
+	}
+
+	public void setEnrollmentGroupName(String enrollmentGroupName) {
+		this.enrollmentGroupName = enrollmentGroupName;
+		this.enrollmentGroupNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentGroupNameInit() {
+		if(!enrollmentGroupNameWrap.alreadyInitialized) {
+			_enrollmentGroupName(enrollmentGroupNameWrap);
+			if(enrollmentGroupName == null)
+				setEnrollmentGroupName(enrollmentGroupNameWrap.o);
+		}
+		enrollmentGroupNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentGroupName() {
+		return enrollmentGroupName;
+	}
+
+	public String strEnrollmentGroupName() {
+		return enrollmentGroupName == null ? "" : enrollmentGroupName;
+	}
+
+	public String jsonEnrollmentGroupName() {
+		return enrollmentGroupName == null ? "" : enrollmentGroupName;
+	}
+
+	public String nomAffichageEnrollmentGroupName() {
+		return "group name";
+	}
+
+	public String htmTooltipEnrollmentGroupName() {
+		return null;
+	}
+
+	public String htmEnrollmentGroupName() {
+		return enrollmentGroupName == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentGroupName());
+	}
+
+	public void htmEnrollmentGroupName(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "EnrollmentGroupName\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "EnrollmentGroupName() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentGroupName\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentGroupName()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentGroupName\"");
+							r.s(" value=\"", htmEnrollmentGroupName(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentGroupName());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////////////////
+	// enrollmentPaymentEachMonth //
+	////////////////////////////////
+
+	/**	L'entité « enrollmentPaymentEachMonth »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean enrollmentPaymentEachMonth;
+	@JsonIgnore
+	public Wrap<Boolean> enrollmentPaymentEachMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentEachMonth").o(enrollmentPaymentEachMonth);
+
+	/**	<br/>L'entité « enrollmentPaymentEachMonth »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentEachMonth">Trouver l'entité enrollmentPaymentEachMonth dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentPaymentEachMonth(Wrap<Boolean> c);
+
+	public Boolean getEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth;
+	}
+
+	public void setEnrollmentPaymentEachMonth(Boolean enrollmentPaymentEachMonth) {
+		this.enrollmentPaymentEachMonth = enrollmentPaymentEachMonth;
+		this.enrollmentPaymentEachMonthWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setEnrollmentPaymentEachMonth(String o) {
+		this.enrollmentPaymentEachMonth = Boolean.parseBoolean(o);
+		this.enrollmentPaymentEachMonthWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentPaymentEachMonthInit() {
+		if(!enrollmentPaymentEachMonthWrap.alreadyInitialized) {
+			_enrollmentPaymentEachMonth(enrollmentPaymentEachMonthWrap);
+			if(enrollmentPaymentEachMonth == null)
+				setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonthWrap.o);
+		}
+		enrollmentPaymentEachMonthWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth;
+	}
+
+	public String strEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
+	}
+
+	public String jsonEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
+	}
+
+	public String nomAffichageEnrollmentPaymentEachMonth() {
+		return "payment each month";
+	}
+
+	public String htmTooltipEnrollmentPaymentEachMonth() {
+		return null;
+	}
+
+	public String htmEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPaymentEachMonth());
+	}
+
+	public void htmEnrollmentPaymentEachMonth(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "EnrollmentPaymentEachMonth\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "EnrollmentPaymentEachMonth() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentPaymentEachMonth\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentPaymentEachMonth()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentPaymentEachMonth\"");
+							r.s(" value=\"", htmEnrollmentPaymentEachMonth(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentPaymentEachMonth());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////////////////
+	// enrollmentPaymentComplete //
+	///////////////////////////////
+
+	/**	L'entité « enrollmentPaymentComplete »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean enrollmentPaymentComplete;
+	@JsonIgnore
+	public Wrap<Boolean> enrollmentPaymentCompleteWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentComplete").o(enrollmentPaymentComplete);
+
+	/**	<br/>L'entité « enrollmentPaymentComplete »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentComplete">Trouver l'entité enrollmentPaymentComplete dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentPaymentComplete(Wrap<Boolean> c);
+
+	public Boolean getEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete;
+	}
+
+	public void setEnrollmentPaymentComplete(Boolean enrollmentPaymentComplete) {
+		this.enrollmentPaymentComplete = enrollmentPaymentComplete;
+		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setEnrollmentPaymentComplete(String o) {
+		this.enrollmentPaymentComplete = Boolean.parseBoolean(o);
+		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentPaymentCompleteInit() {
+		if(!enrollmentPaymentCompleteWrap.alreadyInitialized) {
+			_enrollmentPaymentComplete(enrollmentPaymentCompleteWrap);
+			if(enrollmentPaymentComplete == null)
+				setEnrollmentPaymentComplete(enrollmentPaymentCompleteWrap.o);
+		}
+		enrollmentPaymentCompleteWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete;
+	}
+
+	public String strEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
+	}
+
+	public String jsonEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
+	}
+
+	public String nomAffichageEnrollmentPaymentComplete() {
+		return "complete payment";
+	}
+
+	public String htmTooltipEnrollmentPaymentComplete() {
+		return null;
+	}
+
+	public String htmEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPaymentComplete());
+	}
+
+	public void htmEnrollmentPaymentComplete(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "EnrollmentPaymentComplete\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "EnrollmentPaymentComplete() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentPaymentComplete\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentPaymentComplete()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentPaymentComplete\"");
+							r.s(" value=\"", htmEnrollmentPaymentComplete(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentPaymentComplete());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////////////
 	// enrollmentCompleteName //
 	////////////////////////////
@@ -5770,7 +6605,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		dadKeysInit();
 		guardianKeysInit();
 		paymentKeysInit();
-		familyKeyInit();
 		educationSortInit();
 		schoolSortInit();
 		yearSortInit();
@@ -5805,6 +6639,15 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		blockSaturdayInit();
 		enrollmentApprovedInit();
 		enrollmentImmunizationsInit();
+		familyMarriedInit();
+		familySeparatedInit();
+		familyDivorcedInit();
+		familyAddressInit();
+		familyHowDoYouKnowTheSchoolInit();
+		enrollmentSpecialConsiderationsInit();
+		enrollmentGroupNameInit();
+		enrollmentPaymentEachMonthInit();
+		enrollmentPaymentCompleteInit();
 		enrollmentCompleteNameInit();
 		enrollmentIdInit();
 		pageUrlInit();
@@ -5883,8 +6726,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.guardianKeys;
 			case "paymentKeys":
 				return oSchoolEnrollment.paymentKeys;
-			case "familyKey":
-				return oSchoolEnrollment.familyKey;
 			case "educationSort":
 				return oSchoolEnrollment.educationSort;
 			case "schoolSort":
@@ -5953,6 +6794,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentApproved;
 			case "enrollmentImmunizations":
 				return oSchoolEnrollment.enrollmentImmunizations;
+			case "familyMarried":
+				return oSchoolEnrollment.familyMarried;
+			case "familySeparated":
+				return oSchoolEnrollment.familySeparated;
+			case "familyDivorced":
+				return oSchoolEnrollment.familyDivorced;
+			case "familyAddress":
+				return oSchoolEnrollment.familyAddress;
+			case "familyHowDoYouKnowTheSchool":
+				return oSchoolEnrollment.familyHowDoYouKnowTheSchool;
+			case "enrollmentSpecialConsiderations":
+				return oSchoolEnrollment.enrollmentSpecialConsiderations;
+			case "enrollmentGroupName":
+				return oSchoolEnrollment.enrollmentGroupName;
+			case "enrollmentPaymentEachMonth":
+				return oSchoolEnrollment.enrollmentPaymentEachMonth;
+			case "enrollmentPaymentComplete":
+				return oSchoolEnrollment.enrollmentPaymentComplete;
 			case "enrollmentCompleteName":
 				return oSchoolEnrollment.enrollmentCompleteName;
 			case "enrollmentId":
@@ -6030,24 +6889,48 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	public Object defineSchoolEnrollment(String var, String val) {
 		switch(var) {
-			case "blockStartTime":
-				setBlockStartTime(val);
-				savesSchoolEnrollment.add(var);
-				return val;
-			case "blockEndTime":
-				setBlockEndTime(val);
-				savesSchoolEnrollment.add(var);
-				return val;
-			case "blockPricePerMonth":
-				setBlockPricePerMonth(val);
-				savesSchoolEnrollment.add(var);
-				return val;
 			case "enrollmentApproved":
 				setEnrollmentApproved(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			case "enrollmentImmunizations":
 				setEnrollmentImmunizations(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "familyMarried":
+				setFamilyMarried(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "familySeparated":
+				setFamilySeparated(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "familyDivorced":
+				setFamilyDivorced(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "familyAddress":
+				setFamilyAddress(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "familyHowDoYouKnowTheSchool":
+				setFamilyHowDoYouKnowTheSchool(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentSpecialConsiderations":
+				setEnrollmentSpecialConsiderations(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentGroupName":
+				setEnrollmentGroupName(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentPaymentEachMonth":
+				setEnrollmentPaymentEachMonth(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentPaymentComplete":
+				setEnrollmentPaymentComplete(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			default:
@@ -6132,12 +7015,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			List<Long> paymentKeys = (List<Long>)solrDocument.get("paymentKeys_stored_longs");
 			if(paymentKeys != null)
 				oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
-
-			if(savesSchoolEnrollment.contains("familyKey")) {
-				Long familyKey = (Long)solrDocument.get("familyKey_stored_long");
-				if(familyKey != null)
-					oSchoolEnrollment.setFamilyKey(familyKey);
-			}
 
 			if(savesSchoolEnrollment.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -6331,6 +7208,60 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentImmunizations(enrollmentImmunizations);
 			}
 
+			if(savesSchoolEnrollment.contains("familyMarried")) {
+				Boolean familyMarried = (Boolean)solrDocument.get("familyMarried_stored_boolean");
+				if(familyMarried != null)
+					oSchoolEnrollment.setFamilyMarried(familyMarried);
+			}
+
+			if(savesSchoolEnrollment.contains("familySeparated")) {
+				Boolean familySeparated = (Boolean)solrDocument.get("familySeparated_stored_boolean");
+				if(familySeparated != null)
+					oSchoolEnrollment.setFamilySeparated(familySeparated);
+			}
+
+			if(savesSchoolEnrollment.contains("familyDivorced")) {
+				Boolean familyDivorced = (Boolean)solrDocument.get("familyDivorced_stored_boolean");
+				if(familyDivorced != null)
+					oSchoolEnrollment.setFamilyDivorced(familyDivorced);
+			}
+
+			if(savesSchoolEnrollment.contains("familyAddress")) {
+				String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
+				if(familyAddress != null)
+					oSchoolEnrollment.setFamilyAddress(familyAddress);
+			}
+
+			if(savesSchoolEnrollment.contains("familyHowDoYouKnowTheSchool")) {
+				String familyHowDoYouKnowTheSchool = (String)solrDocument.get("familyHowDoYouKnowTheSchool_stored_string");
+				if(familyHowDoYouKnowTheSchool != null)
+					oSchoolEnrollment.setFamilyHowDoYouKnowTheSchool(familyHowDoYouKnowTheSchool);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentSpecialConsiderations")) {
+				String enrollmentSpecialConsiderations = (String)solrDocument.get("enrollmentSpecialConsiderations_stored_string");
+				if(enrollmentSpecialConsiderations != null)
+					oSchoolEnrollment.setEnrollmentSpecialConsiderations(enrollmentSpecialConsiderations);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentGroupName")) {
+				String enrollmentGroupName = (String)solrDocument.get("enrollmentGroupName_stored_string");
+				if(enrollmentGroupName != null)
+					oSchoolEnrollment.setEnrollmentGroupName(enrollmentGroupName);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentPaymentEachMonth")) {
+				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
+				if(enrollmentPaymentEachMonth != null)
+					oSchoolEnrollment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentPaymentComplete")) {
+				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
+				if(enrollmentPaymentComplete != null)
+					oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
+			}
+
 			if(savesSchoolEnrollment.contains("enrollmentCompleteName")) {
 				String enrollmentCompleteName = (String)solrDocument.get("enrollmentCompleteName_stored_string");
 				if(enrollmentCompleteName != null)
@@ -6491,10 +7422,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				document.addField("paymentKeys_stored_longs", o);
 			}
 		}
-		if(familyKey != null) {
-			document.addField("familyKey_indexed_long", familyKey);
-			document.addField("familyKey_stored_long", familyKey);
-		}
 		if(educationSort != null) {
 			document.addField("educationSort_indexed_int", educationSort);
 			document.addField("educationSort_stored_int", educationSort);
@@ -6623,6 +7550,42 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentImmunizations_indexed_boolean", enrollmentImmunizations);
 			document.addField("enrollmentImmunizations_stored_boolean", enrollmentImmunizations);
 		}
+		if(familyMarried != null) {
+			document.addField("familyMarried_indexed_boolean", familyMarried);
+			document.addField("familyMarried_stored_boolean", familyMarried);
+		}
+		if(familySeparated != null) {
+			document.addField("familySeparated_indexed_boolean", familySeparated);
+			document.addField("familySeparated_stored_boolean", familySeparated);
+		}
+		if(familyDivorced != null) {
+			document.addField("familyDivorced_indexed_boolean", familyDivorced);
+			document.addField("familyDivorced_stored_boolean", familyDivorced);
+		}
+		if(familyAddress != null) {
+			document.addField("familyAddress_indexed_string", familyAddress);
+			document.addField("familyAddress_stored_string", familyAddress);
+		}
+		if(familyHowDoYouKnowTheSchool != null) {
+			document.addField("familyHowDoYouKnowTheSchool_indexed_string", familyHowDoYouKnowTheSchool);
+			document.addField("familyHowDoYouKnowTheSchool_stored_string", familyHowDoYouKnowTheSchool);
+		}
+		if(enrollmentSpecialConsiderations != null) {
+			document.addField("enrollmentSpecialConsiderations_indexed_string", enrollmentSpecialConsiderations);
+			document.addField("enrollmentSpecialConsiderations_stored_string", enrollmentSpecialConsiderations);
+		}
+		if(enrollmentGroupName != null) {
+			document.addField("enrollmentGroupName_indexed_string", enrollmentGroupName);
+			document.addField("enrollmentGroupName_stored_string", enrollmentGroupName);
+		}
+		if(enrollmentPaymentEachMonth != null) {
+			document.addField("enrollmentPaymentEachMonth_indexed_boolean", enrollmentPaymentEachMonth);
+			document.addField("enrollmentPaymentEachMonth_stored_boolean", enrollmentPaymentEachMonth);
+		}
+		if(enrollmentPaymentComplete != null) {
+			document.addField("enrollmentPaymentComplete_indexed_boolean", enrollmentPaymentComplete);
+			document.addField("enrollmentPaymentComplete_stored_boolean", enrollmentPaymentComplete);
+		}
 		if(enrollmentCompleteName != null) {
 			document.addField("enrollmentCompleteName_indexed_string", enrollmentCompleteName);
 			document.addField("enrollmentCompleteName_stored_string", enrollmentCompleteName);
@@ -6717,10 +7680,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		List<Long> paymentKeys = (List<Long>)solrDocument.get("paymentKeys_stored_longs");
 		if(paymentKeys != null)
 			oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
-
-		Long familyKey = (Long)solrDocument.get("familyKey_stored_long");
-		if(familyKey != null)
-			oSchoolEnrollment.setFamilyKey(familyKey);
 
 		Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 		if(educationSort != null)
@@ -6850,6 +7809,42 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentImmunizations != null)
 			oSchoolEnrollment.setEnrollmentImmunizations(enrollmentImmunizations);
 
+		Boolean familyMarried = (Boolean)solrDocument.get("familyMarried_stored_boolean");
+		if(familyMarried != null)
+			oSchoolEnrollment.setFamilyMarried(familyMarried);
+
+		Boolean familySeparated = (Boolean)solrDocument.get("familySeparated_stored_boolean");
+		if(familySeparated != null)
+			oSchoolEnrollment.setFamilySeparated(familySeparated);
+
+		Boolean familyDivorced = (Boolean)solrDocument.get("familyDivorced_stored_boolean");
+		if(familyDivorced != null)
+			oSchoolEnrollment.setFamilyDivorced(familyDivorced);
+
+		String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
+		if(familyAddress != null)
+			oSchoolEnrollment.setFamilyAddress(familyAddress);
+
+		String familyHowDoYouKnowTheSchool = (String)solrDocument.get("familyHowDoYouKnowTheSchool_stored_string");
+		if(familyHowDoYouKnowTheSchool != null)
+			oSchoolEnrollment.setFamilyHowDoYouKnowTheSchool(familyHowDoYouKnowTheSchool);
+
+		String enrollmentSpecialConsiderations = (String)solrDocument.get("enrollmentSpecialConsiderations_stored_string");
+		if(enrollmentSpecialConsiderations != null)
+			oSchoolEnrollment.setEnrollmentSpecialConsiderations(enrollmentSpecialConsiderations);
+
+		String enrollmentGroupName = (String)solrDocument.get("enrollmentGroupName_stored_string");
+		if(enrollmentGroupName != null)
+			oSchoolEnrollment.setEnrollmentGroupName(enrollmentGroupName);
+
+		Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
+		if(enrollmentPaymentEachMonth != null)
+			oSchoolEnrollment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
+
+		Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
+		if(enrollmentPaymentComplete != null)
+			oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
+
 		String enrollmentCompleteName = (String)solrDocument.get("enrollmentCompleteName_stored_string");
 		if(enrollmentCompleteName != null)
 			oSchoolEnrollment.setEnrollmentCompleteName(enrollmentCompleteName);
@@ -6873,7 +7868,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, blockStartTime, blockEndTime, blockPricePerMonth, enrollmentApproved, enrollmentImmunizations);
+		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
 	}
 
 	////////////
@@ -6893,11 +7888,17 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( dadKeys, that.dadKeys )
 				&& Objects.equals( guardianKeys, that.guardianKeys )
 				&& Objects.equals( paymentKeys, that.paymentKeys )
-				&& Objects.equals( blockStartTime, that.blockStartTime )
-				&& Objects.equals( blockEndTime, that.blockEndTime )
-				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
 				&& Objects.equals( enrollmentApproved, that.enrollmentApproved )
-				&& Objects.equals( enrollmentImmunizations, that.enrollmentImmunizations );
+				&& Objects.equals( enrollmentImmunizations, that.enrollmentImmunizations )
+				&& Objects.equals( familyMarried, that.familyMarried )
+				&& Objects.equals( familySeparated, that.familySeparated )
+				&& Objects.equals( familyDivorced, that.familyDivorced )
+				&& Objects.equals( familyAddress, that.familyAddress )
+				&& Objects.equals( familyHowDoYouKnowTheSchool, that.familyHowDoYouKnowTheSchool )
+				&& Objects.equals( enrollmentSpecialConsiderations, that.enrollmentSpecialConsiderations )
+				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
+				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
+				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete );
 	}
 
 	//////////////
@@ -6914,11 +7915,17 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", dadKeys: " ).append(dadKeys);
 		sb.append( ", guardianKeys: " ).append(guardianKeys);
 		sb.append( ", paymentKeys: " ).append(paymentKeys);
-		sb.append( ", blockStartTime: " ).append(blockStartTime);
-		sb.append( ", blockEndTime: " ).append(blockEndTime);
-		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
 		sb.append( ", enrollmentApproved: " ).append(enrollmentApproved);
 		sb.append( ", enrollmentImmunizations: " ).append(enrollmentImmunizations);
+		sb.append( ", familyMarried: " ).append(familyMarried);
+		sb.append( ", familySeparated: " ).append(familySeparated);
+		sb.append( ", familyDivorced: " ).append(familyDivorced);
+		sb.append( ", familyAddress: \"" ).append(familyAddress).append( "\"" );
+		sb.append( ", familyHowDoYouKnowTheSchool: \"" ).append(familyHowDoYouKnowTheSchool).append( "\"" );
+		sb.append( ", enrollmentSpecialConsiderations: \"" ).append(enrollmentSpecialConsiderations).append( "\"" );
+		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
+		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
+		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
 		sb.append(" }");
 		return sb.toString();
 	}

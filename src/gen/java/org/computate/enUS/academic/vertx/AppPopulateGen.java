@@ -1,17 +1,21 @@
 package org.computate.enUS.academic.vertx;
 
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import java.lang.Exception;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.apache.commons.lang3.StringUtils;
-import java.lang.Exception;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.enUS.academic.vertx.AppPopulate&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -27,6 +31,7 @@ public abstract class AppPopulateGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -63,6 +68,7 @@ public abstract class AppPopulateGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContextEnUS(). 
 	 */
 	protected SiteContextEnUS siteContext = new SiteContextEnUS();
+	@JsonIgnore
 	public Wrap<SiteContextEnUS> siteContextWrap = new Wrap<SiteContextEnUS>().p(this).c(SiteContextEnUS.class).var("siteContext").o(siteContext);
 
 	/**	<br/>L'entité « siteContext »
@@ -98,6 +104,7 @@ public abstract class AppPopulateGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteConfig siteConfig;
+	@JsonIgnore
 	public Wrap<SiteConfig> siteConfigWrap = new Wrap<SiteConfig>().p(this).c(SiteConfig.class).var("siteConfig").o(siteConfig);
 
 	/**	<br/>L'entité « siteConfig »
@@ -277,7 +284,7 @@ public abstract class AppPopulateGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AppPopulate {");
+		sb.append("AppPopulate { ");
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -216,6 +216,9 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: yearShortName
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 3
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 * r: anneeFin
@@ -319,7 +322,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * VarUrl: true
 	 * r: anneeId
 	 * r.enUS: yearId
-	 * r: /frFR/annee/
+	 * r: /annee/
 	 * r.enUS: /year/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
@@ -330,7 +333,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
 		if(anneeId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/annee/" + anneeId;
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/annee/" + anneeId;
 			c.o(o);
 		}
 	}

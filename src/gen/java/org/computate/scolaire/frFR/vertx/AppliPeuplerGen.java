@@ -1,17 +1,21 @@
 package org.computate.scolaire.frFR.vertx;
 
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import java.lang.Exception;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.apache.commons.lang3.StringUtils;
-import java.lang.Exception;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliPeupler&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -27,6 +31,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -63,6 +68,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContexteFrFR(). 
 	 */
 	protected SiteContexteFrFR siteContexte = new SiteContexteFrFR();
+	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexteCouverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte").o(siteContexte);
 
 	/**	<br/>L'entité « siteContexte »
@@ -98,6 +104,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ConfigSite configSite;
+	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
 
 	/**	<br/>L'entité « configSite »
@@ -277,7 +284,7 @@ public abstract class AppliPeuplerGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AppliPeupler {");
+		sb.append("AppliPeupler { ");
 		sb.append(" }");
 		return sb.toString();
 	}

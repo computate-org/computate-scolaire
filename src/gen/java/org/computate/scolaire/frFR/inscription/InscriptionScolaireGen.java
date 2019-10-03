@@ -1645,114 +1645,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////
-	// familleCle //
-	////////////////
-
-	/**	L'entité « familleCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long familleCle;
-	@JsonIgnore
-	public Couverture<Long> familleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("familleCle").o(familleCle);
-
-	/**	<br/>L'entité « familleCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleCle">Trouver l'entité familleCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _familleCle(Couverture<Long> c);
-
-	public Long getFamilleCle() {
-		return familleCle;
-	}
-
-	public void setFamilleCle(Long familleCle) {
-		this.familleCle = familleCle;
-		this.familleCleCouverture.dejaInitialise = true;
-	}
-	public InscriptionScolaire setFamilleCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.familleCle = Long.parseLong(o);
-		this.familleCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
-	}
-	protected InscriptionScolaire familleCleInit() {
-		if(!familleCleCouverture.dejaInitialise) {
-			_familleCle(familleCleCouverture);
-			if(familleCle == null)
-				setFamilleCle(familleCleCouverture.o);
-		}
-		familleCleCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public Long solrFamilleCle() {
-		return familleCle;
-	}
-
-	public String strFamilleCle() {
-		return familleCle == null ? "" : familleCle.toString();
-	}
-
-	public String jsonFamilleCle() {
-		return familleCle == null ? "" : familleCle.toString();
-	}
-
-	public String nomAffichageFamilleCle() {
-		return "famille";
-	}
-
-	public String htmTooltipFamilleCle() {
-		return null;
-	}
-
-	public String htmFamilleCle() {
-		return familleCle == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleCle());
-	}
-
-	public void htmFamilleCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "FamilleCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setFamilleCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"familleCle\"");
-							r.s(" value=\"", htmFamilleCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmFamilleCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////
 	// scolaireTri //
 	/////////////////
@@ -5327,6 +5219,949 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////////
+	// familleMarie //
+	//////////////////
+
+	/**	L'entité « familleMarie »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familleMarie;
+	@JsonIgnore
+	public Couverture<Boolean> familleMarieCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleMarie").o(familleMarie);
+
+	/**	<br/>L'entité « familleMarie »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleMarie">Trouver l'entité familleMarie dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleMarie(Couverture<Boolean> c);
+
+	public Boolean getFamilleMarie() {
+		return familleMarie;
+	}
+
+	public void setFamilleMarie(Boolean familleMarie) {
+		this.familleMarie = familleMarie;
+		this.familleMarieCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setFamilleMarie(String o) {
+		this.familleMarie = Boolean.parseBoolean(o);
+		this.familleMarieCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire familleMarieInit() {
+		if(!familleMarieCouverture.dejaInitialise) {
+			_familleMarie(familleMarieCouverture);
+			if(familleMarie == null)
+				setFamilleMarie(familleMarieCouverture.o);
+		}
+		familleMarieCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrFamilleMarie() {
+		return familleMarie;
+	}
+
+	public String strFamilleMarie() {
+		return familleMarie == null ? "" : familleMarie.toString();
+	}
+
+	public String jsonFamilleMarie() {
+		return familleMarie == null ? "" : familleMarie.toString();
+	}
+
+	public String nomAffichageFamilleMarie() {
+		return "marié";
+	}
+
+	public String htmTooltipFamilleMarie() {
+		return null;
+	}
+
+	public String htmFamilleMarie() {
+		return familleMarie == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleMarie());
+	}
+
+	public void htmFamilleMarie(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleMarie\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FamilleMarie() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilleMarie\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleMarie()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familleMarie\"");
+							r.s(" value=\"", htmFamilleMarie(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilleMarie());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////
+	// familleSepare //
+	///////////////////
+
+	/**	L'entité « familleSepare »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familleSepare;
+	@JsonIgnore
+	public Couverture<Boolean> familleSepareCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleSepare").o(familleSepare);
+
+	/**	<br/>L'entité « familleSepare »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleSepare">Trouver l'entité familleSepare dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleSepare(Couverture<Boolean> c);
+
+	public Boolean getFamilleSepare() {
+		return familleSepare;
+	}
+
+	public void setFamilleSepare(Boolean familleSepare) {
+		this.familleSepare = familleSepare;
+		this.familleSepareCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setFamilleSepare(String o) {
+		this.familleSepare = Boolean.parseBoolean(o);
+		this.familleSepareCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire familleSepareInit() {
+		if(!familleSepareCouverture.dejaInitialise) {
+			_familleSepare(familleSepareCouverture);
+			if(familleSepare == null)
+				setFamilleSepare(familleSepareCouverture.o);
+		}
+		familleSepareCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrFamilleSepare() {
+		return familleSepare;
+	}
+
+	public String strFamilleSepare() {
+		return familleSepare == null ? "" : familleSepare.toString();
+	}
+
+	public String jsonFamilleSepare() {
+		return familleSepare == null ? "" : familleSepare.toString();
+	}
+
+	public String nomAffichageFamilleSepare() {
+		return "séparé";
+	}
+
+	public String htmTooltipFamilleSepare() {
+		return null;
+	}
+
+	public String htmFamilleSepare() {
+		return familleSepare == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleSepare());
+	}
+
+	public void htmFamilleSepare(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleSepare\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FamilleSepare() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilleSepare\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleSepare()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familleSepare\"");
+							r.s(" value=\"", htmFamilleSepare(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilleSepare());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////
+	// familleDivorce //
+	////////////////////
+
+	/**	L'entité « familleDivorce »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean familleDivorce;
+	@JsonIgnore
+	public Couverture<Boolean> familleDivorceCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("familleDivorce").o(familleDivorce);
+
+	/**	<br/>L'entité « familleDivorce »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleDivorce">Trouver l'entité familleDivorce dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleDivorce(Couverture<Boolean> c);
+
+	public Boolean getFamilleDivorce() {
+		return familleDivorce;
+	}
+
+	public void setFamilleDivorce(Boolean familleDivorce) {
+		this.familleDivorce = familleDivorce;
+		this.familleDivorceCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setFamilleDivorce(String o) {
+		this.familleDivorce = Boolean.parseBoolean(o);
+		this.familleDivorceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire familleDivorceInit() {
+		if(!familleDivorceCouverture.dejaInitialise) {
+			_familleDivorce(familleDivorceCouverture);
+			if(familleDivorce == null)
+				setFamilleDivorce(familleDivorceCouverture.o);
+		}
+		familleDivorceCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrFamilleDivorce() {
+		return familleDivorce;
+	}
+
+	public String strFamilleDivorce() {
+		return familleDivorce == null ? "" : familleDivorce.toString();
+	}
+
+	public String jsonFamilleDivorce() {
+		return familleDivorce == null ? "" : familleDivorce.toString();
+	}
+
+	public String nomAffichageFamilleDivorce() {
+		return "divorcé";
+	}
+
+	public String htmTooltipFamilleDivorce() {
+		return null;
+	}
+
+	public String htmFamilleDivorce() {
+		return familleDivorce == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleDivorce());
+	}
+
+	public void htmFamilleDivorce(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleDivorce\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FamilleDivorce() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilleDivorce\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleDivorce()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familleDivorce\"");
+							r.s(" value=\"", htmFamilleDivorce(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilleDivorce());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////
+	// familleAddresse //
+	/////////////////////
+
+	/**	L'entité « familleAddresse »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String familleAddresse;
+	@JsonIgnore
+	public Couverture<String> familleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("familleAddresse").o(familleAddresse);
+
+	/**	<br/>L'entité « familleAddresse »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleAddresse">Trouver l'entité familleAddresse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleAddresse(Couverture<String> c);
+
+	public String getFamilleAddresse() {
+		return familleAddresse;
+	}
+
+	public void setFamilleAddresse(String familleAddresse) {
+		this.familleAddresse = familleAddresse;
+		this.familleAddresseCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire familleAddresseInit() {
+		if(!familleAddresseCouverture.dejaInitialise) {
+			_familleAddresse(familleAddresseCouverture);
+			if(familleAddresse == null)
+				setFamilleAddresse(familleAddresseCouverture.o);
+		}
+		familleAddresseCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrFamilleAddresse() {
+		return familleAddresse;
+	}
+
+	public String strFamilleAddresse() {
+		return familleAddresse == null ? "" : familleAddresse;
+	}
+
+	public String jsonFamilleAddresse() {
+		return familleAddresse == null ? "" : familleAddresse;
+	}
+
+	public String nomAffichageFamilleAddresse() {
+		return "addresse de la famille";
+	}
+
+	public String htmTooltipFamilleAddresse() {
+		return null;
+	}
+
+	public String htmFamilleAddresse() {
+		return familleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleAddresse());
+	}
+
+	public void htmFamilleAddresse(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleAddresse\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FamilleAddresse() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilleAddresse\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleAddresse()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familleAddresse\"");
+							r.s(" value=\"", htmFamilleAddresse(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilleAddresse());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////////////////////////
+	// familleCommentVousConnaissezEcole //
+	///////////////////////////////////////
+
+	/**	L'entité « familleCommentVousConnaissezEcole »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String familleCommentVousConnaissezEcole;
+	@JsonIgnore
+	public Couverture<String> familleCommentVousConnaissezEcoleCouverture = new Couverture<String>().p(this).c(String.class).var("familleCommentVousConnaissezEcole").o(familleCommentVousConnaissezEcole);
+
+	/**	<br/>L'entité « familleCommentVousConnaissezEcole »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleCommentVousConnaissezEcole">Trouver l'entité familleCommentVousConnaissezEcole dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleCommentVousConnaissezEcole(Couverture<String> c);
+
+	public String getFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole;
+	}
+
+	public void setFamilleCommentVousConnaissezEcole(String familleCommentVousConnaissezEcole) {
+		this.familleCommentVousConnaissezEcole = familleCommentVousConnaissezEcole;
+		this.familleCommentVousConnaissezEcoleCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire familleCommentVousConnaissezEcoleInit() {
+		if(!familleCommentVousConnaissezEcoleCouverture.dejaInitialise) {
+			_familleCommentVousConnaissezEcole(familleCommentVousConnaissezEcoleCouverture);
+			if(familleCommentVousConnaissezEcole == null)
+				setFamilleCommentVousConnaissezEcole(familleCommentVousConnaissezEcoleCouverture.o);
+		}
+		familleCommentVousConnaissezEcoleCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole;
+	}
+
+	public String strFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole == null ? "" : familleCommentVousConnaissezEcole;
+	}
+
+	public String jsonFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole == null ? "" : familleCommentVousConnaissezEcole;
+	}
+
+	public String nomAffichageFamilleCommentVousConnaissezEcole() {
+		return "comment vous connaissez l'école ? ";
+	}
+
+	public String htmTooltipFamilleCommentVousConnaissezEcole() {
+		return null;
+	}
+
+	public String htmFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleCommentVousConnaissezEcole());
+	}
+
+	public void htmFamilleCommentVousConnaissezEcole(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FamilleCommentVousConnaissezEcole\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FamilleCommentVousConnaissezEcole() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFamilleCommentVousConnaissezEcole\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilleCommentVousConnaissezEcole()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"familleCommentVousConnaissezEcole\"");
+							r.s(" value=\"", htmFamilleCommentVousConnaissezEcole(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFamilleCommentVousConnaissezEcole());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////////////////////////
+	// inscriptionConsiderationsSpeciales //
+	////////////////////////////////////////
+
+	/**	L'entité « inscriptionConsiderationsSpeciales »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String inscriptionConsiderationsSpeciales;
+	@JsonIgnore
+	public Couverture<String> inscriptionConsiderationsSpecialesCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionConsiderationsSpeciales").o(inscriptionConsiderationsSpeciales);
+
+	/**	<br/>L'entité « inscriptionConsiderationsSpeciales »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionConsiderationsSpeciales">Trouver l'entité inscriptionConsiderationsSpeciales dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionConsiderationsSpeciales(Couverture<String> c);
+
+	public String getInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales;
+	}
+
+	public void setInscriptionConsiderationsSpeciales(String inscriptionConsiderationsSpeciales) {
+		this.inscriptionConsiderationsSpeciales = inscriptionConsiderationsSpeciales;
+		this.inscriptionConsiderationsSpecialesCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionConsiderationsSpecialesInit() {
+		if(!inscriptionConsiderationsSpecialesCouverture.dejaInitialise) {
+			_inscriptionConsiderationsSpeciales(inscriptionConsiderationsSpecialesCouverture);
+			if(inscriptionConsiderationsSpeciales == null)
+				setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpecialesCouverture.o);
+		}
+		inscriptionConsiderationsSpecialesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales;
+	}
+
+	public String strInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales == null ? "" : inscriptionConsiderationsSpeciales;
+	}
+
+	public String jsonInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales == null ? "" : inscriptionConsiderationsSpeciales;
+	}
+
+	public String nomAffichageInscriptionConsiderationsSpeciales() {
+		return "considérations spéciale";
+	}
+
+	public String htmTooltipInscriptionConsiderationsSpeciales() {
+		return null;
+	}
+
+	public String htmInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionConsiderationsSpeciales());
+	}
+
+	public void htmInscriptionConsiderationsSpeciales(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionConsiderationsSpeciales\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionConsiderationsSpeciales() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setInscriptionConsiderationsSpeciales\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionConsiderationsSpeciales()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"inscriptionConsiderationsSpeciales\"");
+							r.s(" value=\"", htmInscriptionConsiderationsSpeciales(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmInscriptionConsiderationsSpeciales());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////////
+	// inscriptionNomGroupe //
+	//////////////////////////
+
+	/**	L'entité « inscriptionNomGroupe »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String inscriptionNomGroupe;
+	@JsonIgnore
+	public Couverture<String> inscriptionNomGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomGroupe").o(inscriptionNomGroupe);
+
+	/**	<br/>L'entité « inscriptionNomGroupe »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNomGroupe">Trouver l'entité inscriptionNomGroupe dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionNomGroupe(Couverture<String> c);
+
+	public String getInscriptionNomGroupe() {
+		return inscriptionNomGroupe;
+	}
+
+	public void setInscriptionNomGroupe(String inscriptionNomGroupe) {
+		this.inscriptionNomGroupe = inscriptionNomGroupe;
+		this.inscriptionNomGroupeCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionNomGroupeInit() {
+		if(!inscriptionNomGroupeCouverture.dejaInitialise) {
+			_inscriptionNomGroupe(inscriptionNomGroupeCouverture);
+			if(inscriptionNomGroupe == null)
+				setInscriptionNomGroupe(inscriptionNomGroupeCouverture.o);
+		}
+		inscriptionNomGroupeCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionNomGroupe() {
+		return inscriptionNomGroupe;
+	}
+
+	public String strInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : inscriptionNomGroupe;
+	}
+
+	public String jsonInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : inscriptionNomGroupe;
+	}
+
+	public String nomAffichageInscriptionNomGroupe() {
+		return "nom du groupe";
+	}
+
+	public String htmTooltipInscriptionNomGroupe() {
+		return null;
+	}
+
+	public String htmInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomGroupe());
+	}
+
+	public void htmInscriptionNomGroupe(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionNomGroupe\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionNomGroupe() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setInscriptionNomGroupe\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionNomGroupe()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"inscriptionNomGroupe\"");
+							r.s(" value=\"", htmInscriptionNomGroupe(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmInscriptionNomGroupe());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////////////////
+	// inscriptionPaimentChaqueMois //
+	//////////////////////////////////
+
+	/**	L'entité « inscriptionPaimentChaqueMois »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean inscriptionPaimentChaqueMois;
+	@JsonIgnore
+	public Couverture<Boolean> inscriptionPaimentChaqueMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentChaqueMois").o(inscriptionPaimentChaqueMois);
+
+	/**	<br/>L'entité « inscriptionPaimentChaqueMois »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentChaqueMois">Trouver l'entité inscriptionPaimentChaqueMois dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionPaimentChaqueMois(Couverture<Boolean> c);
+
+	public Boolean getInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois;
+	}
+
+	public void setInscriptionPaimentChaqueMois(Boolean inscriptionPaimentChaqueMois) {
+		this.inscriptionPaimentChaqueMois = inscriptionPaimentChaqueMois;
+		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setInscriptionPaimentChaqueMois(String o) {
+		this.inscriptionPaimentChaqueMois = Boolean.parseBoolean(o);
+		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionPaimentChaqueMoisInit() {
+		if(!inscriptionPaimentChaqueMoisCouverture.dejaInitialise) {
+			_inscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture);
+			if(inscriptionPaimentChaqueMois == null)
+				setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture.o);
+		}
+		inscriptionPaimentChaqueMoisCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois;
+	}
+
+	public String strInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
+	}
+
+	public String jsonInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
+	}
+
+	public String nomAffichageInscriptionPaimentChaqueMois() {
+		return "paiement chaque mois";
+	}
+
+	public String htmTooltipInscriptionPaimentChaqueMois() {
+		return null;
+	}
+
+	public String htmInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentChaqueMois());
+	}
+
+	public void htmInscriptionPaimentChaqueMois(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionPaimentChaqueMois\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionPaimentChaqueMois() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setInscriptionPaimentChaqueMois\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionPaimentChaqueMois()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"inscriptionPaimentChaqueMois\"");
+							r.s(" value=\"", htmInscriptionPaimentChaqueMois(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmInscriptionPaimentChaqueMois());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////////////////
+	// inscriptionPaimentComplet //
+	///////////////////////////////
+
+	/**	L'entité « inscriptionPaimentComplet »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean inscriptionPaimentComplet;
+	@JsonIgnore
+	public Couverture<Boolean> inscriptionPaimentCompletCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentComplet").o(inscriptionPaimentComplet);
+
+	/**	<br/>L'entité « inscriptionPaimentComplet »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentComplet">Trouver l'entité inscriptionPaimentComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionPaimentComplet(Couverture<Boolean> c);
+
+	public Boolean getInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet;
+	}
+
+	public void setInscriptionPaimentComplet(Boolean inscriptionPaimentComplet) {
+		this.inscriptionPaimentComplet = inscriptionPaimentComplet;
+		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setInscriptionPaimentComplet(String o) {
+		this.inscriptionPaimentComplet = Boolean.parseBoolean(o);
+		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionPaimentCompletInit() {
+		if(!inscriptionPaimentCompletCouverture.dejaInitialise) {
+			_inscriptionPaimentComplet(inscriptionPaimentCompletCouverture);
+			if(inscriptionPaimentComplet == null)
+				setInscriptionPaimentComplet(inscriptionPaimentCompletCouverture.o);
+		}
+		inscriptionPaimentCompletCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet;
+	}
+
+	public String strInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
+	}
+
+	public String jsonInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
+	}
+
+	public String nomAffichageInscriptionPaimentComplet() {
+		return "paiement complet";
+	}
+
+	public String htmTooltipInscriptionPaimentComplet() {
+		return null;
+	}
+
+	public String htmInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentComplet());
+	}
+
+	public void htmInscriptionPaimentComplet(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionPaimentComplet\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionPaimentComplet() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setInscriptionPaimentComplet\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionPaimentComplet()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"inscriptionPaimentComplet\"");
+							r.s(" value=\"", htmInscriptionPaimentComplet(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmInscriptionPaimentComplet());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////////////
 	// inscriptionNomComplet //
 	///////////////////////////
@@ -5771,7 +6606,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		pereClesInit();
 		gardienClesInit();
 		paiementClesInit();
-		familleCleInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		anneeTriInit();
@@ -5806,6 +6640,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		blocSamediInit();
 		inscriptionApprouveInit();
 		inscriptionImmunisationsInit();
+		familleMarieInit();
+		familleSepareInit();
+		familleDivorceInit();
+		familleAddresseInit();
+		familleCommentVousConnaissezEcoleInit();
+		inscriptionConsiderationsSpecialesInit();
+		inscriptionNomGroupeInit();
+		inscriptionPaimentChaqueMoisInit();
+		inscriptionPaimentCompletInit();
 		inscriptionNomCompletInit();
 		inscriptionIdInit();
 		pageUrlInit();
@@ -5884,8 +6727,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.gardienCles;
 			case "paiementCles":
 				return oInscriptionScolaire.paiementCles;
-			case "familleCle":
-				return oInscriptionScolaire.familleCle;
 			case "scolaireTri":
 				return oInscriptionScolaire.scolaireTri;
 			case "ecoleTri":
@@ -5954,6 +6795,24 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionApprouve;
 			case "inscriptionImmunisations":
 				return oInscriptionScolaire.inscriptionImmunisations;
+			case "familleMarie":
+				return oInscriptionScolaire.familleMarie;
+			case "familleSepare":
+				return oInscriptionScolaire.familleSepare;
+			case "familleDivorce":
+				return oInscriptionScolaire.familleDivorce;
+			case "familleAddresse":
+				return oInscriptionScolaire.familleAddresse;
+			case "familleCommentVousConnaissezEcole":
+				return oInscriptionScolaire.familleCommentVousConnaissezEcole;
+			case "inscriptionConsiderationsSpeciales":
+				return oInscriptionScolaire.inscriptionConsiderationsSpeciales;
+			case "inscriptionNomGroupe":
+				return oInscriptionScolaire.inscriptionNomGroupe;
+			case "inscriptionPaimentChaqueMois":
+				return oInscriptionScolaire.inscriptionPaimentChaqueMois;
+			case "inscriptionPaimentComplet":
+				return oInscriptionScolaire.inscriptionPaimentComplet;
 			case "inscriptionNomComplet":
 				return oInscriptionScolaire.inscriptionNomComplet;
 			case "inscriptionId":
@@ -6031,24 +6890,48 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirInscriptionScolaire(String var, String val) {
 		switch(var) {
-			case "blocHeureDebut":
-				setBlocHeureDebut(val);
-				sauvegardesInscriptionScolaire.add(var);
-				return val;
-			case "blocHeureFin":
-				setBlocHeureFin(val);
-				sauvegardesInscriptionScolaire.add(var);
-				return val;
-			case "blocPrixParMois":
-				setBlocPrixParMois(val);
-				sauvegardesInscriptionScolaire.add(var);
-				return val;
 			case "inscriptionApprouve":
 				setInscriptionApprouve(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionImmunisations":
 				setInscriptionImmunisations(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "familleMarie":
+				setFamilleMarie(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "familleSepare":
+				setFamilleSepare(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "familleDivorce":
+				setFamilleDivorce(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "familleAddresse":
+				setFamilleAddresse(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "familleCommentVousConnaissezEcole":
+				setFamilleCommentVousConnaissezEcole(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "inscriptionConsiderationsSpeciales":
+				setInscriptionConsiderationsSpeciales(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "inscriptionNomGroupe":
+				setInscriptionNomGroupe(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "inscriptionPaimentChaqueMois":
+				setInscriptionPaimentChaqueMois(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "inscriptionPaimentComplet":
+				setInscriptionPaimentComplet(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			default:
@@ -6133,12 +7016,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
 			if(paiementCles != null)
 				oInscriptionScolaire.paiementCles.addAll(paiementCles);
-
-			if(sauvegardesInscriptionScolaire.contains("familleCle")) {
-				Long familleCle = (Long)solrDocument.get("familleCle_stored_long");
-				if(familleCle != null)
-					oInscriptionScolaire.setFamilleCle(familleCle);
-			}
 
 			if(sauvegardesInscriptionScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -6332,6 +7209,60 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionImmunisations(inscriptionImmunisations);
 			}
 
+			if(sauvegardesInscriptionScolaire.contains("familleMarie")) {
+				Boolean familleMarie = (Boolean)solrDocument.get("familleMarie_stored_boolean");
+				if(familleMarie != null)
+					oInscriptionScolaire.setFamilleMarie(familleMarie);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("familleSepare")) {
+				Boolean familleSepare = (Boolean)solrDocument.get("familleSepare_stored_boolean");
+				if(familleSepare != null)
+					oInscriptionScolaire.setFamilleSepare(familleSepare);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("familleDivorce")) {
+				Boolean familleDivorce = (Boolean)solrDocument.get("familleDivorce_stored_boolean");
+				if(familleDivorce != null)
+					oInscriptionScolaire.setFamilleDivorce(familleDivorce);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("familleAddresse")) {
+				String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
+				if(familleAddresse != null)
+					oInscriptionScolaire.setFamilleAddresse(familleAddresse);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("familleCommentVousConnaissezEcole")) {
+				String familleCommentVousConnaissezEcole = (String)solrDocument.get("familleCommentVousConnaissezEcole_stored_string");
+				if(familleCommentVousConnaissezEcole != null)
+					oInscriptionScolaire.setFamilleCommentVousConnaissezEcole(familleCommentVousConnaissezEcole);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionConsiderationsSpeciales")) {
+				String inscriptionConsiderationsSpeciales = (String)solrDocument.get("inscriptionConsiderationsSpeciales_stored_string");
+				if(inscriptionConsiderationsSpeciales != null)
+					oInscriptionScolaire.setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpeciales);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionNomGroupe")) {
+				String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
+				if(inscriptionNomGroupe != null)
+					oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionPaimentChaqueMois")) {
+				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
+				if(inscriptionPaimentChaqueMois != null)
+					oInscriptionScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionPaimentComplet")) {
+				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
+				if(inscriptionPaimentComplet != null)
+					oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
+			}
+
 			if(sauvegardesInscriptionScolaire.contains("inscriptionNomComplet")) {
 				String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
 				if(inscriptionNomComplet != null)
@@ -6492,10 +7423,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				document.addField("paiementCles_stored_longs", o);
 			}
 		}
-		if(familleCle != null) {
-			document.addField("familleCle_indexed_long", familleCle);
-			document.addField("familleCle_stored_long", familleCle);
-		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -6624,6 +7551,42 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionImmunisations_indexed_boolean", inscriptionImmunisations);
 			document.addField("inscriptionImmunisations_stored_boolean", inscriptionImmunisations);
 		}
+		if(familleMarie != null) {
+			document.addField("familleMarie_indexed_boolean", familleMarie);
+			document.addField("familleMarie_stored_boolean", familleMarie);
+		}
+		if(familleSepare != null) {
+			document.addField("familleSepare_indexed_boolean", familleSepare);
+			document.addField("familleSepare_stored_boolean", familleSepare);
+		}
+		if(familleDivorce != null) {
+			document.addField("familleDivorce_indexed_boolean", familleDivorce);
+			document.addField("familleDivorce_stored_boolean", familleDivorce);
+		}
+		if(familleAddresse != null) {
+			document.addField("familleAddresse_indexed_string", familleAddresse);
+			document.addField("familleAddresse_stored_string", familleAddresse);
+		}
+		if(familleCommentVousConnaissezEcole != null) {
+			document.addField("familleCommentVousConnaissezEcole_indexed_string", familleCommentVousConnaissezEcole);
+			document.addField("familleCommentVousConnaissezEcole_stored_string", familleCommentVousConnaissezEcole);
+		}
+		if(inscriptionConsiderationsSpeciales != null) {
+			document.addField("inscriptionConsiderationsSpeciales_indexed_string", inscriptionConsiderationsSpeciales);
+			document.addField("inscriptionConsiderationsSpeciales_stored_string", inscriptionConsiderationsSpeciales);
+		}
+		if(inscriptionNomGroupe != null) {
+			document.addField("inscriptionNomGroupe_indexed_string", inscriptionNomGroupe);
+			document.addField("inscriptionNomGroupe_stored_string", inscriptionNomGroupe);
+		}
+		if(inscriptionPaimentChaqueMois != null) {
+			document.addField("inscriptionPaimentChaqueMois_indexed_boolean", inscriptionPaimentChaqueMois);
+			document.addField("inscriptionPaimentChaqueMois_stored_boolean", inscriptionPaimentChaqueMois);
+		}
+		if(inscriptionPaimentComplet != null) {
+			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
+			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
+		}
 		if(inscriptionNomComplet != null) {
 			document.addField("inscriptionNomComplet_indexed_string", inscriptionNomComplet);
 			document.addField("inscriptionNomComplet_stored_string", inscriptionNomComplet);
@@ -6718,10 +7681,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
 		if(paiementCles != null)
 			oInscriptionScolaire.paiementCles.addAll(paiementCles);
-
-		Long familleCle = (Long)solrDocument.get("familleCle_stored_long");
-		if(familleCle != null)
-			oInscriptionScolaire.setFamilleCle(familleCle);
 
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
@@ -6851,6 +7810,42 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionImmunisations != null)
 			oInscriptionScolaire.setInscriptionImmunisations(inscriptionImmunisations);
 
+		Boolean familleMarie = (Boolean)solrDocument.get("familleMarie_stored_boolean");
+		if(familleMarie != null)
+			oInscriptionScolaire.setFamilleMarie(familleMarie);
+
+		Boolean familleSepare = (Boolean)solrDocument.get("familleSepare_stored_boolean");
+		if(familleSepare != null)
+			oInscriptionScolaire.setFamilleSepare(familleSepare);
+
+		Boolean familleDivorce = (Boolean)solrDocument.get("familleDivorce_stored_boolean");
+		if(familleDivorce != null)
+			oInscriptionScolaire.setFamilleDivorce(familleDivorce);
+
+		String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
+		if(familleAddresse != null)
+			oInscriptionScolaire.setFamilleAddresse(familleAddresse);
+
+		String familleCommentVousConnaissezEcole = (String)solrDocument.get("familleCommentVousConnaissezEcole_stored_string");
+		if(familleCommentVousConnaissezEcole != null)
+			oInscriptionScolaire.setFamilleCommentVousConnaissezEcole(familleCommentVousConnaissezEcole);
+
+		String inscriptionConsiderationsSpeciales = (String)solrDocument.get("inscriptionConsiderationsSpeciales_stored_string");
+		if(inscriptionConsiderationsSpeciales != null)
+			oInscriptionScolaire.setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpeciales);
+
+		String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
+		if(inscriptionNomGroupe != null)
+			oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
+
+		Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
+		if(inscriptionPaimentChaqueMois != null)
+			oInscriptionScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
+
+		Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
+		if(inscriptionPaimentComplet != null)
+			oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
+
 		String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
 		if(inscriptionNomComplet != null)
 			oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
@@ -6874,7 +7869,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, blocHeureDebut, blocHeureFin, blocPrixParMois, inscriptionApprouve, inscriptionImmunisations);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet);
 	}
 
 	////////////
@@ -6894,11 +7889,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( pereCles, that.pereCles )
 				&& Objects.equals( gardienCles, that.gardienCles )
 				&& Objects.equals( paiementCles, that.paiementCles )
-				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
-				&& Objects.equals( blocHeureFin, that.blocHeureFin )
-				&& Objects.equals( blocPrixParMois, that.blocPrixParMois )
 				&& Objects.equals( inscriptionApprouve, that.inscriptionApprouve )
-				&& Objects.equals( inscriptionImmunisations, that.inscriptionImmunisations );
+				&& Objects.equals( inscriptionImmunisations, that.inscriptionImmunisations )
+				&& Objects.equals( familleMarie, that.familleMarie )
+				&& Objects.equals( familleSepare, that.familleSepare )
+				&& Objects.equals( familleDivorce, that.familleDivorce )
+				&& Objects.equals( familleAddresse, that.familleAddresse )
+				&& Objects.equals( familleCommentVousConnaissezEcole, that.familleCommentVousConnaissezEcole )
+				&& Objects.equals( inscriptionConsiderationsSpeciales, that.inscriptionConsiderationsSpeciales )
+				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
+				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
+				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet );
 	}
 
 	//////////////
@@ -6915,11 +7916,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", pereCles: " ).append(pereCles);
 		sb.append( ", gardienCles: " ).append(gardienCles);
 		sb.append( ", paiementCles: " ).append(paiementCles);
-		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
-		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
-		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
 		sb.append( ", inscriptionApprouve: " ).append(inscriptionApprouve);
 		sb.append( ", inscriptionImmunisations: " ).append(inscriptionImmunisations);
+		sb.append( ", familleMarie: " ).append(familleMarie);
+		sb.append( ", familleSepare: " ).append(familleSepare);
+		sb.append( ", familleDivorce: " ).append(familleDivorce);
+		sb.append( ", familleAddresse: \"" ).append(familleAddresse).append( "\"" );
+		sb.append( ", familleCommentVousConnaissezEcole: \"" ).append(familleCommentVousConnaissezEcole).append( "\"" );
+		sb.append( ", inscriptionConsiderationsSpeciales: \"" ).append(inscriptionConsiderationsSpeciales).append( "\"" );
+		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
+		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
+		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
 		sb.append(" }");
 		return sb.toString();
 	}

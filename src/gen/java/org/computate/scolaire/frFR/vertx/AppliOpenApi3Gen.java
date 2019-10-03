@@ -1,14 +1,18 @@
 package org.computate.scolaire.frFR.vertx;
 
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.frFR.couverture.Couverture;
+import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.vertx.AppliSwagger2;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliOpenApi3&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -159,7 +163,7 @@ public abstract class AppliOpenApi3Gen<DEV> extends AppliSwagger2 {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("AppliOpenApi3 {");
+		sb.append("AppliOpenApi3 { ");
 		sb.append(" }");
 		return sb.toString();
 	}

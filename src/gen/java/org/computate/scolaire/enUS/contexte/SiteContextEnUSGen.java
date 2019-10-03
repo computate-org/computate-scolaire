@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.contexte;
 
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
@@ -7,6 +8,7 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import io.vertx.core.WorkerExecutor;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -14,6 +16,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;

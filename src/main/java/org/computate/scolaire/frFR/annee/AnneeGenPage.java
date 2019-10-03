@@ -312,7 +312,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postEcoleVals({ anneeCles: ", o.getPk(), " }, function() { var $e = $('#Page_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_ecoleCle')); }); ")
+											.a("onclick", "postEcoleVals({ anneeCles: [ \"", o.getPk(), "\" ] }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireEcoleCle($('#' + ($('#Page_ecoleCle').val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); var $e = $('#Page_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_ecoleCle')); }); }, function() { ajouterErreur($('#Page_ecoleCle')); });")
 											.f().sx("ajouter une école")
 										.g("button");
 									} g("div");
@@ -371,7 +371,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSaisonScolaireVals({ anneeCle: ", o.getPk(), " }, function() { var $e = $('#Page_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_saisonCles')); }); ")
+											.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", o.getPk(), "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireSaisonCles($('#' + ($('#Page_saisonCles').val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); var $e = $('#Page_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_saisonCles')); }); }, function() { ajouterErreur($('#Page_saisonCles')); });")
 											.f().sx("ajouter une saison")
 										.g("button");
 									} g("div");
@@ -571,7 +571,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postEcoleVals({ anneeCles: ", o.getPk(), " }, function() { var $e = $('#POST_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_ecoleCle')); }); ")
+										.a("onclick", "postEcoleVals({ anneeCles: [ \"", o.getPk(), "\" ] }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireEcoleCle($('#' + ($('#POST_ecoleCle').val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); var $e = $('#POST_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_ecoleCle')); }); }, function() { ajouterErreur($('#POST_ecoleCle')); });")
 										.f().sx("ajouter une école")
 									.g("button");
 								} g("div");
@@ -630,7 +630,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSaisonScolaireVals({ anneeCle: ", o.getPk(), " }, function() { var $e = $('#POST_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_saisonCles')); }); ")
+										.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", o.getPk(), "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireSaisonCles($('#' + ($('#POST_saisonCles').val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); var $e = $('#POST_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_saisonCles')); }); }, function() { ajouterErreur($('#POST_saisonCles')); });")
 										.f().sx("ajouter une saison")
 									.g("button");
 								} g("div");
@@ -830,7 +830,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postEcoleVals({ anneeCles: ", o.getPk(), " }, function() { var $e = $('#PATCH_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_ecoleCle')); }); ")
+										.a("onclick", "postEcoleVals({ anneeCles: [ \"", o.getPk(), "\" ] }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireEcoleCle($('#' + ($('#PATCH_ecoleCle').val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); var $e = $('#PATCH_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_ecoleCle')); }); }, function() { ajouterErreur($('#PATCH_ecoleCle')); });")
 										.f().sx("ajouter une école")
 									.g("button");
 								} g("div");
@@ -889,7 +889,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSaisonScolaireVals({ anneeCle: ", o.getPk(), " }, function() { var $e = $('#PATCH_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_saisonCles')); }); ")
+										.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", o.getPk(), "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireSaisonCles($('#' + ($('#PATCH_saisonCles').val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); var $e = $('#PATCH_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_saisonCles')); }); }, function() { ajouterErreur($('#PATCH_saisonCles')); });")
 										.f().sx("ajouter une saison")
 									.g("button");
 								} g("div");
@@ -1104,7 +1104,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postEcoleVals({ anneeCles: ", o.getPk(), " }, function() { var $e = $('#Recherche_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_ecoleCle')); }); ")
+										.a("onclick", "postEcoleVals({ anneeCles: [ \"", o.getPk(), "\" ] }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireEcoleCle($('#' + ($('#Recherche_ecoleCle').val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle')); var $e = $('#Recherche_ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_ecoleCle')); }); }, function() { ajouterErreur($('#Recherche_ecoleCle')); });")
 										.f().sx("ajouter une école")
 									.g("button");
 								} g("div");
@@ -1163,7 +1163,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSaisonScolaireVals({ anneeCle: ", o.getPk(), " }, function() { var $e = $('#Recherche_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_saisonCles')); }); ")
+										.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", o.getPk(), "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereAnneeScolaireSaisonCles($('#' + ($('#Recherche_saisonCles').val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles')); var $e = $('#Recherche_saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_saisonCles')); }); }, function() { ajouterErreur($('#Recherche_saisonCles')); });")
 										.f().sx("ajouter une saison")
 									.g("button");
 								} g("div");
