@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import org.computate.scolaire.enUS.recherche.ResultatRecherche;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -209,6 +209,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "yearEnd":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("yearEnd", jsonObject.getString(entityVar), pk));
+						break;
+					case "yearShortName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("yearShortName", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -469,6 +473,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("yearEnd", o2.jsonYearEnd(), pk));
+						}
+						break;
+					case "setYearShortName":
+						o2.setYearShortName(requestJson.getString(methodName));
+						if(o2.getYearShortName() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "yearShortName"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("yearShortName", o2.jsonYearShortName(), pk));
 						}
 						break;
 				}

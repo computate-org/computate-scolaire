@@ -1961,6 +1961,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				setYearEnd(val);
 				savesSchoolYear.add(var);
 				return val;
+			case "yearShortName":
+				setYearShortName(val);
+				savesSchoolYear.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -2304,7 +2308,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), schoolKey, seasonKeys, yearStart, yearEnd);
+		return Objects.hash(super.hashCode(), schoolKey, seasonKeys, yearStart, yearEnd, yearShortName);
 	}
 
 	////////////
@@ -2321,7 +2325,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				&& Objects.equals( schoolKey, that.schoolKey )
 				&& Objects.equals( seasonKeys, that.seasonKeys )
 				&& Objects.equals( yearStart, that.yearStart )
-				&& Objects.equals( yearEnd, that.yearEnd );
+				&& Objects.equals( yearEnd, that.yearEnd )
+				&& Objects.equals( yearShortName, that.yearShortName );
 	}
 
 	//////////////
@@ -2336,6 +2341,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		sb.append( ", seasonKeys: " ).append(seasonKeys);
 		sb.append( ", yearStart: " ).append(yearStart);
 		sb.append( ", yearEnd: " ).append(yearEnd);
+		sb.append( ", yearShortName: \"" ).append(yearShortName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

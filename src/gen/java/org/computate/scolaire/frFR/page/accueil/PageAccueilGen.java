@@ -1,15 +1,19 @@
 package org.computate.scolaire.frFR.page.accueil;
 
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.page.MiseEnPage;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import java.lang.String;
-import org.apache.commons.lang3.StringUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.accueil.PageAccueil&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -25,6 +29,7 @@ public abstract class PageAccueilGen<DEV> extends MiseEnPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageTitre;
+	@JsonIgnore
 	public Couverture<String> pageTitreCouverture = new Couverture<String>().p(this).c(String.class).var("pageTitre").o(pageTitre);
 
 	/**	<br/>L'entité « pageTitre »
@@ -61,6 +66,10 @@ public abstract class PageAccueilGen<DEV> extends MiseEnPage {
 		return pageTitre == null ? "" : pageTitre;
 	}
 
+	public String jsonPageTitre() {
+		return pageTitre == null ? "" : pageTitre;
+	}
+
 	public String nomAffichagePageTitre() {
 		return null;
 	}
@@ -81,6 +90,7 @@ public abstract class PageAccueilGen<DEV> extends MiseEnPage {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String pageUri;
+	@JsonIgnore
 	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
 	/**	<br/>L'entité « pageUri »
@@ -114,6 +124,10 @@ public abstract class PageAccueilGen<DEV> extends MiseEnPage {
 	}
 
 	public String strPageUri() {
+		return pageUri == null ? "" : pageUri;
+	}
+
+	public String jsonPageUri() {
 		return pageUri == null ? "" : pageUri;
 	}
 
@@ -362,7 +376,7 @@ public abstract class PageAccueilGen<DEV> extends MiseEnPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("PageAccueil {");
+		sb.append("PageAccueil { ");
 		sb.append(" }");
 		return sb.toString();
 	}

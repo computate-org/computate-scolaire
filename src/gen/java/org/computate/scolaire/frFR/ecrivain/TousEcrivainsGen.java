@@ -1,15 +1,19 @@
 package org.computate.scolaire.frFR.ecrivain;
 
+import java.math.MathContext;
+import org.computate.scolaire.frFR.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.apache.commons.lang3.StringUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.TousEcrivains&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -25,6 +29,7 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -61,6 +66,7 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<ToutEcrivain>(). 
 	 */
 	protected List<ToutEcrivain> ecrivains = new java.util.ArrayList<org.computate.scolaire.frFR.ecrivain.ToutEcrivain>();
+	@JsonIgnore
 	public Couverture<List<ToutEcrivain>> ecrivainsCouverture = new Couverture<List<ToutEcrivain>>().p(this).c(List.class).var("ecrivains").o(ecrivains);
 
 	/**	<br/>L'entité « ecrivains »
@@ -244,7 +250,7 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("TousEcrivains {");
+		sb.append("TousEcrivains { ");
 		sb.append(" }");
 		return sb.toString();
 	}

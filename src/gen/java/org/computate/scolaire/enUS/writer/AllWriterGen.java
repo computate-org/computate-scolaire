@@ -1,16 +1,20 @@
 package org.computate.scolaire.enUS.writer;
 
 import java.io.PrintWriter;
+import java.math.MathContext;
 import java.io.StringWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.io.File;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import io.vertx.core.buffer.Buffer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -30,6 +34,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -66,6 +71,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String tabStr;
+	@JsonIgnore
 	public Wrap<String> tabStrWrap = new Wrap<String>().p(this).c(String.class).var("tabStr").o(tabStr);
 
 	/**	<br/>L'entité « tabStr »
@@ -102,6 +108,10 @@ public abstract class AllWriterGen<DEV> extends Object {
 		return tabStr == null ? "" : tabStr;
 	}
 
+	public String jsonTabStr() {
+		return tabStr == null ? "" : tabStr;
+	}
+
 	public String nomAffichageTabStr() {
 		return null;
 	}
@@ -122,6 +132,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected File file;
+	@JsonIgnore
 	public Wrap<File> fileWrap = new Wrap<File>().p(this).c(File.class).var("file").o(file);
 
 	/**	<br/>L'entité « file »
@@ -158,6 +169,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected StringWriter stringWriter;
+	@JsonIgnore
 	public Wrap<StringWriter> stringWriterWrap = new Wrap<StringWriter>().p(this).c(StringWriter.class).var("stringWriter").o(stringWriter);
 
 	/**	<br/>L'entité « stringWriter »
@@ -194,6 +206,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Buffer buffer;
+	@JsonIgnore
 	public Wrap<Buffer> bufferWrap = new Wrap<Buffer>().p(this).c(Buffer.class).var("buffer").o(buffer);
 
 	/**	<br/>L'entité « buffer »
@@ -230,6 +243,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected PrintWriter printWriter;
+	@JsonIgnore
 	public Wrap<PrintWriter> printWriterWrap = new Wrap<PrintWriter>().p(this).c(PrintWriter.class).var("printWriter").o(printWriter);
 
 	/**	<br/>L'entité « printWriter »
@@ -266,6 +280,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean empty;
+	@JsonIgnore
 	public Wrap<Boolean> emptyWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("empty").o(empty);
 
 	/**	<br/>L'entité « empty »
@@ -304,6 +319,10 @@ public abstract class AllWriterGen<DEV> extends Object {
 	}
 
 	public String strEmpty() {
+		return empty == null ? "" : empty.toString();
+	}
+
+	public String jsonEmpty() {
 		return empty == null ? "" : empty.toString();
 	}
 
@@ -480,7 +499,7 @@ public abstract class AllWriterGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AllWriter {");
+		sb.append("AllWriter { ");
 		sb.append(" }");
 		return sb.toString();
 	}

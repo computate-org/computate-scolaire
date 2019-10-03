@@ -210,6 +210,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("anneeFin", jsonObject.getString(entiteVar), pk));
 						break;
+					case "anneeNomCourt":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("anneeNomCourt", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -469,6 +473,16 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.jsonAnneeFin(), pk));
+						}
+						break;
+					case "setAnneeNomCourt":
+						o2.setAnneeNomCourt(requeteJson.getString(methodeNom));
+						if(o2.getAnneeNomCourt() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "anneeNomCourt"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("anneeNomCourt", o2.jsonAnneeNomCourt(), pk));
 						}
 						break;
 				}

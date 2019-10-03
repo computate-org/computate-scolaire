@@ -1750,7 +1750,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageCree() {
-		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
 	}
 
 	public String jsonPageCree() {
@@ -1827,7 +1827,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public String strPageModifiee() {
-		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
 	}
 
 	public String jsonPageModifiee() {

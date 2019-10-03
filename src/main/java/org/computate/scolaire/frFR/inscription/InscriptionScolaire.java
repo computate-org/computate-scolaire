@@ -72,7 +72,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.inscriptionCles
-	 * HtmlLigne: 5
+	 * HtmlLigne: 7
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des blocs dans la base de données. 
 	 * Description.enUS: The primary key of the school blocks in the database. 
@@ -202,7 +202,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: EnfantScolaire.inscriptionCles
-	 * HtmlLigne: 5
+	 * HtmlLigne: 7
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
@@ -217,7 +217,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: MereScolaire.inscriptionCles
-	 * HtmlLigne: 6
+	 * HtmlLigne: 8
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des mères dans la base de données. 
 	 * Description.enUS: The primary key of the school moms in the database. 
@@ -232,7 +232,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PereScolaire.inscriptionCles
-	 * HtmlLigne: 6
+	 * HtmlLigne: 8
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des pères dans la base de données. 
 	 * Description.enUS: The primary key of the school dads in the database. 
@@ -247,7 +247,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: GardienScolaire.inscriptionCles
-	 * HtmlLigne: 7
+	 * HtmlLigne: 9
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
 	 * Description.enUS: The primary key of the school gardians in the database. 
@@ -262,7 +262,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PaiementScolaire.inscriptionCles
-	 * HtmlLigne: 7
+	 * HtmlLigne: 9
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
@@ -787,7 +787,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: approuvé
 	 * NomAffichage.enUS: approved
 	 * Definir: true
-	 * HtmlLigne: 2
+	 * HtmlLigne: 3
 	 * HtmlCellule: 1
 	 */                   
 	protected void _inscriptionApprouve(Couverture<Boolean> c) {
@@ -801,7 +801,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: vacciné
 	 * NomAffichage.enUS: immunized
 	 * Definir: true
-	 * HtmlLigne: 2
+	 * HtmlLigne: 3
 	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
@@ -815,8 +815,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: marié
 	 * NomAffichage.enUS: married
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 3
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
 	 */                   
 	protected void _familleMarie(Couverture<Boolean> c) {
 	}
@@ -829,8 +829,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: séparé
 	 * NomAffichage.enUS: separated
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 4
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
 	 */                   
 	protected void _familleSepare(Couverture<Boolean> c) {
 	}
@@ -843,8 +843,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: divorcé
 	 * NomAffichage.enUS: divorced
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 5
+	 * HtmlLigne: 6
+	 * HtmlCellule: 3
 	 */                   
 	protected void _familleDivorce(Couverture<Boolean> c) {
 	}
@@ -857,8 +857,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: addresse de la famille
 	 * NomAffichage.enUS: family address
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 6
+	 * HtmlLigne: 7
+	 * HtmlCellule: 1
 	 */                   
 	protected void _familleAddresse(Couverture<String> c) {
 	}
@@ -871,8 +871,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: comment vous connaissez l'école ? 
 	 * NomAffichage.enUS: how do you know the school? 
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 7
+	 * HtmlLigne: 7
+	 * HtmlCellule: 2
 	 */                   
 	protected void _familleCommentVousConnaissezEcole(Couverture<String> c) {
 	}
@@ -885,8 +885,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: considérations spéciale
 	 * NomAffichage.enUS: special considerations
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 7
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 */                   
 	protected void _inscriptionConsiderationsSpeciales(Couverture<String> c) {
 	}
@@ -899,8 +899,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: nom du groupe
 	 * NomAffichage.enUS: group name
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 7
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
 	 */                   
 	protected void _inscriptionNomGroupe(Couverture<String> c) {
 	}
@@ -913,8 +913,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: paiement chaque mois
 	 * NomAffichage.enUS: payment each month
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 5
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
 	 */                   
 	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
 	}
@@ -927,8 +927,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: paiement complet
 	 * NomAffichage.enUS: complete payment
 	 * Definir: true
-	 * HtmlLigne: 2
-	 * HtmlCellule: 5
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
 	}

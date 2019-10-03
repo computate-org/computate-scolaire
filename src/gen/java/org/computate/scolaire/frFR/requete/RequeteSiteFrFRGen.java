@@ -7,16 +7,19 @@ import javax.crypto.spec.SecretKeySpec;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import javax.crypto.Cipher;
+import java.text.NumberFormat;
 import java.util.Stack;
 import java.security.SecureRandom;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import java.lang.Long;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
@@ -27,6 +30,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import io.vertx.ext.web.api.OperationRequest;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLConnection;
 import java.lang.Object;
 
@@ -44,6 +48,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteContexteFrFR siteContexte_;
+	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexte_Couverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte_").o(siteContexte_);
 
 	/**	<br/>L'entité « siteContexte_ »
@@ -80,6 +85,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ConfigSite configSite_;
+	@JsonIgnore
 	public Couverture<ConfigSite> configSite_Couverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite_").o(configSite_);
 
 	/**	<br/>L'entité « configSite_ »
@@ -116,6 +122,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -152,6 +159,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Vertx vertx;
+	@JsonIgnore
 	public Couverture<Vertx> vertxCouverture = new Couverture<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
 
 	/**	<br/>L'entité « vertx »
@@ -188,6 +196,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected JsonObject objetJson;
+	@JsonIgnore
 	public Couverture<JsonObject> objetJsonCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("objetJson").o(objetJson);
 
 	/**	<br/>L'entité « objetJson »
@@ -224,6 +233,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SolrQuery rechercheSolr;
+	@JsonIgnore
 	public Couverture<SolrQuery> rechercheSolrCouverture = new Couverture<SolrQuery>().p(this).c(SolrQuery.class).var("rechercheSolr").o(rechercheSolr);
 
 	/**	<br/>L'entité « rechercheSolr »
@@ -260,6 +270,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected OperationRequest operationRequete;
+	@JsonIgnore
 	public Couverture<OperationRequest> operationRequeteCouverture = new Couverture<OperationRequest>().p(this).c(OperationRequest.class).var("operationRequete").o(operationRequete);
 
 	/**	<br/>L'entité « operationRequete »
@@ -296,6 +307,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected QueryResponse reponseRecherche;
+	@JsonIgnore
 	public Couverture<QueryResponse> reponseRechercheCouverture = new Couverture<QueryResponse>().p(this).c(QueryResponse.class).var("reponseRecherche").o(reponseRecherche);
 
 	/**	<br/>L'entité « reponseRecherche »
@@ -332,6 +344,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SolrDocumentList resultatsRecherche;
+	@JsonIgnore
 	public Couverture<SolrDocumentList> resultatsRechercheCouverture = new Couverture<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("resultatsRecherche").o(resultatsRecherche);
 
 	/**	<br/>L'entité « resultatsRecherche »
@@ -368,6 +381,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected ToutEcrivain w;
+	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
 
 	/**	<br/>L'entité « w »
@@ -406,6 +420,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected JsonObject utilisateurVertx;
+	@JsonIgnore
 	public Couverture<JsonObject> utilisateurVertxCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("utilisateurVertx").o(utilisateurVertx);
 
 	/**	<br/>L'entité « utilisateurVertx »
@@ -442,6 +457,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected JsonObject principalJson;
+	@JsonIgnore
 	public Couverture<JsonObject> principalJsonCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("principalJson").o(principalJson);
 
 	/**	<br/>L'entité « principalJson »
@@ -478,6 +494,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurId;
+	@JsonIgnore
 	public Couverture<String> utilisateurIdCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurId").o(utilisateurId);
 
 	/**	<br/>L'entité « utilisateurId »
@@ -514,6 +531,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurId == null ? "" : utilisateurId;
 	}
 
+	public String jsonUtilisateurId() {
+		return utilisateurId == null ? "" : utilisateurId;
+	}
+
 	public String nomAffichageUtilisateurId() {
 		return null;
 	}
@@ -534,6 +555,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNom;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNom").o(utilisateurNom);
 
 	/**	<br/>L'entité « utilisateurNom »
@@ -570,6 +592,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
 
+	public String jsonUtilisateurNom() {
+		return utilisateurNom == null ? "" : utilisateurNom;
+	}
+
 	public String nomAffichageUtilisateurNom() {
 		return null;
 	}
@@ -590,6 +616,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNomFamille;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomFamilleCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomFamille").o(utilisateurNomFamille);
 
 	/**	<br/>L'entité « utilisateurNomFamille »
@@ -626,6 +653,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
 	}
 
+	public String jsonUtilisateurNomFamille() {
+		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
+	}
+
 	public String nomAffichageUtilisateurNomFamille() {
 		return null;
 	}
@@ -646,6 +677,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurPrenom;
+	@JsonIgnore
 	public Couverture<String> utilisateurPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurPrenom").o(utilisateurPrenom);
 
 	/**	<br/>L'entité « utilisateurPrenom »
@@ -682,6 +714,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
 
+	public String jsonUtilisateurPrenom() {
+		return utilisateurPrenom == null ? "" : utilisateurPrenom;
+	}
+
 	public String nomAffichageUtilisateurPrenom() {
 		return null;
 	}
@@ -702,6 +738,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String utilisateurNomComplet;
+	@JsonIgnore
 	public Couverture<String> utilisateurNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurNomComplet").o(utilisateurNomComplet);
 
 	/**	<br/>L'entité « utilisateurNomComplet »
@@ -738,6 +775,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
 	}
 
+	public String jsonUtilisateurNomComplet() {
+		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
+	}
+
 	public String nomAffichageUtilisateurNomComplet() {
 		return null;
 	}
@@ -758,6 +799,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	protected List<String> utilisateurRolesRoyaume = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
 	public Couverture<List<String>> utilisateurRolesRoyaumeCouverture = new Couverture<List<String>>().p(this).c(List.class).var("utilisateurRolesRoyaume").o(utilisateurRolesRoyaume);
 
 	/**	<br/>L'entité « utilisateurRolesRoyaume »
@@ -811,6 +853,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurRolesRoyaume == null ? "" : utilisateurRolesRoyaume.toString();
 	}
 
+	public String jsonUtilisateurRolesRoyaume() {
+		return utilisateurRolesRoyaume == null ? "" : utilisateurRolesRoyaume.toString();
+	}
+
 	public String nomAffichageUtilisateurRolesRoyaume() {
 		return null;
 	}
@@ -831,6 +877,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected JsonObject utilisateurRessource;
+	@JsonIgnore
 	public Couverture<JsonObject> utilisateurRessourceCouverture = new Couverture<JsonObject>().p(this).c(JsonObject.class).var("utilisateurRessource").o(utilisateurRessource);
 
 	/**	<br/>L'entité « utilisateurRessource »
@@ -867,6 +914,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected UtilisateurSite utilisateurSite;
+	@JsonIgnore
 	public Couverture<UtilisateurSite> utilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite").o(utilisateurSite);
 
 	/**	<br/>L'entité « utilisateurSite »
@@ -905,6 +953,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut Stack<String>(). 
 	 */
 	protected Stack<String> xmlPile = new Stack<String>();
+	@JsonIgnore
 	public Couverture<Stack<String>> xmlPileCouverture = new Couverture<Stack<String>>().p(this).c(Stack.class).var("xmlPile").o(xmlPile);
 
 	/**	<br/>L'entité « xmlPile »
@@ -939,6 +988,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SolrDocument documentSolr;
+	@JsonIgnore
 	public Couverture<SolrDocument> documentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("documentSolr").o(documentSolr);
 
 	/**	<br/>L'entité « documentSolr »
@@ -975,6 +1025,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean pageAdmin;
+	@JsonIgnore
 	public Couverture<Boolean> pageAdminCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pageAdmin").o(pageAdmin);
 
 	/**	<br/>L'entité « pageAdmin »
@@ -1016,6 +1067,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return pageAdmin == null ? "" : pageAdmin.toString();
 	}
 
+	public String jsonPageAdmin() {
+		return pageAdmin == null ? "" : pageAdmin.toString();
+	}
+
 	public String nomAffichagePageAdmin() {
 		return null;
 	}
@@ -1036,6 +1091,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Long requetePk;
+	@JsonIgnore
 	public Couverture<Long> requetePkCouverture = new Couverture<Long>().p(this).c(Long.class).var("requetePk").o(requetePk);
 
 	/**	<br/>L'entité « requetePk »
@@ -1055,7 +1111,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.requetePkCouverture.dejaInitialise = true;
 	}
 	public RequeteSiteFrFR setRequetePk(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.requetePk = Long.parseLong(o);
 		this.requetePkCouverture.dejaInitialise = true;
 		return (RequeteSiteFrFR)this;
@@ -1075,6 +1131,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	}
 
 	public String strRequetePk() {
+		return requetePk == null ? "" : requetePk.toString();
+	}
+
+	public String jsonRequetePk() {
 		return requetePk == null ? "" : requetePk.toString();
 	}
 
@@ -1098,6 +1158,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SQLConnection connexionSql;
+	@JsonIgnore
 	public Couverture<SQLConnection> connexionSqlCouverture = new Couverture<SQLConnection>().p(this).c(SQLConnection.class).var("connexionSql").o(connexionSql);
 
 	/**	<br/>L'entité « connexionSql »
@@ -1134,6 +1195,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String cryptageMotDePasse;
+	@JsonIgnore
 	public Couverture<String> cryptageMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("cryptageMotDePasse").o(cryptageMotDePasse);
 
 	/**	<br/>L'entité « cryptageMotDePasse »
@@ -1170,6 +1232,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
 	}
 
+	public String jsonCryptageMotDePasse() {
+		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
+	}
+
 	public String nomAffichageCryptageMotDePasse() {
 		return null;
 	}
@@ -1190,6 +1256,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Cipher cryptageChiffreCrypter;
+	@JsonIgnore
 	public Couverture<Cipher> cryptageChiffreCrypterCouverture = new Couverture<Cipher>().p(this).c(Cipher.class).var("cryptageChiffreCrypter").o(cryptageChiffreCrypter);
 
 	/**	<br/>L'entité « cryptageChiffreCrypter »
@@ -1226,6 +1293,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Cipher cryptageChiffreDecrypter;
+	@JsonIgnore
 	public Couverture<Cipher> cryptageChiffreDecrypterCouverture = new Couverture<Cipher>().p(this).c(Cipher.class).var("cryptageChiffreDecrypter").o(cryptageChiffreDecrypter);
 
 	/**	<br/>L'entité « cryptageChiffreDecrypter »
@@ -1262,6 +1330,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected MessageDigest cryptageDigestMessage;
+	@JsonIgnore
 	public Couverture<MessageDigest> cryptageDigestMessageCouverture = new Couverture<MessageDigest>().p(this).c(MessageDigest.class).var("cryptageDigestMessage").o(cryptageDigestMessage);
 
 	/**	<br/>L'entité « cryptageDigestMessage »
@@ -1298,6 +1367,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected byte[] cryptageCle;
+	@JsonIgnore
 	public Couverture<byte[]> cryptageCleCouverture = new Couverture<byte[]>().p(this).c(byte[].class).var("cryptageCle").o(cryptageCle);
 
 	/**	<br/>L'entité « cryptageCle »
@@ -1334,6 +1404,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SecureRandom(). 
 	 */
 	protected SecureRandom aleatoireSecurise = new SecureRandom();
+	@JsonIgnore
 	public Couverture<SecureRandom> aleatoireSecuriseCouverture = new Couverture<SecureRandom>().p(this).c(SecureRandom.class).var("aleatoireSecurise").o(aleatoireSecurise);
 
 	/**	<br/>L'entité « aleatoireSecurise »
@@ -1368,6 +1439,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SecretKeySpec specCleSecrete;
+	@JsonIgnore
 	public Couverture<SecretKeySpec> specCleSecreteCouverture = new Couverture<SecretKeySpec>().p(this).c(SecretKeySpec.class).var("specCleSecrete").o(specCleSecrete);
 
 	/**	<br/>L'entité « specCleSecrete »
@@ -1636,7 +1708,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("RequeteSiteFrFR {");
+		sb.append("RequeteSiteFrFR { ");
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -169,7 +169,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -213,7 +213,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "value")
@@ -259,7 +259,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valueAgeKeys")
@@ -305,7 +305,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolSessionVals({ ageKeys: \"", o.getPk(), "\" }, function() { var $e = $('#Page_sessionKey'); $e.html($e.val()); }, function() { addError($('#Page_sessionKey')); }); ")
+											.a("onclick", "postSchoolSessionVals({ ageKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeSessionKey($('#' + ($('#Page_sessionKey').val() ? 'suggest' : 'form') + 'SchoolAgeSessionKey'), $('#listSchoolAgeSessionKey')); var $e = $('#Page_sessionKey'); $e.html($e.val()); }, function() { addError($('#Page_sessionKey')); }); }, function() { addError($('#Page_sessionKey')); });")
 											.f().sx("add a session")
 										.g("button");
 									} g("div");
@@ -317,7 +317,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valueAgeKey")
@@ -363,7 +363,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { var $e = $('#Page_blockKeys'); $e.html($e.val()); }, function() { addError($('#Page_blockKeys')); }); ")
+											.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeBlockKeys($('#' + ($('#Page_blockKeys').val() ? 'suggest' : 'form') + 'SchoolAgeBlockKeys'), $('#listSchoolAgeBlockKeys')); var $e = $('#Page_blockKeys'); $e.html($e.val()); }, function() { addError($('#Page_blockKeys')); }); }, function() { addError($('#Page_blockKeys')); });")
 											.f().sx("add a block")
 										.g("button");
 									} g("div");
@@ -446,7 +446,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -479,7 +479,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -514,7 +514,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKeys")
@@ -560,7 +560,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ ageKeys: \"", o.getPk(), "\" }, function() { var $e = $('#POST_sessionKey'); $e.html($e.val()); }, function() { addError($('#POST_sessionKey')); }); ")
+										.a("onclick", "postSchoolSessionVals({ ageKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeSessionKey($('#' + ($('#POST_sessionKey').val() ? 'suggest' : 'form') + 'SchoolAgeSessionKey'), $('#listSchoolAgeSessionKey')); var $e = $('#POST_sessionKey'); $e.html($e.val()); }, function() { addError($('#POST_sessionKey')); }); }, function() { addError($('#POST_sessionKey')); });")
 										.f().sx("add a session")
 									.g("button");
 								} g("div");
@@ -572,7 +572,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKey")
@@ -618,7 +618,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { var $e = $('#POST_blockKeys'); $e.html($e.val()); }, function() { addError($('#POST_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeBlockKeys($('#' + ($('#POST_blockKeys').val() ? 'suggest' : 'form') + 'SchoolAgeBlockKeys'), $('#listSchoolAgeBlockKeys')); var $e = $('#POST_blockKeys'); $e.html($e.val()); }, function() { addError($('#POST_blockKeys')); }); }, function() { addError($('#POST_blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -701,7 +701,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -734,7 +734,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -769,7 +769,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKeys")
@@ -815,7 +815,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ ageKeys: \"", o.getPk(), "\" }, function() { var $e = $('#PATCH_sessionKey'); $e.html($e.val()); }, function() { addError($('#PATCH_sessionKey')); }); ")
+										.a("onclick", "postSchoolSessionVals({ ageKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeSessionKey($('#' + ($('#PATCH_sessionKey').val() ? 'suggest' : 'form') + 'SchoolAgeSessionKey'), $('#listSchoolAgeSessionKey')); var $e = $('#PATCH_sessionKey'); $e.html($e.val()); }, function() { addError($('#PATCH_sessionKey')); }); }, function() { addError($('#PATCH_sessionKey')); });")
 										.f().sx("add a session")
 									.g("button");
 								} g("div");
@@ -827,7 +827,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKey")
@@ -873,7 +873,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { var $e = $('#PATCH_blockKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeBlockKeys($('#' + ($('#PATCH_blockKeys').val() ? 'suggest' : 'form') + 'SchoolAgeBlockKeys'), $('#listSchoolAgeBlockKeys')); var $e = $('#PATCH_blockKeys'); $e.html($e.val()); }, function() { addError($('#PATCH_blockKeys')); }); }, function() { addError($('#PATCH_blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -971,7 +971,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeStart").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1004,7 +1004,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeAgeEnd").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "value")
@@ -1039,7 +1039,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeSessionKey").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKeys")
@@ -1085,7 +1085,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ ageKeys: \"", o.getPk(), "\" }, function() { var $e = $('#Recherche_sessionKey'); $e.html($e.val()); }, function() { addError($('#Recherche_sessionKey')); }); ")
+										.a("onclick", "postSchoolSessionVals({ ageKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeSessionKey($('#' + ($('#Recherche_sessionKey').val() ? 'suggest' : 'form') + 'SchoolAgeSessionKey'), $('#listSchoolAgeSessionKey')); var $e = $('#Recherche_sessionKey'); $e.html($e.val()); }, function() { addError($('#Recherche_sessionKey')); }); }, function() { addError($('#Recherche_sessionKey')); });")
 										.f().sx("add a session")
 									.g("button");
 								} g("div");
@@ -1097,7 +1097,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formSchoolAgeBlockKeys").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valueAgeKey")
@@ -1143,7 +1143,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { var $e = $('#Recherche_blockKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_blockKeys')); }); ")
+										.a("onclick", "postSchoolBlockVals({ ageKey: \"", o.getPk(), "\" }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolAgeBlockKeys($('#' + ($('#Recherche_blockKeys').val() ? 'suggest' : 'form') + 'SchoolAgeBlockKeys'), $('#listSchoolAgeBlockKeys')); var $e = $('#Recherche_blockKeys'); $e.html($e.val()); }, function() { addError($('#Recherche_blockKeys')); }); }, function() { addError($('#Recherche_blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -1226,11 +1226,51 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 					e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 				e("span").a("class", " ").f().sx("ages").g("span");
 			} g("h1");
-			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
+			e("div").a("class", "").f();
+				{ e("div").f();
+					Long num = listSchoolAge.getQueryResponse().getResults().getNumFound();
+					Integer rows1 = listSchoolAge.getRows();
+					Integer start1 = listSchoolAge.getStart();
+					Integer start2 = start1 - rows1;
+					Integer start3 = start1 + rows1;
+					Integer rows2 = rows1 / 2;
+					Integer rows3 = rows1 * 2;
+					start2 = start2 < 0 ? 0 : start2;
+
+					if(start1 == 0) {
+						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/age?start=", start2, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
+						} g("a");
+					}
+
+					if(rows1 <= 1) {
+						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/age?start=", start1, "&rows=", rows2).f();
+							e("i").a("class", "fas fa-minus-square ").f().g("i");
+						} g("a");
+					}
+
+					{ e("a").a("href", "/age?start=", start1, "&rows=", rows3).f();
+						e("i").a("class", "fas fa-plus-square ").f().g("i");
+					} g("a");
+
+					if(start3 >= num) {
+						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
+					} else {
+						{ e("a").a("href", "/age?start=", start3, "&rows=", rows1).f();
+							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
+						} g("a");
+					}
+						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
+				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
 				{ e("thead").f();
 					{ e("tr").f();
 						e("th").f().sx("").g("th");
+						e("th").f().sx("created").g("th");
 					} g("tr");
 				} g("thead");
 				{ e("tbody").f();
@@ -1245,7 +1285,15 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.getAgeCompleteName());
+										sx(o.strAgeCompleteName());
+									} g("span");
+								} g("a");
+							} g("td");
+							{ e("td").f();
+								{ e("a").a("href", uri).f();
+									e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+									{ e("span").f();
+										sx(o.strCreated());
 									} g("span");
 								} g("a");
 							} g("td");

@@ -1,15 +1,18 @@
 package org.computate.scolaire.frFR.config;
 
 import org.apache.commons.configuration2.INIConfiguration;
+import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -574,7 +577,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.sitePortCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setSitePort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sitePort = Integer.parseInt(o);
 		this.sitePortCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1495,7 +1498,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcTailleMaxPiscineCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcTailleMaxPiscine(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcTailleMaxPiscine = Integer.parseInt(o);
 		this.jdbcTailleMaxPiscineCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1562,7 +1565,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcTailleInitialePiscine(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcTailleInitialePiscine = Integer.parseInt(o);
 		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1629,7 +1632,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcTailleMinPiscineCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcTailleMinPiscine(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcTailleMinPiscine = Integer.parseInt(o);
 		this.jdbcTailleMinPiscineCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1696,7 +1699,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcMaxDeclarationsCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcMaxDeclarations(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxDeclarations = Integer.parseInt(o);
 		this.jdbcMaxDeclarationsCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1763,7 +1766,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcMaxDeclarationsParConnexion(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxDeclarationsParConnexion = Integer.parseInt(o);
 		this.jdbcMaxDeclarationsParConnexionCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -1830,7 +1833,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.jdbcTempsInactiviteMaxCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setJdbcTempsInactiviteMax(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcTempsInactiviteMax = Integer.parseInt(o);
 		this.jdbcTempsInactiviteMaxCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
@@ -2568,7 +2571,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.nombreExecuteursCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setNombreExecuteurs(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.nombreExecuteurs = Integer.parseInt(o);
 		this.nombreExecuteursCouverture.dejaInitialise = true;
 		return (ConfigSite)this;

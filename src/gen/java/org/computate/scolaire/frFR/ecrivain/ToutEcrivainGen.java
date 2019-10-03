@@ -1,16 +1,20 @@
 package org.computate.scolaire.frFR.ecrivain;
 
 import java.io.PrintWriter;
+import java.math.MathContext;
 import java.io.StringWriter;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.io.File;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import io.vertx.core.buffer.Buffer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -30,6 +34,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected RequeteSiteFrFR requeteSite_;
+	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
 	/**	<br/>L'entité « requeteSite_ »
@@ -66,6 +71,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String tabStr;
+	@JsonIgnore
 	public Couverture<String> tabStrCouverture = new Couverture<String>().p(this).c(String.class).var("tabStr").o(tabStr);
 
 	/**	<br/>L'entité « tabStr »
@@ -102,6 +108,10 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 		return tabStr == null ? "" : tabStr;
 	}
 
+	public String jsonTabStr() {
+		return tabStr == null ? "" : tabStr;
+	}
+
 	public String nomAffichageTabStr() {
 		return null;
 	}
@@ -122,6 +132,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected File fichier;
+	@JsonIgnore
 	public Couverture<File> fichierCouverture = new Couverture<File>().p(this).c(File.class).var("fichier").o(fichier);
 
 	/**	<br/>L'entité « fichier »
@@ -158,6 +169,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected StringWriter ecrivainString;
+	@JsonIgnore
 	public Couverture<StringWriter> ecrivainStringCouverture = new Couverture<StringWriter>().p(this).c(StringWriter.class).var("ecrivainString").o(ecrivainString);
 
 	/**	<br/>L'entité « ecrivainString »
@@ -194,6 +206,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Buffer buffer;
+	@JsonIgnore
 	public Couverture<Buffer> bufferCouverture = new Couverture<Buffer>().p(this).c(Buffer.class).var("buffer").o(buffer);
 
 	/**	<br/>L'entité « buffer »
@@ -230,6 +243,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected PrintWriter ecrivainImpression;
+	@JsonIgnore
 	public Couverture<PrintWriter> ecrivainImpressionCouverture = new Couverture<PrintWriter>().p(this).c(PrintWriter.class).var("ecrivainImpression").o(ecrivainImpression);
 
 	/**	<br/>L'entité « ecrivainImpression »
@@ -266,6 +280,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected Boolean vide;
+	@JsonIgnore
 	public Couverture<Boolean> videCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("vide").o(vide);
 
 	/**	<br/>L'entité « vide »
@@ -304,6 +319,10 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 	}
 
 	public String strVide() {
+		return vide == null ? "" : vide.toString();
+	}
+
+	public String jsonVide() {
 		return vide == null ? "" : vide.toString();
 	}
 
@@ -480,7 +499,7 @@ public abstract class ToutEcrivainGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ToutEcrivain {");
+		sb.append("ToutEcrivain { ");
 		sb.append(" }");
 		return sb.toString();
 	}

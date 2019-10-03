@@ -1,15 +1,19 @@
 package org.computate.scolaire.enUS.writer;
 
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.apache.commons.lang3.StringUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.AllWriters&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -25,6 +29,7 @@ public abstract class AllWritersGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected SiteRequestEnUS siteRequest_;
+	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
 	/**	<br/>L'entité « siteRequest_ »
@@ -61,6 +66,7 @@ public abstract class AllWritersGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<AllWriter>(). 
 	 */
 	protected List<AllWriter> writers = new java.util.ArrayList<org.computate.scolaire.enUS.writer.AllWriter>();
+	@JsonIgnore
 	public Wrap<List<AllWriter>> writersWrap = new Wrap<List<AllWriter>>().p(this).c(List.class).var("writers").o(writers);
 
 	/**	<br/>L'entité « writers »
@@ -244,7 +250,7 @@ public abstract class AllWritersGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("AllWriters {");
+		sb.append("AllWriters { ");
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -1,15 +1,19 @@
 package org.computate.scolaire.enUS.page.part;
 
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.page.PageLayout;
-import org.computate.scolaire.enUS.cluster.Cluster;
-import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
 import java.lang.String;
-import org.apache.commons.lang3.StringUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.page.part.PagePart&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -25,6 +29,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected PageLayout page_;
+	@JsonIgnore
 	public Wrap<PageLayout> page_Wrap = new Wrap<PageLayout>().p(this).c(PageLayout.class).var("page_").o(page_);
 
 	/**	<br/>L'entité « page_ »
@@ -61,6 +66,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 	 *	 is defined as null before being initialized. 
 	 */
 	protected String partVar;
+	@JsonIgnore
 	public Wrap<String> partVarWrap = new Wrap<String>().p(this).c(String.class).var("partVar").o(partVar);
 
 	/**	<br/>L'entité « partVar »
@@ -94,6 +100,10 @@ public abstract class PagePartGen<DEV> extends Cluster {
 	}
 
 	public String strPartVar() {
+		return partVar == null ? "" : partVar;
+	}
+
+	public String jsonPartVar() {
 		return partVar == null ? "" : partVar;
 	}
 
@@ -269,7 +279,7 @@ public abstract class PagePartGen<DEV> extends Cluster {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("PagePart {");
+		sb.append("PagePart { ");
 		sb.append(" }");
 		return sb.toString();
 	}

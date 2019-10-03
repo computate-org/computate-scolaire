@@ -1,15 +1,18 @@
 package org.computate.scolaire.enUS.config;
 
 import org.apache.commons.configuration2.INIConfiguration;
+import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.math.NumberUtils;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -594,7 +597,7 @@ The port of the site.
 		this.sitePortWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setSitePort(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.sitePort = Integer.parseInt(o);
 		this.sitePortWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1545,7 +1548,7 @@ The max pool size for the database.
 		this.jdbcMaxPoolSizeWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcMaxPoolSize(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxPoolSize = Integer.parseInt(o);
 		this.jdbcMaxPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1614,7 +1617,7 @@ The max pool size for the database.
 		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcInitialPoolSize(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcInitialPoolSize = Integer.parseInt(o);
 		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1683,7 +1686,7 @@ The max pool size for the database.
 		this.jdbcMinPoolSizeWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcMinPoolSize(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMinPoolSize = Integer.parseInt(o);
 		this.jdbcMinPoolSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1752,7 +1755,7 @@ The max statements for the database.
 		this.jdbcMaxStatementsWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcMaxStatements(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxStatements = Integer.parseInt(o);
 		this.jdbcMaxStatementsWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1821,7 +1824,7 @@ The max statements per connection for the database.
 		this.jdbcMaxStatementsPerConnectionWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcMaxStatementsPerConnection(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxStatementsPerConnection = Integer.parseInt(o);
 		this.jdbcMaxStatementsPerConnectionWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -1890,7 +1893,7 @@ The max idle time for the database.
 		this.jdbcMaxIdleTimeWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setJdbcMaxIdleTime(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.jdbcMaxIdleTime = Integer.parseInt(o);
 		this.jdbcMaxIdleTimeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
@@ -2652,7 +2655,7 @@ The number of executors for executing background tasks in the site.
 		this.numberExecutorsWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setNumberExecutors(String o) {
-		if(org.apache.commons.lang3.math.NumberUtils.isCreatable(o))
+		if(NumberUtils.isParsable(o))
 			this.numberExecutors = Integer.parseInt(o);
 		this.numberExecutorsWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
