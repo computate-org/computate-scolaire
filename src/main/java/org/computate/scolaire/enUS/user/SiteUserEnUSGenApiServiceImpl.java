@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.recherche.ResultatRecherche;
+import org.computate.scolaire.enUS.search.SearchResult;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -102,8 +102,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							aSearchSiteUser(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SiteUser> listSiteUser = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listSiteUser.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modified");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modified");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
@@ -228,43 +230,73 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
+					case "setUserReceiveEmails":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "userReceiveEmails"));
+						} else {
+							o2.setUserReceiveEmails(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("userReceiveEmails", o2.jsonUserReceiveEmails(), pk));
+						}
+						break;
+					case "setSeeArchived":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seeArchived"));
+						} else {
+							o2.setSeeArchived(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seeArchived", o2.jsonSeeArchived(), pk));
+						}
+						break;
+					case "setSeeDeleted":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "seeDeleted"));
+						} else {
+							o2.setSeeDeleted(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("seeDeleted", o2.jsonSeeDeleted(), pk));
 						}
 						break;
 				}
@@ -397,8 +429,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "userId":
-				return "userId_indexed_string";
 			case "userName":
 				return "userName_indexed_string";
 			case "userEmail":
@@ -632,16 +662,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			listSearch.setC(SiteUser.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
-			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
 			listSearch.addSort("created_indexed_date", ORDER.desc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.user.SiteUser"));
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-			SiteUser siteUser = siteRequest.getSiteUser();
-			if(siteUser != null && !siteUser.getSeeDeleted())
-				listSearch.addFilterQuery("deleted_indexed_boolean:false");
-			if(siteUser != null && !siteUser.getSeeArchived())
-				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

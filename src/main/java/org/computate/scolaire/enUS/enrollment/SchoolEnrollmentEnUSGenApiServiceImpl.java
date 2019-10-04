@@ -292,7 +292,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void response200POSTSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -438,41 +438,41 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -608,111 +608,111 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
 						break;
 					case "setEnrollmentApproved":
-						o2.setEnrollmentApproved(requestJson.getBoolean(methodName));
-						if(o2.getEnrollmentApproved() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved"));
 						} else {
+							o2.setEnrollmentApproved(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentApproved", o2.jsonEnrollmentApproved(), pk));
 						}
 						break;
 					case "setEnrollmentImmunizations":
-						o2.setEnrollmentImmunizations(requestJson.getBoolean(methodName));
-						if(o2.getEnrollmentImmunizations() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations"));
 						} else {
+							o2.setEnrollmentImmunizations(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentImmunizations", o2.jsonEnrollmentImmunizations(), pk));
 						}
 						break;
 					case "setFamilyMarried":
-						o2.setFamilyMarried(requestJson.getBoolean(methodName));
-						if(o2.getFamilyMarried() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried"));
 						} else {
+							o2.setFamilyMarried(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyMarried", o2.jsonFamilyMarried(), pk));
 						}
 						break;
 					case "setFamilySeparated":
-						o2.setFamilySeparated(requestJson.getBoolean(methodName));
-						if(o2.getFamilySeparated() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated"));
 						} else {
+							o2.setFamilySeparated(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familySeparated", o2.jsonFamilySeparated(), pk));
 						}
 						break;
 					case "setFamilyDivorced":
-						o2.setFamilyDivorced(requestJson.getBoolean(methodName));
-						if(o2.getFamilyDivorced() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced"));
 						} else {
+							o2.setFamilyDivorced(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyDivorced", o2.jsonFamilyDivorced(), pk));
 						}
 						break;
 					case "setFamilyAddress":
-						o2.setFamilyAddress(requestJson.getString(methodName));
-						if(o2.getFamilyAddress() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress"));
 						} else {
+							o2.setFamilyAddress(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyAddress", o2.jsonFamilyAddress(), pk));
 						}
 						break;
 					case "setFamilyHowDoYouKnowTheSchool":
-						o2.setFamilyHowDoYouKnowTheSchool(requestJson.getString(methodName));
-						if(o2.getFamilyHowDoYouKnowTheSchool() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool"));
 						} else {
+							o2.setFamilyHowDoYouKnowTheSchool(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool(), pk));
 						}
 						break;
 					case "setEnrollmentSpecialConsiderations":
-						o2.setEnrollmentSpecialConsiderations(requestJson.getString(methodName));
-						if(o2.getEnrollmentSpecialConsiderations() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations"));
 						} else {
+							o2.setEnrollmentSpecialConsiderations(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations(), pk));
 						}
 						break;
 					case "setEnrollmentGroupName":
-						o2.setEnrollmentGroupName(requestJson.getString(methodName));
-						if(o2.getEnrollmentGroupName() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName"));
 						} else {
+							o2.setEnrollmentGroupName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentGroupName", o2.jsonEnrollmentGroupName(), pk));
 						}
 						break;
 					case "setEnrollmentPaymentEachMonth":
-						o2.setEnrollmentPaymentEachMonth(requestJson.getBoolean(methodName));
-						if(o2.getEnrollmentPaymentEachMonth() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth"));
 						} else {
+							o2.setEnrollmentPaymentEachMonth(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth(), pk));
 						}
 						break;
 					case "setEnrollmentPaymentComplete":
-						o2.setEnrollmentPaymentComplete(requestJson.getBoolean(methodName));
-						if(o2.getEnrollmentPaymentComplete() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete"));
 						} else {
+							o2.setEnrollmentPaymentComplete(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete(), pk));
 						}
@@ -1078,8 +1078,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "yearStart_indexed_int";
 			case "yearEnd":
 				return "yearEnd_indexed_int";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -1367,6 +1367,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			listSearch.setC(SchoolEnrollment.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

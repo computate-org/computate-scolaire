@@ -260,7 +260,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	public void reponse200POSTPereScolaire(PereScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -406,41 +406,41 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -470,101 +470,101 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "pereCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setPersonnePrenom":
-						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
-						if(o2.getPersonnePrenom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenom"));
 						} else {
+							o2.setPersonnePrenom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenom", o2.jsonPersonnePrenom(), pk));
 						}
 						break;
 					case "setPersonnePrenomPrefere":
-						o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
-						if(o2.getPersonnePrenomPrefere() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenomPrefere"));
 						} else {
+							o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenomPrefere", o2.jsonPersonnePrenomPrefere(), pk));
 						}
 						break;
 					case "setFamilleNom":
-						o2.setFamilleNom(requeteJson.getString(methodeNom));
-						if(o2.getFamilleNom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familleNom"));
 						} else {
+							o2.setFamilleNom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
 					case "setPersonneOccupation":
-						o2.setPersonneOccupation(requeteJson.getString(methodeNom));
-						if(o2.getPersonneOccupation() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneOccupation"));
 						} else {
+							o2.setPersonneOccupation(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneOccupation", o2.jsonPersonneOccupation(), pk));
 						}
 						break;
 					case "setPersonneNumeroTelephone":
-						o2.setPersonneNumeroTelephone(requeteJson.getString(methodeNom));
-						if(o2.getPersonneNumeroTelephone() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneNumeroTelephone"));
 						} else {
+							o2.setPersonneNumeroTelephone(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneNumeroTelephone", o2.jsonPersonneNumeroTelephone(), pk));
 						}
 						break;
 					case "setPersonneMail":
-						o2.setPersonneMail(requeteJson.getString(methodeNom));
-						if(o2.getPersonneMail() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneMail"));
 						} else {
+							o2.setPersonneMail(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneMail", o2.jsonPersonneMail(), pk));
 						}
 						break;
 					case "setPersonneSms":
-						o2.setPersonneSms(requeteJson.getBoolean(methodeNom));
-						if(o2.getPersonneSms() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneSms"));
 						} else {
+							o2.setPersonneSms(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneSms", o2.jsonPersonneSms(), pk));
 						}
 						break;
 					case "setPersonneRecevoirMail":
-						o2.setPersonneRecevoirMail(requeteJson.getBoolean(methodeNom));
-						if(o2.getPersonneRecevoirMail() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneRecevoirMail"));
 						} else {
+							o2.setPersonneRecevoirMail(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneRecevoirMail", o2.jsonPersonneRecevoirMail(), pk));
 						}
 						break;
 					case "setPersonneContactUrgence":
-						o2.setPersonneContactUrgence(requeteJson.getBoolean(methodeNom));
-						if(o2.getPersonneContactUrgence() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneContactUrgence"));
 						} else {
+							o2.setPersonneContactUrgence(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneContactUrgence", o2.jsonPersonneContactUrgence(), pk));
 						}
 						break;
 					case "setPersonneChercher":
-						o2.setPersonneChercher(requeteJson.getBoolean(methodeNom));
-						if(o2.getPersonneChercher() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneChercher"));
 						} else {
+							o2.setPersonneChercher(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneChercher", o2.jsonPersonneChercher(), pk));
 						}
@@ -1159,6 +1159,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			listeRecherche.setC(PereScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

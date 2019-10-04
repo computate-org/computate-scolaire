@@ -232,7 +232,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	public void response200POSTSchoolSession(SchoolSession o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -378,41 +378,41 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -452,21 +452,21 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						patchSqlParams.addAll(Arrays.asList("ageKeys", pk, "sessionKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setSessionStartDay":
-						o2.setSessionStartDay(requestJson.getString(methodName));
-						if(o2.getSessionStartDay() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionStartDay"));
 						} else {
+							o2.setSessionStartDay(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionStartDay", o2.jsonSessionStartDay(), pk));
 						}
 						break;
 					case "setSessionEndDay":
-						o2.setSessionEndDay(requestJson.getString(methodName));
-						if(o2.getSessionEndDay() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionEndDay"));
 						} else {
+							o2.setSessionEndDay(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionEndDay", o2.jsonSessionEndDay(), pk));
 						}
@@ -814,8 +814,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "yearStart_indexed_int";
 			case "yearEnd":
 				return "yearEnd_indexed_int";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -1055,6 +1055,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			listSearch.setC(SchoolSession.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

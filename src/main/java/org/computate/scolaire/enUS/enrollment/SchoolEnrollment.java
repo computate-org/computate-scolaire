@@ -130,7 +130,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block.getYearStart());
 	}
 
-	protected void _seasonStartDay(Wrap<LocalDate> c) {
+	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(block != null)
 			c.o(block.getSeasonStartDay());
 	}

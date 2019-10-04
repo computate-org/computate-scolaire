@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -49,7 +50,7 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 
 	public boolean next(String dt) {
 		boolean next = false;
-		long numFound = getSolrDocumentList().getNumFound();
+		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
 		if(numFound > 0) {
 			addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 			_queryResponse(queryResponseWrap);

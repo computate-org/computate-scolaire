@@ -240,7 +240,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	public void reponse200POSTEcole(Ecole o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -386,41 +386,41 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -450,51 +450,51 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						patchSqlParams.addAll(Arrays.asList("anneeCles", pk, "ecoleCle", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setEcoleNom":
-						o2.setEcoleNom(requeteJson.getString(methodeNom));
-						if(o2.getEcoleNom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ecoleNom"));
 						} else {
+							o2.setEcoleNom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleNom", o2.jsonEcoleNom(), pk));
 						}
 						break;
 					case "setEcoleNumeroTelephone":
-						o2.setEcoleNumeroTelephone(requeteJson.getString(methodeNom));
-						if(o2.getEcoleNumeroTelephone() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ecoleNumeroTelephone"));
 						} else {
+							o2.setEcoleNumeroTelephone(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleNumeroTelephone", o2.jsonEcoleNumeroTelephone(), pk));
 						}
 						break;
 					case "setEcoleAdministrateurNom":
-						o2.setEcoleAdministrateurNom(requeteJson.getString(methodeNom));
-						if(o2.getEcoleAdministrateurNom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAdministrateurNom"));
 						} else {
+							o2.setEcoleAdministrateurNom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleAdministrateurNom", o2.jsonEcoleAdministrateurNom(), pk));
 						}
 						break;
 					case "setEcoleEmplacement":
-						o2.setEcoleEmplacement(requeteJson.getString(methodeNom));
-						if(o2.getEcoleEmplacement() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ecoleEmplacement"));
 						} else {
+							o2.setEcoleEmplacement(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleEmplacement", o2.jsonEcoleEmplacement(), pk));
 						}
 						break;
 					case "setEcoleAddresse":
-						o2.setEcoleAddresse(requeteJson.getString(methodeNom));
-						if(o2.getEcoleAddresse() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse"));
 						} else {
+							o2.setEcoleAddresse(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
 						}
@@ -1073,6 +1073,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			listeRecherche.setC(Ecole.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

@@ -376,41 +376,41 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -947,6 +947,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			listSearch.setC(Cluster.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
+			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

@@ -240,7 +240,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	public void response200POSTSchoolGuardian(SchoolGuardian o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -386,41 +386,41 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -450,51 +450,51 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "guardianKeys", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setPersonFirstName":
-						o2.setPersonFirstName(requestJson.getString(methodName));
-						if(o2.getPersonFirstName() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personFirstName"));
 						} else {
+							o2.setPersonFirstName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personFirstName", o2.jsonPersonFirstName(), pk));
 						}
 						break;
 					case "setPersonFirstNamePreferred":
-						o2.setPersonFirstNamePreferred(requestJson.getString(methodName));
-						if(o2.getPersonFirstNamePreferred() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personFirstNamePreferred"));
 						} else {
+							o2.setPersonFirstNamePreferred(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personFirstNamePreferred", o2.jsonPersonFirstNamePreferred(), pk));
 						}
 						break;
 					case "setFamilyName":
-						o2.setFamilyName(requestJson.getString(methodName));
-						if(o2.getFamilyName() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familyName"));
 						} else {
+							o2.setFamilyName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
 						}
 						break;
 					case "setPersonOccupation":
-						o2.setPersonOccupation(requestJson.getString(methodName));
-						if(o2.getPersonOccupation() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personOccupation"));
 						} else {
+							o2.setPersonOccupation(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personOccupation", o2.jsonPersonOccupation(), pk));
 						}
 						break;
 					case "setPersonPhoneNumber":
-						o2.setPersonPhoneNumber(requestJson.getString(methodName));
-						if(o2.getPersonPhoneNumber() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personPhoneNumber"));
 						} else {
+							o2.setPersonPhoneNumber(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personPhoneNumber", o2.jsonPersonPhoneNumber(), pk));
 						}
@@ -1089,6 +1089,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			listSearch.setC(SchoolGuardian.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

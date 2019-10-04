@@ -5254,7 +5254,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageFamilleMarie() {
-		return "marié";
+		return "parents marié";
 	}
 
 	public String htmTooltipFamilleMarie() {
@@ -5361,7 +5361,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageFamilleSepare() {
-		return "séparé";
+		return "parents séparé";
 	}
 
 	public String htmTooltipFamilleSepare() {
@@ -5468,7 +5468,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageFamilleDivorce() {
-		return "divorcé";
+		return "parents divorcé";
 	}
 
 	public String htmTooltipFamilleDivorce() {

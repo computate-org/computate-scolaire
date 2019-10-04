@@ -232,7 +232,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 	public void reponse200POSTSessionScolaire(SessionScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -378,41 +378,41 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -452,21 +452,21 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
 					case "setSessionJourDebut":
-						o2.setSessionJourDebut(requeteJson.getString(methodeNom));
-						if(o2.getSessionJourDebut() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionJourDebut"));
 						} else {
+							o2.setSessionJourDebut(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionJourDebut", o2.jsonSessionJourDebut(), pk));
 						}
 						break;
 					case "setSessionJourFin":
-						o2.setSessionJourFin(requeteJson.getString(methodeNom));
-						if(o2.getSessionJourFin() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "sessionJourFin"));
 						} else {
+							o2.setSessionJourFin(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("sessionJourFin", o2.jsonSessionJourFin(), pk));
 						}
@@ -1055,6 +1055,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			listeRecherche.setC(SessionScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

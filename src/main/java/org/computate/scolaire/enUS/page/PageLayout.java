@@ -196,7 +196,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _pageUserUri(Wrap<String> c) {
-		c.o("/enUS/user");
+		c.o("/user");
 	}
 
 	protected void _pageLogoutUri(Wrap<String> c) {
@@ -494,13 +494,44 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("div");
 			}
 			if(siteRequest_.getUserId() != null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
-						e("span").a("class", "site-menu-item").f();
+
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "far fa-user-cog w3-padding-small ").f().g("i");
 							sx(siteRequest_.getUserName());
-						g("span");
-					g("a");
-				g("div");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						SiteUser o = siteRequest_.getSiteUser();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Page_seeArchived").a("class", "").f().sx("see archived").g("label");
+							e("input")
+								.a("type", "checkbox")
+								.a("value", "true")
+								.a("class", "setSeeArchived")
+								.a("name", "setSeeArchived")
+								.a("id", "Page_seeArchived")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#Page_seeArchived')); }, function() { addError($('#Page_seeArchived')); }); ")
+								;
+								if(o.getSeeArchived() != null && o.getSeeArchived())
+									a("checked", "checked");
+							fg();
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Page_seeDeleted").a("class", "").f().sx("see deleted").g("label");
+							e("input")
+								.a("type", "checkbox")
+								.a("value", "true")
+								.a("class", "setSeeDeleted")
+								.a("name", "setSeeDeleted")
+								.a("id", "Page_seeDeleted")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#Page_seeDeleted')); }, function() { addError($('#Page_seeDeleted')); }); ")
+								;
+								if(o.getSeeDeleted() != null && o.getSeeDeleted())
+									a("checked", "checked");
+							fg();
+						} g("div");
+					} g("div");
+				} g("div");
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "w3-padding ").a("href", pageLogoutUri).f();
 						e("span").a("class", "site-menu-item").f();

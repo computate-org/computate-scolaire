@@ -9,6 +9,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
+import java.math.BigDecimal;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
@@ -1984,74 +1985,91 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		}
 	}
 
-	//////////////////
-	// paymentValue //
-	//////////////////
+	///////////////////
+	// paymentAmount //
+	///////////////////
 
-	/**	L'entité « paymentValue »
+	/**	L'entité « paymentAmount »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String paymentValue;
+	protected BigDecimal paymentAmount;
 	@JsonIgnore
-	public Wrap<String> paymentValueWrap = new Wrap<String>().p(this).c(String.class).var("paymentValue").o(paymentValue);
+	public Wrap<BigDecimal> paymentAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("paymentAmount").o(paymentAmount);
 
-	/**	<br/>L'entité « paymentValue »
+	/**	<br/>L'entité « paymentAmount »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentValue">Trouver l'entité paymentValue dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentAmount">Trouver l'entité paymentAmount dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _paymentValue(Wrap<String> c);
+	protected abstract void _paymentAmount(Wrap<BigDecimal> c);
 
-	public String getPaymentValue() {
-		return paymentValue;
+	public BigDecimal getPaymentAmount() {
+		return paymentAmount;
 	}
 
-	public void setPaymentValue(String paymentValue) {
-		this.paymentValue = paymentValue;
-		this.paymentValueWrap.alreadyInitialized = true;
+	public void setPaymentAmount(BigDecimal paymentAmount) {
+		this.paymentAmount = paymentAmount;
+		this.paymentAmountWrap.alreadyInitialized = true;
 	}
-	protected SchoolPayment paymentValueInit() {
-		if(!paymentValueWrap.alreadyInitialized) {
-			_paymentValue(paymentValueWrap);
-			if(paymentValue == null)
-				setPaymentValue(paymentValueWrap.o);
+	public SchoolPayment setPaymentAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setPaymentAmount(Double o) {
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setPaymentAmount(Integer o) {
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentAmountInit() {
+		if(!paymentAmountWrap.alreadyInitialized) {
+			_paymentAmount(paymentAmountWrap);
+			if(paymentAmount == null)
+				setPaymentAmount(paymentAmountWrap.o);
 		}
-		paymentValueWrap.alreadyInitialized(true);
+		paymentAmountWrap.alreadyInitialized(true);
 		return (SchoolPayment)this;
 	}
 
-	public String solrPaymentValue() {
-		return paymentValue;
+	public Double solrPaymentAmount() {
+		return paymentAmount == null ? null : paymentAmount.doubleValue();
 	}
 
-	public String strPaymentValue() {
-		return paymentValue == null ? "" : paymentValue;
+	public String strPaymentAmount() {
+		return paymentAmount == null ? "" : paymentAmount.toString();
 	}
 
-	public String jsonPaymentValue() {
-		return paymentValue == null ? "" : paymentValue;
+	public String jsonPaymentAmount() {
+		return paymentAmount == null ? "" : paymentAmount.toString();
 	}
 
-	public String nomAffichagePaymentValue() {
+	public String nomAffichagePaymentAmount() {
 		return "amount";
 	}
 
-	public String htmTooltipPaymentValue() {
+	public String htmTooltipPaymentAmount() {
 		return null;
 	}
 
-	public String htmPaymentValue() {
-		return paymentValue == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentValue());
+	public String htmPaymentAmount() {
+		return paymentAmount == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentAmount());
 	}
 
-	public void htmPaymentValue(AllWriter r, Boolean patchRights) {
+	public void htmPaymentAmount(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchoolPayment", strPk(), "PaymentValue\">");
+			r.s("<div id=\"patchSchoolPayment", strPk(), "PaymentAmount\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolPayment", strPk(), "PaymentValue() {");
+				r.l("		function patchSchoolPayment", strPk(), "PaymentAmount() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2064,23 +2082,23 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setPaymentValue\": this.value },");
+				r.l("				data: {\"setPaymentAmount\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaymentValue()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaymentAmount()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"paymentValue\"");
-							r.s(" value=\"", htmPaymentValue(), "\");");
+							r.s(" name=\"paymentAmount\"");
+							r.s(" value=\"", htmPaymentAmount(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmPaymentValue());
+				r.s(htmPaymentAmount());
 			}
 			r.l("</div>");
 		}
@@ -2853,7 +2871,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		enrollment_Init();
 		paymentDescriptionInit();
 		paymentDateInit();
-		paymentValueInit();
+		paymentAmountInit();
 		paymentCashInit();
 		paymentCheckInit();
 		paymentSystemInit();
@@ -2935,8 +2953,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentDescription;
 			case "paymentDate":
 				return oSchoolPayment.paymentDate;
-			case "paymentValue":
-				return oSchoolPayment.paymentValue;
+			case "paymentAmount":
+				return oSchoolPayment.paymentAmount;
 			case "paymentCash":
 				return oSchoolPayment.paymentCash;
 			case "paymentCheck":
@@ -3005,6 +3023,26 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	public Object defineSchoolPayment(String var, String val) {
 		switch(var) {
+			case "paymentDescription":
+				setPaymentDescription(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentDate":
+				setPaymentDate(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentAmount":
+				setPaymentAmount(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentCash":
+				setPaymentCash(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "paymentCheck":
+				setPaymentCheck(val);
+				savesSchoolPayment.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -3110,10 +3148,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setPaymentDate(paymentDate);
 			}
 
-			if(savesSchoolPayment.contains("paymentValue")) {
-				String paymentValue = (String)solrDocument.get("paymentValue_stored_string");
-				if(paymentValue != null)
-					oSchoolPayment.setPaymentValue(paymentValue);
+			if(savesSchoolPayment.contains("paymentAmount")) {
+				Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
+				if(paymentAmount != null)
+					oSchoolPayment.setPaymentAmount(paymentAmount);
 			}
 
 			if(savesSchoolPayment.contains("paymentCash")) {
@@ -3326,9 +3364,9 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("paymentDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(paymentValue != null) {
-			document.addField("paymentValue_indexed_string", paymentValue);
-			document.addField("paymentValue_stored_string", paymentValue);
+		if(paymentAmount != null) {
+			document.addField("paymentAmount_indexed_double", paymentAmount.doubleValue());
+			document.addField("paymentAmount_stored_double", paymentAmount.doubleValue());
 		}
 		if(paymentCash != null) {
 			document.addField("paymentCash_indexed_boolean", paymentCash);
@@ -3445,9 +3483,9 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentDate != null)
 			oSchoolPayment.setPaymentDate(paymentDate);
 
-		String paymentValue = (String)solrDocument.get("paymentValue_stored_string");
-		if(paymentValue != null)
-			oSchoolPayment.setPaymentValue(paymentValue);
+		Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
+		if(paymentAmount != null)
+			oSchoolPayment.setPaymentAmount(paymentAmount);
 
 		Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 		if(paymentCash != null)
@@ -3484,7 +3522,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys);
+		return Objects.hash(super.hashCode(), enrollmentKeys, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck);
 	}
 
 	////////////
@@ -3498,7 +3536,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			return false;
 		SchoolPayment that = (SchoolPayment)o;
 		return super.equals(o)
-				&& Objects.equals( enrollmentKeys, that.enrollmentKeys );
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
+				&& Objects.equals( paymentDescription, that.paymentDescription )
+				&& Objects.equals( paymentDate, that.paymentDate )
+				&& Objects.equals( paymentAmount, that.paymentAmount )
+				&& Objects.equals( paymentCash, that.paymentCash )
+				&& Objects.equals( paymentCheck, that.paymentCheck );
 	}
 
 	//////////////
@@ -3510,6 +3553,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolPayment { ");
 		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", paymentDescription: \"" ).append(paymentDescription).append( "\"" );
+		sb.append( ", paymentDate: " ).append(paymentDate);
+		sb.append( ", paymentAmount: " ).append(paymentAmount);
+		sb.append( ", paymentCash: " ).append(paymentCash);
+		sb.append( ", paymentCheck: " ).append(paymentCheck);
 		sb.append(" }");
 		return sb.toString();
 	}

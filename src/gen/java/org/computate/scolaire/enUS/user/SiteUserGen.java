@@ -56,9 +56,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public static final String SiteUser_UnNomAdjectif = "a site user";
 	public static final String SiteUser_NomAdjectifSingulier = "site user";
 	public static final String SiteUser_NomAdjectifPluriel = "site users";
-	public static final String SiteUser_Couleur = "green";
+	public static final String SiteUser_Couleur = "gray";
 	public static final String SiteUser_IconeGroupe = "regular";
-	public static final String SiteUser_IconeNom = "book";
+	public static final String SiteUser_IconeNom = "user-cog";
 
 	////////////
 	// userId //
@@ -829,7 +829,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageUserReceiveEmails() {
-		return null;
+		return "receive email";
 	}
 
 	public String htmTooltipUserReceiveEmails() {
@@ -1235,6 +1235,18 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 	public Object defineSiteUser(String var, String val) {
 		switch(var) {
+			case "userReceiveEmails":
+				setUserReceiveEmails(val);
+				savesSiteUser.add(var);
+				return val;
+			case "seeArchived":
+				setSeeArchived(val);
+				savesSiteUser.add(var);
+				return val;
+			case "seeDeleted":
+				setSeeDeleted(val);
+				savesSiteUser.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -1257,12 +1269,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		SiteUser oSiteUser = (SiteUser)this;
 		savesSiteUser = (List<String>)solrDocument.get("savesSiteUser_stored_strings");
 		if(savesSiteUser != null) {
-
-			if(savesSiteUser.contains("userId")) {
-				String userId = (String)solrDocument.get("userId_stored_string");
-				if(userId != null)
-					oSiteUser.setUserId(userId);
-			}
 
 			if(savesSiteUser.contains("userName")) {
 				String userName = (String)solrDocument.get("userName_stored_string");
@@ -1387,10 +1393,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(savesSiteUser != null)
 			document.addField("savesSiteUser_stored_strings", savesSiteUser);
 
-		if(userId != null) {
-			document.addField("userId_indexed_string", userId);
-			document.addField("userId_stored_string", userId);
-		}
 		if(userName != null) {
 			document.addField("userName_indexed_string", userName);
 			document.addField("userName_stored_string", userName);
@@ -1458,10 +1460,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public void storeSiteUser(SolrDocument solrDocument) {
 		SiteUser oSiteUser = (SiteUser)this;
 
-		String userId = (String)solrDocument.get("userId_stored_string");
-		if(userId != null)
-			oSiteUser.setUserId(userId);
-
 		String userName = (String)solrDocument.get("userName_stored_string");
 		if(userName != null)
 			oSiteUser.setUserName(userName);
@@ -1517,7 +1515,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash(super.hashCode(), userReceiveEmails, seeArchived, seeDeleted);
 	}
 
 	////////////
@@ -1530,7 +1528,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(!(o instanceof SiteUser))
 			return false;
 		SiteUser that = (SiteUser)o;
-		return super.equals(o);
+		return super.equals(o)
+				&& Objects.equals( userReceiveEmails, that.userReceiveEmails )
+				&& Objects.equals( seeArchived, that.seeArchived )
+				&& Objects.equals( seeDeleted, that.seeDeleted );
 	}
 
 	//////////////
@@ -1541,6 +1542,9 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SiteUser { ");
+		sb.append( "userReceiveEmails: " ).append(userReceiveEmails);
+		sb.append( ", seeArchived: " ).append(seeArchived);
+		sb.append( ", seeDeleted: " ).append(seeDeleted);
 		sb.append(" }");
 		return sb.toString();
 	}

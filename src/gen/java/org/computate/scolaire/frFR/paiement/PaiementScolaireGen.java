@@ -9,6 +9,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
+import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
@@ -1985,74 +1986,91 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////////
-	// paiementValeur //
-	////////////////////
+	/////////////////////
+	// paiementMontant //
+	/////////////////////
 
-	/**	L'entité « paiementValeur »
+	/**	L'entité « paiementMontant »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String paiementValeur;
+	protected BigDecimal paiementMontant;
 	@JsonIgnore
-	public Couverture<String> paiementValeurCouverture = new Couverture<String>().p(this).c(String.class).var("paiementValeur").o(paiementValeur);
+	public Couverture<BigDecimal> paiementMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("paiementMontant").o(paiementMontant);
 
-	/**	<br/>L'entité « paiementValeur »
+	/**	<br/>L'entité « paiementMontant »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementValeur">Trouver l'entité paiementValeur dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementMontant">Trouver l'entité paiementMontant dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _paiementValeur(Couverture<String> c);
+	protected abstract void _paiementMontant(Couverture<BigDecimal> c);
 
-	public String getPaiementValeur() {
-		return paiementValeur;
+	public BigDecimal getPaiementMontant() {
+		return paiementMontant;
 	}
 
-	public void setPaiementValeur(String paiementValeur) {
-		this.paiementValeur = paiementValeur;
-		this.paiementValeurCouverture.dejaInitialise = true;
+	public void setPaiementMontant(BigDecimal paiementMontant) {
+		this.paiementMontant = paiementMontant;
+		this.paiementMontantCouverture.dejaInitialise = true;
 	}
-	protected PaiementScolaire paiementValeurInit() {
-		if(!paiementValeurCouverture.dejaInitialise) {
-			_paiementValeur(paiementValeurCouverture);
-			if(paiementValeur == null)
-				setPaiementValeur(paiementValeurCouverture.o);
+	public PaiementScolaire setPaiementMontant(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setPaiementMontant(Double o) {
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setPaiementMontant(Integer o) {
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementMontantCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementMontantInit() {
+		if(!paiementMontantCouverture.dejaInitialise) {
+			_paiementMontant(paiementMontantCouverture);
+			if(paiementMontant == null)
+				setPaiementMontant(paiementMontantCouverture.o);
 		}
-		paiementValeurCouverture.dejaInitialise(true);
+		paiementMontantCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
 	}
 
-	public String solrPaiementValeur() {
-		return paiementValeur;
+	public Double solrPaiementMontant() {
+		return paiementMontant == null ? null : paiementMontant.doubleValue();
 	}
 
-	public String strPaiementValeur() {
-		return paiementValeur == null ? "" : paiementValeur;
+	public String strPaiementMontant() {
+		return paiementMontant == null ? "" : paiementMontant.toString();
 	}
 
-	public String jsonPaiementValeur() {
-		return paiementValeur == null ? "" : paiementValeur;
+	public String jsonPaiementMontant() {
+		return paiementMontant == null ? "" : paiementMontant.toString();
 	}
 
-	public String nomAffichagePaiementValeur() {
+	public String nomAffichagePaiementMontant() {
 		return "montant";
 	}
 
-	public String htmTooltipPaiementValeur() {
+	public String htmTooltipPaiementMontant() {
 		return null;
 	}
 
-	public String htmPaiementValeur() {
-		return paiementValeur == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementValeur());
+	public String htmPaiementMontant() {
+		return paiementMontant == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementMontant());
 	}
 
-	public void htmPaiementValeur(ToutEcrivain r, Boolean patchDroits) {
+	public void htmPaiementMontant(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchPaiementScolaire", strPk(), "PaiementValeur\">");
+			r.s("<div id=\"patchPaiementScolaire", strPk(), "PaiementMontant\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchPaiementScolaire", strPk(), "PaiementValeur() {");
+				r.l("		function patchPaiementScolaire", strPk(), "PaiementMontant() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -2065,23 +2083,23 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setPaiementValeur\": this.value },");
+				r.l("				data: {\"setPaiementMontant\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaiementValeur()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaiementMontant()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"paiementValeur\"");
-							r.s(" value=\"", htmPaiementValeur(), "\");");
+							r.s(" name=\"paiementMontant\"");
+							r.s(" value=\"", htmPaiementMontant(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmPaiementValeur());
+				r.s(htmPaiementMontant());
 			}
 			r.l("</div>");
 		}
@@ -2854,7 +2872,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		inscription_Init();
 		paiementDescriptionInit();
 		paiementDateInit();
-		paiementValeurInit();
+		paiementMontantInit();
 		paiementEspecesInit();
 		paiementChequeInit();
 		paiementSystemeInit();
@@ -2936,8 +2954,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementDescription;
 			case "paiementDate":
 				return oPaiementScolaire.paiementDate;
-			case "paiementValeur":
-				return oPaiementScolaire.paiementValeur;
+			case "paiementMontant":
+				return oPaiementScolaire.paiementMontant;
 			case "paiementEspeces":
 				return oPaiementScolaire.paiementEspeces;
 			case "paiementCheque":
@@ -3006,6 +3024,26 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirPaiementScolaire(String var, String val) {
 		switch(var) {
+			case "paiementDescription":
+				setPaiementDescription(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementDate":
+				setPaiementDate(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementMontant":
+				setPaiementMontant(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementEspeces":
+				setPaiementEspeces(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
+			case "paiementCheque":
+				setPaiementCheque(val);
+				sauvegardesPaiementScolaire.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -3111,10 +3149,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setPaiementDate(paiementDate);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementValeur")) {
-				String paiementValeur = (String)solrDocument.get("paiementValeur_stored_string");
-				if(paiementValeur != null)
-					oPaiementScolaire.setPaiementValeur(paiementValeur);
+			if(sauvegardesPaiementScolaire.contains("paiementMontant")) {
+				Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
+				if(paiementMontant != null)
+					oPaiementScolaire.setPaiementMontant(paiementMontant);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementEspeces")) {
@@ -3327,9 +3365,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("paiementDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(paiementValeur != null) {
-			document.addField("paiementValeur_indexed_string", paiementValeur);
-			document.addField("paiementValeur_stored_string", paiementValeur);
+		if(paiementMontant != null) {
+			document.addField("paiementMontant_indexed_double", paiementMontant.doubleValue());
+			document.addField("paiementMontant_stored_double", paiementMontant.doubleValue());
 		}
 		if(paiementEspeces != null) {
 			document.addField("paiementEspeces_indexed_boolean", paiementEspeces);
@@ -3446,9 +3484,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementDate != null)
 			oPaiementScolaire.setPaiementDate(paiementDate);
 
-		String paiementValeur = (String)solrDocument.get("paiementValeur_stored_string");
-		if(paiementValeur != null)
-			oPaiementScolaire.setPaiementValeur(paiementValeur);
+		Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
+		if(paiementMontant != null)
+			oPaiementScolaire.setPaiementMontant(paiementMontant);
 
 		Boolean paiementEspeces = (Boolean)solrDocument.get("paiementEspeces_stored_boolean");
 		if(paiementEspeces != null)
@@ -3485,7 +3523,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles);
+		return Objects.hash(super.hashCode(), inscriptionCles, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque);
 	}
 
 	////////////
@@ -3499,7 +3537,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return false;
 		PaiementScolaire that = (PaiementScolaire)o;
 		return super.equals(o)
-				&& Objects.equals( inscriptionCles, that.inscriptionCles );
+				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( paiementDescription, that.paiementDescription )
+				&& Objects.equals( paiementDate, that.paiementDate )
+				&& Objects.equals( paiementMontant, that.paiementMontant )
+				&& Objects.equals( paiementEspeces, that.paiementEspeces )
+				&& Objects.equals( paiementCheque, that.paiementCheque );
 	}
 
 	//////////////
@@ -3511,6 +3554,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("PaiementScolaire { ");
 		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
+		sb.append( ", paiementDate: " ).append(paiementDate);
+		sb.append( ", paiementMontant: " ).append(paiementMontant);
+		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
+		sb.append( ", paiementCheque: " ).append(paiementCheque);
 		sb.append(" }");
 		return sb.toString();
 	}

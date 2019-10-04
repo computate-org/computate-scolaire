@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription; 
+package org.computate.scolaire.frFR.inscription;   
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -445,7 +445,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStartDay
+	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
@@ -812,10 +812,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: familyMarried
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: marié
-	 * NomAffichage.enUS: married
+	 * NomAffichage.frFR: parents marié
+	 * NomAffichage.enUS: parents married
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 5
 	 * HtmlCellule: 1
 	 */                   
 	protected void _familleMarie(Couverture<Boolean> c) {
@@ -826,10 +826,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: familySeparated
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: séparé
-	 * NomAffichage.enUS: separated
+	 * NomAffichage.frFR: parents séparé
+	 * NomAffichage.enUS: parents separated
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 5
 	 * HtmlCellule: 2
 	 */                   
 	protected void _familleSepare(Couverture<Boolean> c) {
@@ -840,10 +840,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: familyDivorced
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: divorcé
-	 * NomAffichage.enUS: divorced
+	 * NomAffichage.frFR: parents divorcé
+	 * NomAffichage.enUS: parents divorced
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 5
 	 * HtmlCellule: 3
 	 */                   
 	protected void _familleDivorce(Couverture<Boolean> c) {
@@ -856,8 +856,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: addresse de la famille
 	 * NomAffichage.enUS: family address
+	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 6
 	 * HtmlCellule: 1
 	 */                   
 	protected void _familleAddresse(Couverture<String> c) {
@@ -870,9 +871,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: comment vous connaissez l'école ? 
 	 * NomAffichage.enUS: how do you know the school? 
+	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 7
-	 * HtmlCellule: 2
+	 * HtmlLigne: 6
+	 * HtmlCellule: 3
 	 */                   
 	protected void _familleCommentVousConnaissezEcole(Couverture<String> c) {
 	}
@@ -884,9 +886,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: considérations spéciale
 	 * NomAffichage.enUS: special considerations
+	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 1
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionConsiderationsSpeciales(Couverture<String> c) {
 	}

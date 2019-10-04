@@ -237,7 +237,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAnneeCle() {
-		return null;
+		return "année";
 	}
 
 	public String htmTooltipAnneeCle() {
@@ -4921,6 +4921,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setEcoleCle(ecoleCle);
 			}
 
+			if(sauvegardesBlocScolaire.contains("anneeCle")) {
+				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+				if(anneeCle != null)
+					oBlocScolaire.setAnneeCle(anneeCle);
+			}
+
 			if(sauvegardesBlocScolaire.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 				if(saisonCle != null)
@@ -5223,6 +5229,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
 		}
+		if(anneeCle != null) {
+			document.addField("anneeCle_indexed_long", anneeCle);
+			document.addField("anneeCle_stored_long", anneeCle);
+		}
 		if(saisonCle != null) {
 			document.addField("saisonCle_indexed_long", saisonCle);
 			document.addField("saisonCle_stored_long", saisonCle);
@@ -5417,6 +5427,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 		if(ecoleCle != null)
 			oBlocScolaire.setEcoleCle(ecoleCle);
+
+		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+		if(anneeCle != null)
+			oBlocScolaire.setAnneeCle(anneeCle);
 
 		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 		if(saisonCle != null)

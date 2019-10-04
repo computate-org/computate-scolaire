@@ -260,7 +260,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 	public void reponse200POSTEnfantScolaire(EnfantScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -406,41 +406,41 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -470,101 +470,101 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						patchSqlParams.addAll(Arrays.asList("enfantCle", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
 						break;
 					case "setPersonnePrenom":
-						o2.setPersonnePrenom(requeteJson.getString(methodeNom));
-						if(o2.getPersonnePrenom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenom"));
 						} else {
+							o2.setPersonnePrenom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenom", o2.jsonPersonnePrenom(), pk));
 						}
 						break;
 					case "setPersonnePrenomPrefere":
-						o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
-						if(o2.getPersonnePrenomPrefere() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personnePrenomPrefere"));
 						} else {
+							o2.setPersonnePrenomPrefere(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personnePrenomPrefere", o2.jsonPersonnePrenomPrefere(), pk));
 						}
 						break;
 					case "setFamilleNom":
-						o2.setFamilleNom(requeteJson.getString(methodeNom));
-						if(o2.getFamilleNom() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "familleNom"));
 						} else {
+							o2.setFamilleNom(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
 						}
 						break;
 					case "setPersonneDateNaissance":
-						o2.setPersonneDateNaissance(requeteJson.getString(methodeNom));
-						if(o2.getPersonneDateNaissance() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "personneDateNaissance"));
 						} else {
+							o2.setPersonneDateNaissance(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("personneDateNaissance", o2.jsonPersonneDateNaissance(), pk));
 						}
 						break;
 					case "setEnfantConditionsMedicales":
-						o2.setEnfantConditionsMedicales(requeteJson.getString(methodeNom));
-						if(o2.getEnfantConditionsMedicales() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantConditionsMedicales"));
 						} else {
+							o2.setEnfantConditionsMedicales(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales(), pk));
 						}
 						break;
 					case "setEnfantEcolesPrecedemmentFrequentees":
-						o2.setEnfantEcolesPrecedemmentFrequentees(requeteJson.getString(methodeNom));
-						if(o2.getEnfantEcolesPrecedemmentFrequentees() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantEcolesPrecedemmentFrequentees"));
 						} else {
+							o2.setEnfantEcolesPrecedemmentFrequentees(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees(), pk));
 						}
 						break;
 					case "setEnfantDescription":
-						o2.setEnfantDescription(requeteJson.getString(methodeNom));
-						if(o2.getEnfantDescription() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantDescription"));
 						} else {
+							o2.setEnfantDescription(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantDescription", o2.jsonEnfantDescription(), pk));
 						}
 						break;
 					case "setEnfantObjectifs":
-						o2.setEnfantObjectifs(requeteJson.getString(methodeNom));
-						if(o2.getEnfantObjectifs() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantObjectifs"));
 						} else {
+							o2.setEnfantObjectifs(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantObjectifs", o2.jsonEnfantObjectifs(), pk));
 						}
 						break;
 					case "setEnfantVaccinsAJour":
-						o2.setEnfantVaccinsAJour(requeteJson.getBoolean(methodeNom));
-						if(o2.getEnfantVaccinsAJour() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinsAJour"));
 						} else {
+							o2.setEnfantVaccinsAJour(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", o2.jsonEnfantVaccinsAJour(), pk));
 						}
 						break;
 					case "setEnfantPropre":
-						o2.setEnfantPropre(requeteJson.getBoolean(methodeNom));
-						if(o2.getEnfantPropre() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "enfantPropre"));
 						} else {
+							o2.setEnfantPropre(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantPropre", o2.jsonEnfantPropre(), pk));
 						}
@@ -1159,6 +1159,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			listeRecherche.setC(EnfantScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

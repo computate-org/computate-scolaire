@@ -198,6 +198,26 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							postSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", l));
 						}
 						break;
+					case "paiementDescription":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementDescription", jsonObject.getString(entiteVar), pk));
+						break;
+					case "paiementDate":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementDate", jsonObject.getString(entiteVar), pk));
+						break;
+					case "paiementMontant":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementMontant", jsonObject.getString(entiteVar), pk));
+						break;
+					case "paiementEspeces":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementEspeces", jsonObject.getBoolean(entiteVar), pk));
+						break;
+					case "paiementCheque":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paiementCheque", jsonObject.getBoolean(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -220,7 +240,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void reponse200POSTPaiementScolaire(PaiementScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -366,41 +386,41 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -428,6 +448,56 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					case "removeInscriptionCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", pk, "paiementCles", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "setPaiementDescription":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementDescription"));
+						} else {
+							o2.setPaiementDescription(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementDescription", o2.jsonPaiementDescription(), pk));
+						}
+						break;
+					case "setPaiementDate":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementDate"));
+						} else {
+							o2.setPaiementDate(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementDate", o2.jsonPaiementDate(), pk));
+						}
+						break;
+					case "setPaiementMontant":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementMontant"));
+						} else {
+							o2.setPaiementMontant(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementMontant", o2.jsonPaiementMontant(), pk));
+						}
+						break;
+					case "setPaiementEspeces":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementEspeces"));
+						} else {
+							o2.setPaiementEspeces(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementEspeces", o2.jsonPaiementEspeces(), pk));
+						}
+						break;
+					case "setPaiementCheque":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paiementCheque"));
+						} else {
+							o2.setPaiementCheque(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paiementCheque", o2.jsonPaiementCheque(), pk));
+						}
 						break;
 				}
 			}
@@ -774,8 +844,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				return "paiementDescription_indexed_string";
 			case "paiementDate":
 				return "paiementDate_indexed_date";
-			case "paiementValeur":
-				return "paiementValeur_indexed_string";
+			case "paiementMontant":
+				return "paiementMontant_indexed_double";
 			case "paiementEspeces":
 				return "paiementEspeces_indexed_boolean";
 			case "paiementCheque":
@@ -1009,6 +1079,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.setC(PaiementScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

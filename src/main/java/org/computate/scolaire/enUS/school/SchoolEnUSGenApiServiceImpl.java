@@ -240,7 +240,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	public void response200POSTSchool(School o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -386,41 +386,41 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -450,51 +450,51 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						patchSqlParams.addAll(Arrays.asList("schoolKey", Long.parseLong(requestJson.getString(methodName)), "yearKeys", pk));
 						break;
 					case "setSchoolName":
-						o2.setSchoolName(requestJson.getString(methodName));
-						if(o2.getSchoolName() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolName"));
 						} else {
+							o2.setSchoolName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolName", o2.jsonSchoolName(), pk));
 						}
 						break;
 					case "setSchoolPhoneNumber":
-						o2.setSchoolPhoneNumber(requestJson.getString(methodName));
-						if(o2.getSchoolPhoneNumber() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolPhoneNumber"));
 						} else {
+							o2.setSchoolPhoneNumber(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolPhoneNumber", o2.jsonSchoolPhoneNumber(), pk));
 						}
 						break;
 					case "setSchoolAdministratorName":
-						o2.setSchoolAdministratorName(requestJson.getString(methodName));
-						if(o2.getSchoolAdministratorName() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolAdministratorName"));
 						} else {
+							o2.setSchoolAdministratorName(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAdministratorName", o2.jsonSchoolAdministratorName(), pk));
 						}
 						break;
 					case "setSchoolLocation":
-						o2.setSchoolLocation(requestJson.getString(methodName));
-						if(o2.getSchoolLocation() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolLocation"));
 						} else {
+							o2.setSchoolLocation(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolLocation", o2.jsonSchoolLocation(), pk));
 						}
 						break;
 					case "setSchoolAddress":
-						o2.setSchoolAddress(requestJson.getString(methodName));
-						if(o2.getSchoolAddress() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
 						} else {
+							o2.setSchoolAddress(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.jsonSchoolAddress(), pk));
 						}
@@ -1073,6 +1073,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			listSearch.setC(School.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

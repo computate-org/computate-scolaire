@@ -1936,10 +1936,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				setAnneeFin(val);
 				sauvegardesAnneeScolaire.add(var);
 				return val;
-			case "anneeNomCourt":
-				setAnneeNomCourt(val);
-				sauvegardesAnneeScolaire.add(var);
-				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -2283,7 +2279,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin, anneeNomCourt);
+		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin);
 	}
 
 	////////////
@@ -2300,8 +2296,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleCle, that.ecoleCle )
 				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( anneeDebut, that.anneeDebut )
-				&& Objects.equals( anneeFin, that.anneeFin )
-				&& Objects.equals( anneeNomCourt, that.anneeNomCourt );
+				&& Objects.equals( anneeFin, that.anneeFin );
 	}
 
 	//////////////
@@ -2316,7 +2311,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", anneeDebut: " ).append(anneeDebut);
 		sb.append( ", anneeFin: " ).append(anneeFin);
-		sb.append( ", anneeNomCourt: \"" ).append(anneeNomCourt).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

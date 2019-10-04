@@ -264,7 +264,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	public void reponse200POSTBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -410,41 +410,41 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -484,101 +484,101 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						patchSqlParams.addAll(Arrays.asList("blocCles", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
 						break;
 					case "setBlocHeureDebut":
-						o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
-						if(o2.getBlocHeureDebut() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut"));
 						} else {
+							o2.setBlocHeureDebut(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocHeureDebut", o2.jsonBlocHeureDebut(), pk));
 						}
 						break;
 					case "setBlocHeureFin":
-						o2.setBlocHeureFin(requeteJson.getString(methodeNom));
-						if(o2.getBlocHeureFin() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
 						} else {
+							o2.setBlocHeureFin(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocHeureFin", o2.jsonBlocHeureFin(), pk));
 						}
 						break;
 					case "setBlocPrixParMois":
-						o2.setBlocPrixParMois(requeteJson.getString(methodeNom));
-						if(o2.getBlocPrixParMois() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
 						} else {
+							o2.setBlocPrixParMois(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocPrixParMois", o2.jsonBlocPrixParMois(), pk));
 						}
 						break;
 					case "setBlocDimanche":
-						o2.setBlocDimanche(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocDimanche() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocDimanche"));
 						} else {
+							o2.setBlocDimanche(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocDimanche", o2.jsonBlocDimanche(), pk));
 						}
 						break;
 					case "setBlocLundi":
-						o2.setBlocLundi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocLundi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi"));
 						} else {
+							o2.setBlocLundi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocLundi", o2.jsonBlocLundi(), pk));
 						}
 						break;
 					case "setBlocMardi":
-						o2.setBlocMardi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocMardi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi"));
 						} else {
+							o2.setBlocMardi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocMardi", o2.jsonBlocMardi(), pk));
 						}
 						break;
 					case "setBlocMercredi":
-						o2.setBlocMercredi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocMercredi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi"));
 						} else {
+							o2.setBlocMercredi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocMercredi", o2.jsonBlocMercredi(), pk));
 						}
 						break;
 					case "setBlocJeudi":
-						o2.setBlocJeudi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocJeudi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi"));
 						} else {
+							o2.setBlocJeudi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocJeudi", o2.jsonBlocJeudi(), pk));
 						}
 						break;
 					case "setBlocVendredi":
-						o2.setBlocVendredi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocVendredi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi"));
 						} else {
+							o2.setBlocVendredi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocVendredi", o2.jsonBlocVendredi(), pk));
 						}
 						break;
 					case "setBlocSamedi":
-						o2.setBlocSamedi(requeteJson.getBoolean(methodeNom));
-						if(o2.getBlocSamedi() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blocSamedi"));
 						} else {
+							o2.setBlocSamedi(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blocSamedi", o2.jsonBlocSamedi(), pk));
 						}
@@ -902,6 +902,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "classeNomsCanoniques_indexed_strings";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
 			case "saisonCle":
 				return "saisonCle_indexed_long";
 			case "sessionCle":
@@ -1199,6 +1201,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			listeRecherche.setC(BlocScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

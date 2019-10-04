@@ -198,6 +198,26 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							postSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "paymentKeys", l));
 						}
 						break;
+					case "paymentDescription":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentDescription", jsonObject.getString(entityVar), pk));
+						break;
+					case "paymentDate":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentDate", jsonObject.getString(entityVar), pk));
+						break;
+					case "paymentAmount":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentAmount", jsonObject.getString(entityVar), pk));
+						break;
+					case "paymentCash":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentCash", jsonObject.getBoolean(entityVar), pk));
+						break;
+					case "paymentCheck":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("paymentCheck", jsonObject.getBoolean(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -220,7 +240,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void response200POSTSchoolPayment(SchoolPayment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -366,41 +386,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -428,6 +448,56 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "removeEnrollmentKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", pk, "paymentKeys", Long.parseLong(requestJson.getString(methodName))));
+						break;
+					case "setPaymentDescription":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentDescription"));
+						} else {
+							o2.setPaymentDescription(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentDescription", o2.jsonPaymentDescription(), pk));
+						}
+						break;
+					case "setPaymentDate":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentDate"));
+						} else {
+							o2.setPaymentDate(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentDate", o2.jsonPaymentDate(), pk));
+						}
+						break;
+					case "setPaymentAmount":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentAmount"));
+						} else {
+							o2.setPaymentAmount(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentAmount", o2.jsonPaymentAmount(), pk));
+						}
+						break;
+					case "setPaymentCash":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentCash"));
+						} else {
+							o2.setPaymentCash(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentCash", o2.jsonPaymentCash(), pk));
+						}
+						break;
+					case "setPaymentCheck":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "paymentCheck"));
+						} else {
+							o2.setPaymentCheck(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("paymentCheck", o2.jsonPaymentCheck(), pk));
+						}
 						break;
 				}
 			}
@@ -774,8 +844,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				return "paymentDescription_indexed_string";
 			case "paymentDate":
 				return "paymentDate_indexed_date";
-			case "paymentValue":
-				return "paymentValue_indexed_string";
+			case "paymentAmount":
+				return "paymentAmount_indexed_double";
 			case "paymentCash":
 				return "paymentCash_indexed_boolean";
 			case "paymentCheck":
@@ -1009,6 +1079,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			listSearch.setC(SchoolPayment.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

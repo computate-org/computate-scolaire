@@ -79,7 +79,7 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getYearStart());
 	}
 
-	protected void _seasonStartDay(Wrap<LocalDate> c) {
+	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(season_ != null)
 			c.o(season_.getSeasonStartDay());
 	}

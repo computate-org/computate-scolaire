@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison; 
+package org.computate.scolaire.frFR.saison;
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -12,7 +12,7 @@ import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
-/**    
+/**   
  * NomCanonique.enUS: org.computate.scolaire.enUS.season.SchoolSeason
  * Modele: true
  * Api: true
@@ -49,6 +49,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: yellow
  * IconeGroupe: regular
  * IconeNom: sun
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */                              
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
@@ -243,7 +246,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStartDay
+	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -251,7 +254,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: début de la saison
 	 * NomAffichage.enUS: start of the season
-	 */                   
+	 */                  
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {}
 
 	/**

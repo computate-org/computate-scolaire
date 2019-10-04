@@ -1,3 +1,7 @@
+
+
+
+
 package org.computate.scolaire.frFR.paiement;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -95,7 +99,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptPaiementGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggerePaiementScolaireInscriptionCles($('#formPaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); ");
+		tl(1, "suggerePaiementScolaireInscriptionCles($('#formPaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles_Page')); ");
 		l("});");
 	}
 
@@ -243,6 +247,214 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDate").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDate").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							LocalDate val = o.getPaiementDate();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_paiementDate").a("class", "").f().sx("date de paiement").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row  ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									e("input")
+										.a("type", "text")
+										.a("class", "w3-input w3-border datepicker ")
+										.a("placeholder", "DD-MM-YYYY")
+										.a("data-timeformat", "DD-MM-YYYY")
+										.a("id", "Page_paiementDate")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDate', s, function() { ajouterLueur($('#Page_paiementDate')); }, function() { ajouterErreur($('#Page_paiementDate')); }); } ")
+										.fg();
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_paiementDate')); $('#Page_paiementDate').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDate', null, function() { ajouterLueur($('#Page_paiementDate')); }, function() { ajouterErreur($('#Page_paiementDate')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formPaiementScolairePaiementMontant").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementMontant").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_paiementMontant").a("class", "").f().sx("montant").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "montant")
+										.a("class", "setPaiementMontant w3-input w3-border ")
+										.a("name", "setPaiementMontant")
+										.a("id", "Page_paiementMontant")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementMontant', $(this).val(), function() { ajouterLueur($('#Page_paiementMontant')); }, function() { ajouterErreur($('#Page_paiementMontant')); }); ")
+										.a("value", o.strPaiementMontant())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_paiementMontant')); $('#Page_paiementMontant').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementMontant', null, function() { ajouterLueur($('#Page_paiementMontant')); }, function() { ajouterErreur($('#Page_paiementMontant')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formPaiementScolairePaiementEspeces").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementEspeces").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_paiementEspeces").a("class", "").f().sx("espèces").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPaiementEspeces")
+										.a("name", "setPaiementEspeces")
+										.a("id", "Page_paiementEspeces")
+										.a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementEspeces', $(this).prop('checked'), function() { ajouterLueur($('#Page_paiementEspeces')); }, function() { ajouterErreur($('#Page_paiementEspeces')); }); ")
+										;
+										if(o.getPaiementEspeces() != null && o.getPaiementEspeces())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formPaiementScolairePaiementCheque").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementCheque").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_paiementCheque").a("class", "").f().sx("chèque").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setPaiementCheque")
+										.a("name", "setPaiementCheque")
+										.a("id", "Page_paiementCheque")
+										.a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementCheque', $(this).prop('checked'), function() { ajouterLueur($('#Page_paiementCheque')); }, function() { ajouterErreur($('#Page_paiementCheque')); }); ")
+										;
+										if(o.getPaiementCheque() != null && o.getPaiementCheque())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_paiementDescription").a("class", "").f().sx("description").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "description")
+										.a("title", "Description.enUS: ")
+										.a("class", "setPaiementDescription w3-input w3-border ")
+										.a("name", "setPaiementDescription")
+										.a("id", "Page_paiementDescription")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDescription', $(this).val(), function() { ajouterLueur($('#Page_paiementDescription')); }, function() { ajouterErreur($('#Page_paiementDescription')); }); ")
+										.a("value", o.strPaiementDescription())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_paiementDescription')); $('#Page_paiementDescription').val(null); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDescription', null, function() { ajouterLueur($('#Page_paiementDescription')); }, function() { ajouterErreur($('#Page_paiementDescription')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formPaiementScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -277,7 +489,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 											.a("name", "setInscriptionCles")
 											.a("id", "Page_inscriptionCles")
 											.a("autocomplete", "off")
-											.a("oninput", "suggerePaiementScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); ")
+											.a("oninput", "suggerePaiementScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles_Page')); ")
 										.fg();
 
 									} g("div");
@@ -285,12 +497,12 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles_Page").f();
 									} g("ul");
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-											.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", o.getPk(), "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#Page_inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); var $e = $('#Page_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_inscriptionCles')); }); }, function() { ajouterErreur($('#Page_inscriptionCles')); });")
+											.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", o.getPk(), "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#Page_inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles_Page')); var $e = $('#Page_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_inscriptionCles')); }); }, function() { ajouterErreur($('#Page_inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -445,61 +657,193 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formPaiementScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDate").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valeurPaiementCles")
-						.a("class", "valeurPaiementCles ")
+						.a("name", "valeur")
+						.a("class", "valeur ")
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggerePaiementScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDate").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
+						LocalDate val = o.getPaiementDate();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_paiementDate").a("class", "").f().sx("date de paiement").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a ce paiement");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("title", "La clé primaire des enfants dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "POST_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggerePaiementScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); ")
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "POST_paiementDate")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDate', s, function() { ajouterLueur($('#POST_paiementDate')); }, function() { ajouterErreur($('#POST_paiementDate')); }); } ")
 									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", o.getPk(), "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#POST_inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); var $e = $('#POST_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_inscriptionCles')); }); }, function() { ajouterErreur($('#POST_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementMontant").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementMontant").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_paiementMontant").a("class", "").f().sx("montant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "montant")
+									.a("class", "valeurPaiementMontant w3-input w3-border ")
+									.a("name", "paiementMontant")
+									.a("id", "POST_paiementMontant")
+									.a("value", o.strPaiementMontant())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementEspeces").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementEspeces").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_paiementEspeces").a("class", "").f().sx("espèces").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurPaiementEspeces")
+									.a("name", "paiementEspeces")
+									.a("id", "POST_paiementEspeces")
+									;
+									if(o.getPaiementEspeces() != null && o.getPaiementEspeces())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementCheque").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementCheque").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_paiementCheque").a("class", "").f().sx("chèque").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurPaiementCheque")
+									.a("name", "paiementCheque")
+									.a("id", "POST_paiementCheque")
+									;
+									if(o.getPaiementCheque() != null && o.getPaiementCheque())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_paiementDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "description")
+									.a("title", "Description.enUS: ")
+									.a("class", "valeurPaiementDescription w3-input w3-border ")
+									.a("name", "paiementDescription")
+									.a("id", "POST_paiementDescription")
+									.a("value", o.strPaiementDescription())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -647,61 +991,193 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formPaiementScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDate").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valeurPaiementCles")
-						.a("class", "valeurPaiementCles ")
+						.a("name", "valeur")
+						.a("class", "valeur ")
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggerePaiementScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDate").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
+						LocalDate val = o.getPaiementDate();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_paiementDate").a("class", "").f().sx("date de paiement").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a ce paiement");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("title", "La clé primaire des enfants dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "PATCH_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggerePaiementScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); ")
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "PATCH_paiementDate")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDate', s, function() { ajouterLueur($('#PATCH_paiementDate')); }, function() { ajouterErreur($('#PATCH_paiementDate')); }); } ")
 									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", o.getPk(), "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#PATCH_inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); var $e = $('#PATCH_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_inscriptionCles')); }); }, function() { ajouterErreur($('#PATCH_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementMontant").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementMontant").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_paiementMontant").a("class", "").f().sx("montant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "montant")
+									.a("class", "setPaiementMontant w3-input w3-border ")
+									.a("name", "setPaiementMontant")
+									.a("id", "PATCH_paiementMontant")
+									.a("value", o.strPaiementMontant())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementEspeces").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementEspeces").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_paiementEspeces").a("class", "").f().sx("espèces").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPaiementEspeces")
+									.a("name", "setPaiementEspeces")
+									.a("id", "PATCH_paiementEspeces")
+									;
+									if(o.getPaiementEspeces() != null && o.getPaiementEspeces())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementCheque").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementCheque").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_paiementCheque").a("class", "").f().sx("chèque").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setPaiementCheque")
+									.a("name", "setPaiementCheque")
+									.a("id", "PATCH_paiementCheque")
+									;
+									if(o.getPaiementCheque() != null && o.getPaiementCheque())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_paiementDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "description")
+									.a("title", "Description.enUS: ")
+									.a("class", "setPaiementDescription w3-input w3-border ")
+									.a("name", "setPaiementDescription")
+									.a("id", "PATCH_paiementDescription")
+									.a("value", o.strPaiementDescription())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -867,61 +1343,193 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formPaiementScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDate").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
-						.a("name", "valeurPaiementCles")
-						.a("class", "valeurPaiementCles ")
+						.a("name", "valeur")
+						.a("class", "valeur ")
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggerePaiementScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDate").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
+						LocalDate val = o.getPaiementDate();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_paiementDate").a("class", "").f().sx("date de paiement").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a ce paiement");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("title", "La clé primaire des enfants dans la base de données. ")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "Recherche_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggerePaiementScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); ")
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "Recherche_paiementDate")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:' + $('#PaiementScolaireForm :input[name=\"pk\"]').val() }], 'setPaiementDate', s, function() { ajouterLueur($('#Recherche_paiementDate')); }, function() { ajouterErreur($('#Recherche_paiementDate')); }); } ")
 									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", o.getPk(), "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#Recherche_inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles')); var $e = $('#Recherche_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_inscriptionCles')); }); }, function() { ajouterErreur($('#Recherche_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementMontant").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementMontant").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_paiementMontant").a("class", "").f().sx("montant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "montant")
+									.a("class", "valeurPaiementMontant w3-input w3-border ")
+									.a("name", "paiementMontant")
+									.a("id", "Recherche_paiementMontant")
+									.a("value", o.strPaiementMontant())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementEspeces").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementEspeces").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_paiementEspeces").a("class", "").f().sx("espèces").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurPaiementEspeces")
+									.a("name", "paiementEspeces")
+									.a("id", "Recherche_paiementEspeces")
+									;
+									if(o.getPaiementEspeces() != null && o.getPaiementEspeces())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementCheque").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementCheque").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_paiementCheque").a("class", "").f().sx("chèque").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurPaiementCheque")
+									.a("name", "paiementCheque")
+									.a("id", "Recherche_paiementCheque")
+									;
+									if(o.getPaiementCheque() != null && o.getPaiementCheque())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPaiementScolairePaiementDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePaiementScolairePaiementDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_paiementDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "description")
+									.a("title", "Description.enUS: ")
+									.a("class", "valeurPaiementDescription w3-input w3-border ")
+									.a("name", "paiementDescription")
+									.a("id", "Recherche_paiementDescription")
+									.a("value", o.strPaiementDescription())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1005,6 +1613,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listePaiementScolaire.getQueryResponse().getResults().getNumFound();
+					String query = StringUtils.replace(listePaiementScolaire.getQuery(), "_suggested", "");
 					Integer rows1 = listePaiementScolaire.getRows();
 					Integer start1 = listePaiementScolaire.getStart();
 					Integer start2 = start1 - rows1;
@@ -1016,7 +1625,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/paiement?q=", query, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -1024,19 +1633,19 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/paiement?q=", query, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/paiement?start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/paiement?q=", query, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/paiement?start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/paiement?q=", query, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -1067,7 +1676,6 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");
@@ -1124,15 +1732,15 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postPaiementScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Créer un paiement").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Créer un paiement").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					PaiementScolaire o = new PaiementScolaire();
 
 					// Form POST
-					{ e("form").a("action", "").a("id", "postPaiementScolaireForm").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "postPaiementScolaireForm").f();
 						htmlFormPOSTPaiementScolaire(o);
-					} g("form");
+					} g("div");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "postPaiementScolaire($('#postPaiementScolaireForm')); ")
@@ -1153,7 +1761,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPaiementScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modifier des paiements").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Modifier des paiements").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					PaiementScolaire o = new PaiementScolaire();
@@ -1184,34 +1792,36 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		} g("div");
 
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#deletePaiementScolaireModale').show(); ")
-			.f().sx("Supprimer des paiements")
-		.g("button");
-		{ e("div").a("id", "deletePaiementScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deletePaiementScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Supprimer des paiements").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					PaiementScolaire o = new PaiementScolaire();
+		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1) {
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#deletePaiementScolaireModale').show(); ")
+				.f().sx("Supprimer des paiements")
+			.g("button");
+			{ e("div").a("id", "deletePaiementScolaireModale").a("class", "w3-modal ").f();
+				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-green ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deletePaiementScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Supprimer des paiements").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						PaiementScolaire o = new PaiementScolaire();
 
-					// Form DELETE
-					{ e("form").a("action", "").a("id", "deletePaiementScolaireForm").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHPaiementScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "deletePaiementScolaire(); ")
-						.f().sx("Supprimer des paiements")
-					.g("button");
+						// Form DELETE
+						{ e("div").a("id", "deletePaiementScolaireForm").f();
+							htmlFormPATCHPaiementScolaire(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+							.a("onclick", "deletePaiementScolaire(", o.getPk(), "); ")
+							.f().sx("Supprimer des paiements")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
+		}
 		g("div");
 	}
 

@@ -57,9 +57,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static final String UtilisateurSite_DeNom = "d'utilisateur du site";
 	public static final String UtilisateurSite_NomAdjectifSingulier = "utilisateur du site";
 	public static final String UtilisateurSite_NomAdjectifPluriel = "utilisateurs du site";
-	public static final String UtilisateurSite_Couleur = "green";
+	public static final String UtilisateurSite_Couleur = "gray";
 	public static final String UtilisateurSite_IconeGroupe = "regular";
-	public static final String UtilisateurSite_IconeNom = "book";
+	public static final String UtilisateurSite_IconeNom = "user-cog";
 
 	///////////////////
 	// utilisateurId //
@@ -830,7 +830,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageUtilisateurRecevoirCourriels() {
-		return null;
+		return "recevoir des courriels";
 	}
 
 	public String htmTooltipUtilisateurRecevoirCourriels() {
@@ -1236,6 +1236,18 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 	public Object definirUtilisateurSite(String var, String val) {
 		switch(var) {
+			case "utilisateurRecevoirCourriels":
+				setUtilisateurRecevoirCourriels(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
+			case "voirArchive":
+				setVoirArchive(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
+			case "voirSupprime":
+				setVoirSupprime(val);
+				sauvegardesUtilisateurSite.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -1258,12 +1270,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 		sauvegardesUtilisateurSite = (List<String>)solrDocument.get("sauvegardesUtilisateurSite_stored_strings");
 		if(sauvegardesUtilisateurSite != null) {
-
-			if(sauvegardesUtilisateurSite.contains("utilisateurId")) {
-				String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
-				if(utilisateurId != null)
-					oUtilisateurSite.setUtilisateurId(utilisateurId);
-			}
 
 			if(sauvegardesUtilisateurSite.contains("utilisateurNom")) {
 				String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
@@ -1388,10 +1394,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(sauvegardesUtilisateurSite != null)
 			document.addField("sauvegardesUtilisateurSite_stored_strings", sauvegardesUtilisateurSite);
 
-		if(utilisateurId != null) {
-			document.addField("utilisateurId_indexed_string", utilisateurId);
-			document.addField("utilisateurId_stored_string", utilisateurId);
-		}
 		if(utilisateurNom != null) {
 			document.addField("utilisateurNom_indexed_string", utilisateurNom);
 			document.addField("utilisateurNom_stored_string", utilisateurNom);
@@ -1459,10 +1461,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public void stockerUtilisateurSite(SolrDocument solrDocument) {
 		UtilisateurSite oUtilisateurSite = (UtilisateurSite)this;
 
-		String utilisateurId = (String)solrDocument.get("utilisateurId_stored_string");
-		if(utilisateurId != null)
-			oUtilisateurSite.setUtilisateurId(utilisateurId);
-
 		String utilisateurNom = (String)solrDocument.get("utilisateurNom_stored_string");
 		if(utilisateurNom != null)
 			oUtilisateurSite.setUtilisateurNom(utilisateurNom);
@@ -1518,7 +1516,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode());
+		return Objects.hash(super.hashCode(), utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -1531,7 +1529,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(!(o instanceof UtilisateurSite))
 			return false;
 		UtilisateurSite that = (UtilisateurSite)o;
-		return super.equals(o);
+		return super.equals(o)
+				&& Objects.equals( utilisateurRecevoirCourriels, that.utilisateurRecevoirCourriels )
+				&& Objects.equals( voirArchive, that.voirArchive )
+				&& Objects.equals( voirSupprime, that.voirSupprime );
 	}
 
 	//////////////
@@ -1542,6 +1543,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("UtilisateurSite { ");
+		sb.append( "utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);
+		sb.append( ", voirArchive: " ).append(voirArchive);
+		sb.append( ", voirSupprime: " ).append(voirSupprime);
 		sb.append(" }");
 		return sb.toString();
 	}

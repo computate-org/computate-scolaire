@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session;   
+package org.computate.scolaire.frFR.session; 
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -12,7 +12,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 
-/**    
+/**   
  * NomCanonique.enUS: org.computate.scolaire.enUS.session.SchoolSession
  * Modele: true
  * Api: true
@@ -47,6 +47,9 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Couleur: green
  * IconeGroupe: duotone
  * IconeNom: graduation-cap
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */                                             
 public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
@@ -265,7 +268,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStartDay
+	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année

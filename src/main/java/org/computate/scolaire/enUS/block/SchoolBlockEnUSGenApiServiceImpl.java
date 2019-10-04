@@ -264,7 +264,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	public void response200POSTSchoolBlock(SchoolBlock o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -410,41 +410,41 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -484,101 +484,101 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						patchSqlParams.addAll(Arrays.asList("blockKeys", Long.parseLong(requestJson.getString(methodName)), "enrollmentKeys", pk));
 						break;
 					case "setBlockStartTime":
-						o2.setBlockStartTime(requestJson.getString(methodName));
-						if(o2.getBlockStartTime() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockStartTime"));
 						} else {
+							o2.setBlockStartTime(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockStartTime", o2.jsonBlockStartTime(), pk));
 						}
 						break;
 					case "setBlockEndTime":
-						o2.setBlockEndTime(requestJson.getString(methodName));
-						if(o2.getBlockEndTime() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockEndTime"));
 						} else {
+							o2.setBlockEndTime(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockEndTime", o2.jsonBlockEndTime(), pk));
 						}
 						break;
 					case "setBlockPricePerMonth":
-						o2.setBlockPricePerMonth(requestJson.getString(methodName));
-						if(o2.getBlockPricePerMonth() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockPricePerMonth"));
 						} else {
+							o2.setBlockPricePerMonth(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockPricePerMonth", o2.jsonBlockPricePerMonth(), pk));
 						}
 						break;
 					case "setBlockSunday":
-						o2.setBlockSunday(requestJson.getBoolean(methodName));
-						if(o2.getBlockSunday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockSunday"));
 						} else {
+							o2.setBlockSunday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockSunday", o2.jsonBlockSunday(), pk));
 						}
 						break;
 					case "setBlockMonday":
-						o2.setBlockMonday(requestJson.getBoolean(methodName));
-						if(o2.getBlockMonday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockMonday"));
 						} else {
+							o2.setBlockMonday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockMonday", o2.jsonBlockMonday(), pk));
 						}
 						break;
 					case "setBlockTuesday":
-						o2.setBlockTuesday(requestJson.getBoolean(methodName));
-						if(o2.getBlockTuesday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockTuesday"));
 						} else {
+							o2.setBlockTuesday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockTuesday", o2.jsonBlockTuesday(), pk));
 						}
 						break;
 					case "setBlockWednesday":
-						o2.setBlockWednesday(requestJson.getBoolean(methodName));
-						if(o2.getBlockWednesday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockWednesday"));
 						} else {
+							o2.setBlockWednesday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockWednesday", o2.jsonBlockWednesday(), pk));
 						}
 						break;
 					case "setBlockThursday":
-						o2.setBlockThursday(requestJson.getBoolean(methodName));
-						if(o2.getBlockThursday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockThursday"));
 						} else {
+							o2.setBlockThursday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockThursday", o2.jsonBlockThursday(), pk));
 						}
 						break;
 					case "setBlockFriday":
-						o2.setBlockFriday(requestJson.getBoolean(methodName));
-						if(o2.getBlockFriday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockFriday"));
 						} else {
+							o2.setBlockFriday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockFriday", o2.jsonBlockFriday(), pk));
 						}
 						break;
 					case "setBlockSaturday":
-						o2.setBlockSaturday(requestJson.getBoolean(methodName));
-						if(o2.getBlockSaturday() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "blockSaturday"));
 						} else {
+							o2.setBlockSaturday(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("blockSaturday", o2.jsonBlockSaturday(), pk));
 						}
@@ -902,6 +902,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "classCanonicalNames_indexed_strings";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
 			case "seasonKey":
 				return "seasonKey_indexed_long";
 			case "sessionKey":
@@ -932,8 +934,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "yearStart_indexed_int";
 			case "yearEnd":
 				return "yearEnd_indexed_int";
-			case "seasonStartDay":
-				return "seasonStartDay_indexed_date";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
 			case "seasonSummer":
 				return "seasonSummer_indexed_boolean";
 			case "seasonWinter":
@@ -1199,6 +1201,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			listSearch.setC(SchoolBlock.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

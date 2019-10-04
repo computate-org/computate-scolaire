@@ -210,10 +210,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("yearEnd", jsonObject.getString(entityVar), pk));
 						break;
-					case "yearShortName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("yearShortName", jsonObject.getString(entityVar), pk));
-						break;
 					}
 				}
 			}
@@ -236,7 +232,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	public void response200POSTSchoolYear(SchoolYear o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -382,41 +378,41 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setCreated":
-						o2.setCreated(requestJson.getString(methodName));
-						if(o2.getCreated() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "created"));
 						} else {
+							o2.setCreated(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "setModified":
-						o2.setModified(requestJson.getString(methodName));
-						if(o2.getModified() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
 						} else {
+							o2.setModified(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modified", o2.jsonModified(), pk));
 						}
 						break;
 					case "setArchived":
-						o2.setArchived(requestJson.getBoolean(methodName));
-						if(o2.getArchived() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
 						} else {
+							o2.setArchived(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archived", o2.jsonArchived(), pk));
 						}
 						break;
 					case "setDeleted":
-						o2.setDeleted(requestJson.getBoolean(methodName));
-						if(o2.getDeleted() == null) {
+						if(requestJson.getBoolean(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
 						} else {
+							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
@@ -456,33 +452,23 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						patchSqlParams.addAll(Arrays.asList("seasonKeys", pk, "yearKey", Long.parseLong(requestJson.getString(methodName))));
 						break;
 					case "setYearStart":
-						o2.setYearStart(requestJson.getString(methodName));
-						if(o2.getYearStart() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "yearStart"));
 						} else {
+							o2.setYearStart(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("yearStart", o2.jsonYearStart(), pk));
 						}
 						break;
 					case "setYearEnd":
-						o2.setYearEnd(requestJson.getString(methodName));
-						if(o2.getYearEnd() == null) {
+						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "yearEnd"));
 						} else {
+							o2.setYearEnd(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("yearEnd", o2.jsonYearEnd(), pk));
-						}
-						break;
-					case "setYearShortName":
-						o2.setYearShortName(requestJson.getString(methodName));
-						if(o2.getYearShortName() == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "yearShortName"));
-						} else {
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("yearShortName", o2.jsonYearShortName(), pk));
 						}
 						break;
 				}
@@ -1051,6 +1037,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			listSearch.setC(SchoolYear.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
+			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");

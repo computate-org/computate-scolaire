@@ -102,8 +102,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							rechercheUtilisateurSite(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<UtilisateurSite> listeUtilisateurSite = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listeUtilisateurSite.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modifie");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modifie");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
@@ -228,43 +230,73 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setUtilisateurRecevoirCourriels":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurRecevoirCourriels"));
+						} else {
+							o2.setUtilisateurRecevoirCourriels(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("utilisateurRecevoirCourriels", o2.jsonUtilisateurRecevoirCourriels(), pk));
+						}
+						break;
+					case "setVoirArchive":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "voirArchive"));
+						} else {
+							o2.setVoirArchive(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("voirArchive", o2.jsonVoirArchive(), pk));
+						}
+						break;
+					case "setVoirSupprime":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "voirSupprime"));
+						} else {
+							o2.setVoirSupprime(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("voirSupprime", o2.jsonVoirSupprime(), pk));
 						}
 						break;
 				}
@@ -397,8 +429,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "utilisateurId":
-				return "utilisateurId_indexed_string";
 			case "utilisateurNom":
 				return "utilisateurNom_indexed_string";
 			case "utilisateurMail":
@@ -632,16 +662,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			listeRecherche.setC(UtilisateurSite.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
 			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.utilisateur.UtilisateurSite"));
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
-			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
-				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
-				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

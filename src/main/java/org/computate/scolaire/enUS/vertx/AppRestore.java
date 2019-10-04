@@ -330,6 +330,14 @@ public class AppRestore extends AbstractVerticle {
 					e.printStackTrace();
 				}
 			}
+			else if(StringUtils.equalsAny(path, "blockStartTime", "blockEndTime")) {
+				try {
+					value = DateTimeFormatter.ofPattern("HH mm", Locale.US).format(DateTimeFormatter.ofPattern("HH:mm", Locale.US).parse(value));
+				} catch (Exception e) {
+					System.err.println(o);
+					e.printStackTrace();
+				}
+			}
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			sqlConnection.queryWithParams(
 					"update d set modified=now(), value=?, current=true where pk=?;"

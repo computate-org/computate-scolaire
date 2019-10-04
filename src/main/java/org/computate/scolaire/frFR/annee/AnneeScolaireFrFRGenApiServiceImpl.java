@@ -210,10 +210,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("anneeFin", jsonObject.getString(entiteVar), pk));
 						break;
-					case "anneeNomCourt":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("anneeNomCourt", jsonObject.getString(entiteVar), pk));
-						break;
 					}
 				}
 			}
@@ -236,7 +232,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 	public void reponse200POSTAnneeScolaire(AnneeScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -382,41 +378,41 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						o2.setCree(requeteJson.getString(methodeNom));
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "setModifie":
-						o2.setModifie(requeteJson.getString(methodeNom));
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
+							o2.setModifie(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("modifie", o2.jsonModifie(), pk));
 						}
 						break;
 					case "setArchive":
-						o2.setArchive(requeteJson.getBoolean(methodeNom));
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
+							o2.setArchive(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("archive", o2.jsonArchive(), pk));
 						}
 						break;
 					case "setSupprime":
-						o2.setSupprime(requeteJson.getBoolean(methodeNom));
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
+							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
@@ -456,33 +452,23 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						patchSqlParams.addAll(Arrays.asList("anneeCle", Long.parseLong(requeteJson.getString(methodeNom)), "saisonCles", pk));
 						break;
 					case "setAnneeDebut":
-						o2.setAnneeDebut(requeteJson.getString(methodeNom));
-						if(o2.getAnneeDebut() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeDebut"));
 						} else {
+							o2.setAnneeDebut(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeDebut", o2.jsonAnneeDebut(), pk));
 						}
 						break;
 					case "setAnneeFin":
-						o2.setAnneeFin(requeteJson.getString(methodeNom));
-						if(o2.getAnneeFin() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "anneeFin"));
 						} else {
+							o2.setAnneeFin(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("anneeFin", o2.jsonAnneeFin(), pk));
-						}
-						break;
-					case "setAnneeNomCourt":
-						o2.setAnneeNomCourt(requeteJson.getString(methodeNom));
-						if(o2.getAnneeNomCourt() == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "anneeNomCourt"));
-						} else {
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("anneeNomCourt", o2.jsonAnneeNomCourt(), pk));
 						}
 						break;
 				}
@@ -1051,6 +1037,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			listeRecherche.setC(AnneeScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

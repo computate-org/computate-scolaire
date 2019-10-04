@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                      
+package org.computate.scolaire.frFR.annee;                   
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -45,6 +45,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: orange
  * IconeGroupe: regular
  * IconeNom: calendar-check
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */                                     
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
@@ -216,9 +219,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: yearShortName
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 3
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 * r: anneeFin

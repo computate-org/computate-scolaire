@@ -17,7 +17,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	protected void _schoolKey(Wrap<Long> c) {
 	}
 
-	protected void _anneeCle(Wrap<Long> c) {
+	protected void _yearKey(Wrap<Long> c) {
 	}
 
 	protected void _seasonKey(Wrap<Long> c) {
@@ -90,7 +90,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age.getYearStart());
 	}
 
-	protected void _seasonStartDay(Wrap<LocalDate> c) {
+	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(age != null)
 			c.o(age.getSeasonStartDay());
 	}
@@ -191,7 +191,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		if(blockPricePerMonth == null)
 			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);
 		else
-			o = String.format("%s - %s %s %s/month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
+			o = String.format("%s - %s %s %s per month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
 		c.o(o);
 	}
 

@@ -78,6 +78,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * ClePrimaire: true
+	 * Modifier: false
 	 * HtmlLigne: 1
 	 * HtmlCellule: 3
 	 * Description.frFR: La clé primaire dans la base de données. 

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;   
+package org.computate.scolaire.frFR.bloc; 
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -64,7 +64,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	protected void _ecoleCle(Couverture<Long> c) {
 	}
 
-	/*
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearKey
 	 * Indexe: true
@@ -304,7 +304,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStartDay
+	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
@@ -621,8 +621,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
-	 * r: %s - %s %s %s/mois %s
-	 * r.enUS: %s - %s %s %s/month %s
+	 * r: %s - %s %s %s par mois %s
+	 * r.enUS: %s - %s %s %s per month %s
 	 * r: strBlocHeureDebut
 	 * r.enUS: strBlockStartTime
 	 * r: strBlocHeureFin
@@ -676,7 +676,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(blocPrixParMois == null)
 			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);
 		else
-			o = String.format("%s - %s %s %s/mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
+			o = String.format("%s - %s %s %s par mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
 		c.o(o);
 	}
 

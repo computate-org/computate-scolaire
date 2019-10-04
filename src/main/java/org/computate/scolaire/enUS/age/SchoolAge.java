@@ -81,7 +81,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session.getYearStart());
 	}
 
-	protected void _seasonStartDay(Wrap<LocalDate> c) {
+	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(session != null)
 			c.o(session.getSeasonStartDay());
 	}
@@ -129,7 +129,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _ageCompleteName(Wrap<String> c) {
 		String o;
-		o = String.format("ages %s - %s during %s", strAgeStart(), strAgeEnd(), sessionCompleteName);
+		o = String.format("ages %s-%s during the %s", strAgeStart(), strAgeEnd(), sessionCompleteName);
 		c.o(o);
 	}
 

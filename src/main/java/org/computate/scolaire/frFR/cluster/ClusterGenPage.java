@@ -655,6 +655,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeCluster.getQueryResponse().getResults().getNumFound();
+					String query = StringUtils.replace(listeCluster.getQuery(), "_suggested", "");
 					Integer rows1 = listeCluster.getRows();
 					Integer start1 = listeCluster.getStart();
 					Integer start2 = start1 - rows1;
@@ -666,7 +667,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/cluster?q=", query, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -674,19 +675,19 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/cluster?q=", query, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/cluster?start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/cluster?q=", query, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/cluster?start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/cluster?q=", query, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -708,7 +709,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-fort-awesome w3-padding-small ").f().g("i");
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");

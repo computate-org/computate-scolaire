@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;  
+package org.computate.scolaire.frFR.age; 
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -12,7 +12,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import org.computate.scolaire.frFR.session.SessionScolaire;
 
-/**    
+/**     
  * NomCanonique.enUS: org.computate.scolaire.enUS.age.SchoolAge
  * Modele: true
  * Api: true
@@ -277,7 +277,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonStartDay
+	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
@@ -447,8 +447,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: name
 	 * r: ageEte
 	 * r.enUS: ageSummer
-	 * r: âges %s - %s pendant %s
-	 * r.enUS: ages %s - %s during %s
+	 * r: âges %s-%s pendant la %s
+	 * r.enUS: ages %s-%s during the %s
 	 * r: strAgeDebut
 	 * r.enUS: strAgeStart
 	 * r: strAgeFin
@@ -458,7 +458,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 */
 	protected void _ageNomComplet(Couverture<String> c) {
 		String o;
-		o = String.format("âges %s - %s pendant %s", strAgeDebut(), strAgeFin(), sessionNomComplet);
+		o = String.format("âges %s-%s pendant la %s", strAgeDebut(), strAgeFin(), sessionNomComplet);
 		c.o(o);
 	}
 

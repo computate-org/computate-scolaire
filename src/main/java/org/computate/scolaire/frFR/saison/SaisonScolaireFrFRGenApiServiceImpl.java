@@ -240,7 +240,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 	public void reponse200POSTSaisonScolaire(SaisonScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -386,7 +386,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setCree":
-						if(o2.getCree() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
 						} else {
@@ -396,7 +396,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setModifie":
-						if(o2.getModifie() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
 						} else {
@@ -406,7 +406,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setArchive":
-						if(o2.getArchive() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
 						} else {
@@ -416,7 +416,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setSupprime":
-						if(o2.getSupprime() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
 						} else {
@@ -460,7 +460,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						patchSqlParams.addAll(Arrays.asList("saisonCle", Long.parseLong(requeteJson.getString(methodeNom)), "sessionCles", pk));
 						break;
 					case "setSaisonJourDebut":
-						if(o2.getSaisonJourDebut() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "saisonJourDebut"));
 						} else {
@@ -470,7 +470,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setSaisonEte":
-						if(o2.getSaisonEte() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "saisonEte"));
 						} else {
@@ -480,7 +480,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setSaisonHiver":
-						if(o2.getSaisonHiver() == null) {
+						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "saisonHiver"));
 						} else {
@@ -490,7 +490,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						}
 						break;
 					case "setSaisonFraisInscription":
-						if(o2.getSaisonFraisInscription() == null) {
+						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
 							patchSqlParams.addAll(Arrays.asList(pk, "saisonFraisInscription"));
 						} else {
@@ -1075,6 +1075,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			listeRecherche.setC(SaisonScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

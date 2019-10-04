@@ -1,5 +1,6 @@
-package org.computate.scolaire.frFR.paiement; 
+package org.computate.scolaire.frFR.paiement;     
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -253,6 +254,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentDescription
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: description
@@ -266,6 +270,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentDate
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: date de paiement
 	 * NomAffichage.enUS: payment date
 	 */                   
@@ -274,13 +281,16 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: paymentValue
+	 * Var.enUS: paymentAmount
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: montant
 	 * NomAffichage.enUS: amount
 	 */                     
-	protected void _paiementValeur(Couverture<String> c) {
+	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
 
 	/**
@@ -288,6 +298,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentCash
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
 	 * NomAffichage.frFR: espèces
 	 * NomAffichage.enUS: cash
 	 */                     
@@ -300,6 +313,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentCheck
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 4
 	 * NomAffichage.frFR: chèque
 	 * NomAffichage.enUS: check
 	 */                     
@@ -335,7 +351,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentDate
 	 * r: PaiementDate
 	 * r.enUS: PaymentDate
-	 * r: payementValeur
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
 	 * r: paiementCheque
 	 * r.enUS: paymentCheck
 	 * r: paiementEspeces
@@ -354,7 +371,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: " by cash"
 	 * r: inscription_
 	 * r.enUS: enrollment_
-	 */  
+	 * r: FRANCE
+	 * r.enUS: US
+	 */    
 	protected void _paiementNomComplet(Couverture<String> c) {
 		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 		f.setMaximumFractionDigits(0);
@@ -364,8 +383,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			o.append(inscription_.getEnfantNomComplet());
 		if(paiementDate != null)
 			o.append(" ").append(strPaiementDate());
-		if(paiementValeur != null)
-			o.append(" ").append(f.format(paiementValeur));
+		if(paiementMontant != null)
+			o.append(" ").append(f.format(paiementMontant));
 		if(BooleanUtils.isTrue(paiementCheque))
 			o.append(" by check");
 		if(BooleanUtils.isTrue(paiementEspeces))
@@ -374,6 +393,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			o.append(" by authorize.net");
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
+		c.o(o.toString());
 	}
 
 	/**   

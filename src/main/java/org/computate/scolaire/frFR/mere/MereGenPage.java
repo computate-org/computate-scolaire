@@ -95,7 +95,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptMereGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereMereScolaireInscriptionCles($('#formMereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); ");
+		tl(1, "suggereMereScolaireInscriptionCles($('#formMereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles_Page')); ");
 		l("});");
 	}
 
@@ -690,7 +690,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 											.a("name", "setInscriptionCles")
 											.a("id", "Page_inscriptionCles")
 											.a("autocomplete", "off")
-											.a("oninput", "suggereMereScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); ")
+											.a("oninput", "suggereMereScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles_Page')); ")
 										.fg();
 
 									} g("div");
@@ -698,12 +698,12 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles_Page").f();
 									} g("ul");
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-											.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", o.getPk(), "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereMereScolaireInscriptionCles($('#' + ($('#Page_inscriptionCles').val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); var $e = $('#Page_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_inscriptionCles')); }); }, function() { ajouterErreur($('#Page_inscriptionCles')); });")
+											.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", o.getPk(), "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereMereScolaireInscriptionCles($('#' + ($('#Page_inscriptionCles').val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles_Page')); var $e = $('#Page_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_inscriptionCles')); }); }, function() { ajouterErreur($('#Page_inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -1202,60 +1202,18 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formMereScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurMereCles")
-						.a("class", "valeurMereCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereMereScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a cette mère");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "POST_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereMereScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", o.getPk(), "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereMereScolaireInscriptionCles($('#' + ($('#POST_inscriptionCles').val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); var $e = $('#POST_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#POST_inscriptionCles')); }); }, function() { ajouterErreur($('#POST_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-pink ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("form");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1747,60 +1705,18 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formMereScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurMereCles")
-						.a("class", "valeurMereCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereMereScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a cette mère");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "PATCH_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereMereScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", o.getPk(), "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereMereScolaireInscriptionCles($('#' + ($('#PATCH_inscriptionCles').val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); var $e = $('#PATCH_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#PATCH_inscriptionCles')); }); }, function() { ajouterErreur($('#PATCH_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-pink ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("form");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -2310,60 +2226,18 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formMereScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurMereCles")
-						.a("class", "valeurMereCles ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereMereScolaireInscriptionCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
-								sx("inscriptions");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier  a cette mère");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "inscriptions")
-										.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setInscriptionCles")
-										.a("id", "Recherche_inscriptionCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereMereScolaireInscriptionCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); ")
-									.fg();
-
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listMereScolaireInscriptionCles").f();
-								} g("ul");
-								{ e("div").a("class", "w3-cell-row ").f();
-									e("button")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ mereCles: [ \"", o.getPk(), "\" ] }, function() { patchMereScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereMereScolaireInscriptionCles($('#' + ($('#Recherche_inscriptionCles').val() ? 'suggere' : 'form') + 'MereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles')); var $e = $('#Recherche_inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Recherche_inscriptionCles')); }); }, function() { ajouterErreur($('#Recherche_inscriptionCles')); });")
-										.f().sx("ajouter une inscription")
-									.g("button");
-								} g("div");
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-pink ").f();
+						e("label").a("class", "").f().sx("inscriptions").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strInscriptionCles()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
-				} g("form");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -2447,6 +2321,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeMereScolaire.getQueryResponse().getResults().getNumFound();
+					String query = StringUtils.replace(listeMereScolaire.getQuery(), "_suggested", "");
 					Integer rows1 = listeMereScolaire.getRows();
 					Integer start1 = listeMereScolaire.getStart();
 					Integer start2 = start1 - rows1;
@@ -2458,7 +2333,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/mere?start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/mere?q=", query, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -2466,19 +2341,19 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/mere?start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/mere?q=", query, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/mere?start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/mere?q=", query, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/mere?start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/mere?q=", query, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -2509,7 +2384,6 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("td");
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
-									e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
 									{ e("span").f();
 										sx(o.strCree());
 									} g("span");
@@ -2566,15 +2440,15 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-pink ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postMereScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Créer une mère").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Créer une mère").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					MereScolaire o = new MereScolaire();
 
 					// Form POST
-					{ e("form").a("action", "").a("id", "postMereScolaireForm").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "postMereScolaireForm").f();
 						htmlFormPOSTMereScolaire(o);
-					} g("form");
+					} g("div");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
 						.a("onclick", "postMereScolaire($('#postMereScolaireForm')); ")
@@ -2595,7 +2469,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-pink ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchMereScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modifier des mères").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Modifier des mères").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					MereScolaire o = new MereScolaire();
@@ -2626,34 +2500,36 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		} g("div");
 
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-			.a("onclick", "$('#deleteMereScolaireModale').show(); ")
-			.f().sx("Supprimer des mères")
-		.g("button");
-		{ e("div").a("id", "deleteMereScolaireModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-pink ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteMereScolaireModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Supprimer des mères").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					MereScolaire o = new MereScolaire();
+		if(listeMereScolaire != null && listeMereScolaire.size() == 1) {
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+				.a("onclick", "$('#deleteMereScolaireModale').show(); ")
+				.f().sx("Supprimer des mères")
+			.g("button");
+			{ e("div").a("id", "deleteMereScolaireModale").a("class", "w3-modal ").f();
+				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-pink ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteMereScolaireModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Supprimer des mères").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						MereScolaire o = new MereScolaire();
 
-					// Form DELETE
-					{ e("form").a("action", "").a("id", "deleteMereScolaireForm").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHMereScolaire(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-						.a("onclick", "deleteMereScolaire(); ")
-						.f().sx("Supprimer des mères")
-					.g("button");
+						// Form DELETE
+						{ e("div").a("id", "deleteMereScolaireForm").f();
+							htmlFormPATCHMereScolaire(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+							.a("onclick", "deleteMereScolaire(", o.getPk(), "); ")
+							.f().sx("Supprimer des mères")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
+		}
 		g("div");
 	}
 

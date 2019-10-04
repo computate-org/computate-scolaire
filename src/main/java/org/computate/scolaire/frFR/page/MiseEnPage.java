@@ -487,7 +487,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: enUS
 	 */
 	protected void _pageUtilisateurUri(Couverture<String> c)  {
-		c.o("/frFR/utilisateur");
+		c.o("/utilisateur");
 	}
 
 	/**
@@ -731,6 +731,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/** 
+	 * r: UtilisateurSite
+	 * r.enUS: SiteUser
+	 * r: voir archivé
+	 * r.enUS: see archived
+	 * r: voirArchive
+	 * r.enUS: seeArchived
+	 * r: VoirArchive
+	 * r.enUS: SeeArchived
+	 * r: voir supprimé
+	 * r.enUS: see deleted
+	 * r: voirSupprime
+	 * r.enUS: seeDeleted
+	 * r: VoirSupprime
+	 * r.enUS: SeeDeleted
 	 * r: langue
 	 * r.enUS: language
 	 * r: accueil
@@ -949,13 +963,44 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("div");
 			}
 			if(requeteSite_.getUtilisateurId() != null) {
-				e("div").a("class", "site-bar-item w3-bar-item ").f();
-					e("a").a("class", "w3-padding ").a("href", pageUtilisateurUri).f(); 
-						e("span").a("class", "site-menu-item").f();
+
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "far fa-user-cog w3-padding-small ").f().g("i");
 							sx(requeteSite_.getUtilisateurNom());
-						g("span");
-					g("a");
-				g("div");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						UtilisateurSite o = requeteSite_.getUtilisateurSite();
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Page_voirArchive").a("class", "").f().sx("voir archivé").g("label");
+							e("input")
+								.a("type", "checkbox")
+								.a("value", "true")
+								.a("class", "setVoirArchive")
+								.a("name", "setVoirArchive")
+								.a("id", "Page_voirArchive")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setVoirArchive', $(this).prop('checked'), function() { addGlow($('#Page_voirArchive')); }, function() { addError($('#Page_voirArchive')); }); ")
+								;
+								if(o.getVoirArchive() != null && o.getVoirArchive())
+									a("checked", "checked");
+							fg();
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							e("label").a("for", "Page_voirSupprime").a("class", "").f().sx("voir supprimé").g("label");
+							e("input")
+								.a("type", "checkbox")
+								.a("value", "true")
+								.a("class", "setVoirSupprime")
+								.a("name", "setVoirSupprime")
+								.a("id", "Page_voirSupprime")
+								.a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=\"pk\"]').val() }], 'setVoirSupprime', $(this).prop('checked'), function() { addGlow($('#Page_voirSupprime')); }, function() { addError($('#Page_voirSupprime')); }); ")
+								;
+								if(o.getVoirSupprime() != null && o.getVoirSupprime())
+									a("checked", "checked");
+							fg();
+						} g("div");
+					} g("div");
+				} g("div");
 				e("div").a("class", "site-bar-item w3-bar-item ").f();
 					e("a").a("class", "w3-padding ").a("href", pageDeconnexionUri).f();
 						e("span").a("class", "site-menu-item").f();

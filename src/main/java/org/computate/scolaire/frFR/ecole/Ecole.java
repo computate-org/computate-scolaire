@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;          
+package org.computate.scolaire.frFR.ecole;         
 
 import java.text.Normalizer;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                                  
+/**                 
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -44,7 +44,10 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: pink
  * IconeGroupe: regular
  * IconeNom: school
- */                 
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
+ */             
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -215,9 +218,9 @@ public class Ecole extends EcoleGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: schoolLocation
-	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 3
 	 * NomAffichage.enUS: location
@@ -362,7 +365,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: SiteUrlBase
 	 * r.enUS: SiteBaseUrl
-	 * **/  
+	 * **/   
 	protected void _pageUrl(Couverture<String> c)  {
 		if(ecoleId != null) {
 			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/ecole/" + ecoleId;

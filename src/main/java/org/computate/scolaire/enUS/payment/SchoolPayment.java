@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.payment;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -67,7 +68,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentDate(Wrap<LocalDate> c) {
 	}
 
-	protected void _paymentValue(Wrap<String> c) {
+	protected void _paymentAmount(Wrap<BigDecimal> c) {
 	}
 
 	protected void _paymentCash(Wrap<Boolean> c) {
@@ -83,7 +84,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _paymentCompleteName(Wrap<String> c) {
-		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+		NumberFormat f = NumberFormat.getCurrencyInstance(Locale.US);
 		f.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
@@ -91,8 +92,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			o.append(enrollment_.getChildCompleteName());
 		if(paymentDate != null)
 			o.append(" ").append(strPaymentDate());
-		if(paymentValue != null)
-			o.append(" ").append(f.format(paymentValue));
+		if(paymentAmount != null)
+			o.append(" ").append(f.format(paymentAmount));
 		if(BooleanUtils.isTrue(paymentCheck))
 			o.append(" by check");
 		if(BooleanUtils.isTrue(paymentCash))
@@ -101,6 +102,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			o.append(" by authorize.net");
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
+		c.o(o.toString());
 	}
 
 	protected void _paymentId(Wrap<String> c) {
