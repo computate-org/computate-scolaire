@@ -1589,9 +1589,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	/**	L'entité « yearStart »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate yearStart;
+	protected Integer yearStart;
 	@JsonIgnore
-	public Wrap<LocalDate> yearStartWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("yearStart").o(yearStart);
+	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
 
 	/**	<br/>L'entité « yearStart »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1599,29 +1599,19 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearStart(Wrap<LocalDate> c);
+	protected abstract void _yearStart(Wrap<Integer> c);
 
-	public LocalDate getYearStart() {
+	public Integer getYearStart() {
 		return yearStart;
 	}
 
-	public void setYearStart(LocalDate yearStart) {
+	public void setYearStart(Integer yearStart) {
 		this.yearStart = yearStart;
 		this.yearStartWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearStart(Instant o) {
-		this.yearStart = LocalDate.from(o);
-		this.yearStartWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setYearStart(String o) {
-		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.yearStartWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	public SchoolAge setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		if(NumberUtils.isParsable(o))
+			this.yearStart = Integer.parseInt(o);
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -1635,16 +1625,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 
-	public Date solrYearStart() {
-		return yearStart == null ? null : Date.from(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Integer solrYearStart() {
+		return yearStart;
 	}
 
 	public String strYearStart() {
-		return yearStart == null ? "" : yearStart.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return yearStart == null ? "" : yearStart.toString();
 	}
 
 	public String jsonYearStart() {
-		return yearStart == null ? "" : yearStart.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return yearStart == null ? "" : yearStart.toString();
 	}
 
 	public String nomAffichageYearStart() {
@@ -1707,9 +1697,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	/**	L'entité « yearEnd »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate yearEnd;
+	protected Integer yearEnd;
 	@JsonIgnore
-	public Wrap<LocalDate> yearEndWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("yearEnd").o(yearEnd);
+	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
 
 	/**	<br/>L'entité « yearEnd »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1717,29 +1707,19 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearEnd(Wrap<LocalDate> c);
+	protected abstract void _yearEnd(Wrap<Integer> c);
 
-	public LocalDate getYearEnd() {
+	public Integer getYearEnd() {
 		return yearEnd;
 	}
 
-	public void setYearEnd(LocalDate yearEnd) {
+	public void setYearEnd(Integer yearEnd) {
 		this.yearEnd = yearEnd;
 		this.yearEndWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearEnd(Instant o) {
-		this.yearEnd = LocalDate.from(o);
-		this.yearEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setYearEnd(String o) {
-		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.yearEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	public SchoolAge setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		if(NumberUtils.isParsable(o))
+			this.yearEnd = Integer.parseInt(o);
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -1753,16 +1733,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 
-	public Date solrYearEnd() {
-		return yearEnd == null ? null : Date.from(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Integer solrYearEnd() {
+		return yearEnd;
 	}
 
 	public String strYearEnd() {
-		return yearEnd == null ? "" : yearEnd.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return yearEnd == null ? "" : yearEnd.toString();
 	}
 
 	public String jsonYearEnd() {
-		return yearEnd == null ? "" : yearEnd.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return yearEnd == null ? "" : yearEnd.toString();
 	}
 
 	public String nomAffichageYearEnd() {
@@ -2366,124 +2346,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmSeasonCompleteName());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////
-	// seasonEnd //
-	///////////////
-
-	/**	L'entité « seasonEnd »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected LocalDate seasonEnd;
-	@JsonIgnore
-	public Wrap<LocalDate> seasonEndWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonEnd").o(seasonEnd);
-
-	/**	<br/>L'entité « seasonEnd »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonEnd">Trouver l'entité seasonEnd dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _seasonEnd(Wrap<LocalDate> c);
-
-	public LocalDate getSeasonEnd() {
-		return seasonEnd;
-	}
-
-	public void setSeasonEnd(LocalDate seasonEnd) {
-		this.seasonEnd = seasonEnd;
-		this.seasonEndWrap.alreadyInitialized = true;
-	}
-	public SchoolAge setSeasonEnd(Instant o) {
-		this.seasonEnd = LocalDate.from(o);
-		this.seasonEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
-	public SchoolAge setSeasonEnd(String o) {
-		this.seasonEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.seasonEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	public SchoolAge setSeasonEnd(Date o) {
-		this.seasonEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
-		this.seasonEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	protected SchoolAge seasonEndInit() {
-		if(!seasonEndWrap.alreadyInitialized) {
-			_seasonEnd(seasonEndWrap);
-			if(seasonEnd == null)
-				setSeasonEnd(seasonEndWrap.o);
-		}
-		seasonEndWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public Date solrSeasonEnd() {
-		return seasonEnd == null ? null : Date.from(seasonEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
-	public String strSeasonEnd() {
-		return seasonEnd == null ? "" : seasonEnd.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
-	}
-
-	public String jsonSeasonEnd() {
-		return seasonEnd == null ? "" : seasonEnd.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
-	}
-
-	public String nomAffichageSeasonEnd() {
-		return "end of season";
-	}
-
-	public String htmTooltipSeasonEnd() {
-		return null;
-	}
-
-	public String htmSeasonEnd() {
-		return seasonEnd == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonEnd());
-	}
-
-	public void htmSeasonEnd(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolAge", strPk(), "SeasonEnd\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolAge", strPk(), "SeasonEnd() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonEnd\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonEnd()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonEnd\"");
-							r.s(" value=\"", htmSeasonEnd(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonEnd());
 			}
 			r.l("</div>");
 		}
@@ -3093,7 +2955,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeCompleteName() {
-		return null;
+		return "name";
 	}
 
 	public String htmTooltipAgeCompleteName() {
@@ -3494,7 +3356,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
 		seasonCompleteNameInit();
-		seasonEndInit();
 		sessionStartDayInit();
 		sessionEndDayInit();
 		sessionCompleteNameInit();
@@ -3590,8 +3451,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.seasonEnrollmentFee;
 			case "seasonCompleteName":
 				return oSchoolAge.seasonCompleteName;
-			case "seasonEnd":
-				return oSchoolAge.seasonEnd;
 			case "sessionStartDay":
 				return oSchoolAge.sessionStartDay;
 			case "sessionEndDay":
@@ -3767,13 +3626,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolAge.contains("yearStart")) {
-				Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
+				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolAge.setYearStart(yearStart);
 			}
 
 			if(savesSchoolAge.contains("yearEnd")) {
-				Date yearEnd = (Date)solrDocument.get("yearEnd_stored_date");
+				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolAge.setYearEnd(yearEnd);
 			}
@@ -3806,12 +3665,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 				if(seasonCompleteName != null)
 					oSchoolAge.setSeasonCompleteName(seasonCompleteName);
-			}
-
-			if(savesSchoolAge.contains("seasonEnd")) {
-				Date seasonEnd = (Date)solrDocument.get("seasonEnd_stored_date");
-				if(seasonEnd != null)
-					oSchoolAge.setSeasonEnd(seasonEnd);
 			}
 
 			if(savesSchoolAge.contains("sessionStartDay")) {
@@ -3993,12 +3846,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
 		if(yearStart != null) {
-			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearStart_indexed_int", yearStart);
+			document.addField("yearStart_stored_int", yearStart);
 		}
 		if(yearEnd != null) {
-			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearEnd_indexed_int", yearEnd);
+			document.addField("yearEnd_stored_int", yearEnd);
 		}
 		if(seasonStartDay != null) {
 			document.addField("seasonStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(seasonStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
@@ -4019,10 +3872,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(seasonCompleteName != null) {
 			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
 			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
-		}
-		if(seasonEnd != null) {
-			document.addField("seasonEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(seasonEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("seasonEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(seasonEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(sessionStartDay != null) {
 			document.addField("sessionStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
@@ -4139,11 +3988,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(schoolCompleteName != null)
 			oSchoolAge.setSchoolCompleteName(schoolCompleteName);
 
-		Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
+		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)
 			oSchoolAge.setYearStart(yearStart);
 
-		Date yearEnd = (Date)solrDocument.get("yearEnd_stored_date");
+		Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 		if(yearEnd != null)
 			oSchoolAge.setYearEnd(yearEnd);
 
@@ -4166,10 +4015,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 		if(seasonCompleteName != null)
 			oSchoolAge.setSeasonCompleteName(seasonCompleteName);
-
-		Date seasonEnd = (Date)solrDocument.get("seasonEnd_stored_date");
-		if(seasonEnd != null)
-			oSchoolAge.setSeasonEnd(seasonEnd);
 
 		Date sessionStartDay = (Date)solrDocument.get("sessionStartDay_stored_date");
 		if(sessionStartDay != null)

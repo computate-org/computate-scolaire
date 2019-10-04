@@ -12,27 +12,21 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
-import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
-import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
-import java.time.Instant;
-import java.time.ZoneId;
 import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -1045,9 +1039,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	/**	L'entité « yearStart »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate yearStart;
+	protected Integer yearStart;
 	@JsonIgnore
-	public Wrap<LocalDate> yearStartWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("yearStart").o(yearStart);
+	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
 
 	/**	<br/>L'entité « yearStart »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1055,29 +1049,19 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearStart(Wrap<LocalDate> c);
+	protected abstract void _yearStart(Wrap<Integer> c);
 
-	public LocalDate getYearStart() {
+	public Integer getYearStart() {
 		return yearStart;
 	}
 
-	public void setYearStart(LocalDate yearStart) {
+	public void setYearStart(Integer yearStart) {
 		this.yearStart = yearStart;
 		this.yearStartWrap.alreadyInitialized = true;
 	}
-	public SchoolYear setYearStart(Instant o) {
-		this.yearStart = LocalDate.from(o);
-		this.yearStartWrap.alreadyInitialized = true;
-		return (SchoolYear)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearStart(String o) {
-		this.yearStart = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.yearStartWrap.alreadyInitialized = true;
-		return (SchoolYear)this;
-	}
-	public SchoolYear setYearStart(Date o) {
-		this.yearStart = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		if(NumberUtils.isParsable(o))
+			this.yearStart = Integer.parseInt(o);
 		this.yearStartWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1091,16 +1075,16 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 
-	public Date solrYearStart() {
-		return yearStart == null ? null : Date.from(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Integer solrYearStart() {
+		return yearStart;
 	}
 
 	public String strYearStart() {
-		return yearStart == null ? "" : yearStart.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return yearStart == null ? "" : yearStart.toString();
 	}
 
 	public String jsonYearStart() {
-		return yearStart == null ? "" : yearStart.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return yearStart == null ? "" : yearStart.toString();
 	}
 
 	public String nomAffichageYearStart() {
@@ -1163,9 +1147,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	/**	L'entité « yearEnd »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate yearEnd;
+	protected Integer yearEnd;
 	@JsonIgnore
-	public Wrap<LocalDate> yearEndWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("yearEnd").o(yearEnd);
+	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
 
 	/**	<br/>L'entité « yearEnd »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1173,29 +1157,19 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _yearEnd(Wrap<LocalDate> c);
+	protected abstract void _yearEnd(Wrap<Integer> c);
 
-	public LocalDate getYearEnd() {
+	public Integer getYearEnd() {
 		return yearEnd;
 	}
 
-	public void setYearEnd(LocalDate yearEnd) {
+	public void setYearEnd(Integer yearEnd) {
 		this.yearEnd = yearEnd;
 		this.yearEndWrap.alreadyInitialized = true;
 	}
-	public SchoolYear setYearEnd(Instant o) {
-		this.yearEnd = LocalDate.from(o);
-		this.yearEndWrap.alreadyInitialized = true;
-		return (SchoolYear)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
 	public SchoolYear setYearEnd(String o) {
-		this.yearEnd = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.yearEndWrap.alreadyInitialized = true;
-		return (SchoolYear)this;
-	}
-	public SchoolYear setYearEnd(Date o) {
-		this.yearEnd = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		if(NumberUtils.isParsable(o))
+			this.yearEnd = Integer.parseInt(o);
 		this.yearEndWrap.alreadyInitialized = true;
 		return (SchoolYear)this;
 	}
@@ -1209,16 +1183,16 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		return (SchoolYear)this;
 	}
 
-	public Date solrYearEnd() {
-		return yearEnd == null ? null : Date.from(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Integer solrYearEnd() {
+		return yearEnd;
 	}
 
 	public String strYearEnd() {
-		return yearEnd == null ? "" : yearEnd.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return yearEnd == null ? "" : yearEnd.toString();
 	}
 
 	public String jsonYearEnd() {
-		return yearEnd == null ? "" : yearEnd.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return yearEnd == null ? "" : yearEnd.toString();
 	}
 
 	public String nomAffichageYearEnd() {
@@ -2033,13 +2007,13 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			}
 
 			if(savesSchoolYear.contains("yearStart")) {
-				Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
+				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolYear.setYearStart(yearStart);
 			}
 
 			if(savesSchoolYear.contains("yearEnd")) {
-				Date yearEnd = (Date)solrDocument.get("yearEnd_stored_date");
+				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolYear.setYearEnd(yearEnd);
 			}
@@ -2183,12 +2157,12 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
 		if(yearStart != null) {
-			document.addField("yearStart_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("yearStart_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearStart.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearStart_indexed_int", yearStart);
+			document.addField("yearStart_stored_int", yearStart);
 		}
 		if(yearEnd != null) {
-			document.addField("yearEnd_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("yearEnd_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(yearEnd.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("yearEnd_indexed_int", yearEnd);
+			document.addField("yearEnd_stored_int", yearEnd);
 		}
 		if(yearShortName != null) {
 			document.addField("yearShortName_indexed_string", yearShortName);
@@ -2273,11 +2247,11 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(schoolCompleteName != null)
 			oSchoolYear.setSchoolCompleteName(schoolCompleteName);
 
-		Date yearStart = (Date)solrDocument.get("yearStart_stored_date");
+		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)
 			oSchoolYear.setYearStart(yearStart);
 
-		Date yearEnd = (Date)solrDocument.get("yearEnd_stored_date");
+		Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 		if(yearEnd != null)
 			oSchoolYear.setYearEnd(yearEnd);
 

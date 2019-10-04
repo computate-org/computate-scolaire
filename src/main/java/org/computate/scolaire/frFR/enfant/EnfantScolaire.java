@@ -1,7 +1,8 @@
-package org.computate.scolaire.frFR.enfant;
+package org.computate.scolaire.frFR.enfant; 
 
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * UnNom.frFR: un enfant
  * UnNom.enUS: a child
+ * NomPluriel.enUS: children
  * Couleur: green
  * IconeGroupe: regular
  * IconeNom: child
@@ -70,7 +72,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: InscriptionScolaire.enfantCle
-	 * HtmlLigne: 6
+	 * HtmlLigne: 8
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
@@ -242,7 +244,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: first name
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCellule: 2
+	 * HtmlCellule: 1
 	 */                   
 	protected void _personnePrenom(Couverture<String> c) {
 	}
@@ -334,10 +336,40 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: personBirthDate
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: date de naissance
 	 * NomAffichage.enUS: birth date
 	 */                   
 	protected void _personneDateNaissance(Couverture<LocalDate> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personAgeInSeptember
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: âge
+	 * NomAffichage.enUS: age
+	 * r: "âge %s le 1 septembre %s"
+	 * r.enUS: "age %s on September 1 %s"
+	 * r: personneDateNaissance
+	 * r.enUS: personBirthDate
+	 * r: premierSeptembre
+	 * r.enUS: septemberFirst
+	 * r: annee
+	 * r.enUS: year
+	 */                   
+	protected void _personneAgeEnSeptembre(Couverture<String> c) {
+		if(personneDateNaissance != null) {
+			Integer annee = LocalDate.now().getYear();
+			LocalDate premierSeptembre = LocalDate.of(annee, 9, 1);
+			long age = ChronoUnit.YEARS.between(personneDateNaissance, premierSeptembre);
+			c.o(String.format("âge %s le 1 septembre %s", age, annee));
+		}
 	}
 
 	/**
@@ -348,7 +380,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.frFR: conditions médicales
 	 * NomAffichage.enUS: medical conditions
 	 * Definir: true
-	 * HtmlLigne: 3
+	 * HtmlLigne: 6
 	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantConditionsMedicales(Couverture<String> c) {
@@ -362,7 +394,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.frFR: écoles précedemment fréqentées
 	 * NomAffichage.enUS: schools previously attended
 	 * Definir: true
-	 * HtmlLigne: 3
+	 * HtmlLigne: 6
 	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
@@ -375,9 +407,10 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: description
 	 * NomAffichage.enUS: description
+	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 3
+	 * HtmlLigne: 7
+	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantDescription(Couverture<String> c) {
 	}
@@ -389,7 +422,10 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: objectifs
 	 * NomAffichage.enUS: objectives
+	 * Multiligne: true
 	 * Definir: true
+	 * HtmlLigne: 7
+	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantObjectifs(Couverture<String> c) {
 	}
@@ -402,8 +438,8 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.frFR: vaccins à jour
 	 * NomAffichage.enUS: current vaccines
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 2
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantVaccinsAJour(Couverture<Boolean> c) {
 		c.o(false);
@@ -417,8 +453,8 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.frFR: propre
 	 * NomAffichage.enUS: potty trained
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 3
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 */                  
 	protected void _enfantPropre(Couverture<Boolean> c) {
 		c.o(false);
@@ -429,8 +465,11 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * Var.enUS: childCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: personneNomComplet
 	 * r.enUS: personCompleteName
 	 */  
@@ -476,7 +515,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * r: enfantId
 	 * r.enUS: childId
 	 * r: /enfant/
-	 * r.enUS: /chilc/
+	 * r.enUS: /child/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

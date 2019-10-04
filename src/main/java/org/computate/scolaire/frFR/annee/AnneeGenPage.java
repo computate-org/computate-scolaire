@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 package org.computate.scolaire.frFR.annee;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -37,6 +29,7 @@ import java.util.List;
 
 /**
  * Traduire: false
+ * NomCanonique.enUS: org.computate.scolaire.enUS.year.YearGenPage
  **/
 public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
@@ -57,7 +50,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		c.o("");
+		if(anneeScolaire != null && anneeScolaire.getAnneeNomComplet() != null)
+			c.o(anneeScolaire.getAnneeNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -177,6 +171,80 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formAnneeScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereAnneeScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-orange ").f();
+								e("label").a("for", "Page_archive").a("class", "").f().sx("archivé").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setArchive")
+										.a("name", "setArchive")
+										.a("id", "Page_archive")
+										.a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#Page_archive')); }, function() { ajouterErreur($('#Page_archive')); }); ")
+										;
+										if(o.getArchive() != null && o.getArchive())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formAnneeScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereAnneeScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-orange ").f();
+								e("label").a("for", "Page_supprime").a("class", "").f().sx("supprimé").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setSupprime")
+										.a("name", "setSupprime")
+										.a("id", "Page_supprime")
+										.a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#Page_supprime')); }, function() { ajouterErreur($('#Page_supprime')); }); ")
+										;
+										if(o.getSupprime() != null && o.getSupprime())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -187,22 +255,23 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							LocalDate val = o.getAnneeDebut();
 							{ e("div").a("class", "w3-cell-row w3-orange ").f();
 								e("label").a("for", "Page_anneeDebut").a("class", "").f().sx("début de l'année").g("label");
 							} g("div");
-							{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+
 									e("input")
 										.a("type", "text")
-										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "DD-MM-YYYY")
-										.a("data-timeformat", "DD-MM-YYYY")
+										.a("placeholder", "début de l'année")
+										.a("class", "setAnneeDebut w3-input w3-border ")
+										.a("name", "setAnneeDebut")
 										.a("id", "Page_anneeDebut")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#Page_anneeDebut')); }, function() { ajouterErreur($('#Page_anneeDebut')); }); } ")
-										.fg();
+										.a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', $(this).val(), function() { ajouterLueur($('#Page_anneeDebut')); }, function() { ajouterErreur($('#Page_anneeDebut')); }); ")
+										.a("value", o.strAnneeDebut())
+									.fg();
+
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
@@ -230,22 +299,23 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					} g("form");
 					{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
-							LocalDate val = o.getAnneeFin();
 							{ e("div").a("class", "w3-cell-row w3-orange ").f();
 								e("label").a("for", "Page_anneeFin").a("class", "").f().sx("le fin de l'année").g("label");
 							} g("div");
-							{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
+
 									e("input")
 										.a("type", "text")
-										.a("class", "w3-input w3-border datepicker ")
-										.a("placeholder", "DD-MM-YYYY")
-										.a("data-timeformat", "DD-MM-YYYY")
+										.a("placeholder", "le fin de l'année")
+										.a("class", "setAnneeFin w3-input w3-border ")
+										.a("name", "setAnneeFin")
 										.a("id", "Page_anneeFin")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#Page_anneeFin')); }, function() { ajouterErreur($('#Page_anneeFin')); }); } ")
-										.fg();
+										.a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', $(this).val(), function() { ajouterLueur($('#Page_anneeFin')); }, function() { ajouterErreur($('#Page_anneeFin')); }); ")
+										.a("value", o.strAnneeFin())
+									.fg();
+
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
@@ -317,7 +387,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
 								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-									e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+									e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
 									sx("école");
 								} g("a");
 							} g("div");
@@ -494,6 +564,78 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "POST_archive").a("class", "").f().sx("archivé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurArchive")
+									.a("name", "archive")
+									.a("id", "POST_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "POST_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurSupprime")
+									.a("name", "supprime")
+									.a("id", "POST_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -504,22 +646,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "POST_anneeDebut").a("class", "").f().sx("début de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "début de l'année")
+									.a("class", "valeurAnneeDebut w3-input w3-border ")
+									.a("name", "anneeDebut")
 									.a("id", "POST_anneeDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#POST_anneeDebut')); }, function() { ajouterErreur($('#POST_anneeDebut')); }); } ")
-									.fg();
+									.a("value", o.strAnneeDebut())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -538,22 +679,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "POST_anneeFin").a("class", "").f().sx("le fin de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "le fin de l'année")
+									.a("class", "valeurAnneeFin w3-input w3-border ")
+									.a("name", "anneeFin")
 									.a("id", "POST_anneeFin")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#POST_anneeFin')); }, function() { ajouterErreur($('#POST_anneeFin')); }); } ")
-									.fg();
+									.a("value", o.strAnneeFin())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -605,7 +745,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
 								sx("école");
 							} g("a");
 						} g("div");
@@ -782,6 +922,78 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "PATCH_archive").a("class", "").f().sx("archivé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setArchive")
+									.a("name", "setArchive")
+									.a("id", "PATCH_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "PATCH_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setSupprime")
+									.a("name", "setSupprime")
+									.a("id", "PATCH_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -792,22 +1004,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "PATCH_anneeDebut").a("class", "").f().sx("début de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "début de l'année")
+									.a("class", "setAnneeDebut w3-input w3-border ")
+									.a("name", "setAnneeDebut")
 									.a("id", "PATCH_anneeDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#PATCH_anneeDebut')); }, function() { ajouterErreur($('#PATCH_anneeDebut')); }); } ")
-									.fg();
+									.a("value", o.strAnneeDebut())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -826,22 +1037,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "PATCH_anneeFin").a("class", "").f().sx("le fin de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "le fin de l'année")
+									.a("class", "setAnneeFin w3-input w3-border ")
+									.a("name", "setAnneeFin")
 									.a("id", "PATCH_anneeFin")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#PATCH_anneeFin')); }, function() { ajouterErreur($('#PATCH_anneeFin')); }); } ")
-									.fg();
+									.a("value", o.strAnneeFin())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -893,7 +1103,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
 								sx("école");
 							} g("a");
 						} g("div");
@@ -1085,6 +1295,78 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "Recherche_archive").a("class", "").f().sx("archivé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurArchive")
+									.a("name", "archive")
+									.a("id", "Recherche_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formAnneeScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereAnneeScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", "Recherche_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurSupprime")
+									.a("name", "supprime")
+									.a("id", "Recherche_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formAnneeScolaireAnneeDebut").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1095,22 +1377,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeDebut").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeDebut();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "Recherche_anneeDebut").a("class", "").f().sx("début de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "début de l'année")
+									.a("class", "valeurAnneeDebut w3-input w3-border ")
+									.a("name", "anneeDebut")
 									.a("id", "Recherche_anneeDebut")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeDebut', s, function() { ajouterLueur($('#Recherche_anneeDebut')); }, function() { ajouterErreur($('#Recherche_anneeDebut')); }); } ")
-									.fg();
+									.a("value", o.strAnneeDebut())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1129,22 +1410,21 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				} g("form");
 				{ e("form").a("action", "").a("id", "suggereAnneeScolaireAnneeFin").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
-						LocalDate val = o.getAnneeFin();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
 							e("label").a("for", "Recherche_anneeFin").a("class", "").f().sx("le fin de l'année").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
+
 								e("input")
 									.a("type", "text")
-									.a("class", "w3-input w3-border datepicker ")
-									.a("placeholder", "DD-MM-YYYY")
-									.a("data-timeformat", "DD-MM-YYYY")
+									.a("placeholder", "le fin de l'année")
+									.a("class", "valeurAnneeFin w3-input w3-border ")
+									.a("name", "anneeFin")
 									.a("id", "Recherche_anneeFin")
-									.a("onclick", "enleverLueur($(this)); ")
-									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
-									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=\"pk\"]').val() }], 'setAnneeFin', s, function() { ajouterLueur($('#Recherche_anneeFin')); }, function() { ajouterErreur($('#Recherche_anneeFin')); }); } ")
-									.fg();
+									.a("value", o.strAnneeFin())
+								.fg();
+
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1196,7 +1476,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
-								e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
+								e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
 								sx("école");
 							} g("a");
 						} g("div");
@@ -1368,11 +1648,13 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			}
 		} else {
 
-			{ e("h1").f();
-				if(contexteIconeClassesCss != null)
-					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("années").g("span");
-			} g("h1");
+				{ e("h1").f();
+					{ e("a").a("href", "/annee").a("class", "w3-bar-item w3-btn w3-center w3-block w3-orange w3-hover-orange ").f();
+						if(contexteIconeClassesCss != null)
+							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
+				} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeAnneeScolaire.getQueryResponse().getResults().getNumFound();
@@ -1414,7 +1696,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").f();
+				{ e("thead").a("class", "w3-orange w3-hover-orange ").f();
 					{ e("tr").f();
 						e("th").f().sx("").g("th");
 						e("th").f().sx("crée").g("th");
@@ -1471,13 +1753,20 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsAnneeGenPage();
-		htmlSuggereAnneeGenPage();
+		htmlSuggereAnneeGenPage(this, null);
 		g("div");
 	}
 
 	public void htmlBodyFormsAnneeGenPage() {
-		e("div").f();
+		e("div").a("class", "w3-margin-top ").f();
 
+		{ e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+				.a("id", "rechargerCetteAnneeGenPage")
+				.a("onclick", "patchAnneeScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteAnneeGenPage')); }, function() { ajouterErreur($('#rechargerCetteAnneeGenPage')); }); return false; ").f();
+				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+			sx("recharger cette année");
+		} g("button");
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -1616,54 +1905,54 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	 * r: "suggereListAnneeScolaire"
 	 * r.enUS: "suggestListSchoolYear"
 	**/
-	public void htmlSuggereAnneeGenPage() {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("href", "/annee").a("class", "").f();
-					e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
-					sx("voir toutes les années");
-				} g("a");
-			} g("div");
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("id", "rechargerAnneeGenPage").a("href", "/annee").a("class", "").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerAnneeGenPage')); }, function() { ajouterErreur($('#rechargerAnneeGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					sx("recharger toutes les années");
-				} g("a");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("span").f();
-					sx("rechercher années : ");
-				} g("span");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("div").a("class", "w3-cell-row ").f();
+	public static void htmlSuggereAnneeGenPage(MiseEnPage p, String id) {
+		{ p.e("div").a("class", "w3-cell-row ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("a").a("href", "/annee").a("class", "").f();
+					p.e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+					p.sx("voir toutes les années");
+				} p.g("a");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("a").a("id", "rechargerToutesAnneeGenPage", id).a("href", "/annee").a("class", "").a("onclick", "patchAnneeScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesAnneeGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesAnneeGenPage", id, "')); }); return false; ").f();
+					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.sx("recharger toutes les années");
+				} p.g("a");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("span").f();
+					p.sx("rechercher années : ");
+				} p.g("span");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("div").a("class", "w3-cell-row ").f();
 
-					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ e("form").a("action", "").a("id", "suggereFormAnneeScolaire").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
+					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ p.e("form").a("action", "").a("id", "suggereFormAnneeScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/annee?q=objetSuggere:' + encodeURIComponent($('#suggereAnneeScolaire", id, "').val()); return false; ").f();
+						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher années")
 							.a("class", "suggereAnneeScolaire w3-input w3-border w3-cell w3-cell-middle ")
 							.a("name", "suggereAnneeScolaire")
-							.a("id", "suggereAnneeScolaire")
+							.a("id", "suggereAnneeScolaire", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereAnneeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListAnneeScolaire')); ")
+							.a("oninput", "suggereAnneeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListAnneeScolaire", id, "')); ")
 							.fg();
 
-					} g("form");
-				} g("div");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAnneeScolaire").f();
-				} g("ul");
-			} g("div");
-		} g("div");
+					} p.g("form");
+				} p.g("div");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListAnneeScolaire", id).f();
+				} p.g("ul");
+			} p.g("div");
+		} p.g("div");
 	}
 
 }

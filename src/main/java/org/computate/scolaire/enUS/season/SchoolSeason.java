@@ -61,14 +61,14 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 			c.o((String)year_.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {
+	protected void _yearStart(Wrap<Integer> c) {
 		if(year_ != null)
-			c.o((LocalDate)year_.getYearStart());
+			c.o(year_.getYearStart());
 	}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(year_ != null)
-			c.o((LocalDate)year_.getYearStart());
+			c.o(year_.getYearStart());
 	}
 
 	protected void _seasonStartDay(Wrap<LocalDate> c) {}

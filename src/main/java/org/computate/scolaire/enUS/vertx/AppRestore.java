@@ -4,10 +4,14 @@ import java.security.MessageDigest;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -96,6 +100,7 @@ public class AppRestore extends AbstractVerticle {
 															if(g.succeeded()) {
 																sqlConnection.close(h -> {
 																	if(h.succeeded()) {
+																		System.out.println("Completed!!!");
 																		startFuture.complete();
 				//														eventHandler.handle(Future.succeededFuture(d.result()));
 																	} else {
@@ -194,6 +199,7 @@ public class AppRestore extends AbstractVerticle {
 			-> {
 				if(updateDAsync.succeeded()) {
 					List<JsonArray> rows = updateDAsync.result().getResults();
+					System.out.println("d " + rows.stream().map(row -> row.getLong(0)).collect(Collectors.toList()));
 					eventHandler.handle(Future.succeededFuture(rows));
 				} else {
 					eventHandler.handle(Future.failedFuture(new Exception(updateDAsync.cause())));
@@ -215,6 +221,7 @@ public class AppRestore extends AbstractVerticle {
 				if(selectCAsync.succeeded()) {
 					SearchList<Cluster> searchList = new SearchList<Cluster>();
 					searchList.setSiteRequest_(siteRequest);
+					System.out.println("c " + selectCAsync.result().getResults().stream().map(row -> row.getLong(0)).collect(Collectors.toList()));
 					selectCAsync.result().getResults().forEach(clusterValues -> {
 						try {
 							Long pk = clusterValues.getLong(0);
@@ -305,7 +312,24 @@ public class AppRestore extends AbstractVerticle {
 		Future<List<JsonArray>> future = Future.future();
 		try {
 			Long pk = o.getLong(0);
-			String value = new String(cipher.doFinal(decoder.decode(o.getString(3))));
+			String path = o.getString(2);
+			String value = o.getString(3);
+			try {
+				value = new String(cipher.doFinal(decoder.decode(value)));
+			} catch (Exception e1) {
+				System.err.println(o);
+//				e1.printStackTrace();
+			}
+			if(StringUtils.equals("personFirstName", path))
+				value = getScrambledWord(value);
+			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate")) {
+				try {
+					value = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).parse(value));
+				} catch (Exception e) {
+					System.err.println(o);
+					e.printStackTrace();
+				}
+			}
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			sqlConnection.queryWithParams(
 					"update d set modified=now(), value=?, current=true where pk=?;"
@@ -368,7 +392,7 @@ public class AppRestore extends AbstractVerticle {
 							indexCluster(o, d -> {
 								if(d.succeeded()) {
 									future.complete(o);
-									eventHandler.handle(Future.succeededFuture(d.result()));
+//									eventHandler.handle(Future.succeededFuture(d.result()));
 								} else {
 									eventHandler.handle(Future.failedFuture(d.cause()));
 								}
@@ -404,6 +428,7 @@ public class AppRestore extends AbstractVerticle {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
+								System.out.println(definition);
 								e.printStackTrace();
 							}
 						}
@@ -454,7 +479,6 @@ public class AppRestore extends AbstractVerticle {
 	}
 
 	public void indexCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
-		System.out.println(o.getPk());
 		SiteRequestEnUS siteRequest = o.getSiteRequest_();
 		try {
 			o.initDeepForClass(siteRequest);
@@ -465,6 +489,7 @@ public class AppRestore extends AbstractVerticle {
 //				}, res -> {
 //					eventHandler.handle(Future.succeededFuture());
 //			});
+			eventHandler.handle(Future.succeededFuture());
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -516,4 +541,21 @@ public class AppRestore extends AbstractVerticle {
 			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}
 	}
-}
+
+	public static String getScrambledWord(String str) {
+	    char[] character = str.toCharArray();
+	    String question1 = new String();
+
+	    ArrayList<Character> chars = new ArrayList<Character>(); //an arraylist is an array wich dynamically changes its size depending on the amount of its elements
+	    for (int i = 0; i < character.length; i++) {// first we put all characters of the word into that arraylist
+	        chars.add(character[i]);
+	    }
+
+	    while(chars.size()>0){//then we iterate over the arraylist as long as it has more than 0 elements
+	        int index = (int)(Math.random() * chars.size());//we create a random index in the range of 0 and the arraylists size
+	        question1 += chars.get(index);// we add the letter at the index we generated to the scrambled word variable
+	        chars.remove(index);// then we remove the character we just added to the scrambled word, from the arraylist, so it cant be in there twice
+	    }// thus the size decreases by 1 each iteration until every element of the arrraylist is somewhere in the scrambled word
+
+	    return question1;
+	}}

@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import org.computate.scolaire.enUS.search.SearchResult;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -209,6 +209,10 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					case "familyName":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familyName", jsonObject.getString(entityVar), pk));
+						break;
+					case "personBirthDate":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personBirthDate", jsonObject.getString(entityVar), pk));
 						break;
 					case "childMedicalConditions":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -493,6 +497,16 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						} else {
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familyName", o2.jsonFamilyName(), pk));
+						}
+						break;
+					case "setPersonBirthDate":
+						o2.setPersonBirthDate(requestJson.getString(methodName));
+						if(o2.getPersonBirthDate() == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personBirthDate"));
+						} else {
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personBirthDate", o2.jsonPersonBirthDate(), pk));
 						}
 						break;
 					case "setChildMedicalConditions":
@@ -904,6 +918,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				return "personFormalName_indexed_string";
 			case "personBirthDate":
 				return "personBirthDate_indexed_date";
+			case "personAgeInSeptember":
+				return "personAgeInSeptember_indexed_string";
 			case "childMedicalConditions":
 				return "childMedicalConditions_indexed_string";
 			case "childPreviousSchoolsAttended":
@@ -1143,16 +1159,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			listSearch.setC(SchoolChild.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
-			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.child.SchoolChild"));
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-			SiteUser siteUser = siteRequest.getSiteUser();
-			if(siteUser != null && !siteUser.getSeeDeleted())
-				listSearch.addFilterQuery("deleted_indexed_boolean:false");
-			if(siteUser != null && !siteUser.getSeeArchived())
-				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

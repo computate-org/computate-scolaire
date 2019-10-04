@@ -2726,7 +2726,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageMomCompleteName() {
-		return null;
+		return "name";
 	}
 
 	public String htmTooltipMomCompleteName() {

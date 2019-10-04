@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.pere;
+package org.computate.scolaire.frFR.pere; 
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -455,10 +455,11 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * Var.enUS: dadCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
-	 * NomAffichage.frFR: nom complet
-	 * NomAffichage.enUS: full name
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: personneNomComplet
 	 * r.enUS: personCompleteName
 	 */ 
@@ -504,7 +505,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * r: pereId
 	 * r.enUS: dadId
 	 * r: /pere/
-	 * r.enUS: /chilc/
+	 * r.enUS: /child/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

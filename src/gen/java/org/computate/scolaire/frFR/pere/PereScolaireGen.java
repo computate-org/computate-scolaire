@@ -2727,7 +2727,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePereNomComplet() {
-		return "nom complet";
+		return "nom";
 	}
 
 	public String htmTooltipPereNomComplet() {

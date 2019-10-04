@@ -140,7 +140,7 @@ public class SchoolMom extends SchoolMomGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(momId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/chilc/" + momId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/child/" + momId;
 			c.o(o);
 		}
 	}

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mere;
+package org.computate.scolaire.frFR.mere; 
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -449,8 +449,11 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Var.enUS: momCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: personneNomComplet
 	 * r.enUS: personCompleteName
 	 */  
@@ -496,7 +499,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * r: mereId
 	 * r.enUS: momId
 	 * r: /mere/
-	 * r.enUS: /chilc/
+	 * r.enUS: /child/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

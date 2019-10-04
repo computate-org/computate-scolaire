@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;
+package org.computate.scolaire.frFR.paiement; 
 
 import java.text.Normalizer;
 import java.text.NumberFormat;
@@ -47,7 +47,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.enUS: a payment
  * Couleur: green
  * IconeGroupe: solid
- * IconeNom: dollar
+ * IconeNom: search-dollar
 */    
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
@@ -280,7 +280,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.frFR: montant
 	 * NomAffichage.enUS: amount
 	 */                     
-	protected void _paiementValeur(Couverture<LocalDate> c) {
+	protected void _paiementValeur(Couverture<String> c) {
 	}
 
 	/**
@@ -324,8 +324,11 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: paymentCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: EnfantNomComplet
 	 * r.enUS: ChildCompleteName
 	 * r: paiementDate

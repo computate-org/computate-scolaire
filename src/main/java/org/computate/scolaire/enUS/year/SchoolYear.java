@@ -52,22 +52,22 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 			c.o((String)school_.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {}
+	protected void _yearStart(Wrap<Integer> c) {}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(yearStart != null)
-			c.o(yearStart.plusYears(1));
+			c.o(yearStart + 1);
 	}
 
 	protected void _yearShortName(Wrap<String> c) {
 		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
-			o = String.format("%d-%d", yearStart.getYear(), yearEnd.getYear());
+			o = String.format("%d-%d", yearStart, yearEnd);
 		else if(yearStart != null)
-			o = String.format("%d year", yearStart.getYear());
+			o = String.format("%d year", yearStart);
 		else if(yearEnd != null)
-			o = String.format("%d year", yearEnd.getYear());
+			o = String.format("%d year", yearEnd);
 
 		c.o(o);
 	}
@@ -76,11 +76,11 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		String o = "year";
 
 		if(yearStart != null && yearEnd != null)
-			o = String.format("%d-%d school year", yearStart.getYear(), yearEnd.getYear());
+			o = String.format("%d-%d school year", yearStart, yearEnd);
 		else if(yearStart != null)
-			o = String.format("%d school year", yearStart.getYear());
+			o = String.format("%d school year", yearStart);
 		else if(yearEnd != null)
-			o = String.format("%d school year", yearEnd.getYear());
+			o = String.format("%d school year", yearEnd);
 
 		if(schoolCompleteName != null)
 			o += String.format(" at %s", schoolCompleteName);

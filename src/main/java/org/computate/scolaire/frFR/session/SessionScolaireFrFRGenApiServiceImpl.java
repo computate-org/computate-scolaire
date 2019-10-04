@@ -811,9 +811,9 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "anneeDebut":
-				return "anneeDebut_indexed_date";
+				return "anneeDebut_indexed_int";
 			case "anneeFin":
-				return "anneeFin_indexed_date";
+				return "anneeFin_indexed_int";
 			case "saisonJourDebut":
 				return "saisonJourDebut_indexed_date";
 			case "saisonEte":
@@ -824,8 +824,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "saisonFraisInscription_indexed_double";
 			case "saisonNomComplet":
 				return "saisonNomComplet_indexed_string";
-			case "saisonFin":
-				return "saisonFin_indexed_date";
 			case "sessionJourDebut":
 				return "sessionJourDebut_indexed_date";
 			case "sessionJourFin":
@@ -1057,16 +1055,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			listeRecherche.setC(SessionScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.session.SessionScolaire"));
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
-			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
-				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
-				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;
+package org.computate.scolaire.frFR.bloc;   
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -46,9 +46,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.frFR: un bloc
  * UnNom.enUS: a block
  * Couleur: indigo
- * IconeGroupe: duotone
- * IconeNom: bell-o
-*/    
+ * IconeGroupe: regular
+ * IconeNom: bell
+*/ 
 public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
@@ -280,9 +280,9 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: age
 	 * r.enUS: age
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {
+	protected void _anneeDebut(Couverture<Integer> c) {
 		if(age != null)
-			c.o((LocalDate)age.getAnneeDebut());
+			c.o(age.getAnneeDebut());
 	}
 
 	/**
@@ -297,7 +297,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: age
 	 * r.enUS: age
 	 */                     
-	protected void _anneeFin(Couverture<LocalDate> c) {
+	protected void _anneeFin(Couverture<Integer> c) {
 		if(age != null)
 			c.o(age.getAnneeFin());
 	}
@@ -616,8 +616,11 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: blocCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: %s - %s %s %s/mois %s
 	 * r.enUS: %s - %s %s %s/month %s
 	 * r: strBlocHeureDebut

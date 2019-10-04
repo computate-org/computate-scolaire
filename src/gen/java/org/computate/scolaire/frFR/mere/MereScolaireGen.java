@@ -2727,7 +2727,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageMereNomComplet() {
-		return null;
+		return "nom";
 	}
 
 	public String htmTooltipMereNomComplet() {

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session; 
+package org.computate.scolaire.frFR.session;   
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -241,9 +241,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: saison
 	 * r.enUS: season
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {
+	protected void _anneeDebut(Couverture<Integer> c) {
 		if(saison_ != null)
-			c.o((LocalDate)saison_.getAnneeDebut());
+			c.o(saison_.getAnneeDebut());
 	}
 
 	/**
@@ -258,7 +258,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: saison
 	 * r.enUS: season
 	 */                      
-	protected void _anneeFin(Couverture<LocalDate> c) {
+	protected void _anneeFin(Couverture<Integer> c) {
 		if(saison_ != null)
 			c.o(saison_.getAnneeFin());
 	}
@@ -348,23 +348,6 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonEnd
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: le fin de l'année
-	 * NomAffichage.enUS: end of season
-	 * r: AnneeFin
-	 * r.enUS: YearStart
-	 * r: saison
-	 * r.enUS: season
-	 */                      
-	protected void _saisonFin(Couverture<LocalDate> c) {
-		if(saison_ != null)
-			c.o((LocalDate)saison_.getAnneeFin());
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: sessionStartDay
 	 * Indexe: true
 	 * Stocke: true
@@ -394,8 +377,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Var.enUS: sessionCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
 	 * r: strSessionJourDebut

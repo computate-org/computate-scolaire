@@ -6,6 +6,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**
+ * NomCanonique.enUS: org.computate.scolaire.enUS.search.SearchResult
  * MotCle: classeNomSimpleResultatRecherche
  */
 public class ResultatRecherche extends ResultatRechercheGen<Object> {

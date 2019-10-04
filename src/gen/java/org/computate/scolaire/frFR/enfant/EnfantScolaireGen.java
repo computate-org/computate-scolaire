@@ -1965,6 +1965,108 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////////////////
+	// personneAgeEnSeptembre //
+	////////////////////////////
+
+	/**	L'entité « personneAgeEnSeptembre »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String personneAgeEnSeptembre;
+	@JsonIgnore
+	public Couverture<String> personneAgeEnSeptembreCouverture = new Couverture<String>().p(this).c(String.class).var("personneAgeEnSeptembre").o(personneAgeEnSeptembre);
+
+	/**	<br/>L'entité « personneAgeEnSeptembre »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneAgeEnSeptembre">Trouver l'entité personneAgeEnSeptembre dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personneAgeEnSeptembre(Couverture<String> c);
+
+	public String getPersonneAgeEnSeptembre() {
+		return personneAgeEnSeptembre;
+	}
+
+	public void setPersonneAgeEnSeptembre(String personneAgeEnSeptembre) {
+		this.personneAgeEnSeptembre = personneAgeEnSeptembre;
+		this.personneAgeEnSeptembreCouverture.dejaInitialise = true;
+	}
+	protected EnfantScolaire personneAgeEnSeptembreInit() {
+		if(!personneAgeEnSeptembreCouverture.dejaInitialise) {
+			_personneAgeEnSeptembre(personneAgeEnSeptembreCouverture);
+			if(personneAgeEnSeptembre == null)
+				setPersonneAgeEnSeptembre(personneAgeEnSeptembreCouverture.o);
+		}
+		personneAgeEnSeptembreCouverture.dejaInitialise(true);
+		return (EnfantScolaire)this;
+	}
+
+	public String solrPersonneAgeEnSeptembre() {
+		return personneAgeEnSeptembre;
+	}
+
+	public String strPersonneAgeEnSeptembre() {
+		return personneAgeEnSeptembre == null ? "" : personneAgeEnSeptembre;
+	}
+
+	public String jsonPersonneAgeEnSeptembre() {
+		return personneAgeEnSeptembre == null ? "" : personneAgeEnSeptembre;
+	}
+
+	public String nomAffichagePersonneAgeEnSeptembre() {
+		return "âge";
+	}
+
+	public String htmTooltipPersonneAgeEnSeptembre() {
+		return null;
+	}
+
+	public String htmPersonneAgeEnSeptembre() {
+		return personneAgeEnSeptembre == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneAgeEnSeptembre());
+	}
+
+	public void htmPersonneAgeEnSeptembre(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEnfantScolaire", strPk(), "PersonneAgeEnSeptembre\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEnfantScolaire", strPk(), "PersonneAgeEnSeptembre() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPersonneAgeEnSeptembre\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonneAgeEnSeptembre()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"personneAgeEnSeptembre\"");
+							r.s(" value=\"", htmPersonneAgeEnSeptembre(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPersonneAgeEnSeptembre());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////////////////
 	// enfantConditionsMedicales //
 	///////////////////////////////
@@ -2637,7 +2739,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEnfantNomComplet() {
-		return null;
+		return "nom";
 	}
 
 	public String htmTooltipEnfantNomComplet() {
@@ -3034,6 +3136,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		personneNomCompletPrefereInit();
 		personneNomFormelInit();
 		personneDateNaissanceInit();
+		personneAgeEnSeptembreInit();
 		enfantConditionsMedicalesInit();
 		enfantEcolesPrecedemmentFrequenteesInit();
 		enfantDescriptionInit();
@@ -3120,6 +3223,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.personneNomFormel;
 			case "personneDateNaissance":
 				return oEnfantScolaire.personneDateNaissance;
+			case "personneAgeEnSeptembre":
+				return oEnfantScolaire.personneAgeEnSeptembre;
 			case "enfantConditionsMedicales":
 				return oEnfantScolaire.enfantConditionsMedicales;
 			case "enfantEcolesPrecedemmentFrequentees":
@@ -3204,6 +3309,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return val;
 			case "familleNom":
 				setFamilleNom(val);
+				sauvegardesEnfantScolaire.add(var);
+				return val;
+			case "personneDateNaissance":
+				setPersonneDateNaissance(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			case "enfantConditionsMedicales":
@@ -3345,6 +3454,12 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				Date personneDateNaissance = (Date)solrDocument.get("personneDateNaissance_stored_date");
 				if(personneDateNaissance != null)
 					oEnfantScolaire.setPersonneDateNaissance(personneDateNaissance);
+			}
+
+			if(sauvegardesEnfantScolaire.contains("personneAgeEnSeptembre")) {
+				String personneAgeEnSeptembre = (String)solrDocument.get("personneAgeEnSeptembre_stored_string");
+				if(personneAgeEnSeptembre != null)
+					oEnfantScolaire.setPersonneAgeEnSeptembre(personneAgeEnSeptembre);
 			}
 
 			if(sauvegardesEnfantScolaire.contains("enfantConditionsMedicales")) {
@@ -3563,6 +3678,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("personneDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("personneDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(personneAgeEnSeptembre != null) {
+			document.addField("personneAgeEnSeptembre_indexed_string", personneAgeEnSeptembre);
+			document.addField("personneAgeEnSeptembre_stored_string", personneAgeEnSeptembre);
+		}
 		if(enfantConditionsMedicales != null) {
 			document.addField("enfantConditionsMedicales_indexed_string", enfantConditionsMedicales);
 			document.addField("enfantConditionsMedicales_stored_string", enfantConditionsMedicales);
@@ -3698,6 +3817,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		if(personneDateNaissance != null)
 			oEnfantScolaire.setPersonneDateNaissance(personneDateNaissance);
 
+		String personneAgeEnSeptembre = (String)solrDocument.get("personneAgeEnSeptembre_stored_string");
+		if(personneAgeEnSeptembre != null)
+			oEnfantScolaire.setPersonneAgeEnSeptembre(personneAgeEnSeptembre);
+
 		String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
 		if(enfantConditionsMedicales != null)
 			oEnfantScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
@@ -3745,7 +3868,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantVaccinsAJour, enfantPropre);
+		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantVaccinsAJour, enfantPropre);
 	}
 
 	////////////
@@ -3763,6 +3886,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( personnePrenomPrefere, that.personnePrenomPrefere )
 				&& Objects.equals( familleNom, that.familleNom )
+				&& Objects.equals( personneDateNaissance, that.personneDateNaissance )
 				&& Objects.equals( enfantConditionsMedicales, that.enfantConditionsMedicales )
 				&& Objects.equals( enfantEcolesPrecedemmentFrequentees, that.enfantEcolesPrecedemmentFrequentees )
 				&& Objects.equals( enfantDescription, that.enfantDescription )
@@ -3783,6 +3907,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		sb.append( ", personnePrenom: \"" ).append(personnePrenom).append( "\"" );
 		sb.append( ", personnePrenomPrefere: \"" ).append(personnePrenomPrefere).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
+		sb.append( ", personneDateNaissance: " ).append(personneDateNaissance);
 		sb.append( ", enfantConditionsMedicales: \"" ).append(enfantConditionsMedicales).append( "\"" );
 		sb.append( ", enfantEcolesPrecedemmentFrequentees: \"" ).append(enfantEcolesPrecedemmentFrequentees).append( "\"" );
 		sb.append( ", enfantDescription: \"" ).append(enfantDescription).append( "\"" );

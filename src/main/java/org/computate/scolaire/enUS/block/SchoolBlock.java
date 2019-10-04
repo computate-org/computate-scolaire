@@ -80,12 +80,12 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o((String)age.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {
+	protected void _yearStart(Wrap<Integer> c) {
 		if(age != null)
-			c.o((LocalDate)age.getYearStart());
+			c.o(age.getYearStart());
 	}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(age != null)
 			c.o(age.getYearStart());
 	}

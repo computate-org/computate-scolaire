@@ -775,7 +775,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			case "paiementDate":
 				return "paiementDate_indexed_date";
 			case "paiementValeur":
-				return "paiementValeur_indexed_date";
+				return "paiementValeur_indexed_string";
 			case "paiementEspeces":
 				return "paiementEspeces_indexed_boolean";
 			case "paiementCheque":
@@ -1009,16 +1009,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.setC(PaiementScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.paiement.PaiementScolaire"));
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
-			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
-				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
-				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

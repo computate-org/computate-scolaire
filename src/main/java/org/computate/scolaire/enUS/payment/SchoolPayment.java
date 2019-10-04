@@ -67,7 +67,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentDate(Wrap<LocalDate> c) {
 	}
 
-	protected void _paymentValue(Wrap<LocalDate> c) {
+	protected void _paymentValue(Wrap<String> c) {
 	}
 
 	protected void _paymentCash(Wrap<Boolean> c) {

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -13,13 +12,14 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.FacetParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
-
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.search.SearchList
@@ -101,8 +101,29 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * r.enUS: SiteContext
 	 * r: ClientSolr
 	 * r.enUS: SolrClient
+	 * r: UtilisateurSite
+	 * r.enUS: SiteUser
+	 * r: utilisateurSite
+	 * r.enUS: siteUser
+	 * r: supprime_
+	 * r.enUS: deleted_
+	 * r: archive_
+	 * r.enUS: archived_
+	 * r: VoirSupprime
+	 * r.enUS: SeeDeleted
+	 * r: VoirArchive
+	 * r.enUS: SeeArchived
+	 * r: classeNomsCanoniques
+	 * r.enUS: classCanonicalNames
 	 **/
 	protected void _queryResponse(Couverture<QueryResponse> c) {
+		if(this.c != null)
+			solrQuery.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars(this.c.getCanonicalName()));
+		UtilisateurSite utilisateurSite = requeteSite_.getUtilisateurSite();
+		if(utilisateurSite == null || !utilisateurSite.getVoirSupprime())
+			solrQuery.addFilterQuery("supprime_indexed_boolean:false");
+		if(utilisateurSite == null || !utilisateurSite.getVoirArchive())
+			solrQuery.addFilterQuery("archive_indexed_boolean:false");
 		if(solrQuery.getQuery() != null) {
 			try {
 				QueryResponse o = requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery);

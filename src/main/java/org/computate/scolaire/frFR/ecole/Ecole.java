@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;             
+package org.computate.scolaire.frFR.ecole;          
 
 import java.text.Normalizer;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 
 
 
-/**                                    
+/**                                  
  * NomCanonique.enUS: org.computate.scolaire.enUS.school.School
  * Modele: true
  * Api: true
@@ -42,9 +42,9 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * UnNom.frFR: une école
  * UnNom.enUS: a school
  * Couleur: pink
- * IconeGroupe: duotone
+ * IconeGroupe: regular
  * IconeNom: school
- */                  
+ */                 
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -303,6 +303,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * HtmlColonne: 1
 	 * r: ecoleNom
 	 * r.enUS: schoolName
+	 * VarH2: true
 	 * VarTitre: true
 	 * r: ecoleEmplacement
 	 * r.enUS: schoolLocation

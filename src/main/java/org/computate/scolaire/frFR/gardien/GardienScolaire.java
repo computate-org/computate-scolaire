@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.gardien; 
+package org.computate.scolaire.frFR.gardien;  
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -45,8 +45,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.enUS: a guardian
  * Couleur: yellow
  * IconeGroupe: regular
- * IconeNom: chevron-right
-*/    
+ * IconeNom: phone
+*/   
 public class GardienScolaire extends GardienScolaireGen<Cluster> {
 
 	/**
@@ -475,7 +475,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * r: gardienId
 	 * r.enUS: guardianId
 	 * r: /gardien/
-	 * r.enUS: /chilc/
+	 * r.enUS: /child/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

@@ -1,3 +1,7 @@
+
+
+
+
 package org.computate.scolaire.frFR.enfant;
 
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -29,6 +33,7 @@ import java.util.List;
 
 /**
  * Traduire: false
+ * NomCanonique.enUS: org.computate.scolaire.enUS.child.ChildGenPage
  **/
 public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 
@@ -49,7 +54,8 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		c.o("");
+		if(enfantScolaire != null && enfantScolaire.getEnfantNomComplet() != null)
+			c.o(enfantScolaire.getEnfantNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -167,7 +173,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valeur")
@@ -175,40 +181,70 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-green ").f();
-								e("label").a("for", "Page_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+								e("label").a("for", "Page_archive").a("class", "").f().sx("archivé").g("label");
 							} g("div");
 							{ e("div").a("class", "w3-cell-row w3-padding ").f();
 								{ e("div").a("class", "w3-cell ").f();
 
 									e("input")
-										.a("type", "text")
-										.a("placeholder", "conditions médicales")
-										.a("class", "setEnfantConditionsMedicales w3-input w3-border ")
-										.a("name", "setEnfantConditionsMedicales")
-										.a("id", "Page_enfantConditionsMedicales")
-										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantConditionsMedicales', $(this).val(), function() { ajouterLueur($('#Page_enfantConditionsMedicales')); }, function() { ajouterErreur($('#Page_enfantConditionsMedicales')); }); ")
-										.a("value", o.strEnfantConditionsMedicales())
-									.fg();
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setArchive")
+										.a("name", "setArchive")
+										.a("id", "Page_archive")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#Page_archive')); }, function() { ajouterErreur($('#Page_archive')); }); ")
+										;
+										if(o.getArchive() != null && o.getArchive())
+											a("checked", "checked");
+									fg();
 
-								} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#Page_enfantConditionsMedicales')); $('#Page_enfantConditionsMedicales').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantConditionsMedicales', null, function() { ajouterLueur($('#Page_enfantConditionsMedicales')); }, function() { ajouterErreur($('#Page_enfantConditionsMedicales')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
 								} g("div");
 							} g("div");
 						} g("div");
 					} g("form");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_supprime").a("class", "").f().sx("supprimé").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "checkbox")
+										.a("value", "true")
+										.a("class", "setSupprime")
+										.a("name", "setSupprime")
+										.a("id", "Page_supprime")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#Page_supprime')); }, function() { ajouterErreur($('#Page_supprime')); }); ")
+										;
+										if(o.getSupprime() != null && o.getSupprime())
+											a("checked", "checked");
+									fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenom").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -299,50 +335,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valeur")
-							.a("class", "valeur ")
-							.a("value", requeteSite_.getRequetePk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row w3-green ").f();
-								e("label").a("for", "Page_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "écoles précedemment fréqentées")
-										.a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
-										.a("name", "setEnfantEcolesPrecedemmentFrequentees")
-										.a("id", "Page_enfantEcolesPrecedemmentFrequentees")
-										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', $(this).val(), function() { ajouterLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#Page_enfantEcolesPrecedemmentFrequentees')); }); ")
-										.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
-									.fg();
-
-								} g("div");
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); $('#Page_enfantEcolesPrecedemmentFrequentees').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', null, function() { ajouterLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#Page_enfantEcolesPrecedemmentFrequentees')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("form");
-				} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenomPrefere").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -385,9 +377,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					} g("form");
 				} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolairePersonneDateNaissance").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
 							.a("name", "valeur")
@@ -395,31 +389,30 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("form").a("action", "").a("id", "suggereEnfantScolairePersonneDateNaissance").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						{ e("div").a("class", "w3-card ").f();
+							LocalDate val = o.getPersonneDateNaissance();
 							{ e("div").a("class", "w3-cell-row w3-green ").f();
-								e("label").a("for", "Page_enfantDescription").a("class", "").f().sx("description").g("label");
+								e("label").a("for", "Page_personneDateNaissance").a("class", "").f().sx("date de naissance").g("label");
 							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell-row  ").f();
 								{ e("div").a("class", "w3-cell ").f();
-
 									e("input")
 										.a("type", "text")
-										.a("placeholder", "description")
-										.a("class", "setEnfantDescription w3-input w3-border ")
-										.a("name", "setEnfantDescription")
-										.a("id", "Page_enfantDescription")
+										.a("class", "w3-input w3-border datepicker ")
+										.a("placeholder", "DD-MM-YYYY")
+										.a("data-timeformat", "DD-MM-YYYY")
+										.a("id", "Page_personneDateNaissance")
 										.a("onclick", "enleverLueur($(this)); ")
-										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantDescription', $(this).val(), function() { ajouterLueur($('#Page_enfantDescription')); }, function() { ajouterErreur($('#Page_enfantDescription')); }); ")
-										.a("value", o.strEnfantDescription())
-									.fg();
-
+										.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+										.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#Page_personneDateNaissance')); }, function() { ajouterErreur($('#Page_personneDateNaissance')); }); } ")
+										.fg();
 								} g("div");
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#Page_enfantDescription')); $('#Page_enfantDescription').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantDescription', null, function() { ajouterLueur($('#Page_enfantDescription')); }, function() { ajouterErreur($('#Page_enfantDescription')); }); ")
+									.a("onclick", "enleverLueur($('#Page_personneDateNaissance')); $('#Page_personneDateNaissance').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setPersonneDateNaissance', null, function() { ajouterLueur($('#Page_personneDateNaissance')); }, function() { ajouterErreur($('#Page_personneDateNaissance')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -427,6 +420,22 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							} g("div");
 						} g("div");
 					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("class", "").f().sx("âge").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strPersonneAgeEnSeptembre()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");
@@ -507,6 +516,182 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "conditions médicales")
+										.a("class", "setEnfantConditionsMedicales w3-input w3-border ")
+										.a("name", "setEnfantConditionsMedicales")
+										.a("id", "Page_enfantConditionsMedicales")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantConditionsMedicales', $(this).val(), function() { ajouterLueur($('#Page_enfantConditionsMedicales')); }, function() { ajouterErreur($('#Page_enfantConditionsMedicales')); }); ")
+										.a("value", o.strEnfantConditionsMedicales())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_enfantConditionsMedicales')); $('#Page_enfantConditionsMedicales').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantConditionsMedicales', null, function() { ajouterLueur($('#Page_enfantConditionsMedicales')); }, function() { ajouterErreur($('#Page_enfantConditionsMedicales')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "écoles précedemment fréqentées")
+										.a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
+										.a("name", "setEnfantEcolesPrecedemmentFrequentees")
+										.a("id", "Page_enfantEcolesPrecedemmentFrequentees")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', $(this).val(), function() { ajouterLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#Page_enfantEcolesPrecedemmentFrequentees')); }); ")
+										.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
+									.fg();
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); $('#Page_enfantEcolesPrecedemmentFrequentees').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', null, function() { ajouterLueur($('#Page_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#Page_enfantEcolesPrecedemmentFrequentees')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_enfantDescription").a("class", "").f().sx("description").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("textarea")
+										.a("placeholder", "description")
+										.a("class", "setEnfantDescription w3-input w3-border ")
+										.a("name", "setEnfantDescription")
+										.a("id", "Page_enfantDescription")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantDescription', $(this).val(), function() { ajouterLueur($('#Page_enfantDescription')); }, function() { ajouterErreur($('#Page_enfantDescription')); }); ")
+									.f().sx(o.strEnfantDescription()).g("textarea");
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_enfantDescription')); $('#Page_enfantDescription').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantDescription', null, function() { ajouterLueur($('#Page_enfantDescription')); }, function() { ajouterErreur($('#Page_enfantDescription')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantObjectifs").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeur")
+							.a("class", "valeur ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantObjectifs").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row w3-green ").f();
+								e("label").a("for", "Page_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+
+									e("textarea")
+										.a("placeholder", "objectifs")
+										.a("class", "setEnfantObjectifs w3-input w3-border ")
+										.a("name", "setEnfantObjectifs")
+										.a("id", "Page_enfantObjectifs")
+										.a("onclick", "enleverLueur($(this)); ")
+										.a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantObjectifs', $(this).val(), function() { ajouterLueur($('#Page_enfantObjectifs')); }, function() { ajouterErreur($('#Page_enfantObjectifs')); }); ")
+									.f().sx(o.strEnfantObjectifs()).g("textarea");
+
+								} g("div");
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "enleverLueur($('#Page_enfantObjectifs')); $('#Page_enfantObjectifs').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setEnfantObjectifs', null, function() { ajouterLueur($('#Page_enfantObjectifs')); }, function() { ajouterErreur($('#Page_enfantObjectifs')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formEnfantScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 						e("input")
 							.a("type", "hidden")
@@ -519,7 +704,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
 								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-									e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+									e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 									sx("inscriptions");
 								} g("a");
 							} g("div");
@@ -636,7 +821,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -644,22 +829,24 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "POST_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+							e("label").a("for", "POST_archive").a("class", "").f().sx("archivé").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "text")
-									.a("placeholder", "conditions médicales")
-									.a("class", "valeurEnfantConditionsMedicales w3-input w3-border ")
-									.a("name", "enfantConditionsMedicales")
-									.a("id", "POST_enfantConditionsMedicales")
-									.a("value", o.strEnfantConditionsMedicales())
-								.fg();
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurArchive")
+									.a("name", "archive")
+									.a("id", "POST_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
 
 							} g("div");
 						} g("div");
@@ -667,6 +854,43 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurSupprime")
+									.a("name", "supprime")
+									.a("id", "POST_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenom").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -735,39 +959,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "POST_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "écoles précedemment fréqentées")
-									.a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
-									.a("name", "enfantEcolesPrecedemmentFrequentees")
-									.a("id", "POST_enfantEcolesPrecedemmentFrequentees")
-									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
-								.fg();
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenomPrefere").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -799,9 +990,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolairePersonneDateNaissance").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -809,27 +1002,44 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolairePersonneDateNaissance").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getPersonneDateNaissance();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "POST_enfantDescription").a("class", "").f().sx("description").g("label");
+							e("label").a("for", "POST_personneDateNaissance").a("class", "").f().sx("date de naissance").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "description")
-									.a("class", "valeurEnfantDescription w3-input w3-border ")
-									.a("name", "enfantDescription")
-									.a("id", "POST_enfantDescription")
-									.a("value", o.strEnfantDescription())
-								.fg();
-
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "POST_personneDateNaissance")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#POST_personneDateNaissance')); }, function() { ajouterErreur($('#POST_personneDateNaissance')); }); } ")
+									.fg();
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("âge").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPersonneAgeEnSeptembre()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -908,6 +1118,138 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "conditions médicales")
+									.a("class", "valeurEnfantConditionsMedicales w3-input w3-border ")
+									.a("name", "enfantConditionsMedicales")
+									.a("id", "POST_enfantConditionsMedicales")
+									.a("value", o.strEnfantConditionsMedicales())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "écoles précedemment fréqentées")
+									.a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
+									.a("name", "enfantEcolesPrecedemmentFrequentees")
+									.a("id", "POST_enfantEcolesPrecedemmentFrequentees")
+									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_enfantDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "description")
+									.a("class", "valeurEnfantDescription w3-input w3-border ")
+									.a("name", "enfantDescription")
+									.a("id", "POST_enfantDescription")
+								.f().sx(o.strEnfantDescription()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantObjectifs").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantObjectifs").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "POST_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "objectifs")
+									.a("class", "valeurEnfantObjectifs w3-input w3-border ")
+									.a("name", "enfantObjectifs")
+									.a("id", "POST_enfantObjectifs")
+								.f().sx(o.strEnfantObjectifs()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -920,7 +1262,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 								sx("inscriptions");
 							} g("a");
 						} g("div");
@@ -1037,7 +1379,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -1045,22 +1387,24 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "PATCH_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+							e("label").a("for", "PATCH_archive").a("class", "").f().sx("archivé").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "text")
-									.a("placeholder", "conditions médicales")
-									.a("class", "setEnfantConditionsMedicales w3-input w3-border ")
-									.a("name", "setEnfantConditionsMedicales")
-									.a("id", "PATCH_enfantConditionsMedicales")
-									.a("value", o.strEnfantConditionsMedicales())
-								.fg();
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setArchive")
+									.a("name", "setArchive")
+									.a("id", "PATCH_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
 
 							} g("div");
 						} g("div");
@@ -1068,6 +1412,43 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "setSupprime")
+									.a("name", "setSupprime")
+									.a("id", "PATCH_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenom").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -1136,39 +1517,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "PATCH_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "écoles précedemment fréqentées")
-									.a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
-									.a("name", "setEnfantEcolesPrecedemmentFrequentees")
-									.a("id", "PATCH_enfantEcolesPrecedemmentFrequentees")
-									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
-								.fg();
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenomPrefere").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1200,9 +1548,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolairePersonneDateNaissance").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -1210,27 +1560,44 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolairePersonneDateNaissance").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getPersonneDateNaissance();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "PATCH_enfantDescription").a("class", "").f().sx("description").g("label");
+							e("label").a("for", "PATCH_personneDateNaissance").a("class", "").f().sx("date de naissance").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "description")
-									.a("class", "setEnfantDescription w3-input w3-border ")
-									.a("name", "setEnfantDescription")
-									.a("id", "PATCH_enfantDescription")
-									.a("value", o.strEnfantDescription())
-								.fg();
-
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "PATCH_personneDateNaissance")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#PATCH_personneDateNaissance')); }, function() { ajouterErreur($('#PATCH_personneDateNaissance')); }); } ")
+									.fg();
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("âge").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPersonneAgeEnSeptembre()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1309,6 +1676,138 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "conditions médicales")
+									.a("class", "setEnfantConditionsMedicales w3-input w3-border ")
+									.a("name", "setEnfantConditionsMedicales")
+									.a("id", "PATCH_enfantConditionsMedicales")
+									.a("value", o.strEnfantConditionsMedicales())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "écoles précedemment fréqentées")
+									.a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
+									.a("name", "setEnfantEcolesPrecedemmentFrequentees")
+									.a("id", "PATCH_enfantEcolesPrecedemmentFrequentees")
+									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_enfantDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "description")
+									.a("class", "setEnfantDescription w3-input w3-border ")
+									.a("name", "setEnfantDescription")
+									.a("id", "PATCH_enfantDescription")
+								.f().sx(o.strEnfantDescription()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantObjectifs").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantObjectifs").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "PATCH_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "objectifs")
+									.a("class", "setEnfantObjectifs w3-input w3-border ")
+									.a("name", "setEnfantObjectifs")
+									.a("id", "PATCH_enfantObjectifs")
+								.f().sx(o.strEnfantObjectifs()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1321,7 +1820,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 								sx("inscriptions");
 							} g("a");
 						} g("div");
@@ -1370,6 +1869,9 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("nom").g("label");
+					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
@@ -1453,7 +1955,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireArchive").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -1461,22 +1963,24 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "Recherche_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+							e("label").a("for", "Recherche_archive").a("class", "").f().sx("archivé").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
 								e("input")
-									.a("type", "text")
-									.a("placeholder", "conditions médicales")
-									.a("class", "valeurEnfantConditionsMedicales w3-input w3-border ")
-									.a("name", "enfantConditionsMedicales")
-									.a("id", "Recherche_enfantConditionsMedicales")
-									.a("value", o.strEnfantConditionsMedicales())
-								.fg();
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurArchive")
+									.a("name", "archive")
+									.a("id", "Recherche_archive")
+									;
+									if(o.getArchive() != null && o.getArchive())
+										a("checked", "checked");
+								fg();
 
 							} g("div");
 						} g("div");
@@ -1484,6 +1988,43 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireSupprime").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_supprime").a("class", "").f().sx("supprimé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("value", "true")
+									.a("class", "valeurSupprime")
+									.a("name", "supprime")
+									.a("id", "Recherche_supprime")
+									;
+									if(o.getSupprime() != null && o.getSupprime())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenom").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -1552,39 +2093,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", requeteSite_.getRequetePk())
-						.fg();
-				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "Recherche_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "écoles précedemment fréqentées")
-									.a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
-									.a("name", "enfantEcolesPrecedemmentFrequentees")
-									.a("id", "Recherche_enfantEcolesPrecedemmentFrequentees")
-									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
-								.fg();
-
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("form");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolairePersonnePrenomPrefere").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1616,9 +2124,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 				} g("form");
 			} g("div");
 			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolairePersonneDateNaissance").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
 						.a("name", "valeur")
@@ -1626,27 +2136,44 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("form").a("action", "").a("id", "suggereEnfantScolairePersonneDateNaissance").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					{ e("div").a("class", "w3-card ").f();
+						LocalDate val = o.getPersonneDateNaissance();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", "Recherche_enfantDescription").a("class", "").f().sx("description").g("label");
+							e("label").a("for", "Recherche_personneDateNaissance").a("class", "").f().sx("date de naissance").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-
 								e("input")
 									.a("type", "text")
-									.a("placeholder", "description")
-									.a("class", "valeurEnfantDescription w3-input w3-border ")
-									.a("name", "enfantDescription")
-									.a("id", "Recherche_enfantDescription")
-									.a("value", o.strEnfantDescription())
-								.fg();
-
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "DD-MM-YYYY")
+									.a("data-timeformat", "DD-MM-YYYY")
+									.a("id", "Recherche_personneDateNaissance")
+									.a("onclick", "enleverLueur($(this)); ")
+									.a("value", val == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(val))
+									.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=\"pk\"]').val() }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#Recherche_personneDateNaissance')); }, function() { ajouterErreur($('#Recherche_personneDateNaissance')); }); } ")
+									.fg();
 							} g("div");
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("âge").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPersonneAgeEnSeptembre()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -1725,6 +2252,138 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "conditions médicales")
+									.a("class", "valeurEnfantConditionsMedicales w3-input w3-border ")
+									.a("name", "enfantConditionsMedicales")
+									.a("id", "Recherche_enfantConditionsMedicales")
+									.a("value", o.strEnfantConditionsMedicales())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "écoles précedemment fréqentées")
+									.a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ")
+									.a("name", "enfantEcolesPrecedemmentFrequentees")
+									.a("id", "Recherche_enfantEcolesPrecedemmentFrequentees")
+									.a("value", o.strEnfantEcolesPrecedemmentFrequentees())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantDescription").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantDescription").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_enfantDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "description")
+									.a("class", "valeurEnfantDescription w3-input w3-border ")
+									.a("name", "enfantDescription")
+									.a("id", "Recherche_enfantDescription")
+								.f().sx(o.strEnfantDescription()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formEnfantScolaireEnfantObjectifs").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggereEnfantScolaireEnfantObjectifs").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", "Recherche_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "objectifs")
+									.a("class", "valeurEnfantObjectifs w3-input w3-border ")
+									.a("name", "enfantObjectifs")
+									.a("id", "Recherche_enfantObjectifs")
+								.f().sx(o.strEnfantObjectifs()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
 				{ e("form").a("action", "").a("id", "formEnfantScolaireInscriptionCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
 					e("input")
 						.a("type", "hidden")
@@ -1737,7 +2396,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
 							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
-								e("i").a("class", "fas fa-pencil-square w3-padding-small ").f().g("i");
+								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 								sx("inscriptions");
 							} g("a");
 						} g("div");
@@ -1786,6 +2445,9 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-green ").f();
+						e("label").a("class", "").f().sx("nom").g("label");
+					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
@@ -1849,11 +2511,13 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			}
 		} else {
 
-			{ e("h1").f();
-				if(contexteIconeClassesCss != null)
-					e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
-				e("span").a("class", " ").f().sx("enfants").g("span");
-			} g("h1");
+				{ e("h1").f();
+					{ e("a").a("href", "/enfant").a("class", "w3-bar-item w3-btn w3-center w3-block w3-green w3-hover-green ").f();
+						if(contexteIconeClassesCss != null)
+							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
+						e("span").a("class", " ").f().sx(pageH1).g("span");
+					} g("a");
+				} g("h1");
 			e("div").a("class", "").f();
 				{ e("div").f();
 					Long num = listeEnfantScolaire.getQueryResponse().getResults().getNumFound();
@@ -1895,9 +2559,9 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 			{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-				{ e("thead").f();
+				{ e("thead").a("class", "w3-green w3-hover-green ").f();
 					{ e("tr").f();
-						e("th").f().sx("").g("th");
+						e("th").f().sx("nom").g("th");
 						e("th").f().sx("crée").g("th");
 					} g("tr");
 				} g("thead");
@@ -1952,13 +2616,20 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsEnfantGenPage();
-		htmlSuggereEnfantGenPage();
+		htmlSuggereEnfantGenPage(this, null);
 		g("div");
 	}
 
 	public void htmlBodyFormsEnfantGenPage() {
-		e("div").f();
+		e("div").a("class", "w3-margin-top ").f();
 
+		{ e("button")
+			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("id", "rechargerCeEnfantGenPage")
+				.a("onclick", "patchEnfantScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCeEnfantGenPage')); }, function() { ajouterErreur($('#rechargerCeEnfantGenPage')); }); return false; ").f();
+				e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+			sx("recharger cet enfant");
+		} g("button");
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
@@ -2065,17 +2736,17 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r: "/enfant"
 	 * r.enUS: "/child"
 	 * r: "voir tous les enfants"
-	 * r.enUS: "see all the childs"
+	 * r.enUS: "see all the children"
 	 * r: "rechargerEnfantGenPage"
 	 * r.enUS: "refreshChildGenPage"
 	 * r: "recharger tous les enfants"
-	 * r.enUS: "refresh all the childs"
+	 * r.enUS: "refresh all the children"
 	 * r: "rechercher enfants : "
-	 * r.enUS: "search childs: "
+	 * r.enUS: "search children: "
 	 * r: "suggereFormEnfantScolaire"
 	 * r.enUS: "suggestFormSchoolChild"
 	 * r: "rechercher enfants"
-	 * r.enUS: "search childs"
+	 * r.enUS: "search children"
 	 * r: "suggereEnfantScolaire w3-input w3-border w3-cell w3-cell-middle "
 	 * r.enUS: "suggestSchoolChild w3-input w3-border w3-cell w3-cell-middle "
 	 * r: "suggereEnfantScolaire"
@@ -2097,54 +2768,54 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r: "suggereListEnfantScolaire"
 	 * r.enUS: "suggestListSchoolChild"
 	**/
-	public void htmlSuggereEnfantGenPage() {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("href", "/enfant").a("class", "").f();
-					e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
-					sx("voir tous les enfants");
-				} g("a");
-			} g("div");
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("id", "rechargerEnfantGenPage").a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerEnfantGenPage')); }, function() { ajouterErreur($('#rechargerEnfantGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					sx("recharger tous les enfants");
-				} g("a");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("span").f();
-					sx("rechercher enfants : ");
-				} g("span");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("div").a("class", "w3-cell-row ").f();
+	public static void htmlSuggereEnfantGenPage(MiseEnPage p, String id) {
+		{ p.e("div").a("class", "w3-cell-row ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("a").a("href", "/enfant").a("class", "").f();
+					p.e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+					p.sx("voir tous les enfants");
+				} p.g("a");
+			} p.g("div");
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("a").a("id", "rechargerTousEnfantGenPage", id).a("href", "/enfant").a("class", "").a("onclick", "patchEnfantScolaireVals([], {}, function() { ajouterLueur($('#rechargerTousEnfantGenPage", id, "')); }, function() { ajouterErreur($('#rechargerTousEnfantGenPage", id, "')); }); return false; ").f();
+					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
+					p.sx("recharger tous les enfants");
+				} p.g("a");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("span").f();
+					p.sx("rechercher enfants : ");
+				} p.g("span");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell ").f();
+				{ p.e("div").a("class", "w3-cell-row ").f();
 
-					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ e("form").a("action", "").a("id", "suggereFormEnfantScolaire").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
+					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+					{ p.e("form").a("action", "").a("id", "suggereFormEnfantScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/enfant?q=objetSuggere:' + encodeURIComponent($('#suggereEnfantScolaire", id, "').val()); return false; ").f();
+						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher enfants")
 							.a("class", "suggereEnfantScolaire w3-input w3-border w3-cell w3-cell-middle ")
 							.a("name", "suggereEnfantScolaire")
-							.a("id", "suggereEnfantScolaire")
+							.a("id", "suggereEnfantScolaire", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire')); ")
+							.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire", id, "')); ")
 							.fg();
 
-					} g("form");
-				} g("div");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEnfantScolaire").f();
-				} g("ul");
-			} g("div");
-		} g("div");
+					} p.g("form");
+				} p.g("div");
+			} p.g("div");
+		} p.g("div");
+		{ p.e("div").a("class", "w3-cell-row w3-padding ").f();
+			{ p.e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+				{ p.e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEnfantScolaire", id).f();
+				} p.g("ul");
+			} p.g("div");
+		} p.g("div");
 	}
 
 }

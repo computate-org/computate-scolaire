@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.child;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
@@ -94,6 +95,15 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 	protected void _personBirthDate(Wrap<LocalDate> c) {
 	}
 
+	protected void _personAgeInSeptember(Wrap<String> c) {
+		if(personBirthDate != null) {
+			Integer year = LocalDate.now().getYear();
+			LocalDate septemberFirst = LocalDate.of(year, 9, 1);
+			long age = ChronoUnit.YEARS.between(personBirthDate, septemberFirst);
+			c.o(String.format("age %s on September 1 %s", age, year));
+		}
+	}
+
 	protected void _childMedicalConditions(Wrap<String> c) {
 	}
 
@@ -135,7 +145,7 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(childId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/chilc/" + childId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/child/" + childId;
 			c.o(o);
 		}
 	}

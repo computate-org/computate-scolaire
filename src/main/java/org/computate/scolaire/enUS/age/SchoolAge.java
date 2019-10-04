@@ -71,12 +71,12 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o((String)session.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {
+	protected void _yearStart(Wrap<Integer> c) {
 		if(session != null)
-			c.o((LocalDate)session.getYearStart());
+			c.o(session.getYearStart());
 	}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(session != null)
 			c.o(session.getYearStart());
 	}
@@ -104,11 +104,6 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 	protected void _seasonCompleteName(Wrap<String> c) {
 		if(session != null)
 			c.o(session.getSeasonCompleteName());
-	}
-
-	protected void _seasonEnd(Wrap<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getYearStart());
 	}
 
 	protected void _sessionStartDay(Wrap<LocalDate> c) {

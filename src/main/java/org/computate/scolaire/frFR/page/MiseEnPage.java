@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page;         
+package org.computate.scolaire.frFR.page;          
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -15,18 +15,30 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.common.SolrDocument;
+import org.computate.scolaire.frFR.age.AgeGenPage;
+import org.computate.scolaire.frFR.annee.AnneeGenPage;
+import org.computate.scolaire.frFR.bloc.BlocGenPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.enfant.EnfantGenPage;
+import org.computate.scolaire.frFR.gardien.GardienGenPage;
+import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
+import org.computate.scolaire.frFR.mere.MereGenPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
+import org.computate.scolaire.frFR.paiement.PaiementGenPage;
+import org.computate.scolaire.frFR.pere.PereGenPage;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.saison.SaisonGenPage;
+import org.computate.scolaire.frFR.session.SessionGenPage;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;
 
-/** 
+/**  
  * NomCanonique.enUS: org.computate.scolaire.enUS.page.PageLayout
  * MotCle: classeNomSimpleMiseEnPage
- */  
+ */   
 public class MiseEnPage extends MiseEnPageGen<Object> {   
 
 	/**
@@ -548,13 +560,51 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * Var.enUS: htmlScriptsPageLayout
 	 * r: statiqueUrlBase
 	 * r.enUS: staticBaseUrl
+	 * r: /frFR/UtilisateurSitePage.js
+	 * r.enUS: /enUS/SiteUserPage.js
+	 * r: /frFR/EcolePage.js
+	 * r.enUS: /enUS/SchoolPage.js
+	 * r: /frFR/AnneePage.js
+	 * r.enUS: /enUS/YearPage.js
+	 * r: /frFR/SaisonPage.js
+	 * r.enUS: /enUS/SeasonPage.js
+	 * r: /frFR/SessionPage.js
+	 * r.enUS: /enUS/SessionPage.js
+	 * r: /frFR/AgePage.js
+	 * r.enUS: /enUS/AgePage.js
+	 * r: /frFR/BlocPage.js
+	 * r.enUS: /enUS/BlockPage.js
+	 * r: /frFR/InscriptionPage.js
+	 * r.enUS: /enUS/EnrollmentPage.js
+	 * r: /frFR/PaiementPage.js
+	 * r.enUS: /enUS/PaymentPage.js
+	 * r: /frFR/MerePage.js
+	 * r.enUS: /enUS/MomPage.js
+	 * r: /frFR/PerePage.js
+	 * r.enUS: /enUS/DadPage.js
+	 * r: /frFR/GardienPage.js
+	 * r.enUS: /enUS/GuardianPage.js
+	 * r: /frFR/EnfantPage.js
+	 * r.enUS: /enUS/ChildPage.js
 	 * r: frFR
 	 * r.enUS: enUS
 	 */
 	@Override public void htmlScriptsMiseEnPage() {
 		e("script").a("src", statiqueUrlBase, "/js/jquery-1.12.4.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/site-frFR.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/SessionPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PaiementPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/MerePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PerePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/GardienPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/moment.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");
@@ -641,7 +691,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					e("div").a("class", "site-section-above ").f();
 						e("div").a("class", "w3-content w3-center w3-black ").f();
 							e("div").a("class", "").f();
-								menu();
+								menu("Menu1");
 							g("div"); 
 						g("div");
 						e("div").a("id", "site-section-primary").a("class", "site-section-primary w3-text-black w3-padding-bottom-32 ").f();
@@ -660,7 +710,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				g("div");
 				e("div").a("class", "w3-row site-section-contact ").f();
 					e("div").a("class", "w3-content w3-center  w3-cell-row w3-margin-bottom-32 ").f();
-						menu();
+						menu("Menu2");
 						e("div").a("class", "w3-container ").f();
 							e("div").a("class", "w3-container w3-text-black w3-margin-top ").f();
 								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-xlarge ").f();
@@ -711,12 +761,56 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
 	 * r.enUS: "Login"
-	 * r: "Écoles"
-	 * r.enUS: "Schools"
-	 * r: htmlSuggereEcoleGenPage
-	 * r.enUS: htmlSuggestSchoolGenPage
+	 * r: "écoles"
+	 * r.enUS: "schools"
+	 * r: "années"
+	 * r.enUS: "years"
+	 * r: "saisons"
+	 * r.enUS: "seasons"
+	 * r: "sessions"
+	 * r.enUS: "sessions"
+	 * r: "âges"
+	 * r.enUS: "ages"
+	 * r: "blocs"
+	 * r.enUS: "blocks"
+	 * r: "inscriptions"
+	 * r.enUS: "enrollments"
+	 * r: "paiements"
+	 * r.enUS: "payments"
+	 * r: "mères"
+	 * r.enUS: "moms"
+	 * r: "pères"
+	 * r.enUS: "dads"
+	 * r: "gardiens"
+	 * r.enUS: "guardians"
+	 * r: "enfants"
+	 * r.enUS: "children"
+	 * r: EcoleGenPage.htmlSuggereEcoleGenPage
+	 * r.enUS: SchoolGenPage.htmlSuggestSchoolGenPage
+	 * r: AnneeGenPage.htmlSuggereAnneeGenPage
+	 * r.enUS: YearGenPage.htmlSuggestYearGenPage
+	 * r: SaisonGenPage.htmlSuggereSaisonGenPage
+	 * r.enUS: SeasonGenPage.htmlSuggestSeasonGenPage
+	 * r: SessionGenPage.htmlSuggereSessionGenPage
+	 * r.enUS: SessionGenPage.htmlSuggestSessionGenPage
+	 * r: AgeGenPage.htmlSuggereAgeGenPage
+	 * r.enUS: AgeGenPage.htmlSuggestAgeGenPage
+	 * r: BlocGenPage.htmlSuggereBlocGenPage
+	 * r.enUS: BlockGenPage.htmlSuggestBlockGenPage
+	 * r: InscriptionGenPage.htmlSuggereInscriptionGenPage
+	 * r.enUS: EnrollmentGenPage.htmlSuggestEnrollmentGenPage
+	 * r: PaiementGenPage.htmlSuggerePaiementGenPage
+	 * r.enUS: PaymentGenPage.htmlSuggestPaymentGenPage
+	 * r: MereGenPage.htmlSuggereMereGenPage
+	 * r.enUS: MomGenPage.htmlSuggestMomGenPage
+	 * r: PereGenPage.htmlSuggerePereGenPage
+	 * r.enUS: DadGenPage.htmlSuggestDadGenPage
+	 * r: GardienGenPage.htmlSuggereGardienGenPage
+	 * r.enUS: GuardianGenPage.htmlSuggestGuardianGenPage
+	 * r: EnfantGenPage.htmlSuggereEnfantGenPage
+	 * r.enUS: ChildGenPage.htmlSuggestChildGenPage
 	 */ 
-	public void menu()  {
+	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageAccueilUri).f();
@@ -725,13 +819,124 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					g("span");
 				g("a");
 			g("div");
+
 			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-						e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
-						sx("Écoles");
+				{ e("div").a("class", "w3-button w3-hover-pink ").f();
+						e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
+						sx("écoles");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					htmlSuggereEcoleGenPage();
+					EcoleGenPage.htmlSuggereEcoleGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-orange ").f();
+						e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+						sx("années");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					AnneeGenPage.htmlSuggereAnneeGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+						e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+						sx("saisons");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					SaisonGenPage.htmlSuggereSaisonGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+						sx("sessions");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					SessionGenPage.htmlSuggereSessionGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-blue ").f();
+						e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+						sx("âges");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					AgeGenPage.htmlSuggereAgeGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-indigo ").f();
+						e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+						sx("blocs");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					BlocGenPage.htmlSuggereBlocGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-purple ").f();
+						e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+						sx("inscriptions");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					InscriptionGenPage.htmlSuggereInscriptionGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
+						sx("paiements");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					PaiementGenPage.htmlSuggerePaiementGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-pink ").f();
+						e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+						sx("mères");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					MereGenPage.htmlSuggereMereGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
+						e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+						sx("pères");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					PereGenPage.htmlSuggerePereGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-orange ").f();
+						e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
+						sx("gardiens");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					GardienGenPage.htmlSuggereGardienGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+						sx("enfants");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					EnfantGenPage.htmlSuggereEnfantGenPage(this, id);
 				} g("div");
 			} g("div");
 			if(requeteSite_.getUtilisateurId() == null) {
@@ -761,93 +966,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			}
 		g("div");
 	} 
-
-	/**
-	 * Var.enUS: htmlSuggestSchoolGenPage
-	 * r: "/ecole"
-	 * r.enUS: "/school"
-	 * r: "voir toutes les écoles"
-	 * r.enUS: "see all the schools"
-	 * r: "rechargerEcoleGenPage"
-	 * r.enUS: "refreshSchoolGenPage"
-	 * r: "recharger toutes les écoles"
-	 * r.enUS: "refresh all the schools"
-	 * r: "rechercher écoles : "
-	 * r.enUS: "search schools: "
-	 * r: "suggereFormEcole"
-	 * r.enUS: "suggestFormSchool"
-	 * r: "rechercher écoles"
-	 * r.enUS: "search schools"
-	 * r: "suggereEcole w3-input w3-border w3-cell w3-cell-middle "
-	 * r.enUS: "suggestSchool w3-input w3-border w3-cell w3-cell-middle "
-	 * r: "suggereEcole"
-	 * r.enUS: "suggestSchool"
-	 * r: patchEcoleVals
-	 * r.enUS: patchSchoolVals
-	 * r: ajouterLueur
-	 * r.enUS: addGlow
-	 * r: rechargerEcoleGenPage
-	 * r.enUS: refreshSchoolGenPage
-	 * r: ajouterErreur
-	 * r.enUS: addError
-	 * r: suggereEcoleObjetSuggere
-	 * r.enUS: suggestSchoolObjectSuggest
-	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
-	 * r: '#suggereListEcole'
-	 * r.enUS: '#suggestListSchool'
-	 * r: "suggereListEcole"
-	 * r.enUS: "suggestListSchool"
-	**/
-	public void htmlSuggereEcoleGenPage() {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("href", "/ecole").a("class", "").f();
-					e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
-					sx("voir toutes les écoles");
-				} g("a");
-			} g("div");
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("id", "rechargerEcoleGenPage").a("href", "/ecole").a("class", "").a("onclick", "patchEcoleVals([], {}, function() { ajouterLueur($('#rechargerEcoleGenPage')); }, function() { ajouterErreur($('#rechargerEcoleGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					sx("recharger toutes les écoles");
-				} g("a");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("span").f();
-					sx("rechercher écoles : ");
-				} g("span");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("div").a("class", "w3-cell-row ").f();
-
-					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ e("form").a("action", "").a("id", "suggereFormEcole").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "text")
-							.a("placeholder", "rechercher écoles")
-							.a("class", "suggereEcole w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggereEcole")
-							.a("id", "suggereEcole")
-							.a("autocomplete", "off")
-							.a("oninput", "suggereEcoleObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEcole')); ")
-							.fg();
-
-					} g("form");
-				} g("div");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggereListEcole").f();
-				} g("ul");
-			} g("div");
-		} g("div");
-	}
 
 	/**  
 	 * var.enUS: sharePage

@@ -138,6 +138,8 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 1
 	 * Description.frFR: archivé. 
 	 * Description.enUS: archived. 
 	 * NomAffichage.frFR: archivé
@@ -153,6 +155,8 @@ public class Cluster extends ClusterGen<Object> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
+	 * HtmlLigne: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: supprimé. 
 	 * Description.enUS: deleted. 
 	 * NomAffichage.frFR: supprimé

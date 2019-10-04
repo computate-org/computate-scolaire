@@ -2726,7 +2726,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageDadCompleteName() {
-		return "full name";
+		return "name";
 	}
 
 	public String htmTooltipDadCompleteName() {

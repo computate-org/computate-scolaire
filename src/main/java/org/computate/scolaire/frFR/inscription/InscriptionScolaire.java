@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;
+package org.computate.scolaire.frFR.inscription; 
 
 import java.math.BigDecimal;
 import java.text.Normalizer;
@@ -48,8 +48,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * UnNom.enUS: an enrollment
  * Couleur: purple
  * IconeGroupe: solid
- * IconeNom: pencil-square
-*/              
+ * IconeNom: edit
+*/ 
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
@@ -421,9 +421,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {
+	protected void _anneeDebut(Couverture<Integer> c) {
 		if(bloc != null)
-			c.o((LocalDate)bloc.getAnneeDebut());
+			c.o(bloc.getAnneeDebut());
 	}
 
 	/**
@@ -438,7 +438,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: bloc
 	 * r.enUS: block
 	 */                     
-	protected void _anneeFin(Couverture<LocalDate> c) {
+	protected void _anneeFin(Couverture<Integer> c) {
 		if(bloc != null)
 			c.o(bloc.getAnneeFin());
 	}
@@ -938,8 +938,11 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: "inscription pour l'enfant %s"
 	 * r.enUS: "enrollment for the child %s"
 	 * r: "inscription %s"

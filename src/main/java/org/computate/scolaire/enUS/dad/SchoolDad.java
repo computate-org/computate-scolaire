@@ -140,7 +140,7 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(dadId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/chilc/" + dadId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/child/" + dadId;
 			c.o(o);
 		}
 	}

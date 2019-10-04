@@ -4,7 +4,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import org.computate.scolaire.enUS.search.SearchResult;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -929,9 +929,9 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
 			case "yearStart":
-				return "yearStart_indexed_date";
+				return "yearStart_indexed_int";
 			case "yearEnd":
-				return "yearEnd_indexed_date";
+				return "yearEnd_indexed_int";
 			case "seasonStartDay":
 				return "seasonStartDay_indexed_date";
 			case "seasonSummer":
@@ -1199,16 +1199,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			listSearch.setC(SchoolBlock.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("archived_indexed_boolean", ORDER.asc);
-			listSearch.addSort("deleted_indexed_boolean", ORDER.asc);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
-			listSearch.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.enUS.block.SchoolBlock"));
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-			SiteUser siteUser = siteRequest.getSiteUser();
-			if(siteUser != null && !siteUser.getSeeDeleted())
-				listSearch.addFilterQuery("deleted_indexed_boolean:false");
-			if(siteUser != null && !siteUser.getSeeArchived())
-				listSearch.addFilterQuery("archived_indexed_boolean:false");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

@@ -59,7 +59,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public static final String School_NomAdjectifSingulier = "school";
 	public static final String School_NomAdjectifPluriel = "schools";
 	public static final String School_Couleur = "pink";
-	public static final String School_IconeGroupe = "duotone";
+	public static final String School_IconeGroupe = "regular";
 	public static final String School_IconeNom = "school";
 
 	///////////////

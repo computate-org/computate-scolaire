@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                       
+package org.computate.scolaire.frFR.annee;                      
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -191,7 +191,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {}
+	protected void _anneeDebut(Couverture<Integer> c) {}
 
 	/**
 	 * {@inheritDoc}
@@ -206,9 +206,9 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r: anneeDebut
 	 * r.enUS: yearStart
 	 */                       
-	protected void _anneeFin(Couverture<LocalDate> c) {
+	protected void _anneeFin(Couverture<Integer> c) {
 		if(anneeDebut != null)
-			c.o(anneeDebut.plusYears(1));
+			c.o(anneeDebut + 1);
 	}
 
 	/**
@@ -234,11 +234,11 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		String o = "année";
 
 		if(anneeDebut != null && anneeFin != null)
-			o = String.format("%d-%d", anneeDebut.getYear(), anneeFin.getYear());
+			o = String.format("%d-%d", anneeDebut, anneeFin);
 		else if(anneeDebut != null)
-			o = String.format("année %d", anneeDebut.getYear());
+			o = String.format("année %d", anneeDebut);
 		else if(anneeFin != null)
-			o = String.format("année %d", anneeFin.getYear());
+			o = String.format("année %d", anneeFin);
 
 		c.o(o);
 	}
@@ -248,6 +248,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: yearCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * VarH2: true
 	 * VarTitre: true
 	 * HtmlColonne: 1
 	 * r: anneeDebut
@@ -268,16 +269,16 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: "year"
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
-	 */                  
+	 */                 
 	protected void _anneeNomComplet(Couverture<String> c) {
 		String o = "année";
 
 		if(anneeDebut != null && anneeFin != null)
-			o = String.format("année scolaire %d-%d", anneeDebut.getYear(), anneeFin.getYear());
+			o = String.format("année scolaire %d-%d", anneeDebut, anneeFin);
 		else if(anneeDebut != null)
-			o = String.format("année scolaire %d", anneeDebut.getYear());
+			o = String.format("année scolaire %d", anneeDebut);
 		else if(anneeFin != null)
-			o = String.format("année scolaire %d", anneeFin.getYear());
+			o = String.format("année scolaire %d", anneeFin);
 
 		if(ecoleNomComplet != null)
 			o += String.format(" à %s", ecoleNomComplet);

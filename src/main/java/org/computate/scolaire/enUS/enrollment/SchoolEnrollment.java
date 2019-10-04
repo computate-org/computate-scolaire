@@ -120,12 +120,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o((String)block.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {
+	protected void _yearStart(Wrap<Integer> c) {
 		if(block != null)
-			c.o((LocalDate)block.getYearStart());
+			c.o(block.getYearStart());
 	}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(block != null)
 			c.o(block.getYearStart());
 	}

@@ -63,7 +63,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	public static final String GardienScolaire_NomAdjectifPluriel = "gardiens";
 	public static final String GardienScolaire_Couleur = "yellow";
 	public static final String GardienScolaire_IconeGroupe = "regular";
-	public static final String GardienScolaire_IconeNom = "chevron-right";
+	public static final String GardienScolaire_IconeNom = "phone";
 
 	////////////////
 	// gardienCle //

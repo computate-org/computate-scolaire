@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -12,12 +11,14 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.FacetParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
 
 public class SearchList<DEV> extends SearchListGen<DEV> {
 
@@ -63,6 +64,13 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 	}
 
 	protected void _queryResponse(Wrap<QueryResponse> c) {
+		if(this.c != null)
+			solrQuery.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars(this.c.getCanonicalName()));
+		SiteUser siteUser = siteRequest_.getSiteUser();
+		if(siteUser == null || !siteUser.getSeeDeleted())
+			solrQuery.addFilterQuery("deleted_indexed_boolean:false");
+		if(siteUser == null || !siteUser.getSeeArchived())
+			solrQuery.addFilterQuery("archived_indexed_boolean:false");
 		if(solrQuery.getQuery() != null) {
 			try {
 				QueryResponse o = siteRequest_.getSiteContext_().getSolrClient().query(solrQuery);

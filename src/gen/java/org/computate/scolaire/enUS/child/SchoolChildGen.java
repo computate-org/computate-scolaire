@@ -55,17 +55,17 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public static final String SchoolChild_Un = "a ";
 	public static final String SchoolChild_LeNom = "the child";
 	public static final String SchoolChild_NomSingulier = "child";
-	public static final String SchoolChild_NomPluriel = "childs";
+	public static final String SchoolChild_NomPluriel = "children";
 	public static final String SchoolChild_NomActuel = "current child";
-	public static final String SchoolChild_TousNom = "all the childs";
-	public static final String SchoolChild_RechercherTousNomPar = "search childs by ";
-	public static final String SchoolChild_LesNoms = "the childs";
+	public static final String SchoolChild_TousNom = "all the children";
+	public static final String SchoolChild_RechercherTousNomPar = "search children by ";
+	public static final String SchoolChild_LesNoms = "the children";
 	public static final String SchoolChild_AucunNomTrouve = "no child found";
 	public static final String SchoolChild_NomVar = "child";
 	public static final String SchoolChild_DeNom = "of child";
 	public static final String SchoolChild_UnNomAdjectif = "a child";
 	public static final String SchoolChild_NomAdjectifSingulier = "child";
-	public static final String SchoolChild_NomAdjectifPluriel = "childs";
+	public static final String SchoolChild_NomAdjectifPluriel = "children";
 	public static final String SchoolChild_Couleur = "green";
 	public static final String SchoolChild_IconeGroupe = "regular";
 	public static final String SchoolChild_IconeNom = "child";
@@ -1964,6 +1964,108 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////////////////
+	// personAgeInSeptember //
+	//////////////////////////
+
+	/**	L'entité « personAgeInSeptember »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String personAgeInSeptember;
+	@JsonIgnore
+	public Wrap<String> personAgeInSeptemberWrap = new Wrap<String>().p(this).c(String.class).var("personAgeInSeptember").o(personAgeInSeptember);
+
+	/**	<br/>L'entité « personAgeInSeptember »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:personAgeInSeptember">Trouver l'entité personAgeInSeptember dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personAgeInSeptember(Wrap<String> c);
+
+	public String getPersonAgeInSeptember() {
+		return personAgeInSeptember;
+	}
+
+	public void setPersonAgeInSeptember(String personAgeInSeptember) {
+		this.personAgeInSeptember = personAgeInSeptember;
+		this.personAgeInSeptemberWrap.alreadyInitialized = true;
+	}
+	protected SchoolChild personAgeInSeptemberInit() {
+		if(!personAgeInSeptemberWrap.alreadyInitialized) {
+			_personAgeInSeptember(personAgeInSeptemberWrap);
+			if(personAgeInSeptember == null)
+				setPersonAgeInSeptember(personAgeInSeptemberWrap.o);
+		}
+		personAgeInSeptemberWrap.alreadyInitialized(true);
+		return (SchoolChild)this;
+	}
+
+	public String solrPersonAgeInSeptember() {
+		return personAgeInSeptember;
+	}
+
+	public String strPersonAgeInSeptember() {
+		return personAgeInSeptember == null ? "" : personAgeInSeptember;
+	}
+
+	public String jsonPersonAgeInSeptember() {
+		return personAgeInSeptember == null ? "" : personAgeInSeptember;
+	}
+
+	public String nomAffichagePersonAgeInSeptember() {
+		return "age";
+	}
+
+	public String htmTooltipPersonAgeInSeptember() {
+		return null;
+	}
+
+	public String htmPersonAgeInSeptember() {
+		return personAgeInSeptember == null ? "" : StringEscapeUtils.escapeHtml4(strPersonAgeInSeptember());
+	}
+
+	public void htmPersonAgeInSeptember(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolChild", strPk(), "PersonAgeInSeptember\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolChild", strPk(), "PersonAgeInSeptember() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPersonAgeInSeptember\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonAgeInSeptember()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"personAgeInSeptember\"");
+							r.s(" value=\"", htmPersonAgeInSeptember(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPersonAgeInSeptember());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////////////
 	// childMedicalConditions //
 	////////////////////////////
@@ -2636,7 +2738,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageChildCompleteName() {
-		return null;
+		return "name";
 	}
 
 	public String htmTooltipChildCompleteName() {
@@ -3033,6 +3135,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		personCompleteNamePreferredInit();
 		personFormalNameInit();
 		personBirthDateInit();
+		personAgeInSeptemberInit();
 		childMedicalConditionsInit();
 		childPreviousSchoolsAttendedInit();
 		childDescriptionInit();
@@ -3119,6 +3222,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.personFormalName;
 			case "personBirthDate":
 				return oSchoolChild.personBirthDate;
+			case "personAgeInSeptember":
+				return oSchoolChild.personAgeInSeptember;
 			case "childMedicalConditions":
 				return oSchoolChild.childMedicalConditions;
 			case "childPreviousSchoolsAttended":
@@ -3203,6 +3308,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return val;
 			case "familyName":
 				setFamilyName(val);
+				savesSchoolChild.add(var);
+				return val;
+			case "personBirthDate":
+				setPersonBirthDate(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "childMedicalConditions":
@@ -3344,6 +3453,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				Date personBirthDate = (Date)solrDocument.get("personBirthDate_stored_date");
 				if(personBirthDate != null)
 					oSchoolChild.setPersonBirthDate(personBirthDate);
+			}
+
+			if(savesSchoolChild.contains("personAgeInSeptember")) {
+				String personAgeInSeptember = (String)solrDocument.get("personAgeInSeptember_stored_string");
+				if(personAgeInSeptember != null)
+					oSchoolChild.setPersonAgeInSeptember(personAgeInSeptember);
 			}
 
 			if(savesSchoolChild.contains("childMedicalConditions")) {
@@ -3562,6 +3677,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("personBirthDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("personBirthDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(personAgeInSeptember != null) {
+			document.addField("personAgeInSeptember_indexed_string", personAgeInSeptember);
+			document.addField("personAgeInSeptember_stored_string", personAgeInSeptember);
+		}
 		if(childMedicalConditions != null) {
 			document.addField("childMedicalConditions_indexed_string", childMedicalConditions);
 			document.addField("childMedicalConditions_stored_string", childMedicalConditions);
@@ -3697,6 +3816,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(personBirthDate != null)
 			oSchoolChild.setPersonBirthDate(personBirthDate);
 
+		String personAgeInSeptember = (String)solrDocument.get("personAgeInSeptember_stored_string");
+		if(personAgeInSeptember != null)
+			oSchoolChild.setPersonAgeInSeptember(personAgeInSeptember);
+
 		String childMedicalConditions = (String)solrDocument.get("childMedicalConditions_stored_string");
 		if(childMedicalConditions != null)
 			oSchoolChild.setChildMedicalConditions(childMedicalConditions);
@@ -3744,7 +3867,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, enfantVaccinesCurrent, childPottyTrained);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personBirthDate, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, enfantVaccinesCurrent, childPottyTrained);
 	}
 
 	////////////
@@ -3762,6 +3885,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				&& Objects.equals( personFirstName, that.personFirstName )
 				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
+				&& Objects.equals( personBirthDate, that.personBirthDate )
 				&& Objects.equals( childMedicalConditions, that.childMedicalConditions )
 				&& Objects.equals( childPreviousSchoolsAttended, that.childPreviousSchoolsAttended )
 				&& Objects.equals( childDescription, that.childDescription )
@@ -3782,6 +3906,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		sb.append( ", personFirstName: \"" ).append(personFirstName).append( "\"" );
 		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
+		sb.append( ", personBirthDate: " ).append(personBirthDate);
 		sb.append( ", childMedicalConditions: \"" ).append(childMedicalConditions).append( "\"" );
 		sb.append( ", childPreviousSchoolsAttended: \"" ).append(childPreviousSchoolsAttended).append( "\"" );
 		sb.append( ", childDescription: \"" ).append(childDescription).append( "\"" );

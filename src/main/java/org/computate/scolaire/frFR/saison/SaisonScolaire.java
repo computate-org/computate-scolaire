@@ -219,9 +219,9 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: annee
 	 * r.enUS: year
 	 */                   
-	protected void _anneeDebut(Couverture<LocalDate> c) {
+	protected void _anneeDebut(Couverture<Integer> c) {
 		if(annee_ != null)
-			c.o((LocalDate)annee_.getAnneeDebut());
+			c.o(annee_.getAnneeDebut());
 	}
 
 	/**
@@ -235,10 +235,10 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: YearStart
 	 * r: annee
 	 * r.enUS: year
-	 */                     
-	protected void _anneeFin(Couverture<LocalDate> c) {
+	 */                    
+	protected void _anneeFin(Couverture<Integer> c) {
 		if(annee_ != null)
-			c.o((LocalDate)annee_.getAnneeFin());
+			c.o(annee_.getAnneeFin());
 	}
 
 	/**
@@ -298,9 +298,11 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
-	 * VarTitre: true
 	 * VarH2: true
+	 * VarTitre: true
 	 * HtmlColonne: 1
+	 * NomAffichage.frFR: nom
+	 * NomAffichage.enUS: name
 	 * r: saisonEte
 	 * r.enUS: seasonSummer
 	 * r: saisonHiver

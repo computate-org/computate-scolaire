@@ -69,12 +69,12 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o((String)season_.getSchoolCompleteName());
 	}
 
-	protected void _yearStart(Wrap<LocalDate> c) {
+	protected void _yearStart(Wrap<Integer> c) {
 		if(season_ != null)
-			c.o((LocalDate)season_.getYearStart());
+			c.o(season_.getYearStart());
 	}
 
-	protected void _yearEnd(Wrap<LocalDate> c) {
+	protected void _yearEnd(Wrap<Integer> c) {
 		if(season_ != null)
 			c.o(season_.getYearStart());
 	}
@@ -102,11 +102,6 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 	protected void _seasonCompleteName(Wrap<String> c) {
 		if(season_ != null)
 			c.o(season_.getSeasonCompleteName());
-	}
-
-	protected void _seasonEnd(Wrap<LocalDate> c) {
-		if(season_ != null)
-			c.o((LocalDate)season_.getYearStart());
 	}
 
 	protected void _sessionStartDay(Wrap<LocalDate> c) {}

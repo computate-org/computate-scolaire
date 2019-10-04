@@ -210,6 +210,10 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("familleNom", jsonObject.getString(entiteVar), pk));
 						break;
+					case "personneDateNaissance":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("personneDateNaissance", jsonObject.getString(entiteVar), pk));
+						break;
 					case "enfantConditionsMedicales":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantConditionsMedicales", jsonObject.getString(entiteVar), pk));
@@ -493,6 +497,16 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						} else {
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("familleNom", o2.jsonFamilleNom(), pk));
+						}
+						break;
+					case "setPersonneDateNaissance":
+						o2.setPersonneDateNaissance(requeteJson.getString(methodeNom));
+						if(o2.getPersonneDateNaissance() == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "personneDateNaissance"));
+						} else {
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("personneDateNaissance", o2.jsonPersonneDateNaissance(), pk));
 						}
 						break;
 					case "setEnfantConditionsMedicales":
@@ -904,6 +918,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "personneNomFormel_indexed_string";
 			case "personneDateNaissance":
 				return "personneDateNaissance_indexed_date";
+			case "personneAgeEnSeptembre":
+				return "personneAgeEnSeptembre_indexed_string";
 			case "enfantConditionsMedicales":
 				return "enfantConditionsMedicales_indexed_string";
 			case "enfantEcolesPrecedemmentFrequentees":
@@ -1143,16 +1159,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			listeRecherche.setC(EnfantScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("archive_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("supprime_indexed_boolean", ORDER.asc);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			listeRecherche.addFilterQuery("classeNomsCanoniques_indexed_strings:" + ClientUtils.escapeQueryChars("org.computate.scolaire.frFR.enfant.EnfantScolaire"));
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-			UtilisateurSite utilisateurSite = requeteSite.getUtilisateurSite();
-			if(utilisateurSite != null && !utilisateurSite.getVoirSupprime())
-				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
-			if(utilisateurSite != null && !utilisateurSite.getVoirArchive())
-				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {

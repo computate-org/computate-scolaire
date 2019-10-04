@@ -68,7 +68,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public static final String PaiementScolaire_NomAdjectifPluriel = "paiements";
 	public static final String PaiementScolaire_Couleur = "green";
 	public static final String PaiementScolaire_IconeGroupe = "solid";
-	public static final String PaiementScolaire_IconeNom = "dollar";
+	public static final String PaiementScolaire_IconeNom = "search-dollar";
 
 	///////////////
 	// ecoleCles //
@@ -1992,9 +1992,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/**	L'entité « paiementValeur »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate paiementValeur;
+	protected String paiementValeur;
 	@JsonIgnore
-	public Couverture<LocalDate> paiementValeurCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementValeur").o(paiementValeur);
+	public Couverture<String> paiementValeurCouverture = new Couverture<String>().p(this).c(String.class).var("paiementValeur").o(paiementValeur);
 
 	/**	<br/>L'entité « paiementValeur »
 	 *  est défini comme null avant d'être initialisé. 
@@ -2002,31 +2002,15 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _paiementValeur(Couverture<LocalDate> c);
+	protected abstract void _paiementValeur(Couverture<String> c);
 
-	public LocalDate getPaiementValeur() {
+	public String getPaiementValeur() {
 		return paiementValeur;
 	}
 
-	public void setPaiementValeur(LocalDate paiementValeur) {
+	public void setPaiementValeur(String paiementValeur) {
 		this.paiementValeur = paiementValeur;
 		this.paiementValeurCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setPaiementValeur(Instant o) {
-		this.paiementValeur = LocalDate.from(o);
-		this.paiementValeurCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setPaiementValeur(String o) {
-		this.paiementValeur = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.paiementValeurCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	public PaiementScolaire setPaiementValeur(Date o) {
-		this.paiementValeur = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.paiementValeurCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire paiementValeurInit() {
 		if(!paiementValeurCouverture.dejaInitialise) {
@@ -2038,16 +2022,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
-	public Date solrPaiementValeur() {
-		return paiementValeur == null ? null : Date.from(paiementValeur.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public String solrPaiementValeur() {
+		return paiementValeur;
 	}
 
 	public String strPaiementValeur() {
-		return paiementValeur == null ? "" : paiementValeur.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return paiementValeur == null ? "" : paiementValeur;
 	}
 
 	public String jsonPaiementValeur() {
-		return paiementValeur == null ? "" : paiementValeur.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return paiementValeur == null ? "" : paiementValeur;
 	}
 
 	public String nomAffichagePaiementValeur() {
@@ -2474,7 +2458,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaiementNomComplet() {
-		return null;
+		return "nom";
 	}
 
 	public String htmTooltipPaiementNomComplet() {
@@ -3128,7 +3112,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 			if(sauvegardesPaiementScolaire.contains("paiementValeur")) {
-				Date paiementValeur = (Date)solrDocument.get("paiementValeur_stored_date");
+				String paiementValeur = (String)solrDocument.get("paiementValeur_stored_string");
 				if(paiementValeur != null)
 					oPaiementScolaire.setPaiementValeur(paiementValeur);
 			}
@@ -3344,8 +3328,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(paiementValeur != null) {
-			document.addField("paiementValeur_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementValeur.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("paiementValeur_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementValeur.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("paiementValeur_indexed_string", paiementValeur);
+			document.addField("paiementValeur_stored_string", paiementValeur);
 		}
 		if(paiementEspeces != null) {
 			document.addField("paiementEspeces_indexed_boolean", paiementEspeces);
@@ -3462,7 +3446,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementDate != null)
 			oPaiementScolaire.setPaiementDate(paiementDate);
 
-		Date paiementValeur = (Date)solrDocument.get("paiementValeur_stored_date");
+		String paiementValeur = (String)solrDocument.get("paiementValeur_stored_string");
 		if(paiementValeur != null)
 			oPaiementScolaire.setPaiementValeur(paiementValeur);
 

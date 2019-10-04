@@ -14,11 +14,23 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.common.SolrDocument;
+import org.computate.scolaire.enUS.age.AgeGenPage;
+import org.computate.scolaire.enUS.year.YearGenPage;
+import org.computate.scolaire.enUS.block.BlockGenPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.child.ChildGenPage;
+import org.computate.scolaire.enUS.guardian.GuardianGenPage;
+import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
+import org.computate.scolaire.enUS.mom.MomGenPage;
 import org.computate.scolaire.enUS.page.part.PagePart;
+import org.computate.scolaire.enUS.payment.PaymentGenPage;
+import org.computate.scolaire.enUS.dad.DadGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.season.SeasonGenPage;
+import org.computate.scolaire.enUS.session.SessionGenPage;
 import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.xml.UtilXml;
 
@@ -225,7 +237,19 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public void  htmlScriptsPageLayout() {
 		e("script").a("src", staticBaseUrl, "/js/jquery-1.12.4.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/site-enUS.js").f().g("script");
-		e("script").a("src", staticBaseUrl, "/js/UtilisateurSiteFrFRPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SchoolPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SeasonPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SessionPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/AgePage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/PaymentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/MomPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/DadPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/GuardianPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/ChildPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jquery.serialize-object.js").f().g("script");
@@ -292,7 +316,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 					e("div").a("class", "site-section-above ").f();
 						e("div").a("class", "w3-content w3-center w3-black ").f();
 							e("div").a("class", "").f();
-								menu();
+								menu("Menu1");
 							g("div"); 
 						g("div");
 						e("div").a("id", "site-section-primary").a("class", "site-section-primary w3-text-black w3-padding-bottom-32 ").f();
@@ -311,7 +335,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("div");
 				e("div").a("class", "w3-row site-section-contact ").f();
 					e("div").a("class", "w3-content w3-center  w3-cell-row w3-margin-bottom-32 ").f();
-						menu();
+						menu("Menu2");
 						e("div").a("class", "w3-container ").f();
 							e("div").a("class", "w3-container w3-text-black w3-margin-top ").f();
 								e("h6").a("id", "h2-contactez-nous").a("class",  "w3-xlarge ").f();
@@ -331,7 +355,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	}
 
-	public void  menu() {
+	public void  menu(String id) {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageHomeUri).f();
@@ -340,13 +364,124 @@ public class PageLayout extends PageLayoutGen<Object> {
 					g("span");
 				g("a");
 			g("div");
+
 			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-						e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
-						sx("Schools");
+				{ e("div").a("class", "w3-button w3-hover-pink ").f();
+						e("i").a("class", "far fa-school w3-padding-small ").f().g("i");
+						sx("schools");
 				} g("div");
 				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					htmlSuggestSchoolGenPage();
+					SchoolGenPage.htmlSuggestSchoolGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-orange ").f();
+						e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+						sx("years");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					YearGenPage.htmlSuggestYearGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+						e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+						sx("seasons");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					SeasonGenPage.htmlSuggestSeasonGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+						sx("sessions");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					SessionGenPage.htmlSuggestSessionGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-blue ").f();
+						e("i").a("class", "fad fa-birthday-cake w3-padding-small ").f().g("i");
+						sx("ages");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					AgeGenPage.htmlSuggestAgeGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-indigo ").f();
+						e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+						sx("blocks");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					BlockGenPage.htmlSuggestBlockGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-purple ").f();
+						e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+						sx("enrollments");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					EnrollmentGenPage.htmlSuggestEnrollmentGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "fas fa-search-dollar w3-padding-small ").f().g("i");
+						sx("payments");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					PaymentGenPage.htmlSuggestPaymentGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-pink ").f();
+						e("i").a("class", "far fa-female w3-padding-small ").f().g("i");
+						sx("moms");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					MomGenPage.htmlSuggestMomGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-light-blue ").f();
+						e("i").a("class", "far fa-male w3-padding-small ").f().g("i");
+						sx("dads");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					DadGenPage.htmlSuggestDadGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-orange ").f();
+						e("i").a("class", "far fa-phone w3-padding-small ").f().g("i");
+						sx("guardians");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					GuardianGenPage.htmlSuggestGuardianGenPage(this, id);
+				} g("div");
+			} g("div");
+
+			{ e("div").a("class", "w3-dropdown-hover ").f();
+				{ e("div").a("class", "w3-button w3-hover-green ").f();
+						e("i").a("class", "far fa-child w3-padding-small ").f().g("i");
+						sx("children");
+				} g("div");
+				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+					ChildGenPage.htmlSuggestChildGenPage(this, id);
 				} g("div");
 			} g("div");
 			if(siteRequest_.getUserId() == null) {
@@ -375,56 +510,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 				g("div");
 			}
 		g("div");
-	}
-
-	public void  htmlSuggestSchoolGenPage() {
-		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("href", "/school").a("class", "").f();
-					e("i").a("class", "fad fa-school w3-padding-small ").f().g("i");
-					sx("see all the schools");
-				} g("a");
-			} g("div");
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("a").a("id", "refreshSchoolGenPage").a("href", "/school").a("class", "").a("onclick", "patchSchoolVals([], {}, function() { addGlow($('#refreshSchoolGenPage')); }, function() { addError($('#refreshSchoolGenPage')); }); return false; ").f();
-					e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
-					sx("refresh all the schools");
-				} g("a");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("span").f();
-					sx("search schools: ");
-				} g("span");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell ").f();
-				{ e("div").a("class", "w3-cell-row ").f();
-
-					e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ e("form").a("action", "").a("id", "suggestFormSchool").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "text")
-							.a("placeholder", "search schools")
-							.a("class", "suggestSchool w3-input w3-border w3-cell w3-cell-middle ")
-							.a("name", "suggestSchool")
-							.a("id", "suggestSchool")
-							.a("autocomplete", "off")
-							.a("oninput", "suggestSchoolObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchool')); ")
-							.fg();
-
-					} g("form");
-				} g("div");
-			} g("div");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row w3-padding ").f();
-			{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-				{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "suggestListSchool").f();
-				} g("ul");
-			} g("div");
-		} g("div");
 	}
 
 	public void  partagerPage() {

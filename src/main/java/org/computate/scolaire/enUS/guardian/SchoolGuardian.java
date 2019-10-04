@@ -136,7 +136,7 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 
 	protected void _pageUrl(Wrap<String> c) {
 		if(guardianId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/chilc/" + guardianId;
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/child/" + guardianId;
 			c.o(o);
 		}
 	}
