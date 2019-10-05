@@ -132,7 +132,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(block != null)
-			c.o(block.getSeasonStartDay());
+			c.o(block.getSeasonStartDate());
 	}
 
 	protected void _seasonSummer(Wrap<Boolean> c) {

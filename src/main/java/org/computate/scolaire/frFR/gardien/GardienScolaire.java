@@ -475,7 +475,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * r: gardienId
 	 * r.enUS: guardianId
 	 * r: /gardien/
-	 * r.enUS: /child/
+	 * r.enUS: /guardian/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

@@ -310,7 +310,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
 	 * r: SaisonJourDebut
-	 * r.enUS: SeasonStartDay
+	 * r.enUS: SeasonStartDate
 	 * r: age
 	 * r.enUS: age
 	 */                  

@@ -92,7 +92,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(age != null)
-			c.o(age.getSeasonStartDay());
+			c.o(age.getSeasonStartDate());
 	}
 
 	protected void _seasonSummer(Wrap<Boolean> c) {

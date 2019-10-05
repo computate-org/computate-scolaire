@@ -505,7 +505,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * r: pereId
 	 * r.enUS: dadId
 	 * r: /pere/
-	 * r.enUS: /child/
+	 * r.enUS: /dad/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

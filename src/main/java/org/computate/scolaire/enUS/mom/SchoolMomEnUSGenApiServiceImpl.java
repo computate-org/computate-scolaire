@@ -280,8 +280,10 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 							aSearchSchoolMom(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolMom> listSchoolMom = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolMom.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modified");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modified");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));

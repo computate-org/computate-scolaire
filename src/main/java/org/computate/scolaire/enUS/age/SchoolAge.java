@@ -83,7 +83,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(session != null)
-			c.o(session.getSeasonStartDay());
+			c.o(session.getSeasonStartDate());
 	}
 
 	protected void _seasonSummer(Wrap<Boolean> c) {

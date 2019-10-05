@@ -207,7 +207,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(annee_ != null)
-			c.o((String)annee_.getEcoleNomComplet());
+			c.o(annee_.getEcoleNomComplet());
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: "%s saison à %s"
 	 * r.enUS: "%s season at %s"
 	 * r: strSaisonJourDebut
-	 * r.enUS: strSeasonStartDay
+	 * r.enUS: strSeasonStartDate
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
 	 */              

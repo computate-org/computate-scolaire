@@ -499,7 +499,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * r: mereId
 	 * r.enUS: momId
 	 * r: /mere/
-	 * r.enUS: /child/
+	 * r.enUS: /mom/
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite

@@ -252,8 +252,10 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							aSearchSchoolAge(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolAge> listSchoolAge = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolAge.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modified");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modified");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));

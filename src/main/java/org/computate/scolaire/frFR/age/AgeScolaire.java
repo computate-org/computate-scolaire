@@ -283,7 +283,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
 	 * r: SaisonJourDebut
-	 * r.enUS: SeasonStartDay
+	 * r.enUS: SeasonStartDate
 	 * r: session
 	 * r.enUS: session
 	 */                   

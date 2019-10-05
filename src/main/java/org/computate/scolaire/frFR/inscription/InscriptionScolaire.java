@@ -451,7 +451,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
 	 * r: SaisonJourDebut
-	 * r.enUS: SeasonStartDay
+	 * r.enUS: SeasonStartDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                  

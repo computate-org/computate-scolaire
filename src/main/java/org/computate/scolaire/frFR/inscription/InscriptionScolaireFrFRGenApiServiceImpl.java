@@ -312,8 +312,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							rechercheInscriptionScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listeInscriptionScolaire.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modifie");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modifie");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
