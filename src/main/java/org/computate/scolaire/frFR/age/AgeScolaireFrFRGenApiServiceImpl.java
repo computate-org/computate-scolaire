@@ -192,10 +192,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "sessionCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageCles", Long.parseLong(jsonObject.getString(entiteVar)), "sessionCle", pk));
-						break;
 					case "blocCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
@@ -418,16 +414,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
-						break;
-					case "setSessionCle":
-						o2.setSessionCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
-						break;
-					case "removeSessionCle":
-						o2.setSessionCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageCles", o2.getSessionCle(), "sessionCle", pk));
 						break;
 					case "addBlocCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
@@ -790,12 +776,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "sessionCle":
-				return "sessionCle_indexed_long";
 			case "ageCle":
 				return "ageCle_indexed_long";
 			case "inscriptionCles":
@@ -812,8 +792,18 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				return "saisonTri_indexed_int";
 			case "sessionTri":
 				return "sessionTri_indexed_int";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "saisonCle":
+				return "saisonCle_indexed_long";
+			case "sessionCle":
+				return "sessionCle_indexed_long";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

@@ -50,6 +50,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static DateTimeFormatter FORMATZonedDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a:ss.SSS zz VV", Locale.US);
 
+	public static DateTimeFormatter FORMATTimeDisplay = DateTimeFormatter.ofPattern("h:mm a", Locale.US);
+
 	protected void _pageParts(List<PagePart> l) {
 	}
 

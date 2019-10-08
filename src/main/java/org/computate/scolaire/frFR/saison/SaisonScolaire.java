@@ -55,34 +55,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 */                              
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: schoolKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: école
-	 * NomAffichage.enUS: school
-	 */              
-	protected void _ecoleCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: AnneeScolaire.saisonCles
-	 * HtmlLigne: 4
-	 * HtmlCelulle: 1
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	*/             
-	protected void _anneeCle(Couverture<Long> c) {
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -193,6 +165,44 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'école dans la base de données. 
+	 * Description.enUS: The primary key of the school in the database. 
+	 * NomAffichage.frFR: école
+	 * NomAffichage.enUS: school
+	 * r: EcoleCle
+	 * r.enUS: SchoolKey
+	 * r: annee
+	 * r.enUS: year
+	 */              
+	protected void _ecoleCle(Couverture<Long> c) {
+		if(annee_ != null)
+			c.o(annee_.getEcoleCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: AnneeCle
+	 * r.enUS: YearKey
+	 * r: annee
+	 * r.enUS: year
+	*/             
+	protected void _anneeCle(Couverture<Long> c) {
+		if(annee_ != null)
+			c.o(annee_.getAnneeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -208,6 +218,23 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(annee_ != null)
 			c.o(annee_.getEcoleNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: annee
+	 * r.enUS: year
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(annee_ != null)
+			c.o((String)annee_.getEcoleEmplacement());
 	}
 
 	/**

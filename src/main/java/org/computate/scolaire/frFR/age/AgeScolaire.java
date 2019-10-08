@@ -52,61 +52,6 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: école
-	 * NomAffichage.enUS: school
-	 */                
-	protected void _ecoleCle(Couverture<Long> c) {
-	}
-
-	/*
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de l'âge scolaire. 
-	 * Description.enUS: The school year of the school age. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 */          
-	protected void _anneeCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La saison scolaire de l'âge scolaire. 
-	 * Description.enUS: The school season of the school age. 
-	 * NomAffichage.frFR: saison
-	 * NomAffichage.enUS: season
-	 */           
-	protected void _saisonCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: sessionKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: SessionScolaire.ageCles
-	 * HtmlLigne: 4
-	 * HtmlCellule: 1
-	 * Description.frFR: La clé primaire de la session dans la base de données. 
-	 * Description.enUS: The primary key of the session in the database. 
-	 * NomAffichage.frFR: session
-	 * NomAffichage.enUS: session
-	 */             
-	protected void _sessionCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: ageKey
 	 * Indexe: true
 	 * Stocke: true
@@ -211,15 +156,91 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: session
+	 * Var.enUS: session_
 	 * r: sessionRecherche
 	 * r.enUS: sessionSearch
 	 * Ignorer: true
 	 */   
-	protected void _session(Couverture<SessionScolaire> c) {
+	protected void _session_(Couverture<SessionScolaire> c) {
 		if(sessionRecherche.size() > 0) {
 			c.o(sessionRecherche.get(0));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'école dans la base de données. 
+	 * Description.enUS: The primary key of the school in the database. 
+	 * NomAffichage.frFR: école
+	 * NomAffichage.enUS: school
+	 * r: EcoleCle
+	 * r.enUS: SchoolKey
+	 * r: session
+	 * r.enUS: session
+	 */              
+	protected void _ecoleCle(Couverture<Long> c) {
+		if(session_ != null)
+			c.o(session_.getEcoleCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: AnneeCle
+	 * r.enUS: YearKey
+	 * r: session
+	 * r.enUS: session
+	*/             
+	protected void _anneeCle(Couverture<Long> c) {
+		if(session_ != null)
+			c.o(session_.getAnneeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: SaisonCle
+	 * r.enUS: SeasonKey
+	 * r: session
+	 * r.enUS: session
+	*/             
+	protected void _saisonCle(Couverture<Long> c) {
+		if(session_ != null)
+			c.o(session_.getSaisonCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: session
+	 * NomAffichage.enUS: session
+	 * r: SessionCle
+	 * r.enUS: SessionKey
+	 * r: session
+	 * r.enUS: session
+	*/             
+	protected void _sessionCle(Couverture<Long> c) {
+		if(session_ != null)
+			c.o(session_.getSessionCle());
 	}
 
 	/**
@@ -237,8 +258,25 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(session != null)
-			c.o((String)session.getEcoleNomComplet());
+		if(session_ != null)
+			c.o((String)session_.getEcoleNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: session
+	 * r.enUS: session
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(session_ != null)
+			c.o((String)session_.getEcoleEmplacement());
 	}
 
 	/**
@@ -254,8 +292,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _anneeDebut(Couverture<Integer> c) {
-		if(session != null)
-			c.o(session.getAnneeDebut());
+		if(session_ != null)
+			c.o(session_.getAnneeDebut());
 	}
 
 	/**
@@ -271,8 +309,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                      
 	protected void _anneeFin(Couverture<Integer> c) {
-		if(session != null)
-			c.o(session.getAnneeFin());
+		if(session_ != null)
+			c.o(session_.getAnneeFin());
 	}
 
 	/**
@@ -288,8 +326,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {
-		if(session != null)
-			c.o(session.getSaisonJourDebut());
+		if(session_ != null)
+			c.o(session_.getSaisonJourDebut());
 	}
 
 	/**
@@ -305,8 +343,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _saisonEte(Couverture<Boolean> c) {
-		if(session != null)
-			c.o(session.getSaisonEte());
+		if(session_ != null)
+			c.o(session_.getSaisonEte());
 	}
 
 	/**
@@ -322,8 +360,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _saisonHiver(Couverture<Boolean> c) {
-		if(session != null)
-			c.o(session.getSaisonHiver());
+		if(session_ != null)
+			c.o(session_.getSaisonHiver());
 	}
 
 	/**
@@ -339,8 +377,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
-		if(session != null)
-			c.o(session.getSaisonFraisInscription());
+		if(session_ != null)
+			c.o(session_.getSaisonFraisInscription());
 	}
 
 	/**   
@@ -354,8 +392,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */
 	protected void _saisonNomComplet(Couverture<String> c) {
-		if(session != null)
-			c.o(session.getSaisonNomComplet());
+		if(session_ != null)
+			c.o(session_.getSaisonNomComplet());
 	}
 
 	/**
@@ -371,8 +409,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _sessionJourDebut(Couverture<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getSessionJourDebut());
+		if(session_ != null)
+			c.o((LocalDate)session_.getSessionJourDebut());
 	}
 
 	/**
@@ -388,8 +426,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _sessionJourFin(Couverture<LocalDate> c) {
-		if(session != null)
-			c.o((LocalDate)session.getSessionJourFin());
+		if(session_ != null)
+			c.o((LocalDate)session_.getSessionJourFin());
 	}
 
 	/**
@@ -403,8 +441,8 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: session
 	 */                   
 	protected void _sessionNomComplet(Couverture<String> c) {
-		if(session != null)
-			c.o(session.getSessionNomComplet());
+		if(session_ != null)
+			c.o(session_.getSessionNomComplet());
 	}
 
 	/**

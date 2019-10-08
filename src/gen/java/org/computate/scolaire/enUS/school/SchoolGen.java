@@ -170,98 +170,98 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////
-	// childKeys //
-	///////////////
+	//////////////
+	// yearKeys //
+	//////////////
 
-	/**	L'entité « childKeys »
+	/**	L'entité « yearKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	protected List<Long> childKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
-	public Wrap<List<Long>> childKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childKeys").o(childKeys);
+	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
 
-	/**	<br/>L'entité « childKeys »
+	/**	<br/>L'entité « yearKeys »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childKeys">Trouver l'entité childKeys dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKeys">Trouver l'entité yearKeys dans Solr</a>
 	 * <br/>
-	 * @param childKeys est l'entité déjà construit. 
+	 * @param yearKeys est l'entité déjà construit. 
 	 **/
-	protected abstract void _childKeys(List<Long> o);
+	protected abstract void _yearKeys(List<Long> o);
 
-	public List<Long> getChildKeys() {
-		return childKeys;
+	public List<Long> getYearKeys() {
+		return yearKeys;
 	}
 
-	public void setChildKeys(List<Long> childKeys) {
-		this.childKeys = childKeys;
-		this.childKeysWrap.alreadyInitialized = true;
+	public void setYearKeys(List<Long> yearKeys) {
+		this.yearKeys = yearKeys;
+		this.yearKeysWrap.alreadyInitialized = true;
 	}
-	public School addChildKeys(Long...objets) {
+	public School addYearKeys(Long...objets) {
 		for(Long o : objets) {
-			addChildKeys(o);
+			addYearKeys(o);
 		}
 		return (School)this;
 	}
-	public School addChildKeys(Long o) {
-		if(o != null && !childKeys.contains(o))
-			this.childKeys.add(o);
+	public School addYearKeys(Long o) {
+		if(o != null && !yearKeys.contains(o))
+			this.yearKeys.add(o);
 		return (School)this;
 	}
-	public School setChildKeys(JsonArray objets) {
-		childKeys.clear();
+	public School setYearKeys(JsonArray objets) {
+		yearKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
-			addChildKeys(o);
+			addYearKeys(o);
 		}
 		return (School)this;
 	}
-	public School addChildKeys(String o) {
+	public School addYearKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
-			addChildKeys(p);
+			addYearKeys(p);
 		}
 		return (School)this;
 	}
-	protected School childKeysInit() {
-		if(!childKeysWrap.alreadyInitialized) {
-			_childKeys(childKeys);
+	protected School yearKeysInit() {
+		if(!yearKeysWrap.alreadyInitialized) {
+			_yearKeys(yearKeys);
 		}
-		childKeysWrap.alreadyInitialized(true);
+		yearKeysWrap.alreadyInitialized(true);
 		return (School)this;
 	}
 
-	public List<Long> solrChildKeys() {
-		return childKeys;
+	public List<Long> solrYearKeys() {
+		return yearKeys;
 	}
 
-	public String strChildKeys() {
-		return childKeys == null ? "" : childKeys.toString();
+	public String strYearKeys() {
+		return yearKeys == null ? "" : yearKeys.toString();
 	}
 
-	public String jsonChildKeys() {
-		return childKeys == null ? "" : childKeys.toString();
+	public String jsonYearKeys() {
+		return yearKeys == null ? "" : yearKeys.toString();
 	}
 
-	public String nomAffichageChildKeys() {
-		return "";
+	public String nomAffichageYearKeys() {
+		return "years";
 	}
 
-	public String htmTooltipChildKeys() {
+	public String htmTooltipYearKeys() {
 		return null;
 	}
 
-	public String htmChildKeys() {
-		return childKeys == null ? "" : StringEscapeUtils.escapeHtml4(strChildKeys());
+	public String htmYearKeys() {
+		return yearKeys == null ? "" : StringEscapeUtils.escapeHtml4(strYearKeys());
 	}
 
-	public void htmChildKeys(AllWriter r, Boolean patchRights) {
+	public void htmYearKeys(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "ChildKeys\">");
+			r.s("<div id=\"patchSchool", strPk(), "YearKeys\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "ChildKeys() {");
+				r.l("		function patchSchool", strPk(), "YearKeys() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -274,401 +274,23 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setChildKeys\": this.value },");
+				r.l("				data: {\"setYearKeys\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildKeys()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKeys()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"childKeys\"");
-							r.s(" value=\"", htmChildKeys(), "\");");
+							r.s(" name=\"yearKeys\"");
+							r.s(" value=\"", htmYearKeys(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmChildKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////
-	// blockKeys //
-	///////////////
-
-	/**	L'entité « blockKeys »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
-
-	/**	<br/>L'entité « blockKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKeys">Trouver l'entité blockKeys dans Solr</a>
-	 * <br/>
-	 * @param blockKeys est l'entité déjà construit. 
-	 **/
-	protected abstract void _blockKeys(List<Long> o);
-
-	public List<Long> getBlockKeys() {
-		return blockKeys;
-	}
-
-	public void setBlockKeys(List<Long> blockKeys) {
-		this.blockKeys = blockKeys;
-		this.blockKeysWrap.alreadyInitialized = true;
-	}
-	public School addBlockKeys(Long...objets) {
-		for(Long o : objets) {
-			addBlockKeys(o);
-		}
-		return (School)this;
-	}
-	public School addBlockKeys(Long o) {
-		if(o != null && !blockKeys.contains(o))
-			this.blockKeys.add(o);
-		return (School)this;
-	}
-	public School setBlockKeys(JsonArray objets) {
-		blockKeys.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addBlockKeys(o);
-		}
-		return (School)this;
-	}
-	public School addBlockKeys(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addBlockKeys(p);
-		}
-		return (School)this;
-	}
-	protected School blockKeysInit() {
-		if(!blockKeysWrap.alreadyInitialized) {
-			_blockKeys(blockKeys);
-		}
-		blockKeysWrap.alreadyInitialized(true);
-		return (School)this;
-	}
-
-	public List<Long> solrBlockKeys() {
-		return blockKeys;
-	}
-
-	public String strBlockKeys() {
-		return blockKeys == null ? "" : blockKeys.toString();
-	}
-
-	public String jsonBlockKeys() {
-		return blockKeys == null ? "" : blockKeys.toString();
-	}
-
-	public String nomAffichageBlockKeys() {
-		return "";
-	}
-
-	public String htmTooltipBlockKeys() {
-		return null;
-	}
-
-	public String htmBlockKeys() {
-		return blockKeys == null ? "" : StringEscapeUtils.escapeHtml4(strBlockKeys());
-	}
-
-	public void htmBlockKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "BlockKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "BlockKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setBlockKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlockKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"blockKeys\"");
-							r.s(" value=\"", htmBlockKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmBlockKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// ageGroupKeys //
-	//////////////////
-
-	/**	L'entité « ageGroupKeys »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	protected List<Long> ageGroupKeys = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Wrap<List<Long>> ageGroupKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageGroupKeys").o(ageGroupKeys);
-
-	/**	<br/>L'entité « ageGroupKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageGroupKeys">Trouver l'entité ageGroupKeys dans Solr</a>
-	 * <br/>
-	 * @param ageGroupKeys est l'entité déjà construit. 
-	 **/
-	protected abstract void _ageGroupKeys(List<Long> o);
-
-	public List<Long> getAgeGroupKeys() {
-		return ageGroupKeys;
-	}
-
-	public void setAgeGroupKeys(List<Long> ageGroupKeys) {
-		this.ageGroupKeys = ageGroupKeys;
-		this.ageGroupKeysWrap.alreadyInitialized = true;
-	}
-	public School addAgeGroupKeys(Long...objets) {
-		for(Long o : objets) {
-			addAgeGroupKeys(o);
-		}
-		return (School)this;
-	}
-	public School addAgeGroupKeys(Long o) {
-		if(o != null && !ageGroupKeys.contains(o))
-			this.ageGroupKeys.add(o);
-		return (School)this;
-	}
-	public School setAgeGroupKeys(JsonArray objets) {
-		ageGroupKeys.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addAgeGroupKeys(o);
-		}
-		return (School)this;
-	}
-	public School addAgeGroupKeys(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addAgeGroupKeys(p);
-		}
-		return (School)this;
-	}
-	protected School ageGroupKeysInit() {
-		if(!ageGroupKeysWrap.alreadyInitialized) {
-			_ageGroupKeys(ageGroupKeys);
-		}
-		ageGroupKeysWrap.alreadyInitialized(true);
-		return (School)this;
-	}
-
-	public List<Long> solrAgeGroupKeys() {
-		return ageGroupKeys;
-	}
-
-	public String strAgeGroupKeys() {
-		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
-	}
-
-	public String jsonAgeGroupKeys() {
-		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
-	}
-
-	public String nomAffichageAgeGroupKeys() {
-		return "";
-	}
-
-	public String htmTooltipAgeGroupKeys() {
-		return null;
-	}
-
-	public String htmAgeGroupKeys() {
-		return ageGroupKeys == null ? "" : StringEscapeUtils.escapeHtml4(strAgeGroupKeys());
-	}
-
-	public void htmAgeGroupKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "AgeGroupKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "AgeGroupKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeGroupKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeGroupKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageGroupKeys\"");
-							r.s(" value=\"", htmAgeGroupKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeGroupKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////////
-	// sessionKeys //
-	/////////////////
-
-	/**	L'entité « sessionKeys »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 */
-	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
-	@JsonIgnore
-	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
-
-	/**	<br/>L'entité « sessionKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKeys">Trouver l'entité sessionKeys dans Solr</a>
-	 * <br/>
-	 * @param sessionKeys est l'entité déjà construit. 
-	 **/
-	protected abstract void _sessionKeys(List<Long> o);
-
-	public List<Long> getSessionKeys() {
-		return sessionKeys;
-	}
-
-	public void setSessionKeys(List<Long> sessionKeys) {
-		this.sessionKeys = sessionKeys;
-		this.sessionKeysWrap.alreadyInitialized = true;
-	}
-	public School addSessionKeys(Long...objets) {
-		for(Long o : objets) {
-			addSessionKeys(o);
-		}
-		return (School)this;
-	}
-	public School addSessionKeys(Long o) {
-		if(o != null && !sessionKeys.contains(o))
-			this.sessionKeys.add(o);
-		return (School)this;
-	}
-	public School setSessionKeys(JsonArray objets) {
-		sessionKeys.clear();
-		for(int i = 0; i < objets.size(); i++) {
-			Long o = objets.getLong(i);
-			addSessionKeys(o);
-		}
-		return (School)this;
-	}
-	public School addSessionKeys(String o) {
-		if(NumberUtils.isParsable(o)) {
-			Long p = Long.parseLong(o);
-			addSessionKeys(p);
-		}
-		return (School)this;
-	}
-	protected School sessionKeysInit() {
-		if(!sessionKeysWrap.alreadyInitialized) {
-			_sessionKeys(sessionKeys);
-		}
-		sessionKeysWrap.alreadyInitialized(true);
-		return (School)this;
-	}
-
-	public List<Long> solrSessionKeys() {
-		return sessionKeys;
-	}
-
-	public String strSessionKeys() {
-		return sessionKeys == null ? "" : sessionKeys.toString();
-	}
-
-	public String jsonSessionKeys() {
-		return sessionKeys == null ? "" : sessionKeys.toString();
-	}
-
-	public String nomAffichageSessionKeys() {
-		return "";
-	}
-
-	public String htmTooltipSessionKeys() {
-		return null;
-	}
-
-	public String htmSessionKeys() {
-		return sessionKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKeys());
-	}
-
-	public void htmSessionKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "SessionKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "SessionKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionKeys\"");
-							r.s(" value=\"", htmSessionKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionKeys());
+				r.s(htmYearKeys());
 			}
 			r.l("</div>");
 		}
@@ -800,98 +422,98 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
-	//////////////
-	// yearKeys //
-	//////////////
+	/////////////////
+	// sessionKeys //
+	/////////////////
 
-	/**	L'entité « yearKeys »
+	/**	L'entité « sessionKeys »
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
 	@JsonIgnore
-	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
+	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
 
-	/**	<br/>L'entité « yearKeys »
+	/**	<br/>L'entité « sessionKeys »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKeys">Trouver l'entité yearKeys dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKeys">Trouver l'entité sessionKeys dans Solr</a>
 	 * <br/>
-	 * @param yearKeys est l'entité déjà construit. 
+	 * @param sessionKeys est l'entité déjà construit. 
 	 **/
-	protected abstract void _yearKeys(List<Long> o);
+	protected abstract void _sessionKeys(List<Long> o);
 
-	public List<Long> getYearKeys() {
-		return yearKeys;
+	public List<Long> getSessionKeys() {
+		return sessionKeys;
 	}
 
-	public void setYearKeys(List<Long> yearKeys) {
-		this.yearKeys = yearKeys;
-		this.yearKeysWrap.alreadyInitialized = true;
+	public void setSessionKeys(List<Long> sessionKeys) {
+		this.sessionKeys = sessionKeys;
+		this.sessionKeysWrap.alreadyInitialized = true;
 	}
-	public School addYearKeys(Long...objets) {
+	public School addSessionKeys(Long...objets) {
 		for(Long o : objets) {
-			addYearKeys(o);
+			addSessionKeys(o);
 		}
 		return (School)this;
 	}
-	public School addYearKeys(Long o) {
-		if(o != null && !yearKeys.contains(o))
-			this.yearKeys.add(o);
+	public School addSessionKeys(Long o) {
+		if(o != null && !sessionKeys.contains(o))
+			this.sessionKeys.add(o);
 		return (School)this;
 	}
-	public School setYearKeys(JsonArray objets) {
-		yearKeys.clear();
+	public School setSessionKeys(JsonArray objets) {
+		sessionKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
-			addYearKeys(o);
+			addSessionKeys(o);
 		}
 		return (School)this;
 	}
-	public School addYearKeys(String o) {
+	public School addSessionKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
-			addYearKeys(p);
+			addSessionKeys(p);
 		}
 		return (School)this;
 	}
-	protected School yearKeysInit() {
-		if(!yearKeysWrap.alreadyInitialized) {
-			_yearKeys(yearKeys);
+	protected School sessionKeysInit() {
+		if(!sessionKeysWrap.alreadyInitialized) {
+			_sessionKeys(sessionKeys);
 		}
-		yearKeysWrap.alreadyInitialized(true);
+		sessionKeysWrap.alreadyInitialized(true);
 		return (School)this;
 	}
 
-	public List<Long> solrYearKeys() {
-		return yearKeys;
+	public List<Long> solrSessionKeys() {
+		return sessionKeys;
 	}
 
-	public String strYearKeys() {
-		return yearKeys == null ? "" : yearKeys.toString();
+	public String strSessionKeys() {
+		return sessionKeys == null ? "" : sessionKeys.toString();
 	}
 
-	public String jsonYearKeys() {
-		return yearKeys == null ? "" : yearKeys.toString();
+	public String jsonSessionKeys() {
+		return sessionKeys == null ? "" : sessionKeys.toString();
 	}
 
-	public String nomAffichageYearKeys() {
-		return "years";
+	public String nomAffichageSessionKeys() {
+		return "";
 	}
 
-	public String htmTooltipYearKeys() {
+	public String htmTooltipSessionKeys() {
 		return null;
 	}
 
-	public String htmYearKeys() {
-		return yearKeys == null ? "" : StringEscapeUtils.escapeHtml4(strYearKeys());
+	public String htmSessionKeys() {
+		return sessionKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKeys());
 	}
 
-	public void htmYearKeys(AllWriter r, Boolean patchRights) {
+	public void htmSessionKeys(AllWriter r, Boolean patchRights) {
 		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "YearKeys\">");
+			r.s("<div id=\"patchSchool", strPk(), "SessionKeys\">");
 			if(patchRights) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "YearKeys() {");
+				r.l("		function patchSchool", strPk(), "SessionKeys() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -904,23 +526,401 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setYearKeys\": this.value },");
+				r.l("				data: {\"setSessionKeys\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKeys()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKeys()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"yearKeys\"");
-							r.s(" value=\"", htmYearKeys(), "\");");
+							r.s(" name=\"sessionKeys\"");
+							r.s(" value=\"", htmSessionKeys(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmYearKeys());
+				r.s(htmSessionKeys());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// ageGroupKeys //
+	//////////////////
+
+	/**	L'entité « ageGroupKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> ageGroupKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> ageGroupKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageGroupKeys").o(ageGroupKeys);
+
+	/**	<br/>L'entité « ageGroupKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageGroupKeys">Trouver l'entité ageGroupKeys dans Solr</a>
+	 * <br/>
+	 * @param ageGroupKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _ageGroupKeys(List<Long> o);
+
+	public List<Long> getAgeGroupKeys() {
+		return ageGroupKeys;
+	}
+
+	public void setAgeGroupKeys(List<Long> ageGroupKeys) {
+		this.ageGroupKeys = ageGroupKeys;
+		this.ageGroupKeysWrap.alreadyInitialized = true;
+	}
+	public School addAgeGroupKeys(Long...objets) {
+		for(Long o : objets) {
+			addAgeGroupKeys(o);
+		}
+		return (School)this;
+	}
+	public School addAgeGroupKeys(Long o) {
+		if(o != null && !ageGroupKeys.contains(o))
+			this.ageGroupKeys.add(o);
+		return (School)this;
+	}
+	public School setAgeGroupKeys(JsonArray objets) {
+		ageGroupKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addAgeGroupKeys(o);
+		}
+		return (School)this;
+	}
+	public School addAgeGroupKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addAgeGroupKeys(p);
+		}
+		return (School)this;
+	}
+	protected School ageGroupKeysInit() {
+		if(!ageGroupKeysWrap.alreadyInitialized) {
+			_ageGroupKeys(ageGroupKeys);
+		}
+		ageGroupKeysWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public List<Long> solrAgeGroupKeys() {
+		return ageGroupKeys;
+	}
+
+	public String strAgeGroupKeys() {
+		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
+	}
+
+	public String jsonAgeGroupKeys() {
+		return ageGroupKeys == null ? "" : ageGroupKeys.toString();
+	}
+
+	public String nomAffichageAgeGroupKeys() {
+		return "";
+	}
+
+	public String htmTooltipAgeGroupKeys() {
+		return null;
+	}
+
+	public String htmAgeGroupKeys() {
+		return ageGroupKeys == null ? "" : StringEscapeUtils.escapeHtml4(strAgeGroupKeys());
+	}
+
+	public void htmAgeGroupKeys(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchool", strPk(), "AgeGroupKeys\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchool", strPk(), "AgeGroupKeys() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setAgeGroupKeys\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeGroupKeys()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ageGroupKeys\"");
+							r.s(" value=\"", htmAgeGroupKeys(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmAgeGroupKeys());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// blockKeys //
+	///////////////
+
+	/**	L'entité « blockKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
+
+	/**	<br/>L'entité « blockKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKeys">Trouver l'entité blockKeys dans Solr</a>
+	 * <br/>
+	 * @param blockKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _blockKeys(List<Long> o);
+
+	public List<Long> getBlockKeys() {
+		return blockKeys;
+	}
+
+	public void setBlockKeys(List<Long> blockKeys) {
+		this.blockKeys = blockKeys;
+		this.blockKeysWrap.alreadyInitialized = true;
+	}
+	public School addBlockKeys(Long...objets) {
+		for(Long o : objets) {
+			addBlockKeys(o);
+		}
+		return (School)this;
+	}
+	public School addBlockKeys(Long o) {
+		if(o != null && !blockKeys.contains(o))
+			this.blockKeys.add(o);
+		return (School)this;
+	}
+	public School setBlockKeys(JsonArray objets) {
+		blockKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addBlockKeys(o);
+		}
+		return (School)this;
+	}
+	public School addBlockKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addBlockKeys(p);
+		}
+		return (School)this;
+	}
+	protected School blockKeysInit() {
+		if(!blockKeysWrap.alreadyInitialized) {
+			_blockKeys(blockKeys);
+		}
+		blockKeysWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public List<Long> solrBlockKeys() {
+		return blockKeys;
+	}
+
+	public String strBlockKeys() {
+		return blockKeys == null ? "" : blockKeys.toString();
+	}
+
+	public String jsonBlockKeys() {
+		return blockKeys == null ? "" : blockKeys.toString();
+	}
+
+	public String nomAffichageBlockKeys() {
+		return "";
+	}
+
+	public String htmTooltipBlockKeys() {
+		return null;
+	}
+
+	public String htmBlockKeys() {
+		return blockKeys == null ? "" : StringEscapeUtils.escapeHtml4(strBlockKeys());
+	}
+
+	public void htmBlockKeys(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchool", strPk(), "BlockKeys\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchool", strPk(), "BlockKeys() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlockKeys\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlockKeys()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blockKeys\"");
+							r.s(" value=\"", htmBlockKeys(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlockKeys());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// childKeys //
+	///////////////
+
+	/**	L'entité « childKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> childKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> childKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childKeys").o(childKeys);
+
+	/**	<br/>L'entité « childKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childKeys">Trouver l'entité childKeys dans Solr</a>
+	 * <br/>
+	 * @param childKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _childKeys(List<Long> o);
+
+	public List<Long> getChildKeys() {
+		return childKeys;
+	}
+
+	public void setChildKeys(List<Long> childKeys) {
+		this.childKeys = childKeys;
+		this.childKeysWrap.alreadyInitialized = true;
+	}
+	public School addChildKeys(Long...objets) {
+		for(Long o : objets) {
+			addChildKeys(o);
+		}
+		return (School)this;
+	}
+	public School addChildKeys(Long o) {
+		if(o != null && !childKeys.contains(o))
+			this.childKeys.add(o);
+		return (School)this;
+	}
+	public School setChildKeys(JsonArray objets) {
+		childKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addChildKeys(o);
+		}
+		return (School)this;
+	}
+	public School addChildKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addChildKeys(p);
+		}
+		return (School)this;
+	}
+	protected School childKeysInit() {
+		if(!childKeysWrap.alreadyInitialized) {
+			_childKeys(childKeys);
+		}
+		childKeysWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public List<Long> solrChildKeys() {
+		return childKeys;
+	}
+
+	public String strChildKeys() {
+		return childKeys == null ? "" : childKeys.toString();
+	}
+
+	public String jsonChildKeys() {
+		return childKeys == null ? "" : childKeys.toString();
+	}
+
+	public String nomAffichageChildKeys() {
+		return "";
+	}
+
+	public String htmTooltipChildKeys() {
+		return null;
+	}
+
+	public String htmChildKeys() {
+		return childKeys == null ? "" : StringEscapeUtils.escapeHtml4(strChildKeys());
+	}
+
+	public void htmChildKeys(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchool", strPk(), "ChildKeys\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchool", strPk(), "ChildKeys() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setChildKeys\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildKeys()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"childKeys\"");
+							r.s(" value=\"", htmChildKeys(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmChildKeys());
 			}
 			r.l("</div>");
 		}
@@ -2394,12 +2394,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void initSchool() {
 		schoolKeyInit();
-		childKeysInit();
-		blockKeysInit();
-		ageGroupKeysInit();
-		sessionKeysInit();
-		seasonKeysInit();
 		yearKeysInit();
+		seasonKeysInit();
+		sessionKeysInit();
+		ageGroupKeysInit();
+		blockKeysInit();
+		childKeysInit();
 		educationSortInit();
 		schoolSortInit();
 		schoolNameInit();
@@ -2454,18 +2454,18 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		switch(var) {
 			case "schoolKey":
 				return oSchool.schoolKey;
-			case "childKeys":
-				return oSchool.childKeys;
-			case "blockKeys":
-				return oSchool.blockKeys;
-			case "ageGroupKeys":
-				return oSchool.ageGroupKeys;
-			case "sessionKeys":
-				return oSchool.sessionKeys;
-			case "seasonKeys":
-				return oSchool.seasonKeys;
 			case "yearKeys":
 				return oSchool.yearKeys;
+			case "seasonKeys":
+				return oSchool.seasonKeys;
+			case "sessionKeys":
+				return oSchool.sessionKeys;
+			case "ageGroupKeys":
+				return oSchool.ageGroupKeys;
+			case "blockKeys":
+				return oSchool.blockKeys;
+			case "childKeys":
+				return oSchool.childKeys;
 			case "educationSort":
 				return oSchool.educationSort;
 			case "schoolSort":
@@ -2597,22 +2597,14 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					oSchool.setSchoolKey(schoolKey);
 			}
 
-			if(savesSchool.contains("childKeys")) {
-				List<Long> childKeys = (List<Long>)solrDocument.get("childKeys_stored_longs");
-				if(childKeys != null)
-					oSchool.childKeys.addAll(childKeys);
-			}
+			List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
+			if(yearKeys != null)
+				oSchool.yearKeys.addAll(yearKeys);
 
-			if(savesSchool.contains("blockKeys")) {
-				List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
-				if(blockKeys != null)
-					oSchool.blockKeys.addAll(blockKeys);
-			}
-
-			if(savesSchool.contains("ageGroupKeys")) {
-				List<Long> ageGroupKeys = (List<Long>)solrDocument.get("ageGroupKeys_stored_longs");
-				if(ageGroupKeys != null)
-					oSchool.ageGroupKeys.addAll(ageGroupKeys);
+			if(savesSchool.contains("seasonKeys")) {
+				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
+				if(seasonKeys != null)
+					oSchool.seasonKeys.addAll(seasonKeys);
 			}
 
 			if(savesSchool.contains("sessionKeys")) {
@@ -2621,15 +2613,23 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					oSchool.sessionKeys.addAll(sessionKeys);
 			}
 
-			if(savesSchool.contains("seasonKeys")) {
-				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
-				if(seasonKeys != null)
-					oSchool.seasonKeys.addAll(seasonKeys);
+			if(savesSchool.contains("ageGroupKeys")) {
+				List<Long> ageGroupKeys = (List<Long>)solrDocument.get("ageGroupKeys_stored_longs");
+				if(ageGroupKeys != null)
+					oSchool.ageGroupKeys.addAll(ageGroupKeys);
 			}
 
-			List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
-			if(yearKeys != null)
-				oSchool.yearKeys.addAll(yearKeys);
+			if(savesSchool.contains("blockKeys")) {
+				List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
+				if(blockKeys != null)
+					oSchool.blockKeys.addAll(blockKeys);
+			}
+
+			if(savesSchool.contains("childKeys")) {
+				List<Long> childKeys = (List<Long>)solrDocument.get("childKeys_stored_longs");
+				if(childKeys != null)
+					oSchool.childKeys.addAll(childKeys);
+			}
 
 			if(savesSchool.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -2775,36 +2775,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolKey_indexed_long", schoolKey);
 			document.addField("schoolKey_stored_long", schoolKey);
 		}
-		if(childKeys != null) {
-			for(java.lang.Long o : childKeys) {
-				document.addField("childKeys_indexed_longs", o);
+		if(yearKeys != null) {
+			for(java.lang.Long o : yearKeys) {
+				document.addField("yearKeys_indexed_longs", o);
 			}
-			for(java.lang.Long o : childKeys) {
-				document.addField("childKeys_stored_longs", o);
-			}
-		}
-		if(blockKeys != null) {
-			for(java.lang.Long o : blockKeys) {
-				document.addField("blockKeys_indexed_longs", o);
-			}
-			for(java.lang.Long o : blockKeys) {
-				document.addField("blockKeys_stored_longs", o);
-			}
-		}
-		if(ageGroupKeys != null) {
-			for(java.lang.Long o : ageGroupKeys) {
-				document.addField("ageGroupKeys_indexed_longs", o);
-			}
-			for(java.lang.Long o : ageGroupKeys) {
-				document.addField("ageGroupKeys_stored_longs", o);
-			}
-		}
-		if(sessionKeys != null) {
-			for(java.lang.Long o : sessionKeys) {
-				document.addField("sessionKeys_indexed_longs", o);
-			}
-			for(java.lang.Long o : sessionKeys) {
-				document.addField("sessionKeys_stored_longs", o);
+			for(java.lang.Long o : yearKeys) {
+				document.addField("yearKeys_stored_longs", o);
 			}
 		}
 		if(seasonKeys != null) {
@@ -2815,12 +2791,36 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				document.addField("seasonKeys_stored_longs", o);
 			}
 		}
-		if(yearKeys != null) {
-			for(java.lang.Long o : yearKeys) {
-				document.addField("yearKeys_indexed_longs", o);
+		if(sessionKeys != null) {
+			for(java.lang.Long o : sessionKeys) {
+				document.addField("sessionKeys_indexed_longs", o);
 			}
-			for(java.lang.Long o : yearKeys) {
-				document.addField("yearKeys_stored_longs", o);
+			for(java.lang.Long o : sessionKeys) {
+				document.addField("sessionKeys_stored_longs", o);
+			}
+		}
+		if(ageGroupKeys != null) {
+			for(java.lang.Long o : ageGroupKeys) {
+				document.addField("ageGroupKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : ageGroupKeys) {
+				document.addField("ageGroupKeys_stored_longs", o);
+			}
+		}
+		if(blockKeys != null) {
+			for(java.lang.Long o : blockKeys) {
+				document.addField("blockKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : blockKeys) {
+				document.addField("blockKeys_stored_longs", o);
+			}
+		}
+		if(childKeys != null) {
+			for(java.lang.Long o : childKeys) {
+				document.addField("childKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : childKeys) {
+				document.addField("childKeys_stored_longs", o);
 			}
 		}
 		if(educationSort != null) {
@@ -2906,29 +2906,29 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolKey != null)
 			oSchool.setSchoolKey(schoolKey);
 
-		List<Long> childKeys = (List<Long>)solrDocument.get("childKeys_stored_longs");
-		if(childKeys != null)
-			oSchool.childKeys.addAll(childKeys);
-
-		List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
-		if(blockKeys != null)
-			oSchool.blockKeys.addAll(blockKeys);
-
-		List<Long> ageGroupKeys = (List<Long>)solrDocument.get("ageGroupKeys_stored_longs");
-		if(ageGroupKeys != null)
-			oSchool.ageGroupKeys.addAll(ageGroupKeys);
-
-		List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
-		if(sessionKeys != null)
-			oSchool.sessionKeys.addAll(sessionKeys);
+		List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
+		if(yearKeys != null)
+			oSchool.yearKeys.addAll(yearKeys);
 
 		List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 		if(seasonKeys != null)
 			oSchool.seasonKeys.addAll(seasonKeys);
 
-		List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
-		if(yearKeys != null)
-			oSchool.yearKeys.addAll(yearKeys);
+		List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
+		if(sessionKeys != null)
+			oSchool.sessionKeys.addAll(sessionKeys);
+
+		List<Long> ageGroupKeys = (List<Long>)solrDocument.get("ageGroupKeys_stored_longs");
+		if(ageGroupKeys != null)
+			oSchool.ageGroupKeys.addAll(ageGroupKeys);
+
+		List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
+		if(blockKeys != null)
+			oSchool.blockKeys.addAll(blockKeys);
+
+		List<Long> childKeys = (List<Long>)solrDocument.get("childKeys_stored_longs");
+		if(childKeys != null)
+			oSchool.childKeys.addAll(childKeys);
 
 		Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 		if(educationSort != null)

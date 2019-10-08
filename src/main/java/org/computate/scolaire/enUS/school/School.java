@@ -12,17 +12,17 @@ public class School extends SchoolGen<Cluster> {
 		c.o(pk);
 	}
 
-	protected void _childKeys(List<Long> o) {}
-
-	protected void _blockKeys(List<Long> o) {}
-
-	protected void _ageGroupKeys(List<Long> o) {}
-
-	protected void _sessionKeys(List<Long> o) {}
+	protected void _yearKeys(List<Long> o) {}
 
 	protected void _seasonKeys(List<Long> o) {}
 
-	protected void _yearKeys(List<Long> o) {}
+	protected void _sessionKeys(List<Long> o) {}
+
+	protected void _ageGroupKeys(List<Long> o) {}
+
+	protected void _blockKeys(List<Long> o) {}
+
+	protected void _childKeys(List<Long> o) {}
 
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(1);

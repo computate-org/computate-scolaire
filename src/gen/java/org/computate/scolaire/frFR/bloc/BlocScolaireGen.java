@@ -73,546 +73,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public static final String BlocScolaire_IconeGroupe = "regular";
 	public static final String BlocScolaire_IconeNom = "bell";
 
-	//////////////
-	// ecoleCle //
-	//////////////
-
-	/**	L'entité « ecoleCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long ecoleCle;
-	@JsonIgnore
-	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
-
-	/**	<br/>L'entité « ecoleCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCle">Trouver l'entité ecoleCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _ecoleCle(Couverture<Long> c);
-
-	public Long getEcoleCle() {
-		return ecoleCle;
-	}
-
-	public void setEcoleCle(Long ecoleCle) {
-		this.ecoleCle = ecoleCle;
-		this.ecoleCleCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setEcoleCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ecoleCle = Long.parseLong(o);
-		this.ecoleCleCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire ecoleCleInit() {
-		if(!ecoleCleCouverture.dejaInitialise) {
-			_ecoleCle(ecoleCleCouverture);
-			if(ecoleCle == null)
-				setEcoleCle(ecoleCleCouverture.o);
-		}
-		ecoleCleCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Long solrEcoleCle() {
-		return ecoleCle;
-	}
-
-	public String strEcoleCle() {
-		return ecoleCle == null ? "" : ecoleCle.toString();
-	}
-
-	public String jsonEcoleCle() {
-		return ecoleCle == null ? "" : ecoleCle.toString();
-	}
-
-	public String nomAffichageEcoleCle() {
-		return "école";
-	}
-
-	public String htmTooltipEcoleCle() {
-		return null;
-	}
-
-	public String htmEcoleCle() {
-		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
-	}
-
-	public void htmEcoleCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "EcoleCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "EcoleCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleCle\"");
-							r.s(" value=\"", htmEcoleCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////
-	// anneeCle //
-	//////////////
-
-	/**	L'entité « anneeCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long anneeCle;
-	@JsonIgnore
-	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
-
-	/**	<br/>L'entité « anneeCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCle">Trouver l'entité anneeCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _anneeCle(Couverture<Long> c);
-
-	public Long getAnneeCle() {
-		return anneeCle;
-	}
-
-	public void setAnneeCle(Long anneeCle) {
-		this.anneeCle = anneeCle;
-		this.anneeCleCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setAnneeCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeCle = Long.parseLong(o);
-		this.anneeCleCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire anneeCleInit() {
-		if(!anneeCleCouverture.dejaInitialise) {
-			_anneeCle(anneeCleCouverture);
-			if(anneeCle == null)
-				setAnneeCle(anneeCleCouverture.o);
-		}
-		anneeCleCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Long solrAnneeCle() {
-		return anneeCle;
-	}
-
-	public String strAnneeCle() {
-		return anneeCle == null ? "" : anneeCle.toString();
-	}
-
-	public String jsonAnneeCle() {
-		return anneeCle == null ? "" : anneeCle.toString();
-	}
-
-	public String nomAffichageAnneeCle() {
-		return "année";
-	}
-
-	public String htmTooltipAnneeCle() {
-		return null;
-	}
-
-	public String htmAnneeCle() {
-		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
-	}
-
-	public void htmAnneeCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "AnneeCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "AnneeCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeCle\"");
-							r.s(" value=\"", htmAnneeCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////
-	// saisonCle //
-	///////////////
-
-	/**	L'entité « saisonCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long saisonCle;
-	@JsonIgnore
-	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
-
-	/**	<br/>L'entité « saisonCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _saisonCle(Couverture<Long> c);
-
-	public Long getSaisonCle() {
-		return saisonCle;
-	}
-
-	public void setSaisonCle(Long saisonCle) {
-		this.saisonCle = saisonCle;
-		this.saisonCleCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setSaisonCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.saisonCle = Long.parseLong(o);
-		this.saisonCleCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire saisonCleInit() {
-		if(!saisonCleCouverture.dejaInitialise) {
-			_saisonCle(saisonCleCouverture);
-			if(saisonCle == null)
-				setSaisonCle(saisonCleCouverture.o);
-		}
-		saisonCleCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Long solrSaisonCle() {
-		return saisonCle;
-	}
-
-	public String strSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String jsonSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String nomAffichageSaisonCle() {
-		return "saison";
-	}
-
-	public String htmTooltipSaisonCle() {
-		return null;
-	}
-
-	public String htmSaisonCle() {
-		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
-	}
-
-	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "SaisonCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "SaisonCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonCle\"");
-							r.s(" value=\"", htmSaisonCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////////
-	// sessionCle //
-	////////////////
-
-	/**	L'entité « sessionCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long sessionCle;
-	@JsonIgnore
-	public Couverture<Long> sessionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("sessionCle").o(sessionCle);
-
-	/**	<br/>L'entité « sessionCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCle">Trouver l'entité sessionCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _sessionCle(Couverture<Long> c);
-
-	public Long getSessionCle() {
-		return sessionCle;
-	}
-
-	public void setSessionCle(Long sessionCle) {
-		this.sessionCle = sessionCle;
-		this.sessionCleCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setSessionCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionCle = Long.parseLong(o);
-		this.sessionCleCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire sessionCleInit() {
-		if(!sessionCleCouverture.dejaInitialise) {
-			_sessionCle(sessionCleCouverture);
-			if(sessionCle == null)
-				setSessionCle(sessionCleCouverture.o);
-		}
-		sessionCleCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Long solrSessionCle() {
-		return sessionCle;
-	}
-
-	public String strSessionCle() {
-		return sessionCle == null ? "" : sessionCle.toString();
-	}
-
-	public String jsonSessionCle() {
-		return sessionCle == null ? "" : sessionCle.toString();
-	}
-
-	public String nomAffichageSessionCle() {
-		return "clé";
-	}
-
-	public String htmTooltipSessionCle() {
-		return null;
-	}
-
-	public String htmSessionCle() {
-		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
-	}
-
-	public void htmSessionCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "SessionCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "SessionCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionCle\"");
-							r.s(" value=\"", htmSessionCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////
-	// ageCle //
-	////////////
-
-	/**	L'entité « ageCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long ageCle;
-	@JsonIgnore
-	public Couverture<Long> ageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ageCle").o(ageCle);
-
-	/**	<br/>L'entité « ageCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCle">Trouver l'entité ageCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _ageCle(Couverture<Long> c);
-
-	public Long getAgeCle() {
-		return ageCle;
-	}
-
-	public void setAgeCle(Long ageCle) {
-		this.ageCle = ageCle;
-		this.ageCleCouverture.dejaInitialise = true;
-	}
-	public BlocScolaire setAgeCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ageCle = Long.parseLong(o);
-		this.ageCleCouverture.dejaInitialise = true;
-		return (BlocScolaire)this;
-	}
-	protected BlocScolaire ageCleInit() {
-		if(!ageCleCouverture.dejaInitialise) {
-			_ageCle(ageCleCouverture);
-			if(ageCle == null)
-				setAgeCle(ageCleCouverture.o);
-		}
-		ageCleCouverture.dejaInitialise(true);
-		return (BlocScolaire)this;
-	}
-
-	public Long solrAgeCle() {
-		return ageCle;
-	}
-
-	public String strAgeCle() {
-		return ageCle == null ? "" : ageCle.toString();
-	}
-
-	public String jsonAgeCle() {
-		return ageCle == null ? "" : ageCle.toString();
-	}
-
-	public String nomAffichageAgeCle() {
-		return "âge";
-	}
-
-	public String htmTooltipAgeCle() {
-		return null;
-	}
-
-	public String htmAgeCle() {
-		return ageCle == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCle());
-	}
-
-	public void htmAgeCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchBlocScolaire", strPk(), "AgeCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchBlocScolaire", strPk(), "AgeCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageCle\"");
-							r.s(" value=\"", htmAgeCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////
 	// blocCle //
 	/////////////
@@ -1640,44 +1100,582 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return (BlocScolaire)this;
 	}
 
-	/////////
-	// age //
-	/////////
+	//////////
+	// age_ //
+	//////////
 
-	/**	L'entité « age »
+	/**	L'entité « age_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected AgeScolaire age;
+	protected AgeScolaire age_;
 	@JsonIgnore
-	public Couverture<AgeScolaire> ageCouverture = new Couverture<AgeScolaire>().p(this).c(AgeScolaire.class).var("age").o(age);
+	public Couverture<AgeScolaire> age_Couverture = new Couverture<AgeScolaire>().p(this).c(AgeScolaire.class).var("age_").o(age_);
 
-	/**	<br/>L'entité « age »
+	/**	<br/>L'entité « age_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:age">Trouver l'entité age dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:age_">Trouver l'entité age_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _age(Couverture<AgeScolaire> c);
+	protected abstract void _age_(Couverture<AgeScolaire> c);
 
-	public AgeScolaire getAge() {
-		return age;
+	public AgeScolaire getAge_() {
+		return age_;
 	}
 
-	public void setAge(AgeScolaire age) {
-		this.age = age;
-		this.ageCouverture.dejaInitialise = true;
+	public void setAge_(AgeScolaire age_) {
+		this.age_ = age_;
+		this.age_Couverture.dejaInitialise = true;
 	}
-	protected BlocScolaire ageInit() {
-		if(!ageCouverture.dejaInitialise) {
-			_age(ageCouverture);
-			if(age == null)
-				setAge(ageCouverture.o);
+	protected BlocScolaire age_Init() {
+		if(!age_Couverture.dejaInitialise) {
+			_age_(age_Couverture);
+			if(age_ == null)
+				setAge_(age_Couverture.o);
 		}
-		if(age != null)
-			age.initLoinPourClasse(requeteSite_);
-		ageCouverture.dejaInitialise(true);
+		age_Couverture.dejaInitialise(true);
 		return (BlocScolaire)this;
+	}
+
+	//////////////
+	// ecoleCle //
+	//////////////
+
+	/**	L'entité « ecoleCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long ecoleCle;
+	@JsonIgnore
+	public Couverture<Long> ecoleCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ecoleCle").o(ecoleCle);
+
+	/**	<br/>L'entité « ecoleCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCle">Trouver l'entité ecoleCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleCle(Couverture<Long> c);
+
+	public Long getEcoleCle() {
+		return ecoleCle;
+	}
+
+	public void setEcoleCle(Long ecoleCle) {
+		this.ecoleCle = ecoleCle;
+		this.ecoleCleCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setEcoleCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ecoleCle = Long.parseLong(o);
+		this.ecoleCleCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire ecoleCleInit() {
+		if(!ecoleCleCouverture.dejaInitialise) {
+			_ecoleCle(ecoleCleCouverture);
+			if(ecoleCle == null)
+				setEcoleCle(ecoleCleCouverture.o);
+		}
+		ecoleCleCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Long solrEcoleCle() {
+		return ecoleCle;
+	}
+
+	public String strEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
+	public String jsonEcoleCle() {
+		return ecoleCle == null ? "" : ecoleCle.toString();
+	}
+
+	public String nomAffichageEcoleCle() {
+		return "école";
+	}
+
+	public String htmTooltipEcoleCle() {
+		return null;
+	}
+
+	public String htmEcoleCle() {
+		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
+	}
+
+	public void htmEcoleCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "EcoleCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "EcoleCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleCle\"");
+							r.s(" value=\"", htmEcoleCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////
+	// anneeCle //
+	//////////////
+
+	/**	L'entité « anneeCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long anneeCle;
+	@JsonIgnore
+	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
+
+	/**	<br/>L'entité « anneeCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCle">Trouver l'entité anneeCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeCle(Couverture<Long> c);
+
+	public Long getAnneeCle() {
+		return anneeCle;
+	}
+
+	public void setAnneeCle(Long anneeCle) {
+		this.anneeCle = anneeCle;
+		this.anneeCleCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setAnneeCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.anneeCle = Long.parseLong(o);
+		this.anneeCleCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire anneeCleInit() {
+		if(!anneeCleCouverture.dejaInitialise) {
+			_anneeCle(anneeCleCouverture);
+			if(anneeCle == null)
+				setAnneeCle(anneeCleCouverture.o);
+		}
+		anneeCleCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Long solrAnneeCle() {
+		return anneeCle;
+	}
+
+	public String strAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String jsonAnneeCle() {
+		return anneeCle == null ? "" : anneeCle.toString();
+	}
+
+	public String nomAffichageAnneeCle() {
+		return "année";
+	}
+
+	public String htmTooltipAnneeCle() {
+		return null;
+	}
+
+	public String htmAnneeCle() {
+		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
+	}
+
+	public void htmAnneeCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "AnneeCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "AnneeCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setAnneeCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"anneeCle\"");
+							r.s(" value=\"", htmAnneeCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmAnneeCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// saisonCle //
+	///////////////
+
+	/**	L'entité « saisonCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long saisonCle;
+	@JsonIgnore
+	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
+
+	/**	<br/>L'entité « saisonCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonCle(Couverture<Long> c);
+
+	public Long getSaisonCle() {
+		return saisonCle;
+	}
+
+	public void setSaisonCle(Long saisonCle) {
+		this.saisonCle = saisonCle;
+		this.saisonCleCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setSaisonCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.saisonCle = Long.parseLong(o);
+		this.saisonCleCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire saisonCleInit() {
+		if(!saisonCleCouverture.dejaInitialise) {
+			_saisonCle(saisonCleCouverture);
+			if(saisonCle == null)
+				setSaisonCle(saisonCleCouverture.o);
+		}
+		saisonCleCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Long solrSaisonCle() {
+		return saisonCle;
+	}
+
+	public String strSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String jsonSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String nomAffichageSaisonCle() {
+		return "année";
+	}
+
+	public String htmTooltipSaisonCle() {
+		return null;
+	}
+
+	public String htmSaisonCle() {
+		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
+	}
+
+	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "SaisonCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "SaisonCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSaisonCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"saisonCle\"");
+							r.s(" value=\"", htmSaisonCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSaisonCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////
+	// sessionCle //
+	////////////////
+
+	/**	L'entité « sessionCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long sessionCle;
+	@JsonIgnore
+	public Couverture<Long> sessionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("sessionCle").o(sessionCle);
+
+	/**	<br/>L'entité « sessionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCle">Trouver l'entité sessionCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionCle(Couverture<Long> c);
+
+	public Long getSessionCle() {
+		return sessionCle;
+	}
+
+	public void setSessionCle(Long sessionCle) {
+		this.sessionCle = sessionCle;
+		this.sessionCleCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setSessionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.sessionCle = Long.parseLong(o);
+		this.sessionCleCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire sessionCleInit() {
+		if(!sessionCleCouverture.dejaInitialise) {
+			_sessionCle(sessionCleCouverture);
+			if(sessionCle == null)
+				setSessionCle(sessionCleCouverture.o);
+		}
+		sessionCleCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Long solrSessionCle() {
+		return sessionCle;
+	}
+
+	public String strSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String jsonSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String nomAffichageSessionCle() {
+		return "session";
+	}
+
+	public String htmTooltipSessionCle() {
+		return null;
+	}
+
+	public String htmSessionCle() {
+		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
+	}
+
+	public void htmSessionCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "SessionCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "SessionCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionCle\"");
+							r.s(" value=\"", htmSessionCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////
+	// ageCle //
+	////////////
+
+	/**	L'entité « ageCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long ageCle;
+	@JsonIgnore
+	public Couverture<Long> ageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("ageCle").o(ageCle);
+
+	/**	<br/>L'entité « ageCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCle">Trouver l'entité ageCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageCle(Couverture<Long> c);
+
+	public Long getAgeCle() {
+		return ageCle;
+	}
+
+	public void setAgeCle(Long ageCle) {
+		this.ageCle = ageCle;
+		this.ageCleCouverture.dejaInitialise = true;
+	}
+	public BlocScolaire setAgeCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ageCle = Long.parseLong(o);
+		this.ageCleCouverture.dejaInitialise = true;
+		return (BlocScolaire)this;
+	}
+	protected BlocScolaire ageCleInit() {
+		if(!ageCleCouverture.dejaInitialise) {
+			_ageCle(ageCleCouverture);
+			if(ageCle == null)
+				setAgeCle(ageCleCouverture.o);
+		}
+		ageCleCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public Long solrAgeCle() {
+		return ageCle;
+	}
+
+	public String strAgeCle() {
+		return ageCle == null ? "" : ageCle.toString();
+	}
+
+	public String jsonAgeCle() {
+		return ageCle == null ? "" : ageCle.toString();
+	}
+
+	public String nomAffichageAgeCle() {
+		return "âge";
+	}
+
+	public String htmTooltipAgeCle() {
+		return null;
+	}
+
+	public String htmAgeCle() {
+		return ageCle == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCle());
+	}
+
+	public void htmAgeCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "AgeCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "AgeCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setAgeCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ageCle\"");
+							r.s(" value=\"", htmAgeCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmAgeCle());
+			}
+			r.l("</div>");
+		}
 	}
 
 	/////////////////////
@@ -1777,6 +1775,108 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmEcoleNomComplet());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////
+	// ecoleEmplacement //
+	//////////////////////
+
+	/**	L'entité « ecoleEmplacement »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleEmplacement;
+	@JsonIgnore
+	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
+
+	/**	<br/>L'entité « ecoleEmplacement »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleEmplacement">Trouver l'entité ecoleEmplacement dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleEmplacement(Couverture<String> c);
+
+	public String getEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public void setEcoleEmplacement(String ecoleEmplacement) {
+		this.ecoleEmplacement = ecoleEmplacement;
+		this.ecoleEmplacementCouverture.dejaInitialise = true;
+	}
+	protected BlocScolaire ecoleEmplacementInit() {
+		if(!ecoleEmplacementCouverture.dejaInitialise) {
+			_ecoleEmplacement(ecoleEmplacementCouverture);
+			if(ecoleEmplacement == null)
+				setEcoleEmplacement(ecoleEmplacementCouverture.o);
+		}
+		ecoleEmplacementCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public String solrEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public String strEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String jsonEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String nomAffichageEcoleEmplacement() {
+		return "l'emplacement";
+	}
+
+	public String htmTooltipEcoleEmplacement() {
+		return null;
+	}
+
+	public String htmEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleEmplacement());
+	}
+
+	public void htmEcoleEmplacement(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchBlocScolaire", strPk(), "EcoleEmplacement\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchBlocScolaire", strPk(), "EcoleEmplacement() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleEmplacement\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleEmplacement()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleEmplacement\"");
+							r.s(" value=\"", htmEcoleEmplacement(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleEmplacement());
 			}
 			r.l("</div>");
 		}
@@ -4624,11 +4724,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initBlocScolaire() {
-		ecoleCleInit();
-		anneeCleInit();
-		saisonCleInit();
-		sessionCleInit();
-		ageCleInit();
 		blocCleInit();
 		enfantCleInit();
 		inscriptionClesInit();
@@ -4639,8 +4734,14 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		sessionTriInit();
 		ageTriInit();
 		ageRechercheInit();
-		ageInit();
+		age_Init();
+		ecoleCleInit();
+		anneeCleInit();
+		saisonCleInit();
+		sessionCleInit();
+		ageCleInit();
 		ecoleNomCompletInit();
+		ecoleEmplacementInit();
 		anneeDebutInit();
 		anneeFinInit();
 		saisonJourDebutInit();
@@ -4681,8 +4782,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(ageRecherche != null)
 			ageRecherche.setRequeteSite_(requeteSite_);
-		if(age != null)
-			age.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -4709,16 +4808,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public Object obtenirBlocScolaire(String var) {
 		BlocScolaire oBlocScolaire = (BlocScolaire)this;
 		switch(var) {
-			case "ecoleCle":
-				return oBlocScolaire.ecoleCle;
-			case "anneeCle":
-				return oBlocScolaire.anneeCle;
-			case "saisonCle":
-				return oBlocScolaire.saisonCle;
-			case "sessionCle":
-				return oBlocScolaire.sessionCle;
-			case "ageCle":
-				return oBlocScolaire.ageCle;
 			case "blocCle":
 				return oBlocScolaire.blocCle;
 			case "enfantCle":
@@ -4739,10 +4828,22 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.ageTri;
 			case "ageRecherche":
 				return oBlocScolaire.ageRecherche;
-			case "age":
-				return oBlocScolaire.age;
+			case "age_":
+				return oBlocScolaire.age_;
+			case "ecoleCle":
+				return oBlocScolaire.ecoleCle;
+			case "anneeCle":
+				return oBlocScolaire.anneeCle;
+			case "saisonCle":
+				return oBlocScolaire.saisonCle;
+			case "sessionCle":
+				return oBlocScolaire.sessionCle;
+			case "ageCle":
+				return oBlocScolaire.ageCle;
 			case "ecoleNomComplet":
 				return oBlocScolaire.ecoleNomComplet;
+			case "ecoleEmplacement":
+				return oBlocScolaire.ecoleEmplacement;
 			case "anneeDebut":
 				return oBlocScolaire.anneeDebut;
 			case "anneeFin":
@@ -4820,9 +4921,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public Object attribuerBlocScolaire(String var, Object val) {
 		BlocScolaire oBlocScolaire = (BlocScolaire)this;
 		switch(var) {
-			case "ageCle":
-				oBlocScolaire.setAgeCle((Long)val);
-				return val;
 			case "inscriptionCles":
 				oBlocScolaire.addInscriptionCles((Long)val);
 				return val;
@@ -4915,34 +5013,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		sauvegardesBlocScolaire = (List<String>)solrDocument.get("sauvegardesBlocScolaire_stored_strings");
 		if(sauvegardesBlocScolaire != null) {
 
-			if(sauvegardesBlocScolaire.contains("ecoleCle")) {
-				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
-				if(ecoleCle != null)
-					oBlocScolaire.setEcoleCle(ecoleCle);
-			}
-
-			if(sauvegardesBlocScolaire.contains("anneeCle")) {
-				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-				if(anneeCle != null)
-					oBlocScolaire.setAnneeCle(anneeCle);
-			}
-
-			if(sauvegardesBlocScolaire.contains("saisonCle")) {
-				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-				if(saisonCle != null)
-					oBlocScolaire.setSaisonCle(saisonCle);
-			}
-
-			if(sauvegardesBlocScolaire.contains("sessionCle")) {
-				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-				if(sessionCle != null)
-					oBlocScolaire.setSessionCle(sessionCle);
-			}
-
-			Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
-			if(ageCle != null)
-				oBlocScolaire.setAgeCle(ageCle);
-
 			if(sauvegardesBlocScolaire.contains("blocCle")) {
 				Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
 				if(blocCle != null)
@@ -4995,10 +5065,46 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setAgeTri(ageTri);
 			}
 
+			if(sauvegardesBlocScolaire.contains("ecoleCle")) {
+				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
+				if(ecoleCle != null)
+					oBlocScolaire.setEcoleCle(ecoleCle);
+			}
+
+			if(sauvegardesBlocScolaire.contains("anneeCle")) {
+				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+				if(anneeCle != null)
+					oBlocScolaire.setAnneeCle(anneeCle);
+			}
+
+			if(sauvegardesBlocScolaire.contains("saisonCle")) {
+				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+				if(saisonCle != null)
+					oBlocScolaire.setSaisonCle(saisonCle);
+			}
+
+			if(sauvegardesBlocScolaire.contains("sessionCle")) {
+				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+				if(sessionCle != null)
+					oBlocScolaire.setSessionCle(sessionCle);
+			}
+
+			if(sauvegardesBlocScolaire.contains("ageCle")) {
+				Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
+				if(ageCle != null)
+					oBlocScolaire.setAgeCle(ageCle);
+			}
+
 			if(sauvegardesBlocScolaire.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oBlocScolaire.setEcoleNomComplet(ecoleNomComplet);
+			}
+
+			if(sauvegardesBlocScolaire.contains("ecoleEmplacement")) {
+				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+				if(ecoleEmplacement != null)
+					oBlocScolaire.setEcoleEmplacement(ecoleEmplacement);
 			}
 
 			if(sauvegardesBlocScolaire.contains("anneeDebut")) {
@@ -5225,26 +5331,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(sauvegardesBlocScolaire != null)
 			document.addField("sauvegardesBlocScolaire_stored_strings", sauvegardesBlocScolaire);
 
-		if(ecoleCle != null) {
-			document.addField("ecoleCle_indexed_long", ecoleCle);
-			document.addField("ecoleCle_stored_long", ecoleCle);
-		}
-		if(anneeCle != null) {
-			document.addField("anneeCle_indexed_long", anneeCle);
-			document.addField("anneeCle_stored_long", anneeCle);
-		}
-		if(saisonCle != null) {
-			document.addField("saisonCle_indexed_long", saisonCle);
-			document.addField("saisonCle_stored_long", saisonCle);
-		}
-		if(sessionCle != null) {
-			document.addField("sessionCle_indexed_long", sessionCle);
-			document.addField("sessionCle_stored_long", sessionCle);
-		}
-		if(ageCle != null) {
-			document.addField("ageCle_indexed_long", ageCle);
-			document.addField("ageCle_stored_long", ageCle);
-		}
 		if(blocCle != null) {
 			document.addField("blocCle_indexed_long", blocCle);
 			document.addField("blocCle_stored_long", blocCle);
@@ -5285,9 +5371,33 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ageTri_indexed_int", ageTri);
 			document.addField("ageTri_stored_int", ageTri);
 		}
+		if(ecoleCle != null) {
+			document.addField("ecoleCle_indexed_long", ecoleCle);
+			document.addField("ecoleCle_stored_long", ecoleCle);
+		}
+		if(anneeCle != null) {
+			document.addField("anneeCle_indexed_long", anneeCle);
+			document.addField("anneeCle_stored_long", anneeCle);
+		}
+		if(saisonCle != null) {
+			document.addField("saisonCle_indexed_long", saisonCle);
+			document.addField("saisonCle_stored_long", saisonCle);
+		}
+		if(sessionCle != null) {
+			document.addField("sessionCle_indexed_long", sessionCle);
+			document.addField("sessionCle_stored_long", sessionCle);
+		}
+		if(ageCle != null) {
+			document.addField("ageCle_indexed_long", ageCle);
+			document.addField("ageCle_stored_long", ageCle);
+		}
 		if(ecoleNomComplet != null) {
 			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
+		}
+		if(ecoleEmplacement != null) {
+			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
+			document.addField("ecoleEmplacement_stored_string", ecoleEmplacement);
 		}
 		if(anneeDebut != null) {
 			document.addField("anneeDebut_indexed_int", anneeDebut);
@@ -5424,26 +5534,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public void stockerBlocScolaire(SolrDocument solrDocument) {
 		BlocScolaire oBlocScolaire = (BlocScolaire)this;
 
-		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
-		if(ecoleCle != null)
-			oBlocScolaire.setEcoleCle(ecoleCle);
-
-		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-		if(anneeCle != null)
-			oBlocScolaire.setAnneeCle(anneeCle);
-
-		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-		if(saisonCle != null)
-			oBlocScolaire.setSaisonCle(saisonCle);
-
-		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-		if(sessionCle != null)
-			oBlocScolaire.setSessionCle(sessionCle);
-
-		Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
-		if(ageCle != null)
-			oBlocScolaire.setAgeCle(ageCle);
-
 		Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
 		if(blocCle != null)
 			oBlocScolaire.setBlocCle(blocCle);
@@ -5480,9 +5570,33 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(ageTri != null)
 			oBlocScolaire.setAgeTri(ageTri);
 
+		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
+		if(ecoleCle != null)
+			oBlocScolaire.setEcoleCle(ecoleCle);
+
+		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+		if(anneeCle != null)
+			oBlocScolaire.setAnneeCle(anneeCle);
+
+		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+		if(saisonCle != null)
+			oBlocScolaire.setSaisonCle(saisonCle);
+
+		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+		if(sessionCle != null)
+			oBlocScolaire.setSessionCle(sessionCle);
+
+		Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
+		if(ageCle != null)
+			oBlocScolaire.setAgeCle(ageCle);
+
 		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 		if(ecoleNomComplet != null)
 			oBlocScolaire.setEcoleNomComplet(ecoleNomComplet);
+
+		String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+		if(ecoleEmplacement != null)
+			oBlocScolaire.setEcoleEmplacement(ecoleEmplacement);
 
 		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 		if(anneeDebut != null)
@@ -5595,7 +5709,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageCle, inscriptionCles, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi);
+		return Objects.hash(super.hashCode(), inscriptionCles, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi);
 	}
 
 	////////////
@@ -5609,7 +5723,6 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			return false;
 		BlocScolaire that = (BlocScolaire)o;
 		return super.equals(o)
-				&& Objects.equals( ageCle, that.ageCle )
 				&& Objects.equals( inscriptionCles, that.inscriptionCles )
 				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
 				&& Objects.equals( blocHeureFin, that.blocHeureFin )
@@ -5631,8 +5744,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("BlocScolaire { ");
-		sb.append( "ageCle: " ).append(ageCle);
-		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "inscriptionCles: " ).append(inscriptionCles);
 		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
 		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
 		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);

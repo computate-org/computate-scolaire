@@ -3,6 +3,7 @@ package org.computate.scolaire.frFR.session;
 import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -52,48 +53,6 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteAdmin
 */                                             
 public class SessionScolaire extends SessionScolaireGen<Cluster> {
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: schoolKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: école
-	 * NomAffichage.enUS: school
-	 */                
-	protected void _ecoleCle(Couverture<Long> c) {
-	}
-
-	/*
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la session scolaire. 
-	 * Description.enUS: The school year of the school session. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 */          
-	protected void _anneeCle(Couverture<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Attribuer: SaisonScolaire.sessionCles
-	 * HtmlLigne: 4
-	 * HtmlCellule: 1
-	 * Description.frFR: La saison scolaire de la session scolaire. 
-	 * Description.enUS: The school season of the school session. 
-	 * NomAffichage.frFR: saison
-	 * NomAffichage.enUS: season
-	 */          
-	protected void _saisonCle(Couverture<Long> c) {
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -215,6 +174,63 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: La clé primaire de l'école dans la base de données. 
+	 * Description.enUS: The primary key of the school in the database. 
+	 * NomAffichage.frFR: école
+	 * NomAffichage.enUS: school
+	 * r: EcoleCle
+	 * r.enUS: SchoolKey
+	 * r: saison
+	 * r.enUS: season
+	 */              
+	protected void _ecoleCle(Couverture<Long> c) {
+		if(saison_ != null)
+			c.o(saison_.getEcoleCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: AnneeCle
+	 * r.enUS: YearKey
+	 * r: saison
+	 * r.enUS: season
+	*/             
+	protected void _anneeCle(Couverture<Long> c) {
+		if(saison_ != null)
+			c.o(saison_.getAnneeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: SaisonCle
+	 * r.enUS: SeasonKey
+	 * r: saison
+	 * r.enUS: season
+	*/             
+	protected void _saisonCle(Couverture<Long> c) {
+		if(saison_ != null)
+			c.o(saison_.getSaisonCle());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -230,6 +246,23 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(saison_ != null)
 			c.o((String)saison_.getEcoleNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: saison
+	 * r.enUS: season
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(saison_ != null)
+			c.o((String)saison_.getEcoleEmplacement());
 	}
 
 	/**
@@ -361,6 +394,38 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of the session
 	 */                   
 	protected void _sessionJourDebut(Couverture<LocalDate> c) {}
+
+	/**
+	 * Var.enUS: setSessionStartDay
+	 * r: SessionJourDebut
+	 * r.enUS: SessionStartDay
+	 */
+	@Override public SessionScolaire setSessionJourDebut(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionJourDebut(o);
+		} catch (Exception e) {
+			setSessionJourDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	/**
+	 * Var.enUS: setSessionEndDay
+	 * r: SessionJourFin
+	 * r.enUS: SessionEndDay
+	 */
+	@Override public SessionScolaire setSessionJourFin(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionJourFin(o);
+		} catch (Exception e) {
+			setSessionJourFin(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

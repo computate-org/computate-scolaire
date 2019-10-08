@@ -52,6 +52,11 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 			c.o((String)school_.getSchoolCompleteName());
 	}
 
+	protected void _schoolLocation(Wrap<String> c) {
+		if(school_ != null)
+			c.o((String)school_.getSchoolLocation());
+	}
+
 	protected void _yearStart(Wrap<Integer> c) {}
 
 	protected void _yearEnd(Wrap<Integer> c) {

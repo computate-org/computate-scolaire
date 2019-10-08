@@ -192,10 +192,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "anneeCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", Long.parseLong(jsonObject.getString(entiteVar))));
-						break;
 					case "sessionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
@@ -426,16 +422,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
-						break;
-					case "setAnneeCle":
-						o2.setAnneeCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", o2.getAnneeCle()));
-						break;
-					case "removeAnneeCle":
-						o2.setAnneeCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "saisonCles", o2.getAnneeCle()));
 						break;
 					case "addSessionCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
@@ -818,10 +804,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
 			case "saisonCle":
 				return "saisonCle_indexed_long";
 			case "inscriptionCles":
@@ -836,8 +818,14 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "anneeTri_indexed_int";
 			case "saisonTri":
 				return "saisonTri_indexed_int";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

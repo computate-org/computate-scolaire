@@ -1042,6 +1042,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "blocCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
 			case "saisonCle":
 				return "saisonCle_indexed_long";
 			case "sessionCle":
@@ -1076,6 +1078,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "enfantNomComplet_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

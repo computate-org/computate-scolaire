@@ -92,6 +92,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 */
 	public static DateTimeFormatter FORMATDateHeureZoneeAffichage = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE);
 
+	/**
+	 * Var.enUS: FORMATTimeDisplay
+	 * r: H'h'mm
+	 * r.enUS: h:mm a
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */
+	public static DateTimeFormatter FORMATHeureAffichage = DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE);
+
 	protected void _pageParts(List<PagePart> l) {
 	}
 

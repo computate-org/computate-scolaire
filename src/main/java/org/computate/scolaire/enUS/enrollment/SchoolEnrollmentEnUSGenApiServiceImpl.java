@@ -1042,6 +1042,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "blockKeys_indexed_longs";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
 			case "seasonKey":
 				return "seasonKey_indexed_long";
 			case "sessionKey":
@@ -1076,6 +1078,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "childCompleteName_indexed_string";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

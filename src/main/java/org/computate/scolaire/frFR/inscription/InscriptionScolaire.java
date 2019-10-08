@@ -107,12 +107,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: block
+	 * Var.enUS: block_
 	 * r: blocRecherche
 	 * r.enUS: blockSearch
 	 * Ignorer: true
 	 */   
-	protected void _bloc(Couverture<BlocScolaire> c) {
+	protected void _bloc_(Couverture<BlocScolaire> c) {
 		if(blocRecherche.size() > 0) {
 			c.o(blocRecherche.get(0));
 		}
@@ -127,21 +127,33 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */                  
+	 * r: EcoleCle
+	 * r.enUS: SchoolKey
+	 * r: bloc
+	 * r.enUS: block
+	 */              
 	protected void _ecoleCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleCle());
 	}
 
-	/*
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: L'année scolaire de l'inscription scolaire. 
-	 * Description.enUS: The school year of the school block. 
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
 	 * NomAffichage.enUS: year
-	 */          
+	 * r: AnneeCle
+	 * r.enUS: YearKey
+	 * r: bloc
+	 * r.enUS: block
+	*/             
 	protected void _anneeCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeCle());
 	}
 
 	/**
@@ -149,12 +161,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: seasonKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La saison scolaire de l'inscription scolaire. 
-	 * Description.enUS: The school season of the school block. 
-	 * NomAffichage.frFR: saison
-	 * NomAffichage.enUS: season
-	 */           
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	 * r: SaisonCle
+	 * r.enUS: SeasonKey
+	 * r: bloc
+	 * r.enUS: block
+	*/             
 	protected void _saisonCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonCle());
 	}
 
 	/**
@@ -162,12 +180,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: sessionKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire de la session dans la base de données. 
-	 * Description.enUS: The primary key of the school block in the database. 
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: session
 	 * NomAffichage.enUS: session
-	 */          
+	 * r: SessionCle
+	 * r.enUS: SessionKey
+	 * r: bloc
+	 * r.enUS: block
+	*/             
 	protected void _sessionCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getSessionCle());
 	}
 
 	/**
@@ -175,12 +199,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: ageKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'âge dans la base de données. 
-	 * Description.enUS: The primary key of the age in the database. 
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: âge
 	 * NomAffichage.enUS: age
-	 */                  
+	 * r: AgeCle
+	 * r.enUS: AgeKey
+	 * r: bloc
+	 * r.enUS: block
+	*/             
 	protected void _ageCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getAgeCle());
 	}
 
 	/**
@@ -192,8 +222,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
+	 * r: BlocCle
+	 * r.enUS: BlockKey
+	 * r: bloc
+	 * r.enUS: block
 	 */              
 	protected void _blocCle(Couverture<Long> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getBlocCle());
 	}
 
 	/**
@@ -405,8 +441,25 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(bloc != null)
-			c.o((String)bloc.getEcoleNomComplet());
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: bloc
+	 * r.enUS: block
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleEmplacement());
 	}
 
 	/**
@@ -422,8 +475,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _anneeDebut(Couverture<Integer> c) {
-		if(bloc != null)
-			c.o(bloc.getAnneeDebut());
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeDebut());
 	}
 
 	/**
@@ -439,8 +492,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                     
 	protected void _anneeFin(Couverture<Integer> c) {
-		if(bloc != null)
-			c.o(bloc.getAnneeFin());
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeFin());
 	}
 
 	/**
@@ -456,8 +509,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                  
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {
-		if(bloc != null)
-			c.o(bloc.getSaisonJourDebut());
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonJourDebut());
 	}
 
 	/**
@@ -473,8 +526,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _saisonEte(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getSaisonEte());
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonEte());
 	}
 
 	/**
@@ -490,8 +543,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _saisonHiver(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getSaisonHiver());
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonHiver());
 	}
 
 	/**
@@ -507,8 +560,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
-		if(bloc != null)
-			c.o(bloc.getSaisonFraisInscription());
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonFraisInscription());
 	}
 
 	/**   
@@ -522,8 +575,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */
 	protected void _saisonNomComplet(Couverture<String> c) {
-		if(bloc != null)
-			c.o(bloc.getSaisonNomComplet());
+		if(bloc_ != null)
+			c.o(bloc_.getSaisonNomComplet());
 	}
 
 	/**
@@ -539,8 +592,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _sessionJourDebut(Couverture<LocalDate> c) {
-		if(bloc != null)
-			c.o((LocalDate)bloc.getSessionJourDebut());
+		if(bloc_ != null)
+			c.o((LocalDate)bloc_.getSessionJourDebut());
 	}
 
 	/**
@@ -556,8 +609,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _sessionJourFin(Couverture<LocalDate> c) {
-		if(bloc != null)
-			c.o((LocalDate)bloc.getSessionJourFin());
+		if(bloc_ != null)
+			c.o((LocalDate)bloc_.getSessionJourFin());
 	}
 
 	/**
@@ -571,8 +624,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _ageNomComplet(Couverture<String> c) {
-		if(bloc != null)
-			c.o(bloc.getAgeNomComplet());
+		if(bloc_ != null)
+			c.o(bloc_.getAgeNomComplet());
 	}
 
 	/**
@@ -588,8 +641,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _ageDebut(Couverture<Integer> c) {
-		if(bloc != null)
-			c.o(bloc.getAgeDebut());
+		if(bloc_ != null)
+			c.o(bloc_.getAgeDebut());
 	}
 
 	/**
@@ -605,8 +658,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 */                   
 	protected void _ageFin(Couverture<Integer> c) {
-		if(bloc != null)
-			c.o(bloc.getAgeFin());
+		if(bloc_ != null)
+			c.o(bloc_.getAgeFin());
 	}
 
 	/**
@@ -622,8 +675,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockStartTime
 	 */                   
 	protected void _blocHeureDebut(Couverture<LocalTime> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocHeureDebut());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocHeureDebut());
 	}
 
 	/**
@@ -639,8 +692,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockEndTime
 	 */                   
 	protected void _blocHeureFin(Couverture<LocalTime> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocHeureFin());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocHeureFin());
 	}
 
 	/**
@@ -656,8 +709,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockPricePerMonth
 	 */                   
 	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocPrixParMois());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocPrixParMois());
 	}
 
 	/**
@@ -673,8 +726,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockSunday
 	 */                   
 	protected void _blocDimanche(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocDimanche());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocDimanche());
 	}
 
 	/**
@@ -690,8 +743,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockMonday
 	 */                   
 	protected void _blocLundi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocLundi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocLundi());
 	}
 
 	/**
@@ -707,8 +760,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockTuesday
 	 */                   
 	protected void _blocMardi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocMardi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocMardi());
 	}
 
 	/**
@@ -724,8 +777,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockWednesday
 	 */                   
 	protected void _blocMercredi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocMercredi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocMercredi());
 	}
 
 	/**
@@ -741,8 +794,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockThursday
 	 */                   
 	protected void _blocJeudi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocJeudi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocJeudi());
 	}
 
 	/**
@@ -758,8 +811,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockFriday
 	 */                   
 	protected void _blocVendredi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocVendredi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocVendredi());
 	}
 
 	/**
@@ -775,8 +828,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: BlockSaturday
 	 */                   
 	protected void _blocSamedi(Couverture<Boolean> c) {
-		if(bloc != null)
-			c.o(bloc.getBlocSamedi());
+		if(bloc_ != null)
+			c.o(bloc_.getBlocSamedi());
 	}
 
 	/**

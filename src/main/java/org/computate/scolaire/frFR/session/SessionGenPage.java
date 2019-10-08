@@ -98,13 +98,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsSessionGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/SessionPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereSessionScolaireSaisonCle($('#formSessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle_Page')); ");
 		tl(1, "suggereSessionScolaireAgeCles($('#formSessionScolaireAgeCles'), $('#listSessionScolaireAgeCles_Page')); ");
 		l("});");
 	}
@@ -339,65 +337,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSessionScolaireSaisonCle").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valeurSessionCles")
-							.a("class", "valeurSessionCles ")
-							.a("value", requeteSite_.getRequetePk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggereSessionScolaireSaisonCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
-									sx("saison");
-								} g("a");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("class", "w3-cell ").f();
-									sx("relier une saison a cette session");
-								} g("h5");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-									{ e("div").a("class", "w3-cell-row ").f();
-
-									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-										e("input")
-											.a("type", "text")
-											.a("placeholder", "saison")
-											.a("title", "La saison scolaire de la session scolaire. ")
-											.a("class", "valeurObjetSuggere suggereSaisonCle w3-input w3-border w3-cell w3-cell-middle ")
-											.a("name", "setSaisonCle")
-											.a("id", "Page_saisonCle")
-											.a("autocomplete", "off")
-											.a("oninput", "suggereSessionScolaireSaisonCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle_Page')); ")
-										.fg();
-
-									} g("div");
-								} g("div");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSessionScolaireSaisonCle_Page").f();
-									} g("ul");
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSaisonScolaireVals({ sessionCles: [ \"", o.getPk(), "\" ] }, function() { patchSessionScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereSessionScolaireSaisonCle($('#' + ($('#Page_saisonCle').val() ? 'suggere' : 'form') + 'SessionScolaireSaisonCle'), $('#listSessionScolaireSaisonCle_Page')); var $e = $('#Page_saisonCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_saisonCle')); }); }, function() { ajouterErreur($('#Page_saisonCle')); });")
-											.f().sx("ajouter une saison")
-										.g("button");
-									} g("div");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("form");
-				} g("div");
-			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					{ e("form").a("action", "").a("id", "formSessionScolaireAgeCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -674,22 +613,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
 					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("saison").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSaisonCle()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
 						e("label").a("class", "").f().sx("âges").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -915,22 +838,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("saison").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSaisonCle()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
@@ -1178,22 +1085,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("class", "w3-card ").f();
-					{ e("div").a("class", "w3-cell-row w3-green ").f();
-						e("label").a("class", "").f().sx("saison").g("label");
-					} g("div");
-					{ e("div").a("class", "w3-cell-row  ").f();
-						{ e("div").a("class", "w3-cell ").f();
-							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSaisonCle()).g("span");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();

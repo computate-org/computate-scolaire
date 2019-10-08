@@ -260,8 +260,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							rechercheEcole(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<Ecole> listeEcole = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listeEcole.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modifie");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modifie");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
@@ -818,18 +820,18 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "classeNomsCanoniques_indexed_strings";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
-			case "enfantCles":
-				return "enfantCles_indexed_longs";
-			case "blocCles":
-				return "blocCles_indexed_longs";
-			case "groupeAgeCles":
-				return "groupeAgeCles_indexed_longs";
-			case "sessionCles":
-				return "sessionCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
 			case "anneeCles":
 				return "anneeCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "groupeAgeCles":
+				return "groupeAgeCles_indexed_longs";
+			case "blocCles":
+				return "blocCles_indexed_longs";
+			case "enfantCles":
+				return "enfantCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":

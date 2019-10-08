@@ -66,51 +66,18 @@ public class Ecole extends EcoleGen<Cluster> {
 	
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: childKeys
+	 * Var.enUS: yearKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: AnneeScolaire.ecoleCle
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
-	protected void _enfantCles(List<Long> o) {}
-	
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: blockKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
-	protected void _blocCles(List<Long> o) {}
-	
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: ageGroupKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
-	protected void _groupeAgeCles(List<Long> o) {}
-	
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: sessionKeys
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */
-	protected void _sessionCles(List<Long> o) {}
+	 * NomAffichage.frFR: années
+	 * NomAffichage.enUS: years
+	 */   
+	protected void _anneeCles(List<Long> o) {}
 	
 	/**
 	 * {@inheritDoc}
@@ -126,18 +93,51 @@ public class Ecole extends EcoleGen<Cluster> {
 	
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: yearKeys
+	 * Var.enUS: sessionKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: AnneeScolaire.ecoleCle
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 * NomAffichage.frFR: années
-	 * NomAffichage.enUS: years
-	 */   
-	protected void _anneeCles(List<Long> o) {}
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 */
+	protected void _sessionCles(List<Long> o) {}
+	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageGroupKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 */
+	protected void _groupeAgeCles(List<Long> o) {}
+	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 */
+	protected void _blocCles(List<Long> o) {}
+	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 */
+	protected void _enfantCles(List<Long> o) {}
 
 	/**      
 	 * {@inheritDoc}

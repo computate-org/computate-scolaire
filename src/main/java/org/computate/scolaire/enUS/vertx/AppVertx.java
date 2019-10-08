@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.vertx;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiService;
 import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
+import org.computate.scolaire.enUS.java.LocalTimeSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
 import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiService;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiService;
@@ -390,6 +392,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SimpleModule module = new SimpleModule();
 		module.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer());
 		module.addSerializer(LocalDate.class, new LocalDateSerializer());
+		module.addSerializer(LocalTime.class, new LocalTimeSerializer());
 		Json.mapper.registerModule(module);
 
 		String siteNomHote = siteConfig.getSiteHostName();

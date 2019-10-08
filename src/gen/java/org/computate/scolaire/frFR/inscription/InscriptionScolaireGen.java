@@ -345,43 +345,41 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	//////////
-	// bloc //
-	//////////
+	///////////
+	// bloc_ //
+	///////////
 
-	/**	L'entité « bloc »
+	/**	L'entité « bloc_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected BlocScolaire bloc;
+	protected BlocScolaire bloc_;
 	@JsonIgnore
-	public Couverture<BlocScolaire> blocCouverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("bloc").o(bloc);
+	public Couverture<BlocScolaire> bloc_Couverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("bloc_").o(bloc_);
 
-	/**	<br/>L'entité « bloc »
+	/**	<br/>L'entité « bloc_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:bloc">Trouver l'entité bloc dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:bloc_">Trouver l'entité bloc_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _bloc(Couverture<BlocScolaire> c);
+	protected abstract void _bloc_(Couverture<BlocScolaire> c);
 
-	public BlocScolaire getBloc() {
-		return bloc;
+	public BlocScolaire getBloc_() {
+		return bloc_;
 	}
 
-	public void setBloc(BlocScolaire bloc) {
-		this.bloc = bloc;
-		this.blocCouverture.dejaInitialise = true;
+	public void setBloc_(BlocScolaire bloc_) {
+		this.bloc_ = bloc_;
+		this.bloc_Couverture.dejaInitialise = true;
 	}
-	protected InscriptionScolaire blocInit() {
-		if(!blocCouverture.dejaInitialise) {
-			_bloc(blocCouverture);
-			if(bloc == null)
-				setBloc(blocCouverture.o);
+	protected InscriptionScolaire bloc_Init() {
+		if(!bloc_Couverture.dejaInitialise) {
+			_bloc_(bloc_Couverture);
+			if(bloc_ == null)
+				setBloc_(bloc_Couverture.o);
 		}
-		if(bloc != null)
-			bloc.initLoinPourClasse(requeteSite_);
-		blocCouverture.dejaInitialise(true);
+		bloc_Couverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
@@ -549,7 +547,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAnneeCle() {
-		return null;
+		return "année";
 	}
 
 	public String htmTooltipAnneeCle() {
@@ -657,7 +655,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSaisonCle() {
-		return "saison";
+		return "année";
 	}
 
 	public String htmTooltipSaisonCle() {
@@ -2567,6 +2565,108 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmEcoleNomComplet());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////
+	// ecoleEmplacement //
+	//////////////////////
+
+	/**	L'entité « ecoleEmplacement »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleEmplacement;
+	@JsonIgnore
+	public Couverture<String> ecoleEmplacementCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleEmplacement").o(ecoleEmplacement);
+
+	/**	<br/>L'entité « ecoleEmplacement »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleEmplacement">Trouver l'entité ecoleEmplacement dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleEmplacement(Couverture<String> c);
+
+	public String getEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public void setEcoleEmplacement(String ecoleEmplacement) {
+		this.ecoleEmplacement = ecoleEmplacement;
+		this.ecoleEmplacementCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire ecoleEmplacementInit() {
+		if(!ecoleEmplacementCouverture.dejaInitialise) {
+			_ecoleEmplacement(ecoleEmplacementCouverture);
+			if(ecoleEmplacement == null)
+				setEcoleEmplacement(ecoleEmplacementCouverture.o);
+		}
+		ecoleEmplacementCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
+	public String strEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String jsonEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String nomAffichageEcoleEmplacement() {
+		return "l'emplacement";
+	}
+
+	public String htmTooltipEcoleEmplacement() {
+		return null;
+	}
+
+	public String htmEcoleEmplacement() {
+		return ecoleEmplacement == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleEmplacement());
+	}
+
+	public void htmEcoleEmplacement(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "EcoleEmplacement\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "EcoleEmplacement() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleEmplacement\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleEmplacement()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleEmplacement\"");
+							r.s(" value=\"", htmEcoleEmplacement(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleEmplacement());
 			}
 			r.l("</div>");
 		}
@@ -6574,7 +6674,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionCleInit();
 		blocClesInit();
 		blocRechercheInit();
-		blocInit();
+		bloc_Init();
 		ecoleCleInit();
 		anneeCleInit();
 		saisonCleInit();
@@ -6596,6 +6696,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfant_Init();
 		enfantNomCompletInit();
 		ecoleNomCompletInit();
+		ecoleEmplacementInit();
 		anneeDebutInit();
 		anneeFinInit();
 		saisonJourDebutInit();
@@ -6647,8 +6748,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(blocRecherche != null)
 			blocRecherche.setRequeteSite_(requeteSite_);
-		if(bloc != null)
-			bloc.setRequeteSite_(requeteSite_);
 		if(enfantRecherche != null)
 			enfantRecherche.setRequeteSite_(requeteSite_);
 	}
@@ -6683,8 +6782,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.blocCles;
 			case "blocRecherche":
 				return oInscriptionScolaire.blocRecherche;
-			case "bloc":
-				return oInscriptionScolaire.bloc;
+			case "bloc_":
+				return oInscriptionScolaire.bloc_;
 			case "ecoleCle":
 				return oInscriptionScolaire.ecoleCle;
 			case "anneeCle":
@@ -6727,6 +6826,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.enfantNomComplet;
 			case "ecoleNomComplet":
 				return oInscriptionScolaire.ecoleNomComplet;
+			case "ecoleEmplacement":
+				return oInscriptionScolaire.ecoleEmplacement;
 			case "anneeDebut":
 				return oInscriptionScolaire.anneeDebut;
 			case "anneeFin":
@@ -6953,6 +7054,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setEcoleCle(ecoleCle);
 			}
 
+			if(sauvegardesInscriptionScolaire.contains("anneeCle")) {
+				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+				if(anneeCle != null)
+					oInscriptionScolaire.setAnneeCle(anneeCle);
+			}
+
 			if(sauvegardesInscriptionScolaire.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 				if(saisonCle != null)
@@ -7043,6 +7150,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oInscriptionScolaire.setEcoleNomComplet(ecoleNomComplet);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("ecoleEmplacement")) {
+				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+				if(ecoleEmplacement != null)
+					oInscriptionScolaire.setEcoleEmplacement(ecoleEmplacement);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("anneeDebut")) {
@@ -7351,6 +7464,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
 		}
+		if(anneeCle != null) {
+			document.addField("anneeCle_indexed_long", anneeCle);
+			document.addField("anneeCle_stored_long", anneeCle);
+		}
 		if(saisonCle != null) {
 			document.addField("saisonCle_indexed_long", saisonCle);
 			document.addField("saisonCle_stored_long", saisonCle);
@@ -7434,6 +7551,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(ecoleNomComplet != null) {
 			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
 			document.addField("ecoleNomComplet_stored_string", ecoleNomComplet);
+		}
+		if(ecoleEmplacement != null) {
+			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
+			document.addField("ecoleEmplacement_stored_string", ecoleEmplacement);
 		}
 		if(anneeDebut != null) {
 			document.addField("anneeDebut_indexed_int", anneeDebut);
@@ -7626,6 +7747,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(ecoleCle != null)
 			oInscriptionScolaire.setEcoleCle(ecoleCle);
 
+		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+		if(anneeCle != null)
+			oInscriptionScolaire.setAnneeCle(anneeCle);
+
 		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 		if(saisonCle != null)
 			oInscriptionScolaire.setSaisonCle(saisonCle);
@@ -7693,6 +7818,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 		if(ecoleNomComplet != null)
 			oInscriptionScolaire.setEcoleNomComplet(ecoleNomComplet);
+
+		String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
+		if(ecoleEmplacement != null)
+			oInscriptionScolaire.setEcoleEmplacement(ecoleEmplacement);
 
 		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 		if(anneeDebut != null)

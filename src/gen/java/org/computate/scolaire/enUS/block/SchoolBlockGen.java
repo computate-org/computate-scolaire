@@ -72,546 +72,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public static final String SchoolBlock_IconeGroupe = "regular";
 	public static final String SchoolBlock_IconeNom = "bell";
 
-	///////////////
-	// schoolKey //
-	///////////////
-
-	/**	L'entité « schoolKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long schoolKey;
-	@JsonIgnore
-	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
-
-	/**	<br/>L'entité « schoolKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _schoolKey(Wrap<Long> c);
-
-	public Long getSchoolKey() {
-		return schoolKey;
-	}
-
-	public void setSchoolKey(Long schoolKey) {
-		this.schoolKey = schoolKey;
-		this.schoolKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setSchoolKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.schoolKey = Long.parseLong(o);
-		this.schoolKeyWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock schoolKeyInit() {
-		if(!schoolKeyWrap.alreadyInitialized) {
-			_schoolKey(schoolKeyWrap);
-			if(schoolKey == null)
-				setSchoolKey(schoolKeyWrap.o);
-		}
-		schoolKeyWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Long solrSchoolKey() {
-		return schoolKey;
-	}
-
-	public String strSchoolKey() {
-		return schoolKey == null ? "" : schoolKey.toString();
-	}
-
-	public String jsonSchoolKey() {
-		return schoolKey == null ? "" : schoolKey.toString();
-	}
-
-	public String nomAffichageSchoolKey() {
-		return "school";
-	}
-
-	public String htmTooltipSchoolKey() {
-		return null;
-	}
-
-	public String htmSchoolKey() {
-		return schoolKey == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolKey());
-	}
-
-	public void htmSchoolKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "SchoolKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "SchoolKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolKey\"");
-							r.s(" value=\"", htmSchoolKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// yearKey //
-	/////////////
-
-	/**	L'entité « yearKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long yearKey;
-	@JsonIgnore
-	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
-
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearKey(Wrap<Long> c);
-
-	public Long getYearKey() {
-		return yearKey;
-	}
-
-	public void setYearKey(Long yearKey) {
-		this.yearKey = yearKey;
-		this.yearKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
-		this.yearKeyWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock yearKeyInit() {
-		if(!yearKeyWrap.alreadyInitialized) {
-			_yearKey(yearKeyWrap);
-			if(yearKey == null)
-				setYearKey(yearKeyWrap.o);
-		}
-		yearKeyWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Long solrYearKey() {
-		return yearKey;
-	}
-
-	public String strYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String jsonYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String nomAffichageYearKey() {
-		return "year";
-	}
-
-	public String htmTooltipYearKey() {
-		return null;
-	}
-
-	public String htmYearKey() {
-		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
-	}
-
-	public void htmYearKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "YearKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "YearKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearKey\"");
-							r.s(" value=\"", htmYearKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////
-	// seasonKey //
-	///////////////
-
-	/**	L'entité « seasonKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long seasonKey;
-	@JsonIgnore
-	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
-
-	/**	<br/>L'entité « seasonKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonKey">Trouver l'entité seasonKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _seasonKey(Wrap<Long> c);
-
-	public Long getSeasonKey() {
-		return seasonKey;
-	}
-
-	public void setSeasonKey(Long seasonKey) {
-		this.seasonKey = seasonKey;
-		this.seasonKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setSeasonKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.seasonKey = Long.parseLong(o);
-		this.seasonKeyWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock seasonKeyInit() {
-		if(!seasonKeyWrap.alreadyInitialized) {
-			_seasonKey(seasonKeyWrap);
-			if(seasonKey == null)
-				setSeasonKey(seasonKeyWrap.o);
-		}
-		seasonKeyWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Long solrSeasonKey() {
-		return seasonKey;
-	}
-
-	public String strSeasonKey() {
-		return seasonKey == null ? "" : seasonKey.toString();
-	}
-
-	public String jsonSeasonKey() {
-		return seasonKey == null ? "" : seasonKey.toString();
-	}
-
-	public String nomAffichageSeasonKey() {
-		return "season";
-	}
-
-	public String htmTooltipSeasonKey() {
-		return null;
-	}
-
-	public String htmSeasonKey() {
-		return seasonKey == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonKey());
-	}
-
-	public void htmSeasonKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "SeasonKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "SeasonKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonKey\"");
-							r.s(" value=\"", htmSeasonKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////////
-	// sessionKey //
-	////////////////
-
-	/**	L'entité « sessionKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long sessionKey;
-	@JsonIgnore
-	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
-
-	/**	<br/>L'entité « sessionKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Trouver l'entité sessionKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _sessionKey(Wrap<Long> c);
-
-	public Long getSessionKey() {
-		return sessionKey;
-	}
-
-	public void setSessionKey(Long sessionKey) {
-		this.sessionKey = sessionKey;
-		this.sessionKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setSessionKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionKey = Long.parseLong(o);
-		this.sessionKeyWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock sessionKeyInit() {
-		if(!sessionKeyWrap.alreadyInitialized) {
-			_sessionKey(sessionKeyWrap);
-			if(sessionKey == null)
-				setSessionKey(sessionKeyWrap.o);
-		}
-		sessionKeyWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Long solrSessionKey() {
-		return sessionKey;
-	}
-
-	public String strSessionKey() {
-		return sessionKey == null ? "" : sessionKey.toString();
-	}
-
-	public String jsonSessionKey() {
-		return sessionKey == null ? "" : sessionKey.toString();
-	}
-
-	public String nomAffichageSessionKey() {
-		return "key";
-	}
-
-	public String htmTooltipSessionKey() {
-		return null;
-	}
-
-	public String htmSessionKey() {
-		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
-	}
-
-	public void htmSessionKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "SessionKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "SessionKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionKey\"");
-							r.s(" value=\"", htmSessionKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////
-	// ageKey //
-	////////////
-
-	/**	L'entité « ageKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long ageKey;
-	@JsonIgnore
-	public Wrap<Long> ageKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("ageKey").o(ageKey);
-
-	/**	<br/>L'entité « ageKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageKey">Trouver l'entité ageKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _ageKey(Wrap<Long> c);
-
-	public Long getAgeKey() {
-		return ageKey;
-	}
-
-	public void setAgeKey(Long ageKey) {
-		this.ageKey = ageKey;
-		this.ageKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolBlock setAgeKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ageKey = Long.parseLong(o);
-		this.ageKeyWrap.alreadyInitialized = true;
-		return (SchoolBlock)this;
-	}
-	protected SchoolBlock ageKeyInit() {
-		if(!ageKeyWrap.alreadyInitialized) {
-			_ageKey(ageKeyWrap);
-			if(ageKey == null)
-				setAgeKey(ageKeyWrap.o);
-		}
-		ageKeyWrap.alreadyInitialized(true);
-		return (SchoolBlock)this;
-	}
-
-	public Long solrAgeKey() {
-		return ageKey;
-	}
-
-	public String strAgeKey() {
-		return ageKey == null ? "" : ageKey.toString();
-	}
-
-	public String jsonAgeKey() {
-		return ageKey == null ? "" : ageKey.toString();
-	}
-
-	public String nomAffichageAgeKey() {
-		return "age";
-	}
-
-	public String htmTooltipAgeKey() {
-		return null;
-	}
-
-	public String htmAgeKey() {
-		return ageKey == null ? "" : StringEscapeUtils.escapeHtml4(strAgeKey());
-	}
-
-	public void htmAgeKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolBlock", strPk(), "AgeKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolBlock", strPk(), "AgeKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageKey\"");
-							r.s(" value=\"", htmAgeKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// blockKey //
 	//////////////
@@ -1639,44 +1099,582 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		return (SchoolBlock)this;
 	}
 
-	/////////
-	// age //
-	/////////
+	//////////
+	// age_ //
+	//////////
 
-	/**	L'entité « age »
+	/**	L'entité « age_ »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
-	protected SchoolAge age;
+	protected SchoolAge age_;
 	@JsonIgnore
-	public Wrap<SchoolAge> ageWrap = new Wrap<SchoolAge>().p(this).c(SchoolAge.class).var("age").o(age);
+	public Wrap<SchoolAge> age_Wrap = new Wrap<SchoolAge>().p(this).c(SchoolAge.class).var("age_").o(age_);
 
-	/**	<br/>L'entité « age »
+	/**	<br/>L'entité « age_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:age">Trouver l'entité age dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:age_">Trouver l'entité age_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _age(Wrap<SchoolAge> c);
+	protected abstract void _age_(Wrap<SchoolAge> c);
 
-	public SchoolAge getAge() {
-		return age;
+	public SchoolAge getAge_() {
+		return age_;
 	}
 
-	public void setAge(SchoolAge age) {
-		this.age = age;
-		this.ageWrap.alreadyInitialized = true;
+	public void setAge_(SchoolAge age_) {
+		this.age_ = age_;
+		this.age_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolBlock ageInit() {
-		if(!ageWrap.alreadyInitialized) {
-			_age(ageWrap);
-			if(age == null)
-				setAge(ageWrap.o);
+	protected SchoolBlock age_Init() {
+		if(!age_Wrap.alreadyInitialized) {
+			_age_(age_Wrap);
+			if(age_ == null)
+				setAge_(age_Wrap.o);
 		}
-		if(age != null)
-			age.initDeepForClass(siteRequest_);
-		ageWrap.alreadyInitialized(true);
+		age_Wrap.alreadyInitialized(true);
 		return (SchoolBlock)this;
+	}
+
+	///////////////
+	// schoolKey //
+	///////////////
+
+	/**	L'entité « schoolKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long schoolKey;
+	@JsonIgnore
+	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
+
+	/**	<br/>L'entité « schoolKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolKey(Wrap<Long> c);
+
+	public Long getSchoolKey() {
+		return schoolKey;
+	}
+
+	public void setSchoolKey(Long schoolKey) {
+		this.schoolKey = schoolKey;
+		this.schoolKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setSchoolKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.schoolKey = Long.parseLong(o);
+		this.schoolKeyWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock schoolKeyInit() {
+		if(!schoolKeyWrap.alreadyInitialized) {
+			_schoolKey(schoolKeyWrap);
+			if(schoolKey == null)
+				setSchoolKey(schoolKeyWrap.o);
+		}
+		schoolKeyWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Long solrSchoolKey() {
+		return schoolKey;
+	}
+
+	public String strSchoolKey() {
+		return schoolKey == null ? "" : schoolKey.toString();
+	}
+
+	public String jsonSchoolKey() {
+		return schoolKey == null ? "" : schoolKey.toString();
+	}
+
+	public String nomAffichageSchoolKey() {
+		return "school";
+	}
+
+	public String htmTooltipSchoolKey() {
+		return null;
+	}
+
+	public String htmSchoolKey() {
+		return schoolKey == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolKey());
+	}
+
+	public void htmSchoolKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "SchoolKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "SchoolKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolKey\"");
+							r.s(" value=\"", htmSchoolKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolKey());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return "year";
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	public void htmYearKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "YearKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "YearKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setYearKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"yearKey\"");
+							r.s(" value=\"", htmYearKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmYearKey());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////
+	// seasonKey //
+	///////////////
+
+	/**	L'entité « seasonKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long seasonKey;
+	@JsonIgnore
+	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
+
+	/**	<br/>L'entité « seasonKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonKey">Trouver l'entité seasonKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _seasonKey(Wrap<Long> c);
+
+	public Long getSeasonKey() {
+		return seasonKey;
+	}
+
+	public void setSeasonKey(Long seasonKey) {
+		this.seasonKey = seasonKey;
+		this.seasonKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setSeasonKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.seasonKey = Long.parseLong(o);
+		this.seasonKeyWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock seasonKeyInit() {
+		if(!seasonKeyWrap.alreadyInitialized) {
+			_seasonKey(seasonKeyWrap);
+			if(seasonKey == null)
+				setSeasonKey(seasonKeyWrap.o);
+		}
+		seasonKeyWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Long solrSeasonKey() {
+		return seasonKey;
+	}
+
+	public String strSeasonKey() {
+		return seasonKey == null ? "" : seasonKey.toString();
+	}
+
+	public String jsonSeasonKey() {
+		return seasonKey == null ? "" : seasonKey.toString();
+	}
+
+	public String nomAffichageSeasonKey() {
+		return "year";
+	}
+
+	public String htmTooltipSeasonKey() {
+		return null;
+	}
+
+	public String htmSeasonKey() {
+		return seasonKey == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonKey());
+	}
+
+	public void htmSeasonKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "SeasonKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "SeasonKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSeasonKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"seasonKey\"");
+							r.s(" value=\"", htmSeasonKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSeasonKey());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////
+	// sessionKey //
+	////////////////
+
+	/**	L'entité « sessionKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long sessionKey;
+	@JsonIgnore
+	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
+
+	/**	<br/>L'entité « sessionKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Trouver l'entité sessionKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionKey(Wrap<Long> c);
+
+	public Long getSessionKey() {
+		return sessionKey;
+	}
+
+	public void setSessionKey(Long sessionKey) {
+		this.sessionKey = sessionKey;
+		this.sessionKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setSessionKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.sessionKey = Long.parseLong(o);
+		this.sessionKeyWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock sessionKeyInit() {
+		if(!sessionKeyWrap.alreadyInitialized) {
+			_sessionKey(sessionKeyWrap);
+			if(sessionKey == null)
+				setSessionKey(sessionKeyWrap.o);
+		}
+		sessionKeyWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Long solrSessionKey() {
+		return sessionKey;
+	}
+
+	public String strSessionKey() {
+		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public String jsonSessionKey() {
+		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public String nomAffichageSessionKey() {
+		return "session";
+	}
+
+	public String htmTooltipSessionKey() {
+		return null;
+	}
+
+	public String htmSessionKey() {
+		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
+	}
+
+	public void htmSessionKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "SessionKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "SessionKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionKey\"");
+							r.s(" value=\"", htmSessionKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionKey());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////
+	// ageKey //
+	////////////
+
+	/**	L'entité « ageKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long ageKey;
+	@JsonIgnore
+	public Wrap<Long> ageKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("ageKey").o(ageKey);
+
+	/**	<br/>L'entité « ageKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageKey">Trouver l'entité ageKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageKey(Wrap<Long> c);
+
+	public Long getAgeKey() {
+		return ageKey;
+	}
+
+	public void setAgeKey(Long ageKey) {
+		this.ageKey = ageKey;
+		this.ageKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolBlock setAgeKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ageKey = Long.parseLong(o);
+		this.ageKeyWrap.alreadyInitialized = true;
+		return (SchoolBlock)this;
+	}
+	protected SchoolBlock ageKeyInit() {
+		if(!ageKeyWrap.alreadyInitialized) {
+			_ageKey(ageKeyWrap);
+			if(ageKey == null)
+				setAgeKey(ageKeyWrap.o);
+		}
+		ageKeyWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public Long solrAgeKey() {
+		return ageKey;
+	}
+
+	public String strAgeKey() {
+		return ageKey == null ? "" : ageKey.toString();
+	}
+
+	public String jsonAgeKey() {
+		return ageKey == null ? "" : ageKey.toString();
+	}
+
+	public String nomAffichageAgeKey() {
+		return "age";
+	}
+
+	public String htmTooltipAgeKey() {
+		return null;
+	}
+
+	public String htmAgeKey() {
+		return ageKey == null ? "" : StringEscapeUtils.escapeHtml4(strAgeKey());
+	}
+
+	public void htmAgeKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "AgeKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "AgeKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setAgeKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ageKey\"");
+							r.s(" value=\"", htmAgeKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmAgeKey());
+			}
+			r.l("</div>");
+		}
 	}
 
 	////////////////////////
@@ -1776,6 +1774,108 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmSchoolCompleteName());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////
+	// schoolLocation //
+	////////////////////
+
+	/**	L'entité « schoolLocation »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolLocation;
+	@JsonIgnore
+	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
+
+	/**	<br/>L'entité « schoolLocation »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.SchoolBlock&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation(Wrap<String> c);
+
+	public String getSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public void setSchoolLocation(String schoolLocation) {
+		this.schoolLocation = schoolLocation;
+		this.schoolLocationWrap.alreadyInitialized = true;
+	}
+	protected SchoolBlock schoolLocationInit() {
+		if(!schoolLocationWrap.alreadyInitialized) {
+			_schoolLocation(schoolLocationWrap);
+			if(schoolLocation == null)
+				setSchoolLocation(schoolLocationWrap.o);
+		}
+		schoolLocationWrap.alreadyInitialized(true);
+		return (SchoolBlock)this;
+	}
+
+	public String solrSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public String strSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String jsonSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String nomAffichageSchoolLocation() {
+		return "location";
+	}
+
+	public String htmTooltipSchoolLocation() {
+		return null;
+	}
+
+	public String htmSchoolLocation() {
+		return schoolLocation == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolLocation());
+	}
+
+	public void htmSchoolLocation(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolBlock", strPk(), "SchoolLocation\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolBlock", strPk(), "SchoolLocation() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolLocation\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolLocation()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolLocation\"");
+							r.s(" value=\"", htmSchoolLocation(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolLocation());
 			}
 			r.l("</div>");
 		}
@@ -4623,11 +4723,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public void initSchoolBlock() {
-		schoolKeyInit();
-		yearKeyInit();
-		seasonKeyInit();
-		sessionKeyInit();
-		ageKeyInit();
 		blockKeyInit();
 		childKeyInit();
 		enrollmentKeysInit();
@@ -4638,8 +4733,14 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		sessionSortInit();
 		ageSortInit();
 		ageSearchInit();
-		ageInit();
+		age_Init();
+		schoolKeyInit();
+		yearKeyInit();
+		seasonKeyInit();
+		sessionKeyInit();
+		ageKeyInit();
 		schoolCompleteNameInit();
+		schoolLocationInit();
 		yearStartInit();
 		yearEndInit();
 		seasonStartDateInit();
@@ -4680,8 +4781,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(ageSearch != null)
 			ageSearch.setSiteRequest_(siteRequest_);
-		if(age != null)
-			age.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -4708,16 +4807,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public Object obtainSchoolBlock(String var) {
 		SchoolBlock oSchoolBlock = (SchoolBlock)this;
 		switch(var) {
-			case "schoolKey":
-				return oSchoolBlock.schoolKey;
-			case "yearKey":
-				return oSchoolBlock.yearKey;
-			case "seasonKey":
-				return oSchoolBlock.seasonKey;
-			case "sessionKey":
-				return oSchoolBlock.sessionKey;
-			case "ageKey":
-				return oSchoolBlock.ageKey;
 			case "blockKey":
 				return oSchoolBlock.blockKey;
 			case "childKey":
@@ -4738,10 +4827,22 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				return oSchoolBlock.ageSort;
 			case "ageSearch":
 				return oSchoolBlock.ageSearch;
-			case "age":
-				return oSchoolBlock.age;
+			case "age_":
+				return oSchoolBlock.age_;
+			case "schoolKey":
+				return oSchoolBlock.schoolKey;
+			case "yearKey":
+				return oSchoolBlock.yearKey;
+			case "seasonKey":
+				return oSchoolBlock.seasonKey;
+			case "sessionKey":
+				return oSchoolBlock.sessionKey;
+			case "ageKey":
+				return oSchoolBlock.ageKey;
 			case "schoolCompleteName":
 				return oSchoolBlock.schoolCompleteName;
+			case "schoolLocation":
+				return oSchoolBlock.schoolLocation;
 			case "yearStart":
 				return oSchoolBlock.yearStart;
 			case "yearEnd":
@@ -4819,9 +4920,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public Object attributeSchoolBlock(String var, Object val) {
 		SchoolBlock oSchoolBlock = (SchoolBlock)this;
 		switch(var) {
-			case "ageKey":
-				oSchoolBlock.setAgeKey((Long)val);
-				return val;
 			case "enrollmentKeys":
 				oSchoolBlock.addEnrollmentKeys((Long)val);
 				return val;
@@ -4914,34 +5012,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		savesSchoolBlock = (List<String>)solrDocument.get("savesSchoolBlock_stored_strings");
 		if(savesSchoolBlock != null) {
 
-			if(savesSchoolBlock.contains("schoolKey")) {
-				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
-				if(schoolKey != null)
-					oSchoolBlock.setSchoolKey(schoolKey);
-			}
-
-			if(savesSchoolBlock.contains("yearKey")) {
-				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-				if(yearKey != null)
-					oSchoolBlock.setYearKey(yearKey);
-			}
-
-			if(savesSchoolBlock.contains("seasonKey")) {
-				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
-				if(seasonKey != null)
-					oSchoolBlock.setSeasonKey(seasonKey);
-			}
-
-			if(savesSchoolBlock.contains("sessionKey")) {
-				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-				if(sessionKey != null)
-					oSchoolBlock.setSessionKey(sessionKey);
-			}
-
-			Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
-			if(ageKey != null)
-				oSchoolBlock.setAgeKey(ageKey);
-
 			if(savesSchoolBlock.contains("blockKey")) {
 				Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
 				if(blockKey != null)
@@ -4994,10 +5064,46 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					oSchoolBlock.setAgeSort(ageSort);
 			}
 
+			if(savesSchoolBlock.contains("schoolKey")) {
+				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
+				if(schoolKey != null)
+					oSchoolBlock.setSchoolKey(schoolKey);
+			}
+
+			if(savesSchoolBlock.contains("yearKey")) {
+				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+				if(yearKey != null)
+					oSchoolBlock.setYearKey(yearKey);
+			}
+
+			if(savesSchoolBlock.contains("seasonKey")) {
+				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
+				if(seasonKey != null)
+					oSchoolBlock.setSeasonKey(seasonKey);
+			}
+
+			if(savesSchoolBlock.contains("sessionKey")) {
+				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+				if(sessionKey != null)
+					oSchoolBlock.setSessionKey(sessionKey);
+			}
+
+			if(savesSchoolBlock.contains("ageKey")) {
+				Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
+				if(ageKey != null)
+					oSchoolBlock.setAgeKey(ageKey);
+			}
+
 			if(savesSchoolBlock.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolBlock.setSchoolCompleteName(schoolCompleteName);
+			}
+
+			if(savesSchoolBlock.contains("schoolLocation")) {
+				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+				if(schoolLocation != null)
+					oSchoolBlock.setSchoolLocation(schoolLocation);
 			}
 
 			if(savesSchoolBlock.contains("yearStart")) {
@@ -5224,26 +5330,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(savesSchoolBlock != null)
 			document.addField("savesSchoolBlock_stored_strings", savesSchoolBlock);
 
-		if(schoolKey != null) {
-			document.addField("schoolKey_indexed_long", schoolKey);
-			document.addField("schoolKey_stored_long", schoolKey);
-		}
-		if(yearKey != null) {
-			document.addField("yearKey_indexed_long", yearKey);
-			document.addField("yearKey_stored_long", yearKey);
-		}
-		if(seasonKey != null) {
-			document.addField("seasonKey_indexed_long", seasonKey);
-			document.addField("seasonKey_stored_long", seasonKey);
-		}
-		if(sessionKey != null) {
-			document.addField("sessionKey_indexed_long", sessionKey);
-			document.addField("sessionKey_stored_long", sessionKey);
-		}
-		if(ageKey != null) {
-			document.addField("ageKey_indexed_long", ageKey);
-			document.addField("ageKey_stored_long", ageKey);
-		}
 		if(blockKey != null) {
 			document.addField("blockKey_indexed_long", blockKey);
 			document.addField("blockKey_stored_long", blockKey);
@@ -5284,9 +5370,33 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			document.addField("ageSort_indexed_int", ageSort);
 			document.addField("ageSort_stored_int", ageSort);
 		}
+		if(schoolKey != null) {
+			document.addField("schoolKey_indexed_long", schoolKey);
+			document.addField("schoolKey_stored_long", schoolKey);
+		}
+		if(yearKey != null) {
+			document.addField("yearKey_indexed_long", yearKey);
+			document.addField("yearKey_stored_long", yearKey);
+		}
+		if(seasonKey != null) {
+			document.addField("seasonKey_indexed_long", seasonKey);
+			document.addField("seasonKey_stored_long", seasonKey);
+		}
+		if(sessionKey != null) {
+			document.addField("sessionKey_indexed_long", sessionKey);
+			document.addField("sessionKey_stored_long", sessionKey);
+		}
+		if(ageKey != null) {
+			document.addField("ageKey_indexed_long", ageKey);
+			document.addField("ageKey_stored_long", ageKey);
+		}
 		if(schoolCompleteName != null) {
 			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
 			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
+		}
+		if(schoolLocation != null) {
+			document.addField("schoolLocation_indexed_string", schoolLocation);
+			document.addField("schoolLocation_stored_string", schoolLocation);
 		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_int", yearStart);
@@ -5423,26 +5533,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public void storeSchoolBlock(SolrDocument solrDocument) {
 		SchoolBlock oSchoolBlock = (SchoolBlock)this;
 
-		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
-		if(schoolKey != null)
-			oSchoolBlock.setSchoolKey(schoolKey);
-
-		Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-		if(yearKey != null)
-			oSchoolBlock.setYearKey(yearKey);
-
-		Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
-		if(seasonKey != null)
-			oSchoolBlock.setSeasonKey(seasonKey);
-
-		Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-		if(sessionKey != null)
-			oSchoolBlock.setSessionKey(sessionKey);
-
-		Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
-		if(ageKey != null)
-			oSchoolBlock.setAgeKey(ageKey);
-
 		Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
 		if(blockKey != null)
 			oSchoolBlock.setBlockKey(blockKey);
@@ -5479,9 +5569,33 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		if(ageSort != null)
 			oSchoolBlock.setAgeSort(ageSort);
 
+		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
+		if(schoolKey != null)
+			oSchoolBlock.setSchoolKey(schoolKey);
+
+		Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+		if(yearKey != null)
+			oSchoolBlock.setYearKey(yearKey);
+
+		Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
+		if(seasonKey != null)
+			oSchoolBlock.setSeasonKey(seasonKey);
+
+		Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+		if(sessionKey != null)
+			oSchoolBlock.setSessionKey(sessionKey);
+
+		Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
+		if(ageKey != null)
+			oSchoolBlock.setAgeKey(ageKey);
+
 		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 		if(schoolCompleteName != null)
 			oSchoolBlock.setSchoolCompleteName(schoolCompleteName);
+
+		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+		if(schoolLocation != null)
+			oSchoolBlock.setSchoolLocation(schoolLocation);
 
 		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)
@@ -5594,7 +5708,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageKey, enrollmentKeys, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
+		return Objects.hash(super.hashCode(), enrollmentKeys, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday);
 	}
 
 	////////////
@@ -5608,7 +5722,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			return false;
 		SchoolBlock that = (SchoolBlock)o;
 		return super.equals(o)
-				&& Objects.equals( ageKey, that.ageKey )
 				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( blockStartTime, that.blockStartTime )
 				&& Objects.equals( blockEndTime, that.blockEndTime )
@@ -5630,8 +5743,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolBlock { ");
-		sb.append( "ageKey: " ).append(ageKey);
-		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
 		sb.append( ", blockStartTime: " ).append(blockStartTime);
 		sb.append( ", blockEndTime: " ).append(blockEndTime);
 		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);

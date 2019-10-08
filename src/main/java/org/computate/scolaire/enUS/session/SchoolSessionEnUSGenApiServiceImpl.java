@@ -192,10 +192,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "seasonKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
 					case "ageKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -418,16 +414,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
-						break;
-					case "setSeasonKey":
-						o2.setSeasonKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
-						break;
-					case "removeSeasonKey":
-						o2.setSeasonKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("seasonKey", pk, "sessionKeys", o2.getSeasonKey()));
 						break;
 					case "addAgeKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -790,10 +776,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
 			case "sessionKey":
 				return "sessionKey_indexed_long";
 			case "enrollmentKeys":
@@ -810,8 +792,16 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

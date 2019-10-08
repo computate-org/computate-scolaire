@@ -1032,6 +1032,108 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////////
+	// schoolLocation //
+	////////////////////
+
+	/**	L'entité « schoolLocation »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolLocation;
+	@JsonIgnore
+	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
+
+	/**	<br/>L'entité « schoolLocation »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation(Wrap<String> c);
+
+	public String getSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public void setSchoolLocation(String schoolLocation) {
+		this.schoolLocation = schoolLocation;
+		this.schoolLocationWrap.alreadyInitialized = true;
+	}
+	protected SchoolYear schoolLocationInit() {
+		if(!schoolLocationWrap.alreadyInitialized) {
+			_schoolLocation(schoolLocationWrap);
+			if(schoolLocation == null)
+				setSchoolLocation(schoolLocationWrap.o);
+		}
+		schoolLocationWrap.alreadyInitialized(true);
+		return (SchoolYear)this;
+	}
+
+	public String solrSchoolLocation() {
+		return schoolLocation;
+	}
+
+	public String strSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String jsonSchoolLocation() {
+		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String nomAffichageSchoolLocation() {
+		return "location";
+	}
+
+	public String htmTooltipSchoolLocation() {
+		return null;
+	}
+
+	public String htmSchoolLocation() {
+		return schoolLocation == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolLocation());
+	}
+
+	public void htmSchoolLocation(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolYear", strPk(), "SchoolLocation\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolYear", strPk(), "SchoolLocation() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolLocation\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolLocation()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolLocation\"");
+							r.s(" value=\"", htmSchoolLocation(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolLocation());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////
 	// yearStart //
 	///////////////
@@ -1789,6 +1891,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		schoolSearchInit();
 		school_Init();
 		schoolCompleteNameInit();
+		schoolLocationInit();
 		yearStartInit();
 		yearEndInit();
 		yearShortNameInit();
@@ -1856,6 +1959,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.school_;
 			case "schoolCompleteName":
 				return oSchoolYear.schoolCompleteName;
+			case "schoolLocation":
+				return oSchoolYear.schoolLocation;
 			case "yearStart":
 				return oSchoolYear.yearStart;
 			case "yearEnd":
@@ -2000,6 +2105,12 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolYear.setSchoolCompleteName(schoolCompleteName);
+			}
+
+			if(savesSchoolYear.contains("schoolLocation")) {
+				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+				if(schoolLocation != null)
+					oSchoolYear.setSchoolLocation(schoolLocation);
 			}
 
 			if(savesSchoolYear.contains("yearStart")) {
@@ -2152,6 +2263,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
 			document.addField("schoolCompleteName_stored_string", schoolCompleteName);
 		}
+		if(schoolLocation != null) {
+			document.addField("schoolLocation_indexed_string", schoolLocation);
+			document.addField("schoolLocation_stored_string", schoolLocation);
+		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_int", yearStart);
 			document.addField("yearStart_stored_int", yearStart);
@@ -2242,6 +2357,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 		if(schoolCompleteName != null)
 			oSchoolYear.setSchoolCompleteName(schoolCompleteName);
+
+		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
+		if(schoolLocation != null)
+			oSchoolYear.setSchoolLocation(schoolLocation);
 
 		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)

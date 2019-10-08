@@ -192,10 +192,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
-					case "ageCle":
-						postSql.append(SiteContexteFrFR.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", Long.parseLong(jsonObject.getString(entiteVar))));
-						break;
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
@@ -450,16 +446,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
-						break;
-					case "setAgeCle":
-						o2.setAgeCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
-						break;
-					case "removeAgeCle":
-						o2.setAgeCle(requeteJson.getString(methodeNom));
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
 						break;
 					case "addInscriptionCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
@@ -902,16 +888,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "sessionCle":
-				return "sessionCle_indexed_long";
-			case "ageCle":
-				return "ageCle_indexed_long";
 			case "blocCle":
 				return "blocCle_indexed_long";
 			case "enfantCle":
@@ -930,8 +906,20 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "sessionTri_indexed_int";
 			case "ageTri":
 				return "ageTri_indexed_int";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "saisonCle":
+				return "saisonCle_indexed_long";
+			case "sessionCle":
+				return "sessionCle_indexed_long";
+			case "ageCle":
+				return "ageCle_indexed_long";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

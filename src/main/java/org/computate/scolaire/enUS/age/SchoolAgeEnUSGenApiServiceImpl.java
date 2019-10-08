@@ -192,10 +192,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "sessionKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKeys", Long.parseLong(jsonObject.getString(entityVar)), "sessionKey", pk));
-						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -418,16 +414,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
-						break;
-					case "setSessionKey":
-						o2.setSessionKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA2);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
-						break;
-					case "removeSessionKey":
-						o2.setSessionKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
 						break;
 					case "addBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -790,12 +776,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
 			case "ageKey":
 				return "ageKey_indexed_long";
 			case "enrollmentKeys":
@@ -812,8 +792,18 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "sessionKey":
+				return "sessionKey_indexed_long";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

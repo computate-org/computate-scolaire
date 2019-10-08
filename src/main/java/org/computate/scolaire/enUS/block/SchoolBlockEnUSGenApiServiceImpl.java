@@ -192,10 +192,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case "ageKey":
-						postSql.append(SiteContextEnUS.SQL_addA);
-						postSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", Long.parseLong(jsonObject.getString(entityVar))));
-						break;
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -450,16 +446,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
-						break;
-					case "setAgeKey":
-						o2.setAgeKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_setA1);
-						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
-						break;
-					case "removeAgeKey":
-						o2.setAgeKey(requestJson.getString(methodName));
-						patchSql.append(SiteContextEnUS.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("ageKey", pk, "blockKeys", o2.getAgeKey()));
 						break;
 					case "addEnrollmentKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -902,16 +888,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "ageKey":
-				return "ageKey_indexed_long";
 			case "blockKey":
 				return "blockKey_indexed_long";
 			case "childKey":
@@ -930,8 +906,20 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "sessionSort_indexed_int";
 			case "ageSort":
 				return "ageSort_indexed_int";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "sessionKey":
+				return "sessionKey_indexed_long";
+			case "ageKey":
+				return "ageKey_indexed_long";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

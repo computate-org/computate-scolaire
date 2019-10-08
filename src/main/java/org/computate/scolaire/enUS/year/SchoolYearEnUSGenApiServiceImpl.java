@@ -252,8 +252,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							aSearchSchoolYear(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolYear> listSchoolYear = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listSchoolYear.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modified");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolYear.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modified");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
@@ -804,6 +806,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "yearSort_indexed_int";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

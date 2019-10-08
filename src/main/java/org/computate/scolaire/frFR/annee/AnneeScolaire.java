@@ -185,6 +185,23 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolLocation
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: location
+	 * NomAffichage.frFR: l'emplacement
+	 * r: EcoleEmplacement
+	 * r.enUS: SchoolLocation
+	 * r: ecole
+	 * r.enUS: school
+	 */               
+	protected void _ecoleEmplacement(Couverture<String> c) {
+		if(ecole_ != null)
+			c.o((String)ecole_.getEcoleEmplacement());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true

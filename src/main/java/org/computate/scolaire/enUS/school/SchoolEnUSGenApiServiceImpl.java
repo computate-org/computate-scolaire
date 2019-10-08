@@ -260,8 +260,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							aSearchSchool(siteRequest, false, true, null, c -> {
 								if(c.succeeded()) {
 									SearchList<School> listSchool = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listSchool.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modified");
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modified");
 									String dateStr;
 									if(date == null)
 										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
@@ -818,18 +820,18 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "classCanonicalNames_indexed_strings";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
-			case "childKeys":
-				return "childKeys_indexed_longs";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
-			case "ageGroupKeys":
-				return "ageGroupKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
 			case "yearKeys":
 				return "yearKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageGroupKeys":
+				return "ageGroupKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "childKeys":
+				return "childKeys_indexed_longs";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":

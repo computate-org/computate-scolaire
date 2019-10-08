@@ -13,12 +13,6 @@ import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
-	protected void _schoolKey(Wrap<Long> c) {
-	}
-
-	protected void _yearKey(Wrap<Long> c) {
-	}
-
 	protected void _seasonKey(Wrap<Long> c) {
 		c.o(pk);
 	}
@@ -56,9 +50,24 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		}
 	}
 
+	protected void _schoolKey(Wrap<Long> c) {
+		if(year_ != null)
+			c.o(year_.getSchoolKey());
+	}
+
+	protected void _yearKey(Wrap<Long> c) {
+		if(year_ != null)
+			c.o(year_.getYearKey());
+	}
+
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(year_ != null)
 			c.o(year_.getSchoolCompleteName());
+	}
+
+	protected void _schoolLocation(Wrap<String> c) {
+		if(year_ != null)
+			c.o((String)year_.getSchoolLocation());
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {
