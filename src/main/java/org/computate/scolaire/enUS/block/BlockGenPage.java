@@ -49,8 +49,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolBlock != null && schoolBlock.getBlocCompleteName() != null)
-			c.o(schoolBlock.getBlocCompleteName());
+		if(schoolBlock != null && schoolBlock.getBlockCompleteName() != null)
+			c.o(schoolBlock.getBlockCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -58,8 +58,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolBlock != null && schoolBlock.getBlocCompleteName() != null)
-			c.o(schoolBlock.getBlocCompleteName());
+		if(schoolBlock != null && schoolBlock.getBlockCompleteName() != null)
+			c.o(schoolBlock.getBlockCompleteName());
 		else if(schoolBlock != null)
 			c.o("");
 		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
@@ -1501,7 +1501,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocCompleteName()).g("span");
+								e("span").f().sx(o.strBlockCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1958,7 +1958,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strBlocCompleteName()).g("span");
+								e("span").f().sx(o.strBlockCompleteName()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -2085,7 +2085,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 								{ e("a").a("href", uri).f();
 									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
 									{ e("span").f();
-										sx(o.strBlocCompleteName());
+										sx(o.strBlockCompleteName());
 									} g("span");
 								} g("a");
 							} g("td");

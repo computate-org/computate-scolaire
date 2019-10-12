@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import org.apache.commons.configuration2.INIConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -43,14 +44,16 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	 * r.enUS: configPath
 	 **/ 
 	protected void _config(Couverture<INIConfiguration> c) {
-		Configurations configurations = new Configurations();
-		File fichierConfig = new File(configChemin);
-		if(configChemin != null && fichierConfig.exists()) {
-			try {
-				INIConfiguration o = configurations.ini(fichierConfig);
-				c.o(o);
-			} catch (ConfigurationException e) {
-				ExceptionUtils.rethrow(e);
+		if(configChemin != null) {
+			Configurations configurations = new Configurations();
+			File fichierConfig = new File(configChemin);
+			if(fichierConfig.exists()) {
+				try {
+					INIConfiguration o = configurations.ini(fichierConfig);
+					c.o(o);
+				} catch (ConfigurationException e) {
+					ExceptionUtils.rethrow(e);
+				}
 			}
 		}
 	}
@@ -698,7 +701,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	protected void _nombreExecuteurs(Couverture<Integer> c) {
 		Integer o;
 		if(config == null)
-			o = Integer.parseInt(System.getenv(c.var), 1);
+			o = Integer.parseInt(ObjectUtils.defaultIfNull(System.getenv(c.var), "1"));
 		else
 			o = config.getInt(prefixeEchappe + c.var, 1);
 		c.o(o);

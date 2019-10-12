@@ -3,6 +3,7 @@ package org.computate.scolaire.frFR.saison;
 import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -285,6 +286,22 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	protected void _saisonJourDebut(Couverture<LocalDate> c) {}
 
 	/**
+	 * Var.enUS: setSeasonStartDate
+	 * r: SaisonJourDebut
+	 * r.enUS: SeasonStartDate
+	 */
+	@Override public SaisonScolaire setSaisonJourDebut(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSaisonJourDebut(o);
+		} catch (Exception e) {
+			setSaisonJourDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * Var.enUS: seasonSummer
 	 * Indexe: true
@@ -353,7 +370,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		
 		if(BooleanUtils.isTrue(saisonEte))
 			o = String.format("%s saison d'été à %s", strSaisonJourDebut(), ecoleNomComplet);
-		if(BooleanUtils.isTrue(saisonHiver))
+		else if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("%s saison scolaire à %s", strSaisonJourDebut(), ecoleNomComplet);
 		else
 			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);

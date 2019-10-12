@@ -193,7 +193,7 @@ public class AppRestore extends AbstractVerticle {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			sqlConnection.queryWithParams(
-					"update d set modified=now() where pk in (select pk from d where not current and modified < ? limit 10) returning pk, pk_c, path, value, current, created, modified;"
+					"update d set modified=now() where pk in (select pk from d where not current and modified < ? order by pk limit 10) returning pk, pk_c, path, value, current, created, modified;"
 					, new JsonArray(Arrays.asList(Timestamp.from(dateTime.toInstant())))
 					, updateDAsync
 			-> {
@@ -214,7 +214,7 @@ public class AppRestore extends AbstractVerticle {
 		try {
 			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			sqlConnection.queryWithParams(
-					"update c set modified=now() where pk in (select pk from c where current and canonical_name is not null and modified < ? limit 10) returning pk, current, canonical_name, created, modified, user_id;"
+					"update c set modified=now() where pk in (select pk from c where current and canonical_name is not null and modified < ? order by pk limit 10) returning pk, current, canonical_name, created, modified, user_id;"
 					, new JsonArray(Arrays.asList(Timestamp.from(dateTime.toInstant())))
 					, selectCAsync
 			-> {

@@ -47,7 +47,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */             
+ */          
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**

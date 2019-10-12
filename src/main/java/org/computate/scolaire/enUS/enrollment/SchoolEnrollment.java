@@ -247,6 +247,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block_.getBlockSaturday());
 	}
 
+	protected void _blockTotalPrice(Wrap<BigDecimal> c) {
+		if(block_ != null)
+			c.o(block_.getBlockTotalPrice());
+	}
+
 	protected void _enrollmentApproved(Wrap<Boolean> c) {
 	}
 

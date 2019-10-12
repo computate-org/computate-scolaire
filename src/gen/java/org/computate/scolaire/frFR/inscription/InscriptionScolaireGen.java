@@ -5085,6 +5085,125 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////
+	// blocPrixTotal //
+	///////////////////
+
+	/**	L'entité « blocPrixTotal »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal blocPrixTotal;
+	@JsonIgnore
+	public Couverture<BigDecimal> blocPrixTotalCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("blocPrixTotal").o(blocPrixTotal);
+
+	/**	<br/>L'entité « blocPrixTotal »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocPrixTotal">Trouver l'entité blocPrixTotal dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocPrixTotal(Couverture<BigDecimal> c);
+
+	public BigDecimal getBlocPrixTotal() {
+		return blocPrixTotal;
+	}
+
+	public void setBlocPrixTotal(BigDecimal blocPrixTotal) {
+		this.blocPrixTotal = blocPrixTotal;
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setBlocPrixTotal(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setBlocPrixTotal(Double o) {
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setBlocPrixTotal(Integer o) {
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blocPrixTotalCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire blocPrixTotalInit() {
+		if(!blocPrixTotalCouverture.dejaInitialise) {
+			_blocPrixTotal(blocPrixTotalCouverture);
+			if(blocPrixTotal == null)
+				setBlocPrixTotal(blocPrixTotalCouverture.o);
+		}
+		blocPrixTotalCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Double solrBlocPrixTotal() {
+		return blocPrixTotal == null ? null : blocPrixTotal.doubleValue();
+	}
+
+	public String strBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : blocPrixTotal.toString();
+	}
+
+	public String jsonBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : blocPrixTotal.toString();
+	}
+
+	public String nomAffichageBlocPrixTotal() {
+		return "prix total";
+	}
+
+	public String htmTooltipBlocPrixTotal() {
+		return null;
+	}
+
+	public String htmBlocPrixTotal() {
+		return blocPrixTotal == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixTotal());
+	}
+
+	public void htmBlocPrixTotal(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "BlocPrixTotal\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "BlocPrixTotal() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlocPrixTotal\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocPrixTotal()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blocPrixTotal\"");
+							r.s(" value=\"", htmBlocPrixTotal(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlocPrixTotal());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////////////////
 	// inscriptionApprouve //
 	/////////////////////////
@@ -6719,6 +6838,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		blocJeudiInit();
 		blocVendrediInit();
 		blocSamediInit();
+		blocPrixTotalInit();
 		inscriptionApprouveInit();
 		inscriptionImmunisationsInit();
 		familleMarieInit();
@@ -6872,6 +6992,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.blocVendredi;
 			case "blocSamedi":
 				return oInscriptionScolaire.blocSamedi;
+			case "blocPrixTotal":
+				return oInscriptionScolaire.blocPrixTotal;
 			case "inscriptionApprouve":
 				return oInscriptionScolaire.inscriptionApprouve;
 			case "inscriptionImmunisations":
@@ -7290,6 +7412,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setBlocSamedi(blocSamedi);
 			}
 
+			if(sauvegardesInscriptionScolaire.contains("blocPrixTotal")) {
+				Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
+				if(blocPrixTotal != null)
+					oInscriptionScolaire.setBlocPrixTotal(blocPrixTotal);
+			}
+
 			if(sauvegardesInscriptionScolaire.contains("inscriptionApprouve")) {
 				Boolean inscriptionApprouve = (Boolean)solrDocument.get("inscriptionApprouve_stored_boolean");
 				if(inscriptionApprouve != null)
@@ -7644,6 +7772,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("blocSamedi_indexed_boolean", blocSamedi);
 			document.addField("blocSamedi_stored_boolean", blocSamedi);
 		}
+		if(blocPrixTotal != null) {
+			document.addField("blocPrixTotal_indexed_double", blocPrixTotal.doubleValue());
+			document.addField("blocPrixTotal_stored_double", blocPrixTotal.doubleValue());
+		}
 		if(inscriptionApprouve != null) {
 			document.addField("inscriptionApprouve_indexed_boolean", inscriptionApprouve);
 			document.addField("inscriptionApprouve_stored_boolean", inscriptionApprouve);
@@ -7910,6 +8042,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Boolean blocSamedi = (Boolean)solrDocument.get("blocSamedi_stored_boolean");
 		if(blocSamedi != null)
 			oInscriptionScolaire.setBlocSamedi(blocSamedi);
+
+		Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
+		if(blocPrixTotal != null)
+			oInscriptionScolaire.setBlocPrixTotal(blocPrixTotal);
 
 		Boolean inscriptionApprouve = (Boolean)solrDocument.get("inscriptionApprouve_stored_boolean");
 		if(inscriptionApprouve != null)

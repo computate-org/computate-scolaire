@@ -332,6 +332,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 	public void listPATCHSchoolBlock(SearchList<SchoolBlock> listSchoolBlock, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
+		listSchoolBlock.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		listSchoolBlock.getList().forEach(o -> {
 			futures.add(
@@ -964,8 +965,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return "blockFriday_indexed_boolean";
 			case "blockSaturday":
 				return "blockSaturday_indexed_boolean";
-			case "blocCompleteName":
-				return "blocCompleteName_indexed_string";
+			case "blockTotalPrice":
+				return "blockTotalPrice_indexed_double";
+			case "blockCompleteName":
+				return "blockCompleteName_indexed_string";
 			case "blocId":
 				return "blocId_indexed_string";
 			case "pageUrl":

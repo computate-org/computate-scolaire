@@ -1124,6 +1124,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "blocVendredi_indexed_boolean";
 			case "blocSamedi":
 				return "blocSamedi_indexed_boolean";
+			case "blocPrixTotal":
+				return "blocPrixTotal_indexed_double";
 			case "inscriptionApprouve":
 				return "inscriptionApprouve_indexed_boolean";
 			case "inscriptionImmunisations":

@@ -1384,7 +1384,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wChemins.tl(5, "schema:");
 				wChemins.tl(6, "type: integer");
 				wChemins.tl(6, "default: 10");
-				wChemins.tl(6, "minimum: 1");
+				wChemins.tl(6, "minimum: 0");
 			}
 		}
 

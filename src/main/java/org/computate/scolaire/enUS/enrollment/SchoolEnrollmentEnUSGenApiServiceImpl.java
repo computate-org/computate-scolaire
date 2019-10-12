@@ -365,6 +365,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void listPATCHSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
 				futurePATCHSchoolEnrollment(o, a -> {
@@ -1124,6 +1125,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "blockFriday_indexed_boolean";
 			case "blockSaturday":
 				return "blockSaturday_indexed_boolean";
+			case "blockTotalPrice":
+				return "blockTotalPrice_indexed_double";
 			case "enrollmentApproved":
 				return "enrollmentApproved_indexed_boolean";
 			case "enrollmentImmunizations":

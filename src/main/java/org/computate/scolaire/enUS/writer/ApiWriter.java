@@ -636,7 +636,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wPaths.tl(5, "schema:");
 				wPaths.tl(6, "type: integer");
 				wPaths.tl(6, "default: 10");
-				wPaths.tl(6, "minimum: 1");
+				wPaths.tl(6, "minimum: 0");
 			}
 		}
 

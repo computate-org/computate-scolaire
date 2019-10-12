@@ -5084,6 +5084,125 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
+	/////////////////////
+	// blockTotalPrice //
+	/////////////////////
+
+	/**	L'entité « blockTotalPrice »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal blockTotalPrice;
+	@JsonIgnore
+	public Wrap<BigDecimal> blockTotalPriceWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockTotalPrice").o(blockTotalPrice);
+
+	/**	<br/>L'entité « blockTotalPrice »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockTotalPrice">Trouver l'entité blockTotalPrice dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blockTotalPrice(Wrap<BigDecimal> c);
+
+	public BigDecimal getBlockTotalPrice() {
+		return blockTotalPrice;
+	}
+
+	public void setBlockTotalPrice(BigDecimal blockTotalPrice) {
+		this.blockTotalPrice = blockTotalPrice;
+		this.blockTotalPriceWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setBlockTotalPrice(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockTotalPriceWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setBlockTotalPrice(Double o) {
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockTotalPriceWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setBlockTotalPrice(Integer o) {
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.blockTotalPriceWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment blockTotalPriceInit() {
+		if(!blockTotalPriceWrap.alreadyInitialized) {
+			_blockTotalPrice(blockTotalPriceWrap);
+			if(blockTotalPrice == null)
+				setBlockTotalPrice(blockTotalPriceWrap.o);
+		}
+		blockTotalPriceWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Double solrBlockTotalPrice() {
+		return blockTotalPrice == null ? null : blockTotalPrice.doubleValue();
+	}
+
+	public String strBlockTotalPrice() {
+		return blockTotalPrice == null ? "" : blockTotalPrice.toString();
+	}
+
+	public String jsonBlockTotalPrice() {
+		return blockTotalPrice == null ? "" : blockTotalPrice.toString();
+	}
+
+	public String nomAffichageBlockTotalPrice() {
+		return "total price";
+	}
+
+	public String htmTooltipBlockTotalPrice() {
+		return null;
+	}
+
+	public String htmBlockTotalPrice() {
+		return blockTotalPrice == null ? "" : StringEscapeUtils.escapeHtml4(strBlockTotalPrice());
+	}
+
+	public void htmBlockTotalPrice(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "BlockTotalPrice\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "BlockTotalPrice() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setBlockTotalPrice\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlockTotalPrice()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"blockTotalPrice\"");
+							r.s(" value=\"", htmBlockTotalPrice(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmBlockTotalPrice());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////////
 	// enrollmentApproved //
 	////////////////////////
@@ -6718,6 +6837,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		blockThursdayInit();
 		blockFridayInit();
 		blockSaturdayInit();
+		blockTotalPriceInit();
 		enrollmentApprovedInit();
 		enrollmentImmunizationsInit();
 		familyMarriedInit();
@@ -6871,6 +6991,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.blockFriday;
 			case "blockSaturday":
 				return oSchoolEnrollment.blockSaturday;
+			case "blockTotalPrice":
+				return oSchoolEnrollment.blockTotalPrice;
 			case "enrollmentApproved":
 				return oSchoolEnrollment.enrollmentApproved;
 			case "enrollmentImmunizations":
@@ -7289,6 +7411,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setBlockSaturday(blockSaturday);
 			}
 
+			if(savesSchoolEnrollment.contains("blockTotalPrice")) {
+				Double blockTotalPrice = (Double)solrDocument.get("blockTotalPrice_stored_double");
+				if(blockTotalPrice != null)
+					oSchoolEnrollment.setBlockTotalPrice(blockTotalPrice);
+			}
+
 			if(savesSchoolEnrollment.contains("enrollmentApproved")) {
 				Boolean enrollmentApproved = (Boolean)solrDocument.get("enrollmentApproved_stored_boolean");
 				if(enrollmentApproved != null)
@@ -7643,6 +7771,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("blockSaturday_indexed_boolean", blockSaturday);
 			document.addField("blockSaturday_stored_boolean", blockSaturday);
 		}
+		if(blockTotalPrice != null) {
+			document.addField("blockTotalPrice_indexed_double", blockTotalPrice.doubleValue());
+			document.addField("blockTotalPrice_stored_double", blockTotalPrice.doubleValue());
+		}
 		if(enrollmentApproved != null) {
 			document.addField("enrollmentApproved_indexed_boolean", enrollmentApproved);
 			document.addField("enrollmentApproved_stored_boolean", enrollmentApproved);
@@ -7909,6 +8041,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Boolean blockSaturday = (Boolean)solrDocument.get("blockSaturday_stored_boolean");
 		if(blockSaturday != null)
 			oSchoolEnrollment.setBlockSaturday(blockSaturday);
+
+		Double blockTotalPrice = (Double)solrDocument.get("blockTotalPrice_stored_double");
+		if(blockTotalPrice != null)
+			oSchoolEnrollment.setBlockTotalPrice(blockTotalPrice);
 
 		Boolean enrollmentApproved = (Boolean)solrDocument.get("enrollmentApproved_stored_boolean");
 		if(enrollmentApproved != null)

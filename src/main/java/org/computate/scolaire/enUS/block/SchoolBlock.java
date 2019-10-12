@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -192,7 +193,13 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(false);
 	}
 
-	protected void _blocCompleteName(Wrap<String> c) {
+	protected void _blockTotalPrice(Wrap<BigDecimal> c) {
+		if(blockPricePerMonth != null && sessionStartDay != null && sessionEndDay != null) {
+			c.o(blockPricePerMonth.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionStartDay, sessionEndDay))));
+		}
+	}
+
+	protected void _blockCompleteName(Wrap<String> c) {
 		String o;
 		String weekdays = "";
 		if(BooleanUtils.isTrue(blockSunday)) weekdays += " Su";
@@ -211,8 +218,8 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	}
 
 	protected void _blocId(Wrap<String> c) {
-		if(blocCompleteName != null) {
-			String s = Normalizer.normalize(blocCompleteName, Normalizer.Form.NFD);
+		if(blockCompleteName != null) {
+			String s = Normalizer.normalize(blockCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -233,7 +240,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	}
 
 	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(blocCompleteName);
+		c.o(blockCompleteName);
 	}
 
 	@Override()

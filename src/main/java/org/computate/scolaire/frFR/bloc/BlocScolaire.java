@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -655,9 +656,29 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		c.o(false);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockTotalPrice
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix total
+	 * NomAffichage.enUS: total price
+	 * r: blocPrixParMois
+	 * r.enUS: blockPricePerMonth
+	 * r: sessionJourDebut
+	 * r.enUS: sessionStartDay
+	 * r: sessionJourFin
+	 * r.enUS: sessionEndDay
+	 */                   
+	protected void _blocPrixTotal(Couverture<BigDecimal> c) {
+		if(blocPrixParMois != null && sessionJourDebut != null && sessionJourFin != null) {
+			c.o(blocPrixParMois.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionJourDebut, sessionJourFin))));
+		}
+	}
+
 	/**    
 	 * {@inheritDoc}
-	 * Var.enUS: blocCompleteName
+	 * Var.enUS: blockCompleteName
 	 * Indexe: true
 	 * Stocke: true
 	 * VarH2: true
@@ -737,7 +758,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
 	 * r: blocNomComplet
-	 * r.enUS: blocCompleteName
+	 * r.enUS: blockCompleteName
 	 */            
 	protected void _blocId(Couverture<String> c) {
 		if(blocNomComplet != null) {
@@ -782,8 +803,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
 	 * r: blocNomComplet
-	 * r.enUS: blocCompleteName
-	 */         
+	 * r.enUS: blockCompleteName
+	 */       
 	protected void _objetSuggere(Couverture<String> c) { 
 		c.o(blocNomComplet);
 	}

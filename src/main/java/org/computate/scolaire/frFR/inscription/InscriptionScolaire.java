@@ -834,6 +834,23 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: blockTotalPrice
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: prix total
+	 * NomAffichage.enUS: total price
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocPrixTotal
+	 * r.enUS: BlockTotalPrice
+	 */                   
+	protected void _blocPrixTotal(Couverture<BigDecimal> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getBlocPrixTotal());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: enrollmentApproved
 	 * Indexe: true
 	 * Stocke: true

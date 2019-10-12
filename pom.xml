@@ -22,7 +22,7 @@
 		<vertx-maven-plugin.version>1.0.9</vertx-maven-plugin.version>
 		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-		<vertx.verticle>org.computate.scolaire.frFR.AppVertx</vertx.verticle>
+		<vertx.verticle>org.computate.scolaire.enUS.vertx.AppVertx</vertx.verticle>
 		<!--<vertx.version>3.5.4</vertx.version> -->
 		<vertx.version>3.6.2</vertx.version>
 		<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest</fabric8.generator.from>
@@ -272,7 +272,7 @@
 						</goals>
 						<configuration>
 							<files>
-								<file>/usr/local/src/computate.org/config/keystore.properties</file>
+								<file>/usr/local/src/computate-scolaire/config/keystore.properties</file>
 							</files>
 						</configuration>
 					</execution>
@@ -326,7 +326,7 @@
 							<generator>
 								<config>
 									<java-exec>
-										<mainClass>org.computate.scolaire.frFR.vertx.AppliVertx</mainClass>
+										<mainClass>org.computate.scolaire.enUS.vertx.AppVertx</mainClass>
 									</java-exec>
 								</config>
 							</generator>
@@ -365,7 +365,7 @@
 										<transformer
 											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 											<manifestEntries>
-												<Main-Class>org.computate.scolaire.frFR.vertx.AppliVertx</Main-Class>
+												<Main-Class>org.computate.scolaire.enUS.vertx.AppVertx</Main-Class>
 											</manifestEntries>
 										</transformer>
 									</transformers>

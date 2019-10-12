@@ -77,14 +77,22 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 	 * r.enUS: Wrap
 	 * r: modifie_
 	 * r.enUS: modified_
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: SiteContexte
+	 * r.enUS: SiteContext
+	 * r: ClientSolr
+	 * r.enUS: SolrClient
 	 */
 	public boolean next(String dt) {
 		boolean next = false;
 		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
 		if(numFound > 0) {
-			addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-			_queryResponse(queryResponseCouverture);
-			setQueryResponse(queryResponseCouverture.o);
+			try {
+				setQueryResponse(requeteSite_.getSiteContexte_().getClientSolr().query(solrQuery));
+			} catch (SolrServerException | IOException e) {
+				ExceptionUtils.rethrow(e);
+			}
 			_solrDocumentList(solrDocumentListCouverture);
 			setSolrDocumentList(solrDocumentListCouverture.o);
 			list.clear();

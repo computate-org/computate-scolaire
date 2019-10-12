@@ -52,9 +52,11 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		boolean next = false;
 		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
 		if(numFound > 0) {
-			addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-			_queryResponse(queryResponseWrap);
-			setQueryResponse(queryResponseWrap.o);
+			try {
+				setQueryResponse(siteRequest_.getSiteContext_().getSolrClient().query(solrQuery));
+			} catch (SolrServerException | IOException e) {
+				ExceptionUtils.rethrow(e);
+			}
 			_solrDocumentList(solrDocumentListWrap);
 			setSolrDocumentList(solrDocumentListWrap.o);
 			list.clear();

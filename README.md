@@ -1,49 +1,28 @@
-# Spring-Boot Camel QuickStart
 
-This example demonstrates how you can use Apache Camel with Spring Boot.
+# Deployment
 
-The quickstart uses Spring Boot to configure a little application that includes a Camel route that triggers a message every 5th second, and routes the message to a log.
+# Deploy static files to CDN. 
+rsync -r /usr/local/src/computate-scolaire-static/ /usr/local/src/computate.org-static/scolaire/
 
-### Building
-
-The example can be built with
-
-    mvn clean install
-
-### Running the example in OpenShift
-
-It is assumed that:
-- OpenShift platform is already running, if not you can find details how to [Install OpenShift at your site](https://docs.openshift.com/container-platform/3.3/install_config/index.html).
-- Your system is configured for Fabric8 Maven Workflow, if not you can find a [Get Started Guide](https://access.redhat.com/documentation/en/red-hat-jboss-middleware-for-openshift/3/single/red-hat-jboss-fuse-integration-services-20-for-openshift/)
-
-The example can be built and run on OpenShift using a single goal:
-
-    mvn fabric8:deploy
-
-When the example runs in OpenShift, you can use the OpenShift client tool to inspect the status
-
-To list all the running pods:
-
-    oc get pods
-
-Then find the name of the pod that runs this quickstart, and output the logs from the running pods with:
-
-    oc logs <name of pod>
-
-You can also use the OpenShift [web console](https://docs.openshift.com/container-platform/3.3/getting_started/developers_console.html#developers-console-video) to manage the
-running pods, and view logs and much more.
-
-### Running via an S2I Application Template
-
-Application templates allow you deploy applications to OpenShift by filling out a form in the OpenShift console that allows you to adjust deployment parameters.  This template uses an S2I source build so that it handle building and deploying the application for you.
-
-First, import the Fuse image streams:
-
-    oc create -f https://raw.githubusercontent.com/jboss-fuse/application-templates/GA/fis-image-streams.json
-
-Then create the quickstart template:
-
-    oc create -f https://raw.githubusercontent.com/jboss-fuse/application-templates/GA/quickstarts/spring-boot-camel-template.json
-
-Now when you use "Add to Project" button in the OpenShift console, you should see a template for this quickstart. 
+# Certs
+sudo yum install -y letsencrypt
+curl https://letsencrypt.org/certs/isrgrootx1.pem.txt -o /usr/local/src/computate-scolaire/config/root.crt
+curl https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt -o /usr/local/src/computate-scolaire/config/ca1.crt
+curl https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt -o /usr/local/src/computate-scolaire/config/ca2.crt
+sudo certbot -d demo.heytate.com --manual --preferred-challenges dns certonly --server https://acme-v02.api.letsencrypt.org/directory
+sudo cp /etc/letsencrypt/live/demo.heytate.com/privkey.pem /usr/local/src/computate-scolaire/config/server.key
+sudo cp /etc/letsencrypt/live/demo.heytate.com/fullchain.pem /usr/local/src/computate-scolaire/config/server.crt
+sudo chown $USER: /usr/local/src/computate-scolaire/config/server.* /usr/local/src/computate-scolaire/config/root.crt
+cat /usr/local/src/computate-scolaire/config/root.crt /usr/local/src/computate-scolaire/config/server.crt > /usr/local/src/computate-scolaire/config/merged.crt
+openssl pkcs12 -export -in /usr/local/src/computate-scolaire/config/merged.crt -inkey /usr/local/src/computate-scolaire/config/server.key -out /usr/local/src/computate-scolaire/config/server.p12 -name demo.heytate.com
+keytool -importkeystore -srckeystore /usr/local/src/computate-scolaire/config/server.p12 -destkeystore /usr/local/src/computate-scolaire/config/server.jks -srcstoretype pkcs12 -deststoretype pkcs12 -alias demo.heytate.com -destalias demo.heytate.com
+rm /usr/local/src/computate-scolaire/config/server.jceks
+keytool -genseckey -alias demo.heytate.com -storetype JCEKS -keystore /usr/local/src/computate-scolaire/config/server.jceks
+# Reconfigure the Red Hat SSO secret:
+base64 /usr/local/src/computate-scolaire/config/server.jks | perl -pe'chomp'
+base64 /usr/local/src/computate-scolaire/config/server.jceks | perl -pe'chomp'
+# Configure the www.computate.org route:
+cat /usr/local/src/computate-scolaire/config/server.crt
+cat /usr/local/src/computate-scolaire/config/server.key
+cat /usr/local/src/computate-scolaire/config/ca1.crt
 

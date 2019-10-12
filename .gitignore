@@ -11,7 +11,15 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 config/*.config
+config/*.crt
+config/*.key
+config/*.jks
+config/*.p12
+config/*.jceks
+config/*.properties
 .vertx
+src/main/fabric8/deployment.yml
+**/*.swp
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
