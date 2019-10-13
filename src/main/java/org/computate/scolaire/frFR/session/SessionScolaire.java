@@ -23,7 +23,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiTag.frFR: Session
  * ApiUri.frFR: /api/session
  * 
- * ApiTag.enUS: Season
+ * ApiTag.enUS: Session
  * ApiUri.enUS: /api/session
  * 
  * ApiMethode: POST

@@ -252,12 +252,13 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 									Date date = null;
 									if(facets != null)
 										date = (Date)facets.get("max_modifie");
-									String dateStr;
+									String dt;
 									if(date == null)
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
 									else
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePATCHSessionScolaire(listeSessionScolaire, dateStr, d -> {
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listeSessionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									listePATCHSessionScolaire(listeSessionScolaire, dt, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {

@@ -3,7 +3,7 @@ info:
   title: "computate-scolaire"
   version: 3.0.0
 servers:
-  - url: https://scolaire-dev.computate.org:11280
+  - url: https://scolaire-dev.computate.org:10180
 paths:
   /api/cluster:
     post:
@@ -4221,1332 +4221,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
-  /annee:
-    get:
-      operationId: pagerechercheAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PageRechercheAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /annee/{id}:
-    get:
-      operationId: pagerechercheAnneeScolaireId
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PageRechercheAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/annee:
-    post:
-      operationId: postAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTAnneeScolaireRequete'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHAnneeScolaireRequete'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: rechercheAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/RechercheAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/annee/{id}:
-    get:
-      operationId: getAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    delete:
-      operationId: deleteAnneeScolaire
-      x-vertx-event-bus: frFRAnneeScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Année
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/DELETEAnneeScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/session:
-    post:
-      operationId: postSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSessionScolaireRequete'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/POSTSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    patch:
-      operationId: patchSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PATCHSessionScolaireRequete'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PATCHSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    get:
-      operationId: rechercheSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/RechercheSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /api/session/{id}:
-    get:
-      operationId: getSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/GETSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-    delete:
-      operationId: deleteSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/DELETESessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /session:
-    get:
-      operationId: pagerechercheSessionScolaire
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PageRechercheSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-  /session/{id}:
-    get:
-      operationId: pagerechercheSessionScolaireId
-      x-vertx-event-bus: frFRSessionScolaire
-      security:
-        - openIdConnect:
-          - SiteAdmin
-      description: >+
-      summary: >+
-      tags:
-        - Session
-      parameters:
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: ''
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: ''
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: ''
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: start
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: ''
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/requestBodies/PageRechercheSessionScolaireReponse'
-        '400':
-          description: >+
-                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
-                or invalid Parameters</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '401':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
-                credentials are missing or invalid</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '403':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
-                request operation is not configured to access this
-                resource</td><td>Channel/Country/Business provided in the request is
-                not supported currently</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '404':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
-                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
-                requested resource was not found</td><td>Empty resource/resource not
-                found</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
-        '500':
-          description: >+
-                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
-                request failed due to an internal error/server
-                unavailability</td></tr></table>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/requestBodies/ErrorResponse'
   /age:
     get:
       operationId: pagerechercheAgeScolaire
@@ -8799,11 +7473,1337 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/requestBodies/ErrorResponse'
+  /annee:
+    get:
+      operationId: pagerechercheAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PageRechercheAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /annee/{id}:
+    get:
+      operationId: pagerechercheAnneeScolaireId
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PageRechercheAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/annee:
+    post:
+      operationId: postAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTAnneeScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHAnneeScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: rechercheAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RechercheAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/annee/{id}:
+    get:
+      operationId: getAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteAnneeScolaire
+      x-vertx-event-bus: frFRAnneeScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Année
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETEAnneeScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/session:
+    post:
+      operationId: postSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSessionScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/POSTSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    patch:
+      operationId: patchSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSessionScolaireRequete'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PATCHSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    get:
+      operationId: rechercheSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/RechercheSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /api/session/{id}:
+    get:
+      operationId: getSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/GETSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+    delete:
+      operationId: deleteSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/DELETESessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /session:
+    get:
+      operationId: pagerechercheSessionScolaire
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PageRechercheSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+  /session/{id}:
+    get:
+      operationId: pagerechercheSessionScolaireId
+      x-vertx-event-bus: frFRSessionScolaire
+      security:
+        - openIdConnect:
+          - SiteAdmin
+      description: >+
+      summary: >+
+      tags:
+        - Session
+      parameters:
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: ''
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: ''
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: start
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: ''
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/requestBodies/PageRechercheSessionScolaireReponse'
+        '400':
+          description: >+
+                <table><table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>invalidRequest</td><td>Missing
+                or invalid Parameters</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '401':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>error</td><td>unAuthorized</td><td>Authorization
+                credentials are missing or invalid</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '403':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>accessNotConfigured</td><td>The
+                request operation is not configured to access this
+                resource</td><td>Channel/Country/Business provided in the request is
+                not supported currently</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '404':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More
+                Info</td></tr><tr><td>error</td><td>resourceNotFound</td><td>The
+                requested resource was not found</td><td>Empty resource/resource not
+                found</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
+        '500':
+          description: >+
+                <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The
+                request failed due to an internal error/server
+                unavailability</td></tr></table>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/requestBodies/ErrorResponse'
 components:
   securitySchemes:
     openIdConnect:
       type: openIdConnect
-      openIdConnectUrl: https://auth.computate.org/auth/realms/computate.org/.well-known/openid-configuration
+      openIdConnectUrl: https://sso.computate.org/auth/realms/COMPUTATE.ORG/.well-known/openid-configuration
   requestBodies:
     ErrorResponse:
       content:
@@ -9065,86 +9065,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/PageRechercheGardienScolaireReponse'
-    PageRechercheAnneeScolaireReponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PageRechercheAnneeScolaireReponse'
-    POSTAnneeScolaireRequete:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTAnneeScolaireRequete'
-    POSTAnneeScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTAnneeScolaireReponse'
-    PATCHAnneeScolaireRequete:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHAnneeScolaireRequete'
-    PATCHAnneeScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHAnneeScolaireReponse'
-    RechercheAnneeScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/RechercheAnneeScolaireReponse'
-    GETAnneeScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETAnneeScolaireReponse'
-    DELETEAnneeScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DELETEAnneeScolaireReponse'
-    POSTSessionScolaireRequete:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSessionScolaireRequete'
-    POSTSessionScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSessionScolaireReponse'
-    PATCHSessionScolaireRequete:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PATCHSessionScolaireRequete'
-    PATCHSessionScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PATCHSessionScolaireReponse'
-    RechercheSessionScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/RechercheSessionScolaireReponse'
-    GETSessionScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/GETSessionScolaireReponse'
-    DELETESessionScolaireReponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DELETESessionScolaireReponse'
-    PageRechercheSessionScolaireReponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/PageRechercheSessionScolaireReponse'
     PageRechercheAgeScolaireReponse:
       content:
         text/html; charset=utf-8:
@@ -9345,6 +9265,86 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/PageRechercheEcoleReponse'
+    PageRechercheAnneeScolaireReponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PageRechercheAnneeScolaireReponse'
+    POSTAnneeScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTAnneeScolaireRequete'
+    POSTAnneeScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTAnneeScolaireReponse'
+    PATCHAnneeScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHAnneeScolaireRequete'
+    PATCHAnneeScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHAnneeScolaireReponse'
+    RechercheAnneeScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RechercheAnneeScolaireReponse'
+    GETAnneeScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETAnneeScolaireReponse'
+    DELETEAnneeScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEAnneeScolaireReponse'
+    POSTSessionScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSessionScolaireRequete'
+    POSTSessionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSessionScolaireReponse'
+    PATCHSessionScolaireRequete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSessionScolaireRequete'
+    PATCHSessionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSessionScolaireReponse'
+    RechercheSessionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/RechercheSessionScolaireReponse'
+    GETSessionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSessionScolaireReponse'
+    DELETESessionScolaireReponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESessionScolaireReponse'
+    PageRechercheSessionScolaireReponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PageRechercheSessionScolaireReponse'
   schemas:
     POSTClusterRequete:
       allOf:
@@ -14200,1214 +14200,6 @@ components:
             objetSuggere:
               type: string
     PageRechercheGardienScolaireReponse:
-      allOf:
-        - type: string
-    PageRechercheAnneeScolaireReponse:
-      allOf:
-        - type: string
-    POSTAnneeScolaireRequete:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequete"
-        - type: object
-          properties:
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            saisonCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            anneeNomCourt:
-              type: string
-            anneeNomComplet:
-              type: string
-            anneeId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    POSTAnneeScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterReponse"
-        - type: object
-          properties:
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            saisonCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            anneeNomCourt:
-              type: string
-            anneeNomComplet:
-              type: string
-            anneeId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    PATCHAnneeScolaireRequete:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequete"
-        - type: object
-          properties:
-            setEcoleCle:
-              type: string
-              nullable: true
-            removeEcoleCle:
-              type: string
-            removeAllEcoleCle:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setInscriptionCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeInscriptionCles:
-              type: string
-            removeAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            addInscriptionCles:
-              type: string
-            addAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            setSaisonCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSaisonCles:
-              type: string
-            removeAllSaisonCles:
-              type: array
-              items:
-                type: string
-            addSaisonCles:
-              type: string
-            addAllSaisonCles:
-              type: array
-              items:
-                type: string
-            setScolaireTri:
-              type: string
-              nullable: true
-            removeScolaireTri:
-              type: string
-            removeAllScolaireTri:
-              type: string
-            setEcoleTri:
-              type: string
-              nullable: true
-            removeEcoleTri:
-              type: string
-            removeAllEcoleTri:
-              type: string
-            setAnneeTri:
-              type: string
-              nullable: true
-            removeAnneeTri:
-              type: string
-            removeAllAnneeTri:
-              type: string
-            setEcoleNomComplet:
-              type: string
-              nullable: true
-            removeEcoleNomComplet:
-              type: string
-            removeAllEcoleNomComplet:
-              type: string
-            setEcoleEmplacement:
-              type: string
-              nullable: true
-            removeEcoleEmplacement:
-              type: string
-            removeAllEcoleEmplacement:
-              type: string
-            setAnneeDebut:
-              type: string
-              nullable: true
-            removeAnneeDebut:
-              type: string
-            removeAllAnneeDebut:
-              type: string
-            setAnneeFin:
-              type: string
-              nullable: true
-            removeAnneeFin:
-              type: string
-            removeAllAnneeFin:
-              type: string
-            setAnneeNomCourt:
-              type: string
-              nullable: true
-            removeAnneeNomCourt:
-              type: string
-            removeAllAnneeNomCourt:
-              type: string
-            setAnneeNomComplet:
-              type: string
-              nullable: true
-            removeAnneeNomComplet:
-              type: string
-            removeAllAnneeNomComplet:
-              type: string
-            setAnneeId:
-              type: string
-              nullable: true
-            removeAnneeId:
-              type: string
-            removeAllAnneeId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjetSuggere:
-              type: string
-              nullable: true
-            removeObjetSuggere:
-              type: string
-            removeAllObjetSuggere:
-              type: string
-    PATCHAnneeScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterReponse"
-        - type: object
-          properties:
-            setEcoleCle:
-              type: string
-              nullable: true
-            removeEcoleCle:
-              type: string
-            removeAllEcoleCle:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setInscriptionCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeInscriptionCles:
-              type: string
-            removeAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            addInscriptionCles:
-              type: string
-            addAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            setSaisonCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeSaisonCles:
-              type: string
-            removeAllSaisonCles:
-              type: array
-              items:
-                type: string
-            addSaisonCles:
-              type: string
-            addAllSaisonCles:
-              type: array
-              items:
-                type: string
-            setScolaireTri:
-              type: string
-              nullable: true
-            removeScolaireTri:
-              type: string
-            removeAllScolaireTri:
-              type: string
-            setEcoleTri:
-              type: string
-              nullable: true
-            removeEcoleTri:
-              type: string
-            removeAllEcoleTri:
-              type: string
-            setAnneeTri:
-              type: string
-              nullable: true
-            removeAnneeTri:
-              type: string
-            removeAllAnneeTri:
-              type: string
-            setEcoleNomComplet:
-              type: string
-              nullable: true
-            removeEcoleNomComplet:
-              type: string
-            removeAllEcoleNomComplet:
-              type: string
-            setEcoleEmplacement:
-              type: string
-              nullable: true
-            removeEcoleEmplacement:
-              type: string
-            removeAllEcoleEmplacement:
-              type: string
-            setAnneeDebut:
-              type: string
-              nullable: true
-            removeAnneeDebut:
-              type: string
-            removeAllAnneeDebut:
-              type: string
-            setAnneeFin:
-              type: string
-              nullable: true
-            removeAnneeFin:
-              type: string
-            removeAllAnneeFin:
-              type: string
-            setAnneeNomCourt:
-              type: string
-              nullable: true
-            removeAnneeNomCourt:
-              type: string
-            removeAllAnneeNomCourt:
-              type: string
-            setAnneeNomComplet:
-              type: string
-              nullable: true
-            removeAnneeNomComplet:
-              type: string
-            removeAllAnneeNomComplet:
-              type: string
-            setAnneeId:
-              type: string
-              nullable: true
-            removeAnneeId:
-              type: string
-            removeAllAnneeId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjetSuggere:
-              type: string
-              nullable: true
-            removeObjetSuggere:
-              type: string
-            removeAllObjetSuggere:
-              type: string
-    RechercheAnneeScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/RechercheClusterReponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              ecoleCle:
-                type: string
-              anneeCle:
-                type: string
-              inscriptionCles:
-                type: array
-                items:
-                  type: string
-              saisonCles:
-                type: array
-                items:
-                  type: string
-              scolaireTri:
-                type: string
-              ecoleTri:
-                type: string
-              anneeTri:
-                type: string
-              ecoleNomComplet:
-                type: string
-              ecoleEmplacement:
-                type: string
-              anneeDebut:
-                type: string
-              anneeFin:
-                type: string
-              anneeNomCourt:
-                type: string
-              anneeNomComplet:
-                type: string
-              anneeId:
-                type: string
-              pageUrl:
-                type: string
-              objetSuggere:
-                type: string
-    GETAnneeScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterReponse"
-        - type: object
-          properties:
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            saisonCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            anneeNomCourt:
-              type: string
-            anneeNomComplet:
-              type: string
-            anneeId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    DELETEAnneeScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/DELETEClusterReponse"
-        - type: object
-          properties:
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            saisonCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            anneeNomCourt:
-              type: string
-            anneeNomComplet:
-              type: string
-            anneeId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    POSTSessionScolaireRequete:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterRequete"
-        - type: object
-          properties:
-            sessionCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            ageCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            saisonTri:
-              type: string
-            sessionTri:
-              type: string
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            saisonCle:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            saisonJourDebut:
-              type: string
-            saisonEte:
-              type: boolean
-            saisonHiver:
-              type: boolean
-            saisonFraisInscription:
-              type: string
-            saisonNomComplet:
-              type: string
-            sessionJourDebut:
-              type: string
-            sessionJourFin:
-              type: string
-            sessionNomComplet:
-              type: string
-            sessionId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    POSTSessionScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/POSTClusterReponse"
-        - type: object
-          properties:
-            sessionCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            ageCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            saisonTri:
-              type: string
-            sessionTri:
-              type: string
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            saisonCle:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            saisonJourDebut:
-              type: string
-            saisonEte:
-              type: boolean
-            saisonHiver:
-              type: boolean
-            saisonFraisInscription:
-              type: string
-            saisonNomComplet:
-              type: string
-            sessionJourDebut:
-              type: string
-            sessionJourFin:
-              type: string
-            sessionNomComplet:
-              type: string
-            sessionId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    PATCHSessionScolaireRequete:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterRequete"
-        - type: object
-          properties:
-            setSessionCle:
-              type: string
-              nullable: true
-            removeSessionCle:
-              type: string
-            removeAllSessionCle:
-              type: string
-            setInscriptionCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeInscriptionCles:
-              type: string
-            removeAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            addInscriptionCles:
-              type: string
-            addAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            setAgeCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeCles:
-              type: string
-            removeAllAgeCles:
-              type: array
-              items:
-                type: string
-            addAgeCles:
-              type: string
-            addAllAgeCles:
-              type: array
-              items:
-                type: string
-            setScolaireTri:
-              type: string
-              nullable: true
-            removeScolaireTri:
-              type: string
-            removeAllScolaireTri:
-              type: string
-            setEcoleTri:
-              type: string
-              nullable: true
-            removeEcoleTri:
-              type: string
-            removeAllEcoleTri:
-              type: string
-            setAnneeTri:
-              type: string
-              nullable: true
-            removeAnneeTri:
-              type: string
-            removeAllAnneeTri:
-              type: string
-            setSaisonTri:
-              type: string
-              nullable: true
-            removeSaisonTri:
-              type: string
-            removeAllSaisonTri:
-              type: string
-            setSessionTri:
-              type: string
-              nullable: true
-            removeSessionTri:
-              type: string
-            removeAllSessionTri:
-              type: string
-            setEcoleCle:
-              type: string
-              nullable: true
-            removeEcoleCle:
-              type: string
-            removeAllEcoleCle:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setSaisonCle:
-              type: string
-              nullable: true
-            removeSaisonCle:
-              type: string
-            removeAllSaisonCle:
-              type: string
-            setEcoleNomComplet:
-              type: string
-              nullable: true
-            removeEcoleNomComplet:
-              type: string
-            removeAllEcoleNomComplet:
-              type: string
-            setEcoleEmplacement:
-              type: string
-              nullable: true
-            removeEcoleEmplacement:
-              type: string
-            removeAllEcoleEmplacement:
-              type: string
-            setAnneeDebut:
-              type: string
-              nullable: true
-            removeAnneeDebut:
-              type: string
-            removeAllAnneeDebut:
-              type: string
-            setAnneeFin:
-              type: string
-              nullable: true
-            removeAnneeFin:
-              type: string
-            removeAllAnneeFin:
-              type: string
-            setSaisonJourDebut:
-              type: string
-              nullable: true
-            removeSaisonJourDebut:
-              type: string
-            removeAllSaisonJourDebut:
-              type: string
-            setSaisonEte:
-              type: boolean
-              nullable: true
-            removeSaisonEte:
-              type: boolean
-            removeAllSaisonEte:
-              type: boolean
-            setSaisonHiver:
-              type: boolean
-              nullable: true
-            removeSaisonHiver:
-              type: boolean
-            removeAllSaisonHiver:
-              type: boolean
-            setSaisonFraisInscription:
-              type: string
-              nullable: true
-            removeSaisonFraisInscription:
-              type: string
-            removeAllSaisonFraisInscription:
-              type: string
-            setSaisonNomComplet:
-              type: string
-              nullable: true
-            removeSaisonNomComplet:
-              type: string
-            removeAllSaisonNomComplet:
-              type: string
-            setSessionJourDebut:
-              type: string
-              nullable: true
-            removeSessionJourDebut:
-              type: string
-            removeAllSessionJourDebut:
-              type: string
-            setSessionJourFin:
-              type: string
-              nullable: true
-            removeSessionJourFin:
-              type: string
-            removeAllSessionJourFin:
-              type: string
-            setSessionNomComplet:
-              type: string
-              nullable: true
-            removeSessionNomComplet:
-              type: string
-            removeAllSessionNomComplet:
-              type: string
-            setSessionId:
-              type: string
-              nullable: true
-            removeSessionId:
-              type: string
-            removeAllSessionId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjetSuggere:
-              type: string
-              nullable: true
-            removeObjetSuggere:
-              type: string
-            removeAllObjetSuggere:
-              type: string
-    PATCHSessionScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/PATCHClusterReponse"
-        - type: object
-          properties:
-            setSessionCle:
-              type: string
-              nullable: true
-            removeSessionCle:
-              type: string
-            removeAllSessionCle:
-              type: string
-            setInscriptionCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeInscriptionCles:
-              type: string
-            removeAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            addInscriptionCles:
-              type: string
-            addAllInscriptionCles:
-              type: array
-              items:
-                type: string
-            setAgeCles:
-              type: array
-              nullable: true
-              items:
-                type: string
-            removeAgeCles:
-              type: string
-            removeAllAgeCles:
-              type: array
-              items:
-                type: string
-            addAgeCles:
-              type: string
-            addAllAgeCles:
-              type: array
-              items:
-                type: string
-            setScolaireTri:
-              type: string
-              nullable: true
-            removeScolaireTri:
-              type: string
-            removeAllScolaireTri:
-              type: string
-            setEcoleTri:
-              type: string
-              nullable: true
-            removeEcoleTri:
-              type: string
-            removeAllEcoleTri:
-              type: string
-            setAnneeTri:
-              type: string
-              nullable: true
-            removeAnneeTri:
-              type: string
-            removeAllAnneeTri:
-              type: string
-            setSaisonTri:
-              type: string
-              nullable: true
-            removeSaisonTri:
-              type: string
-            removeAllSaisonTri:
-              type: string
-            setSessionTri:
-              type: string
-              nullable: true
-            removeSessionTri:
-              type: string
-            removeAllSessionTri:
-              type: string
-            setEcoleCle:
-              type: string
-              nullable: true
-            removeEcoleCle:
-              type: string
-            removeAllEcoleCle:
-              type: string
-            setAnneeCle:
-              type: string
-              nullable: true
-            removeAnneeCle:
-              type: string
-            removeAllAnneeCle:
-              type: string
-            setSaisonCle:
-              type: string
-              nullable: true
-            removeSaisonCle:
-              type: string
-            removeAllSaisonCle:
-              type: string
-            setEcoleNomComplet:
-              type: string
-              nullable: true
-            removeEcoleNomComplet:
-              type: string
-            removeAllEcoleNomComplet:
-              type: string
-            setEcoleEmplacement:
-              type: string
-              nullable: true
-            removeEcoleEmplacement:
-              type: string
-            removeAllEcoleEmplacement:
-              type: string
-            setAnneeDebut:
-              type: string
-              nullable: true
-            removeAnneeDebut:
-              type: string
-            removeAllAnneeDebut:
-              type: string
-            setAnneeFin:
-              type: string
-              nullable: true
-            removeAnneeFin:
-              type: string
-            removeAllAnneeFin:
-              type: string
-            setSaisonJourDebut:
-              type: string
-              nullable: true
-            removeSaisonJourDebut:
-              type: string
-            removeAllSaisonJourDebut:
-              type: string
-            setSaisonEte:
-              type: boolean
-              nullable: true
-            removeSaisonEte:
-              type: boolean
-            removeAllSaisonEte:
-              type: boolean
-            setSaisonHiver:
-              type: boolean
-              nullable: true
-            removeSaisonHiver:
-              type: boolean
-            removeAllSaisonHiver:
-              type: boolean
-            setSaisonFraisInscription:
-              type: string
-              nullable: true
-            removeSaisonFraisInscription:
-              type: string
-            removeAllSaisonFraisInscription:
-              type: string
-            setSaisonNomComplet:
-              type: string
-              nullable: true
-            removeSaisonNomComplet:
-              type: string
-            removeAllSaisonNomComplet:
-              type: string
-            setSessionJourDebut:
-              type: string
-              nullable: true
-            removeSessionJourDebut:
-              type: string
-            removeAllSessionJourDebut:
-              type: string
-            setSessionJourFin:
-              type: string
-              nullable: true
-            removeSessionJourFin:
-              type: string
-            removeAllSessionJourFin:
-              type: string
-            setSessionNomComplet:
-              type: string
-              nullable: true
-            removeSessionNomComplet:
-              type: string
-            removeAllSessionNomComplet:
-              type: string
-            setSessionId:
-              type: string
-              nullable: true
-            removeSessionId:
-              type: string
-            removeAllSessionId:
-              type: string
-            setPageUrl:
-              type: string
-              nullable: true
-            removePageUrl:
-              type: string
-            removeAllPageUrl:
-              type: string
-            setObjetSuggere:
-              type: string
-              nullable: true
-            removeObjetSuggere:
-              type: string
-            removeAllObjetSuggere:
-              type: string
-    RechercheSessionScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/RechercheClusterReponse"
-        - type: array
-          items:
-            type: object
-            properties:
-              sessionCle:
-                type: string
-              inscriptionCles:
-                type: array
-                items:
-                  type: string
-              ageCles:
-                type: array
-                items:
-                  type: string
-              scolaireTri:
-                type: string
-              ecoleTri:
-                type: string
-              anneeTri:
-                type: string
-              saisonTri:
-                type: string
-              sessionTri:
-                type: string
-              ecoleCle:
-                type: string
-              anneeCle:
-                type: string
-              saisonCle:
-                type: string
-              ecoleNomComplet:
-                type: string
-              ecoleEmplacement:
-                type: string
-              anneeDebut:
-                type: string
-              anneeFin:
-                type: string
-              saisonJourDebut:
-                type: string
-              saisonEte:
-                type: boolean
-              saisonHiver:
-                type: boolean
-              saisonFraisInscription:
-                type: string
-              saisonNomComplet:
-                type: string
-              sessionJourDebut:
-                type: string
-              sessionJourFin:
-                type: string
-              sessionNomComplet:
-                type: string
-              sessionId:
-                type: string
-              pageUrl:
-                type: string
-              objetSuggere:
-                type: string
-    GETSessionScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/GETClusterReponse"
-        - type: object
-          properties:
-            sessionCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            ageCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            saisonTri:
-              type: string
-            sessionTri:
-              type: string
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            saisonCle:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            saisonJourDebut:
-              type: string
-            saisonEte:
-              type: boolean
-            saisonHiver:
-              type: boolean
-            saisonFraisInscription:
-              type: string
-            saisonNomComplet:
-              type: string
-            sessionJourDebut:
-              type: string
-            sessionJourFin:
-              type: string
-            sessionNomComplet:
-              type: string
-            sessionId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    DELETESessionScolaireReponse:
-      allOf:
-        - $ref: "#/components/schemas/DELETEClusterReponse"
-        - type: object
-          properties:
-            sessionCle:
-              type: string
-            inscriptionCles:
-              type: array
-              items:
-                type: string
-            ageCles:
-              type: array
-              items:
-                type: string
-            scolaireTri:
-              type: string
-            ecoleTri:
-              type: string
-            anneeTri:
-              type: string
-            saisonTri:
-              type: string
-            sessionTri:
-              type: string
-            ecoleCle:
-              type: string
-            anneeCle:
-              type: string
-            saisonCle:
-              type: string
-            ecoleNomComplet:
-              type: string
-            ecoleEmplacement:
-              type: string
-            anneeDebut:
-              type: string
-            anneeFin:
-              type: string
-            saisonJourDebut:
-              type: string
-            saisonEte:
-              type: boolean
-            saisonHiver:
-              type: boolean
-            saisonFraisInscription:
-              type: string
-            saisonNomComplet:
-              type: string
-            sessionJourDebut:
-              type: string
-            sessionJourFin:
-              type: string
-            sessionNomComplet:
-              type: string
-            sessionId:
-              type: string
-            pageUrl:
-              type: string
-            objetSuggere:
-              type: string
-    PageRechercheSessionScolaireReponse:
       allOf:
         - type: string
     PageRechercheAgeScolaireReponse:
@@ -20288,6 +19080,1214 @@ components:
             pageH1:
               type: string
     PageRechercheEcoleReponse:
+      allOf:
+        - type: string
+    PageRechercheAnneeScolaireReponse:
+      allOf:
+        - type: string
+    POSTAnneeScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequete"
+        - type: object
+          properties:
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            saisonCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            anneeNomCourt:
+              type: string
+            anneeNomComplet:
+              type: string
+            anneeId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    POSTAnneeScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            saisonCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            anneeNomCourt:
+              type: string
+            anneeNomComplet:
+              type: string
+            anneeId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    PATCHAnneeScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequete"
+        - type: object
+          properties:
+            setEcoleCle:
+              type: string
+              nullable: true
+            removeEcoleCle:
+              type: string
+            removeAllEcoleCle:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setInscriptionCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeInscriptionCles:
+              type: string
+            removeAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            addInscriptionCles:
+              type: string
+            addAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            setSaisonCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSaisonCles:
+              type: string
+            removeAllSaisonCles:
+              type: array
+              items:
+                type: string
+            addSaisonCles:
+              type: string
+            addAllSaisonCles:
+              type: array
+              items:
+                type: string
+            setScolaireTri:
+              type: string
+              nullable: true
+            removeScolaireTri:
+              type: string
+            removeAllScolaireTri:
+              type: string
+            setEcoleTri:
+              type: string
+              nullable: true
+            removeEcoleTri:
+              type: string
+            removeAllEcoleTri:
+              type: string
+            setAnneeTri:
+              type: string
+              nullable: true
+            removeAnneeTri:
+              type: string
+            removeAllAnneeTri:
+              type: string
+            setEcoleNomComplet:
+              type: string
+              nullable: true
+            removeEcoleNomComplet:
+              type: string
+            removeAllEcoleNomComplet:
+              type: string
+            setEcoleEmplacement:
+              type: string
+              nullable: true
+            removeEcoleEmplacement:
+              type: string
+            removeAllEcoleEmplacement:
+              type: string
+            setAnneeDebut:
+              type: string
+              nullable: true
+            removeAnneeDebut:
+              type: string
+            removeAllAnneeDebut:
+              type: string
+            setAnneeFin:
+              type: string
+              nullable: true
+            removeAnneeFin:
+              type: string
+            removeAllAnneeFin:
+              type: string
+            setAnneeNomCourt:
+              type: string
+              nullable: true
+            removeAnneeNomCourt:
+              type: string
+            removeAllAnneeNomCourt:
+              type: string
+            setAnneeNomComplet:
+              type: string
+              nullable: true
+            removeAnneeNomComplet:
+              type: string
+            removeAllAnneeNomComplet:
+              type: string
+            setAnneeId:
+              type: string
+              nullable: true
+            removeAnneeId:
+              type: string
+            removeAllAnneeId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjetSuggere:
+              type: string
+              nullable: true
+            removeObjetSuggere:
+              type: string
+            removeAllObjetSuggere:
+              type: string
+    PATCHAnneeScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterReponse"
+        - type: object
+          properties:
+            setEcoleCle:
+              type: string
+              nullable: true
+            removeEcoleCle:
+              type: string
+            removeAllEcoleCle:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setInscriptionCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeInscriptionCles:
+              type: string
+            removeAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            addInscriptionCles:
+              type: string
+            addAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            setSaisonCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeSaisonCles:
+              type: string
+            removeAllSaisonCles:
+              type: array
+              items:
+                type: string
+            addSaisonCles:
+              type: string
+            addAllSaisonCles:
+              type: array
+              items:
+                type: string
+            setScolaireTri:
+              type: string
+              nullable: true
+            removeScolaireTri:
+              type: string
+            removeAllScolaireTri:
+              type: string
+            setEcoleTri:
+              type: string
+              nullable: true
+            removeEcoleTri:
+              type: string
+            removeAllEcoleTri:
+              type: string
+            setAnneeTri:
+              type: string
+              nullable: true
+            removeAnneeTri:
+              type: string
+            removeAllAnneeTri:
+              type: string
+            setEcoleNomComplet:
+              type: string
+              nullable: true
+            removeEcoleNomComplet:
+              type: string
+            removeAllEcoleNomComplet:
+              type: string
+            setEcoleEmplacement:
+              type: string
+              nullable: true
+            removeEcoleEmplacement:
+              type: string
+            removeAllEcoleEmplacement:
+              type: string
+            setAnneeDebut:
+              type: string
+              nullable: true
+            removeAnneeDebut:
+              type: string
+            removeAllAnneeDebut:
+              type: string
+            setAnneeFin:
+              type: string
+              nullable: true
+            removeAnneeFin:
+              type: string
+            removeAllAnneeFin:
+              type: string
+            setAnneeNomCourt:
+              type: string
+              nullable: true
+            removeAnneeNomCourt:
+              type: string
+            removeAllAnneeNomCourt:
+              type: string
+            setAnneeNomComplet:
+              type: string
+              nullable: true
+            removeAnneeNomComplet:
+              type: string
+            removeAllAnneeNomComplet:
+              type: string
+            setAnneeId:
+              type: string
+              nullable: true
+            removeAnneeId:
+              type: string
+            removeAllAnneeId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjetSuggere:
+              type: string
+              nullable: true
+            removeObjetSuggere:
+              type: string
+            removeAllObjetSuggere:
+              type: string
+    RechercheAnneeScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/RechercheClusterReponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              ecoleCle:
+                type: string
+              anneeCle:
+                type: string
+              inscriptionCles:
+                type: array
+                items:
+                  type: string
+              saisonCles:
+                type: array
+                items:
+                  type: string
+              scolaireTri:
+                type: string
+              ecoleTri:
+                type: string
+              anneeTri:
+                type: string
+              ecoleNomComplet:
+                type: string
+              ecoleEmplacement:
+                type: string
+              anneeDebut:
+                type: string
+              anneeFin:
+                type: string
+              anneeNomCourt:
+                type: string
+              anneeNomComplet:
+                type: string
+              anneeId:
+                type: string
+              pageUrl:
+                type: string
+              objetSuggere:
+                type: string
+    GETAnneeScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            saisonCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            anneeNomCourt:
+              type: string
+            anneeNomComplet:
+              type: string
+            anneeId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    DELETEAnneeScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterReponse"
+        - type: object
+          properties:
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            saisonCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            anneeNomCourt:
+              type: string
+            anneeNomComplet:
+              type: string
+            anneeId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    POSTSessionScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterRequete"
+        - type: object
+          properties:
+            sessionCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            ageCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            saisonTri:
+              type: string
+            sessionTri:
+              type: string
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            saisonCle:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            saisonJourDebut:
+              type: string
+            saisonEte:
+              type: boolean
+            saisonHiver:
+              type: boolean
+            saisonFraisInscription:
+              type: string
+            saisonNomComplet:
+              type: string
+            sessionJourDebut:
+              type: string
+            sessionJourFin:
+              type: string
+            sessionNomComplet:
+              type: string
+            sessionId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    POSTSessionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/POSTClusterReponse"
+        - type: object
+          properties:
+            sessionCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            ageCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            saisonTri:
+              type: string
+            sessionTri:
+              type: string
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            saisonCle:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            saisonJourDebut:
+              type: string
+            saisonEte:
+              type: boolean
+            saisonHiver:
+              type: boolean
+            saisonFraisInscription:
+              type: string
+            saisonNomComplet:
+              type: string
+            sessionJourDebut:
+              type: string
+            sessionJourFin:
+              type: string
+            sessionNomComplet:
+              type: string
+            sessionId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    PATCHSessionScolaireRequete:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterRequete"
+        - type: object
+          properties:
+            setSessionCle:
+              type: string
+              nullable: true
+            removeSessionCle:
+              type: string
+            removeAllSessionCle:
+              type: string
+            setInscriptionCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeInscriptionCles:
+              type: string
+            removeAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            addInscriptionCles:
+              type: string
+            addAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            setAgeCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeCles:
+              type: string
+            removeAllAgeCles:
+              type: array
+              items:
+                type: string
+            addAgeCles:
+              type: string
+            addAllAgeCles:
+              type: array
+              items:
+                type: string
+            setScolaireTri:
+              type: string
+              nullable: true
+            removeScolaireTri:
+              type: string
+            removeAllScolaireTri:
+              type: string
+            setEcoleTri:
+              type: string
+              nullable: true
+            removeEcoleTri:
+              type: string
+            removeAllEcoleTri:
+              type: string
+            setAnneeTri:
+              type: string
+              nullable: true
+            removeAnneeTri:
+              type: string
+            removeAllAnneeTri:
+              type: string
+            setSaisonTri:
+              type: string
+              nullable: true
+            removeSaisonTri:
+              type: string
+            removeAllSaisonTri:
+              type: string
+            setSessionTri:
+              type: string
+              nullable: true
+            removeSessionTri:
+              type: string
+            removeAllSessionTri:
+              type: string
+            setEcoleCle:
+              type: string
+              nullable: true
+            removeEcoleCle:
+              type: string
+            removeAllEcoleCle:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setSaisonCle:
+              type: string
+              nullable: true
+            removeSaisonCle:
+              type: string
+            removeAllSaisonCle:
+              type: string
+            setEcoleNomComplet:
+              type: string
+              nullable: true
+            removeEcoleNomComplet:
+              type: string
+            removeAllEcoleNomComplet:
+              type: string
+            setEcoleEmplacement:
+              type: string
+              nullable: true
+            removeEcoleEmplacement:
+              type: string
+            removeAllEcoleEmplacement:
+              type: string
+            setAnneeDebut:
+              type: string
+              nullable: true
+            removeAnneeDebut:
+              type: string
+            removeAllAnneeDebut:
+              type: string
+            setAnneeFin:
+              type: string
+              nullable: true
+            removeAnneeFin:
+              type: string
+            removeAllAnneeFin:
+              type: string
+            setSaisonJourDebut:
+              type: string
+              nullable: true
+            removeSaisonJourDebut:
+              type: string
+            removeAllSaisonJourDebut:
+              type: string
+            setSaisonEte:
+              type: boolean
+              nullable: true
+            removeSaisonEte:
+              type: boolean
+            removeAllSaisonEte:
+              type: boolean
+            setSaisonHiver:
+              type: boolean
+              nullable: true
+            removeSaisonHiver:
+              type: boolean
+            removeAllSaisonHiver:
+              type: boolean
+            setSaisonFraisInscription:
+              type: string
+              nullable: true
+            removeSaisonFraisInscription:
+              type: string
+            removeAllSaisonFraisInscription:
+              type: string
+            setSaisonNomComplet:
+              type: string
+              nullable: true
+            removeSaisonNomComplet:
+              type: string
+            removeAllSaisonNomComplet:
+              type: string
+            setSessionJourDebut:
+              type: string
+              nullable: true
+            removeSessionJourDebut:
+              type: string
+            removeAllSessionJourDebut:
+              type: string
+            setSessionJourFin:
+              type: string
+              nullable: true
+            removeSessionJourFin:
+              type: string
+            removeAllSessionJourFin:
+              type: string
+            setSessionNomComplet:
+              type: string
+              nullable: true
+            removeSessionNomComplet:
+              type: string
+            removeAllSessionNomComplet:
+              type: string
+            setSessionId:
+              type: string
+              nullable: true
+            removeSessionId:
+              type: string
+            removeAllSessionId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjetSuggere:
+              type: string
+              nullable: true
+            removeObjetSuggere:
+              type: string
+            removeAllObjetSuggere:
+              type: string
+    PATCHSessionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/PATCHClusterReponse"
+        - type: object
+          properties:
+            setSessionCle:
+              type: string
+              nullable: true
+            removeSessionCle:
+              type: string
+            removeAllSessionCle:
+              type: string
+            setInscriptionCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeInscriptionCles:
+              type: string
+            removeAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            addInscriptionCles:
+              type: string
+            addAllInscriptionCles:
+              type: array
+              items:
+                type: string
+            setAgeCles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAgeCles:
+              type: string
+            removeAllAgeCles:
+              type: array
+              items:
+                type: string
+            addAgeCles:
+              type: string
+            addAllAgeCles:
+              type: array
+              items:
+                type: string
+            setScolaireTri:
+              type: string
+              nullable: true
+            removeScolaireTri:
+              type: string
+            removeAllScolaireTri:
+              type: string
+            setEcoleTri:
+              type: string
+              nullable: true
+            removeEcoleTri:
+              type: string
+            removeAllEcoleTri:
+              type: string
+            setAnneeTri:
+              type: string
+              nullable: true
+            removeAnneeTri:
+              type: string
+            removeAllAnneeTri:
+              type: string
+            setSaisonTri:
+              type: string
+              nullable: true
+            removeSaisonTri:
+              type: string
+            removeAllSaisonTri:
+              type: string
+            setSessionTri:
+              type: string
+              nullable: true
+            removeSessionTri:
+              type: string
+            removeAllSessionTri:
+              type: string
+            setEcoleCle:
+              type: string
+              nullable: true
+            removeEcoleCle:
+              type: string
+            removeAllEcoleCle:
+              type: string
+            setAnneeCle:
+              type: string
+              nullable: true
+            removeAnneeCle:
+              type: string
+            removeAllAnneeCle:
+              type: string
+            setSaisonCle:
+              type: string
+              nullable: true
+            removeSaisonCle:
+              type: string
+            removeAllSaisonCle:
+              type: string
+            setEcoleNomComplet:
+              type: string
+              nullable: true
+            removeEcoleNomComplet:
+              type: string
+            removeAllEcoleNomComplet:
+              type: string
+            setEcoleEmplacement:
+              type: string
+              nullable: true
+            removeEcoleEmplacement:
+              type: string
+            removeAllEcoleEmplacement:
+              type: string
+            setAnneeDebut:
+              type: string
+              nullable: true
+            removeAnneeDebut:
+              type: string
+            removeAllAnneeDebut:
+              type: string
+            setAnneeFin:
+              type: string
+              nullable: true
+            removeAnneeFin:
+              type: string
+            removeAllAnneeFin:
+              type: string
+            setSaisonJourDebut:
+              type: string
+              nullable: true
+            removeSaisonJourDebut:
+              type: string
+            removeAllSaisonJourDebut:
+              type: string
+            setSaisonEte:
+              type: boolean
+              nullable: true
+            removeSaisonEte:
+              type: boolean
+            removeAllSaisonEte:
+              type: boolean
+            setSaisonHiver:
+              type: boolean
+              nullable: true
+            removeSaisonHiver:
+              type: boolean
+            removeAllSaisonHiver:
+              type: boolean
+            setSaisonFraisInscription:
+              type: string
+              nullable: true
+            removeSaisonFraisInscription:
+              type: string
+            removeAllSaisonFraisInscription:
+              type: string
+            setSaisonNomComplet:
+              type: string
+              nullable: true
+            removeSaisonNomComplet:
+              type: string
+            removeAllSaisonNomComplet:
+              type: string
+            setSessionJourDebut:
+              type: string
+              nullable: true
+            removeSessionJourDebut:
+              type: string
+            removeAllSessionJourDebut:
+              type: string
+            setSessionJourFin:
+              type: string
+              nullable: true
+            removeSessionJourFin:
+              type: string
+            removeAllSessionJourFin:
+              type: string
+            setSessionNomComplet:
+              type: string
+              nullable: true
+            removeSessionNomComplet:
+              type: string
+            removeAllSessionNomComplet:
+              type: string
+            setSessionId:
+              type: string
+              nullable: true
+            removeSessionId:
+              type: string
+            removeAllSessionId:
+              type: string
+            setPageUrl:
+              type: string
+              nullable: true
+            removePageUrl:
+              type: string
+            removeAllPageUrl:
+              type: string
+            setObjetSuggere:
+              type: string
+              nullable: true
+            removeObjetSuggere:
+              type: string
+            removeAllObjetSuggere:
+              type: string
+    RechercheSessionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/RechercheClusterReponse"
+        - type: array
+          items:
+            type: object
+            properties:
+              sessionCle:
+                type: string
+              inscriptionCles:
+                type: array
+                items:
+                  type: string
+              ageCles:
+                type: array
+                items:
+                  type: string
+              scolaireTri:
+                type: string
+              ecoleTri:
+                type: string
+              anneeTri:
+                type: string
+              saisonTri:
+                type: string
+              sessionTri:
+                type: string
+              ecoleCle:
+                type: string
+              anneeCle:
+                type: string
+              saisonCle:
+                type: string
+              ecoleNomComplet:
+                type: string
+              ecoleEmplacement:
+                type: string
+              anneeDebut:
+                type: string
+              anneeFin:
+                type: string
+              saisonJourDebut:
+                type: string
+              saisonEte:
+                type: boolean
+              saisonHiver:
+                type: boolean
+              saisonFraisInscription:
+                type: string
+              saisonNomComplet:
+                type: string
+              sessionJourDebut:
+                type: string
+              sessionJourFin:
+                type: string
+              sessionNomComplet:
+                type: string
+              sessionId:
+                type: string
+              pageUrl:
+                type: string
+              objetSuggere:
+                type: string
+    GETSessionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/GETClusterReponse"
+        - type: object
+          properties:
+            sessionCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            ageCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            saisonTri:
+              type: string
+            sessionTri:
+              type: string
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            saisonCle:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            saisonJourDebut:
+              type: string
+            saisonEte:
+              type: boolean
+            saisonHiver:
+              type: boolean
+            saisonFraisInscription:
+              type: string
+            saisonNomComplet:
+              type: string
+            sessionJourDebut:
+              type: string
+            sessionJourFin:
+              type: string
+            sessionNomComplet:
+              type: string
+            sessionId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    DELETESessionScolaireReponse:
+      allOf:
+        - $ref: "#/components/schemas/DELETEClusterReponse"
+        - type: object
+          properties:
+            sessionCle:
+              type: string
+            inscriptionCles:
+              type: array
+              items:
+                type: string
+            ageCles:
+              type: array
+              items:
+                type: string
+            scolaireTri:
+              type: string
+            ecoleTri:
+              type: string
+            anneeTri:
+              type: string
+            saisonTri:
+              type: string
+            sessionTri:
+              type: string
+            ecoleCle:
+              type: string
+            anneeCle:
+              type: string
+            saisonCle:
+              type: string
+            ecoleNomComplet:
+              type: string
+            ecoleEmplacement:
+              type: string
+            anneeDebut:
+              type: string
+            anneeFin:
+              type: string
+            saisonJourDebut:
+              type: string
+            saisonEte:
+              type: boolean
+            saisonHiver:
+              type: boolean
+            saisonFraisInscription:
+              type: string
+            saisonNomComplet:
+              type: string
+            sessionJourDebut:
+              type: string
+            sessionJourFin:
+              type: string
+            sessionNomComplet:
+              type: string
+            sessionId:
+              type: string
+            pageUrl:
+              type: string
+            objetSuggere:
+              type: string
+    PageRechercheSessionScolaireReponse:
       allOf:
         - type: string
     ErrorResponse:

@@ -20,7 +20,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * ApiTag.frFR: Année
  * ApiUri.frFR: /api/annee
  * 
- * ApiTag.enUS: School
+ * ApiTag.enUS: Year
  * ApiUri.enUS: /api/year
  * 
  * ApiMethode: POST
