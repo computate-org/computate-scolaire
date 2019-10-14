@@ -5,6 +5,6 @@ package org.computate.scolaire.enUS.cluster;
  **/
 public class ClusterPage extends ClusterPageGen<ClusterGenPage> {
 
-	@Override public void htmlBodyClusterGenPage() {
-	}
+//	@Override public void htmlBodyClusterGenPage() {
+//	}
 }

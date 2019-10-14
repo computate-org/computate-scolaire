@@ -140,7 +140,7 @@ public class AppRestore extends AbstractVerticle {
 				}
 			});
 		} catch(Exception e) {
-			throw e;
+			startFuture.fail(e);
 //			errorCluster(null, eventHandler, Future.failedFuture(e));
 		}
 	}

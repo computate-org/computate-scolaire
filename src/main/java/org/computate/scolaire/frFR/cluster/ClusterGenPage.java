@@ -765,15 +765,15 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Créer un cluster").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Créer un cluster").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
 
 					// Form POST
-					{ e("form").a("action", "").a("id", "postClusterForm").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "postClusterForm").f();
 						htmlFormPOSTCluster(o);
-					} g("form");
+					} g("div");
 					e("button")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 						.a("onclick", "postCluster($('#postClusterForm')); ")
@@ -794,7 +794,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
 				{ e("header").a("class", "w3-container w3-green ").f();
 					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Modifier des clusters").g("h2");
+					e("h2").a("class", "w3-padding ").f().sx("Modifier des clusters").g("h2");
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
@@ -825,34 +825,36 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 		} g("div");
 
 
-		e("button")
-			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-			.a("onclick", "$('#deleteClusterModale').show(); ")
-			.f().sx("Supprimer des clusters")
-		.g("button");
-		{ e("div").a("id", "deleteClusterModale").a("class", "w3-modal ").f();
-			{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
-				{ e("header").a("class", "w3-container w3-green ").f();
-					e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteClusterModale').hide(); ").f().sx("×").g("span");
-					e("h2").a("class", "").f().sx("Supprimer des clusters").g("h2");
-				} g("header");
-				{ e("div").a("class", "w3-container ").f();
-					Cluster o = new Cluster();
+		if(listeCluster != null && listeCluster.size() == 1) {
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+				.a("onclick", "$('#deleteClusterModale').show(); ")
+				.f().sx("Supprimer des clusters")
+			.g("button");
+			{ e("div").a("id", "deleteClusterModale").a("class", "w3-modal ").f();
+				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-green ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#deleteClusterModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Supprimer des clusters").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						Cluster o = new Cluster();
 
-					// Form DELETE
-					{ e("form").a("action", "").a("id", "deleteClusterForm").a("onsubmit", "event.preventDefault(); return false; ").f();
-						htmlFormPATCHCluster(o);
-					} g("form");
-					e("button")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-						.a("onclick", "deleteCluster(); ")
-						.f().sx("Supprimer des clusters")
-					.g("button");
+						// Form DELETE
+						{ e("div").a("id", "deleteClusterForm").f();
+							htmlFormPATCHCluster(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+							.a("onclick", "deleteCluster(", o.getPk(), "); ")
+							.f().sx("Supprimer des clusters")
+						.g("button");
 
+					} g("div");
 				} g("div");
 			} g("div");
-		} g("div");
 
+		}
 		g("div");
 	}
 
