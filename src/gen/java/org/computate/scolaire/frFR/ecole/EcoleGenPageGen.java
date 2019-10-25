@@ -116,8 +116,8 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinEcoleGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initEcoleGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initEcoleGenPage() {

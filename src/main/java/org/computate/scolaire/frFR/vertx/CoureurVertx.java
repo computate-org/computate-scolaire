@@ -14,7 +14,7 @@ import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 /**
  * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.RunnerVertx
  * enUS: A Java class to run the main Vert.x application as a main method. 
- */ 
+ */  
 public class CoureurVertx {
 
 	/**
@@ -23,7 +23,9 @@ public class CoureurVertx {
 	 */
 	public static void run(Class<?> c) {
 		JsonObject zkConfig = new JsonObject();
-		String zookeeperHosts = System.getenv("zookeeperNomHote") + ":" + System.getenv("zookeeperPort");
+		String zookeeperNomHote = System.getenv("zookeeperNomHote");
+		Integer zookeeperPort = Integer.parseInt(System.getenv("zookeeperPort"));
+		String zookeeperHosts = zookeeperNomHote + ":" + zookeeperPort;
 		zkConfig.put("zookeeperHosts", zookeeperHosts);
 		zkConfig.put("sessionTimeout", 20000);
 		zkConfig.put("connectTimeout", 3000);
@@ -38,8 +40,7 @@ public class CoureurVertx {
 		ClusterManager gestionnaireCluster = new ZookeeperClusterManager(zkConfig);
 		VertxOptions optionsVertx = new VertxOptions();
 		// For OpenShift
-		optionsVertx
-				.setEventBusOptions(new EventBusOptions().setClusterPublicHost("whatever").setClusterPublicPort(1234));
+		optionsVertx.setEventBusOptions(new EventBusOptions().setClusterPublicHost(zookeeperNomHote).setClusterPublicPort(zookeeperPort));
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		optionsVertx.setClustered(true);
 

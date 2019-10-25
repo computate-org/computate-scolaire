@@ -43,7 +43,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe classCanonicalNames dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -1139,6 +1139,210 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
+	////////////////
+	// objetTitre //
+	////////////////
+
+	/**	L'entité « objetTitre »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String objetTitre;
+	@JsonIgnore
+	public Couverture<String> objetTitreCouverture = new Couverture<String>().p(this).c(String.class).var("objetTitre").o(objetTitre);
+
+	/**	<br/>L'entité « objetTitre »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetTitre">Trouver l'entité objetTitre dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _objetTitre(Couverture<String> c);
+
+	public String getObjetTitre() {
+		return objetTitre;
+	}
+
+	public void setObjetTitre(String objetTitre) {
+		this.objetTitre = objetTitre;
+		this.objetTitreCouverture.dejaInitialise = true;
+	}
+	protected Cluster objetTitreInit() {
+		if(!objetTitreCouverture.dejaInitialise) {
+			_objetTitre(objetTitreCouverture);
+			if(objetTitre == null)
+				setObjetTitre(objetTitreCouverture.o);
+		}
+		objetTitreCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrObjetTitre() {
+		return objetTitre;
+	}
+
+	public String strObjetTitre() {
+		return objetTitre == null ? "" : objetTitre;
+	}
+
+	public String jsonObjetTitre() {
+		return objetTitre == null ? "" : objetTitre;
+	}
+
+	public String nomAffichageObjetTitre() {
+		return null;
+	}
+
+	public String htmTooltipObjetTitre() {
+		return null;
+	}
+
+	public String htmObjetTitre() {
+		return objetTitre == null ? "" : StringEscapeUtils.escapeHtml4(strObjetTitre());
+	}
+
+	public void htmObjetTitre(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "ObjetTitre\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "ObjetTitre() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetTitre\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetTitre()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetTitre\"");
+							r.s(" value=\"", htmObjetTitre(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetTitre());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// objetSuggere //
+	//////////////////
+
+	/**	L'entité « objetSuggere »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String objetSuggere;
+	@JsonIgnore
+	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
+
+	/**	<br/>L'entité « objetSuggere »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _objetSuggere(Couverture<String> c);
+
+	public String getObjetSuggere() {
+		return objetSuggere;
+	}
+
+	public void setObjetSuggere(String objetSuggere) {
+		this.objetSuggere = objetSuggere;
+		this.objetSuggereCouverture.dejaInitialise = true;
+	}
+	protected Cluster objetSuggereInit() {
+		if(!objetSuggereCouverture.dejaInitialise) {
+			_objetSuggere(objetSuggereCouverture);
+			if(objetSuggere == null)
+				setObjetSuggere(objetSuggereCouverture.o);
+		}
+		objetSuggereCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrObjetSuggere() {
+		return objetSuggere;
+	}
+
+	public String strObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String jsonObjetSuggere() {
+		return objetSuggere == null ? "" : objetSuggere;
+	}
+
+	public String nomAffichageObjetSuggere() {
+		return null;
+	}
+
+	public String htmTooltipObjetSuggere() {
+		return null;
+	}
+
+	public String htmObjetSuggere() {
+		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
+	}
+
+	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "ObjetSuggere\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "ObjetSuggere() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetSuggere\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetSuggere\"");
+							r.s(" value=\"", htmObjetSuggere(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetSuggere());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1170,6 +1374,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		classeNomCanoniqueInit();
 		classeNomSimpleInit();
 		classeNomsCanoniquesInit();
+		objetTitreInit();
+		objetSuggereInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1229,6 +1435,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classeNomSimple;
 			case "classeNomsCanoniques":
 				return oCluster.classeNomsCanoniques;
+			case "objetTitre":
+				return oCluster.objetTitre;
+			case "objetSuggere":
+				return oCluster.objetSuggere;
 			default:
 				return null;
 		}
@@ -1366,6 +1576,17 @@ public abstract class ClusterGen<DEV> extends Object {
 				if(classeNomsCanoniques != null)
 					oCluster.classeNomsCanoniques.addAll(classeNomsCanoniques);
 			}
+
+			if(sauvegardesCluster.contains("objetTitre")) {
+				String objetTitre = (String)solrDocument.get("objetTitre_stored_string");
+				if(objetTitre != null)
+					oCluster.setObjetTitre(objetTitre);
+			}
+
+			if(sauvegardesCluster.contains("objetSuggere")) {
+				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+				oCluster.setObjetSuggere(objetSuggere);
+			}
 		}
 	}
 
@@ -1474,6 +1695,14 @@ public abstract class ClusterGen<DEV> extends Object {
 				document.addField("classeNomsCanoniques_stored_strings", o);
 			}
 		}
+		if(objetTitre != null) {
+			document.addField("objetTitre_indexed_string", objetTitre);
+			document.addField("objetTitre_stored_string", objetTitre);
+		}
+		if(objetSuggere != null) {
+			document.addField("objetSuggere_suggested", objetSuggere);
+			document.addField("objetSuggere_indexed_string", objetSuggere);
+		}
 	}
 
 	public void desindexerCluster() {
@@ -1537,6 +1766,13 @@ public abstract class ClusterGen<DEV> extends Object {
 		List<String> classeNomsCanoniques = (List<String>)solrDocument.get("classeNomsCanoniques_stored_strings");
 		if(classeNomsCanoniques != null)
 			oCluster.classeNomsCanoniques.addAll(classeNomsCanoniques);
+
+		String objetTitre = (String)solrDocument.get("objetTitre_stored_string");
+		if(objetTitre != null)
+			oCluster.setObjetTitre(objetTitre);
+
+		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
+		oCluster.setObjetSuggere(objetSuggere);
 	}
 
 	//////////////

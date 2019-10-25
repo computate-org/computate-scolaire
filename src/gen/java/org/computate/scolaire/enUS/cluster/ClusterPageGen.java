@@ -36,8 +36,8 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 	}
 
 	public void initDeepClusterPage() {
-		super.initDeepClusterGenPage(siteRequest_);
 		initClusterPage();
+		super.initDeepClusterGenPage(siteRequest_);
 	}
 
 	public void initClusterPage() {

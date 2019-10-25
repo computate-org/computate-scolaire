@@ -14,62 +14,61 @@ function computate() {
         esac
 }
 
-computate "figlet -f slant Christopher;\
+computate "figlet -f slant 'Open';\
 xdg-open 'https://books.google.com/books?id=D4gzDAAAQBAJ&pg=PA53&lpg=PA53&dq=Open+is+an+opportunity,+a+chance+to+broaden+the+mind,+free+tools+and+resources+to+benefit+all+of+mankind.+Open+is+an+aperture,+something+you+look+through,+access+for+all,+not+just+the+few.&source=bl&ots=6_mG4PsIK1&sig=ACfU3U3Dn2Qx7bZuuoN3tnwDCj8oFRQMPQ&hl=en&sa=X&ved=2ahUKEwiPqYbZnoPlAhU2CjQIHXgzBwEQ6AEwAXoECAkQAQ';\
 echo 'Open is an opportunity, a chance to broaden the mind, free tools and resources to benefit all of mankind. Open is an aperture, something you look through, access for all, not just the few. '"
 
-#computate "echo 'My name is Christopher Tate and I love people, places and things. '"
-computate "echo 'My name is Christopher Tate, and I love to create systems for people to use in many places to solve things. '"
+computate "echo 'My name is Christopher Tate and I love people, places and systems. '"
+
+computate "echo 'I love to create systems for people to use in many places to solve things. '"
 #computate "echo 'Systems that create relationships between things and with people in various places. '"
 #computate "echo 'I even think about these systems while I daydream. '"
 
 #computate "echo 'My name is Christopher Tate and I love people, places and things. '"
-computate "figlet -f slant Riley;\
-echo 'My name is Riley Ghiles... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/school?rows=1&fl=classSimpleName';\
+computate "xdg-open 'https://school.computate.org/api/school?rows=1&fl=classSimpleName';\
 echo 'So imagine with me a school... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/school?fq=schoolLocation:Bountiful&fl=schoolLocation,classSimpleName';\
+computate "xdg-open 'https://school.computate.org/api/school?fq=schoolLocation:Bountiful&fl=schoolLocation,classSimpleName';\
 echo 'An amazing preschool in Bountiful Utah. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/school?fq=schoolLocation:Bountiful&fl=schoolName,schoolLocation,classSimpleName';\
+computate "xdg-open 'https://school.computate.org/api/school?fq=schoolLocation:Bountiful&fl=schoolName,schoolLocation,classSimpleName';\
 echo 'An inviting place for kids eager to learn, called Little Orchard Preschool. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/school?fq=schoolLocation:Bountiful&fl=schoolAdministratorName,schoolName,schoolLocation,classSimpleName';\
+computate "xdg-open 'https://school.computate.org/api/school?fq=schoolLocation:Bountiful&fl=schoolAdministratorName,schoolName,schoolLocation,classSimpleName';\
 echo 'With a charming founder named Nikita Orchard. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/year?fl=yearShortName,schoolCompleteName&fq=schoolLocation:Bountiful';\
+computate "xdg-open 'https://school.computate.org/api/year?fl=yearShortName,schoolCompleteName&fq=schoolLocation:Bountiful';\
 echo 'Now this school goes back many years. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/year?fl=yearStart,schoolCompleteName&fq=yearStart:2017&fq=schoolLocation:Bountiful';\
+computate "xdg-open 'https://school.computate.org/api/year?fl=yearStart,schoolCompleteName&fq=yearStart:2017&fq=schoolLocation:Bountiful';\
 echo 'Lets go back to the year 2017 where Nikita asked me if I could write school registration software better than her existing software. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/season?fl=seasonWinter,yearStart,yearShortName,schoolCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/season?fl=seasonWinter,yearStart,yearShortName,schoolCompleteName&fq=yearStart:2017';\
 echo 'During the winter season during the month of April, 2017. '"
 
 computate "xdg-open 'http://localhost:10383/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2017'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2017';\
 echo 'I said, I'"'"'"'"'"'"'d love to help you with your site and write the software you need to accomplish your business goals, like increasing enrollments, which at that time was 231. '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/school?fl=schoolName,schoolLocation,schoolCompleteName&fq=schoolLocation:Bountiful';\
+computate "xdg-open 'https://school.computate.org/api/school?fl=schoolName,schoolLocation,schoolCompleteName&fq=schoolLocation:Bountiful';\
 echo 'So I set out to create software for Nikita to create records for her school... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/year?fl=yearStart,yearEnd,yearCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/year?fl=yearStart,yearEnd,yearCompleteName&fq=yearStart:2017';\
 echo 'Her current school year 2017 to 2018... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/season?fl=seasonStartDate,seasonWinter,seasonSummer,seasonCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/season?fl=seasonStartDate,seasonWinter,seasonSummer,seasonCompleteName&fq=yearStart:2017';\
 echo 'Her winter school season... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/session?fl=sessionStartDay,sessionEndDay,sessionCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/session?fl=sessionStartDay,sessionEndDay,sessionCompleteName&fq=yearStart:2017';\
 echo 'The session start and end date during that season... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/age?fl=ageStart,ageEnd,ageCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/age?fl=ageStart,ageEnd,ageCompleteName&fq=yearStart:2017';\
 echo 'The age groups in that session... '"
 
-computate "xdg-open 'https://scolaire-dev.computate.org:10380/api/block?fl=blockStartTime,blockEndTime,blockPricePerMonth,blockMonday,blockTuesday,blockWednesday,blockThursday,blockFriday,blockCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/block?fl=blockStartTime,blockEndTime,blockPricePerMonth,blockMonday,blockTuesday,blockWednesday,blockThursday,blockFriday,blockCompleteName&fq=yearStart:2017';\
 echo 'And the school blocks for the start and end times, the days of the week and the price per month... '"
 
-computate "figlet -f slant Christopher;\
+computate "figlet -f slant 'The API Secret';\
 echo 'Now you probably didnt know that an API can tell stories, but it can! '"
 
 computate "echo 'And I love telling stories, and now I will tell you the secret. '"
@@ -125,11 +124,11 @@ echo 'Now what if we put everything we know about this Java class into a search 
 
 computate "echo 'This search engine API could tell more about this Java class than you and I could possibly describe on our own. '"
 
-computate "figlet -f slant Riley;\
+computate "figlet -f slant 'Code Translation';\
 xdg-open 'https://github.com/computate/computate-scolaire/blob/master/src/main/java/org/computate/scolaire/frFR/ecole/Ecole.java';\
 echo 'Now Ill tell you something surprising, this School.java class was actually written in French first, and translated by open source software into English as a second language to work in both languages! '"
 
-computate "figlet -f slant Christopher;\
+computate "figlet -f slant 'Code APIs';\
 xdg-open 'http://localhost:10383/solr/computate/select?q=*:*&fq=classeNomSimple_enUS_indexed_string:School&sort=modifiee_indexed_date%20desc&json.facet={partIsClass:'"'"'"'"'"'"'sum(partEstClasse_indexed_boolean)'"'"'"'"'"'"',partIsMethod:'"'"'"'"'"'"'sum(partEstMethode_indexed_boolean)'"'"'"'"'"'"',partIsField:'"'"'"'"'"'"'sum(partEstChamp_indexed_boolean)'"'"'"'"'"'"',partIsEntity:'"'"'"'"'"'"'sum(partEstEntite_indexed_boolean)'"'"'"'"'"'"'}';\
 echo 'And the search engine can tell me about 1,297 facts about every individual piece of this Java class to build an API, a website, an OpenAPI swagger definition, getters and setters and so much more. '"
 
@@ -148,7 +147,7 @@ echo 'Lets login through the Red Hat Single Sign on server and show you the site
 computate "xdg-open /home/ctate/ctate-laptop/mp3/make-business-better-with-open-source-software.mp3;\
 echo 'Yes, because with open source software, like in my situation, I expanded a second location, and I added the second location instantly, and another system may not have communicated well for me, super easy to grow. '"
 
-computate "xdg-open 'https://ecole.computate.org/ecole';\
+computate "xdg-open 'https://scolaire-dev.computate.org:10180/ecole';\
 echo 'Lets also checkout the site in French. '"
 
 computate "xdg-open /home/ctate/ctate-laptop/mp3/business-growth-with-open-source-software.mp3;\
@@ -163,10 +162,10 @@ echo 'Then in 2018, enrollments more than doubled to 502. '"
 computate "xdg-open 'http://localhost:10383/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2019'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2019';\
 echo 'And now in 2019, after just 2 months in, enrollments exceeded that too, and are already up to 523! And that is the power of open source software in business! '"
 
-computate "figlet -f slant Riley;\
-xdg-open 'https://school.computate.org/school';\
+computate "figlet -f slant 'Internationalization';\
+xdg-open 'https://github.com/computate/computate-scolaire';\
 echo 'Computate open source software builds software in multiple languages at the same time, making internationalization easy. Vert.x makes it scalable. OpenShift deploys it across the world, and that makes a big impact in communities large and small. '"
 
-computate "figlet -f slant Christopher;\
+computate "figlet -f slant 'Computate!!!';\
 echo 'You can make software that benefits your community and the world. Check out computate on github, on the Red Hat demo system, and computate.org. And dont give up on your dreams, you can do hard things. Computate. '"
 

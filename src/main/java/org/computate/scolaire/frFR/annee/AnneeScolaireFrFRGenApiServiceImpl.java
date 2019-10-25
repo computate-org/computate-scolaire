@@ -809,6 +809,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
+			case "formInscriptionCle":
+				return "formInscriptionCle_indexed_long";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

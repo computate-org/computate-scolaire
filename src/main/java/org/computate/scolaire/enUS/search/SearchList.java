@@ -95,14 +95,16 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		if(solrQuery.getQuery() != null) {
 			for(SolrDocument solrDocument : solrDocumentList) {
 				try {
-					DEV o = c.newInstance();
-					MethodUtils.invokeMethod(o, "setSiteRequest_", siteRequest_);
-					if(populate)
-						MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
-					if(store)
-						MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
-	//				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
-					l.add(o);
+					if(solrDocument != null) {
+						DEV o = c.newInstance();
+						MethodUtils.invokeMethod(o, "setSiteRequest_", siteRequest_);
+						if(populate)
+							MethodUtils.invokeMethod(o, "populateForClass", solrDocument);
+						if(store)
+							MethodUtils.invokeMethod(o, "storeForClass", solrDocument);
+		//				MethodUtils.invokeMethod(o, "initDeepForClass", siteRequest_);
+						l.add(o);
+					}
 				} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
 						| InvocationTargetException e) {
 					ExceptionUtils.rethrow(e);

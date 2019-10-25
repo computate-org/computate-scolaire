@@ -112,8 +112,8 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepSchoolGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initSchoolGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initSchoolGenPage() {

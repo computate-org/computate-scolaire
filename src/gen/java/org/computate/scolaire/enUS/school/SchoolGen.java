@@ -1,6 +1,5 @@
 package org.computate.scolaire.enUS.school;
 
-import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.writer.AllWriter;
@@ -1652,216 +1651,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////////////////
-	// objectSuggestWeight //
-	/////////////////////////
-
-	/**	L'entité « objectSuggestWeight »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Double objectSuggestWeight;
-	@JsonIgnore
-	public Wrap<Double> objectSuggestWeightWrap = new Wrap<Double>().p(this).c(Double.class).var("objectSuggestWeight").o(objectSuggestWeight);
-
-	/**	<br/>L'entité « objectSuggestWeight »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggestWeight">Trouver l'entité objectSuggestWeight dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggestWeight(Wrap<Double> c);
-
-	public Double getObjectSuggestWeight() {
-		return objectSuggestWeight;
-	}
-
-	public void setObjectSuggestWeight(Double objectSuggestWeight) {
-		this.objectSuggestWeight = objectSuggestWeight;
-		this.objectSuggestWeightWrap.alreadyInitialized = true;
-	}
-	public School setObjectSuggestWeight(String o) {
-		if(NumberUtils.isParsable(o))
-			this.objectSuggestWeight = Double.parseDouble(o);
-		this.objectSuggestWeightWrap.alreadyInitialized = true;
-		return (School)this;
-	}
-	protected School objectSuggestWeightInit() {
-		if(!objectSuggestWeightWrap.alreadyInitialized) {
-			_objectSuggestWeight(objectSuggestWeightWrap);
-			if(objectSuggestWeight == null)
-				setObjectSuggestWeight(objectSuggestWeightWrap.o);
-		}
-		objectSuggestWeightWrap.alreadyInitialized(true);
-		return (School)this;
-	}
-
-	public Double solrObjectSuggestWeight() {
-		return objectSuggestWeight;
-	}
-
-	public String strObjectSuggestWeight() {
-		return objectSuggestWeight == null ? "" : objectSuggestWeight.toString();
-	}
-
-	public String jsonObjectSuggestWeight() {
-		return objectSuggestWeight == null ? "" : objectSuggestWeight.toString();
-	}
-
-	public String nomAffichageObjectSuggestWeight() {
-		return "";
-	}
-
-	public String htmTooltipObjectSuggestWeight() {
-		return null;
-	}
-
-	public String htmObjectSuggestWeight() {
-		return objectSuggestWeight == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggestWeight());
-	}
-
-	public void htmObjectSuggestWeight(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "ObjectSuggestWeight\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "ObjectSuggestWeight() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggestWeight\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggestWeight()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggestWeight\"");
-							r.s(" value=\"", htmObjectSuggestWeight(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggestWeight());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected School objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (School)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return "r: ecoleNom";
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchool", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchool", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////
 	// schoolShortName //
 	/////////////////////
@@ -2388,8 +2177,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void initDeepSchool() {
-		super.initDeepCluster(siteRequest_);
 		initSchool();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initSchool() {
@@ -2407,8 +2196,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolAdministratorNameInit();
 		schoolLocationInit();
 		schoolAddressInit();
-		objectSuggestWeightInit();
-		objectSuggestInit();
 		schoolShortNameInit();
 		schoolCompleteNameInit();
 		schoolIdInit();
@@ -2480,10 +2267,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolLocation;
 			case "schoolAddress":
 				return oSchool.schoolAddress;
-			case "objectSuggestWeight":
-				return oSchool.objectSuggestWeight;
-			case "objectSuggest":
-				return oSchool.objectSuggest;
 			case "schoolShortName":
 				return oSchool.schoolShortName;
 			case "schoolCompleteName":
@@ -2673,11 +2456,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					oSchool.setSchoolAddress(schoolAddress);
 			}
 
-			if(savesSchool.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oSchool.setObjectSuggest(objectSuggest);
-			}
-
 			if(savesSchool.contains("schoolShortName")) {
 				String schoolShortName = (String)solrDocument.get("schoolShortName_stored_string");
 				if(schoolShortName != null)
@@ -2851,10 +2629,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolAddress_indexed_string", schoolAddress);
 			document.addField("schoolAddress_stored_string", schoolAddress);
 		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		if(schoolShortName != null) {
 			document.addField("schoolShortName_indexed_string", schoolShortName);
 			document.addField("schoolShortName_stored_string", schoolShortName);
@@ -2957,9 +2731,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 		if(schoolAddress != null)
 			oSchool.setSchoolAddress(schoolAddress);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oSchool.setObjectSuggest(objectSuggest);
 
 		String schoolShortName = (String)solrDocument.get("schoolShortName_stored_string");
 		if(schoolShortName != null)

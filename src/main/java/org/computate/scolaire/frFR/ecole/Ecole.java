@@ -47,7 +47,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */          
+ */           
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -247,33 +247,6 @@ public class Ecole extends EcoleGen<Cluster> {
 	 */
 	protected void _ecoleAddresse(Couverture<String> c) {
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: objectSuggestWeight
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 */    
-	protected void _objetSuggerePoids(Couverture<Double> c) {
-		c.o(1D);
-	}
-	
-	/**  
-	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
-	 * r: ecoleNom
-	 * r.enUS: schoolName
-	 */
-	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(ecoleNom);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -332,12 +305,12 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: 
 	 * NomAffichage.frFR: ID
 	 * NomAffichage.enUS: ID
-	 * r: ecoleNom
-	 * r.enUS: schoolName
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
 	 */                   
 	protected void _ecoleId(Couverture<String> c) {
 		if(ecoleNom != null) {
-			String s = Normalizer.normalize(ecoleNom, Normalizer.Form.NFD);
+			String s = Normalizer.normalize(ecoleNomComplet, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -400,6 +373,17 @@ public class Ecole extends EcoleGen<Cluster> {
 	@Override protected void _classeNomsCanoniques(List<String> l) {
 		l.add(Ecole.class.getCanonicalName());
 		super._classeNomsCanoniques(l);
+	}
+	
+	/**  
+	 * {@inheritDoc}
+	 * Var.enUS: _objectSuggest
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
+	 */
+	@Override
+	protected void _objetSuggere(Couverture<String> c) { 
+		c.o(ecoleNomComplet);
 	}
 }
 

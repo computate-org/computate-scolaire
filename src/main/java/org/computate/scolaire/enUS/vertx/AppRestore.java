@@ -59,16 +59,31 @@ public class AppRestore extends AbstractVerticle {
 	 **/
 	@Override()
 	public void  start(Future<Void> startFuture) throws Exception, Exception {
+		SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+		SiteContextEnUS siteContext = new SiteContextEnUS();
+		siteRequest.setSiteContext_(siteContext);
+		siteRequest.initDeepSiteRequestEnUS();
+		siteContext.getSiteConfig()
+				.setConfigPath("/usr/local/src/computate-scolaire/config/computate-scolaire-enUS.config");
+		siteContext.initDeepSiteContextEnUS();
+		siteRequest.setSiteConfig_(siteContext.getSiteConfig());
+
+		start(siteRequest, startFuture);
+	}
+
+	public void  start(SiteRequestEnUS siteRequest, Future<Void> startFuture) throws Exception, Exception {
+		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
+		SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+		siteRequest2.setSiteContext_(siteContext);
+		siteRequest2.initDeepSiteRequestEnUS();
+		siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+		siteRequest = siteRequest2;
+		start2(siteRequest2, startFuture);
+	}
+
+	public void  start2(SiteRequestEnUS siteRequest, Future<Void> startFuture) throws Exception, Exception {
 
 		try {
-			SiteRequestEnUS siteRequest = new SiteRequestEnUS();
-			SiteContextEnUS siteContext = new SiteContextEnUS();
-			siteRequest.setSiteContext_(siteContext);
-			siteRequest.initDeepSiteRequestEnUS();
-			siteContext.getSiteConfig()
-					.setConfigPath("/usr/local/src/computate-scolaire/config/computate-scolaire-enUS.config");
-			siteContext.initDeepSiteContextEnUS();
-			siteRequest.setSiteConfig_(siteContext.getSiteConfig());
 			ZonedDateTime dateTime = ZonedDateTime.now();
 			configureData(siteRequest);
 
@@ -445,7 +460,7 @@ public class AppRestore extends AbstractVerticle {
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
+					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
 			});
 		} catch(Exception e) {

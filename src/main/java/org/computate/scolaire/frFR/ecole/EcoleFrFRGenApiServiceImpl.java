@@ -819,6 +819,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCles":
@@ -847,8 +849,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				return "ecoleEmplacement_indexed_string";
 			case "ecoleAddresse":
 				return "ecoleAddresse_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
 			case "ecoleNomCourt":
 				return "ecoleNomCourt_indexed_string";
 			case "ecoleNomComplet":

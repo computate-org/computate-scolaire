@@ -198,6 +198,24 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: objectTitle
+	 * Indexe: true
+	 * Stocke: true
+	 * VarTitre: true
+	 */        
+	protected void _objetTitre(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: objectSuggest
+	 * Suggere: true
+	 */       
+	protected void _objetSuggere(Couverture<String> c) { 
+	}
+
+	/**
 	 * Param1.var.enUS: localName
 	 * r: nomLocal
 	 * r.enUS: localName

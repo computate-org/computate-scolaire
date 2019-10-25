@@ -57,7 +57,9 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(cluster != null)
+		if(cluster != null && cluster.getObjetTitre() != null)
+			c.o(cluster.getObjetTitre());
+		else if(cluster != null)
 			c.o("");
 		else if(listeCluster == null || listeCluster.size() == 0)
 			c.o("aucun cluster trouvé");
@@ -886,10 +888,10 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	 * r.enUS: refreshClusterGenPage
 	 * r: ajouterErreur
 	 * r.enUS: addError
-	 * r: suggereCluster
-	 * r.enUS: suggestCluster
-	 * r: ':'
-	 * r.enUS: ':'
+	 * r: suggereClusterObjetSuggere
+	 * r.enUS: suggestClusterObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
 	 * r: '#suggereListCluster'
 	 * r.enUS: '#suggestListCluster'
 	 * r: "suggereListCluster"
@@ -922,7 +924,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormCluster", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/cluster?q=:' + encodeURIComponent($('#suggereCluster", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggereFormCluster", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/cluster?q=objetSuggere:' + encodeURIComponent($('#suggereCluster", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher clusters")
@@ -930,7 +932,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							.a("name", "suggereCluster")
 							.a("id", "suggereCluster", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereCluster( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggereListCluster", id, "')); ")
+							.a("oninput", "suggereClusterObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListCluster", id, "')); ")
 							.fg();
 
 					} p.g("form");

@@ -1,6 +1,5 @@
 package org.computate.scolaire.frFR.ecole;
 
-import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
@@ -1653,216 +1652,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////////////
-	// objetSuggerePoids //
-	///////////////////////
-
-	/**	L'entité « objetSuggerePoids »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Double objetSuggerePoids;
-	@JsonIgnore
-	public Couverture<Double> objetSuggerePoidsCouverture = new Couverture<Double>().p(this).c(Double.class).var("objetSuggerePoids").o(objetSuggerePoids);
-
-	/**	<br/>L'entité « objetSuggerePoids »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggerePoids">Trouver l'entité objetSuggerePoids dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggerePoids(Couverture<Double> c);
-
-	public Double getObjetSuggerePoids() {
-		return objetSuggerePoids;
-	}
-
-	public void setObjetSuggerePoids(Double objetSuggerePoids) {
-		this.objetSuggerePoids = objetSuggerePoids;
-		this.objetSuggerePoidsCouverture.dejaInitialise = true;
-	}
-	public Ecole setObjetSuggerePoids(String o) {
-		if(NumberUtils.isParsable(o))
-			this.objetSuggerePoids = Double.parseDouble(o);
-		this.objetSuggerePoidsCouverture.dejaInitialise = true;
-		return (Ecole)this;
-	}
-	protected Ecole objetSuggerePoidsInit() {
-		if(!objetSuggerePoidsCouverture.dejaInitialise) {
-			_objetSuggerePoids(objetSuggerePoidsCouverture);
-			if(objetSuggerePoids == null)
-				setObjetSuggerePoids(objetSuggerePoidsCouverture.o);
-		}
-		objetSuggerePoidsCouverture.dejaInitialise(true);
-		return (Ecole)this;
-	}
-
-	public Double solrObjetSuggerePoids() {
-		return objetSuggerePoids;
-	}
-
-	public String strObjetSuggerePoids() {
-		return objetSuggerePoids == null ? "" : objetSuggerePoids.toString();
-	}
-
-	public String jsonObjetSuggerePoids() {
-		return objetSuggerePoids == null ? "" : objetSuggerePoids.toString();
-	}
-
-	public String nomAffichageObjetSuggerePoids() {
-		return "NomAffichage.enUS: ";
-	}
-
-	public String htmTooltipObjetSuggerePoids() {
-		return null;
-	}
-
-	public String htmObjetSuggerePoids() {
-		return objetSuggerePoids == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggerePoids());
-	}
-
-	public void htmObjetSuggerePoids(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcole", strPk(), "ObjetSuggerePoids\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcole", strPk(), "ObjetSuggerePoids() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggerePoids\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggerePoids()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggerePoids\"");
-							r.s(" value=\"", htmObjetSuggerePoids(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggerePoids());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected Ecole objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (Ecole)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return "NomAffichage.enUS: ";
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEcole", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEcole", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// ecoleNomCourt //
 	///////////////////
@@ -2389,8 +2178,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void initLoinEcole() {
-		super.initLoinCluster(requeteSite_);
 		initEcole();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initEcole() {
@@ -2408,8 +2197,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		ecoleAdministrateurNomInit();
 		ecoleEmplacementInit();
 		ecoleAddresseInit();
-		objetSuggerePoidsInit();
-		objetSuggereInit();
 		ecoleNomCourtInit();
 		ecoleNomCompletInit();
 		ecoleIdInit();
@@ -2481,10 +2268,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleEmplacement;
 			case "ecoleAddresse":
 				return oEcole.ecoleAddresse;
-			case "objetSuggerePoids":
-				return oEcole.objetSuggerePoids;
-			case "objetSuggere":
-				return oEcole.objetSuggere;
 			case "ecoleNomCourt":
 				return oEcole.ecoleNomCourt;
 			case "ecoleNomComplet":
@@ -2674,11 +2457,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					oEcole.setEcoleAddresse(ecoleAddresse);
 			}
 
-			if(sauvegardesEcole.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oEcole.setObjetSuggere(objetSuggere);
-			}
-
 			if(sauvegardesEcole.contains("ecoleNomCourt")) {
 				String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 				if(ecoleNomCourt != null)
@@ -2852,10 +2630,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
 			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
 		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		if(ecoleNomCourt != null) {
 			document.addField("ecoleNomCourt_indexed_string", ecoleNomCourt);
 			document.addField("ecoleNomCourt_stored_string", ecoleNomCourt);
@@ -2958,9 +2732,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
 		if(ecoleAddresse != null)
 			oEcole.setEcoleAddresse(ecoleAddresse);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oEcole.setObjetSuggere(objetSuggere);
 
 		String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 		if(ecoleNomCourt != null)

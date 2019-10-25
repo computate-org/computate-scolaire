@@ -809,6 +809,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "schoolCompleteName_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
+			case "enrollmentFormKey":
+				return "enrollmentFormKey_indexed_long";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

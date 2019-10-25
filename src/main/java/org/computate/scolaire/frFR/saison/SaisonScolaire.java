@@ -56,7 +56,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
 */                              
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
-
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: seasonKey

@@ -47,14 +47,6 @@ public class School extends SchoolGen<Cluster> {
 	protected void _schoolAddress(Wrap<String> c) {
 	}
 
-	protected void _objectSuggestWeight(Wrap<Double> c) {
-		c.o(1D);
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(schoolName);
-	}
-
 	protected void _schoolShortName(Wrap<String> c) {
 		if(schoolLocation != null)
 			c.o(schoolLocation);
@@ -70,8 +62,8 @@ public class School extends SchoolGen<Cluster> {
 	}
 
 	protected void _schoolId(Wrap<String> c) {
-		if(schoolName != null) {
-			String s = Normalizer.normalize(schoolName, Normalizer.Form.NFD);
+		if(ecoleNom != null) {
+			String s = Normalizer.normalize(schoolCompleteName, Normalizer.Form.NFD);
 			s = StringUtils.lowerCase(s);
 			s = StringUtils.trim(s);
 			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
@@ -103,5 +95,10 @@ public class School extends SchoolGen<Cluster> {
 	protected void  _classCanonicalNames(List<String> l) {
 		l.add(School.class.getCanonicalName());
 		super._classCanonicalNames(l);
+	}
+
+	@Override()
+	protected void  _objectSuggest(Wrap<String> c) { 
+		c.o(schoolCompleteName);
 	}
 }

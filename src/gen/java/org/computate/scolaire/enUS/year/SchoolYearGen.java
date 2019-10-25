@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.year;
 
+import org.computate.scolaire.enUS.enrollment.form.EnrollmentForm;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -1134,6 +1135,151 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////////
+	// enrollmentFormKey //
+	///////////////////////
+
+	/**	L'entité « enrollmentFormKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long enrollmentFormKey;
+	@JsonIgnore
+	public Wrap<Long> enrollmentFormKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentFormKey").o(enrollmentFormKey);
+
+	/**	<br/>L'entité « enrollmentFormKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormKey">Trouver l'entité enrollmentFormKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentFormKey(Wrap<Long> c);
+
+	public Long getEnrollmentFormKey() {
+		return enrollmentFormKey;
+	}
+
+	public void setEnrollmentFormKey(Long enrollmentFormKey) {
+		this.enrollmentFormKey = enrollmentFormKey;
+		this.enrollmentFormKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolYear setEnrollmentFormKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enrollmentFormKey = Long.parseLong(o);
+		this.enrollmentFormKeyWrap.alreadyInitialized = true;
+		return (SchoolYear)this;
+	}
+	protected SchoolYear enrollmentFormKeyInit() {
+		if(!enrollmentFormKeyWrap.alreadyInitialized) {
+			_enrollmentFormKey(enrollmentFormKeyWrap);
+			if(enrollmentFormKey == null)
+				setEnrollmentFormKey(enrollmentFormKeyWrap.o);
+		}
+		enrollmentFormKeyWrap.alreadyInitialized(true);
+		return (SchoolYear)this;
+	}
+
+	public Long solrEnrollmentFormKey() {
+		return enrollmentFormKey;
+	}
+
+	public String strEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
+	}
+
+	public String jsonEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
+	}
+
+	public String nomAffichageEnrollmentFormKey() {
+		return "enrollment form";
+	}
+
+	public String htmTooltipEnrollmentFormKey() {
+		return null;
+	}
+
+	public String htmEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormKey());
+	}
+
+	public void htmEnrollmentFormKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolYear", strPk(), "EnrollmentFormKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolYear", strPk(), "EnrollmentFormKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentFormKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentFormKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentFormKey\"");
+							r.s(" value=\"", htmEnrollmentFormKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentFormKey());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////////
+	// enrollmentFormSearch //
+	//////////////////////////
+
+	/**	L'entité « enrollmentFormSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentForm>(). 
+	 */
+	@JsonIgnore
+	protected SearchList<EnrollmentForm> enrollmentFormSearch = new SearchList<EnrollmentForm>();
+	@JsonIgnore
+	public Wrap<SearchList<EnrollmentForm>> enrollmentFormSearchWrap = new Wrap<SearchList<EnrollmentForm>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
+
+	/**	<br/>L'entité « enrollmentFormSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentForm>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormSearch">Trouver l'entité enrollmentFormSearch dans Solr</a>
+	 * <br/>
+	 * @param enrollmentFormSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentFormSearch(SearchList<EnrollmentForm> l);
+
+	public SearchList<EnrollmentForm> getEnrollmentFormSearch() {
+		return enrollmentFormSearch;
+	}
+
+	public void setEnrollmentFormSearch(SearchList<EnrollmentForm> enrollmentFormSearch) {
+		this.enrollmentFormSearch = enrollmentFormSearch;
+		this.enrollmentFormSearchWrap.alreadyInitialized = true;
+	}
+	protected SchoolYear enrollmentFormSearchInit() {
+		if(!enrollmentFormSearchWrap.alreadyInitialized) {
+			_enrollmentFormSearch(enrollmentFormSearch);
+		}
+		enrollmentFormSearch.initDeepForClass(siteRequest_);
+		enrollmentFormSearchWrap.alreadyInitialized(true);
+		return (SchoolYear)this;
+	}
+
 	///////////////
 	// yearStart //
 	///////////////
@@ -1892,6 +2038,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		school_Init();
 		schoolCompleteNameInit();
 		schoolLocationInit();
+		enrollmentFormKeyInit();
+		enrollmentFormSearchInit();
 		yearStartInit();
 		yearEndInit();
 		yearShortNameInit();
@@ -1913,6 +2061,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			super.siteRequestCluster(siteRequest_);
 		if(schoolSearch != null)
 			schoolSearch.setSiteRequest_(siteRequest_);
+		if(enrollmentFormSearch != null)
+			enrollmentFormSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -1961,6 +2111,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.schoolCompleteName;
 			case "schoolLocation":
 				return oSchoolYear.schoolLocation;
+			case "enrollmentFormKey":
+				return oSchoolYear.enrollmentFormKey;
+			case "enrollmentFormSearch":
+				return oSchoolYear.enrollmentFormSearch;
 			case "yearStart":
 				return oSchoolYear.yearStart;
 			case "yearEnd":
@@ -2111,6 +2265,12 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchoolYear.setSchoolLocation(schoolLocation);
+			}
+
+			if(savesSchoolYear.contains("enrollmentFormKey")) {
+				Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
+				if(enrollmentFormKey != null)
+					oSchoolYear.setEnrollmentFormKey(enrollmentFormKey);
 			}
 
 			if(savesSchoolYear.contains("yearStart")) {
@@ -2267,6 +2427,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("schoolLocation_indexed_string", schoolLocation);
 			document.addField("schoolLocation_stored_string", schoolLocation);
 		}
+		if(enrollmentFormKey != null) {
+			document.addField("enrollmentFormKey_indexed_long", enrollmentFormKey);
+			document.addField("enrollmentFormKey_stored_long", enrollmentFormKey);
+		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_int", yearStart);
 			document.addField("yearStart_stored_int", yearStart);
@@ -2361,6 +2525,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 		if(schoolLocation != null)
 			oSchoolYear.setSchoolLocation(schoolLocation);
+
+		Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
+		if(enrollmentFormKey != null)
+			oSchoolYear.setEnrollmentFormKey(enrollmentFormKey);
 
 		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)

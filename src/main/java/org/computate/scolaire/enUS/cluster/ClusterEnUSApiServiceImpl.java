@@ -36,7 +36,7 @@ public class ClusterEnUSApiServiceImpl extends ClusterEnUSGenApiServiceImpl {
 		AppRestore appRestore = new AppRestore();
 		appRestore.init(siteRequest.getVertx(), siteRequest.getVertx().getOrCreateContext());
 		try {
-			appRestore.start(future);
+			appRestore.start(siteRequest, future);
 			if(future.succeeded())
 				eventHandler.handle(Future.succeededFuture());
 			else

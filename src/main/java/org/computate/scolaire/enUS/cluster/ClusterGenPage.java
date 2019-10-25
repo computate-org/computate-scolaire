@@ -56,7 +56,9 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(cluster != null)
+		if(cluster != null && cluster.getObjectTitle() != null)
+			c.o(cluster.getObjectTitle());
+		else if(cluster != null)
 			c.o("");
 		else if(listCluster == null || listCluster.size() == 0)
 			c.o("no cluster found");
@@ -886,14 +888,14 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggestFormCluster", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/cluster?q=:' + encodeURIComponent($('#suggestCluster", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggestFormCluster", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/cluster?q=objectSuggest:' + encodeURIComponent($('#suggestCluster", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("class", "suggestCluster w3-input w3-border w3-cell w3-cell-middle ")
 							.a("name", "suggestCluster")
 							.a("id", "suggestCluster", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestCluster( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListCluster", id, "')); ")
+							.a("oninput", "suggestClusterObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListCluster", id, "')); ")
 							.fg();
 
 					} p.g("form");

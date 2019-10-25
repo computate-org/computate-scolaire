@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.annee;
 
+import org.computate.scolaire.frFR.inscription.form.FormInscription;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -1135,6 +1136,151 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////////////
+	// formInscriptionCle //
+	////////////////////////
+
+	/**	L'entité « formInscriptionCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long formInscriptionCle;
+	@JsonIgnore
+	public Couverture<Long> formInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("formInscriptionCle").o(formInscriptionCle);
+
+	/**	<br/>L'entité « formInscriptionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionCle">Trouver l'entité formInscriptionCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _formInscriptionCle(Couverture<Long> c);
+
+	public Long getFormInscriptionCle() {
+		return formInscriptionCle;
+	}
+
+	public void setFormInscriptionCle(Long formInscriptionCle) {
+		this.formInscriptionCle = formInscriptionCle;
+		this.formInscriptionCleCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire setFormInscriptionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.formInscriptionCle = Long.parseLong(o);
+		this.formInscriptionCleCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire formInscriptionCleInit() {
+		if(!formInscriptionCleCouverture.dejaInitialise) {
+			_formInscriptionCle(formInscriptionCleCouverture);
+			if(formInscriptionCle == null)
+				setFormInscriptionCle(formInscriptionCleCouverture.o);
+		}
+		formInscriptionCleCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public Long solrFormInscriptionCle() {
+		return formInscriptionCle;
+	}
+
+	public String strFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
+	}
+
+	public String jsonFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
+	}
+
+	public String nomAffichageFormInscriptionCle() {
+		return "formulaire d'inscription";
+	}
+
+	public String htmTooltipFormInscriptionCle() {
+		return null;
+	}
+
+	public String htmFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
+	}
+
+	public void htmFormInscriptionCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAnneeScolaire", strPk(), "FormInscriptionCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAnneeScolaire", strPk(), "FormInscriptionCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFormInscriptionCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFormInscriptionCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"formInscriptionCle\"");
+							r.s(" value=\"", htmFormInscriptionCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFormInscriptionCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////////////
+	// formInscriptionRecherche //
+	//////////////////////////////
+
+	/**	L'entité « formInscriptionRecherche »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<FormInscription>(). 
+	 */
+	@JsonIgnore
+	protected ListeRecherche<FormInscription> formInscriptionRecherche = new ListeRecherche<FormInscription>();
+	@JsonIgnore
+	public Couverture<ListeRecherche<FormInscription>> formInscriptionRechercheCouverture = new Couverture<ListeRecherche<FormInscription>>().p(this).c(ListeRecherche.class).var("formInscriptionRecherche").o(formInscriptionRecherche);
+
+	/**	<br/>L'entité « formInscriptionRecherche »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<FormInscription>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionRecherche">Trouver l'entité formInscriptionRecherche dans Solr</a>
+	 * <br/>
+	 * @param formInscriptionRecherche est l'entité déjà construit. 
+	 **/
+	protected abstract void _formInscriptionRecherche(ListeRecherche<FormInscription> l);
+
+	public ListeRecherche<FormInscription> getFormInscriptionRecherche() {
+		return formInscriptionRecherche;
+	}
+
+	public void setFormInscriptionRecherche(ListeRecherche<FormInscription> formInscriptionRecherche) {
+		this.formInscriptionRecherche = formInscriptionRecherche;
+		this.formInscriptionRechercheCouverture.dejaInitialise = true;
+	}
+	protected AnneeScolaire formInscriptionRechercheInit() {
+		if(!formInscriptionRechercheCouverture.dejaInitialise) {
+			_formInscriptionRecherche(formInscriptionRecherche);
+		}
+		formInscriptionRecherche.initLoinPourClasse(requeteSite_);
+		formInscriptionRechercheCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
 	////////////////
 	// anneeDebut //
 	////////////////
@@ -1893,6 +2039,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		ecole_Init();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
+		formInscriptionCleInit();
+		formInscriptionRechercheInit();
 		anneeDebutInit();
 		anneeFinInit();
 		anneeNomCourtInit();
@@ -1914,6 +2062,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			super.requeteSiteCluster(requeteSite_);
 		if(ecoleRecherche != null)
 			ecoleRecherche.setRequeteSite_(requeteSite_);
+		if(formInscriptionRecherche != null)
+			formInscriptionRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1962,6 +2112,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.ecoleNomComplet;
 			case "ecoleEmplacement":
 				return oAnneeScolaire.ecoleEmplacement;
+			case "formInscriptionCle":
+				return oAnneeScolaire.formInscriptionCle;
+			case "formInscriptionRecherche":
+				return oAnneeScolaire.formInscriptionRecherche;
 			case "anneeDebut":
 				return oAnneeScolaire.anneeDebut;
 			case "anneeFin":
@@ -2112,6 +2266,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oAnneeScolaire.setEcoleEmplacement(ecoleEmplacement);
+			}
+
+			if(sauvegardesAnneeScolaire.contains("formInscriptionCle")) {
+				Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+				if(formInscriptionCle != null)
+					oAnneeScolaire.setFormInscriptionCle(formInscriptionCle);
 			}
 
 			if(sauvegardesAnneeScolaire.contains("anneeDebut")) {
@@ -2268,6 +2428,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
 			document.addField("ecoleEmplacement_stored_string", ecoleEmplacement);
 		}
+		if(formInscriptionCle != null) {
+			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
+			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
+		}
 		if(anneeDebut != null) {
 			document.addField("anneeDebut_indexed_int", anneeDebut);
 			document.addField("anneeDebut_stored_int", anneeDebut);
@@ -2362,6 +2526,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 		if(ecoleEmplacement != null)
 			oAnneeScolaire.setEcoleEmplacement(ecoleEmplacement);
+
+		Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+		if(formInscriptionCle != null)
+			oAnneeScolaire.setFormInscriptionCle(formInscriptionCle);
 
 		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 		if(anneeDebut != null)

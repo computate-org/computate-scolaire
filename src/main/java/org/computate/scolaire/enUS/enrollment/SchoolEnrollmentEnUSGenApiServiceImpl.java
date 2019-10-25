@@ -35,6 +35,7 @@ import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
+import io.vertx.core.WorkerExecutor;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
@@ -305,6 +306,48 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void patchSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+			WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+			workerExecutor.executeBlocking(
+				future -> {
+					try {
+						patchSchoolEnrollment2(siteRequest, body, operationRequest, a -> {
+							if(a.succeeded())
+								a.complete();
+							else
+								errorSchoolEnrollment(siteRequest, eventHandler, a);
+						});
+					} catch (Exception e) {
+						errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+					}
+				}
+				, res -> {
+					LOGGER.info("AppRestore complete. ");
+					Buffer buffer = Buffer.buffer();
+					buffer.appendString("{}");
+//					eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+				}
+			);
+			Buffer buffer = Buffer.buffer();
+			buffer.appendString("{}");
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(buffer)));
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public Future<Void>  patchSchoolEnrollment2(SiteRequestEnUS siteRequest, JsonObject body, OperationRequest operationRequest, Handler<Future<Void>> eventHandler) throws Exception, Exception {
+		Future<Void> future = Future.future();
+		try {
+			patchSchoolEnrollment3(body, operationRequest, future);
+		} catch (Exception e) {
+			future.fail(e);
+		}
+		return future;
+	}
+
+	public void patchSchoolEnrollment3(JsonObject body, OperationRequest operationRequest, Future<Void> future) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 			sqlSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
@@ -325,40 +368,40 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										if(d.succeeded()) {
 											SQLConnection sqlConnection = siteRequest.getSqlConnection();
 											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
+												future.complete();
 											} else {
 												sqlConnection.commit(e -> {
 													if(e.succeeded()) {
 														sqlConnection.close(f -> {
 															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
+																future.complete();
 															} else {
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
+																future.fail(f.cause());
 															}
 														});
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														future.complete();
 													}
 												});
 											}
 										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
+											future.fail(d.cause());
 										}
 									});
 								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									future.fail(c.cause());
 								}
 							});
 						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							future.fail(b.cause());
 						}
 					});
 				} else {
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					future.fail(a.cause());
 				}
 			});
 		} catch(Exception e) {
-			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+			future.fail(e);
 		}
 	}
 
@@ -379,6 +422,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next(dt)) {
+					System.out.println("Stuff");
 					listPATCHSchoolEnrollment(listSchoolEnrollment, dt, eventHandler);
 				} else {
 					response200PATCHSchoolEnrollment(listSchoolEnrollment, eventHandler);

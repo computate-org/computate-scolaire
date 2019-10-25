@@ -36,8 +36,8 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 	}
 
 	public void initLoinEcolePage() {
-		super.initLoinEcoleGenPage(requeteSite_);
 		initEcolePage();
+		super.initLoinEcoleGenPage(requeteSite_);
 	}
 
 	public void initEcolePage() {

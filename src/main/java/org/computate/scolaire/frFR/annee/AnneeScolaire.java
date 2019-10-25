@@ -1,13 +1,13 @@
 package org.computate.scolaire.frFR.annee;                   
 
 import java.text.Normalizer;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
+import org.computate.scolaire.frFR.inscription.form.FormInscription;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -48,7 +48,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                                     
+*/                                    
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -198,6 +198,39 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	protected void _ecoleEmplacement(Couverture<String> c) {
 		if(ecole_ != null)
 			c.o((String)ecole_.getEcoleEmplacement());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentFormKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: Ecole.formInscriptionCles
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 2
+	 * Description.frFR: La clé primaire de l'école dans la base de données. 
+	 * Description.enUS: The primary key of the school in the database. 
+	 * NomAffichage.frFR: formulaire d'inscription
+	 * NomAffichage.enUS: enrollment form
+	 */               
+	protected void _formInscriptionCle(Couverture<Long> c) {
+	}
+
+	/**
+	 * Var.enUS: enrollmentFormSearch
+	 * r: formInscriptionCles
+	 * r.enUS: enrollmentFormKeys
+	 * r: FormInscription
+	 * r.enUS: EnrollmentForm
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * Ignorer: true
+	 */   
+	protected void _formInscriptionRecherche(ListeRecherche<FormInscription> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("formInscriptionCles_indexed_longs:" + pk);
+		l.setC(FormInscription.class);
+		l.setStocker(true);
 	}
 
 	/**

@@ -58,6 +58,12 @@ public class Cluster extends ClusterGen<Object> {
 		l.add(Cluster.class.getCanonicalName());
 	}
 
+	protected void _objectTitle(Wrap<String> c) {
+	}
+
+	protected void _objectSuggest(Wrap<String> c) { 
+	}
+
 	public Cluster e(String localName) {
 		AllWriter w = siteRequest_.getW();
 		String localNameParent = siteRequest_.getXmlStack().isEmpty() ? null : siteRequest_.getXmlStack().peek();

@@ -819,6 +819,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "yearKeys":
@@ -847,8 +849,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolLocation_indexed_string";
 			case "schoolAddress":
 				return "schoolAddress_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
 			case "schoolShortName":
 				return "schoolShortName_indexed_string";
 			case "schoolCompleteName":

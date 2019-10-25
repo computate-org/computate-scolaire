@@ -36,8 +36,8 @@ public abstract class SchoolPageGen<DEV> extends SchoolGenPage {
 	}
 
 	public void initDeepSchoolPage() {
-		super.initDeepSchoolGenPage(siteRequest_);
 		initSchoolPage();
+		super.initDeepSchoolGenPage(siteRequest_);
 	}
 
 	public void initSchoolPage() {

@@ -174,14 +174,16 @@ public class ListeRecherche<DEV> extends ListeRechercheGen<DEV> {
 		if(solrQuery.getQuery() != null) {
 			for(SolrDocument solrDocument : solrDocumentList) {
 				try {
-					DEV o = c.newInstance();
-					MethodUtils.invokeMethod(o, "setRequeteSite_", requeteSite_);
-					if(peupler)
-						MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
-					if(stocker)
-						MethodUtils.invokeMethod(o, "stockerPourClasse", solrDocument);
-	//				MethodUtils.invokeMethod(o, "initLoinPourClasse", requeteSite_);
-					l.add(o);
+					if(solrDocument != null) {
+						DEV o = c.newInstance();
+						MethodUtils.invokeMethod(o, "setRequeteSite_", requeteSite_);
+						if(peupler)
+							MethodUtils.invokeMethod(o, "peuplerPourClasse", solrDocument);
+						if(stocker)
+							MethodUtils.invokeMethod(o, "stockerPourClasse", solrDocument);
+		//				MethodUtils.invokeMethod(o, "initLoinPourClasse", requeteSite_);
+						l.add(o);
+					}
 				} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
 						| InvocationTargetException e) {
 					ExceptionUtils.rethrow(e);

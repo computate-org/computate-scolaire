@@ -1,6 +1,11 @@
 package org.computate.scolaire.enUS.vertx;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.function.Consumer;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -17,7 +22,9 @@ public class RunnerVertx {
 
 	public static void  run(Class<?> c) {
 		JsonObject zkConfig = new JsonObject();
-		String zookeeperHosts = System.getenv("zookeeperHostName") + ":" + System.getenv("zookeeperPort");
+		String zookeeperHostName = System.getenv("zookeeperHostName");
+		Integer zookeeperPort = Integer.parseInt(System.getenv("zookeeperPort"));
+		String zookeeperHosts = zookeeperHostName + ":" + zookeeperPort;
 		zkConfig.put("zookeeperHosts", zookeeperHosts);
 		zkConfig.put("sessionTimeout", 20000);
 		zkConfig.put("connectTimeout", 3000);
@@ -32,8 +39,11 @@ public class RunnerVertx {
 		ClusterManager gestionnaireCluster = new ZookeeperClusterManager(zkConfig);
 		VertxOptions optionsVertx = new VertxOptions();
 		// For OpenShift
-		optionsVertx
-				.setEventBusOptions(new EventBusOptions().setClusterPublicHost("whatever").setClusterPublicPort(1234));
+		try {
+			optionsVertx.setEventBusOptions(new EventBusOptions().setClusterPublicHost(InetAddress.getLocalHost().getHostAddress()).setClusterPublicPort(8081));
+		} catch (UnknownHostException e) {
+			ExceptionUtils.rethrow(e);
+		}
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		optionsVertx.setClustered(true);
 

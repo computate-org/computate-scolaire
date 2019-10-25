@@ -115,8 +115,8 @@ public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 	}
 
 	public void initLoinClusterGenPage() {
-		super.initLoinMiseEnPage(requeteSite_);
 		initClusterGenPage();
+		super.initLoinMiseEnPage(requeteSite_);
 	}
 
 	public void initClusterGenPage() {
