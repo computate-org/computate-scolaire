@@ -1,7 +1,6 @@
 package org.computate.scolaire.enUS.session;
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -158,35 +157,8 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	}
 
-	protected void _sessionId(Wrap<String> c) {
-		if(sessionCompleteName != null) {
-			String s = Normalizer.normalize(sessionCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(sessionId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/session/" + sessionId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(sessionCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolSession.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(sessionCompleteName);
 	}
 }

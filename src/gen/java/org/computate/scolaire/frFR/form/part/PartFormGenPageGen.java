@@ -116,8 +116,8 @@ public abstract class PartFormGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinPartFormGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initPartFormGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initPartFormGenPage() {

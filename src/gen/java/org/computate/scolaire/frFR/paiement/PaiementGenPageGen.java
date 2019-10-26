@@ -116,8 +116,8 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinPaiementGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initPaiementGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initPaiementGenPage() {

@@ -116,8 +116,8 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinMereGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initMereGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initMereGenPage() {

@@ -112,8 +112,8 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepSeasonGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initSeasonGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initSeasonGenPage() {

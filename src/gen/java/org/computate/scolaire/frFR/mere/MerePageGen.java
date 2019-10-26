@@ -36,8 +36,8 @@ public abstract class MerePageGen<DEV> extends MereGenPage {
 	}
 
 	public void initLoinMerePage() {
-		super.initLoinMereGenPage(requeteSite_);
 		initMerePage();
+		super.initLoinMereGenPage(requeteSite_);
 	}
 
 	public void initMerePage() {

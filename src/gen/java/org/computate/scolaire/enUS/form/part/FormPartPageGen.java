@@ -36,8 +36,8 @@ public abstract class FormPartPageGen<DEV> extends FormPartGenPage {
 	}
 
 	public void initDeepFormPartPage() {
-		super.initDeepFormPartGenPage(siteRequest_);
 		initFormPartPage();
+		super.initDeepFormPartGenPage(siteRequest_);
 	}
 
 	public void initFormPartPage() {

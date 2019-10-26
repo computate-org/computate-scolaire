@@ -36,8 +36,8 @@ public abstract class EnfantPageGen<DEV> extends EnfantGenPage {
 	}
 
 	public void initLoinEnfantPage() {
-		super.initLoinEnfantGenPage(requeteSite_);
 		initEnfantPage();
+		super.initLoinEnfantGenPage(requeteSite_);
 	}
 
 	public void initEnfantPage() {

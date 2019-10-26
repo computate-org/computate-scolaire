@@ -37,7 +37,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe yearCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class AnneeScolaireGen<DEV> extends Cluster {
@@ -1701,312 +1701,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////
-	// anneeId //
-	/////////////
-
-	/**	L'entité « anneeId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String anneeId;
-	@JsonIgnore
-	public Couverture<String> anneeIdCouverture = new Couverture<String>().p(this).c(String.class).var("anneeId").o(anneeId);
-
-	/**	<br/>L'entité « anneeId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeId">Trouver l'entité anneeId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _anneeId(Couverture<String> c);
-
-	public String getAnneeId() {
-		return anneeId;
-	}
-
-	public void setAnneeId(String anneeId) {
-		this.anneeId = anneeId;
-		this.anneeIdCouverture.dejaInitialise = true;
-	}
-	protected AnneeScolaire anneeIdInit() {
-		if(!anneeIdCouverture.dejaInitialise) {
-			_anneeId(anneeIdCouverture);
-			if(anneeId == null)
-				setAnneeId(anneeIdCouverture.o);
-		}
-		anneeIdCouverture.dejaInitialise(true);
-		return (AnneeScolaire)this;
-	}
-
-	public String solrAnneeId() {
-		return anneeId;
-	}
-
-	public String strAnneeId() {
-		return anneeId == null ? "" : anneeId;
-	}
-
-	public String jsonAnneeId() {
-		return anneeId == null ? "" : anneeId;
-	}
-
-	public String nomAffichageAnneeId() {
-		return "ID";
-	}
-
-	public String htmTooltipAnneeId() {
-		return null;
-	}
-
-	public String htmAnneeId() {
-		return anneeId == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeId());
-	}
-
-	public void htmAnneeId(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAnneeScolaire", strPk(), "AnneeId\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAnneeScolaire", strPk(), "AnneeId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeId\"");
-							r.s(" value=\"", htmAnneeId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Couverture<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlCouverture.dejaInitialise = true;
-	}
-	protected AnneeScolaire pageUrlInit() {
-		if(!pageUrlCouverture.dejaInitialise) {
-			_pageUrl(pageUrlCouverture);
-			if(pageUrl == null)
-				setPageUrl(pageUrlCouverture.o);
-		}
-		pageUrlCouverture.dejaInitialise(true);
-		return (AnneeScolaire)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAnneeScolaire", strPk(), "PageUrl\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAnneeScolaire", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected AnneeScolaire objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (AnneeScolaire)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return null;
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAnneeScolaire", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAnneeScolaire", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -2023,8 +1717,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initLoinAnneeScolaire() {
-		super.initLoinCluster(requeteSite_);
 		initAnneeScolaire();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initAnneeScolaire() {
@@ -2045,9 +1739,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		anneeFinInit();
 		anneeNomCourtInit();
 		anneeNomCompletInit();
-		anneeIdInit();
-		pageUrlInit();
-		objetSuggereInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2124,12 +1815,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.anneeNomCourt;
 			case "anneeNomComplet":
 				return oAnneeScolaire.anneeNomComplet;
-			case "anneeId":
-				return oAnneeScolaire.anneeId;
-			case "pageUrl":
-				return oAnneeScolaire.pageUrl;
-			case "objetSuggere":
-				return oAnneeScolaire.objetSuggere;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -2297,23 +1982,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				if(anneeNomComplet != null)
 					oAnneeScolaire.setAnneeNomComplet(anneeNomComplet);
 			}
-
-			if(sauvegardesAnneeScolaire.contains("anneeId")) {
-				String anneeId = (String)solrDocument.get("anneeId_stored_string");
-				if(anneeId != null)
-					oAnneeScolaire.setAnneeId(anneeId);
-			}
-
-			if(sauvegardesAnneeScolaire.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oAnneeScolaire.setPageUrl(pageUrl);
-			}
-
-			if(sauvegardesAnneeScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oAnneeScolaire.setObjetSuggere(objetSuggere);
-			}
 		}
 
 		super.peuplerCluster(solrDocument);
@@ -2448,18 +2116,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("anneeNomComplet_indexed_string", anneeNomComplet);
 			document.addField("anneeNomComplet_stored_string", anneeNomComplet);
 		}
-		if(anneeId != null) {
-			document.addField("anneeId_indexed_string", anneeId);
-			document.addField("anneeId_stored_string", anneeId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		super.indexerCluster(document);
 
 	}
@@ -2546,17 +2202,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		String anneeNomComplet = (String)solrDocument.get("anneeNomComplet_stored_string");
 		if(anneeNomComplet != null)
 			oAnneeScolaire.setAnneeNomComplet(anneeNomComplet);
-
-		String anneeId = (String)solrDocument.get("anneeId_stored_string");
-		if(anneeId != null)
-			oAnneeScolaire.setAnneeId(anneeId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oAnneeScolaire.setPageUrl(pageUrl);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oAnneeScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

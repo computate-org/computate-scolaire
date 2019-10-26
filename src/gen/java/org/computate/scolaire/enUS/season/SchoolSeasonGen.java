@@ -2130,312 +2130,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	//////////////
-	// seasonId //
-	//////////////
-
-	/**	L'entité « seasonId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String seasonId;
-	@JsonIgnore
-	public Wrap<String> seasonIdWrap = new Wrap<String>().p(this).c(String.class).var("seasonId").o(seasonId);
-
-	/**	<br/>L'entité « seasonId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonId">Trouver l'entité seasonId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _seasonId(Wrap<String> c);
-
-	public String getSeasonId() {
-		return seasonId;
-	}
-
-	public void setSeasonId(String seasonId) {
-		this.seasonId = seasonId;
-		this.seasonIdWrap.alreadyInitialized = true;
-	}
-	protected SchoolSeason seasonIdInit() {
-		if(!seasonIdWrap.alreadyInitialized) {
-			_seasonId(seasonIdWrap);
-			if(seasonId == null)
-				setSeasonId(seasonIdWrap.o);
-		}
-		seasonIdWrap.alreadyInitialized(true);
-		return (SchoolSeason)this;
-	}
-
-	public String solrSeasonId() {
-		return seasonId;
-	}
-
-	public String strSeasonId() {
-		return seasonId == null ? "" : seasonId;
-	}
-
-	public String jsonSeasonId() {
-		return seasonId == null ? "" : seasonId;
-	}
-
-	public String nomAffichageSeasonId() {
-		return "ID";
-	}
-
-	public String htmTooltipSeasonId() {
-		return null;
-	}
-
-	public String htmSeasonId() {
-		return seasonId == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonId());
-	}
-
-	public void htmSeasonId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonId\"");
-							r.s(" value=\"", htmSeasonId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Wrap<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlWrap.alreadyInitialized = true;
-	}
-	protected SchoolSeason pageUrlInit() {
-		if(!pageUrlWrap.alreadyInitialized) {
-			_pageUrl(pageUrlWrap);
-			if(pageUrl == null)
-				setPageUrl(pageUrlWrap.o);
-		}
-		pageUrlWrap.alreadyInitialized(true);
-		return (SchoolSeason)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected SchoolSeason objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (SchoolSeason)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return null;
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////
 	// initDeep //
 	//////////////
 
@@ -2451,8 +2145,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void initDeepSchoolSeason() {
-		super.initDeepCluster(siteRequest_);
 		initSchoolSeason();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initSchoolSeason() {
@@ -2476,9 +2170,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
 		seasonCompleteNameInit();
-		seasonIdInit();
-		pageUrlInit();
-		objectSuggestInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2559,12 +2250,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.seasonEnrollmentFee;
 			case "seasonCompleteName":
 				return oSchoolSeason.seasonCompleteName;
-			case "seasonId":
-				return oSchoolSeason.seasonId;
-			case "pageUrl":
-				return oSchoolSeason.pageUrl;
-			case "objectSuggest":
-				return oSchoolSeason.objectSuggest;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -2763,23 +2448,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				if(seasonCompleteName != null)
 					oSchoolSeason.setSeasonCompleteName(seasonCompleteName);
 			}
-
-			if(savesSchoolSeason.contains("seasonId")) {
-				String seasonId = (String)solrDocument.get("seasonId_stored_string");
-				if(seasonId != null)
-					oSchoolSeason.setSeasonId(seasonId);
-			}
-
-			if(savesSchoolSeason.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oSchoolSeason.setPageUrl(pageUrl);
-			}
-
-			if(savesSchoolSeason.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oSchoolSeason.setObjectSuggest(objectSuggest);
-			}
 		}
 
 		super.populateCluster(solrDocument);
@@ -2930,18 +2598,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
 			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
 		}
-		if(seasonId != null) {
-			document.addField("seasonId_indexed_string", seasonId);
-			document.addField("seasonId_stored_string", seasonId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		super.indexCluster(document);
 
 	}
@@ -3044,17 +2700,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 		if(seasonCompleteName != null)
 			oSchoolSeason.setSeasonCompleteName(seasonCompleteName);
-
-		String seasonId = (String)solrDocument.get("seasonId_stored_string");
-		if(seasonId != null)
-			oSchoolSeason.setSeasonId(seasonId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oSchoolSeason.setPageUrl(pageUrl);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oSchoolSeason.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

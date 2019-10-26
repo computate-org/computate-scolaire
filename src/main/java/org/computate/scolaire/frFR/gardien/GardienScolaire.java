@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.gardien;    
+package org.computate.scolaire.frFR.gardien;      
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -46,6 +46,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: yellow
  * IconeGroupe: regular
  * IconeNom: phone
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */   
 public class GardienScolaire extends GardienScolaireGen<Cluster> {
 
@@ -437,82 +440,14 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 		c.o(personneNomComplet);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: guardianId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: gardienNomComplet
-	 * r.enUS: guardianCompleteName
-	 */            
-	protected void _gardienId(Couverture<String> c) {
-		if(gardienNomComplet != null) {
-			String s = Normalizer.normalize(gardienNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: gardienId
-	 * r.enUS: guardianId
-	 * r: /gardien/
-	 * r.enUS: /guardian/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(gardienId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/gardien/" + gardienId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: gardienNomComplet
 	 * r.enUS: guardianCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(gardienNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: GardienScolaire
-	 * r.enUS: SchoolGuardian
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(GardienScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

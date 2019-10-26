@@ -36,8 +36,8 @@ public abstract class YearPageGen<DEV> extends YearGenPage {
 	}
 
 	public void initDeepYearPage() {
-		super.initDeepYearGenPage(siteRequest_);
 		initYearPage();
+		super.initDeepYearGenPage(siteRequest_);
 	}
 
 	public void initYearPage() {

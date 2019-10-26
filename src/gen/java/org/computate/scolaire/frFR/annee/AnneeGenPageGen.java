@@ -116,8 +116,8 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinAnneeGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initAnneeGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initAnneeGenPage() {

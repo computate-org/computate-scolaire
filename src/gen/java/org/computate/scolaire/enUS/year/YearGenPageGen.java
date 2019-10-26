@@ -112,8 +112,8 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepYearGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initYearGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initYearGenPage() {

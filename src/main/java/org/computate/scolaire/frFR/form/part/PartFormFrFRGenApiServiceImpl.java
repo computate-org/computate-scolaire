@@ -845,10 +845,18 @@ public class PartFormFrFRGenApiServiceImpl implements PartFormFrFRGenApiService 
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
+			case "objetTitre":
+				return "objetTitre_indexed_string";
+			case "objetId":
+				return "objetId_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
+			case "partFormCle":
+				return "partFormCle_indexed_long";
+			case "formInscriptionCle":
+				return "formInscriptionCle_indexed_long";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -856,6 +864,8 @@ public class PartFormFrFRGenApiServiceImpl implements PartFormFrFRGenApiService 
 
 	public String varRecherchePartForm(String entiteVar) {
 		switch(entiteVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -863,6 +873,8 @@ public class PartFormFrFRGenApiServiceImpl implements PartFormFrFRGenApiService 
 
 	public String varSuggerePartForm(String entiteVar) {
 		switch(entiteVar) {
+			case "objetSuggere":
+				return "objetSuggere_suggested";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1069,7 +1081,7 @@ public class PartFormFrFRGenApiServiceImpl implements PartFormFrFRGenApiService 
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

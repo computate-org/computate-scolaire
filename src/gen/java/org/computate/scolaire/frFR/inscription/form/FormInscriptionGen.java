@@ -37,7 +37,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollmentFormCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class FormInscriptionGen<DEV> extends Cluster {
@@ -168,6 +168,132 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmFormInscriptionCle());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////
+	// partFormCles //
+	//////////////////
+
+	/**	L'entité « partFormCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> partFormCles = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> partFormClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("partFormCles").o(partFormCles);
+
+	/**	<br/>L'entité « partFormCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partFormCles">Trouver l'entité partFormCles dans Solr</a>
+	 * <br/>
+	 * @param partFormCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _partFormCles(List<Long> o);
+
+	public List<Long> getPartFormCles() {
+		return partFormCles;
+	}
+
+	public void setPartFormCles(List<Long> partFormCles) {
+		this.partFormCles = partFormCles;
+		this.partFormClesCouverture.dejaInitialise = true;
+	}
+	public FormInscription addPartFormCles(Long...objets) {
+		for(Long o : objets) {
+			addPartFormCles(o);
+		}
+		return (FormInscription)this;
+	}
+	public FormInscription addPartFormCles(Long o) {
+		if(o != null && !partFormCles.contains(o))
+			this.partFormCles.add(o);
+		return (FormInscription)this;
+	}
+	public FormInscription setPartFormCles(JsonArray objets) {
+		partFormCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addPartFormCles(o);
+		}
+		return (FormInscription)this;
+	}
+	public FormInscription addPartFormCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addPartFormCles(p);
+		}
+		return (FormInscription)this;
+	}
+	protected FormInscription partFormClesInit() {
+		if(!partFormClesCouverture.dejaInitialise) {
+			_partFormCles(partFormCles);
+		}
+		partFormClesCouverture.dejaInitialise(true);
+		return (FormInscription)this;
+	}
+
+	public List<Long> solrPartFormCles() {
+		return partFormCles;
+	}
+
+	public String strPartFormCles() {
+		return partFormCles == null ? "" : partFormCles.toString();
+	}
+
+	public String jsonPartFormCles() {
+		return partFormCles == null ? "" : partFormCles.toString();
+	}
+
+	public String nomAffichagePartFormCles() {
+		return "parts";
+	}
+
+	public String htmTooltipPartFormCles() {
+		return null;
+	}
+
+	public String htmPartFormCles() {
+		return partFormCles == null ? "" : StringEscapeUtils.escapeHtml4(strPartFormCles());
+	}
+
+	public void htmPartFormCles(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchFormInscription", strPk(), "PartFormCles\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchFormInscription", strPk(), "PartFormCles() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPartFormCles\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePartFormCles()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"partFormCles\"");
+							r.s(" value=\"", htmPartFormCles(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPartFormCles());
 			}
 			r.l("</div>");
 		}
@@ -1402,312 +1528,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////////////
-	// formInscriptionId //
-	///////////////////////
-
-	/**	L'entité « formInscriptionId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String formInscriptionId;
-	@JsonIgnore
-	public Couverture<String> formInscriptionIdCouverture = new Couverture<String>().p(this).c(String.class).var("formInscriptionId").o(formInscriptionId);
-
-	/**	<br/>L'entité « formInscriptionId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionId">Trouver l'entité formInscriptionId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _formInscriptionId(Couverture<String> c);
-
-	public String getFormInscriptionId() {
-		return formInscriptionId;
-	}
-
-	public void setFormInscriptionId(String formInscriptionId) {
-		this.formInscriptionId = formInscriptionId;
-		this.formInscriptionIdCouverture.dejaInitialise = true;
-	}
-	protected FormInscription formInscriptionIdInit() {
-		if(!formInscriptionIdCouverture.dejaInitialise) {
-			_formInscriptionId(formInscriptionIdCouverture);
-			if(formInscriptionId == null)
-				setFormInscriptionId(formInscriptionIdCouverture.o);
-		}
-		formInscriptionIdCouverture.dejaInitialise(true);
-		return (FormInscription)this;
-	}
-
-	public String solrFormInscriptionId() {
-		return formInscriptionId;
-	}
-
-	public String strFormInscriptionId() {
-		return formInscriptionId == null ? "" : formInscriptionId;
-	}
-
-	public String jsonFormInscriptionId() {
-		return formInscriptionId == null ? "" : formInscriptionId;
-	}
-
-	public String nomAffichageFormInscriptionId() {
-		return "ID";
-	}
-
-	public String htmTooltipFormInscriptionId() {
-		return null;
-	}
-
-	public String htmFormInscriptionId() {
-		return formInscriptionId == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionId());
-	}
-
-	public void htmFormInscriptionId(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchFormInscription", strPk(), "FormInscriptionId\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchFormInscription", strPk(), "FormInscriptionId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setFormInscriptionId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFormInscriptionId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"formInscriptionId\"");
-							r.s(" value=\"", htmFormInscriptionId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmFormInscriptionId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Couverture<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlCouverture.dejaInitialise = true;
-	}
-	protected FormInscription pageUrlInit() {
-		if(!pageUrlCouverture.dejaInitialise) {
-			_pageUrl(pageUrlCouverture);
-			if(pageUrl == null)
-				setPageUrl(pageUrlCouverture.o);
-		}
-		pageUrlCouverture.dejaInitialise(true);
-		return (FormInscription)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchFormInscription", strPk(), "PageUrl\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchFormInscription", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.form.FormInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected FormInscription objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (FormInscription)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return null;
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchFormInscription", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchFormInscription", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -1724,12 +1544,13 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void initLoinFormInscription() {
-		super.initLoinCluster(requeteSite_);
 		initFormInscription();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initFormInscription() {
 		formInscriptionCleInit();
+		partFormClesInit();
 		inscriptionClesInit();
 		anneeRechercheInit();
 		annee_Init();
@@ -1744,9 +1565,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		anneeNomCourtInit();
 		anneeNomCompletInit();
 		formInscriptionNomCompletInit();
-		formInscriptionIdInit();
-		pageUrlInit();
-		objetSuggereInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1791,6 +1609,8 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		switch(var) {
 			case "formInscriptionCle":
 				return oFormInscription.formInscriptionCle;
+			case "partFormCles":
+				return oFormInscription.partFormCles;
 			case "inscriptionCles":
 				return oFormInscription.inscriptionCles;
 			case "anneeRecherche":
@@ -1819,12 +1639,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 				return oFormInscription.anneeNomComplet;
 			case "formInscriptionNomComplet":
 				return oFormInscription.formInscriptionNomComplet;
-			case "formInscriptionId":
-				return oFormInscription.formInscriptionId;
-			case "pageUrl":
-				return oFormInscription.pageUrl;
-			case "objetSuggere":
-				return oFormInscription.objetSuggere;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -1850,6 +1664,9 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 	public Object attribuerFormInscription(String var, Object val) {
 		FormInscription oFormInscription = (FormInscription)this;
 		switch(var) {
+			case "partFormCles":
+				oFormInscription.addPartFormCles((Long)val);
+				return val;
 			case "inscriptionCles":
 				oFormInscription.addInscriptionCles((Long)val);
 				return val;
@@ -1908,6 +1725,10 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 					oFormInscription.setFormInscriptionCle(formInscriptionCle);
 			}
 
+			List<Long> partFormCles = (List<Long>)solrDocument.get("partFormCles_stored_longs");
+			if(partFormCles != null)
+				oFormInscription.partFormCles.addAll(partFormCles);
+
 			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 			if(inscriptionCles != null)
 				oFormInscription.inscriptionCles.addAll(inscriptionCles);
@@ -1964,23 +1785,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 				String formInscriptionNomComplet = (String)solrDocument.get("formInscriptionNomComplet_stored_string");
 				if(formInscriptionNomComplet != null)
 					oFormInscription.setFormInscriptionNomComplet(formInscriptionNomComplet);
-			}
-
-			if(sauvegardesFormInscription.contains("formInscriptionId")) {
-				String formInscriptionId = (String)solrDocument.get("formInscriptionId_stored_string");
-				if(formInscriptionId != null)
-					oFormInscription.setFormInscriptionId(formInscriptionId);
-			}
-
-			if(sauvegardesFormInscription.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oFormInscription.setPageUrl(pageUrl);
-			}
-
-			if(sauvegardesFormInscription.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oFormInscription.setObjetSuggere(objetSuggere);
 			}
 		}
 
@@ -2056,6 +1860,14 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
 			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
 		}
+		if(partFormCles != null) {
+			for(java.lang.Long o : partFormCles) {
+				document.addField("partFormCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : partFormCles) {
+				document.addField("partFormCles_stored_longs", o);
+			}
+		}
 		if(inscriptionCles != null) {
 			for(java.lang.Long o : inscriptionCles) {
 				document.addField("inscriptionCles_indexed_longs", o);
@@ -2100,18 +1912,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 			document.addField("formInscriptionNomComplet_indexed_string", formInscriptionNomComplet);
 			document.addField("formInscriptionNomComplet_stored_string", formInscriptionNomComplet);
 		}
-		if(formInscriptionId != null) {
-			document.addField("formInscriptionId_indexed_string", formInscriptionId);
-			document.addField("formInscriptionId_stored_string", formInscriptionId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		super.indexerCluster(document);
 
 	}
@@ -2146,6 +1946,10 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
 		if(formInscriptionCle != null)
 			oFormInscription.setFormInscriptionCle(formInscriptionCle);
+
+		List<Long> partFormCles = (List<Long>)solrDocument.get("partFormCles_stored_longs");
+		if(partFormCles != null)
+			oFormInscription.partFormCles.addAll(partFormCles);
 
 		List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 		if(inscriptionCles != null)
@@ -2187,17 +1991,6 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		if(formInscriptionNomComplet != null)
 			oFormInscription.setFormInscriptionNomComplet(formInscriptionNomComplet);
 
-		String formInscriptionId = (String)solrDocument.get("formInscriptionId_stored_string");
-		if(formInscriptionId != null)
-			oFormInscription.setFormInscriptionId(formInscriptionId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oFormInscription.setPageUrl(pageUrl);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oFormInscription.setObjetSuggere(objetSuggere);
-
 		super.stockerCluster(solrDocument);
 	}
 
@@ -2206,7 +1999,7 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles);
+		return Objects.hash(super.hashCode(), partFormCles, inscriptionCles);
 	}
 
 	////////////
@@ -2220,6 +2013,7 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 			return false;
 		FormInscription that = (FormInscription)o;
 		return super.equals(o)
+				&& Objects.equals( partFormCles, that.partFormCles )
 				&& Objects.equals( inscriptionCles, that.inscriptionCles );
 	}
 
@@ -2231,7 +2025,8 @@ public abstract class FormInscriptionGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("FormInscription { ");
-		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "partFormCles: " ).append(partFormCles);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
 		sb.append(" }");
 		return sb.toString();
 	}

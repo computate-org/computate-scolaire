@@ -192,6 +192,12 @@ public class FormInscriptionFrFRGenApiServiceImpl implements FormInscriptionFrFR
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "partFormCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContexteFrFR.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("formInscriptionCle", l, "partFormCles", pk));
+						}
+						break;
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
@@ -407,6 +413,30 @@ public class FormInscriptionFrFRGenApiServiceImpl implements FormInscriptionFrFR
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
+						break;
+					case "addPartFormCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("formInscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "partFormCles", pk));
+						break;
+					case "addAllPartFormCles":
+						JsonArray addAllPartFormClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllPartFormClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("formInscriptionCle", addAllPartFormClesValeurs.getString(i), "partFormCles", pk));
+						}
+						break;
+					case "setPartFormCles":
+						JsonArray setPartFormClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("formInscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "partFormCles", pk));
+						for(Integer i = 0; i <  setPartFormClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("formInscriptionCle", setPartFormClesValeurs.getString(i), "partFormCles", pk));
+						}
+						break;
+					case "removePartFormCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("formInscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "partFormCles", pk));
 						break;
 					case "addInscriptionCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
@@ -749,8 +779,18 @@ public class FormInscriptionFrFRGenApiServiceImpl implements FormInscriptionFrFR
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "objetTitre":
+				return "objetTitre_indexed_string";
+			case "objetId":
+				return "objetId_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "formInscriptionCle":
 				return "formInscriptionCle_indexed_long";
+			case "partFormCles":
+				return "partFormCles_indexed_longs";
 			case "inscriptionCles":
 				return "inscriptionCles_indexed_longs";
 			case "ecoleCle":
@@ -771,12 +811,6 @@ public class FormInscriptionFrFRGenApiServiceImpl implements FormInscriptionFrFR
 				return "anneeNomComplet_indexed_string";
 			case "formInscriptionNomComplet":
 				return "formInscriptionNomComplet_indexed_string";
-			case "formInscriptionId":
-				return "formInscriptionId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1001,7 +1035,7 @@ public class FormInscriptionFrFRGenApiServiceImpl implements FormInscriptionFrFR
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR formInscriptionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

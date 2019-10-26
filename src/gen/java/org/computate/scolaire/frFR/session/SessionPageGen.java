@@ -36,8 +36,8 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 	}
 
 	public void initLoinSessionPage() {
-		super.initLoinSessionGenPage(requeteSite_);
 		initSessionPage();
+		super.initLoinSessionGenPage(requeteSite_);
 	}
 
 	public void initSessionPage() {

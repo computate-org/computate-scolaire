@@ -2790,312 +2790,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		}
 	}
 
-	/////////////
-	// childId //
-	/////////////
-
-	/**	L'entité « childId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String childId;
-	@JsonIgnore
-	public Wrap<String> childIdWrap = new Wrap<String>().p(this).c(String.class).var("childId").o(childId);
-
-	/**	<br/>L'entité « childId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childId">Trouver l'entité childId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _childId(Wrap<String> c);
-
-	public String getChildId() {
-		return childId;
-	}
-
-	public void setChildId(String childId) {
-		this.childId = childId;
-		this.childIdWrap.alreadyInitialized = true;
-	}
-	protected SchoolChild childIdInit() {
-		if(!childIdWrap.alreadyInitialized) {
-			_childId(childIdWrap);
-			if(childId == null)
-				setChildId(childIdWrap.o);
-		}
-		childIdWrap.alreadyInitialized(true);
-		return (SchoolChild)this;
-	}
-
-	public String solrChildId() {
-		return childId;
-	}
-
-	public String strChildId() {
-		return childId == null ? "" : childId;
-	}
-
-	public String jsonChildId() {
-		return childId == null ? "" : childId;
-	}
-
-	public String nomAffichageChildId() {
-		return "ID";
-	}
-
-	public String htmTooltipChildId() {
-		return null;
-	}
-
-	public String htmChildId() {
-		return childId == null ? "" : StringEscapeUtils.escapeHtml4(strChildId());
-	}
-
-	public void htmChildId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childId\"");
-							r.s(" value=\"", htmChildId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Wrap<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlWrap.alreadyInitialized = true;
-	}
-	protected SchoolChild pageUrlInit() {
-		if(!pageUrlWrap.alreadyInitialized) {
-			_pageUrl(pageUrlWrap);
-			if(pageUrl == null)
-				setPageUrl(pageUrlWrap.o);
-		}
-		pageUrlWrap.alreadyInitialized(true);
-		return (SchoolChild)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected SchoolChild objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (SchoolChild)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return null;
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -3112,8 +2806,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 
 	public void initDeepSchoolChild() {
-		super.initDeepCluster(siteRequest_);
 		initSchoolChild();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initSchoolChild() {
@@ -3143,9 +2837,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		enfantVaccinesCurrentInit();
 		childPottyTrainedInit();
 		childCompleteNameInit();
-		childIdInit();
-		pageUrlInit();
-		objectSuggestInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -3238,12 +2929,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.childPottyTrained;
 			case "childCompleteName":
 				return oSchoolChild.childCompleteName;
-			case "childId":
-				return oSchoolChild.childId;
-			case "pageUrl":
-				return oSchoolChild.pageUrl;
-			case "objectSuggest":
-				return oSchoolChild.objectSuggest;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -3502,23 +3187,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				if(childCompleteName != null)
 					oSchoolChild.setChildCompleteName(childCompleteName);
 			}
-
-			if(savesSchoolChild.contains("childId")) {
-				String childId = (String)solrDocument.get("childId_stored_string");
-				if(childId != null)
-					oSchoolChild.setChildId(childId);
-			}
-
-			if(savesSchoolChild.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oSchoolChild.setPageUrl(pageUrl);
-			}
-
-			if(savesSchoolChild.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oSchoolChild.setObjectSuggest(objectSuggest);
-			}
 		}
 
 		super.populateCluster(solrDocument);
@@ -3709,18 +3377,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
 			document.addField("childCompleteName_stored_string", childCompleteName);
 		}
-		if(childId != null) {
-			document.addField("childId_indexed_string", childId);
-			document.addField("childId_stored_string", childId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		super.indexCluster(document);
 
 	}
@@ -3847,17 +3503,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)
 			oSchoolChild.setChildCompleteName(childCompleteName);
-
-		String childId = (String)solrDocument.get("childId_stored_string");
-		if(childId != null)
-			oSchoolChild.setChildId(childId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oSchoolChild.setPageUrl(pageUrl);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oSchoolChild.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

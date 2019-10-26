@@ -116,8 +116,8 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinPereGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initPereGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initPereGenPage() {

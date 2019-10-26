@@ -37,7 +37,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe guardianCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class GardienScolaireGen<DEV> extends Cluster {
@@ -2779,312 +2779,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////
-	// gardienId //
-	///////////////
-
-	/**	L'entité « gardienId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String gardienId;
-	@JsonIgnore
-	public Couverture<String> gardienIdCouverture = new Couverture<String>().p(this).c(String.class).var("gardienId").o(gardienId);
-
-	/**	<br/>L'entité « gardienId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienId">Trouver l'entité gardienId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _gardienId(Couverture<String> c);
-
-	public String getGardienId() {
-		return gardienId;
-	}
-
-	public void setGardienId(String gardienId) {
-		this.gardienId = gardienId;
-		this.gardienIdCouverture.dejaInitialise = true;
-	}
-	protected GardienScolaire gardienIdInit() {
-		if(!gardienIdCouverture.dejaInitialise) {
-			_gardienId(gardienIdCouverture);
-			if(gardienId == null)
-				setGardienId(gardienIdCouverture.o);
-		}
-		gardienIdCouverture.dejaInitialise(true);
-		return (GardienScolaire)this;
-	}
-
-	public String solrGardienId() {
-		return gardienId;
-	}
-
-	public String strGardienId() {
-		return gardienId == null ? "" : gardienId;
-	}
-
-	public String jsonGardienId() {
-		return gardienId == null ? "" : gardienId;
-	}
-
-	public String nomAffichageGardienId() {
-		return "ID";
-	}
-
-	public String htmTooltipGardienId() {
-		return null;
-	}
-
-	public String htmGardienId() {
-		return gardienId == null ? "" : StringEscapeUtils.escapeHtml4(strGardienId());
-	}
-
-	public void htmGardienId(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchGardienScolaire", strPk(), "GardienId\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchGardienScolaire", strPk(), "GardienId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setGardienId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageGardienId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"gardienId\"");
-							r.s(" value=\"", htmGardienId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmGardienId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Couverture<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlCouverture.dejaInitialise = true;
-	}
-	protected GardienScolaire pageUrlInit() {
-		if(!pageUrlCouverture.dejaInitialise) {
-			_pageUrl(pageUrlCouverture);
-			if(pageUrl == null)
-				setPageUrl(pageUrlCouverture.o);
-		}
-		pageUrlCouverture.dejaInitialise(true);
-		return (GardienScolaire)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchGardienScolaire", strPk(), "PageUrl\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchGardienScolaire", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected GardienScolaire objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (GardienScolaire)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return null;
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchGardienScolaire", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchGardienScolaire", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -3101,8 +2795,8 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initLoinGardienScolaire() {
-		super.initLoinCluster(requeteSite_);
 		initGardienScolaire();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initGardienScolaire() {
@@ -3132,9 +2826,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		personneContactUrgenceInit();
 		personneChercherInit();
 		gardienNomCompletInit();
-		gardienIdInit();
-		pageUrlInit();
-		objetSuggereInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -3227,12 +2918,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				return oGardienScolaire.personneChercher;
 			case "gardienNomComplet":
 				return oGardienScolaire.gardienNomComplet;
-			case "gardienId":
-				return oGardienScolaire.gardienId;
-			case "pageUrl":
-				return oGardienScolaire.pageUrl;
-			case "objetSuggere":
-				return oGardienScolaire.objetSuggere;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -3471,23 +3156,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				if(gardienNomComplet != null)
 					oGardienScolaire.setGardienNomComplet(gardienNomComplet);
 			}
-
-			if(sauvegardesGardienScolaire.contains("gardienId")) {
-				String gardienId = (String)solrDocument.get("gardienId_stored_string");
-				if(gardienId != null)
-					oGardienScolaire.setGardienId(gardienId);
-			}
-
-			if(sauvegardesGardienScolaire.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oGardienScolaire.setPageUrl(pageUrl);
-			}
-
-			if(sauvegardesGardienScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oGardienScolaire.setObjetSuggere(objetSuggere);
-			}
 		}
 
 		super.peuplerCluster(solrDocument);
@@ -3678,18 +3346,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			document.addField("gardienNomComplet_indexed_string", gardienNomComplet);
 			document.addField("gardienNomComplet_stored_string", gardienNomComplet);
 		}
-		if(gardienId != null) {
-			document.addField("gardienId_indexed_string", gardienId);
-			document.addField("gardienId_stored_string", gardienId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		super.indexerCluster(document);
 
 	}
@@ -3816,17 +3472,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		String gardienNomComplet = (String)solrDocument.get("gardienNomComplet_stored_string");
 		if(gardienNomComplet != null)
 			oGardienScolaire.setGardienNomComplet(gardienNomComplet);
-
-		String gardienId = (String)solrDocument.get("gardienId_stored_string");
-		if(gardienId != null)
-			oGardienScolaire.setGardienId(gardienId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oGardienScolaire.setPageUrl(pageUrl);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oGardienScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

@@ -192,6 +192,12 @@ public class EnrollmentFormEnUSGenApiServiceImpl implements EnrollmentFormEnUSGe
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "formPartKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							postSql.append(SiteContextEnUS.SQL_addA);
+							postSqlParams.addAll(Arrays.asList("enrollmentFormKey", l, "formPartKeys", pk));
+						}
+						break;
 					case "enrollmentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -407,6 +413,30 @@ public class EnrollmentFormEnUSGenApiServiceImpl implements EnrollmentFormEnUSGe
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
+						break;
+					case "addFormPartKeys":
+						patchSql.append(SiteContextEnUS.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", Long.parseLong(requestJson.getString(methodName)), "formPartKeys", pk));
+						break;
+					case "addAllFormPartKeys":
+						JsonArray addAllFormPartKeysValues = requestJson.getJsonArray(methodName);
+						for(Integer i = 0; i <  addAllFormPartKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", addAllFormPartKeysValues.getString(i), "formPartKeys", pk));
+						}
+						break;
+					case "setFormPartKeys":
+						JsonArray setFormPartKeysValues = requestJson.getJsonArray(methodName);
+						patchSql.append(SiteContextEnUS.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", Long.parseLong(requestJson.getString(methodName)), "formPartKeys", pk));
+						for(Integer i = 0; i <  setFormPartKeysValues.size(); i++) {
+							patchSql.append(SiteContextEnUS.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", setFormPartKeysValues.getString(i), "formPartKeys", pk));
+						}
+						break;
+					case "removeFormPartKeys":
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", Long.parseLong(requestJson.getString(methodName)), "formPartKeys", pk));
 						break;
 					case "addEnrollmentKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -749,8 +779,18 @@ public class EnrollmentFormEnUSGenApiServiceImpl implements EnrollmentFormEnUSGe
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "objectTitle":
+				return "objectTitle_indexed_string";
+			case "objectId":
+				return "objectId_indexed_string";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "enrollmentFormKey":
 				return "enrollmentFormKey_indexed_long";
+			case "formPartKeys":
+				return "formPartKeys_indexed_longs";
 			case "enrollmentKeys":
 				return "enrollmentKeys_indexed_longs";
 			case "schoolKey":
@@ -771,12 +811,6 @@ public class EnrollmentFormEnUSGenApiServiceImpl implements EnrollmentFormEnUSGe
 				return "yearCompleteName_indexed_string";
 			case "enrollmentFormCompleteName":
 				return "enrollmentFormCompleteName_indexed_string";
-			case "enrollmentFormId":
-				return "enrollmentFormId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1001,7 +1035,7 @@ public class EnrollmentFormEnUSGenApiServiceImpl implements EnrollmentFormEnUSGe
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR enrollmentFormId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

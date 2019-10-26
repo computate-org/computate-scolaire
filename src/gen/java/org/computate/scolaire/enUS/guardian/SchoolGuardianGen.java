@@ -2778,312 +2778,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////////
-	// guardianId //
-	////////////////
-
-	/**	L'entité « guardianId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String guardianId;
-	@JsonIgnore
-	public Wrap<String> guardianIdWrap = new Wrap<String>().p(this).c(String.class).var("guardianId").o(guardianId);
-
-	/**	<br/>L'entité « guardianId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.SchoolGuardian&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianId">Trouver l'entité guardianId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _guardianId(Wrap<String> c);
-
-	public String getGuardianId() {
-		return guardianId;
-	}
-
-	public void setGuardianId(String guardianId) {
-		this.guardianId = guardianId;
-		this.guardianIdWrap.alreadyInitialized = true;
-	}
-	protected SchoolGuardian guardianIdInit() {
-		if(!guardianIdWrap.alreadyInitialized) {
-			_guardianId(guardianIdWrap);
-			if(guardianId == null)
-				setGuardianId(guardianIdWrap.o);
-		}
-		guardianIdWrap.alreadyInitialized(true);
-		return (SchoolGuardian)this;
-	}
-
-	public String solrGuardianId() {
-		return guardianId;
-	}
-
-	public String strGuardianId() {
-		return guardianId == null ? "" : guardianId;
-	}
-
-	public String jsonGuardianId() {
-		return guardianId == null ? "" : guardianId;
-	}
-
-	public String nomAffichageGuardianId() {
-		return "ID";
-	}
-
-	public String htmTooltipGuardianId() {
-		return null;
-	}
-
-	public String htmGuardianId() {
-		return guardianId == null ? "" : StringEscapeUtils.escapeHtml4(strGuardianId());
-	}
-
-	public void htmGuardianId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolGuardian", strPk(), "GuardianId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolGuardian", strPk(), "GuardianId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setGuardianId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageGuardianId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"guardianId\"");
-							r.s(" value=\"", htmGuardianId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmGuardianId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.SchoolGuardian&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Wrap<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlWrap.alreadyInitialized = true;
-	}
-	protected SchoolGuardian pageUrlInit() {
-		if(!pageUrlWrap.alreadyInitialized) {
-			_pageUrl(pageUrlWrap);
-			if(pageUrl == null)
-				setPageUrl(pageUrlWrap.o);
-		}
-		pageUrlWrap.alreadyInitialized(true);
-		return (SchoolGuardian)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolGuardian", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolGuardian", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.SchoolGuardian&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected SchoolGuardian objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (SchoolGuardian)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return null;
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolGuardian", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolGuardian", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -3100,8 +2794,8 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 	}
 
 	public void initDeepSchoolGuardian() {
-		super.initDeepCluster(siteRequest_);
 		initSchoolGuardian();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initSchoolGuardian() {
@@ -3131,9 +2825,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		personEmergencyContactInit();
 		personPickupInit();
 		guardianCompleteNameInit();
-		guardianIdInit();
-		pageUrlInit();
-		objectSuggestInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -3226,12 +2917,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 				return oSchoolGuardian.personPickup;
 			case "guardianCompleteName":
 				return oSchoolGuardian.guardianCompleteName;
-			case "guardianId":
-				return oSchoolGuardian.guardianId;
-			case "pageUrl":
-				return oSchoolGuardian.pageUrl;
-			case "objectSuggest":
-				return oSchoolGuardian.objectSuggest;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -3470,23 +3155,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 				if(guardianCompleteName != null)
 					oSchoolGuardian.setGuardianCompleteName(guardianCompleteName);
 			}
-
-			if(savesSchoolGuardian.contains("guardianId")) {
-				String guardianId = (String)solrDocument.get("guardianId_stored_string");
-				if(guardianId != null)
-					oSchoolGuardian.setGuardianId(guardianId);
-			}
-
-			if(savesSchoolGuardian.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oSchoolGuardian.setPageUrl(pageUrl);
-			}
-
-			if(savesSchoolGuardian.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oSchoolGuardian.setObjectSuggest(objectSuggest);
-			}
 		}
 
 		super.populateCluster(solrDocument);
@@ -3677,18 +3345,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 			document.addField("guardianCompleteName_indexed_string", guardianCompleteName);
 			document.addField("guardianCompleteName_stored_string", guardianCompleteName);
 		}
-		if(guardianId != null) {
-			document.addField("guardianId_indexed_string", guardianId);
-			document.addField("guardianId_stored_string", guardianId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		super.indexCluster(document);
 
 	}
@@ -3815,17 +3471,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		String guardianCompleteName = (String)solrDocument.get("guardianCompleteName_stored_string");
 		if(guardianCompleteName != null)
 			oSchoolGuardian.setGuardianCompleteName(guardianCompleteName);
-
-		String guardianId = (String)solrDocument.get("guardianId_stored_string");
-		if(guardianId != null)
-			oSchoolGuardian.setGuardianId(guardianId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oSchoolGuardian.setPageUrl(pageUrl);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oSchoolGuardian.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

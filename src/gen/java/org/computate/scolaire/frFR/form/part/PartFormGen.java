@@ -62,80 +62,80 @@ public abstract class PartFormGen<DEV> extends Cluster {
 	public static final String PartForm_IconeGroupe = "regular";
 	public static final String PartForm_IconeNom = "sun";
 
-	///////////////
-	// saisonCle //
-	///////////////
+	/////////////////
+	// partFormCle //
+	/////////////////
 
-	/**	L'entité « saisonCle »
+	/**	L'entité « partFormCle »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Long saisonCle;
+	protected Long partFormCle;
 	@JsonIgnore
-	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
+	public Couverture<Long> partFormCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("partFormCle").o(partFormCle);
 
-	/**	<br/>L'entité « saisonCle »
+	/**	<br/>L'entité « partFormCle »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.form.part.PartForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.form.part.PartForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partFormCle">Trouver l'entité partFormCle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonCle(Couverture<Long> c);
+	protected abstract void _partFormCle(Couverture<Long> c);
 
-	public Long getSaisonCle() {
-		return saisonCle;
+	public Long getPartFormCle() {
+		return partFormCle;
 	}
 
-	public void setSaisonCle(Long saisonCle) {
-		this.saisonCle = saisonCle;
-		this.saisonCleCouverture.dejaInitialise = true;
+	public void setPartFormCle(Long partFormCle) {
+		this.partFormCle = partFormCle;
+		this.partFormCleCouverture.dejaInitialise = true;
 	}
-	public PartForm setSaisonCle(String o) {
+	public PartForm setPartFormCle(String o) {
 		if(NumberUtils.isParsable(o))
-			this.saisonCle = Long.parseLong(o);
-		this.saisonCleCouverture.dejaInitialise = true;
+			this.partFormCle = Long.parseLong(o);
+		this.partFormCleCouverture.dejaInitialise = true;
 		return (PartForm)this;
 	}
-	protected PartForm saisonCleInit() {
-		if(!saisonCleCouverture.dejaInitialise) {
-			_saisonCle(saisonCleCouverture);
-			if(saisonCle == null)
-				setSaisonCle(saisonCleCouverture.o);
+	protected PartForm partFormCleInit() {
+		if(!partFormCleCouverture.dejaInitialise) {
+			_partFormCle(partFormCleCouverture);
+			if(partFormCle == null)
+				setPartFormCle(partFormCleCouverture.o);
 		}
-		saisonCleCouverture.dejaInitialise(true);
+		partFormCleCouverture.dejaInitialise(true);
 		return (PartForm)this;
 	}
 
-	public Long solrSaisonCle() {
-		return saisonCle;
+	public Long solrPartFormCle() {
+		return partFormCle;
 	}
 
-	public String strSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
+	public String strPartFormCle() {
+		return partFormCle == null ? "" : partFormCle.toString();
 	}
 
-	public String jsonSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
+	public String jsonPartFormCle() {
+		return partFormCle == null ? "" : partFormCle.toString();
 	}
 
-	public String nomAffichageSaisonCle() {
+	public String nomAffichagePartFormCle() {
 		return "clé";
 	}
 
-	public String htmTooltipSaisonCle() {
+	public String htmTooltipPartFormCle() {
 		return null;
 	}
 
-	public String htmSaisonCle() {
-		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
+	public String htmPartFormCle() {
+		return partFormCle == null ? "" : StringEscapeUtils.escapeHtml4(strPartFormCle());
 	}
 
-	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
+	public void htmPartFormCle(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchPartForm", strPk(), "SaisonCle\">");
+			r.s("<div id=\"patchPartForm", strPk(), "PartFormCle\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchPartForm", strPk(), "SaisonCle() {");
+				r.l("		function patchPartForm", strPk(), "PartFormCle() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -148,102 +148,102 @@ public abstract class PartFormGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setSaisonCle\": this.value },");
+				r.l("				data: {\"setPartFormCle\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePartFormCle()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"saisonCle\"");
-							r.s(" value=\"", htmSaisonCle(), "\");");
+							r.s(" name=\"partFormCle\"");
+							r.s(" value=\"", htmPartFormCle(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmSaisonCle());
+				r.s(htmPartFormCle());
 			}
 			r.l("</div>");
 		}
 	}
 
-	//////////////
-	// anneeCle //
-	//////////////
+	////////////////////////
+	// formInscriptionCle //
+	////////////////////////
 
-	/**	L'entité « anneeCle »
+	/**	L'entité « formInscriptionCle »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected Long anneeCle;
+	protected Long formInscriptionCle;
 	@JsonIgnore
-	public Couverture<Long> anneeCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("anneeCle").o(anneeCle);
+	public Couverture<Long> formInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("formInscriptionCle").o(formInscriptionCle);
 
-	/**	<br/>L'entité « anneeCle »
+	/**	<br/>L'entité « formInscriptionCle »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.form.part.PartForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCle">Trouver l'entité anneeCle dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.form.part.PartForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionCle">Trouver l'entité formInscriptionCle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _anneeCle(Couverture<Long> c);
+	protected abstract void _formInscriptionCle(Couverture<Long> c);
 
-	public Long getAnneeCle() {
-		return anneeCle;
+	public Long getFormInscriptionCle() {
+		return formInscriptionCle;
 	}
 
-	public void setAnneeCle(Long anneeCle) {
-		this.anneeCle = anneeCle;
-		this.anneeCleCouverture.dejaInitialise = true;
+	public void setFormInscriptionCle(Long formInscriptionCle) {
+		this.formInscriptionCle = formInscriptionCle;
+		this.formInscriptionCleCouverture.dejaInitialise = true;
 	}
-	public PartForm setAnneeCle(String o) {
+	public PartForm setFormInscriptionCle(String o) {
 		if(NumberUtils.isParsable(o))
-			this.anneeCle = Long.parseLong(o);
-		this.anneeCleCouverture.dejaInitialise = true;
+			this.formInscriptionCle = Long.parseLong(o);
+		this.formInscriptionCleCouverture.dejaInitialise = true;
 		return (PartForm)this;
 	}
-	protected PartForm anneeCleInit() {
-		if(!anneeCleCouverture.dejaInitialise) {
-			_anneeCle(anneeCleCouverture);
-			if(anneeCle == null)
-				setAnneeCle(anneeCleCouverture.o);
+	protected PartForm formInscriptionCleInit() {
+		if(!formInscriptionCleCouverture.dejaInitialise) {
+			_formInscriptionCle(formInscriptionCleCouverture);
+			if(formInscriptionCle == null)
+				setFormInscriptionCle(formInscriptionCleCouverture.o);
 		}
-		anneeCleCouverture.dejaInitialise(true);
+		formInscriptionCleCouverture.dejaInitialise(true);
 		return (PartForm)this;
 	}
 
-	public Long solrAnneeCle() {
-		return anneeCle;
+	public Long solrFormInscriptionCle() {
+		return formInscriptionCle;
 	}
 
-	public String strAnneeCle() {
-		return anneeCle == null ? "" : anneeCle.toString();
+	public String strFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
 	}
 
-	public String jsonAnneeCle() {
-		return anneeCle == null ? "" : anneeCle.toString();
+	public String jsonFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
 	}
 
-	public String nomAffichageAnneeCle() {
+	public String nomAffichageFormInscriptionCle() {
 		return "formulaire d'inscription";
 	}
 
-	public String htmTooltipAnneeCle() {
+	public String htmTooltipFormInscriptionCle() {
 		return null;
 	}
 
-	public String htmAnneeCle() {
-		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
+	public String htmFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
 	}
 
-	public void htmAnneeCle(ToutEcrivain r, Boolean patchDroits) {
+	public void htmFormInscriptionCle(ToutEcrivain r, Boolean patchDroits) {
 		if(pk!= null) {
-			r.s("<div id=\"patchPartForm", strPk(), "AnneeCle\">");
+			r.s("<div id=\"patchPartForm", strPk(), "FormInscriptionCle\">");
 			if(patchDroits) {
 				r.l();
 				r.l("	<script>//<![CDATA[");
-				r.l("		function patchPartForm", strPk(), "AnneeCle() {");
+				r.l("		function patchPartForm", strPk(), "FormInscriptionCle() {");
 				r.l("			$.ajax({");
 				r.l("				url: '?fq=pk:", strPk(), "',");
 				r.l("				dataType: 'json',");
@@ -256,23 +256,23 @@ public abstract class PartFormGen<DEV> extends Cluster {
 				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
 				r.l("					");
 				r.l("				},");
-				r.l("				data: {\"setAnneeCle\": this.value },");
+				r.l("				data: {\"setFormInscriptionCle\": this.value },");
 				r.l("				");
 				r.l("			});");
 				r.l("		}");
 				r.l("	//]]></script>");
 				r.l("	<div class=\"\">");
 				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCle()), "</span>");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFormInscriptionCle()), "</span>");
 				r.s("			<input");
-							r.s(" name=\"anneeCle\"");
-							r.s(" value=\"", htmAnneeCle(), "\");");
+							r.s(" name=\"formInscriptionCle\"");
+							r.s(" value=\"", htmFormInscriptionCle(), "\");");
 							r.s(" onchange=\"\"");
 							r.l("/>");
 				r.l("		</label>");
 				r.l("	</div>");
 			} else {
-				r.s(htmAnneeCle());
+				r.s(htmFormInscriptionCle());
 			}
 			r.l("</div>");
 		}
@@ -1218,13 +1218,13 @@ public abstract class PartFormGen<DEV> extends Cluster {
 	}
 
 	public void initLoinPartForm() {
-		super.initLoinCluster(requeteSite_);
 		initPartForm();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initPartForm() {
-		saisonCleInit();
-		anneeCleInit();
+		partFormCleInit();
+		formInscriptionCleInit();
 		htmlOrdreInit();
 		htmlLienInit();
 		htmlElementInit();
@@ -1272,10 +1272,10 @@ public abstract class PartFormGen<DEV> extends Cluster {
 	public Object obtenirPartForm(String var) {
 		PartForm oPartForm = (PartForm)this;
 		switch(var) {
-			case "saisonCle":
-				return oPartForm.saisonCle;
-			case "anneeCle":
-				return oPartForm.anneeCle;
+			case "partFormCle":
+				return oPartForm.partFormCle;
+			case "formInscriptionCle":
+				return oPartForm.formInscriptionCle;
 			case "htmlOrdre":
 				return oPartForm.htmlOrdre;
 			case "htmlLien":
@@ -1404,16 +1404,16 @@ public abstract class PartFormGen<DEV> extends Cluster {
 		sauvegardesPartForm = (List<String>)solrDocument.get("sauvegardesPartForm_stored_strings");
 		if(sauvegardesPartForm != null) {
 
-			if(sauvegardesPartForm.contains("saisonCle")) {
-				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-				if(saisonCle != null)
-					oPartForm.setSaisonCle(saisonCle);
+			if(sauvegardesPartForm.contains("partFormCle")) {
+				Long partFormCle = (Long)solrDocument.get("partFormCle_stored_long");
+				if(partFormCle != null)
+					oPartForm.setPartFormCle(partFormCle);
 			}
 
-			if(sauvegardesPartForm.contains("anneeCle")) {
-				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-				if(anneeCle != null)
-					oPartForm.setAnneeCle(anneeCle);
+			if(sauvegardesPartForm.contains("formInscriptionCle")) {
+				Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+				if(formInscriptionCle != null)
+					oPartForm.setFormInscriptionCle(formInscriptionCle);
 			}
 
 			if(sauvegardesPartForm.contains("htmlOrdre")) {
@@ -1539,13 +1539,13 @@ public abstract class PartFormGen<DEV> extends Cluster {
 		if(sauvegardesPartForm != null)
 			document.addField("sauvegardesPartForm_stored_strings", sauvegardesPartForm);
 
-		if(saisonCle != null) {
-			document.addField("saisonCle_indexed_long", saisonCle);
-			document.addField("saisonCle_stored_long", saisonCle);
+		if(partFormCle != null) {
+			document.addField("partFormCle_indexed_long", partFormCle);
+			document.addField("partFormCle_stored_long", partFormCle);
 		}
-		if(anneeCle != null) {
-			document.addField("anneeCle_indexed_long", anneeCle);
-			document.addField("anneeCle_stored_long", anneeCle);
+		if(formInscriptionCle != null) {
+			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
+			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
 		}
 		if(htmlOrdre != null) {
 			document.addField("htmlOrdre_stored_double", htmlOrdre);
@@ -1605,13 +1605,13 @@ public abstract class PartFormGen<DEV> extends Cluster {
 	public void stockerPartForm(SolrDocument solrDocument) {
 		PartForm oPartForm = (PartForm)this;
 
-		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-		if(saisonCle != null)
-			oPartForm.setSaisonCle(saisonCle);
+		Long partFormCle = (Long)solrDocument.get("partFormCle_stored_long");
+		if(partFormCle != null)
+			oPartForm.setPartFormCle(partFormCle);
 
-		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-		if(anneeCle != null)
-			oPartForm.setAnneeCle(anneeCle);
+		Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+		if(formInscriptionCle != null)
+			oPartForm.setFormInscriptionCle(formInscriptionCle);
 
 		Double htmlOrdre = (Double)solrDocument.get("htmlOrdre_stored_double");
 		if(htmlOrdre != null)

@@ -36,8 +36,8 @@ public abstract class GardienPageGen<DEV> extends GardienGenPage {
 	}
 
 	public void initLoinGardienPage() {
-		super.initLoinGardienGenPage(requeteSite_);
 		initGardienPage();
+		super.initLoinGardienGenPage(requeteSite_);
 	}
 
 	public void initGardienPage() {

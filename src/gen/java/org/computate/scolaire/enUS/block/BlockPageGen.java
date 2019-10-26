@@ -36,8 +36,8 @@ public abstract class BlockPageGen<DEV> extends BlockGenPage {
 	}
 
 	public void initDeepBlockPage() {
-		super.initDeepBlockGenPage(siteRequest_);
 		initBlockPage();
+		super.initDeepBlockGenPage(siteRequest_);
 	}
 
 	public void initBlockPage() {

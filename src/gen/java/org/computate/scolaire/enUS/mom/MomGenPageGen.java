@@ -112,8 +112,8 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepMomGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initMomGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initMomGenPage() {

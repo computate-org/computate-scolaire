@@ -46,7 +46,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollmentCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class InscriptionScolaireGen<DEV> extends Cluster {
@@ -6463,312 +6463,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////////
-	// inscriptionId //
-	///////////////////
-
-	/**	L'entité « inscriptionId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String inscriptionId;
-	@JsonIgnore
-	public Couverture<String> inscriptionIdCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionId").o(inscriptionId);
-
-	/**	<br/>L'entité « inscriptionId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionId">Trouver l'entité inscriptionId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _inscriptionId(Couverture<String> c);
-
-	public String getInscriptionId() {
-		return inscriptionId;
-	}
-
-	public void setInscriptionId(String inscriptionId) {
-		this.inscriptionId = inscriptionId;
-		this.inscriptionIdCouverture.dejaInitialise = true;
-	}
-	protected InscriptionScolaire inscriptionIdInit() {
-		if(!inscriptionIdCouverture.dejaInitialise) {
-			_inscriptionId(inscriptionIdCouverture);
-			if(inscriptionId == null)
-				setInscriptionId(inscriptionIdCouverture.o);
-		}
-		inscriptionIdCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public String solrInscriptionId() {
-		return inscriptionId;
-	}
-
-	public String strInscriptionId() {
-		return inscriptionId == null ? "" : inscriptionId;
-	}
-
-	public String jsonInscriptionId() {
-		return inscriptionId == null ? "" : inscriptionId;
-	}
-
-	public String nomAffichageInscriptionId() {
-		return "ID";
-	}
-
-	public String htmTooltipInscriptionId() {
-		return null;
-	}
-
-	public String htmInscriptionId() {
-		return inscriptionId == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionId());
-	}
-
-	public void htmInscriptionId(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "InscriptionId\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "InscriptionId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setInscriptionId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"inscriptionId\"");
-							r.s(" value=\"", htmInscriptionId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmInscriptionId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Couverture<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlCouverture.dejaInitialise = true;
-	}
-	protected InscriptionScolaire pageUrlInit() {
-		if(!pageUrlCouverture.dejaInitialise) {
-			_pageUrl(pageUrlCouverture);
-			if(pageUrl == null)
-				setPageUrl(pageUrlCouverture.o);
-		}
-		pageUrlCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "PageUrl\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected InscriptionScolaire objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return null;
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchInscriptionScolaire", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchInscriptionScolaire", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -6785,8 +6479,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initLoinInscriptionScolaire() {
-		super.initLoinCluster(requeteSite_);
 		initInscriptionScolaire();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initInscriptionScolaire() {
@@ -6851,9 +6545,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
 		inscriptionNomCompletInit();
-		inscriptionIdInit();
-		pageUrlInit();
-		objetSuggereInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -7018,12 +6709,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionPaimentComplet;
 			case "inscriptionNomComplet":
 				return oInscriptionScolaire.inscriptionNomComplet;
-			case "inscriptionId":
-				return oInscriptionScolaire.inscriptionId;
-			case "pageUrl":
-				return oInscriptionScolaire.pageUrl;
-			case "objetSuggere":
-				return oInscriptionScolaire.objetSuggere;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -7489,23 +7174,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				if(inscriptionNomComplet != null)
 					oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
 			}
-
-			if(sauvegardesInscriptionScolaire.contains("inscriptionId")) {
-				String inscriptionId = (String)solrDocument.get("inscriptionId_stored_string");
-				if(inscriptionId != null)
-					oInscriptionScolaire.setInscriptionId(inscriptionId);
-			}
-
-			if(sauvegardesInscriptionScolaire.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oInscriptionScolaire.setPageUrl(pageUrl);
-			}
-
-			if(sauvegardesInscriptionScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oInscriptionScolaire.setObjetSuggere(objetSuggere);
-			}
 		}
 
 		super.peuplerCluster(solrDocument);
@@ -7824,18 +7492,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionNomComplet_indexed_string", inscriptionNomComplet);
 			document.addField("inscriptionNomComplet_stored_string", inscriptionNomComplet);
 		}
-		if(inscriptionId != null) {
-			document.addField("inscriptionId_indexed_string", inscriptionId);
-			document.addField("inscriptionId_stored_string", inscriptionId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		super.indexerCluster(document);
 
 	}
@@ -8094,17 +7750,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
 		if(inscriptionNomComplet != null)
 			oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
-
-		String inscriptionId = (String)solrDocument.get("inscriptionId_stored_string");
-		if(inscriptionId != null)
-			oInscriptionScolaire.setInscriptionId(inscriptionId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oInscriptionScolaire.setPageUrl(pageUrl);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oInscriptionScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

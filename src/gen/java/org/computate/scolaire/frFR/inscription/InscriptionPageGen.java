@@ -36,8 +36,8 @@ public abstract class InscriptionPageGen<DEV> extends InscriptionGenPage {
 	}
 
 	public void initLoinInscriptionPage() {
-		super.initLoinInscriptionGenPage(requeteSite_);
 		initInscriptionPage();
+		super.initLoinInscriptionGenPage(requeteSite_);
 	}
 
 	public void initInscriptionPage() {

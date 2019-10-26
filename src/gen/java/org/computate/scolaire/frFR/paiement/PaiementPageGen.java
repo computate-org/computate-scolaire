@@ -36,8 +36,8 @@ public abstract class PaiementPageGen<DEV> extends PaiementGenPage {
 	}
 
 	public void initLoinPaiementPage() {
-		super.initLoinPaiementGenPage(requeteSite_);
 		initPaiementPage();
+		super.initLoinPaiementGenPage(requeteSite_);
 	}
 
 	public void initPaiementPage() {

@@ -116,8 +116,8 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinSaisonGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initSaisonGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initSaisonGenPage() {

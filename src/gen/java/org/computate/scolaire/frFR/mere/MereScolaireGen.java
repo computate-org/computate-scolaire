@@ -37,7 +37,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe momCompleteName dans Solr</a>
  * <br/>
  **/
 public abstract class MereScolaireGen<DEV> extends Cluster {
@@ -2779,312 +2779,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		}
 	}
 
-	////////////
-	// mereId //
-	////////////
-
-	/**	L'entité « mereId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String mereId;
-	@JsonIgnore
-	public Couverture<String> mereIdCouverture = new Couverture<String>().p(this).c(String.class).var("mereId").o(mereId);
-
-	/**	<br/>L'entité « mereId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereId">Trouver l'entité mereId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _mereId(Couverture<String> c);
-
-	public String getMereId() {
-		return mereId;
-	}
-
-	public void setMereId(String mereId) {
-		this.mereId = mereId;
-		this.mereIdCouverture.dejaInitialise = true;
-	}
-	protected MereScolaire mereIdInit() {
-		if(!mereIdCouverture.dejaInitialise) {
-			_mereId(mereIdCouverture);
-			if(mereId == null)
-				setMereId(mereIdCouverture.o);
-		}
-		mereIdCouverture.dejaInitialise(true);
-		return (MereScolaire)this;
-	}
-
-	public String solrMereId() {
-		return mereId;
-	}
-
-	public String strMereId() {
-		return mereId == null ? "" : mereId;
-	}
-
-	public String jsonMereId() {
-		return mereId == null ? "" : mereId;
-	}
-
-	public String nomAffichageMereId() {
-		return "ID";
-	}
-
-	public String htmTooltipMereId() {
-		return null;
-	}
-
-	public String htmMereId() {
-		return mereId == null ? "" : StringEscapeUtils.escapeHtml4(strMereId());
-	}
-
-	public void htmMereId(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchMereScolaire", strPk(), "MereId\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchMereScolaire", strPk(), "MereId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setMereId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageMereId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"mereId\"");
-							r.s(" value=\"", htmMereId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmMereId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Couverture<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlCouverture.dejaInitialise = true;
-	}
-	protected MereScolaire pageUrlInit() {
-		if(!pageUrlCouverture.dejaInitialise) {
-			_pageUrl(pageUrlCouverture);
-			if(pageUrl == null)
-				setPageUrl(pageUrlCouverture.o);
-		}
-		pageUrlCouverture.dejaInitialise(true);
-		return (MereScolaire)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchMereScolaire", strPk(), "PageUrl\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchMereScolaire", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	//////////////////
-	// objetSuggere //
-	//////////////////
-
-	/**	L'entité « objetSuggere »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objetSuggere;
-	@JsonIgnore
-	public Couverture<String> objetSuggereCouverture = new Couverture<String>().p(this).c(String.class).var("objetSuggere").o(objetSuggere);
-
-	/**	<br/>L'entité « objetSuggere »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetSuggere">Trouver l'entité objetSuggere dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objetSuggere(Couverture<String> c);
-
-	public String getObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
-		this.objetSuggereCouverture.dejaInitialise = true;
-	}
-	protected MereScolaire objetSuggereInit() {
-		if(!objetSuggereCouverture.dejaInitialise) {
-			_objetSuggere(objetSuggereCouverture);
-			if(objetSuggere == null)
-				setObjetSuggere(objetSuggereCouverture.o);
-		}
-		objetSuggereCouverture.dejaInitialise(true);
-		return (MereScolaire)this;
-	}
-
-	public String solrObjetSuggere() {
-		return objetSuggere;
-	}
-
-	public String strObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String jsonObjetSuggere() {
-		return objetSuggere == null ? "" : objetSuggere;
-	}
-
-	public String nomAffichageObjetSuggere() {
-		return null;
-	}
-
-	public String htmTooltipObjetSuggere() {
-		return null;
-	}
-
-	public String htmObjetSuggere() {
-		return objetSuggere == null ? "" : StringEscapeUtils.escapeHtml4(strObjetSuggere());
-	}
-
-	public void htmObjetSuggere(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchMereScolaire", strPk(), "ObjetSuggere\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchMereScolaire", strPk(), "ObjetSuggere() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjetSuggere\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetSuggere()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objetSuggere\"");
-							r.s(" value=\"", htmObjetSuggere(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjetSuggere());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initLoin //
 	//////////////
@@ -3101,8 +2795,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	}
 
 	public void initLoinMereScolaire() {
-		super.initLoinCluster(requeteSite_);
 		initMereScolaire();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initMereScolaire() {
@@ -3132,9 +2826,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		personneContactUrgenceInit();
 		personneChercherInit();
 		mereNomCompletInit();
-		mereIdInit();
-		pageUrlInit();
-		objetSuggereInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -3227,12 +2918,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				return oMereScolaire.personneChercher;
 			case "mereNomComplet":
 				return oMereScolaire.mereNomComplet;
-			case "mereId":
-				return oMereScolaire.mereId;
-			case "pageUrl":
-				return oMereScolaire.pageUrl;
-			case "objetSuggere":
-				return oMereScolaire.objetSuggere;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -3491,23 +3176,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				if(mereNomComplet != null)
 					oMereScolaire.setMereNomComplet(mereNomComplet);
 			}
-
-			if(sauvegardesMereScolaire.contains("mereId")) {
-				String mereId = (String)solrDocument.get("mereId_stored_string");
-				if(mereId != null)
-					oMereScolaire.setMereId(mereId);
-			}
-
-			if(sauvegardesMereScolaire.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oMereScolaire.setPageUrl(pageUrl);
-			}
-
-			if(sauvegardesMereScolaire.contains("objetSuggere")) {
-				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-				oMereScolaire.setObjetSuggere(objetSuggere);
-			}
 		}
 
 		super.peuplerCluster(solrDocument);
@@ -3698,18 +3366,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			document.addField("mereNomComplet_indexed_string", mereNomComplet);
 			document.addField("mereNomComplet_stored_string", mereNomComplet);
 		}
-		if(mereId != null) {
-			document.addField("mereId_indexed_string", mereId);
-			document.addField("mereId_stored_string", mereId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objetSuggere != null) {
-			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
-		}
 		super.indexerCluster(document);
 
 	}
@@ -3836,17 +3492,6 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		String mereNomComplet = (String)solrDocument.get("mereNomComplet_stored_string");
 		if(mereNomComplet != null)
 			oMereScolaire.setMereNomComplet(mereNomComplet);
-
-		String mereId = (String)solrDocument.get("mereId_stored_string");
-		if(mereId != null)
-			oMereScolaire.setMereId(mereId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oMereScolaire.setPageUrl(pageUrl);
-
-		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
-		oMereScolaire.setObjetSuggere(objetSuggere);
 
 		super.stockerCluster(solrDocument);
 	}

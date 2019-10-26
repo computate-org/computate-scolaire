@@ -43,7 +43,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe objectSuggest dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageH1 dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -1241,6 +1241,210 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
+	/////////////
+	// objetId //
+	/////////////
+
+	/**	L'entité « objetId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String objetId;
+	@JsonIgnore
+	public Couverture<String> objetIdCouverture = new Couverture<String>().p(this).c(String.class).var("objetId").o(objetId);
+
+	/**	<br/>L'entité « objetId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetId">Trouver l'entité objetId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _objetId(Couverture<String> c);
+
+	public String getObjetId() {
+		return objetId;
+	}
+
+	public void setObjetId(String objetId) {
+		this.objetId = objetId;
+		this.objetIdCouverture.dejaInitialise = true;
+	}
+	protected Cluster objetIdInit() {
+		if(!objetIdCouverture.dejaInitialise) {
+			_objetId(objetIdCouverture);
+			if(objetId == null)
+				setObjetId(objetIdCouverture.o);
+		}
+		objetIdCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrObjetId() {
+		return objetId;
+	}
+
+	public String strObjetId() {
+		return objetId == null ? "" : objetId;
+	}
+
+	public String jsonObjetId() {
+		return objetId == null ? "" : objetId;
+	}
+
+	public String nomAffichageObjetId() {
+		return "ID";
+	}
+
+	public String htmTooltipObjetId() {
+		return null;
+	}
+
+	public String htmObjetId() {
+		return objetId == null ? "" : StringEscapeUtils.escapeHtml4(strObjetId());
+	}
+
+	public void htmObjetId(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "ObjetId\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "ObjetId() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetId\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetId()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetId\"");
+							r.s(" value=\"", htmObjetId(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetId());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////
+	// objetNomVar //
+	/////////////////
+
+	/**	L'entité « objetNomVar »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String objetNomVar;
+	@JsonIgnore
+	public Couverture<String> objetNomVarCouverture = new Couverture<String>().p(this).c(String.class).var("objetNomVar").o(objetNomVar);
+
+	/**	<br/>L'entité « objetNomVar »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:objetNomVar">Trouver l'entité objetNomVar dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _objetNomVar(Couverture<String> c);
+
+	public String getObjetNomVar() {
+		return objetNomVar;
+	}
+
+	public void setObjetNomVar(String objetNomVar) {
+		this.objetNomVar = objetNomVar;
+		this.objetNomVarCouverture.dejaInitialise = true;
+	}
+	protected Cluster objetNomVarInit() {
+		if(!objetNomVarCouverture.dejaInitialise) {
+			_objetNomVar(objetNomVarCouverture);
+			if(objetNomVar == null)
+				setObjetNomVar(objetNomVarCouverture.o);
+		}
+		objetNomVarCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrObjetNomVar() {
+		return objetNomVar;
+	}
+
+	public String strObjetNomVar() {
+		return objetNomVar == null ? "" : objetNomVar;
+	}
+
+	public String jsonObjetNomVar() {
+		return objetNomVar == null ? "" : objetNomVar;
+	}
+
+	public String nomAffichageObjetNomVar() {
+		return null;
+	}
+
+	public String htmTooltipObjetNomVar() {
+		return null;
+	}
+
+	public String htmObjetNomVar() {
+		return objetNomVar == null ? "" : StringEscapeUtils.escapeHtml4(strObjetNomVar());
+	}
+
+	public void htmObjetNomVar(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "ObjetNomVar\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "ObjetNomVar() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setObjetNomVar\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjetNomVar()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"objetNomVar\"");
+							r.s(" value=\"", htmObjetNomVar(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmObjetNomVar());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////////
 	// objetSuggere //
 	//////////////////
@@ -1343,6 +1547,210 @@ public abstract class ClusterGen<DEV> extends Object {
 		}
 	}
 
+	/////////////
+	// pageUrl //
+	/////////////
+
+	/**	L'entité « pageUrl »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String pageUrl;
+	@JsonIgnore
+	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
+
+	/**	<br/>L'entité « pageUrl »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageUrl(Couverture<String> c);
+
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+		this.pageUrlCouverture.dejaInitialise = true;
+	}
+	protected Cluster pageUrlInit() {
+		if(!pageUrlCouverture.dejaInitialise) {
+			_pageUrl(pageUrlCouverture);
+			if(pageUrl == null)
+				setPageUrl(pageUrlCouverture.o);
+		}
+		pageUrlCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrPageUrl() {
+		return pageUrl;
+	}
+
+	public String strPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
+	public String jsonPageUrl() {
+		return pageUrl == null ? "" : pageUrl;
+	}
+
+	public String nomAffichagePageUrl() {
+		return null;
+	}
+
+	public String htmTooltipPageUrl() {
+		return null;
+	}
+
+	public String htmPageUrl() {
+		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
+	}
+
+	public void htmPageUrl(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "PageUrl\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "PageUrl() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPageUrl\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"pageUrl\"");
+							r.s(" value=\"", htmPageUrl(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPageUrl());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////
+	// pageH1 //
+	////////////
+
+	/**	L'entité « pageH1 »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String pageH1;
+	@JsonIgnore
+	public Couverture<String> pageH1Couverture = new Couverture<String>().p(this).c(String.class).var("pageH1").o(pageH1);
+
+	/**	<br/>L'entité « pageH1 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH1">Trouver l'entité pageH1 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pageH1(Couverture<String> c);
+
+	public String getPageH1() {
+		return pageH1;
+	}
+
+	public void setPageH1(String pageH1) {
+		this.pageH1 = pageH1;
+		this.pageH1Couverture.dejaInitialise = true;
+	}
+	protected Cluster pageH1Init() {
+		if(!pageH1Couverture.dejaInitialise) {
+			_pageH1(pageH1Couverture);
+			if(pageH1 == null)
+				setPageH1(pageH1Couverture.o);
+		}
+		pageH1Couverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public String solrPageH1() {
+		return pageH1;
+	}
+
+	public String strPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String jsonPageH1() {
+		return pageH1 == null ? "" : pageH1;
+	}
+
+	public String nomAffichagePageH1() {
+		return null;
+	}
+
+	public String htmTooltipPageH1() {
+		return null;
+	}
+
+	public String htmPageH1() {
+		return pageH1 == null ? "" : StringEscapeUtils.escapeHtml4(strPageH1());
+	}
+
+	public void htmPageH1(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchCluster", strPk(), "PageH1\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchCluster", strPk(), "PageH1() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setPageH1\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageH1()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"pageH1\"");
+							r.s(" value=\"", htmPageH1(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmPageH1());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1375,7 +1783,11 @@ public abstract class ClusterGen<DEV> extends Object {
 		classeNomSimpleInit();
 		classeNomsCanoniquesInit();
 		objetTitreInit();
+		objetIdInit();
+		objetNomVarInit();
 		objetSuggereInit();
+		pageUrlInit();
+		pageH1Init();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1437,8 +1849,16 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classeNomsCanoniques;
 			case "objetTitre":
 				return oCluster.objetTitre;
+			case "objetId":
+				return oCluster.objetId;
+			case "objetNomVar":
+				return oCluster.objetNomVar;
 			case "objetSuggere":
 				return oCluster.objetSuggere;
+			case "pageUrl":
+				return oCluster.pageUrl;
+			case "pageH1":
+				return oCluster.pageH1;
 			default:
 				return null;
 		}
@@ -1583,9 +2003,21 @@ public abstract class ClusterGen<DEV> extends Object {
 					oCluster.setObjetTitre(objetTitre);
 			}
 
+			if(sauvegardesCluster.contains("objetId")) {
+				String objetId = (String)solrDocument.get("objetId_stored_string");
+				if(objetId != null)
+					oCluster.setObjetId(objetId);
+			}
+
 			if(sauvegardesCluster.contains("objetSuggere")) {
 				String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
 				oCluster.setObjetSuggere(objetSuggere);
+			}
+
+			if(sauvegardesCluster.contains("pageUrl")) {
+				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
+				if(pageUrl != null)
+					oCluster.setPageUrl(pageUrl);
 			}
 		}
 	}
@@ -1699,9 +2131,16 @@ public abstract class ClusterGen<DEV> extends Object {
 			document.addField("objetTitre_indexed_string", objetTitre);
 			document.addField("objetTitre_stored_string", objetTitre);
 		}
+		if(objetId != null) {
+			document.addField("objetId_indexed_string", objetId);
+			document.addField("objetId_stored_string", objetId);
+		}
 		if(objetSuggere != null) {
 			document.addField("objetSuggere_suggested", objetSuggere);
-			document.addField("objetSuggere_indexed_string", objetSuggere);
+		}
+		if(pageUrl != null) {
+			document.addField("pageUrl_indexed_string", pageUrl);
+			document.addField("pageUrl_stored_string", pageUrl);
 		}
 	}
 
@@ -1771,8 +2210,16 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(objetTitre != null)
 			oCluster.setObjetTitre(objetTitre);
 
+		String objetId = (String)solrDocument.get("objetId_stored_string");
+		if(objetId != null)
+			oCluster.setObjetId(objetId);
+
 		String objetSuggere = (String)solrDocument.get("objetSuggere_suggested");
 		oCluster.setObjetSuggere(objetSuggere);
+
+		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
+		if(pageUrl != null)
+			oCluster.setPageUrl(pageUrl);
 	}
 
 	//////////////

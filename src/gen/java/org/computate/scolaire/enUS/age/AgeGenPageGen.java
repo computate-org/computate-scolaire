@@ -112,8 +112,8 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepAgeGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initAgeGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initAgeGenPage() {

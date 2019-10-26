@@ -280,14 +280,17 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 							rechercheEnfantScolaire(requeteSite, false, true, null, c -> {
 								if(c.succeeded()) {
 									ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)listeEnfantScolaire.getQueryResponse().getResponse().get("facets");
-									Date date = (Date)facets.get("max_modifie");
-									String dateStr;
+									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEnfantScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+									Date date = null;
+									if(facets != null)
+										date = (Date)facets.get("max_modifie");
+									String dt;
 									if(date == null)
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
 									else
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePATCHEnfantScolaire(listeEnfantScolaire, dateStr, d -> {
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listeEnfantScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									listePATCHEnfantScolaire(listeEnfantScolaire, dt, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -886,6 +889,14 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "objetTitre":
+				return "objetTitre_indexed_string";
+			case "objetId":
+				return "objetId_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "enfantCle":
 				return "enfantCle_indexed_long";
 			case "inscriptionCles":
@@ -934,12 +945,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 				return "enfantPropre_indexed_boolean";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
-			case "enfantId":
-				return "enfantId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1164,7 +1169,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR enfantId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

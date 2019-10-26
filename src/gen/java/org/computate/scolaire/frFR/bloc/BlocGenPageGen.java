@@ -116,8 +116,8 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinBlocGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initBlocGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initBlocGenPage() {

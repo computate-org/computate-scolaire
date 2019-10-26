@@ -36,8 +36,8 @@ public abstract class PartFormPageGen<DEV> extends PartFormGenPage {
 	}
 
 	public void initLoinPartFormPage() {
-		super.initLoinPartFormGenPage(requeteSite_);
 		initPartFormPage();
+		super.initLoinPartFormGenPage(requeteSite_);
 	}
 
 	public void initPartFormPage() {

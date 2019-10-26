@@ -1,15 +1,12 @@
-package org.computate.scolaire.frFR.age;  
+package org.computate.scolaire.frFR.age;    
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
-import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import org.computate.scolaire.frFR.session.SessionScolaire;
 
 /**     
@@ -500,82 +497,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: ageId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: ageNomComplet
-	 * r.enUS: ageCompleteName
-	 */            
-	protected void _ageId(Couverture<String> c) {
-		if(ageNomComplet != null) {
-			String s = Normalizer.normalize(ageNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: ageId
-	 * r.enUS: ageId
-	 * r: /frFR/age/
-	 * r.enUS: /age/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(ageId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/age/" + ageId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: ageNomComplet
 	 * r.enUS: ageCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(ageNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: AgeScolaire
-	 * r.enUS: SchoolAge
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(AgeScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

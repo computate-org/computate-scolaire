@@ -36,8 +36,8 @@ public abstract class AgePageGen<DEV> extends AgeGenPage {
 	}
 
 	public void initDeepAgePage() {
-		super.initDeepAgeGenPage(siteRequest_);
 		initAgePage();
+		super.initDeepAgeGenPage(siteRequest_);
 	}
 
 	public void initAgePage() {

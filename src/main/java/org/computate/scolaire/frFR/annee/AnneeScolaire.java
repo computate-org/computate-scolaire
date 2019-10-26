@@ -1,9 +1,7 @@
 package org.computate.scolaire.frFR.annee;                   
 
-import java.text.Normalizer;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
@@ -48,7 +46,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                                    
+*/   
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
@@ -336,82 +334,14 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: yearId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCelulle: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: anneeNomComplet
-	 * r.enUS: yearCompleteName
-	 */            
-	protected void _anneeId(Couverture<String> c) {
-		if(anneeNomComplet != null) {
-			String s = Normalizer.normalize(anneeNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: anneeId
-	 * r.enUS: yearId
-	 * r: /annee/
-	 * r.enUS: /year/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(anneeId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/annee/" + anneeId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: anneeNomComplet
 	 * r.enUS: yearCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(anneeNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: AnneeScolaire
-	 * r.enUS: SchoolYear
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(AnneeScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

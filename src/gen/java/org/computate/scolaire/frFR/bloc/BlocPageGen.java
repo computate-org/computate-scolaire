@@ -36,8 +36,8 @@ public abstract class BlocPageGen<DEV> extends BlocGenPage {
 	}
 
 	public void initLoinBlocPage() {
-		super.initLoinBlocGenPage(requeteSite_);
 		initBlocPage();
+		super.initLoinBlocGenPage(requeteSite_);
 	}
 
 	public void initBlocPage() {

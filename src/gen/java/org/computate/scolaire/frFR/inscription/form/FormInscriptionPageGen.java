@@ -36,8 +36,8 @@ public abstract class FormInscriptionPageGen<DEV> extends FormInscriptionGenPage
 	}
 
 	public void initLoinFormInscriptionPage() {
-		super.initLoinFormInscriptionGenPage(requeteSite_);
 		initFormInscriptionPage();
+		super.initLoinFormInscriptionGenPage(requeteSite_);
 	}
 
 	public void initFormInscriptionPage() {

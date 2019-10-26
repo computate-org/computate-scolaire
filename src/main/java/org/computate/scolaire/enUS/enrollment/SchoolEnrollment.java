@@ -1,12 +1,10 @@
 package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -294,35 +292,8 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _enrollmentId(Wrap<String> c) {
-		if(enrollmentCompleteName != null) {
-			String s = Normalizer.normalize(enrollmentCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(enrollmentId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enrollment/" + enrollmentId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(enrollmentCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolEnrollment.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(enrollmentCompleteName);
 	}
 }

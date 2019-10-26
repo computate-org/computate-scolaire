@@ -1,8 +1,6 @@
 package org.computate.scolaire.enUS.year;
 
-import java.text.Normalizer;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.school.School;
@@ -103,35 +101,8 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _yearId(Wrap<String> c) {
-		if(yearCompleteName != null) {
-			String s = Normalizer.normalize(yearCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(yearId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/year/" + yearId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(yearCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolYear.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(yearCompleteName);
 	}
 }

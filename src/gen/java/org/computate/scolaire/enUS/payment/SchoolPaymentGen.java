@@ -2527,312 +2527,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		}
 	}
 
-	///////////////
-	// paymentId //
-	///////////////
-
-	/**	L'entité « paymentId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String paymentId;
-	@JsonIgnore
-	public Wrap<String> paymentIdWrap = new Wrap<String>().p(this).c(String.class).var("paymentId").o(paymentId);
-
-	/**	<br/>L'entité « paymentId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentId">Trouver l'entité paymentId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _paymentId(Wrap<String> c);
-
-	public String getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
-		this.paymentIdWrap.alreadyInitialized = true;
-	}
-	protected SchoolPayment paymentIdInit() {
-		if(!paymentIdWrap.alreadyInitialized) {
-			_paymentId(paymentIdWrap);
-			if(paymentId == null)
-				setPaymentId(paymentIdWrap.o);
-		}
-		paymentIdWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public String solrPaymentId() {
-		return paymentId;
-	}
-
-	public String strPaymentId() {
-		return paymentId == null ? "" : paymentId;
-	}
-
-	public String jsonPaymentId() {
-		return paymentId == null ? "" : paymentId;
-	}
-
-	public String nomAffichagePaymentId() {
-		return "ID";
-	}
-
-	public String htmTooltipPaymentId() {
-		return null;
-	}
-
-	public String htmPaymentId() {
-		return paymentId == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentId());
-	}
-
-	public void htmPaymentId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolPayment", strPk(), "PaymentId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolPayment", strPk(), "PaymentId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPaymentId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePaymentId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"paymentId\"");
-							r.s(" value=\"", htmPaymentId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPaymentId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Wrap<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlWrap.alreadyInitialized = true;
-	}
-	protected SchoolPayment pageUrlInit() {
-		if(!pageUrlWrap.alreadyInitialized) {
-			_pageUrl(pageUrlWrap);
-			if(pageUrl == null)
-				setPageUrl(pageUrlWrap.o);
-		}
-		pageUrlWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolPayment", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolPayment", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected SchoolPayment objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return null;
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolPayment", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolPayment", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -2849,8 +2543,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void initDeepSchoolPayment() {
-		super.initDeepCluster(siteRequest_);
 		initSchoolPayment();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initSchoolPayment() {
@@ -2876,9 +2570,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		paymentCheckInit();
 		paymentSystemInit();
 		paymentCompleteNameInit();
-		paymentIdInit();
-		pageUrlInit();
-		objectSuggestInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2963,12 +2654,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentSystem;
 			case "paymentCompleteName":
 				return oSchoolPayment.paymentCompleteName;
-			case "paymentId":
-				return oSchoolPayment.paymentId;
-			case "pageUrl":
-				return oSchoolPayment.pageUrl;
-			case "objectSuggest":
-				return oSchoolPayment.objectSuggest;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -3177,23 +2862,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				if(paymentCompleteName != null)
 					oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
 			}
-
-			if(savesSchoolPayment.contains("paymentId")) {
-				String paymentId = (String)solrDocument.get("paymentId_stored_string");
-				if(paymentId != null)
-					oSchoolPayment.setPaymentId(paymentId);
-			}
-
-			if(savesSchoolPayment.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oSchoolPayment.setPageUrl(pageUrl);
-			}
-
-			if(savesSchoolPayment.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oSchoolPayment.setObjectSuggest(objectSuggest);
-			}
 		}
 
 		super.populateCluster(solrDocument);
@@ -3384,18 +3052,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentCompleteName_indexed_string", paymentCompleteName);
 			document.addField("paymentCompleteName_stored_string", paymentCompleteName);
 		}
-		if(paymentId != null) {
-			document.addField("paymentId_indexed_string", paymentId);
-			document.addField("paymentId_stored_string", paymentId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		super.indexCluster(document);
 
 	}
@@ -3502,17 +3158,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 		if(paymentCompleteName != null)
 			oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
-
-		String paymentId = (String)solrDocument.get("paymentId_stored_string");
-		if(paymentId != null)
-			oSchoolPayment.setPaymentId(paymentId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oSchoolPayment.setPageUrl(pageUrl);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oSchoolPayment.setObjectSuggest(objectSuggest);
 
 		super.storeCluster(solrDocument);
 	}

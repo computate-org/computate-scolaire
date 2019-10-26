@@ -36,8 +36,8 @@ public abstract class PerePageGen<DEV> extends PereGenPage {
 	}
 
 	public void initLoinPerePage() {
-		super.initLoinPereGenPage(requeteSite_);
 		initPerePage();
+		super.initLoinPereGenPage(requeteSite_);
 	}
 
 	public void initPerePage() {

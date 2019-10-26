@@ -172,6 +172,132 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////////
+	// formPartKeys //
+	//////////////////
+
+	/**	L'entité « formPartKeys »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> formPartKeys = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> formPartKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("formPartKeys").o(formPartKeys);
+
+	/**	<br/>L'entité « formPartKeys »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.form.EnrollmentForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:formPartKeys">Trouver l'entité formPartKeys dans Solr</a>
+	 * <br/>
+	 * @param formPartKeys est l'entité déjà construit. 
+	 **/
+	protected abstract void _formPartKeys(List<Long> o);
+
+	public List<Long> getFormPartKeys() {
+		return formPartKeys;
+	}
+
+	public void setFormPartKeys(List<Long> formPartKeys) {
+		this.formPartKeys = formPartKeys;
+		this.formPartKeysWrap.alreadyInitialized = true;
+	}
+	public EnrollmentForm addFormPartKeys(Long...objets) {
+		for(Long o : objets) {
+			addFormPartKeys(o);
+		}
+		return (EnrollmentForm)this;
+	}
+	public EnrollmentForm addFormPartKeys(Long o) {
+		if(o != null && !formPartKeys.contains(o))
+			this.formPartKeys.add(o);
+		return (EnrollmentForm)this;
+	}
+	public EnrollmentForm setFormPartKeys(JsonArray objets) {
+		formPartKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addFormPartKeys(o);
+		}
+		return (EnrollmentForm)this;
+	}
+	public EnrollmentForm addFormPartKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addFormPartKeys(p);
+		}
+		return (EnrollmentForm)this;
+	}
+	protected EnrollmentForm formPartKeysInit() {
+		if(!formPartKeysWrap.alreadyInitialized) {
+			_formPartKeys(formPartKeys);
+		}
+		formPartKeysWrap.alreadyInitialized(true);
+		return (EnrollmentForm)this;
+	}
+
+	public List<Long> solrFormPartKeys() {
+		return formPartKeys;
+	}
+
+	public String strFormPartKeys() {
+		return formPartKeys == null ? "" : formPartKeys.toString();
+	}
+
+	public String jsonFormPartKeys() {
+		return formPartKeys == null ? "" : formPartKeys.toString();
+	}
+
+	public String nomAffichageFormPartKeys() {
+		return "parts";
+	}
+
+	public String htmTooltipFormPartKeys() {
+		return null;
+	}
+
+	public String htmFormPartKeys() {
+		return formPartKeys == null ? "" : StringEscapeUtils.escapeHtml4(strFormPartKeys());
+	}
+
+	public void htmFormPartKeys(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchEnrollmentForm", strPk(), "FormPartKeys\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchEnrollmentForm", strPk(), "FormPartKeys() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFormPartKeys\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFormPartKeys()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"formPartKeys\"");
+							r.s(" value=\"", htmFormPartKeys(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFormPartKeys());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////
 	// enrollmentKeys //
 	////////////////////
@@ -1401,312 +1527,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		}
 	}
 
-	//////////////////////
-	// enrollmentFormId //
-	//////////////////////
-
-	/**	L'entité « enrollmentFormId »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String enrollmentFormId;
-	@JsonIgnore
-	public Wrap<String> enrollmentFormIdWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentFormId").o(enrollmentFormId);
-
-	/**	<br/>L'entité « enrollmentFormId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.form.EnrollmentForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormId">Trouver l'entité enrollmentFormId dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enrollmentFormId(Wrap<String> c);
-
-	public String getEnrollmentFormId() {
-		return enrollmentFormId;
-	}
-
-	public void setEnrollmentFormId(String enrollmentFormId) {
-		this.enrollmentFormId = enrollmentFormId;
-		this.enrollmentFormIdWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentForm enrollmentFormIdInit() {
-		if(!enrollmentFormIdWrap.alreadyInitialized) {
-			_enrollmentFormId(enrollmentFormIdWrap);
-			if(enrollmentFormId == null)
-				setEnrollmentFormId(enrollmentFormIdWrap.o);
-		}
-		enrollmentFormIdWrap.alreadyInitialized(true);
-		return (EnrollmentForm)this;
-	}
-
-	public String solrEnrollmentFormId() {
-		return enrollmentFormId;
-	}
-
-	public String strEnrollmentFormId() {
-		return enrollmentFormId == null ? "" : enrollmentFormId;
-	}
-
-	public String jsonEnrollmentFormId() {
-		return enrollmentFormId == null ? "" : enrollmentFormId;
-	}
-
-	public String nomAffichageEnrollmentFormId() {
-		return "ID";
-	}
-
-	public String htmTooltipEnrollmentFormId() {
-		return null;
-	}
-
-	public String htmEnrollmentFormId() {
-		return enrollmentFormId == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormId());
-	}
-
-	public void htmEnrollmentFormId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentForm", strPk(), "EnrollmentFormId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentForm", strPk(), "EnrollmentFormId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentFormId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentFormId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentFormId\"");
-							r.s(" value=\"", htmEnrollmentFormId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentFormId());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// pageUrl //
-	/////////////
-
-	/**	L'entité « pageUrl »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String pageUrl;
-	@JsonIgnore
-	public Wrap<String> pageUrlWrap = new Wrap<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
-
-	/**	<br/>L'entité « pageUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.form.EnrollmentForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _pageUrl(Wrap<String> c);
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-		this.pageUrlWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentForm pageUrlInit() {
-		if(!pageUrlWrap.alreadyInitialized) {
-			_pageUrl(pageUrlWrap);
-			if(pageUrl == null)
-				setPageUrl(pageUrlWrap.o);
-		}
-		pageUrlWrap.alreadyInitialized(true);
-		return (EnrollmentForm)this;
-	}
-
-	public String solrPageUrl() {
-		return pageUrl;
-	}
-
-	public String strPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String jsonPageUrl() {
-		return pageUrl == null ? "" : pageUrl;
-	}
-
-	public String nomAffichagePageUrl() {
-		return null;
-	}
-
-	public String htmTooltipPageUrl() {
-		return null;
-	}
-
-	public String htmPageUrl() {
-		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
-	}
-
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentForm", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentForm", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////////
-	// objectSuggest //
-	///////////////////
-
-	/**	L'entité « objectSuggest »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String objectSuggest;
-	@JsonIgnore
-	public Wrap<String> objectSuggestWrap = new Wrap<String>().p(this).c(String.class).var("objectSuggest").o(objectSuggest);
-
-	/**	<br/>L'entité « objectSuggest »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.form.EnrollmentForm&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:objectSuggest">Trouver l'entité objectSuggest dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _objectSuggest(Wrap<String> c);
-
-	public String getObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
-		this.objectSuggestWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentForm objectSuggestInit() {
-		if(!objectSuggestWrap.alreadyInitialized) {
-			_objectSuggest(objectSuggestWrap);
-			if(objectSuggest == null)
-				setObjectSuggest(objectSuggestWrap.o);
-		}
-		objectSuggestWrap.alreadyInitialized(true);
-		return (EnrollmentForm)this;
-	}
-
-	public String solrObjectSuggest() {
-		return objectSuggest;
-	}
-
-	public String strObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String jsonObjectSuggest() {
-		return objectSuggest == null ? "" : objectSuggest;
-	}
-
-	public String nomAffichageObjectSuggest() {
-		return null;
-	}
-
-	public String htmTooltipObjectSuggest() {
-		return null;
-	}
-
-	public String htmObjectSuggest() {
-		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentForm", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentForm", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -1723,12 +1543,13 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 	}
 
 	public void initDeepEnrollmentForm() {
-		super.initDeepCluster(siteRequest_);
 		initEnrollmentForm();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initEnrollmentForm() {
 		enrollmentFormKeyInit();
+		formPartKeysInit();
 		enrollmentKeysInit();
 		yearSearchInit();
 		year_Init();
@@ -1743,9 +1564,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		yearShortNameInit();
 		yearCompleteNameInit();
 		enrollmentFormCompleteNameInit();
-		enrollmentFormIdInit();
-		pageUrlInit();
-		objectSuggestInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -1790,6 +1608,8 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentFormKey":
 				return oEnrollmentForm.enrollmentFormKey;
+			case "formPartKeys":
+				return oEnrollmentForm.formPartKeys;
 			case "enrollmentKeys":
 				return oEnrollmentForm.enrollmentKeys;
 			case "yearSearch":
@@ -1818,12 +1638,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 				return oEnrollmentForm.yearCompleteName;
 			case "enrollmentFormCompleteName":
 				return oEnrollmentForm.enrollmentFormCompleteName;
-			case "enrollmentFormId":
-				return oEnrollmentForm.enrollmentFormId;
-			case "pageUrl":
-				return oEnrollmentForm.pageUrl;
-			case "objectSuggest":
-				return oEnrollmentForm.objectSuggest;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -1849,6 +1663,9 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 	public Object attributeEnrollmentForm(String var, Object val) {
 		EnrollmentForm oEnrollmentForm = (EnrollmentForm)this;
 		switch(var) {
+			case "formPartKeys":
+				oEnrollmentForm.addFormPartKeys((Long)val);
+				return val;
 			case "enrollmentKeys":
 				oEnrollmentForm.addEnrollmentKeys((Long)val);
 				return val;
@@ -1907,6 +1724,10 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 					oEnrollmentForm.setEnrollmentFormKey(enrollmentFormKey);
 			}
 
+			List<Long> formPartKeys = (List<Long>)solrDocument.get("formPartKeys_stored_longs");
+			if(formPartKeys != null)
+				oEnrollmentForm.formPartKeys.addAll(formPartKeys);
+
 			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 			if(enrollmentKeys != null)
 				oEnrollmentForm.enrollmentKeys.addAll(enrollmentKeys);
@@ -1963,23 +1784,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 				String enrollmentFormCompleteName = (String)solrDocument.get("enrollmentFormCompleteName_stored_string");
 				if(enrollmentFormCompleteName != null)
 					oEnrollmentForm.setEnrollmentFormCompleteName(enrollmentFormCompleteName);
-			}
-
-			if(savesEnrollmentForm.contains("enrollmentFormId")) {
-				String enrollmentFormId = (String)solrDocument.get("enrollmentFormId_stored_string");
-				if(enrollmentFormId != null)
-					oEnrollmentForm.setEnrollmentFormId(enrollmentFormId);
-			}
-
-			if(savesEnrollmentForm.contains("pageUrl")) {
-				String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-				if(pageUrl != null)
-					oEnrollmentForm.setPageUrl(pageUrl);
-			}
-
-			if(savesEnrollmentForm.contains("objectSuggest")) {
-				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-				oEnrollmentForm.setObjectSuggest(objectSuggest);
 			}
 		}
 
@@ -2055,6 +1859,14 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 			document.addField("enrollmentFormKey_indexed_long", enrollmentFormKey);
 			document.addField("enrollmentFormKey_stored_long", enrollmentFormKey);
 		}
+		if(formPartKeys != null) {
+			for(java.lang.Long o : formPartKeys) {
+				document.addField("formPartKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : formPartKeys) {
+				document.addField("formPartKeys_stored_longs", o);
+			}
+		}
 		if(enrollmentKeys != null) {
 			for(java.lang.Long o : enrollmentKeys) {
 				document.addField("enrollmentKeys_indexed_longs", o);
@@ -2099,18 +1911,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 			document.addField("enrollmentFormCompleteName_indexed_string", enrollmentFormCompleteName);
 			document.addField("enrollmentFormCompleteName_stored_string", enrollmentFormCompleteName);
 		}
-		if(enrollmentFormId != null) {
-			document.addField("enrollmentFormId_indexed_string", enrollmentFormId);
-			document.addField("enrollmentFormId_stored_string", enrollmentFormId);
-		}
-		if(pageUrl != null) {
-			document.addField("pageUrl_indexed_string", pageUrl);
-			document.addField("pageUrl_stored_string", pageUrl);
-		}
-		if(objectSuggest != null) {
-			document.addField("objectSuggest_suggested", objectSuggest);
-			document.addField("objectSuggest_indexed_string", objectSuggest);
-		}
 		super.indexCluster(document);
 
 	}
@@ -2145,6 +1945,10 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
 		if(enrollmentFormKey != null)
 			oEnrollmentForm.setEnrollmentFormKey(enrollmentFormKey);
+
+		List<Long> formPartKeys = (List<Long>)solrDocument.get("formPartKeys_stored_longs");
+		if(formPartKeys != null)
+			oEnrollmentForm.formPartKeys.addAll(formPartKeys);
 
 		List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 		if(enrollmentKeys != null)
@@ -2186,17 +1990,6 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		if(enrollmentFormCompleteName != null)
 			oEnrollmentForm.setEnrollmentFormCompleteName(enrollmentFormCompleteName);
 
-		String enrollmentFormId = (String)solrDocument.get("enrollmentFormId_stored_string");
-		if(enrollmentFormId != null)
-			oEnrollmentForm.setEnrollmentFormId(enrollmentFormId);
-
-		String pageUrl = (String)solrDocument.get("pageUrl_stored_string");
-		if(pageUrl != null)
-			oEnrollmentForm.setPageUrl(pageUrl);
-
-		String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
-		oEnrollmentForm.setObjectSuggest(objectSuggest);
-
 		super.storeCluster(solrDocument);
 	}
 
@@ -2205,7 +1998,7 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys);
+		return Objects.hash(super.hashCode(), formPartKeys, enrollmentKeys);
 	}
 
 	////////////
@@ -2219,6 +2012,7 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 			return false;
 		EnrollmentForm that = (EnrollmentForm)o;
 		return super.equals(o)
+				&& Objects.equals( formPartKeys, that.formPartKeys )
 				&& Objects.equals( enrollmentKeys, that.enrollmentKeys );
 	}
 
@@ -2230,7 +2024,8 @@ public abstract class EnrollmentFormGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("EnrollmentForm { ");
-		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( "formPartKeys: " ).append(formPartKeys);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
 		sb.append(" }");
 		return sb.toString();
 	}

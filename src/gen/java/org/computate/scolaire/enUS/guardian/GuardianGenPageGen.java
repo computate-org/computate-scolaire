@@ -112,8 +112,8 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepGuardianGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initGuardianGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initGuardianGenPage() {

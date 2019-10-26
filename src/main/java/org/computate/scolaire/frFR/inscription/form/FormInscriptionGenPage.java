@@ -90,11 +90,13 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 
 	@Override public void htmlScriptsFormInscriptionGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/FormInscriptionPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PartFormPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptFormInscriptionGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "suggereFormInscriptionPartFormCles($('#formFormInscriptionPartFormCles'), $('#listFormInscriptionPartFormCles_Page')); ");
 		tl(1, "suggereFormInscriptionInscriptionCles($('#formFormInscriptionInscriptionCles'), $('#listFormInscriptionInscriptionCles_Page')); ");
 		l("});");
 	}
@@ -158,7 +160,7 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strFormInscriptionId()).g("span");
+									e("span").f().sx(o.strObjetId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -233,6 +235,66 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 											a("checked", "checked");
 									fg();
 
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("form");
+				} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("form").a("action", "").a("id", "formFormInscriptionPartFormCles").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						e("input")
+							.a("type", "hidden")
+							.a("name", "valeurFormInscriptionCle")
+							.a("class", "valeurFormInscriptionCle ")
+							.a("value", requeteSite_.getRequetePk())
+							.fg();
+					} g("form");
+					{ e("form").a("action", "").a("id", "suggereFormInscriptionPartFormCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+						{ e("div").a("class", "w3-card ").f();
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+									e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+									sx("parts");
+								} g("a");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row ").f();
+								{ e("h5").a("class", "w3-cell ").f();
+									sx("relier  a ce formulaire d'inscription");
+								} g("h5");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell ").f();
+									{ e("div").a("class", "w3-cell-row ").f();
+
+									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+										e("input")
+											.a("type", "text")
+											.a("placeholder", "parts")
+											.a("class", "valeurObjetSuggere suggerePartFormCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("name", "setPartFormCles")
+											.a("id", "Page_partFormCles")
+											.a("autocomplete", "off")
+											.a("oninput", "suggereFormInscriptionPartFormCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'FormInscriptionPartFormCles'), $('#listFormInscriptionPartFormCles_Page')); ")
+										.fg();
+
+									} g("div");
+								} g("div");
+							} g("div");
+							{ e("div").a("class", "w3-cell-row w3-padding ").f();
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listFormInscriptionPartFormCles_Page").f();
+									} g("ul");
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+											.a("onclick", "postPartFormVals({ formInscriptionCle: \"", o.getPk(), "\" }, function() { patchFormInscriptionVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereFormInscriptionPartFormCles($('#' + ($('#Page_partFormCles').val() ? 'suggere' : 'form') + 'FormInscriptionPartFormCles'), $('#listFormInscriptionPartFormCles_Page')); var $e = $('#Page_partFormCles'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_partFormCles')); }); }, function() { ajouterErreur($('#Page_partFormCles')); });")
+											.f().sx("ajouter un part de formulaire")
+										.g("button");
+									} g("div");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -361,7 +423,7 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strFormInscriptionId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -446,6 +508,24 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("class", "w3-card ").f();
 					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("parts").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPartFormCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 						e("label").a("class", "").f().sx("inscriptions").g("label");
 					} g("div");
 					{ e("div").a("class", "w3-cell-row  ").f();
@@ -520,7 +600,7 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strFormInscriptionId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -597,6 +677,24 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("parts").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPartFormCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");
@@ -697,7 +795,7 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strFormInscriptionId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -774,6 +872,24 @@ public class FormInscriptionGenPage extends FormInscriptionGenPageGen<ClusterPag
 						} g("div");
 					} g("div");
 				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+						e("label").a("class", "").f().sx("parts").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strPartFormCles()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			} g("div");
 			} g("div");
 		} g("div");

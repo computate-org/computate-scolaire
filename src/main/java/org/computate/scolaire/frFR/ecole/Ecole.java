@@ -1,9 +1,7 @@
 package org.computate.scolaire.frFR.ecole;         
 
-import java.text.Normalizer;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 
@@ -47,7 +45,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
- */           
+ */        
 public class Ecole extends EcoleGen<Cluster> {   
 
 	/**
@@ -285,7 +283,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: schoolLocation
 	 * r: "%s à %s"
 	 * r.enUS: "%s at %s"
-	 */        
+	 */     
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(ecoleEmplacement != null)
 			c.o(String.format("%s à %s", ecoleNom, ecoleEmplacement));
@@ -293,96 +291,14 @@ public class Ecole extends EcoleGen<Cluster> {
 			c.o(ecoleNom);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: schoolId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: ecoleNomComplet
-	 * r.enUS: schoolCompleteName
-	 */                   
-	protected void _ecoleId(Couverture<String> c) {
-		if(ecoleNom != null) {
-			String s = Normalizer.normalize(ecoleNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: ecoleId
-	 * r.enUS: schoolId
-	 * r: /frFR/ecole/
-	 * r.enUS: /school/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(ecoleId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/ecole/" + ecoleId;
-			c.o(o);
-		}
-	}
-
-	/**
-	 * r: ecoleNom
-	 * r.enUS: schoolName
-	 * r: École : 
-	 * r.enUS: School: 
-	 */ 
-	protected void _pageH1(Couverture<String> c)  {
-		c.o("École : " + ecoleNom);
-	}
-
-	public void htmlBody() {
-		super.htmlBody();
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: Ecole
-	 * r.enUS: School
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(Ecole.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
-	}
-	
-	/**  
-	 * {@inheritDoc}
-	 * Var.enUS: _objectSuggest
+	 * Var.enUS: _objectTitle
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
 	 */
 	@Override
-	protected void _objetSuggere(Couverture<String> c) { 
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(ecoleNomComplet);
 	}
 }

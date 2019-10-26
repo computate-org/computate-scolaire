@@ -316,12 +316,13 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									Date date = null;
 									if(facets != null)
 										date = (Date)facets.get("max_modifie");
-									String dateStr;
+									String dt;
 									if(date == null)
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
 									else
-										dateStr = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePATCHInscriptionScolaire(listeInscriptionScolaire, dateStr, d -> {
+										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+									listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									listePATCHInscriptionScolaire(listeInscriptionScolaire, dt, d -> {
 										if(d.succeeded()) {
 											SQLConnection connexionSql = requeteSite.getConnexionSql();
 											if(connexionSql == null) {
@@ -1036,6 +1037,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "classeNomSimple_indexed_string";
 			case "classeNomsCanoniques":
 				return "classeNomsCanoniques_indexed_strings";
+			case "objetTitre":
+				return "objetTitre_indexed_string";
+			case "objetId":
+				return "objetId_indexed_string";
+			case "objetSuggere":
+				return "objetSuggere_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "inscriptionCle":
 				return "inscriptionCle_indexed_long";
 			case "blocCles":
@@ -1150,12 +1159,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "inscriptionPaimentComplet_indexed_boolean";
 			case "inscriptionNomComplet":
 				return "inscriptionNomComplet_indexed_string";
-			case "inscriptionId":
-				return "inscriptionId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -1380,7 +1383,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR inscriptionId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

@@ -19,8 +19,10 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiService;
 import org.computate.scolaire.frFR.enfant.EnfantScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.form.part.PartFormFrFRGenApiService;
 import org.computate.scolaire.frFR.gardien.GardienScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.inscription.form.FormInscriptionFrFRGenApiService;
 import org.computate.scolaire.frFR.java.LocalDateSerializer;
 import org.computate.scolaire.frFR.java.LocalTimeSerializer;
 import org.computate.scolaire.frFR.java.ZonedDateTimeSerializer;
@@ -665,6 +667,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolGuardianEnUSGenApiService
 	 * r: PaiementScolaireFrFRGenApiService
 	 * r.enUS: SchoolPaymentEnUSGenApiService
+	 * r: FormInscriptionFrFRGenApiService
+	 * r.enUS: EnrollmentFormEnUSGenApiService
+	 * r: PartFormFrFRGenApiService
+	 * r.enUS: FormPartEnUSGenApiService
 	 * r: enregistrerService
 	 * r.enUS: registerService
 	 */   
@@ -686,6 +692,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		PereScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		GardienScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 		PaiementScolaireFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		FormInscriptionFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
+		PartFormFrFRGenApiService.enregistrerService(siteContexteFrFR, vertx);
 
 		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
 

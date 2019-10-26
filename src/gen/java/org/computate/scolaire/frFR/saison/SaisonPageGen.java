@@ -36,8 +36,8 @@ public abstract class SaisonPageGen<DEV> extends SaisonGenPage {
 	}
 
 	public void initLoinSaisonPage() {
-		super.initLoinSaisonGenPage(requeteSite_);
 		initSaisonPage();
+		super.initLoinSaisonGenPage(requeteSite_);
 	}
 
 	public void initSaisonPage() {

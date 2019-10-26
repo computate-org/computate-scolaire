@@ -1,13 +1,11 @@
-package org.computate.scolaire.frFR.inscription;   
+package org.computate.scolaire.frFR.inscription;    
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.computate.scolaire.frFR.age.AgeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -49,6 +47,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: purple
  * IconeGroupe: solid
  * IconeNom: edit
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */ 
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
@@ -1034,82 +1035,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: enrollmentId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: inscriptionNomComplet
-	 * r.enUS: enrollmentCompleteName
-	 */            
-	protected void _inscriptionId(Couverture<String> c) {
-		if(inscriptionNomComplet != null) {
-			String s = Normalizer.normalize(inscriptionNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: inscriptionId
-	 * r.enUS: enrollmentId
-	 * r: /inscription/
-	 * r.enUS: /enrollment/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/  
-	protected void _pageUrl(Couverture<String> c)  {
-		if(inscriptionId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/inscription/" + inscriptionId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: inscriptionNomComplet
 	 * r.enUS: enrollmentCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(inscriptionNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: InscriptionScolaire
-	 * r.enUS: SchoolEnrollment
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(InscriptionScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

@@ -1217,8 +1217,8 @@ public abstract class FormPartGen<DEV> extends Cluster {
 	}
 
 	public void initDeepFormPart() {
-		super.initDeepCluster(siteRequest_);
 		initFormPart();
+		super.initDeepCluster(siteRequest_);
 	}
 
 	public void initFormPart() {

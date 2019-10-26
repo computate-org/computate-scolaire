@@ -737,8 +737,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				return "classCanonicalNames_indexed_strings";
 			case "objectTitle":
 				return "objectTitle_indexed_string";
+			case "objectId":
+				return "objectId_indexed_string";
 			case "objectSuggest":
 				return "objectSuggest_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -963,7 +967,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

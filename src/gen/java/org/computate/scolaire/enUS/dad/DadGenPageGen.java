@@ -112,8 +112,8 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepDadGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initDadGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initDadGenPage() {

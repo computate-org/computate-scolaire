@@ -1,7 +1,6 @@
-package org.computate.scolaire.frFR.saison;
+package org.computate.scolaire.frFR.saison;  
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -377,82 +376,14 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**    
-	 * {@inheritDoc}
-	 * Var.enUS: seasonId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCelulle: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: saisonNomComplet
-	 * r.enUS: seasonCompleteName
-	 */            
-	protected void _saisonId(Couverture<String> c) {
-		if(saisonNomComplet != null) {
-			String s = Normalizer.normalize(saisonNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: saisonId
-	 * r.enUS: seasonId
-	 * r: /saison/
-	 * r.enUS: /season/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/     
-	protected void _pageUrl(Couverture<String> c)  {
-		if(saisonId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/saison/" + saisonId;
-			c.o(o);
-		}
-	}
-
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
-	 * r: saisonNomComplet
-	 * r.enUS: seasonCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
-		c.o(saisonNomComplet);
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: SaisonScolaire
-	 * r.enUS: SchoolSeason
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(SaisonScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
+	 * Var.enUS: _objectTitle
+	 * r: saisonNomComplet
+	 * r.enUS: seasonCompleteName
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
+		c.o(saisonNomComplet);
 	}
 }

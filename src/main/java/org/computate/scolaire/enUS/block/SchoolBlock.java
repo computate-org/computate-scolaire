@@ -1,7 +1,6 @@
 package org.computate.scolaire.enUS.block;
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -217,35 +216,8 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _blocId(Wrap<String> c) {
-		if(blockCompleteName != null) {
-			String s = Normalizer.normalize(blockCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(blocId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/block/" + blocId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(blockCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolBlock.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(blockCompleteName);
 	}
 }

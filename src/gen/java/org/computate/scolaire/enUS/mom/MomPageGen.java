@@ -36,8 +36,8 @@ public abstract class MomPageGen<DEV> extends MomGenPage {
 	}
 
 	public void initDeepMomPage() {
-		super.initDeepMomGenPage(siteRequest_);
 		initMomPage();
+		super.initDeepMomGenPage(siteRequest_);
 	}
 
 	public void initMomPage() {

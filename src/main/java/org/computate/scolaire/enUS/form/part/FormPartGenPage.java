@@ -143,6 +143,22 @@ public class FormPartGenPage extends FormPartGenPageGen<ClusterPage> {
 					} g("div");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("class", "").f().sx("ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strObjectId()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -688,6 +704,22 @@ public class FormPartGenPage extends FormPartGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -1126,6 +1158,22 @@ public class FormPartGenPage extends FormPartGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
 								e("span").f().sx(o.strModified()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1576,6 +1624,22 @@ public class FormPartGenPage extends FormPartGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -1961,14 +2025,14 @@ public class FormPartGenPage extends FormPartGenPageGen<ClusterPage> {
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggestFormFormPart", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/form-part?q=:' + encodeURIComponent($('#suggestFormPart", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggestFormFormPart", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/form-part?q=objectSuggest:' + encodeURIComponent($('#suggestFormPart", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("class", "suggestFormPart w3-input w3-border w3-cell w3-cell-middle ")
 							.a("name", "suggestFormPart")
 							.a("id", "suggestFormPart", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestFormPart( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListFormPart", id, "')); ")
+							.a("oninput", "suggestFormPartObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListFormPart", id, "')); ")
 							.fg();
 
 					} p.g("form");

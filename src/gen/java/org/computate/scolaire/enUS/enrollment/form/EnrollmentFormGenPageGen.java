@@ -112,8 +112,8 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepEnrollmentFormGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initEnrollmentFormGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initEnrollmentFormGenPage() {

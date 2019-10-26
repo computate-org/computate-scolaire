@@ -36,8 +36,8 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	}
 
 	public void initDeepEnrollmentPage() {
-		super.initDeepEnrollmentGenPage(siteRequest_);
 		initEnrollmentPage();
+		super.initDeepEnrollmentGenPage(siteRequest_);
 	}
 
 	public void initEnrollmentPage() {

@@ -162,7 +162,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strEnfantId()).g("span");
+									e("span").f().sx(o.strObjetId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -810,7 +810,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1326,7 +1326,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1860,7 +1860,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strEnfantId()).g("span");
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");

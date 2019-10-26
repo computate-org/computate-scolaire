@@ -144,6 +144,22 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 					} g("div");
 				} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("class", "").f().sx("ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strObjetId()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -229,7 +245,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strAnneeCle()).g("span");
+									e("span").f().sx(o.strFormInscriptionCle()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -689,6 +705,22 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -772,7 +804,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strAnneeCle()).g("span");
+								e("span").f().sx(o.strFormInscriptionCle()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1133,6 +1165,22 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -1216,7 +1264,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strAnneeCle()).g("span");
+								e("span").f().sx(o.strFormInscriptionCle()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1577,6 +1625,22 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -1660,7 +1724,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strAnneeCle()).g("span");
+								e("span").f().sx(o.strFormInscriptionCle()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1961,10 +2025,10 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 	 * r.enUS: refreshFormPartGenPage
 	 * r: ajouterErreur
 	 * r.enUS: addError
-	 * r: suggerePartForm
-	 * r.enUS: suggestFormPart
-	 * r: ':'
-	 * r.enUS: ':'
+	 * r: suggerePartFormObjetSuggere
+	 * r.enUS: suggestFormPartObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
 	 * r: '#suggereListPartForm'
 	 * r.enUS: '#suggestListFormPart'
 	 * r: "suggereListPartForm"
@@ -1997,7 +2061,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormPartForm", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/part-form?q=:' + encodeURIComponent($('#suggerePartForm", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggereFormPartForm", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/part-form?q=objetSuggere:' + encodeURIComponent($('#suggerePartForm", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher part de formulaires")
@@ -2005,7 +2069,7 @@ public class PartFormGenPage extends PartFormGenPageGen<ClusterPage> {
 							.a("name", "suggerePartForm")
 							.a("id", "suggerePartForm", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggerePartForm( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggereListPartForm", id, "')); ")
+							.a("oninput", "suggerePartFormObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartForm", id, "')); ")
 							.fg();
 
 					} p.g("form");

@@ -36,8 +36,8 @@ public abstract class AnneePageGen<DEV> extends AnneeGenPage {
 	}
 
 	public void initLoinAnneePage() {
-		super.initLoinAnneeGenPage(requeteSite_);
 		initAnneePage();
+		super.initLoinAnneeGenPage(requeteSite_);
 	}
 
 	public void initAnneePage() {

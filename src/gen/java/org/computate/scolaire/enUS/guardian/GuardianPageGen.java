@@ -36,8 +36,8 @@ public abstract class GuardianPageGen<DEV> extends GuardianGenPage {
 	}
 
 	public void initDeepGuardianPage() {
-		super.initDeepGuardianGenPage(siteRequest_);
 		initGuardianPage();
+		super.initDeepGuardianGenPage(siteRequest_);
 	}
 
 	public void initGuardianPage() {

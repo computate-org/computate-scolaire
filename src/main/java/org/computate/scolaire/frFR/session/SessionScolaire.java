@@ -1,7 +1,6 @@
-package org.computate.scolaire.frFR.session; 
+package org.computate.scolaire.frFR.session;   
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -485,82 +484,14 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: sessionId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: sessionNomComplet
-	 * r.enUS: sessionCompleteName
-	 */          
-	protected void _sessionId(Couverture<String> c) {
-		if(sessionNomComplet != null) {
-			String s = Normalizer.normalize(sessionNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: sessionId
-	 * r.enUS: sessionId
-	 * r: /frFR/session/
-	 * r.enUS: /session/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(sessionId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/frFR/session/" + sessionId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: sessionNomComplet
 	 * r.enUS: sessionCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(sessionNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: SessionScolaire
-	 * r.enUS: SchoolSession
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(SessionScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

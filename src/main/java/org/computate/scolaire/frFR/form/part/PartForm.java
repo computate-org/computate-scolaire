@@ -54,7 +54,7 @@ public class PartForm extends PartFormGen<Cluster> {
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
 	 */          
-	protected void _saisonCle(Couverture<Long> c) {
+	protected void _partFormCle(Couverture<Long> c) {
 		c.o(pk);
 	}
 
@@ -69,7 +69,7 @@ public class PartForm extends PartFormGen<Cluster> {
 	 * NomAffichage.frFR: formulaire d'inscription
 	 * NomAffichage.enUS: enrollment form
 	*/             
-	protected void _anneeCle(Couverture<Long> c) {
+	protected void _formInscriptionCle(Couverture<Long> c) {
 	}
 
 	/**

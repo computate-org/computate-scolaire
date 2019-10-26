@@ -819,8 +819,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "classSimpleName_indexed_string";
 			case "classCanonicalNames":
 				return "classCanonicalNames_indexed_strings";
+			case "objectTitle":
+				return "objectTitle_indexed_string";
+			case "objectId":
+				return "objectId_indexed_string";
 			case "objectSuggest":
 				return "objectSuggest_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "yearKeys":
@@ -853,10 +859,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				return "schoolShortName_indexed_string";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
-			case "schoolId":
-				return "schoolId_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1081,7 +1083,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR schoolId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
@@ -1103,7 +1105,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchool(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
+								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : "\"" + StringUtils.replace(valueIndexed, "\"", "\\\"") + "\""));
 								if(!"*".equals(entityVar)) {
 									listSearch.setHighlight(true);
 									listSearch.setHighlightSnippets(3);

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;   
+package org.computate.scolaire.frFR.enfant;     
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -49,6 +49,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: green
  * IconeGroupe: regular
  * IconeNom: child
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */    
 public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
@@ -477,82 +480,14 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 		c.o(personneNomComplet);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: childId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: enfantNomComplet
-	 * r.enUS: childCompleteName
-	 */            
-	protected void _enfantId(Couverture<String> c) {
-		if(enfantNomComplet != null) {
-			String s = Normalizer.normalize(enfantNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: enfantId
-	 * r.enUS: childId
-	 * r: /enfant/
-	 * r.enUS: /child/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(enfantId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/enfant/" + enfantId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: enfantNomComplet
 	 * r.enUS: childCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */ 
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(enfantNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: EnfantScolaire
-	 * r.enUS: SchoolChild
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(EnfantScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

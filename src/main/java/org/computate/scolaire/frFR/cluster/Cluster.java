@@ -1,20 +1,19 @@
 package org.computate.scolaire.frFR.cluster; 
 
+import java.text.Normalizer;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.xml.OutilXml;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -194,6 +193,9 @@ public class Cluster extends ClusterGen<Object> {
 	 * Stocke: true
 	 **/      
 	protected void _classeNomsCanoniques(List<String> l) { 
+		Class<?> cl = getClass();
+		if(!cl.equals(Cluster.class))
+			l.add(cl.getCanonicalName());
 		l.add(Cluster.class.getCanonicalName());
 	}
 
@@ -207,12 +209,127 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _objetTitre(Couverture<String> c) {
 	}
 
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: objectId
+	 * Indexe: true
+	 * Stocke: true
+	 * VarId: true
+	 * HtmlLigne: 1
+	 * HtmlCellule: 4
+	 * NomAffichage.frFR: ID
+	 * NomAffichage.enUS: ID
+	 * r: objetTitre
+	 * r.enUS: objectTitle
+	 */                   
+	protected void _objetId(Couverture<String> c) {
+		if(objetTitre != null) {
+			c.o(toId(objetTitre));
+		}
+		else if(pk != null){
+			c.o(pk.toString());
+		}
+	}
+
+	/**
+	 * r: objetTitre
+	 * r.enUS: objectTitle
+	 */
+	public String toId(String s) {
+		if(s != null) {
+			s = Normalizer.normalize(s, Normalizer.Form.NFD);
+			s = StringUtils.lowerCase(s);
+			s = StringUtils.trim(s);
+			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
+			s = StringUtils.replacePattern(s, "[^\\w-]", "");
+			s = StringUtils.replacePattern(s, "-{2,}", "-");
+		}
+
+		return s;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: objectNameVar
+	 * r: objetId
+	 * r.enUS: objectId
+	 * **/   
+	protected void _objetNomVar(Couverture<String> c)  {
+		if(objetId != null) {
+			Class<?> cl = getClass();
+
+			try {
+				String o = toId((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomVar").get(this));
+				c.o(o);
+			} catch (Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: objectSuggest
 	 * Suggere: true
-	 */       
+	 * r: objetNomVar
+	 * r.enUS: objectNameVar
+	 * r: objetId
+	 * r.enUS: objectId
+	 * r: objetTitre
+	 * r.enUS: objectTitle
+	 */     
 	protected void _objetSuggere(Couverture<String> c) { 
+		StringBuilder b = new StringBuilder();
+		if(pk != null)
+			b.append(" ").append(pk);
+		if(objetNomVar != null)
+			b.append(" ").append(objetNomVar);
+		if(objetId != null)
+			b.append(" ").append(objetId);
+		if(objetTitre != null)
+			b.append(" ").append(objetTitre);
+		c.o(b.toString());
+	}
+
+	/**	la version plus courte de l'URL qui commence avec « / » 
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * VarUrl: true
+	 * r: objetId
+	 * r.enUS: objectId
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * r: objetNomVar
+	 * r.enUS: objectNameVar
+	 * **/   
+	protected void _pageUrl(Couverture<String> c)  {
+		if(objetId != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/" + objetNomVar + "/" + objetId;
+			c.o(o);
+		}
+	}
+
+	/**
+	 * H1: true
+	 * r: ecoleNom
+	 * r.enUS: schoolName
+	 * r: " : "
+	 * r.enUS: ": "
+	 * r: objetTitre
+	 * r.enUS: objectTitle
+	 */ 
+	protected void _pageH1(Couverture<String> c)  {
+		try {
+			Class<?> cl = getClass();
+			c.o((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomSingulier").get(this) + " : " + objetTitre);
+		} catch (Exception e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 	/**

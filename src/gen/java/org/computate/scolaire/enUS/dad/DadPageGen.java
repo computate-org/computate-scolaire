@@ -36,8 +36,8 @@ public abstract class DadPageGen<DEV> extends DadGenPage {
 	}
 
 	public void initDeepDadPage() {
-		super.initDeepDadGenPage(siteRequest_);
 		initDadPage();
+		super.initDeepDadGenPage(siteRequest_);
 	}
 
 	public void initDadPage() {

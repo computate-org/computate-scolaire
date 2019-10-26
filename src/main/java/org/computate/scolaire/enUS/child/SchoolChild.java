@@ -128,35 +128,8 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 		c.o(personCompleteName);
 	}
 
-	protected void _childId(Wrap<String> c) {
-		if(childCompleteName != null) {
-			String s = Normalizer.normalize(childCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(childId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/child/" + childId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(childCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolChild.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(childCompleteName);
 	}
 }

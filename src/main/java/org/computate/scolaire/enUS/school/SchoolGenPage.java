@@ -157,7 +157,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strSchoolId()).g("span");
+									e("span").f().sx(o.strObjectId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -582,7 +582,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -908,7 +908,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1252,7 +1252,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strSchoolId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1687,9 +1687,6 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 					} g("form");
 					htmlFormPageSchool(o);
 				}
-
-				if(o != null)
-					o.htmlBody();
 
 			} g("div");
 

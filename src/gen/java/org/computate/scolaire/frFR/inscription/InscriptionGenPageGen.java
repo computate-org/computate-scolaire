@@ -116,8 +116,8 @@ public abstract class InscriptionGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinInscriptionGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initInscriptionGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initInscriptionGenPage() {

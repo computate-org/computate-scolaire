@@ -116,8 +116,8 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinSessionGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initSessionGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initSessionGenPage() {

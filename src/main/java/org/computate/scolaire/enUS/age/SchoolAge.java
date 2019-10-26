@@ -1,14 +1,11 @@
 package org.computate.scolaire.enUS.age;
 
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
-import org.computate.scolaire.enUS.season.SchoolSeason;
 import org.computate.scolaire.enUS.session.SchoolSession;
 
 public class SchoolAge extends SchoolAgeGen<Cluster> {
@@ -146,35 +143,8 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _ageId(Wrap<String> c) {
-		if(ageCompleteName != null) {
-			String s = Normalizer.normalize(ageCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(ageId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/age/" + ageId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(ageCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolAge.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(ageCompleteName);
 	}
 }

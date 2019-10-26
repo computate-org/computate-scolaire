@@ -36,8 +36,8 @@ public abstract class ChildPageGen<DEV> extends ChildGenPage {
 	}
 
 	public void initDeepChildPage() {
-		super.initDeepChildGenPage(siteRequest_);
 		initChildPage();
+		super.initDeepChildGenPage(siteRequest_);
 	}
 
 	public void initChildPage() {

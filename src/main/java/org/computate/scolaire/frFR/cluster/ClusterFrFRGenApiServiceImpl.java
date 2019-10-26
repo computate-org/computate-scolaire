@@ -737,8 +737,12 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				return "classeNomsCanoniques_indexed_strings";
 			case "objetTitre":
 				return "objetTitre_indexed_string";
+			case "objetId":
+				return "objetId_indexed_string";
 			case "objetSuggere":
 				return "objetSuggere_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
@@ -963,7 +967,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR _indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

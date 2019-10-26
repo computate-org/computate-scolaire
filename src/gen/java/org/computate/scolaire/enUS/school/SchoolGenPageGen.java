@@ -251,8 +251,6 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlBodySchoolGenPage() {
-		if(school != null)
-			school.htmlBody();
 	}
 
 	//////////

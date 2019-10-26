@@ -15,6 +15,8 @@ public class EnrollmentForm extends EnrollmentFormGen<Cluster> {
 		c.o(pk);
 	}
 
+	protected void _formPartKeys(List<Long> o) {}
+
 	protected void _enrollmentKeys(List<Long> o) {}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
@@ -90,35 +92,8 @@ public class EnrollmentForm extends EnrollmentFormGen<Cluster> {
 		c.o(o);
 	}
 
-	protected void _enrollmentFormId(Wrap<String> c) {
-		if(enrollmentFormCompleteName != null) {
-			String s = Normalizer.normalize(enrollmentFormCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(enrollmentFormId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/enrollment-form/" + enrollmentFormId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(enrollmentFormCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(EnrollmentForm.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(enrollmentFormCompleteName);
 	}
 }

@@ -123,35 +123,8 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 		c.o(personCompleteName);
 	}
 
-	protected void _dadId(Wrap<String> c) {
-		if(dadCompleteName != null) {
-			String s = Normalizer.normalize(dadCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(dadId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/dad/" + dadId;
-			c.o(o);
-		}
-	}
-
-	protected void _objectSuggest(Wrap<String> c) { 
-		c.o(dadCompleteName);
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(SchoolDad.class.getCanonicalName());
-		super._classCanonicalNames(l);
+	protected void  _objectTitle(Wrap<String> c) {
+		c.o(dadCompleteName);
 	}
 }

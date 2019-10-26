@@ -116,8 +116,8 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinGardienGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initGardienGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initGardienGenPage() {

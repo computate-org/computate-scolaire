@@ -112,8 +112,8 @@ public abstract class FormPartGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepFormPartGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initFormPartGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initFormPartGenPage() {

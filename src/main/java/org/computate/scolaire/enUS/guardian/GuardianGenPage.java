@@ -156,7 +156,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(o.strGuardianId()).g("span");
+									e("span").f().sx(o.strObjectId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -583,7 +583,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGuardianId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -911,7 +911,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGuardianId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1254,7 +1254,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					{ e("div").a("class", "w3-cell-row  ").f();
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
-								e("span").f().sx(o.strGuardianId()).g("span");
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");

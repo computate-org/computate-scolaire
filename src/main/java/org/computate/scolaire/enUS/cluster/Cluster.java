@@ -1,18 +1,18 @@
 package org.computate.scolaire.enUS.cluster;
 
+import java.text.Normalizer;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.xml.UtilXml;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Cluster extends ClusterGen<Object> {
 
@@ -55,13 +55,77 @@ public class Cluster extends ClusterGen<Object> {
 	}
 
 	protected void _classCanonicalNames(List<String> l) { 
+		Class<?> cl = getClass();
+		if(!cl.equals(Cluster.class))
+			l.add(cl.getCanonicalName());
 		l.add(Cluster.class.getCanonicalName());
 	}
 
 	protected void _objectTitle(Wrap<String> c) {
 	}
 
+	protected void _objectId(Wrap<String> c) {
+		if(objectTitle != null) {
+			c.o(toId(objectTitle));
+		}
+		else if(pk != null){
+			c.o(pk.toString());
+		}
+	}
+
+	public String toId(String s) {
+		if(s != null) {
+			s = Normalizer.normalize(s, Normalizer.Form.NFD);
+			s = StringUtils.lowerCase(s);
+			s = StringUtils.trim(s);
+			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
+			s = StringUtils.replacePattern(s, "[^\\w-]", "");
+			s = StringUtils.replacePattern(s, "-{2,}", "-");
+		}
+
+		return s;
+	}
+
+	protected void _objectNameVar(Wrap<String> c) {
+		if(objectId != null) {
+			Class<?> cl = getClass();
+
+			try {
+				String o = toId((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomVar").get(this));
+				c.o(o);
+			} catch (Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		}
+	}
+
 	protected void _objectSuggest(Wrap<String> c) { 
+		StringBuilder b = new StringBuilder();
+		if(pk != null)
+			b.append(" ").append(pk);
+		if(objectNameVar != null)
+			b.append(" ").append(objectNameVar);
+		if(objectId != null)
+			b.append(" ").append(objectId);
+		if(objectTitle != null)
+			b.append(" ").append(objectTitle);
+		c.o(b.toString());
+	}
+
+	protected void _pageUrl(Wrap<String> c) {
+		if(objectId != null) {
+			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/" + objectNameVar + "/" + objectId;
+			c.o(o);
+		}
+	}
+
+	protected void _pageH1(Wrap<String> c) {
+		try {
+			Class<?> cl = getClass();
+			c.o((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomSingulier").get(this) + ": " + objectTitle);
+		} catch (Exception e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 	public Cluster e(String localName) {

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mere;   
+package org.computate.scolaire.frFR.mere;     
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -46,6 +46,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Couleur: pink
  * IconeGroupe: regular
  * IconeNom: female
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */    
 public class MereScolaire extends MereScolaireGen<Cluster> {
 
@@ -461,82 +464,14 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 		c.o(personneNomComplet);
 	}
 
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: momId
-	 * Indexe: true
-	 * Stocke: true
-	 * VarId: true
-	 * HtmlLigne: 1
-	 * HtmlCellule: 4
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: ID
-	 * NomAffichage.enUS: ID
-	 * r: mereNomComplet
-	 * r.enUS: momCompleteName
-	 */            
-	protected void _mereId(Couverture<String> c) {
-		if(mereNomComplet != null) {
-			String s = Normalizer.normalize(mereNomComplet, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	/**	la version plus courte de l'URL qui commence avec « / » 
-	 * {@inheritDoc}
-	 * Indexe: true
-	 * Stocke: true
-	 * VarUrl: true
-	 * r: mereId
-	 * r.enUS: momId
-	 * r: /mere/
-	 * r.enUS: /mom/
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: SiteUrlBase
-	 * r.enUS: SiteBaseUrl
-	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
-		if(mereId != null) {
-			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/mere/" + mereId;
-			c.o(o);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: objectSuggest
-	 * Suggere: true
+	 * Var.enUS: _objectTitle
 	 * r: mereNomComplet
 	 * r.enUS: momCompleteName
-	 */         
-	protected void _objetSuggere(Couverture<String> c) { 
+	 */
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
 		c.o(mereNomComplet);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: _classCanonicalNames
-	 * Indexe: true
-	 * Stocke: true
-	 * r: MereScolaire
-	 * r.enUS: SchoolMom
-	 * r: classeNomsCanoniques
-	 * r.enUS: classCanonicalNames
-	 **/      
-	@Override protected void _classeNomsCanoniques(List<String> l) {
-		l.add(MereScolaire.class.getCanonicalName());
-		super._classeNomsCanoniques(l);
 	}
 }

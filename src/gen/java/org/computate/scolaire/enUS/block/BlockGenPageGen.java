@@ -112,8 +112,8 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepBlockGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initBlockGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initBlockGenPage() {

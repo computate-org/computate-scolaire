@@ -1,8 +1,6 @@
 package org.computate.scolaire.enUS.school;
 
-import java.text.Normalizer;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
@@ -61,44 +59,8 @@ public class School extends SchoolGen<Cluster> {
 			c.o(schoolName);
 	}
 
-	protected void _schoolId(Wrap<String> c) {
-		if(ecoleNom != null) {
-			String s = Normalizer.normalize(schoolCompleteName, Normalizer.Form.NFD);
-			s = StringUtils.lowerCase(s);
-			s = StringUtils.trim(s);
-			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
-			s = StringUtils.replacePattern(s, "[^\\w-]", "");
-			s = StringUtils.replacePattern(s, "-{2,}", "-");
-			c.o(s);
-		}
-		else if(pk != null){
-			c.o(pk.toString());
-		}
-	}
-
-	protected void _pageUrl(Wrap<String> c) {
-		if(schoolId != null) {
-			String o = siteRequest_.getSiteConfig_().getSiteBaseUrl() + "/school/" + schoolId;
-			c.o(o);
-		}
-	}
-
-	protected void _pageH1(Wrap<String> c) {
-		c.o("School: " + schoolName);
-	}
-
-	public void  htmlBody() {
-		super.htmlBody();
-	}
-
 	@Override()
-	protected void  _classCanonicalNames(List<String> l) {
-		l.add(School.class.getCanonicalName());
-		super._classCanonicalNames(l);
-	}
-
-	@Override()
-	protected void  _objectSuggest(Wrap<String> c) { 
+	protected void  _objectTitle(Wrap<String> c) {
 		c.o(schoolCompleteName);
 	}
 }
