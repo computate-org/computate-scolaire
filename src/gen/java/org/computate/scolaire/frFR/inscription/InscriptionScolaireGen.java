@@ -1643,6 +1643,114 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////////////
+	// formInscriptionCle //
+	////////////////////////
+
+	/**	L'entité « formInscriptionCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long formInscriptionCle;
+	@JsonIgnore
+	public Couverture<Long> formInscriptionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("formInscriptionCle").o(formInscriptionCle);
+
+	/**	<br/>L'entité « formInscriptionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionCle">Trouver l'entité formInscriptionCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _formInscriptionCle(Couverture<Long> c);
+
+	public Long getFormInscriptionCle() {
+		return formInscriptionCle;
+	}
+
+	public void setFormInscriptionCle(Long formInscriptionCle) {
+		this.formInscriptionCle = formInscriptionCle;
+		this.formInscriptionCleCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setFormInscriptionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.formInscriptionCle = Long.parseLong(o);
+		this.formInscriptionCleCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire formInscriptionCleInit() {
+		if(!formInscriptionCleCouverture.dejaInitialise) {
+			_formInscriptionCle(formInscriptionCleCouverture);
+			if(formInscriptionCle == null)
+				setFormInscriptionCle(formInscriptionCleCouverture.o);
+		}
+		formInscriptionCleCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Long solrFormInscriptionCle() {
+		return formInscriptionCle;
+	}
+
+	public String strFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
+	}
+
+	public String jsonFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
+	}
+
+	public String nomAffichageFormInscriptionCle() {
+		return "formulaire d'inscription";
+	}
+
+	public String htmTooltipFormInscriptionCle() {
+		return null;
+	}
+
+	public String htmFormInscriptionCle() {
+		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
+	}
+
+	public void htmFormInscriptionCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchInscriptionScolaire", strPk(), "FormInscriptionCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchInscriptionScolaire", strPk(), "FormInscriptionCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setFormInscriptionCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFormInscriptionCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"formInscriptionCle\"");
+							r.s(" value=\"", htmFormInscriptionCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmFormInscriptionCle());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////////
 	// scolaireTri //
 	/////////////////
@@ -6499,6 +6607,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		pereClesInit();
 		gardienClesInit();
 		paiementClesInit();
+		formInscriptionCleInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		anneeTriInit();
@@ -6617,6 +6726,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.gardienCles;
 			case "paiementCles":
 				return oInscriptionScolaire.paiementCles;
+			case "formInscriptionCle":
+				return oInscriptionScolaire.formInscriptionCle;
 			case "scolaireTri":
 				return oInscriptionScolaire.scolaireTri;
 			case "ecoleTri":
@@ -6751,6 +6862,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return val;
 			case "paiementCles":
 				oInscriptionScolaire.addPaiementCles((Long)val);
+				return val;
+			case "formInscriptionCle":
+				oInscriptionScolaire.setFormInscriptionCle((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -6910,6 +7024,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			List<Long> paiementCles = (List<Long>)solrDocument.get("paiementCles_stored_longs");
 			if(paiementCles != null)
 				oInscriptionScolaire.paiementCles.addAll(paiementCles);
+
+			Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+			if(formInscriptionCle != null)
+				oInscriptionScolaire.setFormInscriptionCle(formInscriptionCle);
 
 			if(sauvegardesInscriptionScolaire.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -7316,6 +7434,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				document.addField("paiementCles_stored_longs", o);
 			}
 		}
+		if(formInscriptionCle != null) {
+			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
+			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
+		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -7575,6 +7697,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(paiementCles != null)
 			oInscriptionScolaire.paiementCles.addAll(paiementCles);
 
+		Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
+		if(formInscriptionCle != null)
+			oInscriptionScolaire.setFormInscriptionCle(formInscriptionCle);
+
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
 			oInscriptionScolaire.setScolaireTri(scolaireTri);
@@ -7759,7 +7885,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, formInscriptionCle, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet);
 	}
 
 	////////////
@@ -7779,6 +7905,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( pereCles, that.pereCles )
 				&& Objects.equals( gardienCles, that.gardienCles )
 				&& Objects.equals( paiementCles, that.paiementCles )
+				&& Objects.equals( formInscriptionCle, that.formInscriptionCle )
 				&& Objects.equals( inscriptionApprouve, that.inscriptionApprouve )
 				&& Objects.equals( inscriptionImmunisations, that.inscriptionImmunisations )
 				&& Objects.equals( familleMarie, that.familleMarie )
@@ -7806,6 +7933,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", pereCles: " ).append(pereCles);
 		sb.append( ", gardienCles: " ).append(gardienCles);
 		sb.append( ", paiementCles: " ).append(paiementCles);
+		sb.append( ", formInscriptionCle: " ).append(formInscriptionCle);
 		sb.append( ", inscriptionApprouve: " ).append(inscriptionApprouve);
 		sb.append( ", inscriptionImmunisations: " ).append(inscriptionImmunisations);
 		sb.append( ", familleMarie: " ).append(familleMarie);

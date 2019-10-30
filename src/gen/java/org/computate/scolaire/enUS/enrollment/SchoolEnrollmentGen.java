@@ -1642,6 +1642,114 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////////
+	// enrollmentFormKey //
+	///////////////////////
+
+	/**	L'entité « enrollmentFormKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long enrollmentFormKey;
+	@JsonIgnore
+	public Wrap<Long> enrollmentFormKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentFormKey").o(enrollmentFormKey);
+
+	/**	<br/>L'entité « enrollmentFormKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormKey">Trouver l'entité enrollmentFormKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentFormKey(Wrap<Long> c);
+
+	public Long getEnrollmentFormKey() {
+		return enrollmentFormKey;
+	}
+
+	public void setEnrollmentFormKey(Long enrollmentFormKey) {
+		this.enrollmentFormKey = enrollmentFormKey;
+		this.enrollmentFormKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setEnrollmentFormKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.enrollmentFormKey = Long.parseLong(o);
+		this.enrollmentFormKeyWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentFormKeyInit() {
+		if(!enrollmentFormKeyWrap.alreadyInitialized) {
+			_enrollmentFormKey(enrollmentFormKeyWrap);
+			if(enrollmentFormKey == null)
+				setEnrollmentFormKey(enrollmentFormKeyWrap.o);
+		}
+		enrollmentFormKeyWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Long solrEnrollmentFormKey() {
+		return enrollmentFormKey;
+	}
+
+	public String strEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
+	}
+
+	public String jsonEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
+	}
+
+	public String nomAffichageEnrollmentFormKey() {
+		return "enrollment form";
+	}
+
+	public String htmTooltipEnrollmentFormKey() {
+		return null;
+	}
+
+	public String htmEnrollmentFormKey() {
+		return enrollmentFormKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentFormKey());
+	}
+
+	public void htmEnrollmentFormKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "EnrollmentFormKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "EnrollmentFormKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEnrollmentFormKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentFormKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"enrollmentFormKey\"");
+							r.s(" value=\"", htmEnrollmentFormKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEnrollmentFormKey());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////
 	// educationSort //
 	///////////////////
@@ -6498,6 +6606,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		dadKeysInit();
 		guardianKeysInit();
 		paymentKeysInit();
+		enrollmentFormKeyInit();
 		educationSortInit();
 		schoolSortInit();
 		yearSortInit();
@@ -6616,6 +6725,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.guardianKeys;
 			case "paymentKeys":
 				return oSchoolEnrollment.paymentKeys;
+			case "enrollmentFormKey":
+				return oSchoolEnrollment.enrollmentFormKey;
 			case "educationSort":
 				return oSchoolEnrollment.educationSort;
 			case "schoolSort":
@@ -6750,6 +6861,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
+				return val;
+			case "enrollmentFormKey":
+				oSchoolEnrollment.setEnrollmentFormKey((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -6909,6 +7023,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			List<Long> paymentKeys = (List<Long>)solrDocument.get("paymentKeys_stored_longs");
 			if(paymentKeys != null)
 				oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
+
+			Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
+			if(enrollmentFormKey != null)
+				oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
 
 			if(savesSchoolEnrollment.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -7315,6 +7433,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				document.addField("paymentKeys_stored_longs", o);
 			}
 		}
+		if(enrollmentFormKey != null) {
+			document.addField("enrollmentFormKey_indexed_long", enrollmentFormKey);
+			document.addField("enrollmentFormKey_stored_long", enrollmentFormKey);
+		}
 		if(educationSort != null) {
 			document.addField("educationSort_indexed_int", educationSort);
 			document.addField("educationSort_stored_int", educationSort);
@@ -7574,6 +7696,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(paymentKeys != null)
 			oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
 
+		Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
+		if(enrollmentFormKey != null)
+			oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
+
 		Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 		if(educationSort != null)
 			oSchoolEnrollment.setEducationSort(educationSort);
@@ -7758,7 +7884,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
+		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
 	}
 
 	////////////
@@ -7778,6 +7904,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( dadKeys, that.dadKeys )
 				&& Objects.equals( guardianKeys, that.guardianKeys )
 				&& Objects.equals( paymentKeys, that.paymentKeys )
+				&& Objects.equals( enrollmentFormKey, that.enrollmentFormKey )
 				&& Objects.equals( enrollmentApproved, that.enrollmentApproved )
 				&& Objects.equals( enrollmentImmunizations, that.enrollmentImmunizations )
 				&& Objects.equals( familyMarried, that.familyMarried )
@@ -7805,6 +7932,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", dadKeys: " ).append(dadKeys);
 		sb.append( ", guardianKeys: " ).append(guardianKeys);
 		sb.append( ", paymentKeys: " ).append(paymentKeys);
+		sb.append( ", enrollmentFormKey: " ).append(enrollmentFormKey);
 		sb.append( ", enrollmentApproved: " ).append(enrollmentApproved);
 		sb.append( ", enrollmentImmunizations: " ).append(enrollmentImmunizations);
 		sb.append( ", familyMarried: " ).append(familyMarried);

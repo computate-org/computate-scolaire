@@ -5,7 +5,7 @@ import java.util.List;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
-import org.computate.scolaire.frFR.inscription.form.FormInscription;
+import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -203,7 +203,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentFormKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: Ecole.formInscriptionCles
+	 * Attribuer: FormInscription.anneeCle
 	 * HtmlLigne: 4
 	 * HtmlCelulle: 2
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
@@ -224,10 +224,10 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: setStore
 	 * Ignorer: true
 	 */   
-	protected void _formInscriptionRecherche(ListeRecherche<FormInscription> l) {
+	protected void _formInscriptionRecherche(ListeRecherche<DesignInscription> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("formInscriptionCles_indexed_longs:" + pk);
-		l.setC(FormInscription.class);
+		l.setC(DesignInscription.class);
 		l.setStocker(true);
 	}
 

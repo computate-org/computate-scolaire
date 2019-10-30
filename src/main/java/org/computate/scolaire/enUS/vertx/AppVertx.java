@@ -18,10 +18,10 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
 import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiService;
-import org.computate.scolaire.enUS.form.part.FormPartEnUSGenApiService;
 import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiService;
+import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
-import org.computate.scolaire.enUS.enrollment.form.EnrollmentFormEnUSGenApiService;
+import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesignEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.LocalTimeSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
@@ -381,8 +381,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SchoolDadEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolGuardianEnUSGenApiService.registerService(siteContextEnUS, vertx);
 		SchoolPaymentEnUSGenApiService.registerService(siteContextEnUS, vertx);
-		EnrollmentFormEnUSGenApiService.registerService(siteContextEnUS, vertx);
-		FormPartEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		EnrollmentDesignEnUSGenApiService.registerService(siteContextEnUS, vertx);
+		HtmlPartEnUSGenApiService.registerService(siteContextEnUS, vertx);
 
 		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
 

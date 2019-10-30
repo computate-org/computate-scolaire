@@ -1,6 +1,5 @@
 package org.computate.scolaire.frFR.annee;
 
-import org.computate.scolaire.frFR.inscription.form.FormInscription;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -33,6 +32,7 @@ import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -1249,26 +1249,26 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////////////////////
 
 	/**	L'entité « formInscriptionRecherche »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<FormInscription>(). 
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<DesignInscription>(). 
 	 */
 	@JsonIgnore
-	protected ListeRecherche<FormInscription> formInscriptionRecherche = new ListeRecherche<FormInscription>();
+	protected ListeRecherche<DesignInscription> formInscriptionRecherche = new ListeRecherche<DesignInscription>();
 	@JsonIgnore
-	public Couverture<ListeRecherche<FormInscription>> formInscriptionRechercheCouverture = new Couverture<ListeRecherche<FormInscription>>().p(this).c(ListeRecherche.class).var("formInscriptionRecherche").o(formInscriptionRecherche);
+	public Couverture<ListeRecherche<DesignInscription>> formInscriptionRechercheCouverture = new Couverture<ListeRecherche<DesignInscription>>().p(this).c(ListeRecherche.class).var("formInscriptionRecherche").o(formInscriptionRecherche);
 
 	/**	<br/>L'entité « formInscriptionRecherche »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<FormInscription>(). 
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<DesignInscription>(). 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:formInscriptionRecherche">Trouver l'entité formInscriptionRecherche dans Solr</a>
 	 * <br/>
 	 * @param formInscriptionRecherche est l'entité déjà construit. 
 	 **/
-	protected abstract void _formInscriptionRecherche(ListeRecherche<FormInscription> l);
+	protected abstract void _formInscriptionRecherche(ListeRecherche<DesignInscription> l);
 
-	public ListeRecherche<FormInscription> getFormInscriptionRecherche() {
+	public ListeRecherche<DesignInscription> getFormInscriptionRecherche() {
 		return formInscriptionRecherche;
 	}
 
-	public void setFormInscriptionRecherche(ListeRecherche<FormInscription> formInscriptionRecherche) {
+	public void setFormInscriptionRecherche(ListeRecherche<DesignInscription> formInscriptionRecherche) {
 		this.formInscriptionRecherche = formInscriptionRecherche;
 		this.formInscriptionRechercheCouverture.dejaInitialise = true;
 	}

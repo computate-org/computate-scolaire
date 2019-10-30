@@ -226,6 +226,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							postSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "paymentKeys", pk));
 						}
 						break;
+					case "enrollmentFormKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enrollmentFormKey", pk, "formPartKeys", Long.parseLong(jsonObject.getString(entityVar))));
+						break;
 					case "enrollmentApproved":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enrollmentApproved", jsonObject.getBoolean(entityVar), pk));
@@ -609,6 +613,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "removePaymentKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(requestJson.getString(methodName)), "paymentKeys", pk));
+						break;
+					case "setEnrollmentFormKey":
+						o2.setEnrollmentFormKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", pk, "formPartKeys", o2.getEnrollmentFormKey()));
+						break;
+					case "removeEnrollmentFormKey":
+						o2.setEnrollmentFormKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentFormKey", pk, "formPartKeys", o2.getEnrollmentFormKey()));
 						break;
 					case "setEnrollmentApproved":
 						if(requestJson.getBoolean(methodName) == null) {
@@ -1009,7 +1023,88 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolEnrollment(listSchoolEnrollment);
+			page.setSiteRequest_(siteRequest);
 			page.initDeepEnrollmentPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// FormSearchPage //
+
+	@Override
+	public void formsearchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		formsearchpageSchoolEnrollment(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void formsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+			sqlSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolEnrollment(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/form", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+									response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolEnrollment(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolEnrollment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200FormSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
+			EnrollmentFormPage page = new EnrollmentFormPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/form");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			page.setListSchoolEnrollment(listSchoolEnrollment);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepEnrollmentFormPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -1071,6 +1166,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "guardianKeys_indexed_longs";
 			case "paymentKeys":
 				return "paymentKeys_indexed_longs";
+			case "enrollmentFormKey":
+				return "enrollmentFormKey_indexed_long";
 			case "educationSort":
 				return "educationSort_indexed_int";
 			case "schoolSort":

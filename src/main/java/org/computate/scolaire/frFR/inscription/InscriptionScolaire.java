@@ -42,6 +42,16 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /enrollment
  * 
+ * ApiMethode.frFR: FormPageRecherche
+ * PageFormPageRecherche.frFR: InscriptionFormPage
+ * PageSuperFormPageRecherche.frFR: ClusterPage
+ * ApiUriFormPageRecherche.frFR: /inscription/form
+ * 
+ * ApiMethode.enUS: FormSearchPage
+ * PageFormSearchPage.enUS: EnrollmentFormPage
+ * PageSuperFormSearchPage.enUS: ClusterPage
+ * ApiUriFormSearchPage.enUS: /enrollment/form
+ * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
  * Couleur: purple
@@ -50,7 +60,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/ 
+*/    
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
@@ -307,6 +317,20 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: payments
 	 */               
 	protected void _paiementCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentFormKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: FormInscription.partFormCles
+	 * HtmlLigne: 10
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: formulaire d'inscription
+	 * NomAffichage.enUS: enrollment form
+	*/           
+	protected void _formInscriptionCle(Couverture<Long> c) {
+	}
 
 	/**
 	 * {@inheritDoc}

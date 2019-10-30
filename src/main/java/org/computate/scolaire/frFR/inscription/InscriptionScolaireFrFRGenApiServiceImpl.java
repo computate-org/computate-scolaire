@@ -226,6 +226,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "paiementCles", pk));
 						}
 						break;
+					case "formInscriptionCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("formInscriptionCle", pk, "partFormCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
 					case "inscriptionApprouve":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionApprouve", jsonObject.getBoolean(entiteVar), pk));
@@ -609,6 +613,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "removePaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						break;
+					case "setFormInscriptionCle":
+						o2.setFormInscriptionCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("formInscriptionCle", pk, "partFormCles", o2.getFormInscriptionCle()));
+						break;
+					case "removeFormInscriptionCle":
+						o2.setFormInscriptionCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("formInscriptionCle", pk, "partFormCles", o2.getFormInscriptionCle()));
 						break;
 					case "setInscriptionApprouve":
 						if(requeteJson.getBoolean(methodeNom) == null) {
@@ -1009,7 +1023,88 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeInscriptionScolaire(listeInscriptionScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinInscriptionPage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	// FormPageRecherche //
+
+	@Override
+	public void formpagerechercheInscriptionScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		formpagerechercheInscriptionScolaire(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void formpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
+			sqlInscriptionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurInscriptionScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription/form", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+									reponse200FormPageRechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurInscriptionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200FormPageRechercheInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(listeInscriptionScolaire.getRequeteSite_(), buffer);
+			InscriptionFormPage page = new InscriptionFormPage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/form");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			page.setListeInscriptionScolaire(listeInscriptionScolaire);
+			page.setRequeteSite_(requeteSite);
+			page.initLoinInscriptionFormPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
 		} catch(Exception e) {
@@ -1071,6 +1166,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "gardienCles_indexed_longs";
 			case "paiementCles":
 				return "paiementCles_indexed_longs";
+			case "formInscriptionCle":
+				return "formInscriptionCle_indexed_long";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":

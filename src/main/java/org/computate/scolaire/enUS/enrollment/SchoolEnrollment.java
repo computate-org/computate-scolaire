@@ -77,6 +77,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _paymentKeys(List<Long> o) {}
 
+	protected void _enrollmentFormKey(Wrap<Long> c) {
+	}
+
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(6);
 	}

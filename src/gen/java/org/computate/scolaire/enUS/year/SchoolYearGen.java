@@ -1,6 +1,5 @@
 package org.computate.scolaire.enUS.year;
 
-import org.computate.scolaire.enUS.enrollment.form.EnrollmentForm;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -33,6 +32,7 @@ import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.computate.scolaire.frFR.inscription.design.DesignInscription;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -1248,26 +1248,26 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////////////////
 
 	/**	L'entité « enrollmentFormSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentForm>(). 
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
 	 */
 	@JsonIgnore
-	protected SearchList<EnrollmentForm> enrollmentFormSearch = new SearchList<EnrollmentForm>();
+	protected SearchList<DesignInscription> enrollmentFormSearch = new SearchList<DesignInscription>();
 	@JsonIgnore
-	public Wrap<SearchList<EnrollmentForm>> enrollmentFormSearchWrap = new Wrap<SearchList<EnrollmentForm>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
+	public Wrap<SearchList<DesignInscription>> enrollmentFormSearchWrap = new Wrap<SearchList<DesignInscription>>().p(this).c(SearchList.class).var("enrollmentFormSearch").o(enrollmentFormSearch);
 
 	/**	<br/>L'entité « enrollmentFormSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentForm>(). 
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<DesignInscription>(). 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormSearch">Trouver l'entité enrollmentFormSearch dans Solr</a>
 	 * <br/>
 	 * @param enrollmentFormSearch est l'entité déjà construit. 
 	 **/
-	protected abstract void _enrollmentFormSearch(SearchList<EnrollmentForm> l);
+	protected abstract void _enrollmentFormSearch(SearchList<DesignInscription> l);
 
-	public SearchList<EnrollmentForm> getEnrollmentFormSearch() {
+	public SearchList<DesignInscription> getEnrollmentFormSearch() {
 		return enrollmentFormSearch;
 	}
 
-	public void setEnrollmentFormSearch(SearchList<EnrollmentForm> enrollmentFormSearch) {
+	public void setEnrollmentFormSearch(SearchList<DesignInscription> enrollmentFormSearch) {
 		this.enrollmentFormSearch = enrollmentFormSearch;
 		this.enrollmentFormSearchWrap.alreadyInitialized = true;
 	}

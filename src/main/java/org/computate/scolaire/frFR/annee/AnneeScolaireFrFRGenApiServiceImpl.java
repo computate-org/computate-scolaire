@@ -763,6 +763,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeAnneeScolaire(listeAnneeScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinAnneePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
