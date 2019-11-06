@@ -71,6 +71,11 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session_.getSessionKey());
 	}
 
+	protected void _schoolName(Wrap<String> c) {
+		if(session_ != null)
+			c.o(session_.getSchoolName());
+	}
+
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(session_ != null)
 			c.o((String)session_.getSchoolCompleteName());

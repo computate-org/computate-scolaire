@@ -2910,7 +2910,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSchoolPayment(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2922,7 +2922,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			indexSchoolPayment(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3067,7 +3067,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			initDeepSchoolPayment(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit();
+			solrClient.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

@@ -48,7 +48,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static DateTimeFormatter FORMATDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a:ss.SSS", Locale.US);
 
-	public static DateTimeFormatter FORMATZonedDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a:ss.SSS zz VV", Locale.US);
+	public static DateTimeFormatter FORMATZonedDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy H:mm:ss.SSS zz VV", Locale.US);
 
 	public static DateTimeFormatter FORMATTimeDisplay = DateTimeFormatter.ofPattern("h:mm a", Locale.US);
 
@@ -239,6 +239,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 	public void  htmlScriptsPageLayout() {
 		e("script").a("src", staticBaseUrl, "/js/jquery-1.12.4.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/site-enUS.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/sockjs.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/vertx-eventbus.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/SiteUserPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/SchoolPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");

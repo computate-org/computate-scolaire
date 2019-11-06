@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -262,30 +264,47 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeAnneeScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHAnneeScolaire(listeAnneeScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurAnneeScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeAnneeScolaire.getRows());
+									requetePatch.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHAnneeScolaire(requetePatch, listeAnneeScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHAnneeScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -303,7 +322,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
-	public void listePATCHAnneeScolaire(ListeRecherche<AnneeScolaire> listeAnneeScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHAnneeScolaire(RequetePatch requetePatch, ListeRecherche<AnneeScolaire> listeAnneeScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeAnneeScolaire.getRequeteSite_();
 		listeAnneeScolaire.getList().forEach(o -> {
@@ -318,10 +337,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeAnneeScolaire.size());
 				if(listeAnneeScolaire.next(dt)) {
-					listePATCHAnneeScolaire(listeAnneeScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHAnneeScolaire(requetePatch, listeAnneeScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHAnneeScolaire(listeAnneeScolaire, gestionnaireEvenements);
+					reponse200PATCHAnneeScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurAnneeScolaire(listeAnneeScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -495,10 +516,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
-	public void reponse200PATCHAnneeScolaire(ListeRecherche<AnneeScolaire> listeAnneeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHAnneeScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeAnneeScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -814,6 +835,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "ecoleTri_indexed_int";
 			case "anneeTri":
 				return "anneeTri_indexed_int";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":

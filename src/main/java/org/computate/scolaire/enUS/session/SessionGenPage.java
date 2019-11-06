@@ -103,6 +103,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolSessionAgeKeys($('#formSchoolSessionAgeKeys'), $('#listSchoolSessionAgeKeys_Page')); ");
+		tl(1, "websocketSchoolSession(); ");
 		l("});");
 	}
 

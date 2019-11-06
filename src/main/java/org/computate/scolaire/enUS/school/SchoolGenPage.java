@@ -95,6 +95,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSchoolGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolYearKeys($('#formSchoolYearKeys'), $('#listSchoolYearKeys_Page')); ");
+		tl(1, "websocketSchool(); ");
 		l("});");
 	}
 

@@ -95,6 +95,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	@Override public void htmlScriptMomGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolMomEnrollmentKeys($('#formSchoolMomEnrollmentKeys'), $('#listSchoolMomEnrollmentKeys_Page')); ");
+		tl(1, "websocketSchoolMom(); ");
 		l("});");
 	}
 

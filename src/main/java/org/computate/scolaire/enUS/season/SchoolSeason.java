@@ -60,6 +60,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 			c.o(year_.getYearKey());
 	}
 
+	protected void _schoolName(Wrap<String> c) {
+		if(year_ != null)
+			c.o(year_.getSchoolName());
+	}
+
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(year_ != null)
 			c.o(year_.getSchoolCompleteName());

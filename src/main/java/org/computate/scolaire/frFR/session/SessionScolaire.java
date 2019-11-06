@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.session;   
+package org.computate.scolaire.frFR.session;    
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -226,6 +226,25 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	protected void _saisonCle(Couverture<Long> c) {
 		if(saison_ != null)
 			c.o(saison_.getSaisonCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: saison
+	 * r.enUS: season
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(saison_ != null)
+			c.o(saison_.getEcoleNom());
 	}
 
 	/**

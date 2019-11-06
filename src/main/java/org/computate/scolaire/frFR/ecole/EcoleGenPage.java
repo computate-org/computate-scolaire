@@ -96,6 +96,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	@Override public void htmlScriptEcoleGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereEcoleAnneeCles($('#formEcoleAnneeCles'), $('#listEcoleAnneeCles_Page')); ");
+		tl(1, "websocketEcole(); ");
 		l("});");
 	}
 

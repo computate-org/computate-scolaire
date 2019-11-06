@@ -128,6 +128,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o((String)child_.getPersonCompleteName());
 	}
 
+	protected void _schoolName(Wrap<String> c) {
+		if(block_ != null)
+			c.o(block_.getSchoolName());
+	}
+
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(block_ != null)
 			c.o(block_.getSchoolCompleteName());

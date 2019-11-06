@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -290,30 +292,47 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeMereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHMereScolaire(listeMereScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurMereScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeMereScolaire.getRows());
+									requetePatch.setNumFound(listeMereScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHMereScolaire(requetePatch, listeMereScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHMereScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -331,7 +350,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void listePATCHMereScolaire(ListeRecherche<MereScolaire> listeMereScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHMereScolaire(RequetePatch requetePatch, ListeRecherche<MereScolaire> listeMereScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
 		listeMereScolaire.getList().forEach(o -> {
@@ -346,10 +365,12 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeMereScolaire.size());
 				if(listeMereScolaire.next(dt)) {
-					listePATCHMereScolaire(listeMereScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHMereScolaire(requetePatch, listeMereScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHMereScolaire(listeMereScolaire, gestionnaireEvenements);
+					reponse200PATCHMereScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurMereScolaire(listeMereScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -593,10 +614,10 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200PATCHMereScolaire(ListeRecherche<MereScolaire> listeMereScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHMereScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -861,6 +882,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeMereScolaire(listeMereScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinMerePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));

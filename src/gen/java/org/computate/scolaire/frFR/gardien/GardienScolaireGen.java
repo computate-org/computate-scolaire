@@ -3204,7 +3204,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerGardienScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3216,7 +3216,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			indexerGardienScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3361,7 +3361,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			initLoinGardienScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

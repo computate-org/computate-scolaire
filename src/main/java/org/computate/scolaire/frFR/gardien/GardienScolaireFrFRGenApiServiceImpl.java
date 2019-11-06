@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -270,30 +272,47 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHGardienScolaire(listeGardienScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurGardienScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeGardienScolaire.getRows());
+									requetePatch.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -311,7 +330,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void listePATCHGardienScolaire(ListeRecherche<GardienScolaire> listeGardienScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHGardienScolaire(RequetePatch requetePatch, ListeRecherche<GardienScolaire> listeGardienScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
 		listeGardienScolaire.getList().forEach(o -> {
@@ -326,10 +345,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeGardienScolaire.size());
 				if(listeGardienScolaire.next(dt)) {
-					listePATCHGardienScolaire(listeGardienScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHGardienScolaire(listeGardienScolaire, gestionnaireEvenements);
+					reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurGardienScolaire(listeGardienScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -523,10 +544,10 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void reponse200PATCHGardienScolaire(ListeRecherche<GardienScolaire> listeGardienScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHGardienScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -791,6 +812,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeGardienScolaire(listeGardienScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinGardienPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));

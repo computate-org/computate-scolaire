@@ -120,7 +120,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		e("script").a("src", staticBaseUrl, "/js/enUS/DadPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/GuardianPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/PaymentPage.js").f().g("script");
-		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentFormPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptEnrollmentGenPage() {
@@ -131,7 +130,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		tl(1, "suggestSchoolEnrollmentDadKeys($('#formSchoolEnrollmentDadKeys'), $('#listSchoolEnrollmentDadKeys_Page')); ");
 		tl(1, "suggestSchoolEnrollmentGuardianKeys($('#formSchoolEnrollmentGuardianKeys'), $('#listSchoolEnrollmentGuardianKeys_Page')); ");
 		tl(1, "suggestSchoolEnrollmentPaymentKeys($('#formSchoolEnrollmentPaymentKeys'), $('#listSchoolEnrollmentPaymentKeys_Page')); ");
-		tl(1, "suggestSchoolEnrollmentEnrollmentFormKey($('#formSchoolEnrollmentEnrollmentFormKey'), $('#listSchoolEnrollmentEnrollmentFormKey_Page')); ");
+		tl(1, "websocketSchoolEnrollment(); ");
 		l("});");
 	}
 
@@ -1063,60 +1062,18 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formSchoolEnrollmentEnrollmentFormKey").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valueFormPartKeys")
-							.a("class", "valueFormPartKeys ")
-							.a("value", siteRequest_.getRequestPk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggestSchoolEnrollmentEnrollmentFormKey").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "/enrollment-form").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
-									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
-									sx("enrollment form");
-								} g("a");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("class", "w3-cell ").f();
-									sx("relate an enrollment form to this enrollment");
-								} g("h5");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-									{ e("div").a("class", "w3-cell-row ").f();
-
-									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-										e("input")
-											.a("type", "text")
-											.a("placeholder", "enrollment form")
-											.a("class", "valueObjectSuggest suggestEnrollmentFormKey w3-input w3-border w3-cell w3-cell-middle ")
-											.a("name", "setEnrollmentFormKey")
-											.a("id", "Page_enrollmentFormKey")
-											.a("autocomplete", "off")
-											.a("oninput", "suggestSchoolEnrollmentEnrollmentFormKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolEnrollmentEnrollmentFormKey'), $('#listSchoolEnrollmentEnrollmentFormKey_Page')); ")
-										.fg();
-
-									} g("div");
-								} g("div");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentEnrollmentFormKey_Page").f();
-									} g("ul");
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postEnrollmentFormVals({ formPartKeys: [ \"", o.getPk(), "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggestSchoolEnrollmentEnrollmentFormKey($('#' + ($('#Page_enrollmentFormKey').val() ? 'suggest' : 'form') + 'SchoolEnrollmentEnrollmentFormKey'), $('#listSchoolEnrollmentEnrollmentFormKey_Page')); var $e = $('#Page_enrollmentFormKey'); $e.html($e.val()); }, function() { addError($('#Page_enrollmentFormKey')); }); }, function() { addError($('#Page_enrollmentFormKey')); });")
-											.f().sx("add an enrollment form")
-										.g("button");
-									} g("div");
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("class", "").f().sx("enrollment form").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strEnrollmentFormKey()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("form");
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");

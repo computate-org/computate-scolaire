@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;   
+package org.computate.scolaire.frFR.bloc;    
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -277,6 +277,25 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	protected void _ageCle(Couverture<Long> c) {
 		if(age_ != null)
 			c.o(age_.getAgeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: age
+	 * r.enUS: age
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(age_ != null)
+			c.o(age_.getEcoleNom());
 	}
 
 	/**

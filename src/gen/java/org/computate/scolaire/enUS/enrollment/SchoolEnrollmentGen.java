@@ -2575,6 +2575,108 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////
+	// schoolName //
+	////////////////
+
+	/**	L'entité « schoolName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolName;
+	@JsonIgnore
+	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
+
+	/**	<br/>L'entité « schoolName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Trouver l'entité schoolName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolName(Wrap<String> c);
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+		this.schoolNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment schoolNameInit() {
+		if(!schoolNameWrap.alreadyInitialized) {
+			_schoolName(schoolNameWrap);
+			if(schoolName == null)
+				setSchoolName(schoolNameWrap.o);
+		}
+		schoolNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrSchoolName() {
+		return schoolName;
+	}
+
+	public String strSchoolName() {
+		return schoolName == null ? "" : schoolName;
+	}
+
+	public String jsonSchoolName() {
+		return schoolName == null ? "" : schoolName;
+	}
+
+	public String nomAffichageSchoolName() {
+		return "r: EcoleNom";
+	}
+
+	public String htmTooltipSchoolName() {
+		return null;
+	}
+
+	public String htmSchoolName() {
+		return schoolName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolName());
+	}
+
+	public void htmSchoolName(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolEnrollment", strPk(), "SchoolName\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolEnrollment", strPk(), "SchoolName() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolName\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolName()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolName\"");
+							r.s(" value=\"", htmSchoolName(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolName());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////////////
 	// schoolCompleteName //
 	////////////////////////
@@ -6616,6 +6718,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childSearchInit();
 		child_Init();
 		childCompleteNameInit();
+		schoolNameInit();
 		schoolCompleteNameInit();
 		schoolLocationInit();
 		yearStartInit();
@@ -6745,6 +6848,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.child_;
 			case "childCompleteName":
 				return oSchoolEnrollment.childCompleteName;
+			case "schoolName":
+				return oSchoolEnrollment.schoolName;
 			case "schoolCompleteName":
 				return oSchoolEnrollment.schoolCompleteName;
 			case "schoolLocation":
@@ -6861,9 +6966,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
-				return val;
-			case "enrollmentFormKey":
-				oSchoolEnrollment.setEnrollmentFormKey((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -7024,9 +7126,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			if(paymentKeys != null)
 				oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
 
-			Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
-			if(enrollmentFormKey != null)
-				oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
+			if(savesSchoolEnrollment.contains("enrollmentFormKey")) {
+				Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
+				if(enrollmentFormKey != null)
+					oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
+			}
 
 			if(savesSchoolEnrollment.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
@@ -7068,6 +7172,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 				if(childCompleteName != null)
 					oSchoolEnrollment.setChildCompleteName(childCompleteName);
+			}
+
+			if(savesSchoolEnrollment.contains("schoolName")) {
+				String schoolName = (String)solrDocument.get("schoolName_stored_string");
+				if(schoolName != null)
+					oSchoolEnrollment.setSchoolName(schoolName);
 			}
 
 			if(savesSchoolEnrollment.contains("schoolCompleteName")) {
@@ -7339,7 +7449,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSchoolEnrollment(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -7351,7 +7461,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			indexSchoolEnrollment(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -7464,6 +7574,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(childCompleteName != null) {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
 			document.addField("childCompleteName_stored_string", childCompleteName);
+		}
+		if(schoolName != null) {
+			document.addField("schoolName_indexed_string", schoolName);
+			document.addField("schoolName_stored_string", schoolName);
 		}
 		if(schoolCompleteName != null) {
 			document.addField("schoolCompleteName_indexed_string", schoolCompleteName);
@@ -7628,7 +7742,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			initDeepSchoolEnrollment(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit();
+			solrClient.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -7727,6 +7841,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)
 			oSchoolEnrollment.setChildCompleteName(childCompleteName);
+
+		String schoolName = (String)solrDocument.get("schoolName_stored_string");
+		if(schoolName != null)
+			oSchoolEnrollment.setSchoolName(schoolName);
 
 		String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 		if(schoolCompleteName != null)
@@ -7884,7 +8002,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
+		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
 	}
 
 	////////////
@@ -7904,7 +8022,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( dadKeys, that.dadKeys )
 				&& Objects.equals( guardianKeys, that.guardianKeys )
 				&& Objects.equals( paymentKeys, that.paymentKeys )
-				&& Objects.equals( enrollmentFormKey, that.enrollmentFormKey )
 				&& Objects.equals( enrollmentApproved, that.enrollmentApproved )
 				&& Objects.equals( enrollmentImmunizations, that.enrollmentImmunizations )
 				&& Objects.equals( familyMarried, that.familyMarried )
@@ -7932,7 +8049,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", dadKeys: " ).append(dadKeys);
 		sb.append( ", guardianKeys: " ).append(guardianKeys);
 		sb.append( ", paymentKeys: " ).append(paymentKeys);
-		sb.append( ", enrollmentFormKey: " ).append(enrollmentFormKey);
 		sb.append( ", enrollmentApproved: " ).append(enrollmentApproved);
 		sb.append( ", enrollmentImmunizations: " ).append(enrollmentImmunizations);
 		sb.append( ", familyMarried: " ).append(familyMarried);

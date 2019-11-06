@@ -104,6 +104,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereSessionScolaireAgeCles($('#formSessionScolaireAgeCles'), $('#listSessionScolaireAgeCles_Page')); ");
+		tl(1, "websocketSessionScolaire(); ");
 		l("});");
 	}
 

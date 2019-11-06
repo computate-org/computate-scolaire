@@ -79,4 +79,19 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 
 	protected void _sort10(Wrap<Double> c) {
 	}
+
+	@Override()
+	protected void  _objectTitle(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		b.append(pk).append(" ");
+		if(htmlBefore != null)
+			b.append(htmlBefore);
+		if(htmlVar != null)
+			b.append("{{").append(htmlVar).append("}}");
+		if(htmlText != null)
+			b.append(htmlText);
+		if(htmlAfter != null)
+			b.append(htmlAfter);
+		c.o(b.toString());
+	}
 }

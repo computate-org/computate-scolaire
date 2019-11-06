@@ -100,6 +100,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	@Override public void htmlScriptPaiementGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggerePaiementScolaireInscriptionCles($('#formPaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles_Page')); ");
+		tl(1, "websocketPaiementScolaire(); ");
 		l("});");
 	}
 

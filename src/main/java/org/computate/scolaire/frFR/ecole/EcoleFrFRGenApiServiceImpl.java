@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -270,30 +272,47 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHEcole(listeEcole, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurEcole(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeEcole.getRows());
+									requetePatch.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHEcole(requetePatch, listeEcole, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurEcole(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHEcole(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurEcole(requeteSite, gestionnaireEvenements, c);
 								}
@@ -311,7 +330,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
-	public void listePATCHEcole(ListeRecherche<Ecole> listeEcole, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHEcole(RequetePatch requetePatch, ListeRecherche<Ecole> listeEcole, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
 		listeEcole.getList().forEach(o -> {
@@ -326,10 +345,12 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeEcole.size());
 				if(listeEcole.next(dt)) {
-					listePATCHEcole(listeEcole, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHEcole(requetePatch, listeEcole, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHEcole(listeEcole, gestionnaireEvenements);
+					reponse200PATCHEcole(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurEcole(listeEcole.getRequeteSite_(), gestionnaireEvenements, a);
@@ -523,10 +544,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
-	public void reponse200PATCHEcole(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHEcole(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -791,6 +812,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeEcole(listeEcole);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinEcolePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));

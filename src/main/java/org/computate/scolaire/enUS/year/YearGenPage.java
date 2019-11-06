@@ -97,6 +97,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolYearSchoolKey($('#formSchoolYearSchoolKey'), $('#listSchoolYearSchoolKey_Page')); ");
 		tl(1, "suggestSchoolYearSeasonKeys($('#formSchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys_Page')); ");
+		tl(1, "websocketSchoolYear(); ");
 		l("});");
 	}
 

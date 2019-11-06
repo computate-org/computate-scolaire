@@ -2911,7 +2911,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerPaiementScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2923,7 +2923,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			indexerPaiementScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3068,7 +3068,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			initLoinPaiementScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

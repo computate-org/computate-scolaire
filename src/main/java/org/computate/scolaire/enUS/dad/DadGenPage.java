@@ -95,6 +95,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 	@Override public void htmlScriptDadGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolDadEnrollmentKeys($('#formSchoolDadEnrollmentKeys'), $('#listSchoolDadEnrollmentKeys_Page')); ");
+		tl(1, "websocketSchoolDad(); ");
 		l("});");
 	}
 

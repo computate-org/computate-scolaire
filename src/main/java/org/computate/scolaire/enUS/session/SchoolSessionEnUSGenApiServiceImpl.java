@@ -4,7 +4,9 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -258,30 +260,47 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-									listPATCHSchoolSession(listSchoolSession, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolSession(siteRequest, eventHandler, f);
-															}
-														});
+
+									PatchRequest patchRequest = new PatchRequest();
+									patchRequest.setRows(listSchoolSession.getRows());
+									patchRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+									patchRequest.initDeepPatchRequest(siteRequest);
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listPATCHSchoolSession(patchRequest, listSchoolSession, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection sqlConnection = siteRequest.getSqlConnection();
+														if(sqlConnection == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															sqlConnection.commit(e -> {
+																	if(e.succeeded()) {
+																	sqlConnection.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											errorSchoolSession(siteRequest, eventHandler, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 										}
-									});
+									);
+									response200PATCHSchoolSession(patchRequest, eventHandler);
 								} else {
 									errorSchoolSession(siteRequest, eventHandler, c);
 								}
@@ -299,7 +318,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void listPATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolSession(PatchRequest patchRequest, SearchList<SchoolSession> listSchoolSession, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
 		listSchoolSession.getList().forEach(o -> {
@@ -314,10 +333,12 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolSession.size());
 				if(listSchoolSession.next(dt)) {
-					listPATCHSchoolSession(listSchoolSession, dt, eventHandler);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(patchRequest).toString());
+					listPATCHSchoolSession(patchRequest, listSchoolSession, dt, eventHandler);
 				} else {
-					response200PATCHSchoolSession(listSchoolSession, eventHandler);
+					response200PATCHSchoolSession(patchRequest, eventHandler);
 				}
 			} else {
 				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
@@ -481,10 +502,10 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void response200PATCHSchoolSession(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolSession(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(patchRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -749,6 +770,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolSession(listSchoolSession);
+			page.setSiteRequest_(siteRequest);
 			page.initDeepSessionPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -807,6 +829,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				return "yearKey_indexed_long";
 			case "seasonKey":
 				return "seasonKey_indexed_long";
+			case "schoolName":
+				return "schoolName_indexed_string";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
 			case "schoolLocation":

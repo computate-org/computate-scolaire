@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.cluster;
 
+import java.lang.reflect.Field;
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -122,7 +123,9 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _pageH1(Wrap<String> c) {
 		try {
 			Class<?> cl = getClass();
-			c.o((String)FieldUtils.getField(cl, cl.getSimpleName() + "_NomSingulier").get(this) + ": " + objectTitle);
+			Field f = FieldUtils.getField(cl, cl.getSimpleName() + "_NomSingulier");
+			if(f != null)
+				c.o((String)f.get(this) + ": " + objectTitle);
 		} catch (Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

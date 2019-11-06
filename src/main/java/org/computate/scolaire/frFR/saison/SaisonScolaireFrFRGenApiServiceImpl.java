@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -266,30 +268,47 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeSaisonScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHSaisonScolaire(listeSaisonScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurSaisonScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeSaisonScolaire.getRows());
+									requetePatch.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHSaisonScolaire(requetePatch, listeSaisonScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHSaisonScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -307,7 +326,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
-	public void listePATCHSaisonScolaire(ListeRecherche<SaisonScolaire> listeSaisonScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHSaisonScolaire(RequetePatch requetePatch, ListeRecherche<SaisonScolaire> listeSaisonScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
 		listeSaisonScolaire.getList().forEach(o -> {
@@ -322,10 +341,12 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeSaisonScolaire.size());
 				if(listeSaisonScolaire.next(dt)) {
-					listePATCHSaisonScolaire(listeSaisonScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHSaisonScolaire(requetePatch, listeSaisonScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHSaisonScolaire(listeSaisonScolaire, gestionnaireEvenements);
+					reponse200PATCHSaisonScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurSaisonScolaire(listeSaisonScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -509,10 +530,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
-	public void reponse200PATCHSaisonScolaire(ListeRecherche<SaisonScolaire> listeSaisonScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHSaisonScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSaisonScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -777,6 +798,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeSaisonScolaire(listeSaisonScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinSaisonPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -831,6 +853,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
 				return "anneeCle_indexed_long";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":

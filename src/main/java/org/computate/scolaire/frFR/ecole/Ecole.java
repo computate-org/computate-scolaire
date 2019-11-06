@@ -193,7 +193,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.enUS: phone number
 	 * Description.frFR: Numéro de téléphone de l'école. 
 	 * Description.enUS: Telephone number of the school. 
-	 */         
+	 */
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
 	}
 
@@ -209,7 +209,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */               
+	 */  
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 	}
 
@@ -225,7 +225,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * NomAffichage.frFR: l'emplacement
 	 * Description.frFR: 
 	 * Description.enUS: 
-	 */               
+	 */             
 	protected void _ecoleEmplacement(Couverture<String> c) {
 	}
 
@@ -283,7 +283,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r.enUS: schoolLocation
 	 * r: "%s à %s"
 	 * r.enUS: "%s at %s"
-	 */     
+	 */      
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(ecoleEmplacement != null)
 			c.o(String.format("%s à %s", ecoleNom, ecoleEmplacement));

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                   
+package org.computate.scolaire.frFR.annee;                    
 
 import java.util.List;
 
@@ -160,6 +160,25 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		if(ecoleRecherche.size() > 0) {
 			c.o(ecoleRecherche.get(0));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: ecole
+	 * r.enUS: school
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(ecole_ != null)
+			c.o(ecole_.getEcoleNom());
 	}
 
 	/**

@@ -4,7 +4,9 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -270,30 +272,47 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listSchoolPayment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-									listPATCHSchoolPayment(listSchoolPayment, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchoolPayment(siteRequest, eventHandler, f);
-															}
-														});
+
+									PatchRequest patchRequest = new PatchRequest();
+									patchRequest.setRows(listSchoolPayment.getRows());
+									patchRequest.setNumFound(listSchoolPayment.getQueryResponse().getResults().getNumFound());
+									patchRequest.initDeepPatchRequest(siteRequest);
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection sqlConnection = siteRequest.getSqlConnection();
+														if(sqlConnection == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															sqlConnection.commit(e -> {
+																	if(e.succeeded()) {
+																	sqlConnection.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											errorSchoolPayment(siteRequest, eventHandler, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 										}
-									});
+									);
+									response200PATCHSchoolPayment(patchRequest, eventHandler);
 								} else {
 									errorSchoolPayment(siteRequest, eventHandler, c);
 								}
@@ -311,7 +330,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public void listPATCHSchoolPayment(SearchList<SchoolPayment> listSchoolPayment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolPayment(PatchRequest patchRequest, SearchList<SchoolPayment> listSchoolPayment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		listSchoolPayment.getList().forEach(o -> {
@@ -326,10 +345,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolPayment.size());
 				if(listSchoolPayment.next(dt)) {
-					listPATCHSchoolPayment(listSchoolPayment, dt, eventHandler);
+				siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(patchRequest).toString());
+					listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, eventHandler);
 				} else {
-					response200PATCHSchoolPayment(listSchoolPayment, eventHandler);
+					response200PATCHSchoolPayment(patchRequest, eventHandler);
 				}
 			} else {
 				errorSchoolPayment(listSchoolPayment.getSiteRequest_(), eventHandler, a);
@@ -523,10 +544,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public void response200PATCHSchoolPayment(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolPayment(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(patchRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -791,6 +812,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchoolPayment(listSchoolPayment);
+			page.setSiteRequest_(siteRequest);
 			page.initDeepPaymentPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));

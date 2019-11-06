@@ -2201,7 +2201,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerEcole(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2213,7 +2213,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			indexerEcole(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2326,7 +2326,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			initLoinEcole(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

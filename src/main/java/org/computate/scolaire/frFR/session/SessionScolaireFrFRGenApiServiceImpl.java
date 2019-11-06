@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -258,30 +260,47 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeSessionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHSessionScolaire(listeSessionScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurSessionScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeSessionScolaire.getRows());
+									requetePatch.setNumFound(listeSessionScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHSessionScolaire(requetePatch, listeSessionScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurSessionScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHSessionScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -299,7 +318,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void listePATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHSessionScolaire(RequetePatch requetePatch, ListeRecherche<SessionScolaire> listeSessionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
 		listeSessionScolaire.getList().forEach(o -> {
@@ -314,10 +333,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeSessionScolaire.size());
 				if(listeSessionScolaire.next(dt)) {
-					listePATCHSessionScolaire(listeSessionScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHSessionScolaire(requetePatch, listeSessionScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHSessionScolaire(listeSessionScolaire, gestionnaireEvenements);
+					reponse200PATCHSessionScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurSessionScolaire(listeSessionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -481,10 +502,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void reponse200PATCHSessionScolaire(ListeRecherche<SessionScolaire> listeSessionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHSessionScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeSessionScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -749,6 +770,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeSessionScolaire(listeSessionScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinSessionPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -807,6 +829,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "anneeCle_indexed_long";
 			case "saisonCle":
 				return "saisonCle_indexed_long";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":

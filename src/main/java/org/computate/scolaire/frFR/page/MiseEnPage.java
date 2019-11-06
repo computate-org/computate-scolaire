@@ -85,8 +85,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 
 	/**
 	 * Var.enUS: FORMATZonedDateTimeDisplay
-	 * r: EEEE d MMMM yyyy H'h'mm
-	 * r.enUS: EEEE MMMM d yyyy h:mm a
+	 * r: EEEE d MMMM yyyy H'h'mm:ss.SSS zz VV
+	 * r.enUS: EEEE MMMM d yyyy H:mm:ss.SSS zz VV
 	 * r: Locale.FRANCE
 	 * r.enUS: Locale.US
 	 */
@@ -601,6 +601,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	@Override public void htmlScriptsMiseEnPage() {
 		e("script").a("src", statiqueUrlBase, "/js/jquery-1.12.4.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/site-frFR.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/sockjs.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/vertx-eventbus.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");

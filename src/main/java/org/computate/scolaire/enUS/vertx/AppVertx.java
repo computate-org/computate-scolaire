@@ -47,6 +47,8 @@ import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
+import io.vertx.ext.bridge.BridgeEventType;
+import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
@@ -55,11 +57,14 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
+import io.vertx.ext.web.handler.sockjs.BridgeOptions;
+import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
 /**	
@@ -131,7 +136,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				configureOpenApi().compose(c -> 
 					configureHealthChecks().compose(d -> 
 						configureSharedWorkerExecutor().compose(e -> 
-							startServer()
+							configureWebsockets().compose(f -> 
+								startServer()
+							)
 						)
 					)
 				)
@@ -355,6 +362,20 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			}
 		});
 		siteRouteur.get("/health").handler(healthCheckHandler);
+		future.complete();
+		return future;
+	}
+
+	/**	
+	 *	Configure websockets for realtime messages. 
+	 **/
+	private Future<Void> configureWebsockets() {
+		Future<Void> future = Future.future();
+		Router siteRouter = siteContextEnUS.getRouterFactory().getRouter();
+		BridgeOptions options = new BridgeOptions()
+				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
+		SockJSHandler sockJsHandler = SockJSHandler.create(vertx).bridge(options);
+		siteRouter.route("/eventbus/*").handler(sockJsHandler);
 		future.complete();
 		return future;
 	}

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.saison;  
+package org.computate.scolaire.frFR.saison;   
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -198,6 +198,25 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	protected void _anneeCle(Couverture<Long> c) {
 		if(annee_ != null)
 			c.o(annee_.getAnneeCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: annee
+	 * r.enUS: year
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(annee_ != null)
+			c.o(annee_.getEcoleNom());
 	}
 
 	/**

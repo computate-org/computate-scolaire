@@ -70,6 +70,11 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getSeasonKey());
 	}
 
+	protected void _schoolName(Wrap<String> c) {
+		if(season_ != null)
+			c.o(season_.getSchoolName());
+	}
+
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(season_ != null)
 			c.o((String)season_.getSchoolCompleteName());

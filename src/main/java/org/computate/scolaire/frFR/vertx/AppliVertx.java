@@ -50,6 +50,8 @@ import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
+import io.vertx.ext.bridge.BridgeEventType;
+import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
@@ -58,11 +60,14 @@ import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.api.contract.openapi3.impl.AppOpenAPI3RouterFactory;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
+import io.vertx.ext.web.handler.sockjs.BridgeOptions;
+import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
 /**
@@ -190,6 +195,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureHealthChecks
 	 * r: configurerExecuteurTravailleurPartage
 	 * r.enUS: configureSharedWorkerExecutor
+	 * r: configurerWebsockets
+	 * r.enUS: configureWebsockets
 	 * r: demarrerServeur
 	 * r.enUS: startServer
 	 * r: etapesFutures
@@ -211,7 +218,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				configurerOpenApi().compose(c -> 
 					configurerControlesSante().compose(d -> 
 						configurerExecuteurTravailleurPartage().compose(e -> 
-							demarrerServeur()
+							configurerWebsockets().compose(f -> 
+								demarrerServeur()
+							)
 						)
 					)
 				)
@@ -596,6 +605,35 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			}
 		});
 		siteRouteur.get("/health").handler(gestionnaireControlesSante);
+		future.complete();
+		return future;
+	}
+
+	/**
+	 * Var.enUS: configureWebsockets
+	 * 
+	 * enUS: Configure websockets for realtime messages. 
+	 * 
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: gestionnaireSockJs
+	 * r.enUS: sockJsHandler
+	 * r: GestionnaireSockJs
+	 * r.enUS: SockJsHandler
+	 * r: siteRouteur
+	 * r.enUS: siteRouter
+	 * r: usineRouteur
+	 * r.enUS: routerFactory
+	 * r: UsineRouteur
+	 * r.enUS: RouterFactory
+	 */
+	private Future<Void> configurerWebsockets() {
+		Future<Void> future = Future.future();
+		Router siteRouteur = siteContexteFrFR.getUsineRouteur().getRouter();
+		BridgeOptions options = new BridgeOptions()
+				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
+		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx).bridge(options);
+		siteRouteur.route("/eventbus/*").handler(gestionnaireSockJs);
 		future.complete();
 		return future;
 	}

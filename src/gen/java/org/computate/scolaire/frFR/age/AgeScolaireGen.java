@@ -1479,6 +1479,108 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	//////////////
+	// ecoleNom //
+	//////////////
+
+	/**	L'entité « ecoleNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleNom;
+	@JsonIgnore
+	public Couverture<String> ecoleNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNom").o(ecoleNom);
+
+	/**	<br/>L'entité « ecoleNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNom">Trouver l'entité ecoleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNom(Couverture<String> c);
+
+	public String getEcoleNom() {
+		return ecoleNom;
+	}
+
+	public void setEcoleNom(String ecoleNom) {
+		this.ecoleNom = ecoleNom;
+		this.ecoleNomCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire ecoleNomInit() {
+		if(!ecoleNomCouverture.dejaInitialise) {
+			_ecoleNom(ecoleNomCouverture);
+			if(ecoleNom == null)
+				setEcoleNom(ecoleNomCouverture.o);
+		}
+		ecoleNomCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrEcoleNom() {
+		return ecoleNom;
+	}
+
+	public String strEcoleNom() {
+		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String jsonEcoleNom() {
+		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String nomAffichageEcoleNom() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEcoleNom() {
+		return null;
+	}
+
+	public String htmEcoleNom() {
+		return ecoleNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNom());
+	}
+
+	public void htmEcoleNom(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleNom\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAgeScolaire", strPk(), "EcoleNom() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNom\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNom()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNom\"");
+							r.s(" value=\"", htmEcoleNom(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNom());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////////////
 	// ecoleNomComplet //
 	/////////////////////
@@ -3143,6 +3245,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		anneeCleInit();
 		saisonCleInit();
 		sessionCleInit();
+		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
 		anneeDebutInit();
@@ -3226,6 +3329,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.saisonCle;
 			case "sessionCle":
 				return oAgeScolaire.sessionCle;
+			case "ecoleNom":
+				return oAgeScolaire.ecoleNom;
 			case "ecoleNomComplet":
 				return oAgeScolaire.ecoleNomComplet;
 			case "ecoleEmplacement":
@@ -3411,6 +3516,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSessionCle(sessionCle);
 			}
 
+			if(sauvegardesAgeScolaire.contains("ecoleNom")) {
+				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
+				if(ecoleNom != null)
+					oAgeScolaire.setEcoleNom(ecoleNom);
+			}
+
 			if(sauvegardesAgeScolaire.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
@@ -3548,7 +3659,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerAgeScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3560,7 +3671,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			indexerAgeScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3625,6 +3736,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(sessionCle != null) {
 			document.addField("sessionCle_indexed_long", sessionCle);
 			document.addField("sessionCle_stored_long", sessionCle);
+		}
+		if(ecoleNom != null) {
+			document.addField("ecoleNom_indexed_string", ecoleNom);
+			document.addField("ecoleNom_stored_string", ecoleNom);
 		}
 		if(ecoleNomComplet != null) {
 			document.addField("ecoleNomComplet_indexed_string", ecoleNomComplet);
@@ -3701,7 +3816,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			initLoinAgeScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3764,6 +3879,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
 		if(sessionCle != null)
 			oAgeScolaire.setSessionCle(sessionCle);
+
+		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
+		if(ecoleNom != null)
+			oAgeScolaire.setEcoleNom(ecoleNom);
 
 		String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 		if(ecoleNomComplet != null)

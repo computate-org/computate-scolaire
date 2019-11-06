@@ -94,6 +94,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 	@Override public void htmlScriptGuardianGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolGuardianEnrollmentKeys($('#formSchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys_Page')); ");
+		tl(1, "websocketSchoolGuardian(); ");
 		l("});");
 	}
 

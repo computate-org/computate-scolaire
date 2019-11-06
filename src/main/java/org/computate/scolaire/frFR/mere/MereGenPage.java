@@ -96,6 +96,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 	@Override public void htmlScriptMereGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereMereScolaireInscriptionCles($('#formMereScolaireInscriptionCles'), $('#listMereScolaireInscriptionCles_Page')); ");
+		tl(1, "websocketMereScolaire(); ");
 		l("});");
 	}
 

@@ -40,10 +40,15 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeNom: sun
  * NomVar.frFR: part-html
  * NomVar.enUS: html-part
+ * Tri.asc: tri1
+ * Tri.asc: tri2
+ * Tri.asc: tri3
+ * Tri.asc: tri4
+ * Tri.asc: tri5
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                         
+*/                        
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -331,7 +336,34 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 8
 	 * HtmlCelulle: 10
-	 */               
+	 */              
 	protected void _tri10(Couverture<Double> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: _objectTitle
+	 * r: inscriptionNomComplet
+	 * r.enUS: enrollmentCompleteName
+	 * r: htmlAvant
+	 * r.enUS: htmlBefore
+	 * r: htmlTexte
+	 * r.enUS: htmlText
+	 * r: htmlApres
+	 * r.enUS: htmlAfter
+	 */ 
+	@Override
+	protected void _objetTitre(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		b.append(pk).append(" ");
+		if(htmlAvant != null)
+			b.append(htmlAvant);
+		if(htmlVar != null)
+			b.append("{{").append(htmlVar).append("}}");
+		if(htmlTexte != null)
+			b.append(htmlTexte);
+		if(htmlApres != null)
+			b.append(htmlApres);
+		c.o(b.toString());
 	}
 }

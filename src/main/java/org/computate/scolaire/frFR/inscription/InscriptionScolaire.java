@@ -453,6 +453,25 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: bloc
+	 * r.enUS: block
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -481,7 +500,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolLocation
 	 * r: bloc
 	 * r.enUS: block
-	 */               
+	 */           
 	protected void _ecoleEmplacement(Couverture<String> c) {
 		if(bloc_ != null)
 			c.o(bloc_.getEcoleEmplacement());
@@ -498,7 +517,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: YearStart
 	 * r: bloc
 	 * r.enUS: block
-	 */                   
+	 */               
 	protected void _anneeDebut(Couverture<Integer> c) {
 		if(bloc_ != null)
 			c.o(bloc_.getAnneeDebut());

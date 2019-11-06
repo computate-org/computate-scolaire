@@ -3224,7 +3224,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerMereScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3236,7 +3236,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			indexerMereScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3381,7 +3381,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			initLoinMereScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

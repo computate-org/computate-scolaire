@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -290,30 +292,47 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeBlocScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHBlocScolaire(listeBlocScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurBlocScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeBlocScolaire.getRows());
+									requetePatch.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHBlocScolaire(requetePatch, listeBlocScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHBlocScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -331,7 +350,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void listePATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHBlocScolaire(RequetePatch requetePatch, ListeRecherche<BlocScolaire> listeBlocScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
 		listeBlocScolaire.getList().forEach(o -> {
@@ -346,10 +365,12 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeBlocScolaire.size());
 				if(listeBlocScolaire.next(dt)) {
-					listePATCHBlocScolaire(listeBlocScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHBlocScolaire(requetePatch, listeBlocScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHBlocScolaire(listeBlocScolaire, gestionnaireEvenements);
+					reponse200PATCHBlocScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurBlocScolaire(listeBlocScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -593,10 +614,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200PATCHBlocScolaire(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHBlocScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -861,6 +882,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeBlocScolaire(listeBlocScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinBlocPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -925,6 +947,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "sessionCle_indexed_long";
 			case "ageCle":
 				return "ageCle_indexed_long";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":

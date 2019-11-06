@@ -96,6 +96,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptAgeGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereAgeScolaireBlocCles($('#formAgeScolaireBlocCles'), $('#listAgeScolaireBlocCles_Page')); ");
+		tl(1, "websocketAgeScolaire(); ");
 		l("});");
 	}
 

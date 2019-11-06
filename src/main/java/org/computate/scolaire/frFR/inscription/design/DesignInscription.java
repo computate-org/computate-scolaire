@@ -48,7 +48,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/    
+*/   
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
 	/**
@@ -306,7 +306,7 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * r.enUS: "enrollment design for the %s"
 	 * r: "design d'inscription"
 	 * r.enUS: "enrollment design"
-	 */  
+	 */ 
 	protected void _designInscriptionNomComplet(Couverture<String> c) {
 		String o;
 		if(anneeNomComplet == null)

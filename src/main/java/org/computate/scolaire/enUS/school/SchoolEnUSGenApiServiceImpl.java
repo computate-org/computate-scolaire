@@ -4,7 +4,9 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -270,30 +272,47 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-									listPATCHSchool(listSchool, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorSchool(siteRequest, eventHandler, f);
-															}
-														});
+
+									PatchRequest patchRequest = new PatchRequest();
+									patchRequest.setRows(listSchool.getRows());
+									patchRequest.setNumFound(listSchool.getQueryResponse().getResults().getNumFound());
+									patchRequest.initDeepPatchRequest(siteRequest);
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listPATCHSchool(patchRequest, listSchool, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection sqlConnection = siteRequest.getSqlConnection();
+														if(sqlConnection == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															sqlConnection.commit(e -> {
+																	if(e.succeeded()) {
+																	sqlConnection.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											errorSchool(siteRequest, eventHandler, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 										}
-									});
+									);
+									response200PATCHSchool(patchRequest, eventHandler);
 								} else {
 									errorSchool(siteRequest, eventHandler, c);
 								}
@@ -311,7 +330,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void listPATCHSchool(SearchList<School> listSchool, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchool(PatchRequest patchRequest, SearchList<School> listSchool, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
 		listSchool.getList().forEach(o -> {
@@ -326,10 +345,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchool.size());
 				if(listSchool.next(dt)) {
-					listPATCHSchool(listSchool, dt, eventHandler);
+				siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
+					listPATCHSchool(patchRequest, listSchool, dt, eventHandler);
 				} else {
-					response200PATCHSchool(listSchool, eventHandler);
+					response200PATCHSchool(patchRequest, eventHandler);
 				}
 			} else {
 				errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
@@ -523,10 +544,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200PATCHSchool(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchool(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(patchRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -791,6 +812,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			page.setListSchool(listSchool);
+			page.setSiteRequest_(siteRequest);
 			page.initDeepSchoolPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -1105,7 +1127,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchool(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : "\"" + StringUtils.replace(valueIndexed, "\"", "\\\"") + "\""));
+								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 								if(!"*".equals(entityVar)) {
 									listSearch.setHighlight(true);
 									listSearch.setHighlightSnippets(3);

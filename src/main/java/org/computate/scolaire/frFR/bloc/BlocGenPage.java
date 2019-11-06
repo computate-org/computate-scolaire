@@ -96,6 +96,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	@Override public void htmlScriptBlocGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereBlocScolaireInscriptionCles($('#formBlocScolaireInscriptionCles'), $('#listBlocScolaireInscriptionCles_Page')); ");
+		tl(1, "websocketBlocScolaire(); ");
 		l("});");
 	}
 

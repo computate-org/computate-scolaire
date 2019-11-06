@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;    
+package org.computate.scolaire.frFR.age;      
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -238,6 +238,25 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	protected void _sessionCle(Couverture<Long> c) {
 		if(session_ != null)
 			c.o(session_.getSessionCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolName
+	 * Indexe: true
+	 * Stocke: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: EcoleNom
+	 * r.enUS: SchoolName
+	 * r: session
+	 * r.enUS: session
+	 */   
+	protected void _ecoleNom(Couverture<String> c) {
+		if(session_ != null)
+			c.o(session_.getEcoleNom());
 	}
 
 	/**

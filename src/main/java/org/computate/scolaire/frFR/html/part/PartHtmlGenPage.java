@@ -58,7 +58,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(partHtml != null)
+		if(partHtml != null && partHtml.getObjetTitre() != null)
+			c.o(partHtml.getObjetTitre());
+		else if(partHtml != null)
 			c.o("");
 		else if(listePartHtml == null || listePartHtml.size() == 0)
 			c.o("aucun part de HTML trouvé");

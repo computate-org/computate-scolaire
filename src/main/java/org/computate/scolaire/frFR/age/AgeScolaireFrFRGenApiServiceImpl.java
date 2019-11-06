@@ -4,7 +4,9 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -258,30 +260,47 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listeAgeScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
-									listePATCHAgeScolaire(listeAgeScolaire, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											if(connexionSql == null) {
-												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											} else {
-												connexionSql.commit(e -> {
-													if(e.succeeded()) {
-														connexionSql.close(f -> {
-															if(f.succeeded()) {
-																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-															} else {
-																erreurAgeScolaire(requeteSite, gestionnaireEvenements, f);
-															}
-														});
+
+									RequetePatch requetePatch = new RequetePatch();
+									requetePatch.setRows(listeAgeScolaire.getRows());
+									requetePatch.setNumFound(listeAgeScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.initLoinRequetePatch(requeteSite);
+									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+									executeurTravailleur.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listePATCHAgeScolaire(requetePatch, listeAgeScolaire, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection connexionSql = requeteSite.getConnexionSql();
+														if(connexionSql == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															connexionSql.commit(e -> {
+																	if(e.succeeded()) {
+																	connexionSql.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											erreurAgeScolaire(requeteSite, gestionnaireEvenements, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 										}
-									});
+									);
+									reponse200PATCHAgeScolaire(requetePatch, gestionnaireEvenements);
 								} else {
 									erreurAgeScolaire(requeteSite, gestionnaireEvenements, c);
 								}
@@ -299,7 +318,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		}
 	}
 
-	public void listePATCHAgeScolaire(ListeRecherche<AgeScolaire> listeAgeScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHAgeScolaire(RequetePatch requetePatch, ListeRecherche<AgeScolaire> listeAgeScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeAgeScolaire.getRequeteSite_();
 		listeAgeScolaire.getList().forEach(o -> {
@@ -314,10 +333,12 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeAgeScolaire.size());
 				if(listeAgeScolaire.next(dt)) {
-					listePATCHAgeScolaire(listeAgeScolaire, dt, gestionnaireEvenements);
+				requeteSite.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requetePatch).toString());
+					listePATCHAgeScolaire(requetePatch, listeAgeScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHAgeScolaire(listeAgeScolaire, gestionnaireEvenements);
+					reponse200PATCHAgeScolaire(requetePatch, gestionnaireEvenements);
 				}
 			} else {
 				erreurAgeScolaire(listeAgeScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -481,10 +502,10 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		}
 	}
 
-	public void reponse200PATCHAgeScolaire(ListeRecherche<AgeScolaire> listeAgeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHAgeScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = listeAgeScolaire.getRequeteSite_();
-			JsonObject json = new JsonObject();
+			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requetePatch);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
@@ -749,6 +770,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			page.setListeAgeScolaire(listeAgeScolaire);
+			page.setRequeteSite_(requeteSite);
 			page.initLoinAgePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
@@ -809,6 +831,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				return "saisonCle_indexed_long";
 			case "sessionCle":
 				return "sessionCle_indexed_long";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":

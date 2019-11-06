@@ -100,6 +100,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	@Override public void htmlScriptEnfantGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereEnfantScolaireInscriptionCles($('#formEnfantScolaireInscriptionCles'), $('#listEnfantScolaireInscriptionCles_Page')); ");
+		tl(1, "websocketEnfantScolaire(); ");
 		l("});");
 	}
 

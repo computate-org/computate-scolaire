@@ -99,6 +99,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSeasonGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestSchoolSeasonSessionKeys($('#formSchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys_Page')); ");
+		tl(1, "websocketSchoolSeason(); ");
 		l("});");
 	}
 

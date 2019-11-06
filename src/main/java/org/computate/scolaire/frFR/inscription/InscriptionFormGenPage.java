@@ -120,7 +120,6 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PerePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/GardienPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PaiementPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/FormInscriptionPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptInscriptionFormGenPage() {
@@ -131,7 +130,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		tl(1, "suggereInscriptionScolairePereCles($('#formInscriptionScolairePereCles'), $('#listInscriptionScolairePereCles_Page')); ");
 		tl(1, "suggereInscriptionScolaireGardienCles($('#formInscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles_Page')); ");
 		tl(1, "suggereInscriptionScolairePaiementCles($('#formInscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles_Page')); ");
-		tl(1, "suggereInscriptionScolaireFormInscriptionCle($('#formInscriptionScolaireFormInscriptionCle'), $('#listInscriptionScolaireFormInscriptionCle_Page')); ");
+		tl(1, "websocketInscriptionScolaire(); ");
 		l("});");
 	}
 
@@ -1069,60 +1068,18 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 				{ e("div").a("class", "w3-padding ").f();
-					{ e("form").a("action", "").a("id", "formInscriptionScolaireFormInscriptionCle").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						e("input")
-							.a("type", "hidden")
-							.a("name", "valeurPartFormCles")
-							.a("class", "valeurPartFormCles ")
-							.a("value", requeteSite_.getRequetePk())
-							.fg();
-					} g("form");
-					{ e("form").a("action", "").a("id", "suggereInscriptionScolaireFormInscriptionCle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
-						{ e("div").a("class", "w3-card ").f();
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
-									e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
-									sx("formulaire d'inscription");
-								} g("a");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row ").f();
-								{ e("h5").a("class", "w3-cell ").f();
-									sx("relier un formulaire d'inscription a cette inscription");
-								} g("h5");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell ").f();
-									{ e("div").a("class", "w3-cell-row ").f();
-
-									e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-										e("input")
-											.a("type", "text")
-											.a("placeholder", "formulaire d'inscription")
-											.a("class", "valeurObjetSuggere suggereFormInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
-											.a("name", "setFormInscriptionCle")
-											.a("id", "Page_formInscriptionCle")
-											.a("autocomplete", "off")
-											.a("oninput", "suggereInscriptionScolaireFormInscriptionCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'InscriptionScolaireFormInscriptionCle'), $('#listInscriptionScolaireFormInscriptionCle_Page')); ")
-										.fg();
-
-									} g("div");
-								} g("div");
-							} g("div");
-							{ e("div").a("class", "w3-cell-row w3-padding ").f();
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireFormInscriptionCle_Page").f();
-									} g("ul");
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postFormInscriptionVals({ partFormCles: [ \"", o.getPk(), "\" ] }, function() { patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", o.getPk(), "' }], {}, function() { suggereInscriptionScolaireFormInscriptionCle($('#' + ($('#Page_formInscriptionCle').val() ? 'suggere' : 'form') + 'InscriptionScolaireFormInscriptionCle'), $('#listInscriptionScolaireFormInscriptionCle_Page')); var $e = $('#Page_formInscriptionCle'); $e.html($e.val()); }, function() { ajouterErreur($('#Page_formInscriptionCle')); }); }, function() { ajouterErreur($('#Page_formInscriptionCle')); });")
-											.f().sx("ajouter un formulaire d'inscription")
-										.g("button");
-									} g("div");
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("class", "").f().sx("formulaire d'inscription").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strFormInscriptionCle()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
-					} g("form");
+					} g("div");
 				} g("div");
 			} g("div");
 		} g("div");

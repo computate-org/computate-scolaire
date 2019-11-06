@@ -98,6 +98,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		l("$(document).ready(function() {");
 		tl(1, "suggereAnneeScolaireEcoleCle($('#formAnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle_Page')); ");
 		tl(1, "suggereAnneeScolaireSaisonCles($('#formAnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles_Page')); ");
+		tl(1, "websocketAnneeScolaire(); ");
 		l("});");
 	}
 
