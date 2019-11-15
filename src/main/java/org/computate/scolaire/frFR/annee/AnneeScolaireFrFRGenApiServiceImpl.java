@@ -1070,7 +1070,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			listeRecherche.setC(AnneeScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1131,6 +1130,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

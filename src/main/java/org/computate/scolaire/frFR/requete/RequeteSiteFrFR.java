@@ -283,6 +283,27 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	}
 
 	/**	
+	 * Var.enUS: userResourceRoles
+	 * r: configSite_
+	 * r.enUS: siteConfig_
+	 * r: utilisateurRessource
+	 * r.enUS: userResource
+	 * r: addUtilisateurRolesRessource
+	 * r.enUS: addUserResourceRoles
+	 * frFR: Les rôles de la ressource de l'utilisateur. 
+	 * **/
+	protected void _utilisateurRolesRessource(List<String> o) {
+		if(configSite_ != null && utilisateurRessource != null) {
+			JsonArray roles = utilisateurRessource.getJsonArray("roles");
+			if(roles != null) {
+				roles.stream().forEach(r -> {
+					addUtilisateurRolesRessource((String)r);
+				});
+			}
+		}
+	}
+
+	/**	
 	 * Var.enUS: siteUser
 	 * r: UtilisateurSite
 	 * r.enUS: SiteUser

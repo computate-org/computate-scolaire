@@ -317,6 +317,18 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: appName
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 * r: frFR
+	 * r.enUS: enUS
+	 **/
+	protected void _appliNom(Couverture<String> c) {
+		c.o((String)classeDocumentSolr.get("appliNom_stored_string"));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classAbsolutePath
 	 * r: classeDocumentSolr
 	 * r.enUS: classSolrDocument
@@ -1295,6 +1307,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: "Search"
 	 * r: ecrireApi
 	 * r.enUS: writeApi
+	 * r: appliNom
+	 * r.enUS: appName
 	 */
 	public void ecrireApi(Boolean id) throws Exception {
 
@@ -1305,7 +1319,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	
 			wChemins.tl(2, StringUtils.lowerCase(classeApiMethodeMethode), ":");
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
-			wChemins.tl(3, "x-vertx-event-bus: ", langueNom, classeNomSimple);
+			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
 			if(classeRolesTrouves) {
 				wChemins.tl(3, "security:");

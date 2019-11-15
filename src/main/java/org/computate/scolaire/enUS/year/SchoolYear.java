@@ -66,7 +66,7 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	protected void _enrollmentFormSearch(SearchList<EnrollmentDesign> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentFormKeys_indexed_longs:" + pk);
-		l.setC(DesignInscription.class);
+		l.setC(EnrollmentDesign.class);
 		l.setStore(true);
 	}
 

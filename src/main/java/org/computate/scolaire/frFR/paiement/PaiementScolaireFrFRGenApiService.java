@@ -21,7 +21,7 @@ import io.vertx.ext.web.api.OperationResponse;
 @ProxyGen
 public interface PaiementScolaireFrFRGenApiService {
 	static void enregistrerService(SiteContexteFrFR siteContexte, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress("frFRPaiementScolaire").register(PaiementScolaireFrFRGenApiService.class, new PaiementScolaireFrFRApiServiceImpl(siteContexte));
+		new ServiceBinder(vertx).setAddress("computate-scolaire-frFR-PaiementScolaire").register(PaiementScolaireFrFRGenApiService.class, new PaiementScolaireFrFRApiServiceImpl(siteContexte));
 	}
 
 	static PaiementScolaireFrFRGenApiService creer(SiteContexteFrFR siteContexte, Vertx vertx) {

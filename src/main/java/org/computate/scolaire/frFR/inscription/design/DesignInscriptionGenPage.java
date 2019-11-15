@@ -96,6 +96,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 	@Override public void htmlScriptDesignInscriptionGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggereDesignInscriptionPartHtmlCles($('#formDesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_Page')); ");
+		tl(1, "websocketDesignInscription(); ");
 		l("});");
 	}
 
@@ -290,7 +291,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "parts")
-											.a("class", "valeurObjetSuggere suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setPartHtmlCles")
 											.a("id", "Page_partHtmlCles")
 											.a("autocomplete", "off")

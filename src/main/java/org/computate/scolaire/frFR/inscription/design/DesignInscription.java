@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;
+package org.computate.scolaire.frFR.inscription.design; 
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * Description.enUS: The primary key of the school block in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */               
+	 */            
 	protected void _designInscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -79,7 +79,7 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * r.enUS: YearKey
 	 * r: annee
 	 * r.enUS: year
-	*/             
+	*/      
 	protected void _anneeCle(Couverture<Long> c) {
 	}
 

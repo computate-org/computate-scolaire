@@ -910,6 +910,84 @@ The site configuration.
 		return (SiteRequestEnUS)this;
 	}
 
+	///////////////////////
+	// userResourceRoles //
+	///////////////////////
+
+	/**	L'entité « userResourceRoles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> userResourceRoles = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Wrap<List<String>> userResourceRolesWrap = new Wrap<List<String>>().p(this).c(List.class).var("userResourceRoles").o(userResourceRoles);
+
+	/**	<br/>L'entité « userResourceRoles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userResourceRoles">Trouver l'entité userResourceRoles dans Solr</a>
+	 * <br/>
+	 * @param userResourceRoles est l'entité déjà construit. 
+	 **/
+	protected abstract void _userResourceRoles(List<String> o);
+
+	public List<String> getUserResourceRoles() {
+		return userResourceRoles;
+	}
+
+	public void setUserResourceRoles(List<String> userResourceRoles) {
+		this.userResourceRoles = userResourceRoles;
+		this.userResourceRolesWrap.alreadyInitialized = true;
+	}
+	public SiteRequestEnUS addUserResourceRoles(String...objets) {
+		for(String o : objets) {
+			addUserResourceRoles(o);
+		}
+		return (SiteRequestEnUS)this;
+	}
+	public SiteRequestEnUS addUserResourceRoles(String o) {
+		if(o != null && !userResourceRoles.contains(o))
+			this.userResourceRoles.add(o);
+		return (SiteRequestEnUS)this;
+	}
+	public SiteRequestEnUS setUserResourceRoles(JsonArray objets) {
+		userResourceRoles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addUserResourceRoles(o);
+		}
+		return (SiteRequestEnUS)this;
+	}
+	protected SiteRequestEnUS userResourceRolesInit() {
+		if(!userResourceRolesWrap.alreadyInitialized) {
+			_userResourceRoles(userResourceRoles);
+		}
+		userResourceRolesWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public List<String> solrUserResourceRoles() {
+		return userResourceRoles;
+	}
+
+	public String strUserResourceRoles() {
+		return userResourceRoles == null ? "" : userResourceRoles.toString();
+	}
+
+	public String jsonUserResourceRoles() {
+		return userResourceRoles == null ? "" : userResourceRoles.toString();
+	}
+
+	public String nomAffichageUserResourceRoles() {
+		return null;
+	}
+
+	public String htmTooltipUserResourceRoles() {
+		return null;
+	}
+
+	public String htmUserResourceRoles() {
+		return userResourceRoles == null ? "" : StringEscapeUtils.escapeHtml4(strUserResourceRoles());
+	}
+
 	//////////////
 	// siteUser //
 	//////////////
@@ -1511,6 +1589,7 @@ The site configuration.
 		userFullNameInit();
 		userRealmRolesInit();
 		userResourceInit();
+		userResourceRolesInit();
 		siteUserInit();
 		xmlStackInit();
 		solrDocumentInit();
@@ -1603,6 +1682,8 @@ The site configuration.
 				return oSiteRequestEnUS.userRealmRoles;
 			case "userResource":
 				return oSiteRequestEnUS.userResource;
+			case "userResourceRoles":
+				return oSiteRequestEnUS.userResourceRoles;
 			case "siteUser":
 				return oSiteRequestEnUS.siteUser;
 			case "xmlStack":

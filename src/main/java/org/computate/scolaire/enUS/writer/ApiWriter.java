@@ -120,6 +120,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 		c.o((String)classSolrDocument.get("classeNomSimple_enUS_stored_string"));
 	}
 
+	protected void _appName(Wrap<String> c) {
+		c.o((String)classSolrDocument.get("appliNom_stored_string"));
+	}
+
 	protected void _classAbsolutePath(Wrap<String> c) {
 		c.o((String)classSolrDocument.get("classeCheminAbsolu_enUS_stored_string"));
 	}
@@ -557,7 +561,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 	
 			wPaths.tl(2, StringUtils.lowerCase(classApiMethodMethod), ":");
 			wPaths.tl(3, "operationId: ", classApiOperationIdMethod, (id ? "Id" : ""));
-			wPaths.tl(3, "x-vertx-event-bus: ", languageName, classSimpleName);
+			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-", classSimpleName);
 	
 			if(classRolesFound) {
 				wPaths.tl(3, "security:");

@@ -160,6 +160,17 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		}
 	}
 
+	protected void _userResourceRoles(List<String> o) {
+		if(siteConfig_ != null && userResource != null) {
+			JsonArray roles = userResource.getJsonArray("roles");
+			if(roles != null) {
+				roles.stream().forEach(r -> {
+					addUserResourceRoles((String)r);
+				});
+			}
+		}
+	}
+
 	protected void _siteUser(Wrap<SiteUser> c) { 
 		if(userId != null) {
 			SiteUser o = new SiteUser();

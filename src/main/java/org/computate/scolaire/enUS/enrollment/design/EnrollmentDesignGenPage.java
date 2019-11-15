@@ -95,6 +95,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 	@Override public void htmlScriptEnrollmentDesignGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestEnrollmentDesignHtmlPartKeys($('#formEnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_Page')); ");
+		tl(1, "websocketEnrollmentDesign(); ");
 		l("});");
 	}
 

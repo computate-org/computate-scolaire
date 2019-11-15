@@ -25,6 +25,8 @@ public class CoureurVertx {
 		JsonObject zkConfig = new JsonObject();
 		String zookeeperNomHote = System.getenv("zookeeperNomHote");
 		Integer zookeeperPort = Integer.parseInt(System.getenv("zookeeperPort"));
+		Integer clusterPort = System.getenv("clusterPort") == null ? null : Integer.parseInt(System.getenv("clusterPort"));
+		String clusterPublicHost = System.getenv("clusterPublicHost");
 		String zookeeperHosts = zookeeperNomHote + ":" + zookeeperPort;
 		zkConfig.put("zookeeperHosts", zookeeperHosts);
 		zkConfig.put("sessionTimeout", 20000);
@@ -40,7 +42,11 @@ public class CoureurVertx {
 		ClusterManager gestionnaireCluster = new ZookeeperClusterManager(zkConfig);
 		VertxOptions optionsVertx = new VertxOptions();
 		// For OpenShift
-		optionsVertx.setEventBusOptions(new EventBusOptions().setClusterPublicHost(zookeeperNomHote).setClusterPublicPort(zookeeperPort));
+		optionsVertx.setEventBusOptions(new EventBusOptions());
+		if(clusterPublicHost != null)
+			optionsVertx.setClusterPublicHost(clusterPublicHost);
+		if(clusterPort != null)
+			optionsVertx.setClusterPublicPort(clusterPort);
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		optionsVertx.setClustered(true);
 

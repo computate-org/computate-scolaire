@@ -94,6 +94,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 	@Override public void htmlScriptHtmlPartGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggestHtmlPartEnrollmentDesignKey($('#formHtmlPartEnrollmentDesignKey'), $('#listHtmlPartEnrollmentDesignKey_Page')); ");
+		tl(1, "websocketHtmlPart(); ");
 		l("});");
 	}
 
@@ -2886,6 +2887,641 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 						} g("div");
 					} g("div");
 				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlLink").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlLink").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlLink").a("class", "").f().sx("link").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "link")
+									.a("class", "valueHtmlLink w3-input w3-border ")
+									.a("name", "htmlLink")
+									.a("id", "Recherche_htmlLink")
+									.a("value", o.strHtmlLink())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlElement").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlElement").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlElement").a("class", "").f().sx("HTML element").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML element")
+									.a("class", "valueHtmlElement w3-input w3-border ")
+									.a("name", "htmlElement")
+									.a("id", "Recherche_htmlElement")
+									.a("value", o.strHtmlElement())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlId").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlId").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlId").a("class", "").f().sx("HTML ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML ID")
+									.a("class", "valueHtmlId w3-input w3-border ")
+									.a("name", "htmlId")
+									.a("id", "Recherche_htmlId")
+									.a("value", o.strHtmlId())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlClasses").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlClasses").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlClasses").a("class", "").f().sx("HTML classes").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML classes")
+									.a("class", "valueHtmlClasses w3-input w3-border ")
+									.a("name", "htmlClasses")
+									.a("id", "Recherche_htmlClasses")
+									.a("value", o.strHtmlClasses())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlStyle").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlStyle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlStyle").a("class", "").f().sx("HTML style").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML style")
+									.a("class", "valueHtmlStyle w3-input w3-border ")
+									.a("name", "htmlStyle")
+									.a("id", "Recherche_htmlStyle")
+									.a("value", o.strHtmlStyle())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlBefore").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlBefore").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlBefore").a("class", "").f().sx("HTML before").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML before")
+									.a("class", "valueHtmlBefore w3-input w3-border ")
+									.a("name", "htmlBefore")
+									.a("id", "Recherche_htmlBefore")
+									.a("value", o.strHtmlBefore())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlVar").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlVar").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlVar").a("class", "").f().sx("var").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "var")
+									.a("class", "valueHtmlVar w3-input w3-border ")
+									.a("name", "htmlVar")
+									.a("id", "Recherche_htmlVar")
+									.a("value", o.strHtmlVar())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlAfter").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlAfter").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlAfter").a("class", "").f().sx("HTML after").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML after")
+									.a("class", "valueHtmlAfter w3-input w3-border ")
+									.a("name", "htmlAfter")
+									.a("id", "Recherche_htmlAfter")
+									.a("value", o.strHtmlAfter())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartHtmlText").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartHtmlText").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlText").a("class", "").f().sx("text").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "text")
+									.a("class", "valueHtmlText w3-input w3-border ")
+									.a("name", "htmlText")
+									.a("id", "Recherche_htmlText")
+								.f().sx(o.strHtmlText()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort1").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort1").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort1").a("class", "").f().sx("sort1").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort1")
+									.a("class", "valueSort1 w3-input w3-border ")
+									.a("name", "sort1")
+									.a("id", "Recherche_sort1")
+									.a("value", o.strSort1())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort2").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort2").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort2").a("class", "").f().sx("sort2").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort2")
+									.a("class", "valueSort2 w3-input w3-border ")
+									.a("name", "sort2")
+									.a("id", "Recherche_sort2")
+									.a("value", o.strSort2())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort3").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort3").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort3").a("class", "").f().sx("sort3").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort3")
+									.a("class", "valueSort3 w3-input w3-border ")
+									.a("name", "sort3")
+									.a("id", "Recherche_sort3")
+									.a("value", o.strSort3())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort4").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort4").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort4").a("class", "").f().sx("sort4").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort4")
+									.a("class", "valueSort4 w3-input w3-border ")
+									.a("name", "sort4")
+									.a("id", "Recherche_sort4")
+									.a("value", o.strSort4())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort5").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort5").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort5").a("class", "").f().sx("sort5").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort5")
+									.a("class", "valueSort5 w3-input w3-border ")
+									.a("name", "sort5")
+									.a("id", "Recherche_sort5")
+									.a("value", o.strSort5())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort6").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort6").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort6").a("class", "").f().sx("sort6").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort6")
+									.a("class", "valueSort6 w3-input w3-border ")
+									.a("name", "sort6")
+									.a("id", "Recherche_sort6")
+									.a("value", o.strSort6())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort7").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort7").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort7").a("class", "").f().sx("sort7").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort7")
+									.a("class", "valueSort7 w3-input w3-border ")
+									.a("name", "sort7")
+									.a("id", "Recherche_sort7")
+									.a("value", o.strSort7())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort8").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort8").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort8").a("class", "").f().sx("sort8").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort8")
+									.a("class", "valueSort8 w3-input w3-border ")
+									.a("name", "sort8")
+									.a("id", "Recherche_sort8")
+									.a("value", o.strSort8())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort9").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort9").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort9").a("class", "").f().sx("sort9").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort9")
+									.a("class", "valueSort9 w3-input w3-border ")
+									.a("name", "sort9")
+									.a("id", "Recherche_sort9")
+									.a("value", o.strSort9())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formHtmlPartSort10").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", siteRequest_.getRequestPk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggestHtmlPartSort10").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_sort10").a("class", "").f().sx("sort10").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort10")
+									.a("class", "valueSort10 w3-input w3-border ")
+									.a("name", "sort10")
+									.a("id", "Recherche_sort10")
+									.a("value", o.strSort10())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");

@@ -2722,7 +2722,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerPartHtml(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2734,7 +2734,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			indexerPartHtml(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2753,60 +2753,79 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("designInscriptionCle_stored_long", designInscriptionCle);
 		}
 		if(htmlLien != null) {
+			document.addField("htmlLien_indexed_string", htmlLien);
 			document.addField("htmlLien_stored_string", htmlLien);
 		}
 		if(htmlElement != null) {
+			document.addField("htmlElement_indexed_string", htmlElement);
 			document.addField("htmlElement_stored_string", htmlElement);
 		}
 		if(htmlId != null) {
+			document.addField("htmlId_indexed_string", htmlId);
 			document.addField("htmlId_stored_string", htmlId);
 		}
 		if(htmlClasses != null) {
+			document.addField("htmlClasses_indexed_string", htmlClasses);
 			document.addField("htmlClasses_stored_string", htmlClasses);
 		}
 		if(htmlStyle != null) {
+			document.addField("htmlStyle_indexed_string", htmlStyle);
 			document.addField("htmlStyle_stored_string", htmlStyle);
 		}
 		if(htmlAvant != null) {
+			document.addField("htmlAvant_indexed_string", htmlAvant);
 			document.addField("htmlAvant_stored_string", htmlAvant);
 		}
 		if(htmlVar != null) {
+			document.addField("htmlVar_indexed_string", htmlVar);
 			document.addField("htmlVar_stored_string", htmlVar);
 		}
 		if(htmlApres != null) {
+			document.addField("htmlApres_indexed_string", htmlApres);
 			document.addField("htmlApres_stored_string", htmlApres);
 		}
 		if(htmlTexte != null) {
+			document.addField("htmlTexte_indexed_string", htmlTexte);
 			document.addField("htmlTexte_stored_string", htmlTexte);
 		}
 		if(tri1 != null) {
+			document.addField("tri1_indexed_double", tri1);
 			document.addField("tri1_stored_double", tri1);
 		}
 		if(tri2 != null) {
+			document.addField("tri2_indexed_double", tri2);
 			document.addField("tri2_stored_double", tri2);
 		}
 		if(tri3 != null) {
+			document.addField("tri3_indexed_double", tri3);
 			document.addField("tri3_stored_double", tri3);
 		}
 		if(tri4 != null) {
+			document.addField("tri4_indexed_double", tri4);
 			document.addField("tri4_stored_double", tri4);
 		}
 		if(tri5 != null) {
+			document.addField("tri5_indexed_double", tri5);
 			document.addField("tri5_stored_double", tri5);
 		}
 		if(tri6 != null) {
+			document.addField("tri6_indexed_double", tri6);
 			document.addField("tri6_stored_double", tri6);
 		}
 		if(tri7 != null) {
+			document.addField("tri7_indexed_double", tri7);
 			document.addField("tri7_stored_double", tri7);
 		}
 		if(tri8 != null) {
+			document.addField("tri8_indexed_double", tri8);
 			document.addField("tri8_stored_double", tri8);
 		}
 		if(tri9 != null) {
+			document.addField("tri9_indexed_double", tri9);
 			document.addField("tri9_stored_double", tri9);
 		}
 		if(tri10 != null) {
+			document.addField("tri10_indexed_double", tri10);
 			document.addField("tri10_stored_double", tri10);
 		}
 		super.indexerCluster(document);
@@ -2824,7 +2843,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			initLoinPartHtml(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

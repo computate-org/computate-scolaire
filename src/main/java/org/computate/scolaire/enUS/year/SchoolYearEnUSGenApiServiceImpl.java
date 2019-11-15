@@ -1070,7 +1070,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			listSearch.setC(SchoolYear.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1131,6 +1130,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

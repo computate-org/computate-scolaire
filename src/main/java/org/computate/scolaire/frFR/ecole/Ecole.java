@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;         
+package org.computate.scolaire.frFR.ecole;          
 
 import java.util.List;
 

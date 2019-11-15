@@ -906,6 +906,84 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	///////////////////////////////
+	// utilisateurRolesRessource //
+	///////////////////////////////
+
+	/**	L'entité « utilisateurRolesRessource »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> utilisateurRolesRessource = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Couverture<List<String>> utilisateurRolesRessourceCouverture = new Couverture<List<String>>().p(this).c(List.class).var("utilisateurRolesRessource").o(utilisateurRolesRessource);
+
+	/**	<br/>L'entité « utilisateurRolesRessource »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurRolesRessource">Trouver l'entité utilisateurRolesRessource dans Solr</a>
+	 * <br/>
+	 * @param utilisateurRolesRessource est l'entité déjà construit. 
+	 **/
+	protected abstract void _utilisateurRolesRessource(List<String> o);
+
+	public List<String> getUtilisateurRolesRessource() {
+		return utilisateurRolesRessource;
+	}
+
+	public void setUtilisateurRolesRessource(List<String> utilisateurRolesRessource) {
+		this.utilisateurRolesRessource = utilisateurRolesRessource;
+		this.utilisateurRolesRessourceCouverture.dejaInitialise = true;
+	}
+	public RequeteSiteFrFR addUtilisateurRolesRessource(String...objets) {
+		for(String o : objets) {
+			addUtilisateurRolesRessource(o);
+		}
+		return (RequeteSiteFrFR)this;
+	}
+	public RequeteSiteFrFR addUtilisateurRolesRessource(String o) {
+		if(o != null && !utilisateurRolesRessource.contains(o))
+			this.utilisateurRolesRessource.add(o);
+		return (RequeteSiteFrFR)this;
+	}
+	public RequeteSiteFrFR setUtilisateurRolesRessource(JsonArray objets) {
+		utilisateurRolesRessource.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addUtilisateurRolesRessource(o);
+		}
+		return (RequeteSiteFrFR)this;
+	}
+	protected RequeteSiteFrFR utilisateurRolesRessourceInit() {
+		if(!utilisateurRolesRessourceCouverture.dejaInitialise) {
+			_utilisateurRolesRessource(utilisateurRolesRessource);
+		}
+		utilisateurRolesRessourceCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	public List<String> solrUtilisateurRolesRessource() {
+		return utilisateurRolesRessource;
+	}
+
+	public String strUtilisateurRolesRessource() {
+		return utilisateurRolesRessource == null ? "" : utilisateurRolesRessource.toString();
+	}
+
+	public String jsonUtilisateurRolesRessource() {
+		return utilisateurRolesRessource == null ? "" : utilisateurRolesRessource.toString();
+	}
+
+	public String nomAffichageUtilisateurRolesRessource() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurRolesRessource() {
+		return null;
+	}
+
+	public String htmUtilisateurRolesRessource() {
+		return utilisateurRolesRessource == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurRolesRessource());
+	}
+
 	/////////////////////
 	// utilisateurSite //
 	/////////////////////
@@ -1507,6 +1585,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		utilisateurNomCompletInit();
 		utilisateurRolesRoyaumeInit();
 		utilisateurRessourceInit();
+		utilisateurRolesRessourceInit();
 		utilisateurSiteInit();
 		xmlPileInit();
 		documentSolrInit();
@@ -1599,6 +1678,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.utilisateurRolesRoyaume;
 			case "utilisateurRessource":
 				return oRequeteSiteFrFR.utilisateurRessource;
+			case "utilisateurRolesRessource":
+				return oRequeteSiteFrFR.utilisateurRolesRessource;
 			case "utilisateurSite":
 				return oRequeteSiteFrFR.utilisateurSite;
 			case "xmlPile":

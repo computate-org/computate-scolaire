@@ -21,7 +21,7 @@ import io.vertx.ext.web.api.OperationResponse;
 @ProxyGen
 public interface SchoolYearEnUSGenApiService {
 	static void registerService(SiteContextEnUS siteContext, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress("enUSSchoolYear").register(SchoolYearEnUSGenApiService.class, new SchoolYearEnUSApiServiceImpl(siteContext));
+		new ServiceBinder(vertx).setAddress("computate-scolaire-enUS-SchoolYear").register(SchoolYearEnUSGenApiService.class, new SchoolYearEnUSApiServiceImpl(siteContext));
 	}
 
 	static SchoolYearEnUSGenApiService create(SiteContextEnUS siteContext, Vertx vertx) {

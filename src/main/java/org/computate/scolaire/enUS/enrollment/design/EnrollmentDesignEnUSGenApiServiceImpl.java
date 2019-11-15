@@ -4,7 +4,9 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -250,30 +252,47 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-									listPATCHEnrollmentDesign(listEnrollmentDesign, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorEnrollmentDesign(siteRequest, eventHandler, f);
-															}
-														});
+
+									PatchRequest patchRequest = new PatchRequest();
+									patchRequest.setRows(listEnrollmentDesign.getRows());
+									patchRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+									patchRequest.initDeepPatchRequest(siteRequest);
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection sqlConnection = siteRequest.getSqlConnection();
+														if(sqlConnection == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															sqlConnection.commit(e -> {
+																	if(e.succeeded()) {
+																	sqlConnection.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											errorEnrollmentDesign(siteRequest, eventHandler, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 										}
-									});
+									);
+									response200PATCHEnrollmentDesign(patchRequest, eventHandler);
 								} else {
 									errorEnrollmentDesign(siteRequest, eventHandler, c);
 								}
@@ -291,7 +310,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void listPATCHEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHEnrollmentDesign(PatchRequest patchRequest, SearchList<EnrollmentDesign> listEnrollmentDesign, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
 		listEnrollmentDesign.getList().forEach(o -> {
@@ -306,10 +325,12 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listEnrollmentDesign.size());
 				if(listEnrollmentDesign.next(dt)) {
-					listPATCHEnrollmentDesign(listEnrollmentDesign, dt, eventHandler);
+				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(patchRequest).toString());
+					listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, eventHandler);
 				} else {
-					response200PATCHEnrollmentDesign(listEnrollmentDesign, eventHandler);
+					response200PATCHEnrollmentDesign(patchRequest, eventHandler);
 				}
 			} else {
 				errorEnrollmentDesign(listEnrollmentDesign.getSiteRequest_(), eventHandler, a);
@@ -453,10 +474,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void response200PATCHEnrollmentDesign(SearchList<EnrollmentDesign> listEnrollmentDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHEnrollmentDesign(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(patchRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -1001,7 +1022,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			listSearch.setC(EnrollmentDesign.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1062,6 +1082,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

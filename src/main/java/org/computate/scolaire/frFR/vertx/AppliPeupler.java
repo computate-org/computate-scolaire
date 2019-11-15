@@ -7,7 +7,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**
- * NomCanonique.enUS: org.computate.enUS.academic.vertx.AppPopulate
+ * NomCanonique.enUS: org.computate.scolaire.enUS.vertx.AppPopulate
  */
 public class AppliPeupler extends AppliPeuplerGen<Object> {   
 

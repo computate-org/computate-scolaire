@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.annee;                    
+package org.computate.scolaire.frFR.annee;                     
 
 import java.util.List;
 
@@ -242,6 +242,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r: setStocker
 	 * r.enUS: setStore
 	 * Ignorer: true
+	 * r: DesignInscription
+	 * r.enUS: EnrollmentDesign
 	 */   
 	protected void _formInscriptionRecherche(ListeRecherche<DesignInscription> l) {
 		l.setQuery("*:*");

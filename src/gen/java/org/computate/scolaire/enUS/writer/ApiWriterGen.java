@@ -1306,6 +1306,67 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		return classSimpleName == null ? "" : StringEscapeUtils.escapeHtml4(strClassSimpleName());
 	}
 
+	/////////////
+	// appName //
+	/////////////
+
+	/**	L'entité « appName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String appName;
+	@JsonIgnore
+	public Wrap<String> appNameWrap = new Wrap<String>().p(this).c(String.class).var("appName").o(appName);
+
+	/**	<br/>L'entité « appName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.writer.ApiWriter&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appName">Trouver l'entité appName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _appName(Wrap<String> c);
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+		this.appNameWrap.alreadyInitialized = true;
+	}
+	protected ApiWriter appNameInit() {
+		if(!appNameWrap.alreadyInitialized) {
+			_appName(appNameWrap);
+			if(appName == null)
+				setAppName(appNameWrap.o);
+		}
+		appNameWrap.alreadyInitialized(true);
+		return (ApiWriter)this;
+	}
+
+	public String solrAppName() {
+		return appName;
+	}
+
+	public String strAppName() {
+		return appName == null ? "" : appName;
+	}
+
+	public String jsonAppName() {
+		return appName == null ? "" : appName;
+	}
+
+	public String nomAffichageAppName() {
+		return null;
+	}
+
+	public String htmTooltipAppName() {
+		return null;
+	}
+
+	public String htmAppName() {
+		return appName == null ? "" : StringEscapeUtils.escapeHtml4(strAppName());
+	}
+
 	///////////////////////
 	// classAbsolutePath //
 	///////////////////////
@@ -2432,6 +2493,7 @@ public abstract class ApiWriterGen<DEV> extends Object {
 		classExtendsBaseInit();
 		classIsBaseInit();
 		classSimpleNameInit();
+		appNameInit();
 		classAbsolutePathInit();
 		classApiUriMethodInit();
 		classApiMethodMethodInit();
@@ -2562,6 +2624,8 @@ public abstract class ApiWriterGen<DEV> extends Object {
 				return oApiWriter.classIsBase;
 			case "classSimpleName":
 				return oApiWriter.classSimpleName;
+			case "appName":
+				return oApiWriter.appName;
 			case "classAbsolutePath":
 				return oApiWriter.classAbsolutePath;
 			case "classApiUriMethod":

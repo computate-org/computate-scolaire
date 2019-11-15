@@ -21,7 +21,7 @@ import io.vertx.ext.web.api.OperationResponse;
 @ProxyGen
 public interface HtmlPartEnUSGenApiService {
 	static void registerService(SiteContextEnUS siteContext, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress("enUSHtmlPart").register(HtmlPartEnUSGenApiService.class, new HtmlPartEnUSApiServiceImpl(siteContext));
+		new ServiceBinder(vertx).setAddress("computate-scolaire-enUS-HtmlPart").register(HtmlPartEnUSGenApiService.class, new HtmlPartEnUSApiServiceImpl(siteContext));
 	}
 
 	static HtmlPartEnUSGenApiService create(SiteContextEnUS siteContext, Vertx vertx) {

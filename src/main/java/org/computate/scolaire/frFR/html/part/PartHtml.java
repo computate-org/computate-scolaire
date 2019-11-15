@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;
+package org.computate.scolaire.frFR.html.part; 
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -48,7 +48,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                        
+*/                       
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -82,6 +82,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlLink
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: link
 	 * NomAffichage.frFR: lien
@@ -95,6 +96,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlElement
+	 * Indexe: true
 	 * Stocke: true
 	  NomAffichage.enUS: HTML element
 	 * NomAffichage.frFR: HTML élément
@@ -112,6 +114,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlId
+	 * Indexe: true
 	 * Stocke: true
 	  NomAffichage.enUS: HTML ID
 	 * NomAffichage.frFR: HTML ID
@@ -125,6 +128,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlClasses
+	 * Indexe: true
 	 * Stocke: true
 	  NomAffichage.enUS: HTML classes
 	 * NomAffichage.frFR: HTML classes
@@ -138,6 +142,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlStyle
+	 * Indexe: true
 	 * Stocke: true
 	  NomAffichage.enUS: HTML style
 	 * NomAffichage.frFR: HTML style
@@ -151,6 +156,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlBefore
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: HTML avant
 	 * NomAffichage.enUS: HTML before
@@ -170,6 +176,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlVar
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: var
 	 * NomAffichage.frFR: var
@@ -183,6 +190,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlAfter
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: HTML après
 	 * NomAffichage.enUS: HTML after
@@ -199,6 +207,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: htmlText
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: texte
 	 * NomAffichage.enUS: text
@@ -206,13 +215,14 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Multiligne: true
 	 * HtmlLigne: 6
 	 * HtmlCelulle: 1
-	 */               
+	 */             
 	protected void _htmlTexte(Couverture<String> c) {
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort1
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
@@ -226,6 +236,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort2
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
@@ -239,6 +250,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort3
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
@@ -252,6 +264,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort4
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
@@ -265,6 +278,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort5
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
@@ -278,6 +292,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort6
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
@@ -291,6 +306,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort7
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
@@ -304,6 +320,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort8
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
@@ -317,6 +334,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort9
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
@@ -330,6 +348,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: sort10
+	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10

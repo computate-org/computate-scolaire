@@ -1306,6 +1306,67 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeNomSimple == null ? "" : StringEscapeUtils.escapeHtml4(strClasseNomSimple());
 	}
 
+	//////////////
+	// appliNom //
+	//////////////
+
+	/**	L'entité « appliNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String appliNom;
+	@JsonIgnore
+	public Couverture<String> appliNomCouverture = new Couverture<String>().p(this).c(String.class).var("appliNom").o(appliNom);
+
+	/**	<br/>L'entité « appliNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:appliNom">Trouver l'entité appliNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _appliNom(Couverture<String> c);
+
+	public String getAppliNom() {
+		return appliNom;
+	}
+
+	public void setAppliNom(String appliNom) {
+		this.appliNom = appliNom;
+		this.appliNomCouverture.dejaInitialise = true;
+	}
+	protected ApiEcrivain appliNomInit() {
+		if(!appliNomCouverture.dejaInitialise) {
+			_appliNom(appliNomCouverture);
+			if(appliNom == null)
+				setAppliNom(appliNomCouverture.o);
+		}
+		appliNomCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public String solrAppliNom() {
+		return appliNom;
+	}
+
+	public String strAppliNom() {
+		return appliNom == null ? "" : appliNom;
+	}
+
+	public String jsonAppliNom() {
+		return appliNom == null ? "" : appliNom;
+	}
+
+	public String nomAffichageAppliNom() {
+		return null;
+	}
+
+	public String htmTooltipAppliNom() {
+		return null;
+	}
+
+	public String htmAppliNom() {
+		return appliNom == null ? "" : StringEscapeUtils.escapeHtml4(strAppliNom());
+	}
+
 	////////////////////////
 	// classeCheminAbsolu //
 	////////////////////////
@@ -2432,6 +2493,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classeEtendBaseInit();
 		classeEstBaseInit();
 		classeNomSimpleInit();
+		appliNomInit();
 		classeCheminAbsoluInit();
 		classeApiUriMethodeInit();
 		classeApiMethodeMethodeInit();
@@ -2562,6 +2624,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeEstBase;
 			case "classeNomSimple":
 				return oApiEcrivain.classeNomSimple;
+			case "appliNom":
+				return oApiEcrivain.appliNom;
 			case "classeCheminAbsolu":
 				return oApiEcrivain.classeCheminAbsolu;
 			case "classeApiUriMethode":

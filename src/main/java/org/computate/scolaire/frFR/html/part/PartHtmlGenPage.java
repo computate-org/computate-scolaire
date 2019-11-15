@@ -95,6 +95,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	@Override public void htmlScriptPartHtmlGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "suggerePartHtmlDesignInscriptionCle($('#formPartHtmlDesignInscriptionCle'), $('#listPartHtmlDesignInscriptionCle_Page')); ");
+		tl(1, "websocketPartHtml(); ");
 		l("});");
 	}
 
@@ -271,7 +272,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 										e("input")
 											.a("type", "text")
 											.a("placeholder", "design d'inscription")
-											.a("class", "valeurObjetSuggere suggereDesignInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
+											.a("class", "valeur suggereDesignInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
 											.a("name", "setDesignInscriptionCle")
 											.a("id", "Page_designInscriptionCle")
 											.a("autocomplete", "off")
@@ -2887,6 +2888,641 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 						} g("div");
 					} g("div");
 				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlLien").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlLien").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlLien").a("class", "").f().sx("lien").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "lien")
+									.a("class", "valeurHtmlLien w3-input w3-border ")
+									.a("name", "htmlLien")
+									.a("id", "Recherche_htmlLien")
+									.a("value", o.strHtmlLien())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlElement").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlElement").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlElement").a("class", "").f().sx("HTML élément").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML élément")
+									.a("class", "valeurHtmlElement w3-input w3-border ")
+									.a("name", "htmlElement")
+									.a("id", "Recherche_htmlElement")
+									.a("value", o.strHtmlElement())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlId").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlId").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlId").a("class", "").f().sx("HTML ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML ID")
+									.a("class", "valeurHtmlId w3-input w3-border ")
+									.a("name", "htmlId")
+									.a("id", "Recherche_htmlId")
+									.a("value", o.strHtmlId())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlClasses").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlClasses").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlClasses").a("class", "").f().sx("HTML classes").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML classes")
+									.a("class", "valeurHtmlClasses w3-input w3-border ")
+									.a("name", "htmlClasses")
+									.a("id", "Recherche_htmlClasses")
+									.a("value", o.strHtmlClasses())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlStyle").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlStyle").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlStyle").a("class", "").f().sx("HTML style").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML style")
+									.a("class", "valeurHtmlStyle w3-input w3-border ")
+									.a("name", "htmlStyle")
+									.a("id", "Recherche_htmlStyle")
+									.a("value", o.strHtmlStyle())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlAvant").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlAvant").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlAvant").a("class", "").f().sx("HTML avant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML avant")
+									.a("class", "valeurHtmlAvant w3-input w3-border ")
+									.a("name", "htmlAvant")
+									.a("id", "Recherche_htmlAvant")
+									.a("value", o.strHtmlAvant())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlVar").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlVar").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlVar").a("class", "").f().sx("var").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "var")
+									.a("class", "valeurHtmlVar w3-input w3-border ")
+									.a("name", "htmlVar")
+									.a("id", "Recherche_htmlVar")
+									.a("value", o.strHtmlVar())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlApres").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlApres").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlApres").a("class", "").f().sx("HTML après").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML après")
+									.a("class", "valeurHtmlApres w3-input w3-border ")
+									.a("name", "htmlApres")
+									.a("id", "Recherche_htmlApres")
+									.a("value", o.strHtmlApres())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlHtmlTexte").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlHtmlTexte").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_htmlTexte").a("class", "").f().sx("texte").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "texte")
+									.a("class", "valeurHtmlTexte w3-input w3-border ")
+									.a("name", "htmlTexte")
+									.a("id", "Recherche_htmlTexte")
+								.f().sx(o.strHtmlTexte()).g("textarea");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri1").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri1").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri1").a("class", "").f().sx("tri1").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri1")
+									.a("class", "valeurTri1 w3-input w3-border ")
+									.a("name", "tri1")
+									.a("id", "Recherche_tri1")
+									.a("value", o.strTri1())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri2").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri2").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri2").a("class", "").f().sx("tri2").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri2")
+									.a("class", "valeurTri2 w3-input w3-border ")
+									.a("name", "tri2")
+									.a("id", "Recherche_tri2")
+									.a("value", o.strTri2())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri3").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri3").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri3").a("class", "").f().sx("tri3").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri3")
+									.a("class", "valeurTri3 w3-input w3-border ")
+									.a("name", "tri3")
+									.a("id", "Recherche_tri3")
+									.a("value", o.strTri3())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri4").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri4").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri4").a("class", "").f().sx("tri4").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri4")
+									.a("class", "valeurTri4 w3-input w3-border ")
+									.a("name", "tri4")
+									.a("id", "Recherche_tri4")
+									.a("value", o.strTri4())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri5").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri5").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri5").a("class", "").f().sx("tri5").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri5")
+									.a("class", "valeurTri5 w3-input w3-border ")
+									.a("name", "tri5")
+									.a("id", "Recherche_tri5")
+									.a("value", o.strTri5())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri6").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri6").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri6").a("class", "").f().sx("tri6").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri6")
+									.a("class", "valeurTri6 w3-input w3-border ")
+									.a("name", "tri6")
+									.a("id", "Recherche_tri6")
+									.a("value", o.strTri6())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri7").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri7").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri7").a("class", "").f().sx("tri7").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri7")
+									.a("class", "valeurTri7 w3-input w3-border ")
+									.a("name", "tri7")
+									.a("id", "Recherche_tri7")
+									.a("value", o.strTri7())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri8").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri8").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri8").a("class", "").f().sx("tri8").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri8")
+									.a("class", "valeurTri8 w3-input w3-border ")
+									.a("name", "tri8")
+									.a("id", "Recherche_tri8")
+									.a("value", o.strTri8())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri9").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri9").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri9").a("class", "").f().sx("tri9").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri9")
+									.a("class", "valeurTri9 w3-input w3-border ")
+									.a("name", "tri9")
+									.a("id", "Recherche_tri9")
+									.a("value", o.strTri9())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("form").a("action", "").a("id", "formPartHtmlTri10").a("style", "display: inline; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeur")
+						.a("class", "valeur ")
+						.a("value", requeteSite_.getRequetePk())
+						.fg();
+				} g("form");
+				{ e("form").a("action", "").a("id", "suggerePartHtmlTri10").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", "Recherche_tri10").a("class", "").f().sx("tri10").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "tri10")
+									.a("class", "valeurTri10 w3-input w3-border ")
+									.a("name", "tri10")
+									.a("id", "Recherche_tri10")
+									.a("value", o.strTri10())
+								.fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("form");
 			} g("div");
 			} g("div");
 		} g("div");

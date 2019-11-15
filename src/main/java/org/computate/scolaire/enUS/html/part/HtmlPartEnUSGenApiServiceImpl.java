@@ -4,7 +4,9 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
+import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -324,30 +326,47 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 									else
 										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 									listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
-									listPATCHHtmlPart(listHtmlPart, dt, d -> {
-										if(d.succeeded()) {
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											if(sqlConnection == null) {
-												eventHandler.handle(Future.succeededFuture(d.result()));
-											} else {
-												sqlConnection.commit(e -> {
-													if(e.succeeded()) {
-														sqlConnection.close(f -> {
-															if(f.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(d.result()));
-															} else {
-																errorHtmlPart(siteRequest, eventHandler, f);
-															}
-														});
+
+									PatchRequest patchRequest = new PatchRequest();
+									patchRequest.setRows(listHtmlPart.getRows());
+									patchRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
+									patchRequest.initDeepPatchRequest(siteRequest);
+									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+									workerExecutor.executeBlocking(
+										blockingCodeHandler -> {
+											try {
+												listPATCHHtmlPart(patchRequest, listHtmlPart, dt, d -> {
+													if(d.succeeded()) {
+														SQLConnection sqlConnection = siteRequest.getSqlConnection();
+														if(sqlConnection == null) {
+															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+														} else {
+															sqlConnection.commit(e -> {
+																	if(e.succeeded()) {
+																	sqlConnection.close(f -> {
+																		if(f.succeeded()) {
+																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																		} else {
+																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																		}
+																	});
+																} else {
+																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+																}
+															});
+														}
 													} else {
-														eventHandler.handle(Future.succeededFuture(d.result()));
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
 													}
 												});
+											} catch(Exception e) {
+												blockingCodeHandler.handle(Future.failedFuture(e));
 											}
-										} else {
-											errorHtmlPart(siteRequest, eventHandler, d);
+										}, resultHandler -> {
+											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 										}
-									});
+									);
+									response200PATCHHtmlPart(patchRequest, eventHandler);
 								} else {
 									errorHtmlPart(siteRequest, eventHandler, c);
 								}
@@ -365,7 +384,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void listPATCHHtmlPart(SearchList<HtmlPart> listHtmlPart, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHHtmlPart(PatchRequest patchRequest, SearchList<HtmlPart> listHtmlPart, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
 		listHtmlPart.getList().forEach(o -> {
@@ -380,10 +399,12 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listHtmlPart.size());
 				if(listHtmlPart.next(dt)) {
-					listPATCHHtmlPart(listHtmlPart, dt, eventHandler);
+				siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(patchRequest).toString());
+					listPATCHHtmlPart(patchRequest, listHtmlPart, dt, eventHandler);
 				} else {
-					response200PATCHHtmlPart(listHtmlPart, eventHandler);
+					response200PATCHHtmlPart(patchRequest, eventHandler);
 				}
 			} else {
 				errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
@@ -703,10 +724,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void response200PATCHHtmlPart(SearchList<HtmlPart> listHtmlPart, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHHtmlPart(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = listHtmlPart.getSiteRequest_();
-			JsonObject json = new JsonObject();
+			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(patchRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -1012,6 +1033,44 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				return "htmlPartKey_indexed_long";
 			case "enrollmentDesignKey":
 				return "enrollmentDesignKey_indexed_long";
+			case "htmlLink":
+				return "htmlLink_indexed_string";
+			case "htmlElement":
+				return "htmlElement_indexed_string";
+			case "htmlId":
+				return "htmlId_indexed_string";
+			case "htmlClasses":
+				return "htmlClasses_indexed_string";
+			case "htmlStyle":
+				return "htmlStyle_indexed_string";
+			case "htmlBefore":
+				return "htmlBefore_indexed_string";
+			case "htmlVar":
+				return "htmlVar_indexed_string";
+			case "htmlAfter":
+				return "htmlAfter_indexed_string";
+			case "htmlText":
+				return "htmlText_indexed_string";
+			case "sort1":
+				return "sort1_indexed_double";
+			case "sort2":
+				return "sort2_indexed_double";
+			case "sort3":
+				return "sort3_indexed_double";
+			case "sort4":
+				return "sort4_indexed_double";
+			case "sort5":
+				return "sort5_indexed_double";
+			case "sort6":
+				return "sort6_indexed_double";
+			case "sort7":
+				return "sort7_indexed_double";
+			case "sort8":
+				return "sort8_indexed_double";
+			case "sort9":
+				return "sort9_indexed_double";
+			case "sort10":
+				return "sort10_indexed_double";
 			default:
 				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
@@ -1231,7 +1290,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			listSearch.setC(HtmlPart.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1292,6 +1350,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {
