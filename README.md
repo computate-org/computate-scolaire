@@ -211,3 +211,10 @@ cat /usr/local/src/computate-scolaire/config/server.key
 cat /usr/local/src/computate-scolaire/config/ca1.crt
 ```
 
+# Deployment to OpenShift
+
+```bash
+cd /usr/local/src/computate-scolaire
+mvn clean install
+mvn fabric8:deploy -Popenshift
+```
