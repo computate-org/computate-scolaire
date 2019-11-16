@@ -50,6 +50,139 @@ Currently a work in progress.
 ```bash
 curl https://raw.githubusercontent.com/computate/computate/master/bin/frFR/installer-computate.sh -o ~/Downloads/installer-computate.sh
 bash ~/Downloads/installer-computate.sh
+
+curl https://raw.githubusercontent.com/computate/computate-scolaire/master/bin/frFR/installer-computate-scolaire.sh -o ~/Downloads/installer-computate-scolaire.sh
+bash ~/Downloads/installer-computate-scolaire.sh
+
+```
+
+# Démarrer le projet en français : 
+
+## If you wish to contribute to the project, you will want to configure it in French. 
+
+The project is entirely written in French as a first language, and English as a second language. 
+This ensures proper internationalization is in place through the whole project! 
+
+Main Project: computate-scolaire
+Main class: org.computate.scolaire.frFR.vertx.AppliVertx
+Environment Variables: 
+* configChemin: /usr/local/src/computate-scolaire/config/computate-scolaire.config
+* zookeeperNomHote: localhost
+* zookeeperPort: 10281
+
+# Configurer les données
+
+```bash
+
+createuser computate -P
+psql -c "create database scolaire_frfr; "
+psql -c "grant all privileges on database scolaire_frfr to computate; "
+
+/srv/solr-7.1.0/bin/solr create_collection -c scolaire_frfr -n computate
+
+```
+
+## computate-scolaire.config
+
+configChemin: /usr/local/src/computate-scolaire/config/computate-scolaire.config
+
+```ini
+appliNom = computate-scolaire
+
+[computate-scolaire]
+zookeeperNomHote=localhost
+zookeeperPort=10281
+langueNom=frFR
+appliChemin_enUS=/usr/local/src/computate-scolaire
+appliChemin_frFR=/usr/local/src/computate-scolaire
+nomDomaine=computate.org
+nomEnsembleDomaine=org.computate.scolaire
+autresLangues=enUS
+suffixeSrcMainJava=/src/main/java
+suffixeSrcGenJava=/src/gen/java
+cheminsRelatifsARegarder=src/main/java/org/computate/scolaire/frFR
+jdbcUrl="jdbc:postgresql://localhost:5432/scolaire_frfr"
+jdbcUtilisateur=scolaire
+jdbcMotDePasse="..."
+siteNomHote=dev.computate.org
+siteUrlBase=https://dev.computate.org:10180
+authRoyaume=COMPUTATE.ORG
+authRessource=computate.org
+authSecret=...
+authUrl=https://sso.computate.org/auth
+authSslRequis=all
+sslJksChemin=/srv/heytate.com/server.jks
+sslJksMotDePasse="..."
+sitePort=10180
+solrUrl=http://localhost:10383/solr/scolaire_frfr
+apiContactMail=ctate@redhat.com
+siteEcrireMethodes=html
+siteEcrireMethodes=htmlMeta
+siteEcrireMethodes=htmlScripts
+siteEcrireMethodes=htmlScript
+siteEcrireMethodes=htmlStyles
+siteEcrireMethodes=htmlStyle
+siteEcrireMethodes=htmlBody
+siteZone=America/Denver
+
+```
+
+# Start the project in English : 
+
+## Eclipse Debug Configuration
+
+Main Project: computate-scolaire
+Main class: org.computate.scolaire.enUS.vertx.AppVertx
+Environment Variables: 
+* configPath: /usr/local/src/computate-scolaire/config/computate-scolaire-enUS.config
+* zookeeperHostName: localhost
+* zookeeperPort: 10281
+
+# Configure the data
+
+```bash
+
+createuser computate -P
+psql -c "create database scolaire_enus; "
+psql -c "grant all privileges on database scolaire_enus to computate; "
+
+/srv/solr-7.1.0/bin/solr create_collection -c scolaire_enus -n computate
+
+```
+
+## computate-scolaire-enUS.config
+
+configPath: /usr/local/src/computate-scolaire/config/computate-scolaire-enUS.config
+
+```ini
+appName = computate-scolaire
+
+[computate-scolaire]
+zookeeperHostName=localhost
+zookeeperPort=10281
+languageName=frFR
+appPath_enUS=/usr/local/src/computate-scolaire
+appPath_frFR=/usr/local/src/computate-scolaire
+domainName=computate.org
+domainPackageName=org.computate.scolaire
+otherLanguages=enUS
+jdbcUrl="jdbc:postgresql://localhost:5432/scolaire_enus"
+jdbcUser=scolaire
+jdbcPassword="..."
+siteHostName=dev.computate.org
+siteBaseUrl=https://dev.computate.org:10380
+authRealm=COMPUTATE.ORG
+authResource=computate.org
+authSecret=...
+authUrl=https://sso.computate.org/auth
+authSslRequired=all
+sslJksPath=/srv/heytate.com/server.jks
+sslJksPassword="..."
+sitePort=10380
+solrUrl=http://localhost:10383/solr/scolaire_enus
+apiContactEmail=ctate@redhat.com
+siteZone=America/Denver
+
 ```
 
 # Deployment
