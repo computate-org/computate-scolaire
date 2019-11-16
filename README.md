@@ -63,6 +63,8 @@ bash ~/Downloads/installer-computate-scolaire.sh
 The project is entirely written in French as a first language, and English as a second language. 
 This ensures proper internationalization is in place through the whole project! 
 
+## Eclipse Debug Configuration
+
 Main Project: computate-scolaire
 Main class: org.computate.scolaire.frFR.vertx.AppliVertx
 Environment Variables: 
