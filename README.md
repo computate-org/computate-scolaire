@@ -66,7 +66,9 @@ This ensures proper internationalization is in place through the whole project!
 ## Eclipse Debug Configuration
 
 Main Project: computate-scolaire
+
 Main class: org.computate.scolaire.frFR.vertx.AppliVertx
+
 Environment Variables: 
 * configChemin: /usr/local/src/computate-scolaire/config/computate-scolaire.config
 * zookeeperNomHote: localhost
@@ -134,7 +136,9 @@ siteZone=America/Denver
 ## Eclipse Debug Configuration
 
 Main Project: computate-scolaire
+
 Main class: org.computate.scolaire.enUS.vertx.AppVertx
+
 Environment Variables: 
 * configPath: /usr/local/src/computate-scolaire/config/computate-scolaire-enUS.config
 * zookeeperHostName: localhost
