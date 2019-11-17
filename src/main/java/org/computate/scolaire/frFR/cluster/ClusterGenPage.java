@@ -92,6 +92,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 	@Override public void htmlScriptClusterGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "websocketCluster(); ");
 		l("});");
 	}
 

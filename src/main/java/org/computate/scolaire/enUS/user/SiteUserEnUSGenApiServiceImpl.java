@@ -117,7 +117,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSiteUser.getRows());
-									patchRequest.setNumFound(listSiteUser.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSiteUser.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(

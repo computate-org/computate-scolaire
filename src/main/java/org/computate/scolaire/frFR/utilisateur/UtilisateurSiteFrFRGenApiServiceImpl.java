@@ -117,7 +117,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeUtilisateurSite.getRows());
-									requetePatch.setNumFound(listeUtilisateurSite.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeUtilisateurSite.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(

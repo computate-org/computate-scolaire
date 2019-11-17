@@ -2065,7 +2065,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerCluster(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2077,7 +2077,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			indexerCluster(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2155,7 +2155,7 @@ public abstract class ClusterGen<DEV> extends Object {
 			initLoinCluster(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

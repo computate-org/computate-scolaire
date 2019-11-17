@@ -91,6 +91,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 	@Override public void htmlScriptClusterGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "websocketCluster(); ");
 		l("});");
 	}
 
