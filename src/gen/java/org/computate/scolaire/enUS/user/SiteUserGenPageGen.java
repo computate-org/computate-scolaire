@@ -112,8 +112,8 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initDeepSiteUserGenPage() {
-		super.initDeepClusterPage(siteRequest_);
 		initSiteUserGenPage();
+		super.initDeepClusterPage(siteRequest_);
 	}
 
 	public void initSiteUserGenPage() {

@@ -58,7 +58,9 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(utilisateurSite != null)
+		if(utilisateurSite != null && utilisateurSite.getObjetTitre() != null)
+			c.o(utilisateurSite.getObjetTitre());
+		else if(utilisateurSite != null)
 			c.o("");
 		else if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0)
 			c.o("aucun utilisateur du site trouvé");
@@ -91,6 +93,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 
 	@Override public void htmlScriptUtilisateurSiteGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "websocketUtilisateurSite(); ");
 		l("});");
 	}
 
@@ -138,6 +141,22 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
 									e("span").f().sx(o.strModifie()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("class", "").f().sx("ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strObjetId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -381,6 +400,22 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -613,6 +648,22 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -839,6 +890,22 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
 								e("span").f().sx(o.strModifie()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjetId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1261,10 +1328,10 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	 * r.enUS: refreshSiteUserGenPage
 	 * r: ajouterErreur
 	 * r.enUS: addError
-	 * r: suggereUtilisateurSite
-	 * r.enUS: suggestSiteUser
-	 * r: ':'
-	 * r.enUS: ':'
+	 * r: suggereUtilisateurSiteObjetSuggere
+	 * r.enUS: suggestSiteUserObjectSuggest
+	 * r: 'objetSuggere:'
+	 * r.enUS: 'objectSuggest:'
 	 * r: '#suggereListUtilisateurSite'
 	 * r.enUS: '#suggestListSiteUser'
 	 * r: "suggereListUtilisateurSite"
@@ -1297,7 +1364,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormUtilisateurSite", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/utilisateur?q=:' + encodeURIComponent($('#suggereUtilisateurSite", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggereFormUtilisateurSite", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/utilisateur?q=objetSuggere:' + encodeURIComponent($('#suggereUtilisateurSite", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher utilisateurs du site")
@@ -1305,7 +1372,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							.a("name", "suggereUtilisateurSite")
 							.a("id", "suggereUtilisateurSite", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereUtilisateurSite( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggereListUtilisateurSite", id, "')); ")
+							.a("oninput", "suggereUtilisateurSiteObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListUtilisateurSite", id, "')); ")
 							.fg();
 
 					} p.g("form");

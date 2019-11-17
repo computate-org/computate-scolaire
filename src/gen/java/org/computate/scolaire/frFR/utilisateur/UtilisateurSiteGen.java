@@ -1112,8 +1112,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public void initLoinUtilisateurSite() {
-		super.initLoinCluster(requeteSite_);
 		initUtilisateurSite();
+		super.initLoinCluster(requeteSite_);
 	}
 
 	public void initUtilisateurSite() {
@@ -1372,7 +1372,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerUtilisateurSite(document);
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1384,7 +1384,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			indexerUtilisateurSite(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1445,7 +1445,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			initLoinUtilisateurSite(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit();
+			clientSolr.commit(false, false, false);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

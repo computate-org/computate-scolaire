@@ -57,7 +57,9 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(siteUser != null)
+		if(siteUser != null && siteUser.getObjectTitle() != null)
+			c.o(siteUser.getObjectTitle());
+		else if(siteUser != null)
 			c.o("");
 		else if(listSiteUser == null || listSiteUser.size() == 0)
 			c.o("no site user found");
@@ -90,6 +92,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSiteUserGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "websocketSiteUser(); ");
 		l("});");
 	}
 
@@ -137,6 +140,22 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
 									e("span").f().sx(o.strModified()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("class", "").f().sx("ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(o.strObjectId()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -380,6 +399,22 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -612,6 +647,22 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -838,6 +889,22 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 						{ e("div").a("class", "w3-cell ").f();
 							{ e("div").a("class", "w3-rest ").f();
 								e("span").f().sx(o.strModified()).g("span");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+			} g("div");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("class", "w3-card ").f();
+					{ e("div").a("class", "w3-cell-row w3-gray ").f();
+						e("label").a("class", "").f().sx("ID").g("label");
+					} g("div");
+					{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell ").f();
+							{ e("div").a("class", "w3-rest ").f();
+								e("span").f().sx(o.strObjectId()).g("span");
 							} g("div");
 						} g("div");
 					} g("div");
@@ -1261,14 +1328,14 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggestFormSiteUser", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/user?q=:' + encodeURIComponent($('#suggestSiteUser", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggestFormSiteUser", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/user?q=objectSuggest:' + encodeURIComponent($('#suggestSiteUser", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("class", "suggestSiteUser w3-input w3-border w3-cell w3-cell-middle ")
 							.a("name", "suggestSiteUser")
 							.a("id", "suggestSiteUser", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestSiteUser( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSiteUser", id, "')); ")
+							.a("oninput", "suggestSiteUserObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSiteUser", id, "')); ")
 							.fg();
 
 					} p.g("form");

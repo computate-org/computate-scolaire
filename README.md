@@ -223,7 +223,7 @@ spec:
             - name: zookeeperPort
               value: 8080
               
-            - name: clusterPort
+            - name: clusterPublicPort
               value: 8081
               
             - name: appliChemin_enUS

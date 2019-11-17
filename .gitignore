@@ -18,7 +18,7 @@ config/*.p12
 config/*.jceks
 config/*.properties
 .vertx
-src/main/fabric8/deployment.yml
+src/main/fabric8/*.yml
 **/*.swp
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)

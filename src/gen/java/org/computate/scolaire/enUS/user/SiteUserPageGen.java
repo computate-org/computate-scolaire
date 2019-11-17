@@ -36,8 +36,8 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	}
 
 	public void initDeepSiteUserPage() {
-		super.initDeepSiteUserGenPage(siteRequest_);
 		initSiteUserPage();
+		super.initDeepSiteUserGenPage(siteRequest_);
 	}
 
 	public void initSiteUserPage() {

@@ -36,8 +36,8 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 	}
 
 	public void initLoinUtilisateurSitePage() {
-		super.initLoinUtilisateurSiteGenPage(requeteSite_);
 		initUtilisateurSitePage();
+		super.initLoinUtilisateurSiteGenPage(requeteSite_);
 	}
 
 	public void initUtilisateurSitePage() {

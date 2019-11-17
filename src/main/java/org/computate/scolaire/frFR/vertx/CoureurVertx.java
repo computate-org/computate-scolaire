@@ -8,6 +8,8 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.EventBusOptions;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 
@@ -18,6 +20,12 @@ import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 public class CoureurVertx {
 
 	/**
+	 * r: CoureurVertx
+	 * r.enUS: RunnerVertx
+	 */
+	protected static final Logger LOGGER = LoggerFactory.getLogger(CoureurVertx.class);
+
+	/**
 	 * r: zookeeperNomHote
 	 * r.enUS: zookeeperHostName
 	 */
@@ -26,6 +34,8 @@ public class CoureurVertx {
 		String zookeeperNomHote = System.getenv("zookeeperNomHote");
 		Integer zookeeperPort = Integer.parseInt(System.getenv("zookeeperPort"));
 		Integer clusterPort = System.getenv("clusterPort") == null ? null : Integer.parseInt(System.getenv("clusterPort"));
+		String clusterHost = System.getenv("clusterHost");
+		Integer clusterPublicPort = System.getenv("clusterPublicPort") == null ? null : Integer.parseInt(System.getenv("clusterPublicPort"));
 		String clusterPublicHost = System.getenv("clusterPublicHost");
 		String zookeeperHosts = zookeeperNomHote + ":" + zookeeperPort;
 		zkConfig.put("zookeeperHosts", zookeeperHosts);
@@ -43,10 +53,28 @@ public class CoureurVertx {
 		VertxOptions optionsVertx = new VertxOptions();
 		// For OpenShift
 		optionsVertx.setEventBusOptions(new EventBusOptions());
-		if(clusterPublicHost != null)
+
+		if(clusterHost == null) {
+			String hostname = System.getenv("HOSTNAME");
+			clusterHost = hostname;
+		}
+		if(clusterHost != null) {
+			LOGGER.info(String.format("clusterHost: %s", clusterHost));
+			optionsVertx.setClusterHost(clusterHost);
+		}
+		if(clusterPort != null) {
+			LOGGER.info(String.format("clusterPort: %s", clusterPort));
+			optionsVertx.setClusterPort(clusterPort);
+		}
+		if(clusterPublicHost != null) {
+			LOGGER.info(String.format("clusterPublicHost: %s", clusterPublicHost));
 			optionsVertx.setClusterPublicHost(clusterPublicHost);
-		if(clusterPort != null)
-			optionsVertx.setClusterPublicPort(clusterPort);
+		}
+		if(clusterPublicPort != null) {
+			LOGGER.info(String.format("clusterPublicPort: %s", clusterPublicPort));
+			optionsVertx.setClusterPublicPort(clusterPublicPort);
+		}
+
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		optionsVertx.setClustered(true);
 
@@ -68,7 +96,7 @@ public class CoureurVertx {
 				if (res.succeeded()) {
 					Vertx vertx = res.result();
 					EventBus eventBus = vertx.eventBus();
-					System.out.println("We now have a clustered event bus: " + eventBus);
+					LOGGER.info("We now have a clustered event bus: {}", eventBus);
 					runner.accept(vertx);
 				} else {
 					res.cause().printStackTrace();

@@ -116,8 +116,8 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void initLoinUtilisateurSiteGenPage() {
-		super.initLoinClusterPage(requeteSite_);
 		initUtilisateurSiteGenPage();
+		super.initLoinClusterPage(requeteSite_);
 	}
 
 	public void initUtilisateurSiteGenPage() {
