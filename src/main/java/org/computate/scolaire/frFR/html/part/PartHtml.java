@@ -45,10 +45,11 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri3
  * Tri.asc: tri4
  * Tri.asc: tri5
+ * Rows: 1000000
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
-*/                       
+ * Rolex.frFR: SiteAdmin
+ * Rolex.enUS: SiteAdmin
+*/                
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -163,6 +164,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 5
 	 * HtmlCelulle: 1
+	 * Multiligne: true
 	 */               
 	protected void _htmlAvant(Couverture<String> c) {
 		if(htmlElement != null) {
@@ -181,8 +183,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: var
 	 * NomAffichage.frFR: var
 	 * Definir: true
-	 * HtmlLigne: 5
-	 * HtmlCelulle: 2
+	 * HtmlLigne: 7
+	 * HtmlCelulle: 1
 	 */               
 	protected void _htmlVar(Couverture<String> c) {
 	}
@@ -195,8 +197,9 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.frFR: HTML après
 	 * NomAffichage.enUS: HTML after
 	 * Definir: true
-	 * HtmlLigne: 5
-	 * HtmlCelulle: 3
+	 * HtmlLigne: 6
+	 * HtmlCelulle: 1
+	 * Multiligne: true
 	 */               
 	protected void _htmlApres(Couverture<String> c) {
 		if(htmlElement != null) {
@@ -213,8 +216,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: text
 	 * Definir: true
 	 * Multiligne: true
-	 * HtmlLigne: 6
-	 * HtmlCelulle: 1
+	 * HtmlLigne: 7
+	 * HtmlCelulle: 2
 	 */             
 	protected void _htmlTexte(Couverture<String> c) {
 	}
@@ -227,7 +230,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCelulle: 1
 	 */               
 	protected void _tri1(Couverture<Double> c) {
@@ -241,7 +244,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCelulle: 2
 	 */               
 	protected void _tri2(Couverture<Double> c) {
@@ -255,7 +258,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCelulle: 3
 	 */               
 	protected void _tri3(Couverture<Double> c) {
@@ -269,7 +272,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCelulle: 4
 	 */               
 	protected void _tri4(Couverture<Double> c) {
@@ -283,7 +286,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCelulle: 5
 	 */               
 	protected void _tri5(Couverture<Double> c) {
@@ -297,7 +300,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 6
 	 */               
 	protected void _tri6(Couverture<Double> c) {
@@ -311,7 +314,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 7
 	 */               
 	protected void _tri7(Couverture<Double> c) {
@@ -325,7 +328,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 8
 	 */               
 	protected void _tri8(Couverture<Double> c) {
@@ -339,7 +342,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 9
 	 */               
 	protected void _tri9(Couverture<Double> c) {
@@ -353,7 +356,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 10
 	 */              
 	protected void _tri10(Couverture<Double> c) {
@@ -374,7 +377,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	@Override
 	protected void _objetTitre(Couverture<String> c) {
 		StringBuilder b = new StringBuilder();
-		b.append(pk).append(" ");
 		if(htmlAvant != null)
 			b.append(htmlAvant);
 		if(htmlVar != null)
@@ -383,6 +385,18 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 			b.append(htmlTexte);
 		if(htmlApres != null)
 			b.append(htmlApres);
+		if(b.length() == 0)
+			b.append(pk);
 		c.o(b.toString());
+	}
+
+	@Override
+	/**
+	 * Var.enUS: _objectId
+	 */
+	protected void _objetId(Couverture<String> c) {
+		if(pk != null){
+			c.o(pk.toString());
+		}
 	}
 }

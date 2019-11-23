@@ -83,7 +83,6 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		StringBuilder b = new StringBuilder();
-		b.append(pk).append(" ");
 		if(htmlBefore != null)
 			b.append(htmlBefore);
 		if(htmlVar != null)
@@ -92,6 +91,15 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 			b.append(htmlText);
 		if(htmlAfter != null)
 			b.append(htmlAfter);
+		if(b.length() == 0)
+			b.append(pk);
 		c.o(b.toString());
+	}
+
+	@Override()
+	protected void  _objectId(Wrap<String> c) {
+		if(pk != null){
+			c.o(pk.toString());
+		}
 	}
 }

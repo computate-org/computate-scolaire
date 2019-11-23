@@ -60,6 +60,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public static final String HtmlPart_Couleur = "yellow";
 	public static final String HtmlPart_IconeGroupe = "regular";
 	public static final String HtmlPart_IconeNom = "sun";
+	public static final Integer HtmlPart_Rows = 1000000;
 
 	/////////////////
 	// htmlPartKey //
@@ -2721,7 +2722,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexHtmlPart(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2733,7 +2734,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			indexHtmlPart(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2842,7 +2843,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			initDeepHtmlPart(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

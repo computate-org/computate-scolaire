@@ -55,6 +55,8 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolEnrollment == null)
 				setListSchoolEnrollment(listSchoolEnrollmentWrap.o);
 		}
+		if(listSchoolEnrollment != null)
+			listSchoolEnrollment.initDeepForClass(siteRequest_);
 		listSchoolEnrollmentWrap.alreadyInitialized(true);
 		return (EnrollmentFormGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 			if(schoolEnrollment == null)
 				setSchoolEnrollment(schoolEnrollmentWrap.o);
 		}
+		if(schoolEnrollment != null)
+			schoolEnrollment.initDeepForClass(siteRequest_);
 		schoolEnrollmentWrap.alreadyInitialized(true);
 		return (EnrollmentFormGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestEnrollmentFormGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolEnrollment != null)
+			listSchoolEnrollment.setSiteRequest_(siteRequest_);
+		if(schoolEnrollment != null)
+			schoolEnrollment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

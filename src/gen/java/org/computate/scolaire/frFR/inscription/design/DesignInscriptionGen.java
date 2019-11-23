@@ -1833,7 +1833,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerDesignInscription(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1845,7 +1845,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			indexerDesignInscription(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1926,7 +1926,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			initLoinDesignInscription(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

@@ -255,7 +255,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeDesignInscription.getRows());
-									requetePatch.setNumFound(listeDesignInscription.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(

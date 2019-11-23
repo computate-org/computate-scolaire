@@ -1832,7 +1832,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexEnrollmentDesign(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1844,7 +1844,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			indexEnrollmentDesign(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1925,7 +1925,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			initDeepEnrollmentDesign(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}

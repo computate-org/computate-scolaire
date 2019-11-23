@@ -329,7 +329,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listHtmlPart.getRows());
-									patchRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listHtmlPart.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(

@@ -46,9 +46,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * NomVar.frFR: design-inscription
  * NomVar.enUS: enrollment-design
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
-*/   
+ * Rolex.frFR: SiteAdmin
+ * Rolex.enUS: SiteAdmin
+*/           
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
 	/**

@@ -60,7 +60,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/    
+*/   
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**

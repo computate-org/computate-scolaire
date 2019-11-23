@@ -54,9 +54,15 @@ public class CoureurVertx {
 		// For OpenShift
 		optionsVertx.setEventBusOptions(new EventBusOptions());
 
+		String hostname = System.getenv("HOSTNAME");
+		String openshiftService = System.getenv("openshiftService");
 		if(clusterHost == null) {
-			String hostname = System.getenv("HOSTNAME");
 			clusterHost = hostname;
+		}
+		if(clusterPublicHost == null) {
+			if(hostname != null && openshiftService != null) {
+				clusterPublicHost = hostname + "." + openshiftService;
+			}
 		}
 		if(clusterHost != null) {
 			LOGGER.info(String.format("clusterHost: %s", clusterHost));

@@ -327,7 +327,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeInscriptionScolaire.getRows());
-									requetePatch.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeInscriptionScolaire.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
@@ -1484,7 +1484,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			listeRecherche.setC(InscriptionScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1545,6 +1544,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

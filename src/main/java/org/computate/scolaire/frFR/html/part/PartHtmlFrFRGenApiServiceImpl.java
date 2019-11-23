@@ -329,7 +329,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listePartHtml.getRows());
-									requetePatch.setNumFound(listePartHtml.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(

@@ -255,7 +255,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listEnrollmentDesign.getRows());
-									patchRequest.setNumFound(listEnrollmentDesign.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(

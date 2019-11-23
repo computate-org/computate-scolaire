@@ -327,7 +327,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSchoolEnrollment.getRows());
-									patchRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolEnrollment.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
@@ -1484,7 +1484,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			listSearch.setC(SchoolEnrollment.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1545,6 +1544,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {
