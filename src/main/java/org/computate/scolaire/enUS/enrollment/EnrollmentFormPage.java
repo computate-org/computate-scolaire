@@ -77,7 +77,7 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 
 				s(htmlPart.getHtmlBefore());
 				if(htmlVar != null)
-					s("{{", htmlVar, "}}");
+					s(obtainForClass(htmlVar));
 				s(htmlPart.getHtmlAfter());
 			}
 		}

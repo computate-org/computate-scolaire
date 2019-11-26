@@ -55,6 +55,8 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolAge == null)
 				setListSchoolAge(listSchoolAgeWrap.o);
 		}
+		if(listSchoolAge != null)
+			listSchoolAge.initDeepForClass(siteRequest_);
 		listSchoolAgeWrap.alreadyInitialized(true);
 		return (AgeGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 			if(schoolAge == null)
 				setSchoolAge(schoolAgeWrap.o);
 		}
+		if(schoolAge != null)
+			schoolAge.initDeepForClass(siteRequest_);
 		schoolAgeWrap.alreadyInitialized(true);
 		return (AgeGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestAgeGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolAge != null)
+			listSchoolAge.setSiteRequest_(siteRequest_);
+		if(schoolAge != null)
+			schoolAge.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

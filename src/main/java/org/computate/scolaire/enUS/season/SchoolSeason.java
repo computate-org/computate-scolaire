@@ -37,6 +37,9 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		c.o(3);
 	}
 
+	protected void _yearKey(Wrap<Long> c) {
+	}
+
 	protected void _yearSearch(SearchList<SchoolYear> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("seasonKeys_indexed_longs:" + pk);
@@ -53,11 +56,6 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	protected void _schoolKey(Wrap<Long> c) {
 		if(year_ != null)
 			c.o(year_.getSchoolKey());
-	}
-
-	protected void _yearKey(Wrap<Long> c) {
-		if(year_ != null)
-			c.o(year_.getYearKey());
 	}
 
 	protected void _schoolName(Wrap<String> c) {
@@ -82,7 +80,7 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _yearEnd(Wrap<Integer> c) {
 		if(year_ != null)
-			c.o(year_.getYearStart());
+			c.o(year_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {}

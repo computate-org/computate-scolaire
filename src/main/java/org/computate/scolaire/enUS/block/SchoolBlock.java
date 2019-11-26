@@ -47,6 +47,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(6);
 	}
 
+	protected void _ageKey(Wrap<Long> c) {
+	}
+
 	protected void _ageSearch(SearchList<SchoolAge> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("blockKeys_indexed_longs:" + pk);
@@ -80,11 +83,6 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age_.getSessionKey());
 	}
 
-	protected void _ageKey(Wrap<Long> c) {
-		if(age_ != null)
-			c.o(age_.getAgeKey());
-	}
-
 	protected void _schoolName(Wrap<String> c) {
 		if(age_ != null)
 			c.o(age_.getSchoolName());
@@ -107,7 +105,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _yearEnd(Wrap<Integer> c) {
 		if(age_ != null)
-			c.o(age_.getYearStart());
+			c.o(age_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {

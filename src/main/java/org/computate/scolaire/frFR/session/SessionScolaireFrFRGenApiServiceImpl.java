@@ -200,6 +200,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							postSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", l));
 						}
 						break;
+					case "saisonCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
 					case "sessionJourDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionJourDebut", jsonObject.getString(entiteVar), pk));
@@ -263,7 +267,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeSessionScolaire.getRows());
-									requetePatch.setNumFound(listeSessionScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
@@ -460,6 +464,16 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					case "removeAgeCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageCles", pk, "sessionCle", Long.parseLong(requeteJson.getString(methodeNom))));
+						break;
+					case "setSaisonCle":
+						o2.setSaisonCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
+						break;
+					case "removeSaisonCle":
+						o2.setSaisonCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
 						break;
 					case "setSessionJourDebut":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -823,12 +837,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "saisonTri_indexed_int";
 			case "sessionTri":
 				return "sessionTri_indexed_int";
+			case "saisonCle":
+				return "saisonCle_indexed_long";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
 				return "anneeCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
 			case "ecoleNom":
 				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
@@ -1074,7 +1088,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			listeRecherche.setC(SessionScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1135,6 +1148,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

@@ -265,7 +265,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeCluster.getRows());
-									requetePatch.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeCluster.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(

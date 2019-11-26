@@ -200,6 +200,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							postSqlParams.addAll(Arrays.asList("blocCles", l, "inscriptionCles", pk));
 						}
 						break;
+					case "ageCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
@@ -295,7 +299,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeBlocScolaire.getRows());
-									requetePatch.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeBlocScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeBlocScolaire.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
@@ -492,6 +496,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					case "removeInscriptionCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("blocCles", Long.parseLong(requeteJson.getString(methodeNom)), "inscriptionCles", pk));
+						break;
+					case "setAgeCle":
+						o2.setAgeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						break;
+					case "removeAgeCle":
+						o2.setAgeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
 						break;
 					case "setBlocHeureDebut":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -937,6 +951,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "sessionTri_indexed_int";
 			case "ageTri":
 				return "ageTri_indexed_int";
+			case "ageCle":
+				return "ageCle_indexed_long";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
@@ -945,8 +961,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "saisonCle_indexed_long";
 			case "sessionCle":
 				return "sessionCle_indexed_long";
-			case "ageCle":
-				return "ageCle_indexed_long";
 			case "ecoleNom":
 				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
@@ -1220,7 +1234,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			listeRecherche.setC(BlocScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1281,6 +1294,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

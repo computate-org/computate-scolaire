@@ -155,6 +155,26 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: AgeScolaire.blocCles
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: âge
+	 * NomAffichage.enUS: age
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
+	 * r: AgeCle
+	 * r.enUS: AgeKey
+	 * r: age
+	 * r.enUS: age
+	*/             
+	protected void _ageCle(Couverture<Long> c) {
+	}
+
+	/**
 	 * Var.enUS: ageSearch
 	 * r: blocCles
 	 * r.enUS: blockKeys
@@ -262,25 +282,6 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: ageKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: âge
-	 * NomAffichage.enUS: age
-	 * r: AgeCle
-	 * r.enUS: AgeKey
-	 * r: age
-	 * r.enUS: age
-	*/             
-	protected void _ageCle(Couverture<Long> c) {
-		if(age_ != null)
-			c.o(age_.getAgeCle());
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: schoolName
 	 * Indexe: true
 	 * Stocke: true
@@ -359,7 +360,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
-	 * r.enUS: YearStart
+	 * r.enUS: YearEnd
 	 * r: age
 	 * r.enUS: age
 	 */                     

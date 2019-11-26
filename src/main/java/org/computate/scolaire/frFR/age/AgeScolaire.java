@@ -76,7 +76,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.ageCle
 	 * HtmlLigne: 4
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 * Description.frFR: Les blocs scolaires de l'âge scolaire. 
 	 * Description.enUS: The school blocks of the school age. 
 	 * NomAffichage.frFR: blocs
@@ -132,6 +132,22 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 */
 	protected void _sessionTri(Couverture<Integer> c) {
 		c.o(5);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: SessionScolaire.ageCles
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: session
+	 * NomAffichage.enUS: session
+	*/             
+	protected void _sessionCle(Couverture<Long> c) {
 	}
 
 	/**
@@ -223,25 +239,6 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: session
-	 * NomAffichage.enUS: session
-	 * r: SessionCle
-	 * r.enUS: SessionKey
-	 * r: session
-	 * r.enUS: session
-	*/             
-	protected void _sessionCle(Couverture<Long> c) {
-		if(session_ != null)
-			c.o(session_.getSessionCle());
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: schoolName
 	 * Indexe: true
 	 * Stocke: true
@@ -320,7 +317,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
-	 * r.enUS: YearStart
+	 * r.enUS: YearEnd
 	 * r: session
 	 * r.enUS: session
 	 */                      

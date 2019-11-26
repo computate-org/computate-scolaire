@@ -133,6 +133,22 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: AnneeScolaire.saisonCles
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 1
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	*/            
+	protected void _anneeCle(Couverture<Long> c) {
+	}
+
+	/**
 	 * Var.enUS: yearSearch
 	 * r: saisonCles
 	 * r.enUS: seasonKeys
@@ -179,25 +195,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	protected void _ecoleCle(Couverture<Long> c) {
 		if(annee_ != null)
 			c.o(annee_.getEcoleCle());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 * r: AnneeCle
-	 * r.enUS: YearKey
-	 * r: annee
-	 * r.enUS: year
-	*/             
-	protected void _anneeCle(Couverture<Long> c) {
-		if(annee_ != null)
-			c.o(annee_.getAnneeCle());
 	}
 
 	/**
@@ -280,7 +277,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
-	 * r.enUS: YearStart
+	 * r.enUS: YearEnd
 	 * r: annee
 	 * r.enUS: year
 	 */                    

@@ -55,6 +55,8 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolSeason == null)
 				setListSchoolSeason(listSchoolSeasonWrap.o);
 		}
+		if(listSchoolSeason != null)
+			listSchoolSeason.initDeepForClass(siteRequest_);
 		listSchoolSeasonWrap.alreadyInitialized(true);
 		return (SeasonGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 			if(schoolSeason == null)
 				setSchoolSeason(schoolSeasonWrap.o);
 		}
+		if(schoolSeason != null)
+			schoolSeason.initDeepForClass(siteRequest_);
 		schoolSeasonWrap.alreadyInitialized(true);
 		return (SeasonGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestSeasonGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolSeason != null)
+			listSchoolSeason.setSiteRequest_(siteRequest_);
+		if(schoolSeason != null)
+			schoolSeason.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

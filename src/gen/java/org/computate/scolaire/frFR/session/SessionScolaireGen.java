@@ -972,6 +972,114 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////
+	// saisonCle //
+	///////////////
+
+	/**	L'entité « saisonCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long saisonCle;
+	@JsonIgnore
+	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
+
+	/**	<br/>L'entité « saisonCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonCle(Couverture<Long> c);
+
+	public Long getSaisonCle() {
+		return saisonCle;
+	}
+
+	public void setSaisonCle(Long saisonCle) {
+		this.saisonCle = saisonCle;
+		this.saisonCleCouverture.dejaInitialise = true;
+	}
+	public SessionScolaire setSaisonCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.saisonCle = Long.parseLong(o);
+		this.saisonCleCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	protected SessionScolaire saisonCleInit() {
+		if(!saisonCleCouverture.dejaInitialise) {
+			_saisonCle(saisonCleCouverture);
+			if(saisonCle == null)
+				setSaisonCle(saisonCleCouverture.o);
+		}
+		saisonCleCouverture.dejaInitialise(true);
+		return (SessionScolaire)this;
+	}
+
+	public Long solrSaisonCle() {
+		return saisonCle;
+	}
+
+	public String strSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String jsonSaisonCle() {
+		return saisonCle == null ? "" : saisonCle.toString();
+	}
+
+	public String nomAffichageSaisonCle() {
+		return "saison";
+	}
+
+	public String htmTooltipSaisonCle() {
+		return null;
+	}
+
+	public String htmSaisonCle() {
+		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
+	}
+
+	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSessionScolaire", strPk(), "SaisonCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSessionScolaire", strPk(), "SaisonCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSaisonCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"saisonCle\"");
+							r.s(" value=\"", htmSaisonCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSaisonCle());
+			}
+			r.l("</div>");
+		}
+	}
+
 	/////////////////////
 	// saisonRecherche //
 	/////////////////////
@@ -1258,114 +1366,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmAnneeCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	///////////////
-	// saisonCle //
-	///////////////
-
-	/**	L'entité « saisonCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long saisonCle;
-	@JsonIgnore
-	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
-
-	/**	<br/>L'entité « saisonCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _saisonCle(Couverture<Long> c);
-
-	public Long getSaisonCle() {
-		return saisonCle;
-	}
-
-	public void setSaisonCle(Long saisonCle) {
-		this.saisonCle = saisonCle;
-		this.saisonCleCouverture.dejaInitialise = true;
-	}
-	public SessionScolaire setSaisonCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.saisonCle = Long.parseLong(o);
-		this.saisonCleCouverture.dejaInitialise = true;
-		return (SessionScolaire)this;
-	}
-	protected SessionScolaire saisonCleInit() {
-		if(!saisonCleCouverture.dejaInitialise) {
-			_saisonCle(saisonCleCouverture);
-			if(saisonCle == null)
-				setSaisonCle(saisonCleCouverture.o);
-		}
-		saisonCleCouverture.dejaInitialise(true);
-		return (SessionScolaire)this;
-	}
-
-	public Long solrSaisonCle() {
-		return saisonCle;
-	}
-
-	public String strSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String jsonSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String nomAffichageSaisonCle() {
-		return "année";
-	}
-
-	public String htmTooltipSaisonCle() {
-		return null;
-	}
-
-	public String htmSaisonCle() {
-		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
-	}
-
-	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSessionScolaire", strPk(), "SaisonCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSessionScolaire", strPk(), "SaisonCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonCle\"");
-							r.s(" value=\"", htmSaisonCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonCle());
 			}
 			r.l("</div>");
 		}
@@ -2813,11 +2813,11 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		anneeTriInit();
 		saisonTriInit();
 		sessionTriInit();
+		saisonCleInit();
 		saisonRechercheInit();
 		saison_Init();
 		ecoleCleInit();
 		anneeCleInit();
-		saisonCleInit();
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
@@ -2887,6 +2887,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				return oSessionScolaire.saisonTri;
 			case "sessionTri":
 				return oSessionScolaire.sessionTri;
+			case "saisonCle":
+				return oSessionScolaire.saisonCle;
 			case "saisonRecherche":
 				return oSessionScolaire.saisonRecherche;
 			case "saison_":
@@ -2895,8 +2897,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				return oSessionScolaire.ecoleCle;
 			case "anneeCle":
 				return oSessionScolaire.anneeCle;
-			case "saisonCle":
-				return oSessionScolaire.saisonCle;
 			case "ecoleNom":
 				return oSessionScolaire.ecoleNom;
 			case "ecoleNomComplet":
@@ -2950,6 +2950,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "ageCles":
 				oSessionScolaire.addAgeCles((Long)val);
+				return val;
+			case "saisonCle":
+				oSessionScolaire.setSaisonCle((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3054,6 +3057,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					oSessionScolaire.setSessionTri(sessionTri);
 			}
 
+			Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+			if(saisonCle != null)
+				oSessionScolaire.setSaisonCle(saisonCle);
+
 			if(sauvegardesSessionScolaire.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
@@ -3064,12 +3071,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 				if(anneeCle != null)
 					oSessionScolaire.setAnneeCle(anneeCle);
-			}
-
-			if(sauvegardesSessionScolaire.contains("saisonCle")) {
-				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-				if(saisonCle != null)
-					oSessionScolaire.setSaisonCle(saisonCle);
 			}
 
 			if(sauvegardesSessionScolaire.contains("ecoleNom")) {
@@ -3197,7 +3198,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerSessionScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3209,7 +3210,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			indexerSessionScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3259,6 +3260,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			document.addField("sessionTri_indexed_int", sessionTri);
 			document.addField("sessionTri_stored_int", sessionTri);
 		}
+		if(saisonCle != null) {
+			document.addField("saisonCle_indexed_long", saisonCle);
+			document.addField("saisonCle_stored_long", saisonCle);
+		}
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
@@ -3266,10 +3271,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		if(anneeCle != null) {
 			document.addField("anneeCle_indexed_long", anneeCle);
 			document.addField("anneeCle_stored_long", anneeCle);
-		}
-		if(saisonCle != null) {
-			document.addField("saisonCle_indexed_long", saisonCle);
-			document.addField("saisonCle_stored_long", saisonCle);
 		}
 		if(ecoleNom != null) {
 			document.addField("ecoleNom_indexed_string", ecoleNom);
@@ -3338,7 +3339,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			initLoinSessionScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3386,6 +3387,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		if(sessionTri != null)
 			oSessionScolaire.setSessionTri(sessionTri);
 
+		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
+		if(saisonCle != null)
+			oSessionScolaire.setSaisonCle(saisonCle);
+
 		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 		if(ecoleCle != null)
 			oSessionScolaire.setEcoleCle(ecoleCle);
@@ -3393,10 +3398,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 		if(anneeCle != null)
 			oSessionScolaire.setAnneeCle(anneeCle);
-
-		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-		if(saisonCle != null)
-			oSessionScolaire.setSaisonCle(saisonCle);
 
 		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 		if(ecoleNom != null)
@@ -3458,7 +3459,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageCles, sessionJourDebut, sessionJourFin);
+		return Objects.hash(super.hashCode(), ageCles, saisonCle, sessionJourDebut, sessionJourFin);
 	}
 
 	////////////
@@ -3473,6 +3474,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		SessionScolaire that = (SessionScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( ageCles, that.ageCles )
+				&& Objects.equals( saisonCle, that.saisonCle )
 				&& Objects.equals( sessionJourDebut, that.sessionJourDebut )
 				&& Objects.equals( sessionJourFin, that.sessionJourFin );
 	}
@@ -3486,6 +3488,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SessionScolaire { ");
 		sb.append( "ageCles: " ).append(ageCles);
+		sb.append( ", saisonCle: " ).append(saisonCle);
 		sb.append( ", sessionJourDebut: " ).append(sessionJourDebut);
 		sb.append( ", sessionJourFin: " ).append(sessionJourFin);
 		sb.append(" }");

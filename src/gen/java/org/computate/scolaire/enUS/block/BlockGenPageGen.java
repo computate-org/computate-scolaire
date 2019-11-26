@@ -55,6 +55,8 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolBlock == null)
 				setListSchoolBlock(listSchoolBlockWrap.o);
 		}
+		if(listSchoolBlock != null)
+			listSchoolBlock.initDeepForClass(siteRequest_);
 		listSchoolBlockWrap.alreadyInitialized(true);
 		return (BlockGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 			if(schoolBlock == null)
 				setSchoolBlock(schoolBlockWrap.o);
 		}
+		if(schoolBlock != null)
+			schoolBlock.initDeepForClass(siteRequest_);
 		schoolBlockWrap.alreadyInitialized(true);
 		return (BlockGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestBlockGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolBlock != null)
+			listSchoolBlock.setSiteRequest_(siteRequest_);
+		if(schoolBlock != null)
+			schoolBlock.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

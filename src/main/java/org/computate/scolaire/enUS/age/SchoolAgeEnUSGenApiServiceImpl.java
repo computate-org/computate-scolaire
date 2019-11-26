@@ -200,6 +200,10 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							postSqlParams.addAll(Arrays.asList("ageKey", l, "blockKeys", pk));
 						}
 						break;
+					case "sessionKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("ageKeys", Long.parseLong(jsonObject.getString(entityVar)), "sessionKey", pk));
+						break;
 					case "ageStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getString(entityVar), pk));
@@ -263,7 +267,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSchoolAge.getRows());
-									patchRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolAge.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
@@ -460,6 +464,16 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					case "removeBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageKey", Long.parseLong(requestJson.getString(methodName)), "blockKeys", pk));
+						break;
+					case "setSessionKey":
+						o2.setSessionKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						break;
+					case "removeSessionKey":
+						o2.setSessionKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
 						break;
 					case "setAgeStart":
 						if(requestJson.getString(methodName) == null) {
@@ -823,14 +837,14 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "seasonSort_indexed_int";
 			case "sessionSort":
 				return "sessionSort_indexed_int";
+			case "sessionKey":
+				return "sessionKey_indexed_long";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "yearKey":
 				return "yearKey_indexed_long";
 			case "seasonKey":
 				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
 			case "schoolName":
 				return "schoolName_indexed_string";
 			case "schoolCompleteName":
@@ -1082,7 +1096,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			listSearch.setC(SchoolAge.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1143,6 +1156,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

@@ -41,6 +41,9 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 		c.o(4);
 	}
 
+	protected void _seasonKey(Wrap<Long> c) {
+	}
+
 	protected void _seasonSearch(SearchList<SchoolSeason> l) {
 		l.setQuery("*:*");
 		if(pk != null)
@@ -65,11 +68,6 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getYearKey());
 	}
 
-	protected void _seasonKey(Wrap<Long> c) {
-		if(season_ != null)
-			c.o(season_.getSeasonKey());
-	}
-
 	protected void _schoolName(Wrap<String> c) {
 		if(season_ != null)
 			c.o(season_.getSchoolName());
@@ -92,7 +90,7 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	protected void _yearEnd(Wrap<Integer> c) {
 		if(season_ != null)
-			c.o(season_.getYearStart());
+			c.o(season_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {

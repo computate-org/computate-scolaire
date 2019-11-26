@@ -38,6 +38,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 		c.o(5);
 	}
 
+	protected void _sessionKey(Wrap<Long> c) {
+	}
+
 	protected void _sessionSearch(SearchList<SchoolSession> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("ageKeys_indexed_longs:" + pk);
@@ -66,11 +69,6 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session_.getSeasonKey());
 	}
 
-	protected void _sessionKey(Wrap<Long> c) {
-		if(session_ != null)
-			c.o(session_.getSessionKey());
-	}
-
 	protected void _schoolName(Wrap<String> c) {
 		if(session_ != null)
 			c.o(session_.getSchoolName());
@@ -93,7 +91,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _yearEnd(Wrap<Integer> c) {
 		if(session_ != null)
-			c.o(session_.getYearStart());
+			c.o(session_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {

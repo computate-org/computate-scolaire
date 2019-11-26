@@ -865,6 +865,114 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		}
 	}
 
+	/////////////
+	// yearKey //
+	/////////////
+
+	/**	L'entité « yearKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long yearKey;
+	@JsonIgnore
+	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
+
+	/**	<br/>L'entité « yearKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearKey(Wrap<Long> c);
+
+	public Long getYearKey() {
+		return yearKey;
+	}
+
+	public void setYearKey(Long yearKey) {
+		this.yearKey = yearKey;
+		this.yearKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolSeason setYearKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.yearKey = Long.parseLong(o);
+		this.yearKeyWrap.alreadyInitialized = true;
+		return (SchoolSeason)this;
+	}
+	protected SchoolSeason yearKeyInit() {
+		if(!yearKeyWrap.alreadyInitialized) {
+			_yearKey(yearKeyWrap);
+			if(yearKey == null)
+				setYearKey(yearKeyWrap.o);
+		}
+		yearKeyWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public Long solrYearKey() {
+		return yearKey;
+	}
+
+	public String strYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String jsonYearKey() {
+		return yearKey == null ? "" : yearKey.toString();
+	}
+
+	public String nomAffichageYearKey() {
+		return "year";
+	}
+
+	public String htmTooltipYearKey() {
+		return null;
+	}
+
+	public String htmYearKey() {
+		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	public void htmYearKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolSeason", strPk(), "YearKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolSeason", strPk(), "YearKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setYearKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"yearKey\"");
+							r.s(" value=\"", htmYearKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmYearKey());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// yearSearch //
 	////////////////
@@ -1043,114 +1151,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmSchoolKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	/////////////
-	// yearKey //
-	/////////////
-
-	/**	L'entité « yearKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long yearKey;
-	@JsonIgnore
-	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
-
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _yearKey(Wrap<Long> c);
-
-	public Long getYearKey() {
-		return yearKey;
-	}
-
-	public void setYearKey(Long yearKey) {
-		this.yearKey = yearKey;
-		this.yearKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolSeason setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
-		this.yearKeyWrap.alreadyInitialized = true;
-		return (SchoolSeason)this;
-	}
-	protected SchoolSeason yearKeyInit() {
-		if(!yearKeyWrap.alreadyInitialized) {
-			_yearKey(yearKeyWrap);
-			if(yearKey == null)
-				setYearKey(yearKeyWrap.o);
-		}
-		yearKeyWrap.alreadyInitialized(true);
-		return (SchoolSeason)this;
-	}
-
-	public Long solrYearKey() {
-		return yearKey;
-	}
-
-	public String strYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String jsonYearKey() {
-		return yearKey == null ? "" : yearKey.toString();
-	}
-
-	public String nomAffichageYearKey() {
-		return "year";
-	}
-
-	public String htmTooltipYearKey() {
-		return null;
-	}
-
-	public String htmYearKey() {
-		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
-	}
-
-	public void htmYearKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "YearKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "YearKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearKey\"");
-							r.s(" value=\"", htmYearKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearKey());
 			}
 			r.l("</div>");
 		}
@@ -2259,10 +2259,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		schoolSortInit();
 		yearSortInit();
 		seasonSortInit();
+		yearKeyInit();
 		yearSearchInit();
 		year_Init();
 		schoolKeyInit();
-		yearKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
 		schoolLocationInit();
@@ -2327,14 +2327,14 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.yearSort;
 			case "seasonSort":
 				return oSchoolSeason.seasonSort;
+			case "yearKey":
+				return oSchoolSeason.yearKey;
 			case "yearSearch":
 				return oSchoolSeason.yearSearch;
 			case "year_":
 				return oSchoolSeason.year_;
 			case "schoolKey":
 				return oSchoolSeason.schoolKey;
-			case "yearKey":
-				return oSchoolSeason.yearKey;
 			case "schoolName":
 				return oSchoolSeason.schoolName;
 			case "schoolCompleteName":
@@ -2382,6 +2382,9 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		switch(var) {
 			case "sessionKeys":
 				oSchoolSeason.addSessionKeys((Long)val);
+				return val;
+			case "yearKey":
+				oSchoolSeason.setYearKey((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -2488,16 +2491,14 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					oSchoolSeason.setSeasonSort(seasonSort);
 			}
 
+			Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+			if(yearKey != null)
+				oSchoolSeason.setYearKey(yearKey);
+
 			if(savesSchoolSeason.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
 					oSchoolSeason.setSchoolKey(schoolKey);
-			}
-
-			if(savesSchoolSeason.contains("yearKey")) {
-				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-				if(yearKey != null)
-					oSchoolSeason.setYearKey(yearKey);
 			}
 
 			if(savesSchoolSeason.contains("schoolName")) {
@@ -2607,7 +2608,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSchoolSeason(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2619,7 +2620,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			indexSchoolSeason(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2665,13 +2666,13 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			document.addField("seasonSort_indexed_int", seasonSort);
 			document.addField("seasonSort_stored_int", seasonSort);
 		}
-		if(schoolKey != null) {
-			document.addField("schoolKey_indexed_long", schoolKey);
-			document.addField("schoolKey_stored_long", schoolKey);
-		}
 		if(yearKey != null) {
 			document.addField("yearKey_indexed_long", yearKey);
 			document.addField("yearKey_stored_long", yearKey);
+		}
+		if(schoolKey != null) {
+			document.addField("schoolKey_indexed_long", schoolKey);
+			document.addField("schoolKey_stored_long", schoolKey);
 		}
 		if(schoolName != null) {
 			document.addField("schoolName_indexed_string", schoolName);
@@ -2728,7 +2729,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			initDeepSchoolSeason(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -2772,13 +2773,13 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		if(seasonSort != null)
 			oSchoolSeason.setSeasonSort(seasonSort);
 
-		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
-		if(schoolKey != null)
-			oSchoolSeason.setSchoolKey(schoolKey);
-
 		Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
 		if(yearKey != null)
 			oSchoolSeason.setYearKey(yearKey);
+
+		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
+		if(schoolKey != null)
+			oSchoolSeason.setSchoolKey(schoolKey);
 
 		String schoolName = (String)solrDocument.get("schoolName_stored_string");
 		if(schoolName != null)
@@ -2828,7 +2829,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionKeys, seasonStartDate, seasonSummer, seasonWinter, seasonEnrollmentFee);
+		return Objects.hash(super.hashCode(), sessionKeys, yearKey, seasonStartDate, seasonSummer, seasonWinter, seasonEnrollmentFee);
 	}
 
 	////////////
@@ -2843,6 +2844,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason that = (SchoolSeason)o;
 		return super.equals(o)
 				&& Objects.equals( sessionKeys, that.sessionKeys )
+				&& Objects.equals( yearKey, that.yearKey )
 				&& Objects.equals( seasonStartDate, that.seasonStartDate )
 				&& Objects.equals( seasonSummer, that.seasonSummer )
 				&& Objects.equals( seasonWinter, that.seasonWinter )
@@ -2858,6 +2860,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolSeason { ");
 		sb.append( "sessionKeys: " ).append(sessionKeys);
+		sb.append( ", yearKey: " ).append(yearKey);
 		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
 		sb.append( ", seasonSummer: " ).append(seasonSummer);
 		sb.append( ", seasonWinter: " ).append(seasonWinter);

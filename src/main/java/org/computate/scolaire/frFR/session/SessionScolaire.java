@@ -141,6 +141,22 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: SaisonScolaire.sessionCles
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: saison
+	 * NomAffichage.enUS: season
+	*/             
+	protected void _saisonCle(Couverture<Long> c) {
+	}
+
+	/**
 	 * Var.enUS: seasonSearch
 	 * r: sessionCles
 	 * r.enUS: sessionKeys
@@ -207,25 +223,6 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	protected void _anneeCle(Couverture<Long> c) {
 		if(saison_ != null)
 			c.o(saison_.getAnneeCle());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 * r: SaisonCle
-	 * r.enUS: SeasonKey
-	 * r: saison
-	 * r.enUS: season
-	*/             
-	protected void _saisonCle(Couverture<Long> c) {
-		if(saison_ != null)
-			c.o(saison_.getSaisonCle());
 	}
 
 	/**
@@ -308,7 +305,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
-	 * r.enUS: YearStart
+	 * r.enUS: YearEnd
 	 * r: saison
 	 * r.enUS: season
 	 */                      

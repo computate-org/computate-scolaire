@@ -972,6 +972,114 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////
+	// sessionCle //
+	////////////////
+
+	/**	L'entité « sessionCle »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long sessionCle;
+	@JsonIgnore
+	public Couverture<Long> sessionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("sessionCle").o(sessionCle);
+
+	/**	<br/>L'entité « sessionCle »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCle">Trouver l'entité sessionCle dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionCle(Couverture<Long> c);
+
+	public Long getSessionCle() {
+		return sessionCle;
+	}
+
+	public void setSessionCle(Long sessionCle) {
+		this.sessionCle = sessionCle;
+		this.sessionCleCouverture.dejaInitialise = true;
+	}
+	public AgeScolaire setSessionCle(String o) {
+		if(NumberUtils.isParsable(o))
+			this.sessionCle = Long.parseLong(o);
+		this.sessionCleCouverture.dejaInitialise = true;
+		return (AgeScolaire)this;
+	}
+	protected AgeScolaire sessionCleInit() {
+		if(!sessionCleCouverture.dejaInitialise) {
+			_sessionCle(sessionCleCouverture);
+			if(sessionCle == null)
+				setSessionCle(sessionCleCouverture.o);
+		}
+		sessionCleCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public Long solrSessionCle() {
+		return sessionCle;
+	}
+
+	public String strSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String jsonSessionCle() {
+		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public String nomAffichageSessionCle() {
+		return "session";
+	}
+
+	public String htmTooltipSessionCle() {
+		return null;
+	}
+
+	public String htmSessionCle() {
+		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
+	}
+
+	public void htmSessionCle(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionCle\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAgeScolaire", strPk(), "SessionCle() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionCle\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCle()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionCle\"");
+							r.s(" value=\"", htmSessionCle(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionCle());
+			}
+			r.l("</div>");
+		}
+	}
+
 	//////////////////////
 	// sessionRecherche //
 	//////////////////////
@@ -1366,114 +1474,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmSaisonCle());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////////
-	// sessionCle //
-	////////////////
-
-	/**	L'entité « sessionCle »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long sessionCle;
-	@JsonIgnore
-	public Couverture<Long> sessionCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("sessionCle").o(sessionCle);
-
-	/**	<br/>L'entité « sessionCle »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCle">Trouver l'entité sessionCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _sessionCle(Couverture<Long> c);
-
-	public Long getSessionCle() {
-		return sessionCle;
-	}
-
-	public void setSessionCle(Long sessionCle) {
-		this.sessionCle = sessionCle;
-		this.sessionCleCouverture.dejaInitialise = true;
-	}
-	public AgeScolaire setSessionCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionCle = Long.parseLong(o);
-		this.sessionCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
-	}
-	protected AgeScolaire sessionCleInit() {
-		if(!sessionCleCouverture.dejaInitialise) {
-			_sessionCle(sessionCleCouverture);
-			if(sessionCle == null)
-				setSessionCle(sessionCleCouverture.o);
-		}
-		sessionCleCouverture.dejaInitialise(true);
-		return (AgeScolaire)this;
-	}
-
-	public Long solrSessionCle() {
-		return sessionCle;
-	}
-
-	public String strSessionCle() {
-		return sessionCle == null ? "" : sessionCle.toString();
-	}
-
-	public String jsonSessionCle() {
-		return sessionCle == null ? "" : sessionCle.toString();
-	}
-
-	public String nomAffichageSessionCle() {
-		return "session";
-	}
-
-	public String htmTooltipSessionCle() {
-		return null;
-	}
-
-	public String htmSessionCle() {
-		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
-	}
-
-	public void htmSessionCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionCle\"");
-							r.s(" value=\"", htmSessionCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionCle());
 			}
 			r.l("</div>");
 		}
@@ -3239,12 +3239,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		anneeTriInit();
 		saisonTriInit();
 		sessionTriInit();
+		sessionCleInit();
 		sessionRechercheInit();
 		session_Init();
 		ecoleCleInit();
 		anneeCleInit();
 		saisonCleInit();
-		sessionCleInit();
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
@@ -3317,6 +3317,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.saisonTri;
 			case "sessionTri":
 				return oAgeScolaire.sessionTri;
+			case "sessionCle":
+				return oAgeScolaire.sessionCle;
 			case "sessionRecherche":
 				return oAgeScolaire.sessionRecherche;
 			case "session_":
@@ -3327,8 +3329,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.anneeCle;
 			case "saisonCle":
 				return oAgeScolaire.saisonCle;
-			case "sessionCle":
-				return oAgeScolaire.sessionCle;
 			case "ecoleNom":
 				return oAgeScolaire.ecoleNom;
 			case "ecoleNomComplet":
@@ -3388,6 +3388,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "blocCles":
 				oAgeScolaire.addBlocCles((Long)val);
+				return val;
+			case "sessionCle":
+				oAgeScolaire.setSessionCle((Long)val);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3492,6 +3495,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSessionTri(sessionTri);
 			}
 
+			Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+			if(sessionCle != null)
+				oAgeScolaire.setSessionCle(sessionCle);
+
 			if(sauvegardesAgeScolaire.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
@@ -3508,12 +3515,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 				if(saisonCle != null)
 					oAgeScolaire.setSaisonCle(saisonCle);
-			}
-
-			if(sauvegardesAgeScolaire.contains("sessionCle")) {
-				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-				if(sessionCle != null)
-					oAgeScolaire.setSessionCle(sessionCle);
 			}
 
 			if(sauvegardesAgeScolaire.contains("ecoleNom")) {
@@ -3659,7 +3660,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexerAgeScolaire(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3671,7 +3672,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			indexerAgeScolaire(document);
 			SolrClient clientSolr = requeteSite_.getSiteContexte_().getClientSolr();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3721,6 +3722,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("sessionTri_indexed_int", sessionTri);
 			document.addField("sessionTri_stored_int", sessionTri);
 		}
+		if(sessionCle != null) {
+			document.addField("sessionCle_indexed_long", sessionCle);
+			document.addField("sessionCle_stored_long", sessionCle);
+		}
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
@@ -3732,10 +3737,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(saisonCle != null) {
 			document.addField("saisonCle_indexed_long", saisonCle);
 			document.addField("saisonCle_stored_long", saisonCle);
-		}
-		if(sessionCle != null) {
-			document.addField("sessionCle_indexed_long", sessionCle);
-			document.addField("sessionCle_stored_long", sessionCle);
 		}
 		if(ecoleNom != null) {
 			document.addField("ecoleNom_indexed_string", ecoleNom);
@@ -3816,7 +3817,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			initLoinAgeScolaire(requeteSite);
 			SolrClient clientSolr = siteContexte.getClientSolr();
 			clientSolr.deleteById(id.toString());
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3864,6 +3865,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(sessionTri != null)
 			oAgeScolaire.setSessionTri(sessionTri);
 
+		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+		if(sessionCle != null)
+			oAgeScolaire.setSessionCle(sessionCle);
+
 		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 		if(ecoleCle != null)
 			oAgeScolaire.setEcoleCle(ecoleCle);
@@ -3875,10 +3880,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 		if(saisonCle != null)
 			oAgeScolaire.setSaisonCle(saisonCle);
-
-		Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-		if(sessionCle != null)
-			oAgeScolaire.setSessionCle(sessionCle);
 
 		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 		if(ecoleNom != null)
@@ -3952,7 +3953,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, ageDebut, ageFin);
+		return Objects.hash(super.hashCode(), blocCles, sessionCle, ageDebut, ageFin);
 	}
 
 	////////////
@@ -3967,6 +3968,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		AgeScolaire that = (AgeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( blocCles, that.blocCles )
+				&& Objects.equals( sessionCle, that.sessionCle )
 				&& Objects.equals( ageDebut, that.ageDebut )
 				&& Objects.equals( ageFin, that.ageFin );
 	}
@@ -3980,6 +3982,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AgeScolaire { ");
 		sb.append( "blocCles: " ).append(blocCles);
+		sb.append( ", sessionCle: " ).append(sessionCle);
 		sb.append( ", ageDebut: " ).append(ageDebut);
 		sb.append( ", ageFin: " ).append(ageFin);
 		sb.append(" }");

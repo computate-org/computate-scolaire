@@ -200,6 +200,10 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							postSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
 						}
 						break;
+					case "yearKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("seasonKeys", Long.parseLong(jsonObject.getString(entityVar)), "yearKey", pk));
+						break;
 					case "seasonStartDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("seasonStartDate", jsonObject.getString(entityVar), pk));
@@ -271,7 +275,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSchoolSeason.getRows());
-									patchRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolSeason.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
@@ -468,6 +472,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					case "removeSessionKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("seasonKey", Long.parseLong(requestJson.getString(methodName)), "sessionKeys", pk));
+						break;
+					case "setYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
+						break;
+					case "removeYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("seasonKeys", o2.getYearKey(), "yearKey", pk));
 						break;
 					case "setSeasonStartDate":
 						if(requestJson.getString(methodName) == null) {
@@ -849,10 +863,10 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				return "yearSort_indexed_int";
 			case "seasonSort":
 				return "seasonSort_indexed_int";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
 			case "yearKey":
 				return "yearKey_indexed_long";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
 			case "schoolName":
 				return "schoolName_indexed_string";
 			case "schoolCompleteName":
@@ -1092,7 +1106,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			listSearch.setC(SchoolSeason.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1153,6 +1166,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

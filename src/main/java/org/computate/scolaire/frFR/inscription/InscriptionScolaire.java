@@ -531,7 +531,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
-	 * r.enUS: YearStart
+	 * r.enUS: YearEnd
 	 * r: bloc
 	 * r.enUS: block
 	 */                     

@@ -971,6 +971,114 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		}
 	}
 
+	////////////////
+	// sessionKey //
+	////////////////
+
+	/**	L'entité « sessionKey »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long sessionKey;
+	@JsonIgnore
+	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
+
+	/**	<br/>L'entité « sessionKey »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Trouver l'entité sessionKey dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionKey(Wrap<Long> c);
+
+	public Long getSessionKey() {
+		return sessionKey;
+	}
+
+	public void setSessionKey(Long sessionKey) {
+		this.sessionKey = sessionKey;
+		this.sessionKeyWrap.alreadyInitialized = true;
+	}
+	public SchoolAge setSessionKey(String o) {
+		if(NumberUtils.isParsable(o))
+			this.sessionKey = Long.parseLong(o);
+		this.sessionKeyWrap.alreadyInitialized = true;
+		return (SchoolAge)this;
+	}
+	protected SchoolAge sessionKeyInit() {
+		if(!sessionKeyWrap.alreadyInitialized) {
+			_sessionKey(sessionKeyWrap);
+			if(sessionKey == null)
+				setSessionKey(sessionKeyWrap.o);
+		}
+		sessionKeyWrap.alreadyInitialized(true);
+		return (SchoolAge)this;
+	}
+
+	public Long solrSessionKey() {
+		return sessionKey;
+	}
+
+	public String strSessionKey() {
+		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public String jsonSessionKey() {
+		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public String nomAffichageSessionKey() {
+		return "session";
+	}
+
+	public String htmTooltipSessionKey() {
+		return null;
+	}
+
+	public String htmSessionKey() {
+		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
+	}
+
+	public void htmSessionKey(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolAge", strPk(), "SessionKey\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolAge", strPk(), "SessionKey() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSessionKey\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKey()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"sessionKey\"");
+							r.s(" value=\"", htmSessionKey(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSessionKey());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////////
 	// sessionSearch //
 	///////////////////
@@ -1365,114 +1473,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				r.l("	</div>");
 			} else {
 				r.s(htmSeasonKey());
-			}
-			r.l("</div>");
-		}
-	}
-
-	////////////////
-	// sessionKey //
-	////////////////
-
-	/**	L'entité « sessionKey »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Long sessionKey;
-	@JsonIgnore
-	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
-
-	/**	<br/>L'entité « sessionKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Trouver l'entité sessionKey dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _sessionKey(Wrap<Long> c);
-
-	public Long getSessionKey() {
-		return sessionKey;
-	}
-
-	public void setSessionKey(Long sessionKey) {
-		this.sessionKey = sessionKey;
-		this.sessionKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolAge setSessionKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionKey = Long.parseLong(o);
-		this.sessionKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	protected SchoolAge sessionKeyInit() {
-		if(!sessionKeyWrap.alreadyInitialized) {
-			_sessionKey(sessionKeyWrap);
-			if(sessionKey == null)
-				setSessionKey(sessionKeyWrap.o);
-		}
-		sessionKeyWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public Long solrSessionKey() {
-		return sessionKey;
-	}
-
-	public String strSessionKey() {
-		return sessionKey == null ? "" : sessionKey.toString();
-	}
-
-	public String jsonSessionKey() {
-		return sessionKey == null ? "" : sessionKey.toString();
-	}
-
-	public String nomAffichageSessionKey() {
-		return "session";
-	}
-
-	public String htmTooltipSessionKey() {
-		return null;
-	}
-
-	public String htmSessionKey() {
-		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
-	}
-
-	public void htmSessionKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolAge", strPk(), "SessionKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolAge", strPk(), "SessionKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionKey\"");
-							r.s(" value=\"", htmSessionKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionKey());
 			}
 			r.l("</div>");
 		}
@@ -3238,12 +3238,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		yearSortInit();
 		seasonSortInit();
 		sessionSortInit();
+		sessionKeyInit();
 		sessionSearchInit();
 		session_Init();
 		schoolKeyInit();
 		yearKeyInit();
 		seasonKeyInit();
-		sessionKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
 		schoolLocationInit();
@@ -3316,6 +3316,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.seasonSort;
 			case "sessionSort":
 				return oSchoolAge.sessionSort;
+			case "sessionKey":
+				return oSchoolAge.sessionKey;
 			case "sessionSearch":
 				return oSchoolAge.sessionSearch;
 			case "session_":
@@ -3326,8 +3328,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.yearKey;
 			case "seasonKey":
 				return oSchoolAge.seasonKey;
-			case "sessionKey":
-				return oSchoolAge.sessionKey;
 			case "schoolName":
 				return oSchoolAge.schoolName;
 			case "schoolCompleteName":
@@ -3387,6 +3387,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		switch(var) {
 			case "blockKeys":
 				oSchoolAge.addBlockKeys((Long)val);
+				return val;
+			case "sessionKey":
+				oSchoolAge.setSessionKey((Long)val);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -3491,6 +3494,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setSessionSort(sessionSort);
 			}
 
+			Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+			if(sessionKey != null)
+				oSchoolAge.setSessionKey(sessionKey);
+
 			if(savesSchoolAge.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
@@ -3507,12 +3514,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
 				if(seasonKey != null)
 					oSchoolAge.setSeasonKey(seasonKey);
-			}
-
-			if(savesSchoolAge.contains("sessionKey")) {
-				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-				if(sessionKey != null)
-					oSchoolAge.setSessionKey(sessionKey);
 			}
 
 			if(savesSchoolAge.contains("schoolName")) {
@@ -3658,7 +3659,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSchoolAge(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3670,7 +3671,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			indexSchoolAge(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3720,6 +3721,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("sessionSort_indexed_int", sessionSort);
 			document.addField("sessionSort_stored_int", sessionSort);
 		}
+		if(sessionKey != null) {
+			document.addField("sessionKey_indexed_long", sessionKey);
+			document.addField("sessionKey_stored_long", sessionKey);
+		}
 		if(schoolKey != null) {
 			document.addField("schoolKey_indexed_long", schoolKey);
 			document.addField("schoolKey_stored_long", schoolKey);
@@ -3731,10 +3736,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(seasonKey != null) {
 			document.addField("seasonKey_indexed_long", seasonKey);
 			document.addField("seasonKey_stored_long", seasonKey);
-		}
-		if(sessionKey != null) {
-			document.addField("sessionKey_indexed_long", sessionKey);
-			document.addField("sessionKey_stored_long", sessionKey);
 		}
 		if(schoolName != null) {
 			document.addField("schoolName_indexed_string", schoolName);
@@ -3815,7 +3816,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			initDeepSchoolAge(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3863,6 +3864,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(sessionSort != null)
 			oSchoolAge.setSessionSort(sessionSort);
 
+		Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+		if(sessionKey != null)
+			oSchoolAge.setSessionKey(sessionKey);
+
 		Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 		if(schoolKey != null)
 			oSchoolAge.setSchoolKey(schoolKey);
@@ -3874,10 +3879,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
 		if(seasonKey != null)
 			oSchoolAge.setSeasonKey(seasonKey);
-
-		Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-		if(sessionKey != null)
-			oSchoolAge.setSessionKey(sessionKey);
 
 		String schoolName = (String)solrDocument.get("schoolName_stored_string");
 		if(schoolName != null)
@@ -3951,7 +3952,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, ageStart, ageEnd);
+		return Objects.hash(super.hashCode(), blockKeys, sessionKey, ageStart, ageEnd);
 	}
 
 	////////////
@@ -3966,6 +3967,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		SchoolAge that = (SchoolAge)o;
 		return super.equals(o)
 				&& Objects.equals( blockKeys, that.blockKeys )
+				&& Objects.equals( sessionKey, that.sessionKey )
 				&& Objects.equals( ageStart, that.ageStart )
 				&& Objects.equals( ageEnd, that.ageEnd );
 	}
@@ -3979,6 +3981,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolAge { ");
 		sb.append( "blockKeys: " ).append(blockKeys);
+		sb.append( ", sessionKey: " ).append(sessionKey);
 		sb.append( ", ageStart: " ).append(ageStart);
 		sb.append( ", ageEnd: " ).append(ageEnd);
 		sb.append(" }");

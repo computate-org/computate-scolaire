@@ -55,6 +55,8 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolSession == null)
 				setListSchoolSession(listSchoolSessionWrap.o);
 		}
+		if(listSchoolSession != null)
+			listSchoolSession.initDeepForClass(siteRequest_);
 		listSchoolSessionWrap.alreadyInitialized(true);
 		return (SessionGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 			if(schoolSession == null)
 				setSchoolSession(schoolSessionWrap.o);
 		}
+		if(schoolSession != null)
+			schoolSession.initDeepForClass(siteRequest_);
 		schoolSessionWrap.alreadyInitialized(true);
 		return (SessionGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestSessionGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolSession != null)
+			listSchoolSession.setSiteRequest_(siteRequest_);
+		if(schoolSession != null)
+			schoolSession.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
