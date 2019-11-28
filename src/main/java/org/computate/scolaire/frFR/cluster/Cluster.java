@@ -17,7 +17,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
 
 
 
-/**       
+/**            
  * NomCanonique.enUS: org.computate.scolaire.enUS.cluster.Cluster
  * Modele: true
  * Api: true

@@ -61,7 +61,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
 */   
-public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
+public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
 	 * {@inheritDoc}
@@ -72,7 +72,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */                  
+	 */                        
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -504,6 +504,58 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _ecoleEmplacement(Couverture<String> c) {
 		if(bloc_ != null)
 			c.o(bloc_.getEcoleEmplacement());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAddress
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: addresse
+	 * NomAffichage.enUS: address
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 * r: bloc
+	 * r.enUS: block
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o((String)bloc_.getEcoleAddresse());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: numéro de téléphone
+	 * NomAffichage.enUS: phone number
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: bloc
+	 * r.enUS: block
+	 */    
+	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o((String)bloc_.getEcoleNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAdministratorName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: administrator of the school
+	 * NomAffichage.frFR: administrateur de l'école
+	 * r: EcoleAdministrateurNom
+	 * r.enUS: SchoolAdministratorName
+	 * r: bloc
+	 * r.enUS: block
+	 */             
+	protected void _ecoleAdministrateurNom(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o((String)bloc_.getEcoleAdministrateurNom());
 	}
 
 	/**

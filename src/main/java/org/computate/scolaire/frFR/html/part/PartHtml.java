@@ -49,7 +49,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * 
  * Rolex.frFR: SiteAdmin
  * Rolex.enUS: SiteAdmin
-*/                
+*/                 
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**

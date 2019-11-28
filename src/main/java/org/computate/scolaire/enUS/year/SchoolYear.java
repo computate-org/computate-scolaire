@@ -60,6 +60,21 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 			c.o((String)school_.getSchoolLocation());
 	}
 
+	protected void _schoolAddress(Wrap<String> c) {
+		if(school_ != null)
+			c.o((String)school_.getSchoolAddress());
+	}
+
+	protected void _schoolPhoneNumber(Wrap<String> c) {
+		if(school_ != null)
+			c.o((String)school_.getSchoolPhoneNumber());
+	}
+
+	protected void _schoolAdministratorName(Wrap<String> c) {
+		if(school_ != null)
+			c.o((String)school_.getSchoolAdministratorName());
+	}
+
 	protected void _enrollmentFormKey(Wrap<Long> c) {
 	}
 

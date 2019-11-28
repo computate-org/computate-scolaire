@@ -254,6 +254,57 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolAddress
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: addresse
+	 * NomAffichage.enUS: address
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 * r: annee
+	 * r.enUS: year
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
+		if(annee_ != null)
+			c.o((String)annee_.getEcoleAddresse());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: numéro de téléphone
+	 * NomAffichage.enUS: phone number
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: annee
+	 * r.enUS: year
+	 */
+	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+		if(annee_ != null)
+			c.o((String)annee_.getEcoleNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAdministratorName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: administrator of the school
+	 * NomAffichage.frFR: administrateur de l'école
+	 * r: EcoleAdministrateurNom
+	 * r.enUS: SchoolAdministratorName
+	 * r: annee
+	 * r.enUS: year
+	 */  
+	protected void _ecoleAdministrateurNom(Couverture<String> c) {
+		if(annee_ != null)
+			c.o((String)annee_.getEcoleAdministrateurNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true

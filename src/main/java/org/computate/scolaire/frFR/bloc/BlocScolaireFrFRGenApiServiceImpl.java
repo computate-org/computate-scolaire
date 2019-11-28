@@ -204,6 +204,10 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
+					case "ecoleAddresse":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
+						break;
 					case "blocHeureDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("blocHeureDebut", jsonObject.getString(entiteVar), pk));
@@ -506,6 +510,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						o2.setAgeCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", o2.getAgeCle()));
+						break;
+					case "setEcoleAddresse":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse"));
+						} else {
+							o2.setEcoleAddresse(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
+						}
 						break;
 					case "setBlocHeureDebut":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -967,6 +981,12 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

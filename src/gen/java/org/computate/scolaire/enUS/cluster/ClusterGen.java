@@ -222,45 +222,26 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
 	}
 
-	public void htmPk(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Pk\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Pk() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPk\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePk()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pk\"");
-							r.s(" value=\"", htmPk(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPk());
+	public void htmPk(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ s.e("div").a("class", "w3-padding ").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("class", "").f().sx("primary key").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row  ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+								{ s.e("div").a("class", "w3-rest ").f();
+									s.e("span").f().sx(strPk()).g("span");
+								} s.g("div");
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
 			}
-			r.l("</div>");
-		}
+		} s.g("div");
 	}
 
 	////////
@@ -322,47 +303,6 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmId() {
 		return id == null ? "" : StringEscapeUtils.escapeHtml4(strId());
-	}
-
-	public void htmId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Id\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Id() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"id\"");
-							r.s(" value=\"", htmId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmId());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////
@@ -442,45 +382,26 @@ public abstract class ClusterGen<DEV> extends Object {
 		return created == null ? "" : StringEscapeUtils.escapeHtml4(strCreated());
 	}
 
-	public void htmCreated(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Created\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Created() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setCreated\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageCreated()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"created\"");
-							r.s(" value=\"", htmCreated(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmCreated());
+	public void htmCreated(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ s.e("div").a("class", "w3-padding ").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("class", "").f().sx("created").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row  ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+								{ s.e("div").a("class", "w3-rest ").f();
+									s.e("span").f().sx(strCreated()).g("span");
+								} s.g("div");
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
 			}
-			r.l("</div>");
-		}
+		} s.g("div");
 	}
 
 	//////////////
@@ -560,45 +481,26 @@ public abstract class ClusterGen<DEV> extends Object {
 		return modified == null ? "" : StringEscapeUtils.escapeHtml4(strModified());
 	}
 
-	public void htmModified(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Modified\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Modified() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setModified\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageModified()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"modified\"");
-							r.s(" value=\"", htmModified(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmModified());
+	public void htmModified(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ s.e("div").a("class", "w3-padding ").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("class", "").f().sx("modified").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row  ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+								{ s.e("div").a("class", "w3-rest ").f();
+									s.e("span").f().sx(strModified()).g("span");
+								} s.g("div");
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
 			}
-			r.l("</div>");
-		}
+		} s.g("div");
 	}
 
 	//////////////
@@ -667,45 +569,51 @@ public abstract class ClusterGen<DEV> extends Object {
 		return archived == null ? "" : StringEscapeUtils.escapeHtml4(strArchived());
 	}
 
-	public void htmArchived(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Archived\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Archived() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setArchived\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageArchived()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"archived\"");
-							r.s(" value=\"", htmArchived(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmArchived());
-			}
-			r.l("</div>");
-		}
+	public void htmArchived(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("span").a("id", "formClusterArchived").f();
+					s.e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} s.g("span");
+				{ s.e("div").a("id", "suggestClusterArchived").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("for", classApiMethodMethod, "_archived").a("class", "").f().sx("archived").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								s.e("input")
+									.a("type", "checkbox")
+									.a("id", classApiMethodMethod, "_archived")
+									.a("value", "true");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										s.a("class", "setArchived");
+										s.a("name", "setArchived");
+									} else {
+										s.a("class", "valueArchived");
+										s.a("name", "archived");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=\"pk\"]').val() }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_archived')); }, function() { addError($('#\", classApiMethodMethod, \"_archived')); }); ");
+									}
+									;
+									if(getArchived() != null && getArchived())
+										s.a("checked", "checked");
+								s.fg();
+
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
 	}
 
 	/////////////
@@ -774,45 +682,51 @@ public abstract class ClusterGen<DEV> extends Object {
 		return deleted == null ? "" : StringEscapeUtils.escapeHtml4(strDeleted());
 	}
 
-	public void htmDeleted(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "Deleted\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "Deleted() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setDeleted\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageDeleted()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"deleted\"");
-							r.s(" value=\"", htmDeleted(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmDeleted());
-			}
-			r.l("</div>");
-		}
+	public void htmDeleted(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ s.e("div").a("class", "w3-padding ").f();
+				{ s.e("span").a("id", "formClusterDeleted").f();
+					s.e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} s.g("span");
+				{ s.e("div").a("id", "suggestClusterDeleted").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("for", classApiMethodMethod, "_deleted").a("class", "").f().sx("deleted").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+
+								s.e("input")
+									.a("type", "checkbox")
+									.a("id", classApiMethodMethod, "_deleted")
+									.a("value", "true");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										s.a("class", "setDeleted");
+										s.a("name", "setDeleted");
+									} else {
+										s.a("class", "valueDeleted");
+										s.a("name", "deleted");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=\"pk\"]').val() }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_deleted')); }, function() { addError($('#\", classApiMethodMethod, \"_deleted')); }); ");
+									}
+									;
+									if(getDeleted() != null && getDeleted())
+										s.a("checked", "checked");
+								s.fg();
+
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
+			} s.g("div");
+		} s.g("div");
 	}
 
 	////////////////////////
@@ -876,47 +790,6 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalName == null ? "" : StringEscapeUtils.escapeHtml4(strClassCanonicalName());
 	}
 
-	public void htmClassCanonicalName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ClassCanonicalName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ClassCanonicalName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setClassCanonicalName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageClassCanonicalName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"classCanonicalName\"");
-							r.s(" value=\"", htmClassCanonicalName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmClassCanonicalName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////
 	// classSimpleName //
 	/////////////////////
@@ -976,47 +849,6 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmClassSimpleName() {
 		return classSimpleName == null ? "" : StringEscapeUtils.escapeHtml4(strClassSimpleName());
-	}
-
-	public void htmClassSimpleName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ClassSimpleName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ClassSimpleName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setClassSimpleName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageClassSimpleName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"classSimpleName\"");
-							r.s(" value=\"", htmClassSimpleName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmClassSimpleName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////////
@@ -1097,47 +929,6 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalNames == null ? "" : StringEscapeUtils.escapeHtml4(strClassCanonicalNames());
 	}
 
-	public void htmClassCanonicalNames(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ClassCanonicalNames\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ClassCanonicalNames() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setClassCanonicalNames\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageClassCanonicalNames()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"classCanonicalNames\"");
-							r.s(" value=\"", htmClassCanonicalNames(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmClassCanonicalNames());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////
 	// objectTitle //
 	/////////////////
@@ -1197,47 +988,6 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmObjectTitle() {
 		return objectTitle == null ? "" : StringEscapeUtils.escapeHtml4(strObjectTitle());
-	}
-
-	public void htmObjectTitle(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ObjectTitle\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ObjectTitle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectTitle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectTitle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectTitle\"");
-							r.s(" value=\"", htmObjectTitle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectTitle());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////
@@ -1301,45 +1051,26 @@ public abstract class ClusterGen<DEV> extends Object {
 		return objectId == null ? "" : StringEscapeUtils.escapeHtml4(strObjectId());
 	}
 
-	public void htmObjectId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ObjectId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ObjectId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectId\"");
-							r.s(" value=\"", htmObjectId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectId());
+	public void htmObjectId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ s.e("div").a("class", "w3-padding ").f();
+					{ s.e("div").a("class", "w3-card ").f();
+						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
+							s.e("label").a("class", "").f().sx("ID").g("label");
+						} s.g("div");
+						{ s.e("div").a("class", "w3-cell-row  ").f();
+							{ s.e("div").a("class", "w3-cell ").f();
+								{ s.e("div").a("class", "w3-rest ").f();
+									s.e("span").f().sx(strObjectId()).g("span");
+								} s.g("div");
+							} s.g("div");
+						} s.g("div");
+					} s.g("div");
+				} s.g("div");
 			}
-			r.l("</div>");
-		}
+		} s.g("div");
 	}
 
 	///////////////////
@@ -1403,47 +1134,6 @@ public abstract class ClusterGen<DEV> extends Object {
 		return objectNameVar == null ? "" : StringEscapeUtils.escapeHtml4(strObjectNameVar());
 	}
 
-	public void htmObjectNameVar(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ObjectNameVar\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ObjectNameVar() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectNameVar\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectNameVar()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectNameVar\"");
-							r.s(" value=\"", htmObjectNameVar(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectNameVar());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// objectSuggest //
 	///////////////////
@@ -1503,47 +1193,6 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmObjectSuggest() {
 		return objectSuggest == null ? "" : StringEscapeUtils.escapeHtml4(strObjectSuggest());
-	}
-
-	public void htmObjectSuggest(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "ObjectSuggest\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "ObjectSuggest() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setObjectSuggest\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageObjectSuggest()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"objectSuggest\"");
-							r.s(" value=\"", htmObjectSuggest(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmObjectSuggest());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////
@@ -1607,47 +1256,6 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pageUrl == null ? "" : StringEscapeUtils.escapeHtml4(strPageUrl());
 	}
 
-	public void htmPageUrl(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "PageUrl\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "PageUrl() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageUrl\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageUrl()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageUrl\"");
-							r.s(" value=\"", htmPageUrl(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageUrl());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////
 	// pageH1 //
 	////////////
@@ -1707,47 +1315,6 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmPageH1() {
 		return pageH1 == null ? "" : StringEscapeUtils.escapeHtml4(strPageH1());
-	}
-
-	public void htmPageH1(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchCluster", strPk(), "PageH1\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchCluster", strPk(), "PageH1() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPageH1\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePageH1()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"pageH1\"");
-							r.s(" value=\"", htmPageH1(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPageH1());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////

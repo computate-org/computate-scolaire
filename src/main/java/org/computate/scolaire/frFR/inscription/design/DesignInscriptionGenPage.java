@@ -178,7 +178,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereDesignInscriptionArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggereDesignInscriptionArchive").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 								e("label").a("for", "Page_archive").a("class", "").f().sx("archivé").g("label");
@@ -214,7 +214,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereDesignInscriptionSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggereDesignInscriptionSupprime").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 								e("label").a("for", "Page_supprime").a("class", "").f().sx("supprimé").g("label");
@@ -270,7 +270,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							.a("value", requeteSite_.getRequetePk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggereDesignInscriptionPartHtmlCles").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggereDesignInscriptionPartHtmlCles").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
 								{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -417,7 +417,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionArchive").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "POST_archive").a("class", "").f().sx("archivé").g("label");
@@ -452,7 +452,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionSupprime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "POST_supprime").a("class", "").f().sx("supprimé").g("label");
@@ -612,7 +612,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionArchive").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "PATCH_archive").a("class", "").f().sx("archivé").g("label");
@@ -647,7 +647,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionSupprime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "PATCH_supprime").a("class", "").f().sx("supprimé").g("label");
@@ -825,7 +825,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionArchive").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionArchive").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "Recherche_archive").a("class", "").f().sx("archivé").g("label");
@@ -860,7 +860,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("value", requeteSite_.getRequetePk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggereDesignInscriptionSupprime").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggereDesignInscriptionSupprime").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "Recherche_supprime").a("class", "").f().sx("supprimé").g("label");

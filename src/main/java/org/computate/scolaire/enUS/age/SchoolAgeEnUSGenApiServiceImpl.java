@@ -204,6 +204,10 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						postSql.append(SiteContextEnUS.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("ageKeys", Long.parseLong(jsonObject.getString(entityVar)), "sessionKey", pk));
 						break;
+					case "schoolAddress":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
+						break;
 					case "ageStart":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ageStart", jsonObject.getString(entityVar), pk));
@@ -474,6 +478,16 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						o2.setSessionKey(requestJson.getString(methodName));
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("ageKeys", o2.getSessionKey(), "sessionKey", pk));
+						break;
+					case "setSchoolAddress":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
+						} else {
+							o2.setSchoolAddress(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.jsonSchoolAddress(), pk));
+						}
 						break;
 					case "setAgeStart":
 						if(requestJson.getString(methodName) == null) {
@@ -851,6 +865,12 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				return "schoolCompleteName_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

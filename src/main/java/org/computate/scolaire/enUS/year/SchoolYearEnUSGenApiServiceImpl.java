@@ -267,7 +267,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSchoolYear.getRows());
-									patchRequest.setNumFound(listSchoolYear.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSchoolYear.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolYear.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
@@ -841,6 +841,12 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return "schoolCompleteName_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
 			case "enrollmentFormKey":
 				return "enrollmentFormKey_indexed_long";
 			case "yearStart":

@@ -83,6 +83,21 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o((String)season_.getSchoolLocation());
 	}
 
+	protected void _schoolAddress(Wrap<String> c) {
+		if(season_ != null)
+			c.o((String)season_.getSchoolAddress());
+	}
+
+	protected void _schoolPhoneNumber(Wrap<String> c) {
+		if(season_ != null)
+			c.o((String)season_.getSchoolPhoneNumber());
+	}
+
+	protected void _schoolAdministratorName(Wrap<String> c) {
+		if(season_ != null)
+			c.o((String)season_.getSchoolAdministratorName());
+	}
+
 	protected void _yearStart(Wrap<Integer> c) {
 		if(season_ != null)
 			c.o(season_.getYearStart());

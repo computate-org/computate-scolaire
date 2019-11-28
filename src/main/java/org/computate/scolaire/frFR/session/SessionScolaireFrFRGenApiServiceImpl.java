@@ -204,6 +204,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						postSql.append(SiteContexteFrFR.SQL_addA);
 						postSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", Long.parseLong(jsonObject.getString(entiteVar))));
 						break;
+					case "ecoleAddresse":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
+						break;
 					case "sessionJourDebut":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("sessionJourDebut", jsonObject.getString(entiteVar), pk));
@@ -474,6 +478,16 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						o2.setSaisonCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("saisonCle", pk, "sessionCles", o2.getSaisonCle()));
+						break;
+					case "setEcoleAddresse":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse"));
+						} else {
+							o2.setEcoleAddresse(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
+						}
 						break;
 					case "setSessionJourDebut":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -849,6 +863,12 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

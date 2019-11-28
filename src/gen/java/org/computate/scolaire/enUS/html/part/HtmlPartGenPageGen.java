@@ -55,6 +55,8 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 			if(listHtmlPart == null)
 				setListHtmlPart(listHtmlPartWrap.o);
 		}
+		if(listHtmlPart != null)
+			listHtmlPart.initDeepForClass(siteRequest_);
 		listHtmlPartWrap.alreadyInitialized(true);
 		return (HtmlPartGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 			if(htmlPart == null)
 				setHtmlPart(htmlPartWrap.o);
 		}
+		if(htmlPart != null)
+			htmlPart.initDeepForClass(siteRequest_);
 		htmlPartWrap.alreadyInitialized(true);
 		return (HtmlPartGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestHtmlPartGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listHtmlPart != null)
+			listHtmlPart.setSiteRequest_(siteRequest_);
+		if(htmlPart != null)
+			htmlPart.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

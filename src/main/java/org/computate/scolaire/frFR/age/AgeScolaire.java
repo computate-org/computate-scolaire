@@ -294,6 +294,58 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolAddress
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: addresse
+	 * NomAffichage.enUS: address
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 * r: session
+	 * r.enUS: session
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
+		if(session_ != null)
+			c.o((String)session_.getEcoleAddresse());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: numéro de téléphone
+	 * NomAffichage.enUS: phone number
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: session
+	 * r.enUS: session
+	 */
+	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+		if(session_ != null)
+			c.o((String)session_.getEcoleNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAdministratorName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: administrator of the school
+	 * NomAffichage.frFR: administrateur de l'école
+	 * r: EcoleAdministrateurNom
+	 * r.enUS: SchoolAdministratorName
+	 * r: session
+	 * r.enUS: session
+	 */  
+	protected void _ecoleAdministrateurNom(Couverture<String> c) {
+		if(session_ != null)
+			c.o((String)session_.getEcoleAdministrateurNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true

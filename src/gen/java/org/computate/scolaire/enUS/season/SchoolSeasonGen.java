@@ -1462,6 +1462,312 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////
+	// schoolAddress //
+	///////////////////
+
+	/**	L'entité « schoolAddress »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolAddress;
+	@JsonIgnore
+	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
+
+	/**	<br/>L'entité « schoolAddress »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Trouver l'entité schoolAddress dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolAddress(Wrap<String> c);
+
+	public String getSchoolAddress() {
+		return schoolAddress;
+	}
+
+	public void setSchoolAddress(String schoolAddress) {
+		this.schoolAddress = schoolAddress;
+		this.schoolAddressWrap.alreadyInitialized = true;
+	}
+	protected SchoolSeason schoolAddressInit() {
+		if(!schoolAddressWrap.alreadyInitialized) {
+			_schoolAddress(schoolAddressWrap);
+			if(schoolAddress == null)
+				setSchoolAddress(schoolAddressWrap.o);
+		}
+		schoolAddressWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public String solrSchoolAddress() {
+		return schoolAddress;
+	}
+
+	public String strSchoolAddress() {
+		return schoolAddress == null ? "" : schoolAddress;
+	}
+
+	public String jsonSchoolAddress() {
+		return schoolAddress == null ? "" : schoolAddress;
+	}
+
+	public String nomAffichageSchoolAddress() {
+		return "address";
+	}
+
+	public String htmTooltipSchoolAddress() {
+		return null;
+	}
+
+	public String htmSchoolAddress() {
+		return schoolAddress == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAddress());
+	}
+
+	public void htmSchoolAddress(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolAddress\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolSeason", strPk(), "SchoolAddress() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolAddress\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolAddress()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolAddress\"");
+							r.s(" value=\"", htmSchoolAddress(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolAddress());
+			}
+			r.l("</div>");
+		}
+	}
+
+	///////////////////////
+	// schoolPhoneNumber //
+	///////////////////////
+
+	/**	L'entité « schoolPhoneNumber »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolPhoneNumber;
+	@JsonIgnore
+	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
+
+	/**	<br/>L'entité « schoolPhoneNumber »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Trouver l'entité schoolPhoneNumber dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolPhoneNumber(Wrap<String> c);
+
+	public String getSchoolPhoneNumber() {
+		return schoolPhoneNumber;
+	}
+
+	public void setSchoolPhoneNumber(String schoolPhoneNumber) {
+		this.schoolPhoneNumber = schoolPhoneNumber;
+		this.schoolPhoneNumberWrap.alreadyInitialized = true;
+	}
+	protected SchoolSeason schoolPhoneNumberInit() {
+		if(!schoolPhoneNumberWrap.alreadyInitialized) {
+			_schoolPhoneNumber(schoolPhoneNumberWrap);
+			if(schoolPhoneNumber == null)
+				setSchoolPhoneNumber(schoolPhoneNumberWrap.o);
+		}
+		schoolPhoneNumberWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public String solrSchoolPhoneNumber() {
+		return schoolPhoneNumber;
+	}
+
+	public String strSchoolPhoneNumber() {
+		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
+	}
+
+	public String jsonSchoolPhoneNumber() {
+		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
+	}
+
+	public String nomAffichageSchoolPhoneNumber() {
+		return "phone number";
+	}
+
+	public String htmTooltipSchoolPhoneNumber() {
+		return null;
+	}
+
+	public String htmSchoolPhoneNumber() {
+		return schoolPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolPhoneNumber());
+	}
+
+	public void htmSchoolPhoneNumber(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolPhoneNumber\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolSeason", strPk(), "SchoolPhoneNumber() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolPhoneNumber\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolPhoneNumber()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolPhoneNumber\"");
+							r.s(" value=\"", htmSchoolPhoneNumber(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolPhoneNumber());
+			}
+			r.l("</div>");
+		}
+	}
+
+	/////////////////////////////
+	// schoolAdministratorName //
+	/////////////////////////////
+
+	/**	L'entité « schoolAdministratorName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String schoolAdministratorName;
+	@JsonIgnore
+	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
+
+	/**	<br/>L'entité « schoolAdministratorName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Trouver l'entité schoolAdministratorName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolAdministratorName(Wrap<String> c);
+
+	public String getSchoolAdministratorName() {
+		return schoolAdministratorName;
+	}
+
+	public void setSchoolAdministratorName(String schoolAdministratorName) {
+		this.schoolAdministratorName = schoolAdministratorName;
+		this.schoolAdministratorNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolSeason schoolAdministratorNameInit() {
+		if(!schoolAdministratorNameWrap.alreadyInitialized) {
+			_schoolAdministratorName(schoolAdministratorNameWrap);
+			if(schoolAdministratorName == null)
+				setSchoolAdministratorName(schoolAdministratorNameWrap.o);
+		}
+		schoolAdministratorNameWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public String solrSchoolAdministratorName() {
+		return schoolAdministratorName;
+	}
+
+	public String strSchoolAdministratorName() {
+		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
+	public String jsonSchoolAdministratorName() {
+		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
+	public String nomAffichageSchoolAdministratorName() {
+		return "administrator of the school";
+	}
+
+	public String htmTooltipSchoolAdministratorName() {
+		return null;
+	}
+
+	public String htmSchoolAdministratorName() {
+		return schoolAdministratorName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAdministratorName());
+	}
+
+	public void htmSchoolAdministratorName(AllWriter r, Boolean patchRights) {
+		if(pk!= null) {
+			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolAdministratorName\">");
+			if(patchRights) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchSchoolSeason", strPk(), "SchoolAdministratorName() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setSchoolAdministratorName\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolAdministratorName()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"schoolAdministratorName\"");
+							r.s(" value=\"", htmSchoolAdministratorName(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmSchoolAdministratorName());
+			}
+			r.l("</div>");
+		}
+	}
+
 	///////////////
 	// yearStart //
 	///////////////
@@ -2266,6 +2572,9 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		schoolNameInit();
 		schoolCompleteNameInit();
 		schoolLocationInit();
+		schoolAddressInit();
+		schoolPhoneNumberInit();
+		schoolAdministratorNameInit();
 		yearStartInit();
 		yearEndInit();
 		seasonStartDateInit();
@@ -2341,6 +2650,12 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.schoolCompleteName;
 			case "schoolLocation":
 				return oSchoolSeason.schoolLocation;
+			case "schoolAddress":
+				return oSchoolSeason.schoolAddress;
+			case "schoolPhoneNumber":
+				return oSchoolSeason.schoolPhoneNumber;
+			case "schoolAdministratorName":
+				return oSchoolSeason.schoolAdministratorName;
 			case "yearStart":
 				return oSchoolSeason.yearStart;
 			case "yearEnd":
@@ -2519,6 +2834,24 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					oSchoolSeason.setSchoolLocation(schoolLocation);
 			}
 
+			if(savesSchoolSeason.contains("schoolAddress")) {
+				String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
+				if(schoolAddress != null)
+					oSchoolSeason.setSchoolAddress(schoolAddress);
+			}
+
+			if(savesSchoolSeason.contains("schoolPhoneNumber")) {
+				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
+				if(schoolPhoneNumber != null)
+					oSchoolSeason.setSchoolPhoneNumber(schoolPhoneNumber);
+			}
+
+			if(savesSchoolSeason.contains("schoolAdministratorName")) {
+				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
+				if(schoolAdministratorName != null)
+					oSchoolSeason.setSchoolAdministratorName(schoolAdministratorName);
+			}
+
 			if(savesSchoolSeason.contains("yearStart")) {
 				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
@@ -2686,6 +3019,18 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			document.addField("schoolLocation_indexed_string", schoolLocation);
 			document.addField("schoolLocation_stored_string", schoolLocation);
 		}
+		if(schoolAddress != null) {
+			document.addField("schoolAddress_indexed_string", schoolAddress);
+			document.addField("schoolAddress_stored_string", schoolAddress);
+		}
+		if(schoolPhoneNumber != null) {
+			document.addField("schoolPhoneNumber_indexed_string", schoolPhoneNumber);
+			document.addField("schoolPhoneNumber_stored_string", schoolPhoneNumber);
+		}
+		if(schoolAdministratorName != null) {
+			document.addField("schoolAdministratorName_indexed_string", schoolAdministratorName);
+			document.addField("schoolAdministratorName_stored_string", schoolAdministratorName);
+		}
 		if(yearStart != null) {
 			document.addField("yearStart_indexed_int", yearStart);
 			document.addField("yearStart_stored_int", yearStart);
@@ -2792,6 +3137,18 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 		if(schoolLocation != null)
 			oSchoolSeason.setSchoolLocation(schoolLocation);
+
+		String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
+		if(schoolAddress != null)
+			oSchoolSeason.setSchoolAddress(schoolAddress);
+
+		String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
+		if(schoolPhoneNumber != null)
+			oSchoolSeason.setSchoolPhoneNumber(schoolPhoneNumber);
+
+		String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
+		if(schoolAdministratorName != null)
+			oSchoolSeason.setSchoolAdministratorName(schoolAdministratorName);
 
 		Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 		if(yearStart != null)

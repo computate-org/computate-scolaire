@@ -1785,6 +1785,312 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		}
 	}
 
+	///////////////////
+	// ecoleAddresse //
+	///////////////////
+
+	/**	L'entité « ecoleAddresse »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleAddresse;
+	@JsonIgnore
+	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
+
+	/**	<br/>L'entité « ecoleAddresse »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAddresse">Trouver l'entité ecoleAddresse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleAddresse(Couverture<String> c);
+
+	public String getEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public void setEcoleAddresse(String ecoleAddresse) {
+		this.ecoleAddresse = ecoleAddresse;
+		this.ecoleAddresseCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire ecoleAddresseInit() {
+		if(!ecoleAddresseCouverture.dejaInitialise) {
+			_ecoleAddresse(ecoleAddresseCouverture);
+			if(ecoleAddresse == null)
+				setEcoleAddresse(ecoleAddresseCouverture.o);
+		}
+		ecoleAddresseCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public String strEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String jsonEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String nomAffichageEcoleAddresse() {
+		return "addresse";
+	}
+
+	public String htmTooltipEcoleAddresse() {
+		return null;
+	}
+
+	public String htmEcoleAddresse() {
+		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
+	}
+
+	public void htmEcoleAddresse(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleAddresse\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAgeScolaire", strPk(), "EcoleAddresse() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleAddresse\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAddresse()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleAddresse\"");
+							r.s(" value=\"", htmEcoleAddresse(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleAddresse());
+			}
+			r.l("</div>");
+		}
+	}
+
+	//////////////////////////
+	// ecoleNumeroTelephone //
+	//////////////////////////
+
+	/**	L'entité « ecoleNumeroTelephone »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> ecoleNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
+
+	/**	<br/>L'entité « ecoleNumeroTelephone »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumeroTelephone">Trouver l'entité ecoleNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNumeroTelephone(Couverture<String> c);
+
+	public String getEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
+	public void setEcoleNumeroTelephone(String ecoleNumeroTelephone) {
+		this.ecoleNumeroTelephone = ecoleNumeroTelephone;
+		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire ecoleNumeroTelephoneInit() {
+		if(!ecoleNumeroTelephoneCouverture.dejaInitialise) {
+			_ecoleNumeroTelephone(ecoleNumeroTelephoneCouverture);
+			if(ecoleNumeroTelephone == null)
+				setEcoleNumeroTelephone(ecoleNumeroTelephoneCouverture.o);
+		}
+		ecoleNumeroTelephoneCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
+	public String strEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
+	public String jsonEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
+	public String nomAffichageEcoleNumeroTelephone() {
+		return "numéro de téléphone";
+	}
+
+	public String htmTooltipEcoleNumeroTelephone() {
+		return null;
+	}
+
+	public String htmEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
+	}
+
+	public void htmEcoleNumeroTelephone(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleNumeroTelephone\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAgeScolaire", strPk(), "EcoleNumeroTelephone() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleNumeroTelephone\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNumeroTelephone()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleNumeroTelephone\"");
+							r.s(" value=\"", htmEcoleNumeroTelephone(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleNumeroTelephone());
+			}
+			r.l("</div>");
+		}
+	}
+
+	////////////////////////////
+	// ecoleAdministrateurNom //
+	////////////////////////////
+
+	/**	L'entité « ecoleAdministrateurNom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ecoleAdministrateurNom;
+	@JsonIgnore
+	public Couverture<String> ecoleAdministrateurNomCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAdministrateurNom").o(ecoleAdministrateurNom);
+
+	/**	<br/>L'entité « ecoleAdministrateurNom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAdministrateurNom">Trouver l'entité ecoleAdministrateurNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleAdministrateurNom(Couverture<String> c);
+
+	public String getEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom;
+	}
+
+	public void setEcoleAdministrateurNom(String ecoleAdministrateurNom) {
+		this.ecoleAdministrateurNom = ecoleAdministrateurNom;
+		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire ecoleAdministrateurNomInit() {
+		if(!ecoleAdministrateurNomCouverture.dejaInitialise) {
+			_ecoleAdministrateurNom(ecoleAdministrateurNomCouverture);
+			if(ecoleAdministrateurNom == null)
+				setEcoleAdministrateurNom(ecoleAdministrateurNomCouverture.o);
+		}
+		ecoleAdministrateurNomCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom;
+	}
+
+	public String strEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
+	}
+
+	public String jsonEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
+	}
+
+	public String nomAffichageEcoleAdministrateurNom() {
+		return "administrateur de l'école";
+	}
+
+	public String htmTooltipEcoleAdministrateurNom() {
+		return null;
+	}
+
+	public String htmEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAdministrateurNom());
+	}
+
+	public void htmEcoleAdministrateurNom(ToutEcrivain r, Boolean patchDroits) {
+		if(pk!= null) {
+			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleAdministrateurNom\">");
+			if(patchDroits) {
+				r.l();
+				r.l("	<script>//<![CDATA[");
+				r.l("		function patchAgeScolaire", strPk(), "EcoleAdministrateurNom() {");
+				r.l("			$.ajax({");
+				r.l("				url: '?fq=pk:", strPk(), "',");
+				r.l("				dataType: 'json',");
+				r.l("				type: 'patch',");
+				r.l("				contentType: 'application/json',");
+				r.l("				processData: false,");
+				r.l("				success: function( data, textStatus, jQxhr ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
+				r.l("					");
+				r.l("				},");
+				r.l("				data: {\"setEcoleAdministrateurNom\": this.value },");
+				r.l("				");
+				r.l("			});");
+				r.l("		}");
+				r.l("	//]]></script>");
+				r.l("	<div class=\"\">");
+				r.l("		<label class=\"w3-tooltip \">");
+				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAdministrateurNom()), "</span>");
+				r.s("			<input");
+							r.s(" name=\"ecoleAdministrateurNom\"");
+							r.s(" value=\"", htmEcoleAdministrateurNom(), "\");");
+							r.s(" onchange=\"\"");
+							r.l("/>");
+				r.l("		</label>");
+				r.l("	</div>");
+			} else {
+				r.s(htmEcoleAdministrateurNom());
+			}
+			r.l("</div>");
+		}
+	}
+
 	////////////////
 	// anneeDebut //
 	////////////////
@@ -3248,6 +3554,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
+		ecoleAddresseInit();
+		ecoleNumeroTelephoneInit();
+		ecoleAdministrateurNomInit();
 		anneeDebutInit();
 		anneeFinInit();
 		saisonJourDebutInit();
@@ -3335,6 +3644,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.ecoleNomComplet;
 			case "ecoleEmplacement":
 				return oAgeScolaire.ecoleEmplacement;
+			case "ecoleAddresse":
+				return oAgeScolaire.ecoleAddresse;
+			case "ecoleNumeroTelephone":
+				return oAgeScolaire.ecoleNumeroTelephone;
+			case "ecoleAdministrateurNom":
+				return oAgeScolaire.ecoleAdministrateurNom;
 			case "anneeDebut":
 				return oAgeScolaire.anneeDebut;
 			case "anneeFin":
@@ -3418,6 +3733,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirAgeScolaire(String var, String val) {
 		switch(var) {
+			case "ecoleAddresse":
+				setEcoleAddresse(val);
+				sauvegardesAgeScolaire.add(var);
+				return val;
 			case "ageDebut":
 				setAgeDebut(val);
 				sauvegardesAgeScolaire.add(var);
@@ -3533,6 +3852,24 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oAgeScolaire.setEcoleEmplacement(ecoleEmplacement);
+			}
+
+			if(sauvegardesAgeScolaire.contains("ecoleAddresse")) {
+				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+				if(ecoleAddresse != null)
+					oAgeScolaire.setEcoleAddresse(ecoleAddresse);
+			}
+
+			if(sauvegardesAgeScolaire.contains("ecoleNumeroTelephone")) {
+				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
+				if(ecoleNumeroTelephone != null)
+					oAgeScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardesAgeScolaire.contains("ecoleAdministrateurNom")) {
+				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
+				if(ecoleAdministrateurNom != null)
+					oAgeScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 			}
 
 			if(sauvegardesAgeScolaire.contains("anneeDebut")) {
@@ -3750,6 +4087,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleEmplacement_indexed_string", ecoleEmplacement);
 			document.addField("ecoleEmplacement_stored_string", ecoleEmplacement);
 		}
+		if(ecoleAddresse != null) {
+			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
+			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
+		}
+		if(ecoleNumeroTelephone != null) {
+			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
+			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
+		}
+		if(ecoleAdministrateurNom != null) {
+			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
+			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
+		}
 		if(anneeDebut != null) {
 			document.addField("anneeDebut_indexed_int", anneeDebut);
 			document.addField("anneeDebut_stored_int", anneeDebut);
@@ -3893,6 +4242,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(ecoleEmplacement != null)
 			oAgeScolaire.setEcoleEmplacement(ecoleEmplacement);
 
+		String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+		if(ecoleAddresse != null)
+			oAgeScolaire.setEcoleAddresse(ecoleAddresse);
+
+		String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
+		if(ecoleNumeroTelephone != null)
+			oAgeScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+
+		String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
+		if(ecoleAdministrateurNom != null)
+			oAgeScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
+
 		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 		if(anneeDebut != null)
 			oAgeScolaire.setAnneeDebut(anneeDebut);
@@ -3953,7 +4314,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, sessionCle, ageDebut, ageFin);
+		return Objects.hash(super.hashCode(), blocCles, sessionCle, ecoleAddresse, ageDebut, ageFin);
 	}
 
 	////////////
@@ -3969,6 +4330,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return super.equals(o)
 				&& Objects.equals( blocCles, that.blocCles )
 				&& Objects.equals( sessionCle, that.sessionCle )
+				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( ageDebut, that.ageDebut )
 				&& Objects.equals( ageFin, that.ageFin );
 	}
@@ -3983,6 +4345,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		sb.append("AgeScolaire { ");
 		sb.append( "blocCles: " ).append(blocCles);
 		sb.append( ", sessionCle: " ).append(sessionCle);
+		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", ageDebut: " ).append(ageDebut);
 		sb.append( ", ageFin: " ).append(ageFin);
 		sb.append(" }");

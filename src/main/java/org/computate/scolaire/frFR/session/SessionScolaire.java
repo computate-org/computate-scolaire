@@ -282,6 +282,58 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolAddress
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: addresse
+	 * NomAffichage.enUS: address
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 * r: saison
+	 * r.enUS: season
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
+		if(saison_ != null)
+			c.o((String)saison_.getEcoleAddresse());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: numéro de téléphone
+	 * NomAffichage.enUS: phone number
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: saison
+	 * r.enUS: season
+	 */
+	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+		if(saison_ != null)
+			c.o((String)saison_.getEcoleNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAdministratorName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: administrator of the school
+	 * NomAffichage.frFR: administrateur de l'école
+	 * r: EcoleAdministrateurNom
+	 * r.enUS: SchoolAdministratorName
+	 * r: saison
+	 * r.enUS: season
+	 */  
+	protected void _ecoleAdministrateurNom(Couverture<String> c) {
+		if(saison_ != null)
+			c.o((String)saison_.getEcoleAdministrateurNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true

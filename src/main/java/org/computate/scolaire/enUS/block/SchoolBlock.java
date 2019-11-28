@@ -98,6 +98,21 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o((String)age_.getSchoolLocation());
 	}
 
+	protected void _schoolAddress(Wrap<String> c) {
+		if(age_ != null)
+			c.o((String)age_.getSchoolAddress());
+	}
+
+	protected void _schoolPhoneNumber(Wrap<String> c) {
+		if(age_ != null)
+			c.o((String)age_.getSchoolPhoneNumber());
+	}
+
+	protected void _schoolAdministratorName(Wrap<String> c) {
+		if(age_ != null)
+			c.o((String)age_.getSchoolAdministratorName());
+	}
+
 	protected void _yearStart(Wrap<Integer> c) {
 		if(age_ != null)
 			c.o(age_.getYearStart());

@@ -55,6 +55,8 @@ public abstract class EnrollmentDesignGenPageGen<DEV> extends ClusterPage {
 			if(listEnrollmentDesign == null)
 				setListEnrollmentDesign(listEnrollmentDesignWrap.o);
 		}
+		if(listEnrollmentDesign != null)
+			listEnrollmentDesign.initDeepForClass(siteRequest_);
 		listEnrollmentDesignWrap.alreadyInitialized(true);
 		return (EnrollmentDesignGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class EnrollmentDesignGenPageGen<DEV> extends ClusterPage {
 			if(enrollmentDesign == null)
 				setEnrollmentDesign(enrollmentDesignWrap.o);
 		}
+		if(enrollmentDesign != null)
+			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
 		return (EnrollmentDesignGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class EnrollmentDesignGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestEnrollmentDesignGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listEnrollmentDesign != null)
+			listEnrollmentDesign.setSiteRequest_(siteRequest_);
+		if(enrollmentDesign != null)
+			enrollmentDesign.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

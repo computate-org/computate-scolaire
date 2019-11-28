@@ -177,7 +177,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestEnrollmentDesignArchived").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggestEnrollmentDesignArchived").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 								e("label").a("for", "Page_archived").a("class", "").f().sx("archived").g("label");
@@ -213,7 +213,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestEnrollmentDesignDeleted").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggestEnrollmentDesignDeleted").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 								e("label").a("for", "Page_deleted").a("class", "").f().sx("deleted").g("label");
@@ -269,7 +269,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 							.a("value", siteRequest_.getRequestPk())
 							.fg();
 					} g("form");
-					{ e("form").a("action", "").a("id", "suggestEnrollmentDesignHtmlPartKeys").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+					{ e("div").a("id", "suggestEnrollmentDesignHtmlPartKeys").f();
 						{ e("div").a("class", "w3-card ").f();
 							{ e("div").a("class", "w3-cell-row ").f();
 								{ e("a").a("href", "/html-part").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
@@ -416,7 +416,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignArchived").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignArchived").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "POST_archived").a("class", "").f().sx("archived").g("label");
@@ -451,7 +451,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignDeleted").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignDeleted").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "POST_deleted").a("class", "").f().sx("deleted").g("label");
@@ -611,7 +611,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignArchived").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignArchived").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "PATCH_archived").a("class", "").f().sx("archived").g("label");
@@ -646,7 +646,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignDeleted").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignDeleted").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "PATCH_deleted").a("class", "").f().sx("deleted").g("label");
@@ -824,7 +824,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignArchived").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignArchived").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "Recherche_archived").a("class", "").f().sx("archived").g("label");
@@ -859,7 +859,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("value", siteRequest_.getRequestPk())
 						.fg();
 				} g("form");
-				{ e("form").a("action", "").a("id", "suggestEnrollmentDesignDeleted").a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); return false; ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignDeleted").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
 							e("label").a("for", "Recherche_deleted").a("class", "").f().sx("deleted").g("label");

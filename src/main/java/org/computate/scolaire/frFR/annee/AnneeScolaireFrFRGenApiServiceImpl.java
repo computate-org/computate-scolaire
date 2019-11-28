@@ -267,7 +267,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeAnneeScolaire.getRows());
-									requetePatch.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeAnneeScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeAnneeScolaire.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
@@ -841,6 +841,12 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
 			case "formInscriptionCle":
 				return "formInscriptionCle_indexed_long";
 			case "anneeDebut":
