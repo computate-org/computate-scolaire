@@ -72,7 +72,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */                        
+	 */                      
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -423,7 +423,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: enfantRecherche
 	 * r.enUS: childSearch
 	 * Ignorer: true
-	 */   
+	 */      
 	protected void _enfant_(Couverture<EnfantScolaire> c) {
 		if(enfantRecherche.size() > 0) {
 			c.o(enfantRecherche.get(0));

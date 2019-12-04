@@ -741,6 +741,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/design-inscription");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListeDesignInscription(listeDesignInscription);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinDesignInscriptionPage(requeteSite);

@@ -727,6 +727,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/cluster");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			siteRequest.setW(w);
 			page.setListCluster(listCluster);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepClusterPage(siteRequest);

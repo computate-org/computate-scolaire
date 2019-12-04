@@ -28,7 +28,7 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 		c.o(1);
 	}
 
-	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
+	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) { 
 		l.setQuery("*:*");
 		l.addFilterQuery("childKey_indexed_long:" + pk);
 		l.setC(SchoolEnrollment.class);

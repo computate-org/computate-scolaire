@@ -321,6 +321,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
+					o.setSiteRequest_(siteRequest_);
 
 					// Form POST
 					{ e("div").a("id", "postClusterForm").f();
@@ -350,6 +351,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					Cluster o = new Cluster();
+					o.setSiteRequest_(siteRequest_);
 
 					// FormFilters PATCH
 					{ e("form").a("action", "").a("id", "patchClusterFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -391,6 +393,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 					} g("header");
 					{ e("div").a("class", "w3-container ").f();
 						Cluster o = new Cluster();
+						o.setSiteRequest_(siteRequest_);
 
 						// Form DELETE
 						{ e("div").a("id", "deleteClusterForm").f();

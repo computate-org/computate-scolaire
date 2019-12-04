@@ -295,7 +295,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 
 									PatchRequest patchRequest = new PatchRequest();
 									patchRequest.setRows(listSchoolChild.getRows());
-									patchRequest.setNumFound(listSchoolChild.getQueryResponse().getResults().getNumFound());
+									patchRequest.setNumFound(Optional.ofNullable(listSchoolChild.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolChild.size())));
 									patchRequest.initDeepPatchRequest(siteRequest);
 									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 									workerExecutor.executeBlocking(
@@ -881,6 +881,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/child");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			siteRequest.setW(w);
 			page.setListSchoolChild(listSchoolChild);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepChildPage(siteRequest);
@@ -1186,7 +1187,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			listSearch.setC(SchoolChild.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1247,6 +1247,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

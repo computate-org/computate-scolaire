@@ -741,6 +741,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment-design");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			siteRequest.setW(w);
 			page.setListEnrollmentDesign(listEnrollmentDesign);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepEnrollmentDesignPage(siteRequest);

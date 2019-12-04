@@ -511,6 +511,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SchoolEnrollment o = new SchoolEnrollment();
+					o.setSiteRequest_(siteRequest_);
 
 					// Form POST
 					{ e("div").a("id", "postSchoolEnrollmentForm").f();
@@ -540,6 +541,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					SchoolEnrollment o = new SchoolEnrollment();
+					o.setSiteRequest_(siteRequest_);
 
 					// FormFilters PATCH
 					{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormFilters").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -581,6 +583,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 					} g("header");
 					{ e("div").a("class", "w3-container ").f();
 						SchoolEnrollment o = new SchoolEnrollment();
+						o.setSiteRequest_(siteRequest_);
 
 						// Form DELETE
 						{ e("div").a("id", "deleteSchoolEnrollmentForm").f();

@@ -177,20 +177,6 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: htmlVar
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.enUS: var
-	 * NomAffichage.frFR: var
-	 * Definir: true
-	 * HtmlLigne: 7
-	 * HtmlCelulle: 1
-	 */               
-	protected void _htmlVar(Couverture<String> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: htmlAfter
 	 * Indexe: true
 	 * Stocke: true
@@ -224,13 +210,41 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: htmlVar
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var
+	 * NomAffichage.frFR: var
+	 * Definir: true
+	 * HtmlLigne: 8
+	 * HtmlCelulle: 1
+	 */               
+	protected void _htmlVar(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: htmlVarInput
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var input
+	 * NomAffichage.frFR: var input
+	 * Definir: true
+	 * HtmlLigne: 8
+	 * HtmlCelulle: 1
+	 */            
+	protected void _htmlVarInput(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: sort1
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 1
 	 */               
 	protected void _tri1(Couverture<Double> c) {
@@ -244,7 +258,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 2
 	 */               
 	protected void _tri2(Couverture<Double> c) {
@@ -258,7 +272,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 3
 	 */               
 	protected void _tri3(Couverture<Double> c) {
@@ -272,7 +286,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 4
 	 */               
 	protected void _tri4(Couverture<Double> c) {
@@ -286,7 +300,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
 	 * Definir: true
-	 * HtmlLigne: 8
+	 * HtmlLigne: 9
 	 * HtmlCelulle: 5
 	 */               
 	protected void _tri5(Couverture<Double> c) {
@@ -300,7 +314,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 6
 	 */               
 	protected void _tri6(Couverture<Double> c) {
@@ -314,7 +328,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 7
 	 */               
 	protected void _tri7(Couverture<Double> c) {
@@ -328,7 +342,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 8
 	 */               
 	protected void _tri8(Couverture<Double> c) {
@@ -342,7 +356,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 9
 	 */               
 	protected void _tri9(Couverture<Double> c) {
@@ -356,7 +370,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 10
 	 */              
 	protected void _tri10(Couverture<Double> c) {
@@ -381,6 +395,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 			b.append(htmlAvant);
 		if(htmlVar != null)
 			b.append("{{").append(htmlVar).append("}}");
+		if(htmlVarInput != null)
+			b.append("**").append(htmlVarInput).append("**");
 		if(htmlTexte != null)
 			b.append(htmlTexte);
 		if(htmlApres != null)

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;       
+package org.computate.scolaire.frFR.enfant;         
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -122,7 +122,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * r: ageCle
 	 * r.enUS: ageKey
 	 */
-	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
+	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) { 
 		l.setQuery("*:*");
 		l.addFilterQuery("enfantCle_indexed_long:" + pk);
 		l.setC(InscriptionScolaire.class);

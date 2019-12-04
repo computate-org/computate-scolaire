@@ -727,6 +727,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/cluster");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListeCluster(listeCluster);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinClusterPage(requeteSite);

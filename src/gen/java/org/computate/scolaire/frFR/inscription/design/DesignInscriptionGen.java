@@ -132,47 +132,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return designInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionCle());
 	}
 
-	public void htmDesignInscriptionCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "DesignInscriptionCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "DesignInscriptionCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setDesignInscriptionCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageDesignInscriptionCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"designInscriptionCle\"");
-							r.s(" value=\"", htmDesignInscriptionCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmDesignInscriptionCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// anneeCle //
 	//////////////
@@ -240,45 +199,25 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
 	}
 
-	public void htmAnneeCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "AnneeCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "AnneeCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeCle\"");
-							r.s(" value=\"", htmAnneeCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeCle());
+	public void htmAnneeCle(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classeApiMethodeMethode)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("année").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strAnneeCle()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////////
@@ -366,45 +305,65 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return partHtmlCles == null ? "" : StringEscapeUtils.escapeHtml4(strPartHtmlCles());
 	}
 
-	public void htmPartHtmlCles(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "PartHtmlCles\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "PartHtmlCles() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPartHtmlCles\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePartHtmlCles()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"partHtmlCles\"");
-							r.s(" value=\"", htmPartHtmlCles(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPartHtmlCles());
-			}
-			r.l("</div>");
-		}
+	public void htmPartHtmlCles(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formDesignInscriptionPartHtmlCles").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valeurDesignInscriptionCle")
+						.a("class", "valeurDesignInscriptionCle ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggereDesignInscriptionPartHtmlCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								sx("parts");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a ce design d'inscription");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "parts")
+										.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setPartHtmlCles")
+										.a("id", classeApiMethodeMethode, "_partHtmlCles")
+										.a("autocomplete", "off")
+										.a("oninput", "suggereDesignInscriptionPartHtmlCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'DesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereDesignInscriptionPartHtmlCles($('#' + ($('#", classeApiMethodeMethode, "partHtmlCles').val() ? 'suggere' : 'form') + 'DesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "partHtmlCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
+										.f().sx("ajouter un part de HTML")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////
@@ -492,45 +451,25 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
 	}
 
-	public void htmInscriptionCles(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "InscriptionCles\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "InscriptionCles() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setInscriptionCles\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionCles()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"inscriptionCles\"");
-							r.s(" value=\"", htmInscriptionCles(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmInscriptionCles());
+	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classeApiMethodeMethode)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("inscriptions").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strInscriptionCles()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	////////////////////
@@ -761,47 +700,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
 	}
 
-	public void htmEcoleCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "EcoleCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "EcoleCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleCle\"");
-							r.s(" value=\"", htmEcoleCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////
 	// ecoleNomComplet //
 	/////////////////////
@@ -863,47 +761,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomComplet());
 	}
 
-	public void htmEcoleNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "EcoleNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "EcoleNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleNomComplet\"");
-							r.s(" value=\"", htmEcoleNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleNomComplet());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////
 	// ecoleEmplacement //
 	//////////////////////
@@ -963,47 +820,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public String htmEcoleEmplacement() {
 		return ecoleEmplacement == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleEmplacement());
-	}
-
-	public void htmEcoleEmplacement(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "EcoleEmplacement\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "EcoleEmplacement() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleEmplacement\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleEmplacement()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleEmplacement\"");
-							r.s(" value=\"", htmEcoleEmplacement(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleEmplacement());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////
@@ -1073,47 +889,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeDebut == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeDebut());
 	}
 
-	public void htmAnneeDebut(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "AnneeDebut\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "AnneeDebut() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeDebut\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeDebut()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeDebut\"");
-							r.s(" value=\"", htmAnneeDebut(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeDebut());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// anneeFin //
 	//////////////
@@ -1181,47 +956,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeFin == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFin());
 	}
 
-	public void htmAnneeFin(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "AnneeFin\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "AnneeFin() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeFin\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeFin()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeFin\"");
-							r.s(" value=\"", htmAnneeFin(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeFin());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// anneeNomCourt //
 	///////////////////
@@ -1281,47 +1015,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public String htmAnneeNomCourt() {
 		return anneeNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeNomCourt());
-	}
-
-	public void htmAnneeNomCourt(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "AnneeNomCourt\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "AnneeNomCourt() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeNomCourt\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeNomCourt()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeNomCourt\"");
-							r.s(" value=\"", htmAnneeNomCourt(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeNomCourt());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////
@@ -1385,47 +1078,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeNomComplet());
 	}
 
-	public void htmAnneeNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "AnneeNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "AnneeNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeNomComplet\"");
-							r.s(" value=\"", htmAnneeNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeNomComplet());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////////////////
 	// designInscriptionNomComplet //
 	/////////////////////////////////
@@ -1487,45 +1139,25 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return designInscriptionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionNomComplet());
 	}
 
-	public void htmDesignInscriptionNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchDesignInscription", strPk(), "DesignInscriptionNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchDesignInscription", strPk(), "DesignInscriptionNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setDesignInscriptionNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageDesignInscriptionNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"designInscriptionNomComplet\"");
-							r.s(" value=\"", htmDesignInscriptionNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmDesignInscriptionNomComplet());
+	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classeApiMethodeMethode)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("nom").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strDesignInscriptionNomComplet()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////

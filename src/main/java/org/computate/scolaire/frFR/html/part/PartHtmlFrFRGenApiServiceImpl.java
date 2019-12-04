@@ -222,10 +222,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlAvant", jsonObject.getString(entiteVar), pk));
 						break;
-					case "htmlVar":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
-						break;
 					case "htmlApres":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlApres", jsonObject.getString(entiteVar), pk));
@@ -233,6 +229,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "htmlTexte":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlTexte", jsonObject.getString(entiteVar), pk));
+						break;
+					case "htmlVar":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
+						break;
+					case "htmlVarInput":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
 						break;
 					case "tri1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -573,16 +577,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							patchSqlParams.addAll(Arrays.asList("htmlAvant", o2.jsonHtmlAvant(), pk));
 						}
 						break;
-					case "setHtmlVar":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
-						} else {
-							o2.setHtmlVar(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
-						}
-						break;
 					case "setHtmlApres":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -601,6 +595,26 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							o2.setHtmlTexte(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlTexte", o2.jsonHtmlTexte(), pk));
+						}
+						break;
+					case "setHtmlVar":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
+						} else {
+							o2.setHtmlVar(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
+						}
+						break;
+					case "setHtmlVarInput":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarInput"));
+						} else {
+							o2.setHtmlVarInput(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
 						}
 						break;
 					case "setTri1":
@@ -991,6 +1005,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/part-html");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListePartHtml(listePartHtml);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinPartHtmlPage(requeteSite);
@@ -1045,12 +1060,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				return "htmlStyle_indexed_string";
 			case "htmlAvant":
 				return "htmlAvant_indexed_string";
-			case "htmlVar":
-				return "htmlVar_indexed_string";
 			case "htmlApres":
 				return "htmlApres_indexed_string";
 			case "htmlTexte":
 				return "htmlTexte_indexed_string";
+			case "htmlVar":
+				return "htmlVar_indexed_string";
+			case "htmlVarInput":
+				return "htmlVarInput_indexed_string";
 			case "tri1":
 				return "tri1_indexed_double";
 			case "tri2":

@@ -277,10 +277,10 @@ public class Cluster extends ClusterGen<Object> {
 		String tabs = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\t"));
 		String tabsEscaped = String.join("", Collections.nCopies(siteRequest_.getXmlStack().size(), "\\t"));
 
-		if(!eNoWrap && !tabsEscaped.isEmpty()) {
+		if(!eNoWrap || localNameParent == null)
 			w.l();
+		if(!eNoWrap && !tabsEscaped.isEmpty())
 			w.s(tabs);
-		}
 		w.s("</");
 		w.s(localName);
 		w.s(">");

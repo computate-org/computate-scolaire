@@ -512,6 +512,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					InscriptionScolaire o = new InscriptionScolaire();
+					o.setRequeteSite_(requeteSite_);
 
 					// Form POST
 					{ e("div").a("id", "postInscriptionScolaireForm").f();
@@ -541,6 +542,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("header");
 				{ e("div").a("class", "w3-container ").f();
 					InscriptionScolaire o = new InscriptionScolaire();
+					o.setRequeteSite_(requeteSite_);
 
 					// FormulaireFiltres PATCH
 					{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireFiltres").a("onsubmit", "event.preventDefault(); return false; ").f();
@@ -582,6 +584,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					} g("header");
 					{ e("div").a("class", "w3-container ").f();
 						InscriptionScolaire o = new InscriptionScolaire();
+						o.setRequeteSite_(requeteSite_);
 
 						// Form DELETE
 						{ e("div").a("id", "deleteInscriptionScolaireForm").f();

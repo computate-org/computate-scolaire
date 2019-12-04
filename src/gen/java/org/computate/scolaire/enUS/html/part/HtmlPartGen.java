@@ -129,47 +129,6 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlPartKey == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlPartKey());
 	}
 
-	public void htmHtmlPartKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlPartKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlPartKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlPartKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlPartKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlPartKey\"");
-							r.s(" value=\"", htmHtmlPartKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlPartKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////////
 	// enrollmentDesignKey //
 	/////////////////////////
@@ -237,45 +196,65 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return enrollmentDesignKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDesignKey());
 	}
 
-	public void htmEnrollmentDesignKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "EnrollmentDesignKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "EnrollmentDesignKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentDesignKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentDesignKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentDesignKey\"");
-							r.s(" value=\"", htmEnrollmentDesignKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentDesignKey());
-			}
-			r.l("</div>");
-		}
+	public void htmEnrollmentDesignKey(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartEnrollmentDesignKey").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueHtmlPartKeys")
+						.a("class", "valueHtmlPartKeys ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartEnrollmentDesignKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+								sx("enrollment design");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate an enrollment design to this HTML part");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollment design")
+										.a("class", "valueObjectSuggest suggestEnrollmentDesignKey w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentDesignKey")
+										.a("id", classApiMethodMethod, "_enrollmentDesignKey")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestHtmlPartEnrollmentDesignKey($('#' + ($(this).val() ? 'suggest' : 'form') + 'HtmlPartEnrollmentDesignKey'), $('#listHtmlPartEnrollmentDesignKey_", classApiMethodMethod, "')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listHtmlPartEnrollmentDesignKey_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+										.a("onclick", "postEnrollmentDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() { patchHtmlPartVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestHtmlPartEnrollmentDesignKey($('#' + ($('#", classApiMethodMethod, "enrollmentDesignKey').val() ? 'suggest' : 'form') + 'HtmlPartEnrollmentDesignKey'), $('#listHtmlPartEnrollmentDesignKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "enrollmentDesignKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "enrollmentDesignKey')); }); }, function() { addError($('#", classApiMethodMethod, "enrollmentDesignKey')); });")
+										.f().sx("add an enrollment design")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////
@@ -339,45 +318,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlLink == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlLink());
 	}
 
-	public void htmHtmlLink(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlLink\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlLink() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlLink\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlLink()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlLink\"");
-							r.s(" value=\"", htmHtmlLink(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlLink());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlLink(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlLink").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlLink").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlLink").a("class", "").f().sx("link").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "link")
+									.a("id", classApiMethodMethod, "_htmlLink");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlLink w3-input w3-border ");
+										a("name", "setHtmlLink");
+									} else {
+										a("class", "valueHtmlLink w3-input w3-border ");
+										a("name", "htmlLink");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlLink', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlLink')); }, function() { addError($('#", classApiMethodMethod, "_htmlLink')); }); ");
+									}
+									a("value", strHtmlLink())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlLink')); $('#", classApiMethodMethod, "_htmlLink').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlLink', null, function() { addGlow($('#", classApiMethodMethod, "_htmlLink')); }, function() { addError($('#", classApiMethodMethod, "_htmlLink')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////
@@ -441,45 +435,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlElement == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlElement());
 	}
 
-	public void htmHtmlElement(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlElement\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlElement() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlElement\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlElement()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlElement\"");
-							r.s(" value=\"", htmHtmlElement(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlElement());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlElement(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlElement").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlElement").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlElement").a("class", "").f().sx("HTML element").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML element")
+									.a("id", classApiMethodMethod, "_htmlElement");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlElement w3-input w3-border ");
+										a("name", "setHtmlElement");
+									} else {
+										a("class", "valueHtmlElement w3-input w3-border ");
+										a("name", "htmlElement");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlElement', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlElement')); }, function() { addError($('#", classApiMethodMethod, "_htmlElement')); }); ");
+									}
+									a("value", strHtmlElement())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlElement')); $('#", classApiMethodMethod, "_htmlElement').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlElement', null, function() { addGlow($('#", classApiMethodMethod, "_htmlElement')); }, function() { addError($('#", classApiMethodMethod, "_htmlElement')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////
@@ -543,45 +552,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlId == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlId());
 	}
 
-	public void htmHtmlId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlId\"");
-							r.s(" value=\"", htmHtmlId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlId());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlId(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlId").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlId").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlId").a("class", "").f().sx("HTML ID").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML ID")
+									.a("id", classApiMethodMethod, "_htmlId");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlId w3-input w3-border ");
+										a("name", "setHtmlId");
+									} else {
+										a("class", "valueHtmlId w3-input w3-border ");
+										a("name", "htmlId");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlId', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlId')); }, function() { addError($('#", classApiMethodMethod, "_htmlId')); }); ");
+									}
+									a("value", strHtmlId())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlId')); $('#", classApiMethodMethod, "_htmlId').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlId', null, function() { addGlow($('#", classApiMethodMethod, "_htmlId')); }, function() { addError($('#", classApiMethodMethod, "_htmlId')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////
@@ -645,45 +669,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlClasses == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlClasses());
 	}
 
-	public void htmHtmlClasses(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlClasses\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlClasses() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlClasses\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlClasses()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlClasses\"");
-							r.s(" value=\"", htmHtmlClasses(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlClasses());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlClasses(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlClasses").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlClasses").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlClasses").a("class", "").f().sx("HTML classes").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML classes")
+									.a("id", classApiMethodMethod, "_htmlClasses");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlClasses w3-input w3-border ");
+										a("name", "setHtmlClasses");
+									} else {
+										a("class", "valueHtmlClasses w3-input w3-border ");
+										a("name", "htmlClasses");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlClasses', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlClasses')); }, function() { addError($('#", classApiMethodMethod, "_htmlClasses')); }); ");
+									}
+									a("value", strHtmlClasses())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlClasses')); $('#", classApiMethodMethod, "_htmlClasses').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlClasses', null, function() { addGlow($('#", classApiMethodMethod, "_htmlClasses')); }, function() { addError($('#", classApiMethodMethod, "_htmlClasses')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////
@@ -747,45 +786,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlStyle == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlStyle());
 	}
 
-	public void htmHtmlStyle(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlStyle\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlStyle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlStyle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlStyle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlStyle\"");
-							r.s(" value=\"", htmHtmlStyle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlStyle());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlStyle(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlStyle").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlStyle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlStyle").a("class", "").f().sx("HTML style").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "HTML style")
+									.a("id", classApiMethodMethod, "_htmlStyle");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlStyle w3-input w3-border ");
+										a("name", "setHtmlStyle");
+									} else {
+										a("class", "valueHtmlStyle w3-input w3-border ");
+										a("name", "htmlStyle");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlStyle', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlStyle')); }, function() { addError($('#", classApiMethodMethod, "_htmlStyle')); }); ");
+									}
+									a("value", strHtmlStyle())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlStyle')); $('#", classApiMethodMethod, "_htmlStyle').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlStyle', null, function() { addGlow($('#", classApiMethodMethod, "_htmlStyle')); }, function() { addError($('#", classApiMethodMethod, "_htmlStyle')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////
@@ -849,147 +903,58 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlBefore == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlBefore());
 	}
 
-	public void htmHtmlBefore(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlBefore\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlBefore() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlBefore\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlBefore()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlBefore\"");
-							r.s(" value=\"", htmHtmlBefore(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlBefore());
-			}
-			r.l("</div>");
-		}
-	}
+	public void htmHtmlBefore(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlBefore").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlBefore").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlBefore").a("class", "").f().sx("HTML before").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
 
-	/////////////
-	// htmlVar //
-	/////////////
+								e("textarea")
+									.a("placeholder", "HTML before")
+									.a("id", classApiMethodMethod, "_htmlBefore");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlBefore w3-input w3-border ");
+										a("name", "setHtmlBefore");
+									} else {
+										a("class", "valueHtmlBefore w3-input w3-border ");
+										a("name", "htmlBefore");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlBefore', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlBefore')); }, function() { addError($('#", classApiMethodMethod, "_htmlBefore')); }); ");
+									}
+								f().sx(strHtmlBefore()).g("textarea");
 
-	/**	L'entité « htmlVar »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String htmlVar;
-	@JsonIgnore
-	public Wrap<String> htmlVarWrap = new Wrap<String>().p(this).c(String.class).var("htmlVar").o(htmlVar);
-
-	/**	<br/>L'entité « htmlVar »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlVar">Trouver l'entité htmlVar dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _htmlVar(Wrap<String> c);
-
-	public String getHtmlVar() {
-		return htmlVar;
-	}
-
-	public void setHtmlVar(String htmlVar) {
-		this.htmlVar = htmlVar;
-		this.htmlVarWrap.alreadyInitialized = true;
-	}
-	protected HtmlPart htmlVarInit() {
-		if(!htmlVarWrap.alreadyInitialized) {
-			_htmlVar(htmlVarWrap);
-			if(htmlVar == null)
-				setHtmlVar(htmlVarWrap.o);
-		}
-		htmlVarWrap.alreadyInitialized(true);
-		return (HtmlPart)this;
-	}
-
-	public String solrHtmlVar() {
-		return htmlVar;
-	}
-
-	public String strHtmlVar() {
-		return htmlVar == null ? "" : htmlVar;
-	}
-
-	public String jsonHtmlVar() {
-		return htmlVar == null ? "" : htmlVar;
-	}
-
-	public String nomAffichageHtmlVar() {
-		return "var";
-	}
-
-	public String htmTooltipHtmlVar() {
-		return null;
-	}
-
-	public String htmHtmlVar() {
-		return htmlVar == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVar());
-	}
-
-	public void htmHtmlVar(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlVar\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlVar() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlVar\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlVar()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlVar\"");
-							r.s(" value=\"", htmHtmlVar(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlVar());
-			}
-			r.l("</div>");
-		}
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlBefore')); $('#", classApiMethodMethod, "_htmlBefore').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlBefore', null, function() { addGlow($('#", classApiMethodMethod, "_htmlBefore')); }, function() { addError($('#", classApiMethodMethod, "_htmlBefore')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////
@@ -1053,45 +1018,58 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlAfter == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlAfter());
 	}
 
-	public void htmHtmlAfter(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlAfter\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlAfter() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlAfter\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlAfter()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlAfter\"");
-							r.s(" value=\"", htmHtmlAfter(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlAfter());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlAfter(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlAfter").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlAfter").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlAfter").a("class", "").f().sx("HTML after").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "HTML after")
+									.a("id", classApiMethodMethod, "_htmlAfter");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlAfter w3-input w3-border ");
+										a("name", "setHtmlAfter");
+									} else {
+										a("class", "valueHtmlAfter w3-input w3-border ");
+										a("name", "htmlAfter");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlAfter', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlAfter')); }, function() { addError($('#", classApiMethodMethod, "_htmlAfter')); }); ");
+									}
+								f().sx(strHtmlAfter()).g("textarea");
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlAfter')); $('#", classApiMethodMethod, "_htmlAfter').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlAfter', null, function() { addGlow($('#", classApiMethodMethod, "_htmlAfter')); }, function() { addError($('#", classApiMethodMethod, "_htmlAfter')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////
@@ -1155,45 +1133,292 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlText == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlText());
 	}
 
-	public void htmHtmlText(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "HtmlText\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "HtmlText() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlText\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlText()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlText\"");
-							r.s(" value=\"", htmHtmlText(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlText());
-			}
-			r.l("</div>");
+	public void htmHtmlText(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlText").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlText").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlText").a("class", "").f().sx("text").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "text")
+									.a("id", classApiMethodMethod, "_htmlText");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlText w3-input w3-border ");
+										a("name", "setHtmlText");
+									} else {
+										a("class", "valueHtmlText w3-input w3-border ");
+										a("name", "htmlText");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlText', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlText')); }, function() { addError($('#", classApiMethodMethod, "_htmlText')); }); ");
+									}
+								f().sx(strHtmlText()).g("textarea");
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlText')); $('#", classApiMethodMethod, "_htmlText').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlText', null, function() { addGlow($('#", classApiMethodMethod, "_htmlText')); }, function() { addError($('#", classApiMethodMethod, "_htmlText')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////
+	// htmlVar //
+	/////////////
+
+	/**	L'entité « htmlVar »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String htmlVar;
+	@JsonIgnore
+	public Wrap<String> htmlVarWrap = new Wrap<String>().p(this).c(String.class).var("htmlVar").o(htmlVar);
+
+	/**	<br/>L'entité « htmlVar »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlVar">Trouver l'entité htmlVar dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVar(Wrap<String> c);
+
+	public String getHtmlVar() {
+		return htmlVar;
+	}
+
+	public void setHtmlVar(String htmlVar) {
+		this.htmlVar = htmlVar;
+		this.htmlVarWrap.alreadyInitialized = true;
+	}
+	protected HtmlPart htmlVarInit() {
+		if(!htmlVarWrap.alreadyInitialized) {
+			_htmlVar(htmlVarWrap);
+			if(htmlVar == null)
+				setHtmlVar(htmlVarWrap.o);
 		}
+		htmlVarWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+
+	public String solrHtmlVar() {
+		return htmlVar;
+	}
+
+	public String strHtmlVar() {
+		return htmlVar == null ? "" : htmlVar;
+	}
+
+	public String jsonHtmlVar() {
+		return htmlVar == null ? "" : htmlVar;
+	}
+
+	public String nomAffichageHtmlVar() {
+		return "var";
+	}
+
+	public String htmTooltipHtmlVar() {
+		return null;
+	}
+
+	public String htmHtmlVar() {
+		return htmlVar == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVar());
+	}
+
+	public void htmHtmlVar(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlVar").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlVar").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlVar").a("class", "").f().sx("var").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "var")
+									.a("id", classApiMethodMethod, "_htmlVar");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlVar w3-input w3-border ");
+										a("name", "setHtmlVar");
+									} else {
+										a("class", "valueHtmlVar w3-input w3-border ");
+										a("name", "htmlVar");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVar', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlVar')); }, function() { addError($('#", classApiMethodMethod, "_htmlVar')); }); ");
+									}
+									a("value", strHtmlVar())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlVar')); $('#", classApiMethodMethod, "_htmlVar').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlVar', null, function() { addGlow($('#", classApiMethodMethod, "_htmlVar')); }, function() { addError($('#", classApiMethodMethod, "_htmlVar')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////
+	// htmlVarInput //
+	//////////////////
+
+	/**	L'entité « htmlVarInput »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String htmlVarInput;
+	@JsonIgnore
+	public Wrap<String> htmlVarInputWrap = new Wrap<String>().p(this).c(String.class).var("htmlVarInput").o(htmlVarInput);
+
+	/**	<br/>L'entité « htmlVarInput »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlVarInput">Trouver l'entité htmlVarInput dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVarInput(Wrap<String> c);
+
+	public String getHtmlVarInput() {
+		return htmlVarInput;
+	}
+
+	public void setHtmlVarInput(String htmlVarInput) {
+		this.htmlVarInput = htmlVarInput;
+		this.htmlVarInputWrap.alreadyInitialized = true;
+	}
+	protected HtmlPart htmlVarInputInit() {
+		if(!htmlVarInputWrap.alreadyInitialized) {
+			_htmlVarInput(htmlVarInputWrap);
+			if(htmlVarInput == null)
+				setHtmlVarInput(htmlVarInputWrap.o);
+		}
+		htmlVarInputWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+
+	public String solrHtmlVarInput() {
+		return htmlVarInput;
+	}
+
+	public String strHtmlVarInput() {
+		return htmlVarInput == null ? "" : htmlVarInput;
+	}
+
+	public String jsonHtmlVarInput() {
+		return htmlVarInput == null ? "" : htmlVarInput;
+	}
+
+	public String nomAffichageHtmlVarInput() {
+		return "var input";
+	}
+
+	public String htmTooltipHtmlVarInput() {
+		return null;
+	}
+
+	public String htmHtmlVarInput() {
+		return htmlVarInput == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarInput());
+	}
+
+	public void htmHtmlVarInput(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartHtmlVarInput").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartHtmlVarInput").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlVarInput").a("class", "").f().sx("var input").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "var input")
+									.a("id", classApiMethodMethod, "_htmlVarInput");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setHtmlVarInput w3-input w3-border ");
+										a("name", "setHtmlVarInput");
+									} else {
+										a("class", "valueHtmlVarInput w3-input w3-border ");
+										a("name", "htmlVarInput");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarInput', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlVarInput')); }, function() { addError($('#", classApiMethodMethod, "_htmlVarInput')); }); ");
+									}
+									a("value", strHtmlVarInput())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlVarInput')); $('#", classApiMethodMethod, "_htmlVarInput').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlVarInput', null, function() { addGlow($('#", classApiMethodMethod, "_htmlVarInput')); }, function() { addError($('#", classApiMethodMethod, "_htmlVarInput')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1263,45 +1488,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort1 == null ? "" : StringEscapeUtils.escapeHtml4(strSort1());
 	}
 
-	public void htmSort1(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort1\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort1() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort1\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort1()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort1\"");
-							r.s(" value=\"", htmSort1(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort1());
-			}
-			r.l("</div>");
-		}
+	public void htmSort1(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort1").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort1").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort1").a("class", "").f().sx("sort1").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort1")
+									.a("id", classApiMethodMethod, "_sort1");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort1 w3-input w3-border ");
+										a("name", "setSort1");
+									} else {
+										a("class", "valueSort1 w3-input w3-border ");
+										a("name", "sort1");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort1', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort1')); }, function() { addError($('#", classApiMethodMethod, "_sort1')); }); ");
+									}
+									a("value", strSort1())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort1')); $('#", classApiMethodMethod, "_sort1').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort1', null, function() { addGlow($('#", classApiMethodMethod, "_sort1')); }, function() { addError($('#", classApiMethodMethod, "_sort1')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1371,45 +1611,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort2 == null ? "" : StringEscapeUtils.escapeHtml4(strSort2());
 	}
 
-	public void htmSort2(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort2\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort2() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort2\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort2()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort2\"");
-							r.s(" value=\"", htmSort2(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort2());
-			}
-			r.l("</div>");
-		}
+	public void htmSort2(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort2").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort2").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort2").a("class", "").f().sx("sort2").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort2")
+									.a("id", classApiMethodMethod, "_sort2");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort2 w3-input w3-border ");
+										a("name", "setSort2");
+									} else {
+										a("class", "valueSort2 w3-input w3-border ");
+										a("name", "sort2");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort2', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort2')); }, function() { addError($('#", classApiMethodMethod, "_sort2')); }); ");
+									}
+									a("value", strSort2())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort2')); $('#", classApiMethodMethod, "_sort2').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort2', null, function() { addGlow($('#", classApiMethodMethod, "_sort2')); }, function() { addError($('#", classApiMethodMethod, "_sort2')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1479,45 +1734,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort3 == null ? "" : StringEscapeUtils.escapeHtml4(strSort3());
 	}
 
-	public void htmSort3(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort3\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort3() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort3\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort3()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort3\"");
-							r.s(" value=\"", htmSort3(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort3());
-			}
-			r.l("</div>");
-		}
+	public void htmSort3(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort3").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort3").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort3").a("class", "").f().sx("sort3").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort3")
+									.a("id", classApiMethodMethod, "_sort3");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort3 w3-input w3-border ");
+										a("name", "setSort3");
+									} else {
+										a("class", "valueSort3 w3-input w3-border ");
+										a("name", "sort3");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort3', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort3')); }, function() { addError($('#", classApiMethodMethod, "_sort3')); }); ");
+									}
+									a("value", strSort3())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort3')); $('#", classApiMethodMethod, "_sort3').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort3', null, function() { addGlow($('#", classApiMethodMethod, "_sort3')); }, function() { addError($('#", classApiMethodMethod, "_sort3')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1587,45 +1857,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort4 == null ? "" : StringEscapeUtils.escapeHtml4(strSort4());
 	}
 
-	public void htmSort4(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort4\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort4() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort4\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort4()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort4\"");
-							r.s(" value=\"", htmSort4(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort4());
-			}
-			r.l("</div>");
-		}
+	public void htmSort4(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort4").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort4").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort4").a("class", "").f().sx("sort4").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort4")
+									.a("id", classApiMethodMethod, "_sort4");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort4 w3-input w3-border ");
+										a("name", "setSort4");
+									} else {
+										a("class", "valueSort4 w3-input w3-border ");
+										a("name", "sort4");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort4', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort4')); }, function() { addError($('#", classApiMethodMethod, "_sort4')); }); ");
+									}
+									a("value", strSort4())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort4')); $('#", classApiMethodMethod, "_sort4').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort4', null, function() { addGlow($('#", classApiMethodMethod, "_sort4')); }, function() { addError($('#", classApiMethodMethod, "_sort4')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1695,45 +1980,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort5 == null ? "" : StringEscapeUtils.escapeHtml4(strSort5());
 	}
 
-	public void htmSort5(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort5\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort5() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort5\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort5()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort5\"");
-							r.s(" value=\"", htmSort5(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort5());
-			}
-			r.l("</div>");
-		}
+	public void htmSort5(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort5").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort5").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort5").a("class", "").f().sx("sort5").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort5")
+									.a("id", classApiMethodMethod, "_sort5");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort5 w3-input w3-border ");
+										a("name", "setSort5");
+									} else {
+										a("class", "valueSort5 w3-input w3-border ");
+										a("name", "sort5");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort5', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort5')); }, function() { addError($('#", classApiMethodMethod, "_sort5')); }); ");
+									}
+									a("value", strSort5())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort5')); $('#", classApiMethodMethod, "_sort5').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort5', null, function() { addGlow($('#", classApiMethodMethod, "_sort5')); }, function() { addError($('#", classApiMethodMethod, "_sort5')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1803,45 +2103,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort6 == null ? "" : StringEscapeUtils.escapeHtml4(strSort6());
 	}
 
-	public void htmSort6(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort6\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort6() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort6\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort6()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort6\"");
-							r.s(" value=\"", htmSort6(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort6());
-			}
-			r.l("</div>");
-		}
+	public void htmSort6(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort6").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort6").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort6").a("class", "").f().sx("sort6").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort6")
+									.a("id", classApiMethodMethod, "_sort6");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort6 w3-input w3-border ");
+										a("name", "setSort6");
+									} else {
+										a("class", "valueSort6 w3-input w3-border ");
+										a("name", "sort6");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort6', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort6')); }, function() { addError($('#", classApiMethodMethod, "_sort6')); }); ");
+									}
+									a("value", strSort6())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort6')); $('#", classApiMethodMethod, "_sort6').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort6', null, function() { addGlow($('#", classApiMethodMethod, "_sort6')); }, function() { addError($('#", classApiMethodMethod, "_sort6')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -1911,45 +2226,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort7 == null ? "" : StringEscapeUtils.escapeHtml4(strSort7());
 	}
 
-	public void htmSort7(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort7\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort7() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort7\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort7()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort7\"");
-							r.s(" value=\"", htmSort7(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort7());
-			}
-			r.l("</div>");
-		}
+	public void htmSort7(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort7").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort7").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort7").a("class", "").f().sx("sort7").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort7")
+									.a("id", classApiMethodMethod, "_sort7");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort7 w3-input w3-border ");
+										a("name", "setSort7");
+									} else {
+										a("class", "valueSort7 w3-input w3-border ");
+										a("name", "sort7");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort7', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort7')); }, function() { addError($('#", classApiMethodMethod, "_sort7')); }); ");
+									}
+									a("value", strSort7())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort7')); $('#", classApiMethodMethod, "_sort7').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort7', null, function() { addGlow($('#", classApiMethodMethod, "_sort7')); }, function() { addError($('#", classApiMethodMethod, "_sort7')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -2019,45 +2349,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort8 == null ? "" : StringEscapeUtils.escapeHtml4(strSort8());
 	}
 
-	public void htmSort8(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort8\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort8() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort8\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort8()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort8\"");
-							r.s(" value=\"", htmSort8(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort8());
-			}
-			r.l("</div>");
-		}
+	public void htmSort8(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort8").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort8").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort8").a("class", "").f().sx("sort8").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort8")
+									.a("id", classApiMethodMethod, "_sort8");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort8 w3-input w3-border ");
+										a("name", "setSort8");
+									} else {
+										a("class", "valueSort8 w3-input w3-border ");
+										a("name", "sort8");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort8', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort8')); }, function() { addError($('#", classApiMethodMethod, "_sort8')); }); ");
+									}
+									a("value", strSort8())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort8')); $('#", classApiMethodMethod, "_sort8').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort8', null, function() { addGlow($('#", classApiMethodMethod, "_sort8')); }, function() { addError($('#", classApiMethodMethod, "_sort8')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////
@@ -2127,45 +2472,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort9 == null ? "" : StringEscapeUtils.escapeHtml4(strSort9());
 	}
 
-	public void htmSort9(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort9\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort9() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort9\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort9()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort9\"");
-							r.s(" value=\"", htmSort9(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort9());
-			}
-			r.l("</div>");
-		}
+	public void htmSort9(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort9").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort9").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort9").a("class", "").f().sx("sort9").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort9")
+									.a("id", classApiMethodMethod, "_sort9");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort9 w3-input w3-border ");
+										a("name", "setSort9");
+									} else {
+										a("class", "valueSort9 w3-input w3-border ");
+										a("name", "sort9");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort9', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort9')); }, function() { addError($('#", classApiMethodMethod, "_sort9')); }); ");
+									}
+									a("value", strSort9())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort9')); $('#", classApiMethodMethod, "_sort9').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort9', null, function() { addGlow($('#", classApiMethodMethod, "_sort9')); }, function() { addError($('#", classApiMethodMethod, "_sort9')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////
@@ -2235,45 +2595,60 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort10 == null ? "" : StringEscapeUtils.escapeHtml4(strSort10());
 	}
 
-	public void htmSort10(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchHtmlPart", strPk(), "Sort10\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchHtmlPart", strPk(), "Sort10() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSort10\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSort10()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sort10\"");
-							r.s(" value=\"", htmSort10(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSort10());
-			}
-			r.l("</div>");
-		}
+	public void htmSort10(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formHtmlPartSort10").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestHtmlPartSort10").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_sort10").a("class", "").f().sx("sort10").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "sort10")
+									.a("id", classApiMethodMethod, "_sort10");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setSort10 w3-input w3-border ");
+										a("name", "setSort10");
+									} else {
+										a("class", "valueSort10 w3-input w3-border ");
+										a("name", "sort10");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSort10', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_sort10')); }, function() { addError($('#", classApiMethodMethod, "_sort10')); }); ");
+									}
+									a("value", strSort10())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sort10')); $('#", classApiMethodMethod, "_sort10').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setSort10', null, function() { addGlow($('#", classApiMethodMethod, "_sort10')); }, function() { addError($('#", classApiMethodMethod, "_sort10')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////
@@ -2305,9 +2680,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		htmlClassesInit();
 		htmlStyleInit();
 		htmlBeforeInit();
-		htmlVarInit();
 		htmlAfterInit();
 		htmlTextInit();
+		htmlVarInit();
+		htmlVarInputInit();
 		sort1Init();
 		sort2Init();
 		sort3Init();
@@ -2372,12 +2748,14 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return oHtmlPart.htmlStyle;
 			case "htmlBefore":
 				return oHtmlPart.htmlBefore;
-			case "htmlVar":
-				return oHtmlPart.htmlVar;
 			case "htmlAfter":
 				return oHtmlPart.htmlAfter;
 			case "htmlText":
 				return oHtmlPart.htmlText;
+			case "htmlVar":
+				return oHtmlPart.htmlVar;
+			case "htmlVarInput":
+				return oHtmlPart.htmlVarInput;
 			case "sort1":
 				return oHtmlPart.sort1;
 			case "sort2":
@@ -2476,16 +2854,20 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				setHtmlBefore(val);
 				savesHtmlPart.add(var);
 				return val;
-			case "htmlVar":
-				setHtmlVar(val);
-				savesHtmlPart.add(var);
-				return val;
 			case "htmlAfter":
 				setHtmlAfter(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "htmlText":
 				setHtmlText(val);
+				savesHtmlPart.add(var);
+				return val;
+			case "htmlVar":
+				setHtmlVar(val);
+				savesHtmlPart.add(var);
+				return val;
+			case "htmlVarInput":
+				setHtmlVarInput(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "sort1":
@@ -2597,12 +2979,6 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					oHtmlPart.setHtmlBefore(htmlBefore);
 			}
 
-			if(savesHtmlPart.contains("htmlVar")) {
-				String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
-				if(htmlVar != null)
-					oHtmlPart.setHtmlVar(htmlVar);
-			}
-
 			if(savesHtmlPart.contains("htmlAfter")) {
 				String htmlAfter = (String)solrDocument.get("htmlAfter_stored_string");
 				if(htmlAfter != null)
@@ -2613,6 +2989,18 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				String htmlText = (String)solrDocument.get("htmlText_stored_string");
 				if(htmlText != null)
 					oHtmlPart.setHtmlText(htmlText);
+			}
+
+			if(savesHtmlPart.contains("htmlVar")) {
+				String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
+				if(htmlVar != null)
+					oHtmlPart.setHtmlVar(htmlVar);
+			}
+
+			if(savesHtmlPart.contains("htmlVarInput")) {
+				String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
+				if(htmlVarInput != null)
+					oHtmlPart.setHtmlVarInput(htmlVarInput);
 			}
 
 			if(savesHtmlPart.contains("sort1")) {
@@ -2776,10 +3164,6 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			document.addField("htmlBefore_indexed_string", htmlBefore);
 			document.addField("htmlBefore_stored_string", htmlBefore);
 		}
-		if(htmlVar != null) {
-			document.addField("htmlVar_indexed_string", htmlVar);
-			document.addField("htmlVar_stored_string", htmlVar);
-		}
 		if(htmlAfter != null) {
 			document.addField("htmlAfter_indexed_string", htmlAfter);
 			document.addField("htmlAfter_stored_string", htmlAfter);
@@ -2787,6 +3171,14 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(htmlText != null) {
 			document.addField("htmlText_indexed_string", htmlText);
 			document.addField("htmlText_stored_string", htmlText);
+		}
+		if(htmlVar != null) {
+			document.addField("htmlVar_indexed_string", htmlVar);
+			document.addField("htmlVar_stored_string", htmlVar);
+		}
+		if(htmlVarInput != null) {
+			document.addField("htmlVarInput_indexed_string", htmlVarInput);
+			document.addField("htmlVarInput_stored_string", htmlVarInput);
 		}
 		if(sort1 != null) {
 			document.addField("sort1_indexed_double", sort1);
@@ -2891,10 +3283,6 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(htmlBefore != null)
 			oHtmlPart.setHtmlBefore(htmlBefore);
 
-		String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
-		if(htmlVar != null)
-			oHtmlPart.setHtmlVar(htmlVar);
-
 		String htmlAfter = (String)solrDocument.get("htmlAfter_stored_string");
 		if(htmlAfter != null)
 			oHtmlPart.setHtmlAfter(htmlAfter);
@@ -2902,6 +3290,14 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		String htmlText = (String)solrDocument.get("htmlText_stored_string");
 		if(htmlText != null)
 			oHtmlPart.setHtmlText(htmlText);
+
+		String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
+		if(htmlVar != null)
+			oHtmlPart.setHtmlVar(htmlVar);
+
+		String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
+		if(htmlVarInput != null)
+			oHtmlPart.setHtmlVarInput(htmlVarInput);
 
 		Double sort1 = (Double)solrDocument.get("sort1_stored_double");
 		if(sort1 != null)
@@ -2951,7 +3347,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentDesignKey, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlVar, htmlAfter, htmlText, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
+		return Objects.hash(super.hashCode(), enrollmentDesignKey, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlAfter, htmlText, htmlVar, htmlVarInput, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
 	}
 
 	////////////
@@ -2972,9 +3368,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				&& Objects.equals( htmlClasses, that.htmlClasses )
 				&& Objects.equals( htmlStyle, that.htmlStyle )
 				&& Objects.equals( htmlBefore, that.htmlBefore )
-				&& Objects.equals( htmlVar, that.htmlVar )
 				&& Objects.equals( htmlAfter, that.htmlAfter )
 				&& Objects.equals( htmlText, that.htmlText )
+				&& Objects.equals( htmlVar, that.htmlVar )
+				&& Objects.equals( htmlVarInput, that.htmlVarInput )
 				&& Objects.equals( sort1, that.sort1 )
 				&& Objects.equals( sort2, that.sort2 )
 				&& Objects.equals( sort3, that.sort3 )
@@ -3002,9 +3399,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		sb.append( ", htmlClasses: \"" ).append(htmlClasses).append( "\"" );
 		sb.append( ", htmlStyle: \"" ).append(htmlStyle).append( "\"" );
 		sb.append( ", htmlBefore: \"" ).append(htmlBefore).append( "\"" );
-		sb.append( ", htmlVar: \"" ).append(htmlVar).append( "\"" );
 		sb.append( ", htmlAfter: \"" ).append(htmlAfter).append( "\"" );
 		sb.append( ", htmlText: \"" ).append(htmlText).append( "\"" );
+		sb.append( ", htmlVar: \"" ).append(htmlVar).append( "\"" );
+		sb.append( ", htmlVarInput: \"" ).append(htmlVarInput).append( "\"" );
 		sb.append( ", sort1: " ).append(sort1);
 		sb.append( ", sort2: " ).append(sort2);
 		sb.append( ", sort3: " ).append(sort3);

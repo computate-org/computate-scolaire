@@ -131,47 +131,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return enrollmentDesignKey == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDesignKey());
 	}
 
-	public void htmEnrollmentDesignKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "EnrollmentDesignKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "EnrollmentDesignKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentDesignKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentDesignKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentDesignKey\"");
-							r.s(" value=\"", htmEnrollmentDesignKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentDesignKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////
 	// yearKey //
 	/////////////
@@ -239,45 +198,25 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
-	public void htmYearKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "YearKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "YearKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearKey\"");
-							r.s(" value=\"", htmYearKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearKey());
+	public void htmYearKey(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("year").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strYearKey()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////////
@@ -365,45 +304,65 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return htmlPartKeys == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlPartKeys());
 	}
 
-	public void htmHtmlPartKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "HtmlPartKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "HtmlPartKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setHtmlPartKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageHtmlPartKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"htmlPartKeys\"");
-							r.s(" value=\"", htmHtmlPartKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmHtmlPartKeys());
-			}
-			r.l("</div>");
-		}
+	public void htmHtmlPartKeys(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formEnrollmentDesignHtmlPartKeys").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueEnrollmentDesignKey")
+						.a("class", "valueEnrollmentDesignKey ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestEnrollmentDesignHtmlPartKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+								e("i").a("class", "far fa-sun w3-padding-small ").f().g("i");
+								sx("parts");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate HTML parts to this enrollment design");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "parts")
+										.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setHtmlPartKeys")
+										.a("id", classApiMethodMethod, "_htmlPartKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'EnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+										.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestEnrollmentDesignHtmlPartKeys($('#' + ($('#", classApiMethodMethod, "htmlPartKeys').val() ? 'suggest' : 'form') + 'EnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "htmlPartKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); }); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+										.f().sx("add an HTML part")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////////
@@ -491,45 +450,25 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
 	}
 
-	public void htmEnrollmentKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "EnrollmentKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "EnrollmentKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentKeys\"");
-							r.s(" value=\"", htmEnrollmentKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentKeys());
+	public void htmEnrollmentKeys(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("enrollments").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strEnrollmentKeys()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	////////////////
@@ -760,47 +699,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolKey());
 	}
 
-	public void htmSchoolKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "SchoolKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "SchoolKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolKey\"");
-							r.s(" value=\"", htmSchoolKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////////
 	// schoolCompleteName //
 	////////////////////////
@@ -862,47 +760,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return schoolCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolCompleteName());
 	}
 
-	public void htmSchoolCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "SchoolCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "SchoolCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolCompleteName\"");
-							r.s(" value=\"", htmSchoolCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolCompleteName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// schoolLocation //
 	////////////////////
@@ -962,47 +819,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public String htmSchoolLocation() {
 		return schoolLocation == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolLocation());
-	}
-
-	public void htmSchoolLocation(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "SchoolLocation\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "SchoolLocation() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolLocation\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolLocation()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolLocation\"");
-							r.s(" value=\"", htmSchoolLocation(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolLocation());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////
@@ -1072,47 +888,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearStart == null ? "" : StringEscapeUtils.escapeHtml4(strYearStart());
 	}
 
-	public void htmYearStart(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "YearStart\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "YearStart() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearStart\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearStart()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearStart\"");
-							r.s(" value=\"", htmYearStart(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearStart());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////
 	// yearEnd //
 	/////////////
@@ -1180,47 +955,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearEnd == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnd());
 	}
 
-	public void htmYearEnd(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "YearEnd\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "YearEnd() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearEnd\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearEnd()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearEnd\"");
-							r.s(" value=\"", htmYearEnd(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearEnd());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// yearShortName //
 	///////////////////
@@ -1280,47 +1014,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public String htmYearShortName() {
 		return yearShortName == null ? "" : StringEscapeUtils.escapeHtml4(strYearShortName());
-	}
-
-	public void htmYearShortName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "YearShortName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "YearShortName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearShortName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearShortName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearShortName\"");
-							r.s(" value=\"", htmYearShortName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearShortName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////////////
@@ -1384,47 +1077,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strYearCompleteName());
 	}
 
-	public void htmYearCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "YearCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "YearCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearCompleteName\"");
-							r.s(" value=\"", htmYearCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearCompleteName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////////////////
 	// enrollmentDesignCompleteName //
 	//////////////////////////////////
@@ -1486,45 +1138,25 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return enrollmentDesignCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDesignCompleteName());
 	}
 
-	public void htmEnrollmentDesignCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchEnrollmentDesign", strPk(), "EnrollmentDesignCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchEnrollmentDesign", strPk(), "EnrollmentDesignCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentDesignCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentDesignCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentDesignCompleteName\"");
-							r.s(" value=\"", htmEnrollmentDesignCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentDesignCompleteName());
+	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
+							e("label").a("class", "").f().sx("name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strEnrollmentDesignCompleteName()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////

@@ -38,9 +38,6 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 		}
 	}
 
-	protected void _htmlVar(Wrap<String> c) {
-	}
-
 	protected void _htmlAfter(Wrap<String> c) {
 		if(htmlElement != null) {
 			c.o(String.format("<%s>", htmlElement));
@@ -48,6 +45,12 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	}
 
 	protected void _htmlText(Wrap<String> c) {
+	}
+
+	protected void _htmlVar(Wrap<String> c) {
+	}
+
+	protected void _htmlVarInput(Wrap<String> c) {
 	}
 
 	protected void _sort1(Wrap<Double> c) {
@@ -87,6 +90,8 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 			b.append(htmlBefore);
 		if(htmlVar != null)
 			b.append("{{").append(htmlVar).append("}}");
+		if(htmlVarInput != null)
+			b.append("**").append(htmlVarInput).append("**");
 		if(htmlText != null)
 			b.append(htmlText);
 		if(htmlAfter != null)

@@ -1,7 +1,11 @@
 package org.computate.scolaire.enUS.enrollment;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
@@ -74,10 +78,21 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		if(htmlPartList != null) {
 			for(HtmlPart htmlPart : htmlPartList) {
 				String htmlVar = htmlPart.getHtmlVar();
+				String htmlVarInput = htmlPart.getHtmlVarInput();
 
 				s(htmlPart.getHtmlBefore());
 				if(htmlVar != null)
 					s(obtainForClass(htmlVar));
+				if(htmlVarInput != null) {
+					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, "."));
+					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+					try {
+						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+						l();
+					} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+						ExceptionUtils.rethrow(e);
+					}
+				}
 				s(htmlPart.getHtmlAfter());
 			}
 		}

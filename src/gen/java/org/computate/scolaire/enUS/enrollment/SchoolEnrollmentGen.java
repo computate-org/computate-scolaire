@@ -4153,7 +4153,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "enrollmentApproved");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setEnrollmentApproved', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentApproved')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentApproved')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentApproved', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentApproved')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentApproved')); }); ");
 									}
 									;
 									if(getEnrollmentApproved() != null && getEnrollmentApproved())
@@ -4265,7 +4265,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "enrollmentImmunizations");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setEnrollmentImmunizations', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentImmunizations')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentImmunizations')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentImmunizations', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentImmunizations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentImmunizations')); }); ");
 									}
 									;
 									if(getEnrollmentImmunizations() != null && getEnrollmentImmunizations())
@@ -4377,7 +4377,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "familyMarried");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setFamilyMarried', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_familyMarried')); }, function() { addError($('#\", classApiMethodMethod, \"_familyMarried')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyMarried', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyMarried')); }, function() { addError($('#", classApiMethodMethod, "_familyMarried')); }); ");
 									}
 									;
 									if(getFamilyMarried() != null && getFamilyMarried())
@@ -4489,7 +4489,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "familySeparated");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setFamilySeparated', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_familySeparated')); }, function() { addError($('#\", classApiMethodMethod, \"_familySeparated')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilySeparated', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familySeparated')); }, function() { addError($('#", classApiMethodMethod, "_familySeparated')); }); ");
 									}
 									;
 									if(getFamilySeparated() != null && getFamilySeparated())
@@ -4601,7 +4601,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "familyDivorced");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setFamilyDivorced', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_familyDivorced')); }, function() { addError($('#\", classApiMethodMethod, \"_familyDivorced')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyDivorced', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_familyDivorced')); }, function() { addError($('#", classApiMethodMethod, "_familyDivorced')); }); ");
 									}
 									;
 									if(getFamilyDivorced() != null && getFamilyDivorced())
@@ -4708,7 +4708,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									}
 									if("Page".equals(classApiMethodMethod)) {
 										a("onclick", "removeGlow($(this)); ");
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyAddress', $(this).val(), function() { addGlow($('#\", classApiMethodMethod, \"_familyAddress')); }, function() { addError($('#\", classApiMethodMethod, \"_familyAddress')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyAddress')); }, function() { addError($('#", classApiMethodMethod, "_familyAddress')); }); ");
 									}
 								f().sx(strFamilyAddress()).g("textarea");
 
@@ -4823,7 +4823,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									}
 									if("Page".equals(classApiMethodMethod)) {
 										a("onclick", "removeGlow($(this)); ");
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setFamilyHowDoYouKnowTheSchool', $(this).val(), function() { addGlow($('#\", classApiMethodMethod, \"_familyHowDoYouKnowTheSchool')); }, function() { addError($('#\", classApiMethodMethod, \"_familyHowDoYouKnowTheSchool')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyHowDoYouKnowTheSchool', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }, function() { addError($('#", classApiMethodMethod, "_familyHowDoYouKnowTheSchool')); }); ");
 									}
 								f().sx(strFamilyHowDoYouKnowTheSchool()).g("textarea");
 
@@ -4938,7 +4938,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									}
 									if("Page".equals(classApiMethodMethod)) {
 										a("onclick", "removeGlow($(this)); ");
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentSpecialConsiderations', $(this).val(), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentSpecialConsiderations')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentSpecialConsiderations')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSpecialConsiderations', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentSpecialConsiderations')); }); ");
 									}
 								f().sx(strEnrollmentSpecialConsiderations()).g("textarea");
 
@@ -5054,7 +5054,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									}
 									if("Page".equals(classApiMethodMethod)) {
 										a("onclick", "removeGlow($(this)); ");
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentGroupName', $(this).val(), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentGroupName')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentGroupName')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentGroupName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentGroupName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentGroupName')); }); ");
 									}
 									a("value", strEnrollmentGroupName())
 								.fg();
@@ -5175,7 +5175,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "enrollmentPaymentEachMonth");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentPaymentEachMonth')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentPaymentEachMonth')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
 									}
 									;
 									if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
@@ -5287,7 +5287,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										a("name", "enrollmentPaymentComplete");
 									}
 									if("Page".equals(classApiMethodMethod)) {
-										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=\"pk\"]').val() }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_enrollmentPaymentComplete')); }, function() { addError($('#\", classApiMethodMethod, \"_enrollmentPaymentComplete')); }); ");
+										a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
 									}
 									;
 									if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())

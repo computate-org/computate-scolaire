@@ -641,10 +641,10 @@ public class Cluster extends ClusterGen<Object> {
 		String tabulations = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\t"));
 		String tabulationsEchappes = String.join("", Collections.nCopies(requeteSite_.getXmlPile().size(), "\\t"));
 
-		if(!eNoWrap && !tabulationsEchappes.isEmpty()) {
+		if(!eNoWrap || nomLocalParent == null)
 			w.l();
+		if(!eNoWrap && !tabulationsEchappes.isEmpty())
 			w.s(tabulations);
-		}
 		w.s("</");
 		w.s(nomLocal);
 		w.s(">");

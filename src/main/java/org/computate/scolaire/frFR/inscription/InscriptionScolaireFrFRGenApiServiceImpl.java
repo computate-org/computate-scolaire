@@ -529,6 +529,30 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("blocCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
+					case "addPaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_addA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						break;
+					case "addAllPaiementCles":
+						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllPaiementClesValeurs.getString(i), "paiementCles", pk));
+						}
+						break;
+					case "setPaiementCles":
+						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
+						patchSql.append(SiteContexteFrFR.SQL_clearA2);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
+							patchSql.append(SiteContexteFrFR.SQL_setA2);
+							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPaiementClesValeurs.getString(i), "paiementCles", pk));
+						}
+						break;
+					case "removePaiementCles":
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						break;
 					case "setEnfantCle":
 						o2.setEnfantCle(requeteJson.getString(methodeNom));
 						patchSql.append(SiteContexteFrFR.SQL_setA1);
@@ -611,29 +635,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("gardienCles", pk, "inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom))));
 						break;
-					case "addPaiementCles":
-						patchSql.append(SiteContexteFrFR.SQL_addA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
-						break;
-					case "addAllPaiementCles":
-						JsonArray addAllPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
-						for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
-							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", addAllPaiementClesValeurs.getString(i), "paiementCles", pk));
+					case "setInscriptionApprouve":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve"));
+						} else {
+							o2.setInscriptionApprouve(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionApprouve", o2.jsonInscriptionApprouve(), pk));
 						}
-						break;
-					case "setPaiementCles":
-						JsonArray setPaiementClesValeurs = requeteJson.getJsonArray(methodeNom);
-						patchSql.append(SiteContexteFrFR.SQL_clearA2);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
-						for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
-							patchSql.append(SiteContexteFrFR.SQL_setA2);
-							patchSqlParams.addAll(Arrays.asList("inscriptionCles", setPaiementClesValeurs.getString(i), "paiementCles", pk));
-						}
-						break;
-					case "removePaiementCles":
-						patchSql.append(SiteContexteFrFR.SQL_removeA);
-						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
 						break;
 					case "setEcoleAddresse":
 						if(requeteJson.getString(methodeNom) == null) {
@@ -645,14 +655,34 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							patchSqlParams.addAll(Arrays.asList("ecoleAddresse", o2.jsonEcoleAddresse(), pk));
 						}
 						break;
-					case "setInscriptionApprouve":
+					case "setInscriptionNomGroupe":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe"));
+						} else {
+							o2.setInscriptionNomGroupe(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", o2.jsonInscriptionNomGroupe(), pk));
+						}
+						break;
+					case "setInscriptionPaimentChaqueMois":
 						if(requeteJson.getBoolean(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionApprouve"));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois"));
 						} else {
-							o2.setInscriptionApprouve(requeteJson.getBoolean(methodeNom));
+							o2.setInscriptionPaimentChaqueMois(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionApprouve", o2.jsonInscriptionApprouve(), pk));
+							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois(), pk));
+						}
+						break;
+					case "setInscriptionPaimentComplet":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet"));
+						} else {
+							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
 						}
 						break;
 					case "setInscriptionImmunisations":
@@ -723,36 +753,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setInscriptionConsiderationsSpeciales(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales(), pk));
-						}
-						break;
-					case "setInscriptionNomGroupe":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionNomGroupe"));
-						} else {
-							o2.setInscriptionNomGroupe(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionNomGroupe", o2.jsonInscriptionNomGroupe(), pk));
-						}
-						break;
-					case "setInscriptionPaimentChaqueMois":
-						if(requeteJson.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentChaqueMois"));
-						} else {
-							o2.setInscriptionPaimentChaqueMois(requeteJson.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois(), pk));
-						}
-						break;
-					case "setInscriptionPaimentComplet":
-						if(requeteJson.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionPaimentComplet"));
-						} else {
-							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
 						}
 						break;
 				}
@@ -1043,6 +1043,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListeInscriptionScolaire(listeInscriptionScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinInscriptionPage(requeteSite);
@@ -1123,6 +1124,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/form");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListeInscriptionScolaire(listeInscriptionScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinInscriptionFormPage(requeteSite);
@@ -1161,10 +1163,24 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "objetSuggere_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
-			case "inscriptionCle":
-				return "inscriptionCle_indexed_long";
 			case "blocCles":
 				return "blocCles_indexed_longs";
+			case "inscriptionCle":
+				return "inscriptionCle_indexed_long";
+			case "paiementCles":
+				return "paiementCles_indexed_longs";
+			case "formInscriptionCle":
+				return "formInscriptionCle_indexed_long";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
+			case "enfantCle":
+				return "enfantCle_indexed_long";
+			case "mereCles":
+				return "mereCles_indexed_longs";
+			case "pereCles":
+				return "pereCles_indexed_longs";
+			case "gardienCles":
+				return "gardienCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
@@ -1177,22 +1193,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "ageCle_indexed_long";
 			case "blocCle":
 				return "blocCle_indexed_long";
-			case "enfantCle":
-				return "enfantCle_indexed_long";
-			case "mereCles":
-				return "mereCles_indexed_longs";
-			case "pereCles":
-				return "pereCles_indexed_longs";
-			case "gardienCles":
-				return "gardienCles_indexed_longs";
-			case "paiementCles":
-				return "paiementCles_indexed_longs";
-			case "formInscriptionCle":
-				return "formInscriptionCle_indexed_long";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
 			case "anneeTri":
 				return "anneeTri_indexed_int";
 			case "saisonTri":
@@ -1201,26 +1201,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "sessionTri_indexed_int";
 			case "ageTri":
 				return "ageTri_indexed_int";
-			case "enfantNomComplet":
-				return "enfantNomComplet_indexed_string";
-			case "ecoleNom":
-				return "ecoleNom_indexed_string";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "ecoleEmplacement":
-				return "ecoleEmplacement_indexed_string";
-			case "ecoleAddresse":
-				return "ecoleAddresse_indexed_string";
-			case "ecoleNumeroTelephone":
-				return "ecoleNumeroTelephone_indexed_string";
-			case "ecoleAdministrateurNom":
-				return "ecoleAdministrateurNom_indexed_string";
-			case "anneeDebut":
-				return "anneeDebut_indexed_int";
-			case "anneeFin":
-				return "anneeFin_indexed_int";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
+			case "ecoleTri":
+				return "ecoleTri_indexed_int";
 			case "saisonEte":
 				return "saisonEte_indexed_boolean";
 			case "saisonHiver":
@@ -1233,18 +1215,28 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "sessionJourDebut_indexed_date";
 			case "sessionJourFin":
 				return "sessionJourFin_indexed_date";
-			case "ageNomComplet":
-				return "ageNomComplet_indexed_string";
-			case "ageDebut":
-				return "ageDebut_indexed_int";
-			case "ageFin":
-				return "ageFin_indexed_int";
+			case "blocSamedi":
+				return "blocSamedi_indexed_boolean";
+			case "blocPrixTotal":
+				return "blocPrixTotal_indexed_double";
+			case "inscriptionApprouve":
+				return "inscriptionApprouve_indexed_boolean";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
 			case "blocHeureDebut":
 				return "blocHeureDebut_indexed_string";
 			case "blocHeureFin":
 				return "blocHeureFin_indexed_string";
 			case "blocPrixParMois":
 				return "blocPrixParMois_indexed_double";
+			case "enfantNomComplet":
+				return "enfantNomComplet_indexed_string";
 			case "blocDimanche":
 				return "blocDimanche_indexed_boolean";
 			case "blocLundi":
@@ -1257,12 +1249,30 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "blocJeudi_indexed_boolean";
 			case "blocVendredi":
 				return "blocVendredi_indexed_boolean";
-			case "blocSamedi":
-				return "blocSamedi_indexed_boolean";
-			case "blocPrixTotal":
-				return "blocPrixTotal_indexed_double";
-			case "inscriptionApprouve":
-				return "inscriptionApprouve_indexed_boolean";
+			case "anneeDebut":
+				return "anneeDebut_indexed_int";
+			case "anneeFin":
+				return "anneeFin_indexed_int";
+			case "saisonJourDebut":
+				return "saisonJourDebut_indexed_date";
+			case "ageNomComplet":
+				return "ageNomComplet_indexed_string";
+			case "ageDebut":
+				return "ageDebut_indexed_int";
+			case "ageFin":
+				return "ageFin_indexed_int";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "inscriptionNomGroupe":
+				return "inscriptionNomGroupe_indexed_string";
+			case "inscriptionPaimentChaqueMois":
+				return "inscriptionPaimentChaqueMois_indexed_boolean";
+			case "inscriptionPaimentComplet":
+				return "inscriptionPaimentComplet_indexed_boolean";
+			case "inscriptionNomComplet":
+				return "inscriptionNomComplet_indexed_string";
 			case "inscriptionImmunisations":
 				return "inscriptionImmunisations_indexed_boolean";
 			case "familleMarie":
@@ -1277,14 +1287,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "familleCommentVousConnaissezEcole_indexed_string";
 			case "inscriptionConsiderationsSpeciales":
 				return "inscriptionConsiderationsSpeciales_indexed_string";
-			case "inscriptionNomGroupe":
-				return "inscriptionNomGroupe_indexed_string";
-			case "inscriptionPaimentChaqueMois":
-				return "inscriptionPaimentChaqueMois_indexed_boolean";
-			case "inscriptionPaimentComplet":
-				return "inscriptionPaimentComplet_indexed_boolean";
-			case "inscriptionNomComplet":
-				return "inscriptionNomComplet_indexed_string";
 			default:
 				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}

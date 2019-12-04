@@ -295,7 +295,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 									RequetePatch requetePatch = new RequetePatch();
 									requetePatch.setRows(listeEnfantScolaire.getRows());
-									requetePatch.setNumFound(listeEnfantScolaire.getQueryResponse().getResults().getNumFound());
+									requetePatch.setNumFound(Optional.ofNullable(listeEnfantScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeEnfantScolaire.size())));
 									requetePatch.initLoinRequetePatch(requeteSite);
 									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 									executeurTravailleur.executeBlocking(
@@ -881,6 +881,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/enfant");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			requeteSite.setW(w);
 			page.setListeEnfantScolaire(listeEnfantScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinEnfantPage(requeteSite);
@@ -1186,7 +1187,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			listeRecherche.setC(EnfantScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1247,6 +1247,8 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

@@ -222,10 +222,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlBefore", jsonObject.getString(entityVar), pk));
 						break;
-					case "htmlVar":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entityVar), pk));
-						break;
 					case "htmlAfter":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlAfter", jsonObject.getString(entityVar), pk));
@@ -233,6 +229,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "htmlText":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlText", jsonObject.getString(entityVar), pk));
+						break;
+					case "htmlVar":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entityVar), pk));
+						break;
+					case "htmlVarInput":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entityVar), pk));
 						break;
 					case "sort1":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -573,16 +577,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList("htmlBefore", o2.jsonHtmlBefore(), pk));
 						}
 						break;
-					case "setHtmlVar":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
-						} else {
-							o2.setHtmlVar(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
-						}
-						break;
 					case "setHtmlAfter":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -601,6 +595,26 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							o2.setHtmlText(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlText", o2.jsonHtmlText(), pk));
+						}
+						break;
+					case "setHtmlVar":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVar"));
+						} else {
+							o2.setHtmlVar(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
+						}
+						break;
+					case "setHtmlVarInput":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarInput"));
+						} else {
+							o2.setHtmlVarInput(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
 						}
 						break;
 					case "setSort1":
@@ -991,6 +1005,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/html-part");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			siteRequest.setW(w);
 			page.setListHtmlPart(listHtmlPart);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepHtmlPartPage(siteRequest);
@@ -1045,12 +1060,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				return "htmlStyle_indexed_string";
 			case "htmlBefore":
 				return "htmlBefore_indexed_string";
-			case "htmlVar":
-				return "htmlVar_indexed_string";
 			case "htmlAfter":
 				return "htmlAfter_indexed_string";
 			case "htmlText":
 				return "htmlText_indexed_string";
+			case "htmlVar":
+				return "htmlVar_indexed_string";
+			case "htmlVarInput":
+				return "htmlVarInput_indexed_string";
 			case "sort1":
 				return "sort1_indexed_double";
 			case "sort2":

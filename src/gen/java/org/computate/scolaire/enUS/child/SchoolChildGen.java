@@ -137,47 +137,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childKey == null ? "" : StringEscapeUtils.escapeHtml4(strChildKey());
 	}
 
-	public void htmChildKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childKey\"");
-							r.s(" value=\"", htmChildKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// enrollmentKeys //
 	////////////////////
@@ -263,45 +222,65 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
 	}
 
-	public void htmEnrollmentKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "EnrollmentKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "EnrollmentKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentKeys\"");
-							r.s(" value=\"", htmEnrollmentKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentKeys());
-			}
-			r.l("</div>");
-		}
+	public void htmEnrollmentKeys(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildEnrollmentKeys").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "valueChildKey")
+						.a("class", "valueChildKey ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildEnrollmentKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-purple w3-hover-purple ").f();
+								e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
+								sx("enrollments");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate enrollments to this child");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+									e("input")
+										.a("type", "text")
+										.a("placeholder", "enrollments")
+										.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+										.a("name", "setEnrollmentKeys")
+										.a("id", classApiMethodMethod, "_enrollmentKeys")
+										.a("autocomplete", "off")
+										.a("oninput", "suggestSchoolChildEnrollmentKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'SchoolChildEnrollmentKeys'), $('#listSchoolChildEnrollmentKeys_", classApiMethodMethod, "')); ")
+									.fg();
+
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolChildEnrollmentKeys_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
+										.a("onclick", "postSchoolEnrollmentVals({ childKey: \"", pk, "\" }, function() { patchSchoolChildVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolChildEnrollmentKeys($('#' + ($('#", classApiMethodMethod, "enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolChildEnrollmentKeys'), $('#listSchoolChildEnrollmentKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); }); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+										.f().sx("add an enrollment")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////
@@ -371,47 +350,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return familySort == null ? "" : StringEscapeUtils.escapeHtml4(strFamilySort());
 	}
 
-	public void htmFamilySort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "FamilySort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "FamilySort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setFamilySort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilySort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"familySort\"");
-							r.s(" value=\"", htmFamilySort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmFamilySort());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////
 	// schoolSort //
 	////////////////
@@ -477,47 +415,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 
 	public String htmSchoolSort() {
 		return schoolSort == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolSort());
-	}
-
-	public void htmSchoolSort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "SchoolSort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "SchoolSort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolSort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolSort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolSort\"");
-							r.s(" value=\"", htmSchoolSort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolSort());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////////////
@@ -689,47 +586,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return schoolKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolKeys());
 	}
 
-	public void htmSchoolKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "SchoolKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "SchoolKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolKeys\"");
-							r.s(" value=\"", htmSchoolKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// yearKeys //
 	//////////////
@@ -813,47 +669,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 
 	public String htmYearKeys() {
 		return yearKeys == null ? "" : StringEscapeUtils.escapeHtml4(strYearKeys());
-	}
-
-	public void htmYearKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "YearKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "YearKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearKeys\"");
-							r.s(" value=\"", htmYearKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearKeys());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////
@@ -941,47 +756,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return seasonKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonKeys());
 	}
 
-	public void htmSeasonKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "SeasonKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "SeasonKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonKeys\"");
-							r.s(" value=\"", htmSeasonKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////
 	// sessionKeys //
 	/////////////////
@@ -1065,47 +839,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 
 	public String htmSessionKeys() {
 		return sessionKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKeys());
-	}
-
-	public void htmSessionKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "SessionKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "SessionKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionKeys\"");
-							r.s(" value=\"", htmSessionKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionKeys());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////
@@ -1193,47 +926,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return ageKeys == null ? "" : StringEscapeUtils.escapeHtml4(strAgeKeys());
 	}
 
-	public void htmAgeKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "AgeKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "AgeKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageKeys\"");
-							r.s(" value=\"", htmAgeKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeKeys());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////
 	// personFirstName //
 	/////////////////////
@@ -1295,45 +987,60 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strPersonFirstName());
 	}
 
-	public void htmPersonFirstName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonFirstName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonFirstName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonFirstName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonFirstName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personFirstName\"");
-							r.s(" value=\"", htmPersonFirstName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonFirstName());
-			}
-			r.l("</div>");
-		}
+	public void htmPersonFirstName(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildPersonFirstName").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildPersonFirstName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_personFirstName").a("class", "").f().sx("first name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "first name")
+									.a("id", classApiMethodMethod, "_personFirstName");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setPersonFirstName w3-input w3-border ");
+										a("name", "setPersonFirstName");
+									} else {
+										a("class", "valuePersonFirstName w3-input w3-border ");
+										a("name", "personFirstName");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ");
+									}
+									a("value", strPersonFirstName())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstName')); $('#", classApiMethodMethod, "_personFirstName').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setPersonFirstName', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////////////
@@ -1397,45 +1104,60 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personFirstNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strPersonFirstNamePreferred());
 	}
 
-	public void htmPersonFirstNamePreferred(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonFirstNamePreferred\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonFirstNamePreferred() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonFirstNamePreferred\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonFirstNamePreferred()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personFirstNamePreferred\"");
-							r.s(" value=\"", htmPersonFirstNamePreferred(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonFirstNamePreferred());
-			}
-			r.l("</div>");
-		}
+	public void htmPersonFirstNamePreferred(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildPersonFirstNamePreferred").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildPersonFirstNamePreferred").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_personFirstNamePreferred").a("class", "").f().sx("preferred first name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "preferred first name")
+									.a("id", classApiMethodMethod, "_personFirstNamePreferred");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setPersonFirstNamePreferred w3-input w3-border ");
+										a("name", "setPersonFirstNamePreferred");
+									} else {
+										a("class", "valuePersonFirstNamePreferred w3-input w3-border ");
+										a("name", "personFirstNamePreferred");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ");
+									}
+									a("value", strPersonFirstNamePreferred())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); $('#", classApiMethodMethod, "_personFirstNamePreferred').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setPersonFirstNamePreferred', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////
@@ -1499,45 +1221,60 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return familyName == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyName());
 	}
 
-	public void htmFamilyName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "FamilyName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "FamilyName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setFamilyName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageFamilyName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"familyName\"");
-							r.s(" value=\"", htmFamilyName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmFamilyName());
-			}
-			r.l("</div>");
-		}
+	public void htmFamilyName(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildFamilyName").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildFamilyName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_familyName").a("class", "").f().sx("last name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "last name")
+									.a("id", classApiMethodMethod, "_familyName");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setFamilyName w3-input w3-border ");
+										a("name", "setFamilyName");
+									} else {
+										a("class", "valueFamilyName w3-input w3-border ");
+										a("name", "familyName");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ");
+									}
+									a("value", strFamilyName())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyName')); $('#", classApiMethodMethod, "_familyName').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setFamilyName', null, function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////////////
@@ -1601,47 +1338,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strPersonCompleteName());
 	}
 
-	public void htmPersonCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personCompleteName\"");
-							r.s(" value=\"", htmPersonCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonCompleteName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////////////////
 	// personCompleteNamePreferred //
 	/////////////////////////////////
@@ -1703,47 +1399,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personCompleteNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strPersonCompleteNamePreferred());
 	}
 
-	public void htmPersonCompleteNamePreferred(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonCompleteNamePreferred\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonCompleteNamePreferred() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonCompleteNamePreferred\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonCompleteNamePreferred()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personCompleteNamePreferred\"");
-							r.s(" value=\"", htmPersonCompleteNamePreferred(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonCompleteNamePreferred());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////
 	// personFormalName //
 	//////////////////////
@@ -1803,47 +1458,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 
 	public String htmPersonFormalName() {
 		return personFormalName == null ? "" : StringEscapeUtils.escapeHtml4(strPersonFormalName());
-	}
-
-	public void htmPersonFormalName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonFormalName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonFormalName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonFormalName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonFormalName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personFormalName\"");
-							r.s(" value=\"", htmPersonFormalName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonFormalName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////
@@ -1923,45 +1537,51 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personBirthDate == null ? "" : StringEscapeUtils.escapeHtml4(strPersonBirthDate());
 	}
 
-	public void htmPersonBirthDate(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonBirthDate\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonBirthDate() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonBirthDate\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonBirthDate()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personBirthDate\"");
-							r.s(" value=\"", htmPersonBirthDate(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonBirthDate());
-			}
-			r.l("</div>");
-		}
+	public void htmPersonBirthDate(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildPersonBirthDate").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildPersonBirthDate").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_personBirthDate").a("class", "").f().sx("birth date").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								e("input")
+									.a("type", "text")
+									.a("class", "w3-input w3-border datepicker ")
+									.a("placeholder", "MM/DD/YYYY")
+									.a("data-timeformat", "MM/DD/YYYY")
+									.a("id", classApiMethodMethod, "_personBirthDate")
+									.a("onclick", "removeGlow($(this)); ")
+									.a("value", personBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(personBirthDate))
+									.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ")
+									.fg();
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personBirthDate')); $('#", classApiMethodMethod, "_personBirthDate').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setPersonBirthDate', null, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////////
@@ -2025,45 +1645,25 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return personAgeInSeptember == null ? "" : StringEscapeUtils.escapeHtml4(strPersonAgeInSeptember());
 	}
 
-	public void htmPersonAgeInSeptember(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "PersonAgeInSeptember\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "PersonAgeInSeptember() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setPersonAgeInSeptember\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichagePersonAgeInSeptember()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"personAgeInSeptember\"");
-							r.s(" value=\"", htmPersonAgeInSeptember(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmPersonAgeInSeptember());
+	public void htmPersonAgeInSeptember(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("class", "").f().sx("age").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strPersonAgeInSeptember()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	////////////////////////////
@@ -2127,45 +1727,60 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childMedicalConditions == null ? "" : StringEscapeUtils.escapeHtml4(strChildMedicalConditions());
 	}
 
-	public void htmChildMedicalConditions(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildMedicalConditions\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildMedicalConditions() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildMedicalConditions\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildMedicalConditions()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childMedicalConditions\"");
-							r.s(" value=\"", htmChildMedicalConditions(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildMedicalConditions());
-			}
-			r.l("</div>");
-		}
+	public void htmChildMedicalConditions(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildChildMedicalConditions").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildChildMedicalConditions").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_childMedicalConditions").a("class", "").f().sx("medical conditions").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "medical conditions")
+									.a("id", classApiMethodMethod, "_childMedicalConditions");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setChildMedicalConditions w3-input w3-border ");
+										a("name", "setChildMedicalConditions");
+									} else {
+										a("class", "valueChildMedicalConditions w3-input w3-border ");
+										a("name", "childMedicalConditions");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildMedicalConditions', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ");
+									}
+									a("value", strChildMedicalConditions())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childMedicalConditions')); $('#", classApiMethodMethod, "_childMedicalConditions').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setChildMedicalConditions', null, function() { addGlow($('#", classApiMethodMethod, "_childMedicalConditions')); }, function() { addError($('#", classApiMethodMethod, "_childMedicalConditions')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////////////////
@@ -2229,45 +1844,60 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childPreviousSchoolsAttended == null ? "" : StringEscapeUtils.escapeHtml4(strChildPreviousSchoolsAttended());
 	}
 
-	public void htmChildPreviousSchoolsAttended(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildPreviousSchoolsAttended\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildPreviousSchoolsAttended() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildPreviousSchoolsAttended\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildPreviousSchoolsAttended()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childPreviousSchoolsAttended\"");
-							r.s(" value=\"", htmChildPreviousSchoolsAttended(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildPreviousSchoolsAttended());
-			}
-			r.l("</div>");
-		}
+	public void htmChildPreviousSchoolsAttended(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildChildPreviousSchoolsAttended").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildChildPreviousSchoolsAttended").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_childPreviousSchoolsAttended").a("class", "").f().sx("schools previously attended").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "text")
+									.a("placeholder", "schools previously attended")
+									.a("id", classApiMethodMethod, "_childPreviousSchoolsAttended");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setChildPreviousSchoolsAttended w3-input w3-border ");
+										a("name", "setChildPreviousSchoolsAttended");
+									} else {
+										a("class", "valueChildPreviousSchoolsAttended w3-input w3-border ");
+										a("name", "childPreviousSchoolsAttended");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPreviousSchoolsAttended', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ");
+									}
+									a("value", strChildPreviousSchoolsAttended())
+								.fg();
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); $('#", classApiMethodMethod, "_childPreviousSchoolsAttended').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setChildPreviousSchoolsAttended', null, function() { addGlow($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }, function() { addError($('#", classApiMethodMethod, "_childPreviousSchoolsAttended')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////
@@ -2331,45 +1961,58 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childDescription == null ? "" : StringEscapeUtils.escapeHtml4(strChildDescription());
 	}
 
-	public void htmChildDescription(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildDescription\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildDescription() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildDescription\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildDescription()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childDescription\"");
-							r.s(" value=\"", htmChildDescription(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildDescription());
-			}
-			r.l("</div>");
-		}
+	public void htmChildDescription(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildChildDescription").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildChildDescription").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_childDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "description")
+									.a("id", classApiMethodMethod, "_childDescription");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setChildDescription w3-input w3-border ");
+										a("name", "setChildDescription");
+									} else {
+										a("class", "valueChildDescription w3-input w3-border ");
+										a("name", "childDescription");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildDescription', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ");
+									}
+								f().sx(strChildDescription()).g("textarea");
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childDescription')); $('#", classApiMethodMethod, "_childDescription').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setChildDescription', null, function() { addGlow($('#", classApiMethodMethod, "_childDescription')); }, function() { addError($('#", classApiMethodMethod, "_childDescription')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////
@@ -2433,45 +2076,58 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childObjectives == null ? "" : StringEscapeUtils.escapeHtml4(strChildObjectives());
 	}
 
-	public void htmChildObjectives(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildObjectives\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildObjectives() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildObjectives\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildObjectives()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childObjectives\"");
-							r.s(" value=\"", htmChildObjectives(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildObjectives());
-			}
-			r.l("</div>");
-		}
+	public void htmChildObjectives(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildChildObjectives").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildChildObjectives").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_childObjectives").a("class", "").f().sx("objectives").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("textarea")
+									.a("placeholder", "objectives")
+									.a("id", classApiMethodMethod, "_childObjectives");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setChildObjectives w3-input w3-border ");
+										a("name", "setChildObjectives");
+									} else {
+										a("class", "valueChildObjectives w3-input w3-border ");
+										a("name", "childObjectives");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onclick", "removeGlow($(this)); ");
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildObjectives', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ");
+									}
+								f().sx(strChildObjectives()).g("textarea");
+
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_childObjectives')); $('#", classApiMethodMethod, "_childObjectives').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setChildObjectives', null, function() { addGlow($('#", classApiMethodMethod, "_childObjectives')); }, function() { addError($('#", classApiMethodMethod, "_childObjectives')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////////
@@ -2540,45 +2196,50 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return enfantVaccinesCurrent == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantVaccinesCurrent());
 	}
 
-	public void htmEnfantVaccinesCurrent(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "EnfantVaccinesCurrent\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "EnfantVaccinesCurrent() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnfantVaccinesCurrent\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnfantVaccinesCurrent()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enfantVaccinesCurrent\"");
-							r.s(" value=\"", htmEnfantVaccinesCurrent(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnfantVaccinesCurrent());
-			}
-			r.l("</div>");
-		}
+	public void htmEnfantVaccinesCurrent(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildEnfantVaccinesCurrent").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildEnfantVaccinesCurrent").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_enfantVaccinesCurrent").a("class", "").f().sx("current vaccines").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("id", classApiMethodMethod, "_enfantVaccinesCurrent")
+									.a("value", "true");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setEnfantVaccinesCurrent");
+										a("name", "setEnfantVaccinesCurrent");
+									} else {
+										a("class", "valueEnfantVaccinesCurrent");
+										a("name", "enfantVaccinesCurrent");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantVaccinesCurrent', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enfantVaccinesCurrent')); }, function() { addError($('#", classApiMethodMethod, "_enfantVaccinesCurrent')); }); ");
+									}
+									;
+									if(getEnfantVaccinesCurrent() != null && getEnfantVaccinesCurrent())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////
@@ -2647,45 +2308,50 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childPottyTrained == null ? "" : StringEscapeUtils.escapeHtml4(strChildPottyTrained());
 	}
 
-	public void htmChildPottyTrained(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildPottyTrained\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildPottyTrained() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildPottyTrained\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildPottyTrained()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childPottyTrained\"");
-							r.s(" value=\"", htmChildPottyTrained(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildPottyTrained());
-			}
-			r.l("</div>");
-		}
+	public void htmChildPottyTrained(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("span").a("id", "formSchoolChildChildPottyTrained").f();
+					e("input")
+						.a("type", "hidden")
+						.a("name", "value")
+						.a("class", "value ")
+						.a("value", pk)
+						.fg();
+				} g("span");
+				{ e("div").a("id", "suggestSchoolChildChildPottyTrained").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_childPottyTrained").a("class", "").f().sx("potty trained").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								e("input")
+									.a("type", "checkbox")
+									.a("id", classApiMethodMethod, "_childPottyTrained")
+									.a("value", "true");
+									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+										a("class", "setChildPottyTrained");
+										a("name", "setChildPottyTrained");
+									} else {
+										a("class", "valueChildPottyTrained");
+										a("name", "childPottyTrained");
+									}
+									if("Page".equals(classApiMethodMethod)) {
+										a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildPottyTrained', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_childPottyTrained')); }, function() { addError($('#", classApiMethodMethod, "_childPottyTrained')); }); ");
+									}
+									;
+									if(getChildPottyTrained() != null && getChildPottyTrained())
+										a("checked", "checked");
+								fg();
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////
@@ -2749,45 +2415,25 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return childCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strChildCompleteName());
 	}
 
-	public void htmChildCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolChild", strPk(), "ChildCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolChild", strPk(), "ChildCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setChildCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageChildCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"childCompleteName\"");
-							r.s(" value=\"", htmChildCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmChildCompleteName());
+	public void htmChildCompleteName(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("class", "").f().sx("name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strChildCompleteName()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////
@@ -3235,7 +2881,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSchoolChild(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3247,7 +2893,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			indexSchoolChild(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -3392,7 +3038,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			initDeepSchoolChild(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
