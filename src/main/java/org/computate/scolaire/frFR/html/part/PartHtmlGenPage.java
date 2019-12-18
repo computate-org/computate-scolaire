@@ -94,8 +94,20 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptPartHtmlGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggerePartHtmlDesignInscriptionCle($('#formPartHtmlDesignInscriptionCle'), $('#listPartHtmlDesignInscriptionCle_Page')); ");
-		tl(1, "websocketPartHtml(); ");
+		tl(1, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:", requeteSite_.getRequetePk(), "'}], $('#listPartHtmlDesignInscriptionCle_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "websocketPartHtml(async function(requetePatch) {");
+		tl(2, "var pk = requetePatch['pk'];");
+		tl(2, "var pks = requetePatch['pks'];");
+		tl(2, "var classes = requetePatch['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchPartHtmlVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -131,7 +143,12 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVar("Page");
+			o.htmHtmlVarForm("Page");
 			o.htmHtmlVarInput("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlVarForEach("Page");
+			o.htmPdfExclure("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTri1("Page");
@@ -181,7 +198,12 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVar("POST");
+			o.htmHtmlVarForm("POST");
 			o.htmHtmlVarInput("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlVarForEach("POST");
+			o.htmPdfExclure("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTri1("POST");
@@ -231,7 +253,12 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVar("PATCH");
+			o.htmHtmlVarForm("PATCH");
 			o.htmHtmlVarInput("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlVarForEach("PATCH");
+			o.htmPdfExclure("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTri1("PATCH");
@@ -281,7 +308,12 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVar("Recherche");
+			o.htmHtmlVarForm("Recherche");
 			o.htmHtmlVarInput("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmHtmlVarForEach("Recherche");
+			o.htmPdfExclure("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmTri1("Recherche");
@@ -436,6 +468,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 						.a("class", "valeurPk")
 						.a("type", "hidden")
 						.a("value", o.getPk())
+						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
 						.fg();
 					} g("form");
 					htmlFormPagePartHtml(o);
@@ -637,7 +673,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 							.a("name", "suggerePartHtml")
 							.a("id", "suggerePartHtml", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "')); ")
+							.a("oninput", "suggerePartHtmlObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPartHtml", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 							.fg();
 
 					} p.g("form");

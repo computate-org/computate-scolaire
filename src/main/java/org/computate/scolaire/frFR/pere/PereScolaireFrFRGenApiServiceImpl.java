@@ -279,62 +279,75 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					utilisateurPereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePereScolaire(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<PereScolaire> listePereScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									recherchePereScolaire(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<PereScolaire> listePereScolaire = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listePereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listePereScolaire.getRows());
-									requetePatch.setNumFound(listePereScolaire.getQueryResponse().getResults().getNumFound());
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHPereScolaire(requetePatch, listePereScolaire, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listePereScolaire.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePereScolaire.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlPereScolaire(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHPereScolaire(requetePatch, listePereScolaire, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHPereScolaire(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHPereScolaire(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurPereScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurPereScolaire(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -365,9 +378,14 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listePereScolaire.size() == 1) {
+					PereScolaire o = listePereScolaire.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchPereScolaire(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listePereScolaire.size());
 				if(listePereScolaire.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHPereScolaire(requetePatch, listePereScolaire, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHPereScolaire(requetePatch, gestionnaireEvenements);
@@ -376,6 +394,20 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				erreurPereScolaire(listePereScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchPereScolaire(PereScolaire o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getInscriptionCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("InscriptionScolaire");
+				}
+			}
+		}
 	}
 
 	public Future<PereScolaire> futurePATCHPereScolaire(PereScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -390,6 +422,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 								if(c.succeeded()) {
 									indexerPereScolaire(pereScolaire, d -> {
 										if(d.succeeded()) {
+											requetePatchPereScolaire(pereScolaire);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -877,15 +910,20 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			ToutEcrivain w = ToutEcrivain.creer(listePereScolaire.getRequeteSite_(), buffer);
 			PerePage page = new PerePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/pere");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listePereScolaire.size() == 1)
+				requeteSite.setRequetePk(listePereScolaire.get(0).getPk());
+			requeteSite.setW(w);
 			page.setListePereScolaire(listePereScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinPerePage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1186,7 +1224,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			listeRecherche.setC(PereScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1247,6 +1284,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

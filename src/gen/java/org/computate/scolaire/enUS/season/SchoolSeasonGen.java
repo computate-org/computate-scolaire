@@ -140,47 +140,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonKey == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonKey());
 	}
 
-	public void htmSeasonKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonKey\"");
-							r.s(" value=\"", htmSeasonKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// enrollmentKeys //
 	////////////////////
@@ -264,47 +223,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmEnrollmentKeys() {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
-	}
-
-	public void htmEnrollmentKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "EnrollmentKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "EnrollmentKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEnrollmentKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEnrollmentKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"enrollmentKeys\"");
-							r.s(" value=\"", htmEnrollmentKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEnrollmentKeys());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////
@@ -392,45 +310,61 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return sessionKeys == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKeys());
 	}
 
-	public void htmSessionKeys(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SessionKeys\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SessionKeys() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionKeys\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionKeys()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionKeys\"");
-							r.s(" value=\"", htmSessionKeys(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionKeys());
-			}
-			r.l("</div>");
-		}
+	public void inputSessionKeys(String classApiMethodMethod) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "sessions")
+				.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setSessionKeys")
+				.a("id", classApiMethodMethod, "_sessionKeys")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($('#suggestSchoolSeasonSessionKeys')) : [{'name':'fq','value':'seasonKey:", pk, "'}], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmSessionKeys(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSessionKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+								sx("sessions");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate sessions to this season");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputSessionKeys(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonSessionKeys_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSeasonSessionKeys($('#' + ($('#", classApiMethodMethod, "sessionKeys').val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "sessionKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); }); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+										.f().sx("add a session")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////
@@ -500,47 +434,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return educationSort == null ? "" : StringEscapeUtils.escapeHtml4(strEducationSort());
 	}
 
-	public void htmEducationSort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "EducationSort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "EducationSort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEducationSort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEducationSort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"educationSort\"");
-							r.s(" value=\"", htmEducationSort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEducationSort());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////
 	// schoolSort //
 	////////////////
@@ -606,47 +499,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSchoolSort() {
 		return schoolSort == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolSort());
-	}
-
-	public void htmSchoolSort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolSort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolSort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolSort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolSort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolSort\"");
-							r.s(" value=\"", htmSchoolSort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolSort());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////
@@ -716,47 +568,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return yearSort == null ? "" : StringEscapeUtils.escapeHtml4(strYearSort());
 	}
 
-	public void htmYearSort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "YearSort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "YearSort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearSort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearSort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearSort\"");
-							r.s(" value=\"", htmYearSort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearSort());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////
 	// seasonSort //
 	////////////////
@@ -822,47 +633,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSeasonSort() {
 		return seasonSort == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonSort());
-	}
-
-	public void htmSeasonSort(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonSort\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonSort() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonSort\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonSort()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonSort\"");
-							r.s(" value=\"", htmSeasonSort(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonSort());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////
@@ -932,45 +702,61 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
-	public void htmYearKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "YearKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "YearKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearKey\"");
-							r.s(" value=\"", htmYearKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearKey());
-			}
-			r.l("</div>");
-		}
+	public void inputYearKey(String classApiMethodMethod) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "year")
+				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setYearKey")
+				.a("id", classApiMethodMethod, "_yearKey")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($('#suggestSchoolSeasonYearKey')) : [{'name':'fq','value':'seasonKeys:", pk, "'}], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmYearKey(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonYearKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check w3-padding-small ").f().g("i");
+								sx("year");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate a year to this season");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputYearKey(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolSeasonYearKey_", classApiMethodMethod).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSeasonYearKey($('#' + ($('#", classApiMethodMethod, "yearKey').val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "yearKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "yearKey')); }); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+										.f().sx("add a year")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////
@@ -1115,47 +901,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolKey());
 	}
 
-	public void htmSchoolKey(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolKey\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolKey() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolKey\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolKey()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolKey\"");
-							r.s(" value=\"", htmSchoolKey(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolKey());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////
 	// schoolName //
 	////////////////
@@ -1215,47 +960,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSchoolName() {
 		return schoolName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolName());
-	}
-
-	public void htmSchoolName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolName\"");
-							r.s(" value=\"", htmSchoolName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////////////
@@ -1319,47 +1023,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return schoolCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolCompleteName());
 	}
 
-	public void htmSchoolCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolCompleteName\"");
-							r.s(" value=\"", htmSchoolCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolCompleteName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// schoolLocation //
 	////////////////////
@@ -1419,47 +1082,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSchoolLocation() {
 		return schoolLocation == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolLocation());
-	}
-
-	public void htmSchoolLocation(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolLocation\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolLocation() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolLocation\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolLocation()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolLocation\"");
-							r.s(" value=\"", htmSchoolLocation(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolLocation());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////////
@@ -1523,47 +1145,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return schoolAddress == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAddress());
 	}
 
-	public void htmSchoolAddress(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolAddress\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolAddress() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolAddress\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolAddress()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolAddress\"");
-							r.s(" value=\"", htmSchoolAddress(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolAddress());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////////
 	// schoolPhoneNumber //
 	///////////////////////
@@ -1625,47 +1206,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return schoolPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolPhoneNumber());
 	}
 
-	public void htmSchoolPhoneNumber(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolPhoneNumber\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolPhoneNumber() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolPhoneNumber\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolPhoneNumber()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolPhoneNumber\"");
-							r.s(" value=\"", htmSchoolPhoneNumber(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolPhoneNumber());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////////////
 	// schoolAdministratorName //
 	/////////////////////////////
@@ -1725,47 +1265,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAdministratorName());
-	}
-
-	public void htmSchoolAdministratorName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SchoolAdministratorName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SchoolAdministratorName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSchoolAdministratorName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSchoolAdministratorName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"schoolAdministratorName\"");
-							r.s(" value=\"", htmSchoolAdministratorName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSchoolAdministratorName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////
@@ -1835,47 +1334,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return yearStart == null ? "" : StringEscapeUtils.escapeHtml4(strYearStart());
 	}
 
-	public void htmYearStart(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "YearStart\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "YearStart() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearStart\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearStart()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearStart\"");
-							r.s(" value=\"", htmYearStart(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearStart());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////
 	// yearEnd //
 	/////////////
@@ -1941,47 +1399,6 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public String htmYearEnd() {
 		return yearEnd == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnd());
-	}
-
-	public void htmYearEnd(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "YearEnd\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "YearEnd() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setYearEnd\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageYearEnd()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"yearEnd\"");
-							r.s(" value=\"", htmYearEnd(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmYearEnd());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////
@@ -2061,45 +1478,47 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonStartDate == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonStartDate());
 	}
 
-	public void htmSeasonStartDate(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonStartDate\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonStartDate() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonStartDate\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonStartDate()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonStartDate\"");
-							r.s(" value=\"", htmSeasonStartDate(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonStartDate());
-			}
-			r.l("</div>");
-		}
+	public void inputSeasonStartDate(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("class", "w3-input w3-border datepicker ")
+			.a("placeholder", "MM/DD/YYYY")
+			.a("data-timeformat", "MM/DD/YYYY")
+			.a("id", classApiMethodMethod, "_seasonStartDate")
+			.a("onclick", "removeGlow($(this)); ")
+			.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(seasonStartDate))
+			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); } ")
+			.fg();
+	}
+
+	public void htmSeasonStartDate(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSeasonStartDate").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_seasonStartDate").a("class", "").f().sx("start of the season").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputSeasonStartDate(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_seasonStartDate')); $('#", classApiMethodMethod, "_seasonStartDate').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=pk]').val() }], 'setSeasonStartDate', null, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////
@@ -2168,45 +1587,46 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonSummer == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonSummer());
 	}
 
-	public void htmSeasonSummer(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonSummer\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonSummer() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonSummer\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonSummer()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonSummer\"");
-							r.s(" value=\"", htmSeasonSummer(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputSeasonSummer(String classApiMethodMethod) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_seasonSummer")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonSummer");
+				a("name", "setSeasonSummer");
 			} else {
-				r.s(htmSeasonSummer());
+				a("class", "valueSeasonSummer");
+				a("name", "seasonSummer");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonSummer', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonSummer')); }, function() { addError($('#", classApiMethodMethod, "_seasonSummer')); }); ");
+			}
+			;
+			if(getSeasonSummer() != null && getSeasonSummer())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmSeasonSummer(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSeasonSummer").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_seasonSummer").a("class", "").f().sx("summer").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeasonSummer(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////
@@ -2275,45 +1695,46 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonWinter == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonWinter());
 	}
 
-	public void htmSeasonWinter(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonWinter\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonWinter() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonWinter\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonWinter()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonWinter\"");
-							r.s(" value=\"", htmSeasonWinter(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputSeasonWinter(String classApiMethodMethod) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_seasonWinter")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonWinter");
+				a("name", "setSeasonWinter");
 			} else {
-				r.s(htmSeasonWinter());
+				a("class", "valueSeasonWinter");
+				a("name", "seasonWinter");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonWinter', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonWinter')); }, function() { addError($('#", classApiMethodMethod, "_seasonWinter')); }); ");
+			}
+			;
+			if(getSeasonWinter() != null && getSeasonWinter())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmSeasonWinter(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSeasonWinter").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_seasonWinter").a("class", "").f().sx("winter").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeasonWinter(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////////////
@@ -2394,45 +1815,56 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonEnrollmentFee == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonEnrollmentFee());
 	}
 
-	public void htmSeasonEnrollmentFee(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonEnrollmentFee\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonEnrollmentFee() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonEnrollmentFee\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonEnrollmentFee()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonEnrollmentFee\"");
-							r.s(" value=\"", htmSeasonEnrollmentFee(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputSeasonEnrollmentFee(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "enrollment fee")
+			.a("id", classApiMethodMethod, "_seasonEnrollmentFee");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonEnrollmentFee w3-input w3-border ");
+				a("name", "setSeasonEnrollmentFee");
 			} else {
-				r.s(htmSeasonEnrollmentFee());
+				a("class", "valueSeasonEnrollmentFee w3-input w3-border ");
+				a("name", "seasonEnrollmentFee");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonEnrollmentFee', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_seasonEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_seasonEnrollmentFee')); }); ");
+			}
+			a("value", strSeasonEnrollmentFee())
+		.fg();
+
+	}
+
+	public void htmSeasonEnrollmentFee(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_seasonEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeasonEnrollmentFee(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_seasonEnrollmentFee')); $('#", classApiMethodMethod, "_seasonEnrollmentFee').val(null); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:' + $('#SchoolSeasonForm :input[name=pk]').val() }], 'setSeasonEnrollmentFee', null, function() { addGlow($('#", classApiMethodMethod, "_seasonEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_seasonEnrollmentFee')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////////////
@@ -2496,45 +1928,28 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		return seasonCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonCompleteName());
 	}
 
-	public void htmSeasonCompleteName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSchoolSeason", strPk(), "SeasonCompleteName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSchoolSeason", strPk(), "SeasonCompleteName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeasonCompleteName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeasonCompleteName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seasonCompleteName\"");
-							r.s(" value=\"", htmSeasonCompleteName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSeasonCompleteName());
+	public void inputSeasonCompleteName(String classApiMethodMethod) {
+	}
+
+	public void htmSeasonCompleteName(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classApiMethodMethod)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("class", "").f().sx("name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strSeasonCompleteName()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////

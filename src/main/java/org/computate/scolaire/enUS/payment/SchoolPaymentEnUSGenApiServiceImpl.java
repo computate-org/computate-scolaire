@@ -259,62 +259,75 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				if(a.succeeded()) {
 					userSchoolPayment(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolPayment(siteRequest, false, true, null, c -> {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolPayment> listSchoolPayment = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modified");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listSchoolPayment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									aSearchSchoolPayment(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolPayment> listSchoolPayment = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listSchoolPayment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-									PatchRequest patchRequest = new PatchRequest();
-									patchRequest.setRows(listSchoolPayment.getRows());
-									patchRequest.setNumFound(listSchoolPayment.getQueryResponse().getResults().getNumFound());
-									patchRequest.initDeepPatchRequest(siteRequest);
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection sqlConnection = siteRequest.getSqlConnection();
-														if(sqlConnection == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															sqlConnection.commit(e -> {
-																	if(e.succeeded()) {
-																	sqlConnection.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											PatchRequest patchRequest = new PatchRequest();
+											patchRequest.setRows(listSchoolPayment.getRows());
+											patchRequest.setNumFound(Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolPayment.size())));
+											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolPayment(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PATCHSchoolPayment(patchRequest, eventHandler);
+										} else {
+											errorSchoolPayment(siteRequest, eventHandler, c);
 										}
-									);
-									response200PATCHSchoolPayment(patchRequest, eventHandler);
+									});
 								} else {
-									errorSchoolPayment(siteRequest, eventHandler, c);
+									errorSchoolPayment(siteRequest, eventHandler, b);
 								}
 							});
 						} else {
@@ -345,9 +358,14 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(patchRequest.getNumFound() == 1 && listSchoolPayment.size() == 1) {
+					SchoolPayment o = listSchoolPayment.get(0);
+					patchRequest.setPk(o.getPk());
+					patchRequestSchoolPayment(o);
+				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolPayment.size());
 				if(listSchoolPayment.next(dt)) {
-				siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(patchRequest).toString());
+					siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, eventHandler);
 				} else {
 					response200PATCHSchoolPayment(patchRequest, eventHandler);
@@ -356,6 +374,20 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				errorSchoolPayment(listSchoolPayment.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void patchRequestSchoolPayment(SchoolPayment o) {
+		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
+		if(patchRequest != null) {
+			List<Long> pks = patchRequest.getPks();
+			List<String> classes = patchRequest.getClasses();
+			for(Long pk : o.getEnrollmentKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SchoolEnrollment");
+				}
+			}
+		}
 	}
 
 	public Future<SchoolPayment> futurePATCHSchoolPayment(SchoolPayment o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -370,6 +402,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								if(c.succeeded()) {
 									indexSchoolPayment(schoolPayment, d -> {
 										if(d.succeeded()) {
+											patchRequestSchoolPayment(schoolPayment);
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -807,15 +840,20 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			AllWriter w = AllWriter.create(listSchoolPayment.getSiteRequest_(), buffer);
 			PaymentPage page = new PaymentPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/payment");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			if(listSchoolPayment.size() == 1)
+				siteRequest.setRequestPk(listSchoolPayment.get(0).getPk());
+			siteRequest.setW(w);
 			page.setListSchoolPayment(listSchoolPayment);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepPaymentPage(siteRequest);
 			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1106,7 +1144,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			listSearch.setC(SchoolPayment.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1167,6 +1204,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

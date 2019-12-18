@@ -1,6 +1,8 @@
 package org.computate.scolaire.frFR.requete.patch;
 
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -67,6 +69,27 @@ public class RequetePatch extends RequetePatchGen<Object> {
 
 	protected void _id(Couverture<String> c) {
 		c.o("PATCH-" + uuid);
+	}
+
+	/**
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: RequeteSiteFrFR
+	 * r.enUS: SiteRequestEnUS
+	 * r: ObjetJson
+	 * r.enUS: JsonObject
+	 */
+	protected void _empty(Couverture<Boolean> c) {
+		c.o(Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getObjetJson).map(b -> b.size()).orElse(0) == 0);
+	}
+
+	protected void _pk(Couverture<Long> c) {
+	}
+
+	protected void _pks(List<Long> c) {
+	}
+
+	protected void _classes(List<String> c) {
 	}
 
 //	/**

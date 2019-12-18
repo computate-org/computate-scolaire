@@ -29,9 +29,11 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
@@ -78,6 +80,12 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 */
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) { 
 		c.o(this);
+	}
+
+	/**
+	 * Var.enUS: patchRequest_
+	 */
+	protected void _requetePatch_(Couverture<RequetePatch> c) { 
 	}
 
 	/**
@@ -369,6 +377,13 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: sqlConnection
 	 **/
 	protected void _connexionSql(Couverture<SQLConnection> c) {
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: requestHeaders
+	 **/
+	protected void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c) {
 	}
 	
 	/**

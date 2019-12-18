@@ -255,62 +255,75 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurSessionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheSessionScolaire(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listeSessionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									rechercheSessionScolaire(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<SessionScolaire> listeSessionScolaire = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listeSessionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listeSessionScolaire.getRows());
-									requetePatch.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHSessionScolaire(requetePatch, listeSessionScolaire, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listeSessionScolaire.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSessionScolaire(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHSessionScolaire(requetePatch, listeSessionScolaire, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHSessionScolaire(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHSessionScolaire(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurSessionScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurSessionScolaire(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -341,9 +354,14 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listeSessionScolaire.size() == 1) {
+					SessionScolaire o = listeSessionScolaire.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchSessionScolaire(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeSessionScolaire.size());
 				if(listeSessionScolaire.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHSessionScolaire(requetePatch, listeSessionScolaire, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHSessionScolaire(requetePatch, gestionnaireEvenements);
@@ -352,6 +370,26 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				erreurSessionScolaire(listeSessionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchSessionScolaire(SessionScolaire o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getAgeCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("AgeScolaire");
+				}
+			}
+			if(o.getSaisonCle() != null) {
+				if(!pks.contains(o.getSaisonCle())) {
+					pks.add(o.getSaisonCle());
+					classes.add("SaisonScolaire");
+				}
+			}
+		}
 	}
 
 	public Future<SessionScolaire> futurePATCHSessionScolaire(SessionScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -366,6 +404,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								if(c.succeeded()) {
 									indexerSessionScolaire(sessionScolaire, d -> {
 										if(d.succeeded()) {
+											requetePatchSessionScolaire(sessionScolaire);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -793,15 +832,20 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			ToutEcrivain w = ToutEcrivain.creer(listeSessionScolaire.getRequeteSite_(), buffer);
 			SessionPage page = new SessionPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/session");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listeSessionScolaire.size() == 1)
+				requeteSite.setRequetePk(listeSessionScolaire.get(0).getPk());
+			requeteSite.setW(w);
 			page.setListeSessionScolaire(listeSessionScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinSessionPage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}

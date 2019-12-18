@@ -1,11 +1,8 @@
-package org.computate.scolaire.frFR.mere;       
+package org.computate.scolaire.frFR.mere;          
 
-import java.text.Normalizer;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
@@ -245,7 +242,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 2
-	 */                   
+	 */                  
 	protected void _personnePrenom(Couverture<String> c) {
 	}
 
@@ -341,7 +338,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 3
-	 */                   
+	 */                
 	protected void _personneOccupation(Couverture<String> c) {
 	}
 

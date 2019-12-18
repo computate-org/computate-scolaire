@@ -139,47 +139,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ageCle == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCle());
 	}
 
-	public void htmAgeCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AgeCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AgeCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageCle\"");
-							r.s(" value=\"", htmAgeCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////////
 	// inscriptionCles //
 	/////////////////////
@@ -263,47 +222,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmInscriptionCles() {
 		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
-	}
-
-	public void htmInscriptionCles(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "InscriptionCles\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "InscriptionCles() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setInscriptionCles\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageInscriptionCles()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"inscriptionCles\"");
-							r.s(" value=\"", htmInscriptionCles(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmInscriptionCles());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////
@@ -391,45 +309,62 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return blocCles == null ? "" : StringEscapeUtils.escapeHtml4(strBlocCles());
 	}
 
-	public void htmBlocCles(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "BlocCles\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "BlocCles() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setBlocCles\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageBlocCles()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"blocCles\"");
-							r.s(" value=\"", htmBlocCles(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmBlocCles());
-			}
-			r.l("</div>");
-		}
+	public void inputBlocCles(String classeApiMethodeMethode) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "blocs")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setBlocCles")
+				.a("id", classeApiMethodeMethode, "_blocCles")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($('#suggereAgeScolaireBlocCles')) : [{'name':'fq','value':'ageCle:", pk, "'}], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmBlocCles(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAgeScolaireBlocCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+								e("i").a("class", "far fa-bell w3-padding-small ").f().g("i");
+								sx("blocs");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cet âge");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputBlocCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireBlocCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+										.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAgeScolaireBlocCles($('#' + ($('#", classeApiMethodeMethode, "blocCles').val() ? 'suggere' : 'form') + 'AgeScolaireBlocCles'), $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+										.f().sx("ajouter un bloc")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////
@@ -499,47 +434,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return scolaireTri == null ? "" : StringEscapeUtils.escapeHtml4(strScolaireTri());
 	}
 
-	public void htmScolaireTri(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "ScolaireTri\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "ScolaireTri() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setScolaireTri\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageScolaireTri()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"scolaireTri\"");
-							r.s(" value=\"", htmScolaireTri(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmScolaireTri());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// ecoleTri //
 	//////////////
@@ -605,47 +499,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmEcoleTri() {
 		return ecoleTri == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleTri());
-	}
-
-	public void htmEcoleTri(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleTri\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleTri() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleTri\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleTri()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleTri\"");
-							r.s(" value=\"", htmEcoleTri(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleTri());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////
@@ -715,47 +568,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return anneeTri == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeTri());
 	}
 
-	public void htmAnneeTri(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AnneeTri\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AnneeTri() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeTri\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeTri()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeTri\"");
-							r.s(" value=\"", htmAnneeTri(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeTri());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////
 	// saisonTri //
 	///////////////
@@ -821,47 +633,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSaisonTri() {
 		return saisonTri == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonTri());
-	}
-
-	public void htmSaisonTri(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonTri\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonTri() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonTri\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonTri()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonTri\"");
-							r.s(" value=\"", htmSaisonTri(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonTri());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////
@@ -931,47 +702,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionTri == null ? "" : StringEscapeUtils.escapeHtml4(strSessionTri());
 	}
 
-	public void htmSessionTri(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionTri\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionTri() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionTri\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionTri()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionTri\"");
-							r.s(" value=\"", htmSessionTri(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionTri());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////
 	// sessionCle //
 	////////////////
@@ -1039,45 +769,62 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
 	}
 
-	public void htmSessionCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionCle\"");
-							r.s(" value=\"", htmSessionCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionCle());
-			}
-			r.l("</div>");
-		}
+	public void inputSessionCle(String classeApiMethodeMethode) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "session")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("class", "valeur suggereSessionCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setSessionCle")
+				.a("id", classeApiMethodeMethode, "_sessionCle")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($('#suggereAgeScolaireSessionCle')) : [{'name':'fq','value':'ageCles:", pk, "'}], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
+	public void htmSessionCle(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAgeScolaireSessionCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "").a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+								e("i").a("class", "fad fa-graduation-cap w3-padding-small ").f().g("i");
+								sx("session");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier une session a cet âge");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputSessionCle(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireSessionCle_", classeApiMethodeMethode).f();
+								} g("ul");
+								{ e("div").a("class", "w3-cell-row ").f();
+									e("button")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+										.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAgeScolaireSessionCle($('#' + ($('#", classeApiMethodeMethode, "sessionCle').val() ? 'suggere' : 'form') + 'AgeScolaireSessionCle'), $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "sessionCle'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
+										.f().sx("ajouter une session")
+									.g("button");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////
@@ -1222,47 +969,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
 	}
 
-	public void htmEcoleCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleCle\"");
-							r.s(" value=\"", htmEcoleCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// anneeCle //
 	//////////////
@@ -1328,47 +1034,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmAnneeCle() {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
-	}
-
-	public void htmAnneeCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AnneeCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AnneeCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeCle\"");
-							r.s(" value=\"", htmAnneeCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeCle());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////
@@ -1438,47 +1103,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
 	}
 
-	public void htmSaisonCle(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonCle\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonCle() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonCle\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonCle()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonCle\"");
-							r.s(" value=\"", htmSaisonCle(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonCle());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// ecoleNom //
 	//////////////
@@ -1538,47 +1162,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmEcoleNom() {
 		return ecoleNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNom());
-	}
-
-	public void htmEcoleNom(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleNom\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleNom() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleNom\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNom()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleNom\"");
-							r.s(" value=\"", htmEcoleNom(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleNom());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////
@@ -1642,47 +1225,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNomComplet());
 	}
 
-	public void htmEcoleNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleNomComplet\"");
-							r.s(" value=\"", htmEcoleNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleNomComplet());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////
 	// ecoleEmplacement //
 	//////////////////////
@@ -1742,47 +1284,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmEcoleEmplacement() {
 		return ecoleEmplacement == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleEmplacement());
-	}
-
-	public void htmEcoleEmplacement(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleEmplacement\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleEmplacement() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleEmplacement\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleEmplacement()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleEmplacement\"");
-							r.s(" value=\"", htmEcoleEmplacement(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleEmplacement());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////////
@@ -1846,47 +1347,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
 	}
 
-	public void htmEcoleAddresse(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleAddresse\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleAddresse() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleAddresse\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAddresse()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleAddresse\"");
-							r.s(" value=\"", htmEcoleAddresse(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleAddresse());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////////
 	// ecoleNumeroTelephone //
 	//////////////////////////
@@ -1948,47 +1408,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
 	}
 
-	public void htmEcoleNumeroTelephone(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleNumeroTelephone\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleNumeroTelephone() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleNumeroTelephone\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleNumeroTelephone()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleNumeroTelephone\"");
-							r.s(" value=\"", htmEcoleNumeroTelephone(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleNumeroTelephone());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////////////
 	// ecoleAdministrateurNom //
 	////////////////////////////
@@ -2048,47 +1467,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAdministrateurNom());
-	}
-
-	public void htmEcoleAdministrateurNom(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "EcoleAdministrateurNom\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "EcoleAdministrateurNom() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setEcoleAdministrateurNom\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageEcoleAdministrateurNom()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ecoleAdministrateurNom\"");
-							r.s(" value=\"", htmEcoleAdministrateurNom(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmEcoleAdministrateurNom());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////
@@ -2158,47 +1536,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return anneeDebut == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeDebut());
 	}
 
-	public void htmAnneeDebut(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AnneeDebut\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AnneeDebut() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeDebut\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeDebut()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeDebut\"");
-							r.s(" value=\"", htmAnneeDebut(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeDebut());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// anneeFin //
 	//////////////
@@ -2264,47 +1601,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmAnneeFin() {
 		return anneeFin == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFin());
-	}
-
-	public void htmAnneeFin(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AnneeFin\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AnneeFin() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAnneeFin\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAnneeFin()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"anneeFin\"");
-							r.s(" value=\"", htmAnneeFin(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAnneeFin());
-			}
-			r.l("</div>");
-		}
 	}
 
 	/////////////////////
@@ -2384,47 +1680,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonJourDebut());
 	}
 
-	public void htmSaisonJourDebut(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonJourDebut\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonJourDebut() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonJourDebut\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonJourDebut()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonJourDebut\"");
-							r.s(" value=\"", htmSaisonJourDebut(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonJourDebut());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////
 	// saisonEte //
 	///////////////
@@ -2491,47 +1746,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonEte == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonEte());
 	}
 
-	public void htmSaisonEte(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonEte\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonEte() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonEte\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonEte()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonEte\"");
-							r.s(" value=\"", htmSaisonEte(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonEte());
-			}
-			r.l("</div>");
-		}
-	}
-
 	/////////////////
 	// saisonHiver //
 	/////////////////
@@ -2596,47 +1810,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSaisonHiver() {
 		return saisonHiver == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonHiver());
-	}
-
-	public void htmSaisonHiver(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonHiver\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonHiver() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonHiver\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonHiver()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonHiver\"");
-							r.s(" value=\"", htmSaisonHiver(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonHiver());
-			}
-			r.l("</div>");
-		}
 	}
 
 	////////////////////////////
@@ -2717,47 +1890,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonFraisInscription());
 	}
 
-	public void htmSaisonFraisInscription(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonFraisInscription\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonFraisInscription() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonFraisInscription\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonFraisInscription()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonFraisInscription\"");
-							r.s(" value=\"", htmSaisonFraisInscription(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonFraisInscription());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////////
 	// saisonNomComplet //
 	//////////////////////
@@ -2817,47 +1949,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSaisonNomComplet() {
 		return saisonNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonNomComplet());
-	}
-
-	public void htmSaisonNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SaisonNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SaisonNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSaisonNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSaisonNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"saisonNomComplet\"");
-							r.s(" value=\"", htmSaisonNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSaisonNomComplet());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////////////
@@ -2937,47 +2028,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourDebut());
 	}
 
-	public void htmSessionJourDebut(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionJourDebut\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionJourDebut() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionJourDebut\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionJourDebut()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionJourDebut\"");
-							r.s(" value=\"", htmSessionJourDebut(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionJourDebut());
-			}
-			r.l("</div>");
-		}
-	}
-
 	////////////////////
 	// sessionJourFin //
 	////////////////////
@@ -3055,47 +2105,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionJourFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourFin());
 	}
 
-	public void htmSessionJourFin(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionJourFin\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionJourFin() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionJourFin\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionJourFin()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionJourFin\"");
-							r.s(" value=\"", htmSessionJourFin(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionJourFin());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////////
 	// sessionNomComplet //
 	///////////////////////
@@ -3155,47 +2164,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSessionNomComplet() {
 		return sessionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSessionNomComplet());
-	}
-
-	public void htmSessionNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "SessionNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "SessionNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSessionNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSessionNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"sessionNomComplet\"");
-							r.s(" value=\"", htmSessionNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmSessionNomComplet());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////
@@ -3265,45 +2233,57 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ageDebut == null ? "" : StringEscapeUtils.escapeHtml4(strAgeDebut());
 	}
 
-	public void htmAgeDebut(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AgeDebut\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AgeDebut() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeDebut\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeDebut()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageDebut\"");
-							r.s(" value=\"", htmAgeDebut(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputAgeDebut(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "début du groupe d'âge")
+			.a("title", "L'année scolaire de la saison scolaire. ")
+			.a("id", classeApiMethodeMethode, "_ageDebut");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setAgeDebut w3-input w3-border ");
+				a("name", "setAgeDebut");
 			} else {
-				r.s(htmAgeDebut());
+				a("class", "valeurAgeDebut w3-input w3-border ");
+				a("name", "ageDebut");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ");
+			}
+			a("value", strAgeDebut())
+		.fg();
+
+	}
+
+	public void htmAgeDebut(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAgeScolaireAgeDebut").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ageDebut").a("class", "").f().sx("début du groupe d'âge").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAgeDebut(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageDebut')); $('#", classeApiMethodeMethode, "_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////
@@ -3373,45 +2353,57 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ageFin == null ? "" : StringEscapeUtils.escapeHtml4(strAgeFin());
 	}
 
-	public void htmAgeFin(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AgeFin\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AgeFin() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeFin\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeFin()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageFin\"");
-							r.s(" value=\"", htmAgeFin(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputAgeFin(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "fin du groupe d'âge")
+			.a("title", "L'année scolaire de la saison scolaire. ")
+			.a("id", classeApiMethodeMethode, "_ageFin");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setAgeFin w3-input w3-border ");
+				a("name", "setAgeFin");
 			} else {
-				r.s(htmAgeFin());
+				a("class", "valeurAgeFin w3-input w3-border ");
+				a("name", "ageFin");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ");
+			}
+			a("value", strAgeFin())
+		.fg();
+
+	}
+
+	public void htmAgeFin(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAgeScolaireAgeFin").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ageFin").a("class", "").f().sx("fin du groupe d'âge").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAgeFin(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageFin')); $('#", classeApiMethodeMethode, "_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////
@@ -3475,45 +2467,28 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ageNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAgeNomComplet());
 	}
 
-	public void htmAgeNomComplet(ToutEcrivain r, Boolean patchDroits) {
-		if(pk!= null) {
-			r.s("<div id=\"patchAgeScolaire", strPk(), "AgeNomComplet\">");
-			if(patchDroits) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchAgeScolaire", strPk(), "AgeNomComplet() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setAgeNomComplet\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageAgeNomComplet()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"ageNomComplet\"");
-							r.s(" value=\"", htmAgeNomComplet(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmAgeNomComplet());
+	public void inputAgeNomComplet(String classeApiMethodeMethode) {
+	}
+
+	public void htmAgeNomComplet(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			if("Page".equals(classeApiMethodeMethode)) {
+				{ e("div").a("class", "w3-padding ").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue ").f();
+							e("label").a("class", "").f().sx("nom").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-rest ").f();
+									e("span").f().sx(strAgeNomComplet()).g("span");
+								} g("div");
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
 			}
-			r.l("</div>");
-		}
+		} g("div");
 	}
 
 	//////////////

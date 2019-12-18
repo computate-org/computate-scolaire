@@ -198,6 +198,9 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
+	public void inputYearKey(String classApiMethodMethod) {
+	}
+
 	public void htmYearKey(String classApiMethodMethod) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
@@ -304,17 +307,23 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return htmlPartKeys == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlPartKeys());
 	}
 
+	public void inputHtmlPartKeys(String classApiMethodMethod) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "parts")
+				.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setHtmlPartKeys")
+				.a("id", classApiMethodMethod, "_htmlPartKeys")
+				.a("autocomplete", "off")
+				.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($('#suggestEnrollmentDesignHtmlPartKeys')) : [{'name':'fq','value':'enrollmentDesignKey:", pk, "'}], $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ")
+			.fg();
+
+	}
+
 	public void htmHtmlPartKeys(String classApiMethodMethod) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formEnrollmentDesignHtmlPartKeys").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valueEnrollmentDesignKey")
-						.a("class", "valueEnrollmentDesignKey ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggestEnrollmentDesignHtmlPartKeys").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
@@ -332,17 +341,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "parts")
-										.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setHtmlPartKeys")
-										.a("id", classApiMethodMethod, "_htmlPartKeys")
-										.a("autocomplete", "off")
-										.a("oninput", "suggestEnrollmentDesignHtmlPartKeys($('#' + ($(this).val() ? 'suggest' : 'form') + 'EnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "')); ")
-									.fg();
-
+								inputHtmlPartKeys(classApiMethodMethod);
 								} g("div");
 							} g("div");
 						} g("div");
@@ -353,7 +352,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestEnrollmentDesignHtmlPartKeys($('#' + ($('#", classApiMethodMethod, "htmlPartKeys').val() ? 'suggest' : 'form') + 'EnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "htmlPartKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); }); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+										.a("onclick", "postHtmlPartVals({ enrollmentDesignKey: \"", pk, "\" }, function() { patchEnrollmentDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
 										.f().sx("add an HTML part")
 									.g("button");
 								} g("div");
@@ -448,6 +447,9 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public String htmEnrollmentKeys() {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
+	}
+
+	public void inputEnrollmentKeys(String classApiMethodMethod) {
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
@@ -1136,6 +1138,9 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public String htmEnrollmentDesignCompleteName() {
 		return enrollmentDesignCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentDesignCompleteName());
+	}
+
+	public void inputEnrollmentDesignCompleteName(String classApiMethodMethod) {
 	}
 
 	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {

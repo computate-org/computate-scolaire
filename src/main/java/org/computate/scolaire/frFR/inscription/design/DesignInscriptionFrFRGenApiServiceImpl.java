@@ -239,62 +239,75 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(a.succeeded()) {
 					utilisateurDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheDesignInscription(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<DesignInscription> listeDesignInscription = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listeDesignInscription.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									rechercheDesignInscription(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<DesignInscription> listeDesignInscription = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listeDesignInscription.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listeDesignInscription.getRows());
-									requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHDesignInscription(requetePatch, listeDesignInscription, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listeDesignInscription.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlDesignInscription(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHDesignInscription(requetePatch, listeDesignInscription, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHDesignInscription(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHDesignInscription(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
+									erreurDesignInscription(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -325,9 +338,14 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listeDesignInscription.size() == 1) {
+					DesignInscription o = listeDesignInscription.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchDesignInscription(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeDesignInscription.size());
 				if(listeDesignInscription.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHDesignInscription(requetePatch, listeDesignInscription, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHDesignInscription(requetePatch, gestionnaireEvenements);
@@ -336,6 +354,20 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				erreurDesignInscription(listeDesignInscription.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchDesignInscription(DesignInscription o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getPartHtmlCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("PartHtml");
+				}
+			}
+		}
 	}
 
 	public Future<DesignInscription> futurePATCHDesignInscription(DesignInscription o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -350,6 +382,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								if(c.succeeded()) {
 									indexerDesignInscription(designInscription, d -> {
 										if(d.succeeded()) {
+											requetePatchDesignInscription(designInscription);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -737,16 +770,20 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignInscription.getRequeteSite_(), buffer);
 			DesignInscriptionPage page = new DesignInscriptionPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/design-inscription");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listeDesignInscription.size() == 1)
+				requeteSite.setRequetePk(listeDesignInscription.get(0).getPk());
 			requeteSite.setW(w);
 			page.setListeDesignInscription(listeDesignInscription);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinDesignInscriptionPage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -780,20 +817,20 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				return "objetSuggere_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
-			case "designInscriptionCle":
-				return "designInscriptionCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
 			case "partHtmlCles":
 				return "partHtmlCles_indexed_longs";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			case "ecoleEmplacement":
 				return "ecoleEmplacement_indexed_string";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "designInscriptionCle":
+				return "designInscriptionCle_indexed_long";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":

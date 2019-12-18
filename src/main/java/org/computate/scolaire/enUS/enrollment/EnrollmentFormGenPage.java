@@ -50,6 +50,31 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.page.PageLayout;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -124,13 +149,25 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 
 	@Override public void htmlScriptEnrollmentFormGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolEnrollmentBlockKeys($('#formSchoolEnrollmentBlockKeys'), $('#listSchoolEnrollmentBlockKeys_Page')); ");
-		tl(1, "suggestSchoolEnrollmentChildKey($('#formSchoolEnrollmentChildKey'), $('#listSchoolEnrollmentChildKey_Page')); ");
-		tl(1, "suggestSchoolEnrollmentMomKeys($('#formSchoolEnrollmentMomKeys'), $('#listSchoolEnrollmentMomKeys_Page')); ");
-		tl(1, "suggestSchoolEnrollmentDadKeys($('#formSchoolEnrollmentDadKeys'), $('#listSchoolEnrollmentDadKeys_Page')); ");
-		tl(1, "suggestSchoolEnrollmentGuardianKeys($('#formSchoolEnrollmentGuardianKeys'), $('#listSchoolEnrollmentGuardianKeys_Page')); ");
-		tl(1, "suggestSchoolEnrollmentPaymentKeys($('#formSchoolEnrollmentPaymentKeys'), $('#listSchoolEnrollmentPaymentKeys_Page')); ");
-		tl(1, "websocketSchoolEnrollment(); ");
+		tl(1, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentBlockKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentChildKey_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentMomKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentDadKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentGuardianKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentPaymentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "websocketSchoolEnrollment(async function(patchRequest) {");
+		tl(2, "var pk = patchRequest['pk'];");
+		tl(2, "var pks = patchRequest['pks'];");
+		tl(2, "var classes = patchRequest['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchSchoolEnrollmentVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -475,6 +512,10 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageSchoolEnrollment(o);
 				}
@@ -639,7 +680,7 @@ public class EnrollmentFormGenPage extends EnrollmentFormGenPageGen<ClusterPage>
 							.a("name", "suggestSchoolEnrollment")
 							.a("id", "suggestSchoolEnrollment", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "')); ")
+							.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 							.fg();
 
 					} p.g("form");

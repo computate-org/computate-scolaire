@@ -94,8 +94,20 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptChildGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolChildEnrollmentKeys($('#formSchoolChildEnrollmentKeys'), $('#listSchoolChildEnrollmentKeys_Page')); ");
-		tl(1, "websocketSchoolChild(); ");
+		tl(1, "suggestSchoolChildEnrollmentKeys([{'name':'fq','value':'childKey:", siteRequest_.getRequestPk(), "'}], $('#listSchoolChildEnrollmentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "websocketSchoolChild(async function(patchRequest) {");
+		tl(2, "var pk = patchRequest['pk'];");
+		tl(2, "var pks = patchRequest['pks'];");
+		tl(2, "var classes = patchRequest['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchSchoolChildVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -400,6 +412,10 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageSchoolChild(o);
 				}
@@ -564,7 +580,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 							.a("name", "suggestSchoolChild")
 							.a("id", "suggestSchoolChild", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestSchoolChildObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolChild", id, "')); ")
+							.a("oninput", "suggestSchoolChildObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolChild", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 							.fg();
 
 					} p.g("form");

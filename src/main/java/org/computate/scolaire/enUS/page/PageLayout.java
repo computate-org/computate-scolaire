@@ -6,14 +6,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.common.SolrDocument;
+import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.age.AgeGenPage;
 import org.computate.scolaire.enUS.year.YearGenPage;
 import org.computate.scolaire.enUS.block.BlockGenPage;
@@ -827,5 +831,142 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("form");
 			} g("div");
 		} g("div");
+	}
+
+	public Integer htmlPageLayout2(List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
+
+		Integer i;
+
+		Double parentSort1 = null;
+		Double parentSort2 = null;
+		Double parentSort3 = null;
+		Double parentSort4 = null;
+		Double parentSort5 = null;
+		Double parentSort6 = null;
+		Double parentSort7 = null;
+		Double parentSort8 = null;
+		Double parentSort9 = null;
+		Double parentSort10 = null;
+
+		if(htmlPartParent != null) {
+			parentSort1 = htmlPartParent.getSort1();
+			parentSort2 = htmlPartParent.getSort2();
+			parentSort3 = htmlPartParent.getSort3();
+			parentSort4 = htmlPartParent.getSort4();
+			parentSort5 = htmlPartParent.getSort5();
+			parentSort6 = htmlPartParent.getSort6();
+			parentSort7 = htmlPartParent.getSort7();
+			parentSort8 = htmlPartParent.getSort8();
+			parentSort9 = htmlPartParent.getSort9();
+			parentSort10 = htmlPartParent.getSort10();
+		}
+
+		for(i = start; i < size; i++) {
+			HtmlPart htmlPart = htmlPartList.get(i);
+
+			Double sort1 = htmlPart.getSort1();
+			Double sort2 = htmlPart.getSort2();
+			Double sort3 = htmlPart.getSort3();
+			Double sort4 = htmlPart.getSort4();
+			Double sort5 = htmlPart.getSort5();
+			Double sort6 = htmlPart.getSort6();
+			Double sort7 = htmlPart.getSort7();
+			Double sort8 = htmlPart.getSort8();
+			Double sort9 = htmlPart.getSort9();
+			Double sort10 = htmlPart.getSort10();
+
+			if(htmlPartParent != null) {
+				if(parentSort2 != null && (sort1 == null || parentSort1.compareTo(sort1) != 0))
+					return i;
+				if(parentSort3 != null && (sort2 == null || parentSort2.compareTo(sort2) != 0))
+					return i;
+				if(parentSort4 != null && (sort3 == null || parentSort3.compareTo(sort3) != 0))
+					return i;
+				if(parentSort5 != null && (sort4 == null || parentSort4.compareTo(sort4) != 0))
+					return i;
+				if(parentSort6 != null && (sort5 == null || parentSort5.compareTo(sort5) != 0))
+					return i;
+				if(parentSort7 != null && (sort6 == null || parentSort6.compareTo(sort6) != 0))
+					return i;
+				if(parentSort8 != null && (sort7 == null || parentSort7.compareTo(sort7) != 0))
+					return i;
+				if(parentSort9 != null && (sort8 == null || parentSort8.compareTo(sort8) != 0))
+					return i;
+				if(parentSort10 != null && (sort9 == null || parentSort9.compareTo(sort9) != 0))
+					return i;
+			}
+
+			String htmlVar = htmlPart.getHtmlVar();
+			String htmlVarInput = htmlPart.getHtmlVarInput();
+			String htmlVarForm = htmlPart.getHtmlVarForm();
+			String htmlVarForEach = htmlPart.getHtmlVarForEach();
+			Boolean pdfExclude = htmlPart.getPdfExclude();
+
+			if(!"application/pdf".equals(pageContentType) || BooleanUtils.isNotTrue(pdfExclude)) {
+				s(htmlPart.getHtmlBefore());
+				if(htmlVar != null) {
+					if(htmlVarForEach != null) {
+	
+						Object parent = StringUtils.contains(htmlVar, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
+						if(parent == null)
+							parent = this;
+						String var = StringUtils.substringAfterLast(htmlVar, ".");
+						if(StringUtils.isBlank(var))
+							var = htmlVar;
+	
+						Object parentForEach = StringUtils.contains(htmlVarForEach, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVarForEach, ".")) : null;
+						if(parentForEach == null)
+							parentForEach = this;
+						String varForEach = StringUtils.substringAfterLast(htmlVarForEach, ".");
+						if(StringUtils.isBlank(varForEach))
+							var = htmlVarForEach;
+	
+						try {
+							Collection<?> collection = (Collection<?>)MethodUtils.invokeMethod(parentForEach, "get" + StringUtils.capitalize(varForEach), new Object[] {});
+							List<?> list = collection.stream().collect(Collectors.toList());
+							Integer forStart = i + 1;
+	
+							for(Object o : list) {
+								try {
+									MethodUtils.invokeExactMethod(parent, "set" + StringUtils.capitalize(var), o);
+									i = htmlPageLayout2(htmlPartList, htmlPart, forStart, size);
+								} catch (Exception e) {
+									throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "set" + StringUtils.capitalize(var), htmlVar, parent), e);
+								}
+							}
+							i = i - 1;
+						} catch (Exception e) {
+							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "get" + StringUtils.capitalize(var), varForEach, parentForEach), e);
+						}
+					}
+					else {
+						s(obtainForClass(htmlVar));
+					}
+				}
+				if(htmlVarForm != null) {
+					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarForm, "."));
+					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
+					try {
+						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+						l();
+					} catch (Exception e) {
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
+					}
+				}
+				if(htmlVarInput != null) {
+					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, "."));
+					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+					try {
+						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
+						l();
+					} catch (Exception e) {
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
+					}
+				}
+				s(htmlPart.getHtmlAfter());
+			}
+		}
+
+		return i;
 	}
 }

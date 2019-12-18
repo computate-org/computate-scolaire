@@ -27,8 +27,10 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
@@ -55,6 +57,9 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) { 
 		c.o(this);
+	}
+
+	protected void _patchRequest_(Wrap<PatchRequest> c) { 
 	}
 
 	protected void _vertx(Wrap<Vertx> c) {
@@ -197,6 +202,9 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _sqlConnection(Wrap<SQLConnection> c) {
+	}
+
+	protected void _requestHeaders(Wrap<CaseInsensitiveHeaders> c) {
 	}
 
 	protected void _encryptionPassword(Wrap<String> c) {

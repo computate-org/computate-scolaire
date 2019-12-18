@@ -199,6 +199,9 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
 	}
 
+	public void inputAnneeCle(String classeApiMethodeMethode) {
+	}
+
 	public void htmAnneeCle(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -305,17 +308,23 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return partHtmlCles == null ? "" : StringEscapeUtils.escapeHtml4(strPartHtmlCles());
 	}
 
+	public void inputPartHtmlCles(String classeApiMethodeMethode) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "parts")
+				.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setPartHtmlCles")
+				.a("id", classeApiMethodeMethode, "_partHtmlCles")
+				.a("autocomplete", "off")
+				.a("oninput", "suggereDesignInscriptionPartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($('#suggereDesignInscriptionPartHtmlCles')) : [{'name':'fq','value':'designInscriptionCle:", pk, "'}], $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
 	public void htmPartHtmlCles(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formDesignInscriptionPartHtmlCles").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurDesignInscriptionCle")
-						.a("class", "valeurDesignInscriptionCle ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggereDesignInscriptionPartHtmlCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
@@ -333,17 +342,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "parts")
-										.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setPartHtmlCles")
-										.a("id", classeApiMethodeMethode, "_partHtmlCles")
-										.a("autocomplete", "off")
-										.a("oninput", "suggereDesignInscriptionPartHtmlCles($('#' + ($(this).val() ? 'suggere' : 'form') + 'DesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "')); ")
-									.fg();
-
+								inputPartHtmlCles(classeApiMethodeMethode);
 								} g("div");
 							} g("div");
 						} g("div");
@@ -354,7 +353,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereDesignInscriptionPartHtmlCles($('#' + ($('#", classeApiMethodeMethode, "partHtmlCles').val() ? 'suggere' : 'form') + 'DesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "partHtmlCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
+										.a("onclick", "postPartHtmlVals({ designInscriptionCle: \"", pk, "\" }, function() { patchDesignInscriptionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
 										.f().sx("ajouter un part de HTML")
 									.g("button");
 								} g("div");
@@ -449,6 +448,9 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public String htmInscriptionCles() {
 		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
+	}
+
+	public void inputInscriptionCles(String classeApiMethodeMethode) {
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
@@ -1137,6 +1139,9 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public String htmDesignInscriptionNomComplet() {
 		return designInscriptionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionNomComplet());
+	}
+
+	public void inputDesignInscriptionNomComplet(String classeApiMethodeMethode) {
 	}
 
 	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {

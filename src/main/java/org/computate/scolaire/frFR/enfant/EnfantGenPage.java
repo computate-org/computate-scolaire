@@ -95,8 +95,20 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptEnfantGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereEnfantScolaireInscriptionCles($('#formEnfantScolaireInscriptionCles'), $('#listEnfantScolaireInscriptionCles_Page')); ");
-		tl(1, "websocketEnfantScolaire(); ");
+		tl(1, "suggereEnfantScolaireInscriptionCles([{'name':'fq','value':'enfantCle:", requeteSite_.getRequetePk(), "'}], $('#listEnfantScolaireInscriptionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "websocketEnfantScolaire(async function(requetePatch) {");
+		tl(2, "var pk = requetePatch['pk'];");
+		tl(2, "var pks = requetePatch['pks'];");
+		tl(2, "var classes = requetePatch['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchEnfantScolaireVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -401,6 +413,10 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageEnfantScolaire(o);
 				}
@@ -601,7 +617,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							.a("name", "suggereEnfantScolaire")
 							.a("id", "suggereEnfantScolaire", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire", id, "')); ")
+							.a("oninput", "suggereEnfantScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEnfantScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 							.fg();
 
 					} p.g("form");

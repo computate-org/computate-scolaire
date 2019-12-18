@@ -55,6 +55,8 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolPayment == null)
 				setListSchoolPayment(listSchoolPaymentWrap.o);
 		}
+		if(listSchoolPayment != null)
+			listSchoolPayment.initDeepForClass(siteRequest_);
 		listSchoolPaymentWrap.alreadyInitialized(true);
 		return (PaymentGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 			if(schoolPayment == null)
 				setSchoolPayment(schoolPaymentWrap.o);
 		}
+		if(schoolPayment != null)
+			schoolPayment.initDeepForClass(siteRequest_);
 		schoolPaymentWrap.alreadyInitialized(true);
 		return (PaymentGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestPaymentGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolPayment != null)
+			listSchoolPayment.setSiteRequest_(siteRequest_);
+		if(schoolPayment != null)
+			schoolPayment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

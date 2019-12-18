@@ -259,62 +259,75 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				if(a.succeeded()) {
 					utilisateurPaiementScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePaiementScolaire(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									recherchePaiementScolaire(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listePaiementScolaire.getRows());
-									requetePatch.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHPaiementScolaire(requetePatch, listePaiementScolaire, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listePaiementScolaire.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePaiementScolaire.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlPaiementScolaire(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHPaiementScolaire(requetePatch, listePaiementScolaire, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHPaiementScolaire(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHPaiementScolaire(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -345,9 +358,14 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listePaiementScolaire.size() == 1) {
+					PaiementScolaire o = listePaiementScolaire.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchPaiementScolaire(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listePaiementScolaire.size());
 				if(listePaiementScolaire.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHPaiementScolaire(requetePatch, listePaiementScolaire, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHPaiementScolaire(requetePatch, gestionnaireEvenements);
@@ -356,6 +374,20 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				erreurPaiementScolaire(listePaiementScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchPaiementScolaire(PaiementScolaire o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getInscriptionCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("InscriptionScolaire");
+				}
+			}
+		}
 	}
 
 	public Future<PaiementScolaire> futurePATCHPaiementScolaire(PaiementScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -370,6 +402,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								if(c.succeeded()) {
 									indexerPaiementScolaire(paiementScolaire, d -> {
 										if(d.succeeded()) {
+											requetePatchPaiementScolaire(paiementScolaire);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -807,15 +840,20 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			ToutEcrivain w = ToutEcrivain.creer(listePaiementScolaire.getRequeteSite_(), buffer);
 			PaiementPage page = new PaiementPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/paiement");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listePaiementScolaire.size() == 1)
+				requeteSite.setRequetePk(listePaiementScolaire.get(0).getPk());
+			requeteSite.setW(w);
 			page.setListePaiementScolaire(listePaiementScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinPaiementPage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1106,7 +1144,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.setC(PaiementScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1167,6 +1204,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

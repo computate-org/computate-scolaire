@@ -1,29 +1,31 @@
 package org.computate.scolaire.enUS.request.patch;
 
-import java.math.MathContext;
 import java.util.Date;
 import java.time.ZonedDateTime;
-import org.computate.scolaire.enUS.cluster.Cluster;
 import java.time.LocalDateTime;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import java.time.Instant;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
-import java.time.ZoneId;
-import java.util.Objects;
-import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
-import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.math.NumberUtils;
-import java.lang.Object;
+import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.time.ZoneOffset;
 import java.lang.String;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Objects;
+import io.vertx.core.json.JsonArray;
+import java.util.List;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang3.math.NumberUtils;
+import java.lang.Object;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -469,6 +471,302 @@ public abstract class PatchRequestGen<DEV> extends Object {
 		return id == null ? "" : StringEscapeUtils.escapeHtml4(strId());
 	}
 
+	///////////
+	// empty //
+	///////////
+
+	/**	L'entité « empty »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean empty;
+	@JsonIgnore
+	public Wrap<Boolean> emptyWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("empty").o(empty);
+
+	/**	<br/>L'entité « empty »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:empty">Trouver l'entité empty dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _empty(Wrap<Boolean> c);
+
+	public Boolean getEmpty() {
+		return empty;
+	}
+
+	public void setEmpty(Boolean empty) {
+		this.empty = empty;
+		this.emptyWrap.alreadyInitialized = true;
+	}
+	public PatchRequest setEmpty(String o) {
+		this.empty = Boolean.parseBoolean(o);
+		this.emptyWrap.alreadyInitialized = true;
+		return (PatchRequest)this;
+	}
+	protected PatchRequest emptyInit() {
+		if(!emptyWrap.alreadyInitialized) {
+			_empty(emptyWrap);
+			if(empty == null)
+				setEmpty(emptyWrap.o);
+		}
+		emptyWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
+	public Boolean solrEmpty() {
+		return empty;
+	}
+
+	public String strEmpty() {
+		return empty == null ? "" : empty.toString();
+	}
+
+	public String jsonEmpty() {
+		return empty == null ? "" : empty.toString();
+	}
+
+	public String nomAffichageEmpty() {
+		return null;
+	}
+
+	public String htmTooltipEmpty() {
+		return null;
+	}
+
+	public String htmEmpty() {
+		return empty == null ? "" : StringEscapeUtils.escapeHtml4(strEmpty());
+	}
+
+	////////
+	// pk //
+	////////
+
+	/**	L'entité « pk »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long pk;
+	@JsonIgnore
+	public Wrap<Long> pkWrap = new Wrap<Long>().p(this).c(Long.class).var("pk").o(pk);
+
+	/**	<br/>L'entité « pk »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pk">Trouver l'entité pk dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pk(Wrap<Long> c);
+
+	public Long getPk() {
+		return pk;
+	}
+
+	public void setPk(Long pk) {
+		this.pk = pk;
+		this.pkWrap.alreadyInitialized = true;
+	}
+	public PatchRequest setPk(String o) {
+		if(NumberUtils.isParsable(o))
+			this.pk = Long.parseLong(o);
+		this.pkWrap.alreadyInitialized = true;
+		return (PatchRequest)this;
+	}
+	protected PatchRequest pkInit() {
+		if(!pkWrap.alreadyInitialized) {
+			_pk(pkWrap);
+			if(pk == null)
+				setPk(pkWrap.o);
+		}
+		pkWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
+	public Long solrPk() {
+		return pk;
+	}
+
+	public String strPk() {
+		return pk == null ? "" : pk.toString();
+	}
+
+	public String jsonPk() {
+		return pk == null ? "" : pk.toString();
+	}
+
+	public String nomAffichagePk() {
+		return null;
+	}
+
+	public String htmTooltipPk() {
+		return null;
+	}
+
+	public String htmPk() {
+		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
+	}
+
+	/////////
+	// pks //
+	/////////
+
+	/**	L'entité « pks »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	protected List<Long> pks = new java.util.ArrayList<java.lang.Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> pksWrap = new Wrap<List<Long>>().p(this).c(List.class).var("pks").o(pks);
+
+	/**	<br/>L'entité « pks »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pks">Trouver l'entité pks dans Solr</a>
+	 * <br/>
+	 * @param pks est l'entité déjà construit. 
+	 **/
+	protected abstract void _pks(List<Long> c);
+
+	public List<Long> getPks() {
+		return pks;
+	}
+
+	public void setPks(List<Long> pks) {
+		this.pks = pks;
+		this.pksWrap.alreadyInitialized = true;
+	}
+	public PatchRequest addPks(Long...objets) {
+		for(Long o : objets) {
+			addPks(o);
+		}
+		return (PatchRequest)this;
+	}
+	public PatchRequest addPks(Long o) {
+		if(o != null && !pks.contains(o))
+			this.pks.add(o);
+		return (PatchRequest)this;
+	}
+	public PatchRequest setPks(JsonArray objets) {
+		pks.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addPks(o);
+		}
+		return (PatchRequest)this;
+	}
+	public PatchRequest addPks(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addPks(p);
+		}
+		return (PatchRequest)this;
+	}
+	protected PatchRequest pksInit() {
+		if(!pksWrap.alreadyInitialized) {
+			_pks(pks);
+		}
+		pksWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
+	public List<Long> solrPks() {
+		return pks;
+	}
+
+	public String strPks() {
+		return pks == null ? "" : pks.toString();
+	}
+
+	public String jsonPks() {
+		return pks == null ? "" : pks.toString();
+	}
+
+	public String nomAffichagePks() {
+		return null;
+	}
+
+	public String htmTooltipPks() {
+		return null;
+	}
+
+	public String htmPks() {
+		return pks == null ? "" : StringEscapeUtils.escapeHtml4(strPks());
+	}
+
+	/////////////
+	// classes //
+	/////////////
+
+	/**	L'entité « classes »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> classes = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Wrap<List<String>> classesWrap = new Wrap<List<String>>().p(this).c(List.class).var("classes").o(classes);
+
+	/**	<br/>L'entité « classes »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:classes">Trouver l'entité classes dans Solr</a>
+	 * <br/>
+	 * @param classes est l'entité déjà construit. 
+	 **/
+	protected abstract void _classes(List<String> c);
+
+	public List<String> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(List<String> classes) {
+		this.classes = classes;
+		this.classesWrap.alreadyInitialized = true;
+	}
+	public PatchRequest addClasses(String...objets) {
+		for(String o : objets) {
+			addClasses(o);
+		}
+		return (PatchRequest)this;
+	}
+	public PatchRequest addClasses(String o) {
+		if(o != null && !classes.contains(o))
+			this.classes.add(o);
+		return (PatchRequest)this;
+	}
+	public PatchRequest setClasses(JsonArray objets) {
+		classes.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addClasses(o);
+		}
+		return (PatchRequest)this;
+	}
+	protected PatchRequest classesInit() {
+		if(!classesWrap.alreadyInitialized) {
+			_classes(classes);
+		}
+		classesWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
+	public List<String> solrClasses() {
+		return classes;
+	}
+
+	public String strClasses() {
+		return classes == null ? "" : classes.toString();
+	}
+
+	public String jsonClasses() {
+		return classes == null ? "" : classes.toString();
+	}
+
+	public String nomAffichageClasses() {
+		return null;
+	}
+
+	public String htmTooltipClasses() {
+		return null;
+	}
+
+	public String htmClasses() {
+		return classes == null ? "" : StringEscapeUtils.escapeHtml4(strClasses());
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -496,6 +794,10 @@ public abstract class PatchRequestGen<DEV> extends Object {
 		numPATCHInit();
 		uuidInit();
 		idInit();
+		emptyInit();
+		pkInit();
+		pksInit();
+		classesInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -547,6 +849,14 @@ public abstract class PatchRequestGen<DEV> extends Object {
 				return oPatchRequest.uuid;
 			case "id":
 				return oPatchRequest.id;
+			case "empty":
+				return oPatchRequest.empty;
+			case "pk":
+				return oPatchRequest.pk;
+			case "pks":
+				return oPatchRequest.pks;
+			case "classes":
+				return oPatchRequest.classes;
 			default:
 				return null;
 		}

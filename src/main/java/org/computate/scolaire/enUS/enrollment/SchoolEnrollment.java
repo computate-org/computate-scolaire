@@ -9,6 +9,7 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.child.SchoolChild;
+import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
@@ -121,6 +122,17 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		if(childSearch.size() > 0) {
 			c.o(childSearch.get(0));
 		}
+	}
+
+	protected void _momSearch(SearchList<SchoolMom> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+		l.setC(SchoolMom.class);
+		l.setStore(true);
+	}
+
+	protected void _moms(Wrap<List<SchoolMom>> c) {
+		c.o(momSearch.getList());
 	}
 
 	protected void _childCompleteName(Wrap<String> c) {

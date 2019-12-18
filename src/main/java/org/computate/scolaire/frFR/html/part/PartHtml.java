@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part; 
+package org.computate.scolaire.frFR.html.part;      
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -45,11 +45,16 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri3
  * Tri.asc: tri4
  * Tri.asc: tri5
+ * Tri.asc: tri6
+ * Tri.asc: tri7
+ * Tri.asc: tri8
+ * Tri.asc: tri9
+ * Tri.asc: tri10
  * Rows: 1000000
  * 
  * Rolex.frFR: SiteAdmin
  * Rolex.enUS: SiteAdmin
-*/                 
+*/                       
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -224,6 +229,20 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: htmlVarForm
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var form
+	 * NomAffichage.frFR: var form
+	 * Definir: true
+	 * HtmlLigne: 8
+	 * HtmlCelulle: 2
+	 */            
+	protected void _htmlVarForm(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: htmlVarInput
 	 * Indexe: true
 	 * Stocke: true
@@ -231,9 +250,38 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.frFR: var input
 	 * Definir: true
 	 * HtmlLigne: 8
-	 * HtmlCelulle: 1
+	 * HtmlCelulle: 3
 	 */            
 	protected void _htmlVarInput(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: htmlVarForEach
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var for each
+	 * NomAffichage.frFR: var for each
+	 * Definir: true
+	 * HtmlLigne: 9
+	 * HtmlCelulle: 1
+	 */             
+	protected void _htmlVarForEach(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: pdfExclude
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: PDF exclude
+	 * NomAffichage.frFR: PDF exclure
+	 * Definir: true
+	 * HtmlLigne: 9
+	 * HtmlCelulle: 2
+	 */            
+	protected void _pdfExclure(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -244,7 +292,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 1
 	 */               
 	protected void _tri1(Couverture<Double> c) {
@@ -258,7 +306,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 2
 	 */               
 	protected void _tri2(Couverture<Double> c) {
@@ -272,7 +320,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 3
 	 */               
 	protected void _tri3(Couverture<Double> c) {
@@ -286,7 +334,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 4
 	 */               
 	protected void _tri4(Couverture<Double> c) {
@@ -300,7 +348,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 5
 	 */               
 	protected void _tri5(Couverture<Double> c) {
@@ -314,7 +362,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 6
 	 */               
 	protected void _tri6(Couverture<Double> c) {
@@ -328,7 +376,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 7
 	 */               
 	protected void _tri7(Couverture<Double> c) {
@@ -342,7 +390,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 8
 	 */               
 	protected void _tri8(Couverture<Double> c) {
@@ -356,7 +404,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 9
 	 */               
 	protected void _tri9(Couverture<Double> c) {
@@ -370,7 +418,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 10
 	 */              
 	protected void _tri10(Couverture<Double> c) {
@@ -394,9 +442,13 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 		if(htmlAvant != null)
 			b.append(htmlAvant);
 		if(htmlVar != null)
-			b.append("{{").append(htmlVar).append("}}");
+			b.append("{").append(htmlVar).append("}");
+		if(htmlVarForEach != null)
+			b.append("for each {").append(htmlVar).append("}");
 		if(htmlVarInput != null)
-			b.append("**").append(htmlVarInput).append("**");
+			b.append("[").append(htmlVarInput).append("]");
+		if(htmlVarForm != null)
+			b.append("[[").append(htmlVarForm).append("]]");
 		if(htmlTexte != null)
 			b.append(htmlTexte);
 		if(htmlApres != null)

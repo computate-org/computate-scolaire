@@ -1,20 +1,39 @@
 package org.computate.scolaire.enUS.enrollment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
+import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.xhtmlrenderer.extend.FontResolver;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import com.lowagie.text.DocumentException;
 
 /**
  * Translate: false
- **/ 
+ **/  
 public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenPage> {
 
 	public void initDeepEnrollmentFormPage() {
@@ -49,6 +68,27 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 	 * {@inheritDoc}
 	 * 
 	 **/
+	protected void _mom_(Wrap<SchoolMom> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _dad_(Wrap<SchoolDad> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _guardian_(Wrap<SchoolGuardian> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
 	protected void _htmlPartSearch(SearchList<HtmlPart> l) {
 		if(enrollmentDesign != null) {
 			l.setQuery("*:*");
@@ -76,25 +116,7 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 
 	@Override public void htmlPageLayout() {
 		if(htmlPartList != null) {
-			for(HtmlPart htmlPart : htmlPartList) {
-				String htmlVar = htmlPart.getHtmlVar();
-				String htmlVarInput = htmlPart.getHtmlVarInput();
-
-				s(htmlPart.getHtmlBefore());
-				if(htmlVar != null)
-					s(obtainForClass(htmlVar));
-				if(htmlVarInput != null) {
-					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, "."));
-					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
-					try {
-						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
-						l();
-					} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-						ExceptionUtils.rethrow(e);
-					}
-				}
-				s(htmlPart.getHtmlAfter());
-			}
+			htmlPageLayout2(htmlPartList, null, 0, htmlPartList.size());
 		}
 	}
 }

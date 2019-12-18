@@ -94,8 +94,20 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 	@Override public void htmlScriptEnrollmentDesignGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestEnrollmentDesignHtmlPartKeys($('#formEnrollmentDesignHtmlPartKeys'), $('#listEnrollmentDesignHtmlPartKeys_Page')); ");
-		tl(1, "websocketEnrollmentDesign(); ");
+		tl(1, "suggestEnrollmentDesignHtmlPartKeys([{'name':'fq','value':'enrollmentDesignKey:", siteRequest_.getRequestPk(), "'}], $('#listEnrollmentDesignHtmlPartKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "websocketEnrollmentDesign(async function(patchRequest) {");
+		tl(2, "var pk = patchRequest['pk'];");
+		tl(2, "var pks = patchRequest['pks'];");
+		tl(2, "var classes = patchRequest['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchEnrollmentDesignVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -340,6 +352,10 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageEnrollmentDesign(o);
 				}
@@ -504,7 +520,7 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 							.a("name", "suggestEnrollmentDesign")
 							.a("id", "suggestEnrollmentDesign", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggestEnrollmentDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListEnrollmentDesign", id, "')); ")
+							.a("oninput", "suggestEnrollmentDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListEnrollmentDesign", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 							.fg();
 
 					} p.g("form");

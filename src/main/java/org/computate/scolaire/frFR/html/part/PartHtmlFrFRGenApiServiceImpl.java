@@ -101,6 +101,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					creerPOSTPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
+						RequetePatch requetePatch = new RequetePatch();
+							requetePatch.setRows(1);
+							requetePatch.setNumFound(1L);
+							requetePatch.initLoinRequetePatch(requeteSite);
+							requeteSite.setRequetePatch_(requetePatch);
 							PartHtml partHtml = b.result();
 							sqlPOSTPartHtml(partHtml, c -> {
 								if(c.succeeded()) {
@@ -117,6 +122,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requetePatch).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurPartHtml(requeteSite, gestionnaireEvenements, i);
@@ -234,9 +240,21 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entiteVar), pk));
 						break;
+					case "htmlVarForm":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entiteVar), pk));
+						break;
 					case "htmlVarInput":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entiteVar), pk));
+						break;
+					case "htmlVarForEach":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entiteVar), pk));
+						break;
+					case "pdfExclure":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("pdfExclure", jsonObject.getBoolean(entiteVar), pk));
 						break;
 					case "tri1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
@@ -317,62 +335,75 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				if(a.succeeded()) {
 					utilisateurPartHtml(requeteSite, b -> {
 						if(b.succeeded()) {
-							recherchePartHtml(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<PartHtml> listePartHtml = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listePartHtml.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									recherchePartHtml(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<PartHtml> listePartHtml = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listePartHtml.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listePartHtml.getRows());
-									requetePatch.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHPartHtml(requetePatch, listePartHtml, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listePartHtml.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlPartHtml(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHPartHtml(requetePatch, listePartHtml, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHPartHtml(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurPartHtml(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHPartHtml(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurPartHtml(requeteSite, gestionnaireEvenements, c);
+									erreurPartHtml(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -403,9 +434,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listePartHtml.size() == 1) {
+					PartHtml o = listePartHtml.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchPartHtml(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listePartHtml.size());
 				if(listePartHtml.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketPartHtml", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHPartHtml(requetePatch, listePartHtml, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHPartHtml(requetePatch, gestionnaireEvenements);
@@ -414,6 +450,20 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				erreurPartHtml(listePartHtml.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchPartHtml(PartHtml o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			if(o.getDesignInscriptionCle() != null) {
+				if(!pks.contains(o.getDesignInscriptionCle())) {
+					pks.add(o.getDesignInscriptionCle());
+					classes.add("DesignInscription");
+				}
+			}
+		}
 	}
 
 	public Future<PartHtml> futurePATCHPartHtml(PartHtml o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -428,6 +478,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(c.succeeded()) {
 									indexerPartHtml(partHtml, d -> {
 										if(d.succeeded()) {
+											requetePatchPartHtml(partHtml);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -607,6 +658,16 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
 						}
 						break;
+					case "setHtmlVarForm":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForm"));
+						} else {
+							o2.setHtmlVarForm(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarForm", o2.jsonHtmlVarForm(), pk));
+						}
+						break;
 					case "setHtmlVarInput":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -615,6 +676,26 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							o2.setHtmlVarInput(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
+						}
+						break;
+					case "setHtmlVarForEach":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach"));
+						} else {
+							o2.setHtmlVarForEach(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarForEach", o2.jsonHtmlVarForEach(), pk));
+						}
+						break;
+					case "setPdfExclure":
+						if(requeteJson.getBoolean(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "pdfExclure"));
+						} else {
+							o2.setPdfExclure(requeteJson.getBoolean(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("pdfExclure", o2.jsonPdfExclure(), pk));
 						}
 						break;
 					case "setTri1":
@@ -1001,16 +1082,20 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			ToutEcrivain w = ToutEcrivain.creer(listePartHtml.getRequeteSite_(), buffer);
 			PartHtmlPage page = new PartHtmlPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/part-html");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listePartHtml.size() == 1)
+				requeteSite.setRequetePk(listePartHtml.get(0).getPk());
 			requeteSite.setW(w);
 			page.setListePartHtml(listePartHtml);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinPartHtmlPage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1066,8 +1151,14 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				return "htmlTexte_indexed_string";
 			case "htmlVar":
 				return "htmlVar_indexed_string";
+			case "htmlVarForm":
+				return "htmlVarForm_indexed_string";
 			case "htmlVarInput":
 				return "htmlVarInput_indexed_string";
+			case "htmlVarForEach":
+				return "htmlVarForEach_indexed_string";
+			case "pdfExclure":
+				return "pdfExclure_indexed_boolean";
 			case "tri1":
 				return "tri1_indexed_double";
 			case "tri2":

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;     
+package org.computate.scolaire.frFR.inscription;                                                                         
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
+import org.computate.scolaire.frFR.mere.MereScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -52,6 +53,17 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperFormSearchPage.enUS: ClusterPage
  * ApiUriFormSearchPage.enUS: /enrollment/form
  * 
+ * ApiMethode.frFR: PdfPageRecherche
+ * PagePdfPageRecherche.frFR: InscriptionPdfPage
+ * PageSuperPdfPageRecherche.frFR: ClusterPage
+ * ApiUriPdfPageRecherche.frFR: /inscription/pdf
+ * 
+ * ApiMethode.enUS: PdfSearchPage
+ * PagePdfSearchPage.enUS: EnrollmentPdfPage
+ * PageSuperPdfSearchPage.enUS: ClusterPage
+ * ApiUriPdfSearchPage.enUS: /enrollment/pdf
+ * ApiTypeMedia200PdfSearchPage: application/pdf
+ * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
  * Couleur: purple
@@ -60,7 +72,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/   
+*/  
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -270,7 +282,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school moms in the database. 
 	 * NomAffichage.frFR: mères
 	 * NomAffichage.enUS: moms
-	 */             
+	 */            
 	protected void _mereCles(List<Long> o) {}
 
 	/**
@@ -423,11 +435,41 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: enfantRecherche
 	 * r.enUS: childSearch
 	 * Ignorer: true
-	 */      
+	 */                               
 	protected void _enfant_(Couverture<EnfantScolaire> c) {
 		if(enfantRecherche.size() > 0) {
 			c.o(enfantRecherche.get(0));
 		}
+	}
+
+	/**
+	 * Var.enUS: momSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: enfantCle
+	 * r.enUS: childKey
+	 * Ignorer: true
+	 */
+	protected void _mereRecherche(ListeRecherche<MereScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+		l.setC(MereScolaire.class);
+		l.setStocker(true);
+	}
+
+	/**  
+	 * {@inheritDoc}
+	 * Var.enUS: moms
+	 * r: mereRecherche
+	 * r.enUS: momSearch
+	 * Ignorer: true
+	 */      
+	protected void _meres(Couverture<List<MereScolaire>> c) {
+		c.o(mereRecherche.getList());
 	}
 
 	/**

@@ -255,62 +255,75 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					userSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolSession(siteRequest, false, true, null, c -> {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<SchoolSession> listSchoolSession = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modified");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									aSearchSchoolSession(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<SchoolSession> listSchoolSession = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-									PatchRequest patchRequest = new PatchRequest();
-									patchRequest.setRows(listSchoolSession.getRows());
-									patchRequest.setNumFound(Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolSession.size())));
-									patchRequest.initDeepPatchRequest(siteRequest);
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listPATCHSchoolSession(patchRequest, listSchoolSession, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection sqlConnection = siteRequest.getSqlConnection();
-														if(sqlConnection == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															sqlConnection.commit(e -> {
-																	if(e.succeeded()) {
-																	sqlConnection.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											PatchRequest patchRequest = new PatchRequest();
+											patchRequest.setRows(listSchoolSession.getRows());
+											patchRequest.setNumFound(Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolSession.size())));
+											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchoolSession(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHSchoolSession(patchRequest, listSchoolSession, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PATCHSchoolSession(patchRequest, eventHandler);
+										} else {
+											errorSchoolSession(siteRequest, eventHandler, c);
 										}
-									);
-									response200PATCHSchoolSession(patchRequest, eventHandler);
+									});
 								} else {
-									errorSchoolSession(siteRequest, eventHandler, c);
+									errorSchoolSession(siteRequest, eventHandler, b);
 								}
 							});
 						} else {
@@ -341,9 +354,14 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(patchRequest.getNumFound() == 1 && listSchoolSession.size() == 1) {
+					SchoolSession o = listSchoolSession.get(0);
+					patchRequest.setPk(o.getPk());
+					patchRequestSchoolSession(o);
+				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolSession.size());
 				if(listSchoolSession.next(dt)) {
-				siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(patchRequest).toString());
+					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHSchoolSession(patchRequest, listSchoolSession, dt, eventHandler);
 				} else {
 					response200PATCHSchoolSession(patchRequest, eventHandler);
@@ -352,6 +370,26 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				errorSchoolSession(listSchoolSession.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void patchRequestSchoolSession(SchoolSession o) {
+		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
+		if(patchRequest != null) {
+			List<Long> pks = patchRequest.getPks();
+			List<String> classes = patchRequest.getClasses();
+			for(Long pk : o.getAgeKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SchoolAge");
+				}
+			}
+			if(o.getSeasonKey() != null) {
+				if(!pks.contains(o.getSeasonKey())) {
+					pks.add(o.getSeasonKey());
+					classes.add("SchoolSeason");
+				}
+			}
+		}
 	}
 
 	public Future<SchoolSession> futurePATCHSchoolSession(SchoolSession o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -366,6 +404,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(c.succeeded()) {
 									indexSchoolSession(schoolSession, d -> {
 										if(d.succeeded()) {
+											patchRequestSchoolSession(schoolSession);
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -793,15 +832,20 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			AllWriter w = AllWriter.create(listSchoolSession.getSiteRequest_(), buffer);
 			SessionPage page = new SessionPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/session");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			if(listSchoolSession.size() == 1)
+				siteRequest.setRequestPk(listSchoolSession.get(0).getPk());
+			siteRequest.setW(w);
 			page.setListSchoolSession(listSchoolSession);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepSessionPage(siteRequest);
 			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}

@@ -1,6 +1,8 @@
 package org.computate.scolaire.enUS.request.patch;
 
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -29,5 +31,18 @@ public class PatchRequest extends PatchRequestGen<Object> {
 
 	protected void _id(Wrap<String> c) {
 		c.o("PATCH-" + uuid);
+	}
+
+	protected void _empty(Wrap<Boolean> c) {
+		c.o(Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getJsonObject).map(b -> b.size()).orElse(0) == 0);
+	}
+
+	protected void _pk(Wrap<Long> c) {
+	}
+
+	protected void _pks(List<Long> c) {
+	}
+
+	protected void _classes(List<String> c) {
 	}
 }

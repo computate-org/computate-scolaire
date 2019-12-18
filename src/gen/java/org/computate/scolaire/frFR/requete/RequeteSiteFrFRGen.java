@@ -19,6 +19,8 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import io.vertx.core.http.CaseInsensitiveHeaders;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -148,6 +150,43 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				setRequeteSite_(requeteSite_Couverture.o);
 		}
 		requeteSite_Couverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	///////////////////
+	// requetePatch_ //
+	///////////////////
+
+	/**	L'entité « requetePatch_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected RequetePatch requetePatch_;
+	@JsonIgnore
+	public Couverture<RequetePatch> requetePatch_Couverture = new Couverture<RequetePatch>().p(this).c(RequetePatch.class).var("requetePatch_").o(requetePatch_);
+
+	/**	<br/>L'entité « requetePatch_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requetePatch_">Trouver l'entité requetePatch_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _requetePatch_(Couverture<RequetePatch> c);
+
+	public RequetePatch getRequetePatch_() {
+		return requetePatch_;
+	}
+
+	public void setRequetePatch_(RequetePatch requetePatch_) {
+		this.requetePatch_ = requetePatch_;
+		this.requetePatch_Couverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR requetePatch_Init() {
+		if(!requetePatch_Couverture.dejaInitialise) {
+			_requetePatch_(requetePatch_Couverture);
+			if(requetePatch_ == null)
+				setRequetePatch_(requetePatch_Couverture.o);
+		}
+		requetePatch_Couverture.dejaInitialise(true);
 		return (RequeteSiteFrFR)this;
 	}
 
@@ -1265,6 +1304,43 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	////////////////////
+	// requeteEnTetes //
+	////////////////////
+
+	/**	L'entité « requeteEnTetes »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected CaseInsensitiveHeaders requeteEnTetes;
+	@JsonIgnore
+	public Couverture<CaseInsensitiveHeaders> requeteEnTetesCouverture = new Couverture<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requeteEnTetes").o(requeteEnTetes);
+
+	/**	<br/>L'entité « requeteEnTetes »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteEnTetes">Trouver l'entité requeteEnTetes dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c);
+
+	public CaseInsensitiveHeaders getRequeteEnTetes() {
+		return requeteEnTetes;
+	}
+
+	public void setRequeteEnTetes(CaseInsensitiveHeaders requeteEnTetes) {
+		this.requeteEnTetes = requeteEnTetes;
+		this.requeteEnTetesCouverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR requeteEnTetesInit() {
+		if(!requeteEnTetesCouverture.dejaInitialise) {
+			_requeteEnTetes(requeteEnTetesCouverture);
+			if(requeteEnTetes == null)
+				setRequeteEnTetes(requeteEnTetesCouverture.o);
+		}
+		requeteEnTetesCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
 	////////////////////////
 	// cryptageMotDePasse //
 	////////////////////////
@@ -1569,6 +1645,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		siteContexte_Init();
 		configSite_Init();
 		requeteSite_Init();
+		requetePatch_Init();
 		vertxInit();
 		objetJsonInit();
 		rechercheSolrInit();
@@ -1592,6 +1669,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		pageAdminInit();
 		requetePkInit();
 		connexionSqlInit();
+		requeteEnTetesInit();
 		cryptageMotDePasseInit();
 		cryptageChiffreCrypterInit();
 		cryptageChiffreDecrypterInit();
@@ -1646,6 +1724,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.configSite_;
 			case "requeteSite_":
 				return oRequeteSiteFrFR.requeteSite_;
+			case "requetePatch_":
+				return oRequeteSiteFrFR.requetePatch_;
 			case "vertx":
 				return oRequeteSiteFrFR.vertx;
 			case "objetJson":
@@ -1692,6 +1772,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.requetePk;
 			case "connexionSql":
 				return oRequeteSiteFrFR.connexionSql;
+			case "requeteEnTetes":
+				return oRequeteSiteFrFR.requeteEnTetes;
 			case "cryptageMotDePasse":
 				return oRequeteSiteFrFR.cryptageMotDePasse;
 			case "cryptageChiffreCrypter":

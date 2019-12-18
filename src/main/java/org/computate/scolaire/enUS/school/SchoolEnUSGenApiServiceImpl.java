@@ -259,62 +259,75 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(a.succeeded()) {
 					userSchool(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchool(siteRequest, false, true, null, c -> {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<School> listSchool = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modified");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									aSearchSchool(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<School> listSchool = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-									PatchRequest patchRequest = new PatchRequest();
-									patchRequest.setRows(listSchool.getRows());
-									patchRequest.setNumFound(listSchool.getQueryResponse().getResults().getNumFound());
-									patchRequest.initDeepPatchRequest(siteRequest);
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listPATCHSchool(patchRequest, listSchool, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection sqlConnection = siteRequest.getSqlConnection();
-														if(sqlConnection == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															sqlConnection.commit(e -> {
-																	if(e.succeeded()) {
-																	sqlConnection.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											PatchRequest patchRequest = new PatchRequest();
+											patchRequest.setRows(listSchool.getRows());
+											patchRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
+											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlSchool(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHSchool(patchRequest, listSchool, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PATCHSchool(patchRequest, eventHandler);
+										} else {
+											errorSchool(siteRequest, eventHandler, c);
 										}
-									);
-									response200PATCHSchool(patchRequest, eventHandler);
+									});
 								} else {
-									errorSchool(siteRequest, eventHandler, c);
+									errorSchool(siteRequest, eventHandler, b);
 								}
 							});
 						} else {
@@ -345,9 +358,14 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(patchRequest.getNumFound() == 1 && listSchool.size() == 1) {
+					School o = listSchool.get(0);
+					patchRequest.setPk(o.getPk());
+					patchRequestSchool(o);
+				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchool.size());
 				if(listSchool.next(dt)) {
-				siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
+					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHSchool(patchRequest, listSchool, dt, eventHandler);
 				} else {
 					response200PATCHSchool(patchRequest, eventHandler);
@@ -356,6 +374,20 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void patchRequestSchool(School o) {
+		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
+		if(patchRequest != null) {
+			List<Long> pks = patchRequest.getPks();
+			List<String> classes = patchRequest.getClasses();
+			for(Long pk : o.getYearKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("SchoolYear");
+				}
+			}
+		}
 	}
 
 	public Future<School> futurePATCHSchool(School o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -370,6 +402,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								if(c.succeeded()) {
 									indexSchool(school, d -> {
 										if(d.succeeded()) {
+											patchRequestSchool(school);
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -807,15 +840,20 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			AllWriter w = AllWriter.create(listSchool.getSiteRequest_(), buffer);
 			SchoolPage page = new SchoolPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/school");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			if(listSchool.size() == 1)
+				siteRequest.setRequestPk(listSchool.get(0).getPk());
+			siteRequest.setW(w);
 			page.setListSchool(listSchool);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepSchoolPage(siteRequest);
 			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1100,7 +1138,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			listSearch.setC(School.class);
 			if(entityList != null)
 				listSearch.addFields(entityList);
-			listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.set("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
@@ -1161,6 +1198,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
+			if(listSearch.getSorts().size() == 0)
+				listSearch.addSort("created_indexed_date", ORDER.desc);
 			listSearch.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(listSearch));
 		} catch(Exception e) {

@@ -259,62 +259,75 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					utilisateurGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheGardienScolaire(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									rechercheGardienScolaire(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listeGardienScolaire.getRows());
-									requetePatch.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listeGardienScolaire.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeGardienScolaire.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlGardienScolaire(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+									erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -345,9 +358,14 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listeGardienScolaire.size() == 1) {
+					GardienScolaire o = listeGardienScolaire.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchGardienScolaire(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeGardienScolaire.size());
 				if(listeGardienScolaire.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
@@ -356,6 +374,20 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				erreurGardienScolaire(listeGardienScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchGardienScolaire(GardienScolaire o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getInscriptionCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("InscriptionScolaire");
+				}
+			}
+		}
 	}
 
 	public Future<GardienScolaire> futurePATCHGardienScolaire(GardienScolaire o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -370,6 +402,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								if(c.succeeded()) {
 									indexerGardienScolaire(gardienScolaire, d -> {
 										if(d.succeeded()) {
+											requetePatchGardienScolaire(gardienScolaire);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -807,15 +840,20 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			ToutEcrivain w = ToutEcrivain.creer(listeGardienScolaire.getRequeteSite_(), buffer);
 			GardienPage page = new GardienPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/gardien");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listeGardienScolaire.size() == 1)
+				requeteSite.setRequetePk(listeGardienScolaire.get(0).getPk());
+			requeteSite.setW(w);
 			page.setListeGardienScolaire(listeGardienScolaire);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinGardienPage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1116,7 +1154,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			listeRecherche.setC(GardienScolaire.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1177,6 +1214,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

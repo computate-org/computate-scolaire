@@ -95,8 +95,20 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 	@Override public void htmlScriptDesignInscriptionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereDesignInscriptionPartHtmlCles($('#formDesignInscriptionPartHtmlCles'), $('#listDesignInscriptionPartHtmlCles_Page')); ");
-		tl(1, "websocketDesignInscription(); ");
+		tl(1, "suggereDesignInscriptionPartHtmlCles([{'name':'fq','value':'designInscriptionCle:", requeteSite_.getRequetePk(), "'}], $('#listDesignInscriptionPartHtmlCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "websocketDesignInscription(async function(requetePatch) {");
+		tl(2, "var pk = requetePatch['pk'];");
+		tl(2, "var pks = requetePatch['pks'];");
+		tl(2, "var classes = requetePatch['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchDesignInscriptionVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -341,6 +353,10 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageDesignInscription(o);
 				}
@@ -541,7 +557,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 							.a("name", "suggereDesignInscription")
 							.a("id", "suggereDesignInscription", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereDesignInscriptionObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignInscription", id, "')); ")
+							.a("oninput", "suggereDesignInscriptionObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignInscription", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 							.fg();
 
 					} p.g("form");

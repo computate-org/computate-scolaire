@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -197,17 +198,23 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return designInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionCle());
 	}
 
+	public void inputDesignInscriptionCle(String classeApiMethodeMethode) {
+		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "design d'inscription")
+				.a("class", "valeur suggereDesignInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setDesignInscriptionCle")
+				.a("id", classeApiMethodeMethode, "_designInscriptionCle")
+				.a("autocomplete", "off")
+				.a("oninput", "suggerePartHtmlDesignInscriptionCle($(this).val() ? rechercherDesignInscriptionFiltres($('#suggerePartHtmlDesignInscriptionCle')) : [{'name':'fq','value':'partHtmlCles:", pk, "'}], $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+			.fg();
+
+	}
+
 	public void htmDesignInscriptionCle(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlDesignInscriptionCle").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeurPartHtmlCles")
-						.a("class", "valeurPartHtmlCles ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlDesignInscriptionCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
@@ -225,17 +232,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-									e("input")
-										.a("type", "text")
-										.a("placeholder", "design d'inscription")
-										.a("class", "valeur suggereDesignInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
-										.a("name", "setDesignInscriptionCle")
-										.a("id", classeApiMethodeMethode, "_designInscriptionCle")
-										.a("autocomplete", "off")
-										.a("oninput", "suggerePartHtmlDesignInscriptionCle($('#' + ($(this).val() ? 'suggere' : 'form') + 'PartHtmlDesignInscriptionCle'), $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "')); ")
-									.fg();
-
+								inputDesignInscriptionCle(classeApiMethodeMethode);
 								} g("div");
 							} g("div");
 						} g("div");
@@ -246,7 +243,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postDesignInscriptionVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggerePartHtmlDesignInscriptionCle($('#' + ($('#", classeApiMethodeMethode, "designInscriptionCle').val() ? 'suggere' : 'form') + 'PartHtmlDesignInscriptionCle'), $('#listPartHtmlDesignInscriptionCle_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "designInscriptionCle'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designInscriptionCle')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designInscriptionCle')); });")
+										.a("onclick", "postDesignInscriptionVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designInscriptionCle')); });")
 										.f().sx("ajouter un design d'inscription")
 									.g("button");
 								} g("div");
@@ -319,17 +316,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlLien == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlLien());
 	}
 
+	public void inputHtmlLien(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "lien")
+			.a("id", classeApiMethodeMethode, "_htmlLien");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlLien w3-input w3-border ");
+				a("name", "setHtmlLien");
+			} else {
+				a("class", "valeurHtmlLien w3-input w3-border ");
+				a("name", "htmlLien");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlLien', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlLien')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlLien')); }); ");
+			}
+			a("value", strHtmlLien())
+		.fg();
+
+	}
+
 	public void htmHtmlLien(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlLien").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlLien").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -338,24 +348,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "lien")
-									.a("id", classeApiMethodeMethode, "_htmlLien");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlLien w3-input w3-border ");
-										a("name", "setHtmlLien");
-									} else {
-										a("class", "valeurHtmlLien w3-input w3-border ");
-										a("name", "htmlLien");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlLien', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlLien')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlLien')); }); ");
-									}
-									a("value", strHtmlLien())
-								.fg();
-
+								inputHtmlLien(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -436,17 +429,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlElement == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlElement());
 	}
 
+	public void inputHtmlElement(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "HTML élément")
+			.a("id", classeApiMethodeMethode, "_htmlElement");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlElement w3-input w3-border ");
+				a("name", "setHtmlElement");
+			} else {
+				a("class", "valeurHtmlElement w3-input w3-border ");
+				a("name", "htmlElement");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlElement', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlElement')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlElement')); }); ");
+			}
+			a("value", strHtmlElement())
+		.fg();
+
+	}
+
 	public void htmHtmlElement(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlElement").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlElement").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -455,24 +461,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "HTML élément")
-									.a("id", classeApiMethodeMethode, "_htmlElement");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlElement w3-input w3-border ");
-										a("name", "setHtmlElement");
-									} else {
-										a("class", "valeurHtmlElement w3-input w3-border ");
-										a("name", "htmlElement");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlElement', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlElement')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlElement')); }); ");
-									}
-									a("value", strHtmlElement())
-								.fg();
-
+								inputHtmlElement(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -553,17 +542,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlId == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlId());
 	}
 
+	public void inputHtmlId(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "HTML ID")
+			.a("id", classeApiMethodeMethode, "_htmlId");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlId w3-input w3-border ");
+				a("name", "setHtmlId");
+			} else {
+				a("class", "valeurHtmlId w3-input w3-border ");
+				a("name", "htmlId");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlId')); }); ");
+			}
+			a("value", strHtmlId())
+		.fg();
+
+	}
+
 	public void htmHtmlId(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlId").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlId").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -572,24 +574,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "HTML ID")
-									.a("id", classeApiMethodeMethode, "_htmlId");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlId w3-input w3-border ");
-										a("name", "setHtmlId");
-									} else {
-										a("class", "valeurHtmlId w3-input w3-border ");
-										a("name", "htmlId");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlId')); }); ");
-									}
-									a("value", strHtmlId())
-								.fg();
-
+								inputHtmlId(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -670,17 +655,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlClasses == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlClasses());
 	}
 
+	public void inputHtmlClasses(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "HTML classes")
+			.a("id", classeApiMethodeMethode, "_htmlClasses");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlClasses w3-input w3-border ");
+				a("name", "setHtmlClasses");
+			} else {
+				a("class", "valeurHtmlClasses w3-input w3-border ");
+				a("name", "htmlClasses");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlClasses', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlClasses')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlClasses')); }); ");
+			}
+			a("value", strHtmlClasses())
+		.fg();
+
+	}
+
 	public void htmHtmlClasses(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlClasses").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlClasses").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -689,24 +687,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "HTML classes")
-									.a("id", classeApiMethodeMethode, "_htmlClasses");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlClasses w3-input w3-border ");
-										a("name", "setHtmlClasses");
-									} else {
-										a("class", "valeurHtmlClasses w3-input w3-border ");
-										a("name", "htmlClasses");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlClasses', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlClasses')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlClasses')); }); ");
-									}
-									a("value", strHtmlClasses())
-								.fg();
-
+								inputHtmlClasses(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -787,17 +768,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlStyle == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlStyle());
 	}
 
+	public void inputHtmlStyle(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "HTML style")
+			.a("id", classeApiMethodeMethode, "_htmlStyle");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlStyle w3-input w3-border ");
+				a("name", "setHtmlStyle");
+			} else {
+				a("class", "valeurHtmlStyle w3-input w3-border ");
+				a("name", "htmlStyle");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlStyle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlStyle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlStyle')); }); ");
+			}
+			a("value", strHtmlStyle())
+		.fg();
+
+	}
+
 	public void htmHtmlStyle(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlStyle").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlStyle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -806,24 +800,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "HTML style")
-									.a("id", classeApiMethodeMethode, "_htmlStyle");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlStyle w3-input w3-border ");
-										a("name", "setHtmlStyle");
-									} else {
-										a("class", "valeurHtmlStyle w3-input w3-border ");
-										a("name", "htmlStyle");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlStyle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlStyle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlStyle')); }); ");
-									}
-									a("value", strHtmlStyle())
-								.fg();
-
+								inputHtmlStyle(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -904,17 +881,28 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlAvant == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlAvant());
 	}
 
+	public void inputHtmlAvant(String classeApiMethodeMethode) {
+		e("textarea")
+			.a("placeholder", "HTML avant")
+			.a("id", classeApiMethodeMethode, "_htmlAvant");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlAvant w3-input w3-border ");
+				a("name", "setHtmlAvant");
+			} else {
+				a("class", "valeurHtmlAvant w3-input w3-border ");
+				a("name", "htmlAvant");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlAvant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlAvant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlAvant')); }); ");
+			}
+		f().sx(strHtmlAvant()).g("textarea");
+
+	}
+
 	public void htmHtmlAvant(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlAvant").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlAvant").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -923,22 +911,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("textarea")
-									.a("placeholder", "HTML avant")
-									.a("id", classeApiMethodeMethode, "_htmlAvant");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlAvant w3-input w3-border ");
-										a("name", "setHtmlAvant");
-									} else {
-										a("class", "valeurHtmlAvant w3-input w3-border ");
-										a("name", "htmlAvant");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlAvant', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlAvant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlAvant')); }); ");
-									}
-								f().sx(strHtmlAvant()).g("textarea");
-
+								inputHtmlAvant(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1019,17 +992,28 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlApres == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlApres());
 	}
 
+	public void inputHtmlApres(String classeApiMethodeMethode) {
+		e("textarea")
+			.a("placeholder", "HTML après")
+			.a("id", classeApiMethodeMethode, "_htmlApres");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlApres w3-input w3-border ");
+				a("name", "setHtmlApres");
+			} else {
+				a("class", "valeurHtmlApres w3-input w3-border ");
+				a("name", "htmlApres");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlApres', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlApres')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlApres')); }); ");
+			}
+		f().sx(strHtmlApres()).g("textarea");
+
+	}
+
 	public void htmHtmlApres(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlApres").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlApres").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1038,22 +1022,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("textarea")
-									.a("placeholder", "HTML après")
-									.a("id", classeApiMethodeMethode, "_htmlApres");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlApres w3-input w3-border ");
-										a("name", "setHtmlApres");
-									} else {
-										a("class", "valeurHtmlApres w3-input w3-border ");
-										a("name", "htmlApres");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlApres', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlApres')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlApres')); }); ");
-									}
-								f().sx(strHtmlApres()).g("textarea");
-
+								inputHtmlApres(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1134,17 +1103,28 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlTexte == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlTexte());
 	}
 
+	public void inputHtmlTexte(String classeApiMethodeMethode) {
+		e("textarea")
+			.a("placeholder", "texte")
+			.a("id", classeApiMethodeMethode, "_htmlTexte");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlTexte w3-input w3-border ");
+				a("name", "setHtmlTexte");
+			} else {
+				a("class", "valeurHtmlTexte w3-input w3-border ");
+				a("name", "htmlTexte");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlTexte', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlTexte')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlTexte')); }); ");
+			}
+		f().sx(strHtmlTexte()).g("textarea");
+
+	}
+
 	public void htmHtmlTexte(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlTexte").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlTexte").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1153,22 +1133,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("textarea")
-									.a("placeholder", "texte")
-									.a("id", classeApiMethodeMethode, "_htmlTexte");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlTexte w3-input w3-border ");
-										a("name", "setHtmlTexte");
-									} else {
-										a("class", "valeurHtmlTexte w3-input w3-border ");
-										a("name", "htmlTexte");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlTexte', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlTexte')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlTexte')); }); ");
-									}
-								f().sx(strHtmlTexte()).g("textarea");
-
+								inputHtmlTexte(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1249,17 +1214,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlVar == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVar());
 	}
 
+	public void inputHtmlVar(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "var")
+			.a("id", classeApiMethodeMethode, "_htmlVar");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlVar w3-input w3-border ");
+				a("name", "setHtmlVar");
+			} else {
+				a("class", "valeurHtmlVar w3-input w3-border ");
+				a("name", "htmlVar");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVar', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVar')); }); ");
+			}
+			a("value", strHtmlVar())
+		.fg();
+
+	}
+
 	public void htmHtmlVar(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlVar").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlVar").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1268,24 +1246,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "var")
-									.a("id", classeApiMethodeMethode, "_htmlVar");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlVar w3-input w3-border ");
-										a("name", "setHtmlVar");
-									} else {
-										a("class", "valeurHtmlVar w3-input w3-border ");
-										a("name", "htmlVar");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVar', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVar')); }); ");
-									}
-									a("value", strHtmlVar())
-								.fg();
-
+								inputHtmlVar(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1293,6 +1254,119 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
 									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVar')); $('#", classeApiMethodeMethode, "_htmlVar').val(null); patchPartHtmlVal([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVar', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVar')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// htmlVarForm //
+	/////////////////
+
+	/**	L'entité « htmlVarForm »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String htmlVarForm;
+	@JsonIgnore
+	public Couverture<String> htmlVarFormCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarForm").o(htmlVarForm);
+
+	/**	<br/>L'entité « htmlVarForm »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForm">Trouver l'entité htmlVarForm dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVarForm(Couverture<String> c);
+
+	public String getHtmlVarForm() {
+		return htmlVarForm;
+	}
+
+	public void setHtmlVarForm(String htmlVarForm) {
+		this.htmlVarForm = htmlVarForm;
+		this.htmlVarFormCouverture.dejaInitialise = true;
+	}
+	protected PartHtml htmlVarFormInit() {
+		if(!htmlVarFormCouverture.dejaInitialise) {
+			_htmlVarForm(htmlVarFormCouverture);
+			if(htmlVarForm == null)
+				setHtmlVarForm(htmlVarFormCouverture.o);
+		}
+		htmlVarFormCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public String solrHtmlVarForm() {
+		return htmlVarForm;
+	}
+
+	public String strHtmlVarForm() {
+		return htmlVarForm == null ? "" : htmlVarForm;
+	}
+
+	public String jsonHtmlVarForm() {
+		return htmlVarForm == null ? "" : htmlVarForm;
+	}
+
+	public String nomAffichageHtmlVarForm() {
+		return "var form";
+	}
+
+	public String htmTooltipHtmlVarForm() {
+		return null;
+	}
+
+	public String htmHtmlVarForm() {
+		return htmlVarForm == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarForm());
+	}
+
+	public void inputHtmlVarForm(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "var form")
+			.a("id", classeApiMethodeMethode, "_htmlVarForm");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlVarForm w3-input w3-border ");
+				a("name", "setHtmlVarForm");
+			} else {
+				a("class", "valeurHtmlVarForm w3-input w3-border ");
+				a("name", "htmlVarForm");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarForm', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForm')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForm')); }); ");
+			}
+			a("value", strHtmlVarForm())
+		.fg();
+
+	}
+
+	public void htmHtmlVarForm(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggerePartHtmlHtmlVarForm").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_htmlVarForm").a("class", "").f().sx("var form").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputHtmlVarForm(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarForm')); $('#", classeApiMethodeMethode, "_htmlVarForm').val(null); patchPartHtmlVal([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarForm', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForm')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForm')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -1366,17 +1440,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return htmlVarInput == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarInput());
 	}
 
+	public void inputHtmlVarInput(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "var input")
+			.a("id", classeApiMethodeMethode, "_htmlVarInput");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlVarInput w3-input w3-border ");
+				a("name", "setHtmlVarInput");
+			} else {
+				a("class", "valeurHtmlVarInput w3-input w3-border ");
+				a("name", "htmlVarInput");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarInput', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarInput')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarInput')); }); ");
+			}
+			a("value", strHtmlVarInput())
+		.fg();
+
+	}
+
 	public void htmHtmlVarInput(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlHtmlVarInput").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlHtmlVarInput").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1385,24 +1472,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "var input")
-									.a("id", classeApiMethodeMethode, "_htmlVarInput");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setHtmlVarInput w3-input w3-border ");
-										a("name", "setHtmlVarInput");
-									} else {
-										a("class", "valeurHtmlVarInput w3-input w3-border ");
-										a("name", "htmlVarInput");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarInput', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarInput')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarInput')); }); ");
-									}
-									a("value", strHtmlVarInput())
-								.fg();
-
+								inputHtmlVarInput(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1415,6 +1485,227 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									} g("button");
 								} g("div");
 							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////
+	// htmlVarForEach //
+	////////////////////
+
+	/**	L'entité « htmlVarForEach »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String htmlVarForEach;
+	@JsonIgnore
+	public Couverture<String> htmlVarForEachCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarForEach").o(htmlVarForEach);
+
+	/**	<br/>L'entité « htmlVarForEach »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForEach">Trouver l'entité htmlVarForEach dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVarForEach(Couverture<String> c);
+
+	public String getHtmlVarForEach() {
+		return htmlVarForEach;
+	}
+
+	public void setHtmlVarForEach(String htmlVarForEach) {
+		this.htmlVarForEach = htmlVarForEach;
+		this.htmlVarForEachCouverture.dejaInitialise = true;
+	}
+	protected PartHtml htmlVarForEachInit() {
+		if(!htmlVarForEachCouverture.dejaInitialise) {
+			_htmlVarForEach(htmlVarForEachCouverture);
+			if(htmlVarForEach == null)
+				setHtmlVarForEach(htmlVarForEachCouverture.o);
+		}
+		htmlVarForEachCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public String solrHtmlVarForEach() {
+		return htmlVarForEach;
+	}
+
+	public String strHtmlVarForEach() {
+		return htmlVarForEach == null ? "" : htmlVarForEach;
+	}
+
+	public String jsonHtmlVarForEach() {
+		return htmlVarForEach == null ? "" : htmlVarForEach;
+	}
+
+	public String nomAffichageHtmlVarForEach() {
+		return "var for each";
+	}
+
+	public String htmTooltipHtmlVarForEach() {
+		return null;
+	}
+
+	public String htmHtmlVarForEach() {
+		return htmlVarForEach == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarForEach());
+	}
+
+	public void inputHtmlVarForEach(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "var for each")
+			.a("id", classeApiMethodeMethode, "_htmlVarForEach");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setHtmlVarForEach w3-input w3-border ");
+				a("name", "setHtmlVarForEach");
+			} else {
+				a("class", "valeurHtmlVarForEach w3-input w3-border ");
+				a("name", "htmlVarForEach");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarForEach', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }); ");
+			}
+			a("value", strHtmlVarForEach())
+		.fg();
+
+	}
+
+	public void htmHtmlVarForEach(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggerePartHtmlHtmlVarForEach").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_htmlVarForEach").a("class", "").f().sx("var for each").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputHtmlVarForEach(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarForEach')); $('#", classeApiMethodeMethode, "_htmlVarForEach').val(null); patchPartHtmlVal([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarForEach', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////
+	// pdfExclure //
+	////////////////
+
+	/**	L'entité « pdfExclure »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean pdfExclure;
+	@JsonIgnore
+	public Couverture<Boolean> pdfExclureCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pdfExclure").o(pdfExclure);
+
+	/**	<br/>L'entité « pdfExclure »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pdfExclure">Trouver l'entité pdfExclure dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pdfExclure(Couverture<Boolean> c);
+
+	public Boolean getPdfExclure() {
+		return pdfExclure;
+	}
+
+	public void setPdfExclure(Boolean pdfExclure) {
+		this.pdfExclure = pdfExclure;
+		this.pdfExclureCouverture.dejaInitialise = true;
+	}
+	public PartHtml setPdfExclure(String o) {
+		this.pdfExclure = Boolean.parseBoolean(o);
+		this.pdfExclureCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	protected PartHtml pdfExclureInit() {
+		if(!pdfExclureCouverture.dejaInitialise) {
+			_pdfExclure(pdfExclureCouverture);
+			if(pdfExclure == null)
+				setPdfExclure(pdfExclureCouverture.o);
+		}
+		pdfExclureCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public Boolean solrPdfExclure() {
+		return pdfExclure;
+	}
+
+	public String strPdfExclure() {
+		return pdfExclure == null ? "" : pdfExclure.toString();
+	}
+
+	public String jsonPdfExclure() {
+		return pdfExclure == null ? "" : pdfExclure.toString();
+	}
+
+	public String nomAffichagePdfExclure() {
+		return "PDF exclure";
+	}
+
+	public String htmTooltipPdfExclure() {
+		return null;
+	}
+
+	public String htmPdfExclure() {
+		return pdfExclure == null ? "" : StringEscapeUtils.escapeHtml4(strPdfExclure());
+	}
+
+	public void inputPdfExclure(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classeApiMethodeMethode, "_pdfExclure")
+			.a("value", "true");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPdfExclure");
+				a("name", "setPdfExclure");
+			} else {
+				a("class", "valeurPdfExclure");
+				a("name", "pdfExclure");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPdfExclure', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_pdfExclure')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_pdfExclure')); }); ");
+			}
+			;
+			if(getPdfExclure() != null && getPdfExclure())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmPdfExclure(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggerePartHtmlPdfExclure").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_pdfExclure").a("class", "").f().sx("PDF exclure").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPdfExclure(classeApiMethodeMethode);
+							} g("div");
 						} g("div");
 					} g("div");
 				} g("div");
@@ -1489,17 +1780,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri1 == null ? "" : StringEscapeUtils.escapeHtml4(strTri1());
 	}
 
+	public void inputTri1(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri1")
+			.a("id", classeApiMethodeMethode, "_tri1");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri1 w3-input w3-border ");
+				a("name", "setTri1");
+			} else {
+				a("class", "valeurTri1 w3-input w3-border ");
+				a("name", "tri1");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri1', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri1')); }); ");
+			}
+			a("value", strTri1())
+		.fg();
+
+	}
+
 	public void htmTri1(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri1").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri1").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1508,24 +1812,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri1")
-									.a("id", classeApiMethodeMethode, "_tri1");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri1 w3-input w3-border ");
-										a("name", "setTri1");
-									} else {
-										a("class", "valeurTri1 w3-input w3-border ");
-										a("name", "tri1");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri1', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri1')); }); ");
-									}
-									a("value", strTri1())
-								.fg();
-
+								inputTri1(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1612,17 +1899,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri2 == null ? "" : StringEscapeUtils.escapeHtml4(strTri2());
 	}
 
+	public void inputTri2(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri2")
+			.a("id", classeApiMethodeMethode, "_tri2");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri2 w3-input w3-border ");
+				a("name", "setTri2");
+			} else {
+				a("class", "valeurTri2 w3-input w3-border ");
+				a("name", "tri2");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri2', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri2')); }); ");
+			}
+			a("value", strTri2())
+		.fg();
+
+	}
+
 	public void htmTri2(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri2").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri2").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1631,24 +1931,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri2")
-									.a("id", classeApiMethodeMethode, "_tri2");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri2 w3-input w3-border ");
-										a("name", "setTri2");
-									} else {
-										a("class", "valeurTri2 w3-input w3-border ");
-										a("name", "tri2");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri2', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri2')); }); ");
-									}
-									a("value", strTri2())
-								.fg();
-
+								inputTri2(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1735,17 +2018,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri3 == null ? "" : StringEscapeUtils.escapeHtml4(strTri3());
 	}
 
+	public void inputTri3(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri3")
+			.a("id", classeApiMethodeMethode, "_tri3");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri3 w3-input w3-border ");
+				a("name", "setTri3");
+			} else {
+				a("class", "valeurTri3 w3-input w3-border ");
+				a("name", "tri3");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri3', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri3')); }); ");
+			}
+			a("value", strTri3())
+		.fg();
+
+	}
+
 	public void htmTri3(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri3").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri3").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1754,24 +2050,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri3")
-									.a("id", classeApiMethodeMethode, "_tri3");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri3 w3-input w3-border ");
-										a("name", "setTri3");
-									} else {
-										a("class", "valeurTri3 w3-input w3-border ");
-										a("name", "tri3");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri3', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri3')); }); ");
-									}
-									a("value", strTri3())
-								.fg();
-
+								inputTri3(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1858,17 +2137,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri4 == null ? "" : StringEscapeUtils.escapeHtml4(strTri4());
 	}
 
+	public void inputTri4(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri4")
+			.a("id", classeApiMethodeMethode, "_tri4");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri4 w3-input w3-border ");
+				a("name", "setTri4");
+			} else {
+				a("class", "valeurTri4 w3-input w3-border ");
+				a("name", "tri4");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri4', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri4')); }); ");
+			}
+			a("value", strTri4())
+		.fg();
+
+	}
+
 	public void htmTri4(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri4").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri4").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -1877,24 +2169,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri4")
-									.a("id", classeApiMethodeMethode, "_tri4");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri4 w3-input w3-border ");
-										a("name", "setTri4");
-									} else {
-										a("class", "valeurTri4 w3-input w3-border ");
-										a("name", "tri4");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri4', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri4')); }); ");
-									}
-									a("value", strTri4())
-								.fg();
-
+								inputTri4(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -1981,17 +2256,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri5 == null ? "" : StringEscapeUtils.escapeHtml4(strTri5());
 	}
 
+	public void inputTri5(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri5")
+			.a("id", classeApiMethodeMethode, "_tri5");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri5 w3-input w3-border ");
+				a("name", "setTri5");
+			} else {
+				a("class", "valeurTri5 w3-input w3-border ");
+				a("name", "tri5");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri5', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri5')); }); ");
+			}
+			a("value", strTri5())
+		.fg();
+
+	}
+
 	public void htmTri5(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri5").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri5").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2000,24 +2288,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri5")
-									.a("id", classeApiMethodeMethode, "_tri5");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri5 w3-input w3-border ");
-										a("name", "setTri5");
-									} else {
-										a("class", "valeurTri5 w3-input w3-border ");
-										a("name", "tri5");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri5', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri5')); }); ");
-									}
-									a("value", strTri5())
-								.fg();
-
+								inputTri5(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2104,17 +2375,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri6 == null ? "" : StringEscapeUtils.escapeHtml4(strTri6());
 	}
 
+	public void inputTri6(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri6")
+			.a("id", classeApiMethodeMethode, "_tri6");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri6 w3-input w3-border ");
+				a("name", "setTri6");
+			} else {
+				a("class", "valeurTri6 w3-input w3-border ");
+				a("name", "tri6");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri6', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri6')); }); ");
+			}
+			a("value", strTri6())
+		.fg();
+
+	}
+
 	public void htmTri6(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri6").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri6").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2123,24 +2407,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri6")
-									.a("id", classeApiMethodeMethode, "_tri6");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri6 w3-input w3-border ");
-										a("name", "setTri6");
-									} else {
-										a("class", "valeurTri6 w3-input w3-border ");
-										a("name", "tri6");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri6', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri6')); }); ");
-									}
-									a("value", strTri6())
-								.fg();
-
+								inputTri6(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2227,17 +2494,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri7 == null ? "" : StringEscapeUtils.escapeHtml4(strTri7());
 	}
 
+	public void inputTri7(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri7")
+			.a("id", classeApiMethodeMethode, "_tri7");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri7 w3-input w3-border ");
+				a("name", "setTri7");
+			} else {
+				a("class", "valeurTri7 w3-input w3-border ");
+				a("name", "tri7");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri7', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri7')); }); ");
+			}
+			a("value", strTri7())
+		.fg();
+
+	}
+
 	public void htmTri7(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri7").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri7").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2246,24 +2526,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri7")
-									.a("id", classeApiMethodeMethode, "_tri7");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri7 w3-input w3-border ");
-										a("name", "setTri7");
-									} else {
-										a("class", "valeurTri7 w3-input w3-border ");
-										a("name", "tri7");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri7', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri7')); }); ");
-									}
-									a("value", strTri7())
-								.fg();
-
+								inputTri7(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2350,17 +2613,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri8 == null ? "" : StringEscapeUtils.escapeHtml4(strTri8());
 	}
 
+	public void inputTri8(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri8")
+			.a("id", classeApiMethodeMethode, "_tri8");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri8 w3-input w3-border ");
+				a("name", "setTri8");
+			} else {
+				a("class", "valeurTri8 w3-input w3-border ");
+				a("name", "tri8");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri8', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri8')); }); ");
+			}
+			a("value", strTri8())
+		.fg();
+
+	}
+
 	public void htmTri8(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri8").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri8").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2369,24 +2645,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri8")
-									.a("id", classeApiMethodeMethode, "_tri8");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri8 w3-input w3-border ");
-										a("name", "setTri8");
-									} else {
-										a("class", "valeurTri8 w3-input w3-border ");
-										a("name", "tri8");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri8', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri8')); }); ");
-									}
-									a("value", strTri8())
-								.fg();
-
+								inputTri8(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2473,17 +2732,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri9 == null ? "" : StringEscapeUtils.escapeHtml4(strTri9());
 	}
 
+	public void inputTri9(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri9")
+			.a("id", classeApiMethodeMethode, "_tri9");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri9 w3-input w3-border ");
+				a("name", "setTri9");
+			} else {
+				a("class", "valeurTri9 w3-input w3-border ");
+				a("name", "tri9");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri9', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri9')); }); ");
+			}
+			a("value", strTri9())
+		.fg();
+
+	}
+
 	public void htmTri9(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri9").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri9").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2492,24 +2764,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri9")
-									.a("id", classeApiMethodeMethode, "_tri9");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri9 w3-input w3-border ");
-										a("name", "setTri9");
-									} else {
-										a("class", "valeurTri9 w3-input w3-border ");
-										a("name", "tri9");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri9', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri9')); }); ");
-									}
-									a("value", strTri9())
-								.fg();
-
+								inputTri9(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2596,17 +2851,30 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return tri10 == null ? "" : StringEscapeUtils.escapeHtml4(strTri10());
 	}
 
+	public void inputTri10(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "tri10")
+			.a("id", classeApiMethodeMethode, "_tri10");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setTri10 w3-input w3-border ");
+				a("name", "setTri10");
+			} else {
+				a("class", "valeurTri10 w3-input w3-border ");
+				a("name", "tri10");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri10', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri10')); }); ");
+			}
+			a("value", strTri10())
+		.fg();
+
+	}
+
 	public void htmTri10(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("span").a("id", "formPartHtmlTri10").f();
-					e("input")
-						.a("type", "hidden")
-						.a("name", "valeur")
-						.a("class", "valeur ")
-						.a("value", pk)
-						.fg();
-				} g("span");
 				{ e("div").a("id", "suggerePartHtmlTri10").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
@@ -2615,24 +2883,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								e("input")
-									.a("type", "text")
-									.a("placeholder", "tri10")
-									.a("id", classeApiMethodeMethode, "_tri10");
-									if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-										a("class", "setTri10 w3-input w3-border ");
-										a("name", "setTri10");
-									} else {
-										a("class", "valeurTri10 w3-input w3-border ");
-										a("name", "tri10");
-									}
-									if("Page".equals(classeApiMethodeMethode)) {
-										a("onclick", "enleverLueur($(this)); ");
-										a("onchange", "patchPartHtmlVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setTri10', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri10')); }); ");
-									}
-									a("value", strTri10())
-								.fg();
-
+								inputTri10(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
@@ -2684,7 +2935,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		htmlApresInit();
 		htmlTexteInit();
 		htmlVarInit();
+		htmlVarFormInit();
 		htmlVarInputInit();
+		htmlVarForEachInit();
+		pdfExclureInit();
 		tri1Init();
 		tri2Init();
 		tri3Init();
@@ -2755,8 +3009,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return oPartHtml.htmlTexte;
 			case "htmlVar":
 				return oPartHtml.htmlVar;
+			case "htmlVarForm":
+				return oPartHtml.htmlVarForm;
 			case "htmlVarInput":
 				return oPartHtml.htmlVarInput;
+			case "htmlVarForEach":
+				return oPartHtml.htmlVarForEach;
+			case "pdfExclure":
+				return oPartHtml.pdfExclure;
 			case "tri1":
 				return oPartHtml.tri1;
 			case "tri2":
@@ -2867,8 +3127,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				setHtmlVar(val);
 				sauvegardesPartHtml.add(var);
 				return val;
+			case "htmlVarForm":
+				setHtmlVarForm(val);
+				sauvegardesPartHtml.add(var);
+				return val;
 			case "htmlVarInput":
 				setHtmlVarInput(val);
+				sauvegardesPartHtml.add(var);
+				return val;
+			case "htmlVarForEach":
+				setHtmlVarForEach(val);
+				sauvegardesPartHtml.add(var);
+				return val;
+			case "pdfExclure":
+				setPdfExclure(val);
 				sauvegardesPartHtml.add(var);
 				return val;
 			case "tri1":
@@ -2998,10 +3270,28 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					oPartHtml.setHtmlVar(htmlVar);
 			}
 
+			if(sauvegardesPartHtml.contains("htmlVarForm")) {
+				String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
+				if(htmlVarForm != null)
+					oPartHtml.setHtmlVarForm(htmlVarForm);
+			}
+
 			if(sauvegardesPartHtml.contains("htmlVarInput")) {
 				String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
 				if(htmlVarInput != null)
 					oPartHtml.setHtmlVarInput(htmlVarInput);
+			}
+
+			if(sauvegardesPartHtml.contains("htmlVarForEach")) {
+				String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
+				if(htmlVarForEach != null)
+					oPartHtml.setHtmlVarForEach(htmlVarForEach);
+			}
+
+			if(sauvegardesPartHtml.contains("pdfExclure")) {
+				Boolean pdfExclure = (Boolean)solrDocument.get("pdfExclure_stored_boolean");
+				if(pdfExclure != null)
+					oPartHtml.setPdfExclure(pdfExclure);
 			}
 
 			if(sauvegardesPartHtml.contains("tri1")) {
@@ -3177,9 +3467,21 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("htmlVar_indexed_string", htmlVar);
 			document.addField("htmlVar_stored_string", htmlVar);
 		}
+		if(htmlVarForm != null) {
+			document.addField("htmlVarForm_indexed_string", htmlVarForm);
+			document.addField("htmlVarForm_stored_string", htmlVarForm);
+		}
 		if(htmlVarInput != null) {
 			document.addField("htmlVarInput_indexed_string", htmlVarInput);
 			document.addField("htmlVarInput_stored_string", htmlVarInput);
+		}
+		if(htmlVarForEach != null) {
+			document.addField("htmlVarForEach_indexed_string", htmlVarForEach);
+			document.addField("htmlVarForEach_stored_string", htmlVarForEach);
+		}
+		if(pdfExclure != null) {
+			document.addField("pdfExclure_indexed_boolean", pdfExclure);
+			document.addField("pdfExclure_stored_boolean", pdfExclure);
 		}
 		if(tri1 != null) {
 			document.addField("tri1_indexed_double", tri1);
@@ -3296,9 +3598,21 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		if(htmlVar != null)
 			oPartHtml.setHtmlVar(htmlVar);
 
+		String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
+		if(htmlVarForm != null)
+			oPartHtml.setHtmlVarForm(htmlVarForm);
+
 		String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
 		if(htmlVarInput != null)
 			oPartHtml.setHtmlVarInput(htmlVarInput);
+
+		String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
+		if(htmlVarForEach != null)
+			oPartHtml.setHtmlVarForEach(htmlVarForEach);
+
+		Boolean pdfExclure = (Boolean)solrDocument.get("pdfExclure_stored_boolean");
+		if(pdfExclure != null)
+			oPartHtml.setPdfExclure(pdfExclure);
 
 		Double tri1 = (Double)solrDocument.get("tri1_stored_double");
 		if(tri1 != null)
@@ -3348,7 +3662,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designInscriptionCle, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarInput, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
+		return Objects.hash(super.hashCode(), designInscriptionCle, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarForm, htmlVarInput, htmlVarForEach, pdfExclure, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
 	}
 
 	////////////
@@ -3372,7 +3686,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				&& Objects.equals( htmlApres, that.htmlApres )
 				&& Objects.equals( htmlTexte, that.htmlTexte )
 				&& Objects.equals( htmlVar, that.htmlVar )
+				&& Objects.equals( htmlVarForm, that.htmlVarForm )
 				&& Objects.equals( htmlVarInput, that.htmlVarInput )
+				&& Objects.equals( htmlVarForEach, that.htmlVarForEach )
+				&& Objects.equals( pdfExclure, that.pdfExclure )
 				&& Objects.equals( tri1, that.tri1 )
 				&& Objects.equals( tri2, that.tri2 )
 				&& Objects.equals( tri3, that.tri3 )
@@ -3403,7 +3720,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		sb.append( ", htmlApres: \"" ).append(htmlApres).append( "\"" );
 		sb.append( ", htmlTexte: \"" ).append(htmlTexte).append( "\"" );
 		sb.append( ", htmlVar: \"" ).append(htmlVar).append( "\"" );
+		sb.append( ", htmlVarForm: \"" ).append(htmlVarForm).append( "\"" );
 		sb.append( ", htmlVarInput: \"" ).append(htmlVarInput).append( "\"" );
+		sb.append( ", htmlVarForEach: \"" ).append(htmlVarForEach).append( "\"" );
+		sb.append( ", pdfExclure: " ).append(pdfExclure);
 		sb.append( ", tri1: " ).append(tri1);
 		sb.append( ", tri2: " ).append(tri2);
 		sb.append( ", tri3: " ).append(tri3);

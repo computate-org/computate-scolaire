@@ -13,10 +13,13 @@ import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.dad.SchoolDad;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -96,6 +99,117 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 		if(enrollmentDesign != null)
 			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	//////////
+	// mom_ //
+	//////////
+
+	/**	L'entité « mom_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolMom mom_;
+	@JsonIgnore
+	public Wrap<SchoolMom> mom_Wrap = new Wrap<SchoolMom>().p(this).c(SchoolMom.class).var("mom_").o(mom_);
+
+	/**	<br/>L'entité « mom_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mom_">Trouver l'entité mom_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mom_(Wrap<SchoolMom> c);
+
+	public SchoolMom getMom_() {
+		return mom_;
+	}
+
+	public void setMom_(SchoolMom mom_) {
+		this.mom_ = mom_;
+		this.mom_Wrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage mom_Init() {
+		if(!mom_Wrap.alreadyInitialized) {
+			_mom_(mom_Wrap);
+			if(mom_ == null)
+				setMom_(mom_Wrap.o);
+		}
+		mom_Wrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	//////////
+	// dad_ //
+	//////////
+
+	/**	L'entité « dad_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolDad dad_;
+	@JsonIgnore
+	public Wrap<SchoolDad> dad_Wrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("dad_").o(dad_);
+
+	/**	<br/>L'entité « dad_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dad_">Trouver l'entité dad_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _dad_(Wrap<SchoolDad> c);
+
+	public SchoolDad getDad_() {
+		return dad_;
+	}
+
+	public void setDad_(SchoolDad dad_) {
+		this.dad_ = dad_;
+		this.dad_Wrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage dad_Init() {
+		if(!dad_Wrap.alreadyInitialized) {
+			_dad_(dad_Wrap);
+			if(dad_ == null)
+				setDad_(dad_Wrap.o);
+		}
+		dad_Wrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	///////////////
+	// guardian_ //
+	///////////////
+
+	/**	L'entité « guardian_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolGuardian guardian_;
+	@JsonIgnore
+	public Wrap<SchoolGuardian> guardian_Wrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("guardian_").o(guardian_);
+
+	/**	<br/>L'entité « guardian_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardian_">Trouver l'entité guardian_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _guardian_(Wrap<SchoolGuardian> c);
+
+	public SchoolGuardian getGuardian_() {
+		return guardian_;
+	}
+
+	public void setGuardian_(SchoolGuardian guardian_) {
+		this.guardian_ = guardian_;
+		this.guardian_Wrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage guardian_Init() {
+		if(!guardian_Wrap.alreadyInitialized) {
+			_guardian_(guardian_Wrap);
+			if(guardian_ == null)
+				setGuardian_(guardian_Wrap.o);
+		}
+		guardian_Wrap.alreadyInitialized(true);
 		return (EnrollmentFormPage)this;
 	}
 
@@ -206,6 +320,9 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	public void initEnrollmentFormPage() {
 		listEnrollmentDesignInit();
 		enrollmentDesignInit();
+		mom_Init();
+		dad_Init();
+		guardian_Init();
 		htmlPartSearchInit();
 		htmlPartListInit();
 	}
@@ -256,6 +373,12 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 				return oEnrollmentFormPage.listEnrollmentDesign;
 			case "enrollmentDesign":
 				return oEnrollmentFormPage.enrollmentDesign;
+			case "mom_":
+				return oEnrollmentFormPage.mom_;
+			case "dad_":
+				return oEnrollmentFormPage.dad_;
+			case "guardian_":
+				return oEnrollmentFormPage.guardian_;
 			case "htmlPartSearch":
 				return oEnrollmentFormPage.htmlPartSearch;
 			case "htmlPartList":

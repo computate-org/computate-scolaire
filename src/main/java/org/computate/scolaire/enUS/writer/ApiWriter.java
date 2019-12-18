@@ -678,7 +678,11 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			String strResponseDescription = wResponseDescription.toString();
 			wPaths.t(5, "description: ").yamlStr(6, strResponseDescription);
 			wPaths.tl(5, "content:");
-			wPaths.tl(6, classApiMediaType200Method, "; charset=utf-8:");
+
+			if("application/pdf".equals(classApiMediaType200Method))
+				wPaths.tl(6, classApiMediaType200Method, ":");
+			else
+				wPaths.tl(6, classApiMediaType200Method, "; charset=utf-8:");
 		}
 		else {
 	
@@ -753,7 +757,12 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				}
 				wRequestBodies.tl(2, classApiOperationIdMethodResponse, ":");
 				wRequestBodies.tl(3, "content:");
-				wRequestBodies.tl(4, classApiMediaType200Method, "; charset=utf-8:");
+
+				if("application/pdf".equals(classApiMediaType200Method))
+					wRequestBodies.tl(4, classApiMediaType200Method, ":");
+				else
+					wRequestBodies.tl(4, classApiMediaType200Method, "; charset=utf-8:");
+
 				wRequestBodies.tl(5, "schema:");
 				wRequestBodies.tl(6, "$ref: '#/components/schemas/", classApiOperationIdMethodResponse, "'");
 			}
@@ -775,6 +784,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 				wSchemas.tl(tabsSchema + 1, "allOf:");
 				if("text/html".equals(classApiMediaType200Method)) {
 					wSchemas.tl(tabsSchema + 2, "- type: string");
+				}
+				else if("application/pdf".equals(classApiMediaType200Method)) {
+					wSchemas.tl(tabsSchema + 2, "- type: string");
+					wSchemas.tl(tabsSchema + 2, "- format: binary");
 				}
 				else {
 					if(BooleanUtils.isTrue(classExtendsBase)) {

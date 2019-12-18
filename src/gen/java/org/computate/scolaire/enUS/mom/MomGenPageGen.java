@@ -55,6 +55,8 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolMom == null)
 				setListSchoolMom(listSchoolMomWrap.o);
 		}
+		if(listSchoolMom != null)
+			listSchoolMom.initDeepForClass(siteRequest_);
 		listSchoolMomWrap.alreadyInitialized(true);
 		return (MomGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 			if(schoolMom == null)
 				setSchoolMom(schoolMomWrap.o);
 		}
+		if(schoolMom != null)
+			schoolMom.initDeepForClass(siteRequest_);
 		schoolMomWrap.alreadyInitialized(true);
 		return (MomGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestMomGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolMom != null)
+			listSchoolMom.setSiteRequest_(siteRequest_);
+		if(schoolMom != null)
+			schoolMom.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

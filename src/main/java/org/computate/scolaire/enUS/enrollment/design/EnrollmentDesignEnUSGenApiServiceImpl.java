@@ -239,62 +239,75 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					userEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchEnrollmentDesign(siteRequest, false, true, null, c -> {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<EnrollmentDesign> listEnrollmentDesign = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modified");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									aSearchEnrollmentDesign(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<EnrollmentDesign> listEnrollmentDesign = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-									PatchRequest patchRequest = new PatchRequest();
-									patchRequest.setRows(listEnrollmentDesign.getRows());
-									patchRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
-									patchRequest.initDeepPatchRequest(siteRequest);
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection sqlConnection = siteRequest.getSqlConnection();
-														if(sqlConnection == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															sqlConnection.commit(e -> {
-																	if(e.succeeded()) {
-																	sqlConnection.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											PatchRequest patchRequest = new PatchRequest();
+											patchRequest.setRows(listEnrollmentDesign.getRows());
+											patchRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
+											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlEnrollmentDesign(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PATCHEnrollmentDesign(patchRequest, eventHandler);
+										} else {
+											errorEnrollmentDesign(siteRequest, eventHandler, c);
 										}
-									);
-									response200PATCHEnrollmentDesign(patchRequest, eventHandler);
+									});
 								} else {
-									errorEnrollmentDesign(siteRequest, eventHandler, c);
+									errorEnrollmentDesign(siteRequest, eventHandler, b);
 								}
 							});
 						} else {
@@ -325,9 +338,14 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(patchRequest.getNumFound() == 1 && listEnrollmentDesign.size() == 1) {
+					EnrollmentDesign o = listEnrollmentDesign.get(0);
+					patchRequest.setPk(o.getPk());
+					patchRequestEnrollmentDesign(o);
+				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listEnrollmentDesign.size());
 				if(listEnrollmentDesign.next(dt)) {
-				siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(patchRequest).toString());
+					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, eventHandler);
 				} else {
 					response200PATCHEnrollmentDesign(patchRequest, eventHandler);
@@ -336,6 +354,20 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				errorEnrollmentDesign(listEnrollmentDesign.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void patchRequestEnrollmentDesign(EnrollmentDesign o) {
+		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
+		if(patchRequest != null) {
+			List<Long> pks = patchRequest.getPks();
+			List<String> classes = patchRequest.getClasses();
+			for(Long pk : o.getHtmlPartKeys()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("HtmlPart");
+				}
+			}
+		}
 	}
 
 	public Future<EnrollmentDesign> futurePATCHEnrollmentDesign(EnrollmentDesign o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -350,6 +382,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(c.succeeded()) {
 									indexEnrollmentDesign(enrollmentDesign, d -> {
 										if(d.succeeded()) {
+											patchRequestEnrollmentDesign(enrollmentDesign);
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -737,16 +770,20 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 			AllWriter w = AllWriter.create(listEnrollmentDesign.getSiteRequest_(), buffer);
 			EnrollmentDesignPage page = new EnrollmentDesignPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment-design");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			if(listEnrollmentDesign.size() == 1)
+				siteRequest.setRequestPk(listEnrollmentDesign.get(0).getPk());
 			siteRequest.setW(w);
 			page.setListEnrollmentDesign(listEnrollmentDesign);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepEnrollmentDesignPage(siteRequest);
 			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -780,20 +817,20 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				return "objectSuggest_indexed_string";
 			case "pageUrl":
 				return "pageUrl_indexed_string";
-			case "enrollmentDesignKey":
-				return "enrollmentDesignKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
 			case "htmlPartKeys":
 				return "htmlPartKeys_indexed_longs";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
 			case "schoolKey":
 				return "schoolKey_indexed_long";
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
 			case "schoolLocation":
 				return "schoolLocation_indexed_string";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "enrollmentDesignKey":
+				return "enrollmentDesignKey_indexed_long";
 			case "yearStart":
 				return "yearStart_indexed_int";
 			case "yearEnd":

@@ -101,6 +101,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					createPOSTHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
+						PatchRequest patchRequest = new PatchRequest();
+							patchRequest.setRows(1);
+							patchRequest.setNumFound(1L);
+							patchRequest.initDeepPatchRequest(siteRequest);
+							siteRequest.setPatchRequest_(patchRequest);
 							HtmlPart htmlPart = b.result();
 							sqlPOSTHtmlPart(htmlPart, c -> {
 								if(c.succeeded()) {
@@ -117,6 +122,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(patchRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorHtmlPart(siteRequest, eventHandler, i);
@@ -234,9 +240,21 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlVar", jsonObject.getString(entityVar), pk));
 						break;
+					case "htmlVarForm":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarForm", jsonObject.getString(entityVar), pk));
+						break;
 					case "htmlVarInput":
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("htmlVarInput", jsonObject.getString(entityVar), pk));
+						break;
+					case "htmlVarForEach":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("htmlVarForEach", jsonObject.getString(entityVar), pk));
+						break;
+					case "pdfExclude":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("pdfExclude", jsonObject.getBoolean(entityVar), pk));
 						break;
 					case "sort1":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -317,62 +335,75 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				if(a.succeeded()) {
 					userHtmlPart(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchHtmlPart(siteRequest, false, true, null, c -> {
+							SQLConnection sqlConnection = siteRequest.getSqlConnection();
+							sqlConnection.close(c -> {
 								if(c.succeeded()) {
-									SearchList<HtmlPart> listHtmlPart = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modified");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+									aSearchHtmlPart(siteRequest, false, true, null, d -> {
+										if(d.succeeded()) {
+											SearchList<HtmlPart> listHtmlPart = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modified");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-									PatchRequest patchRequest = new PatchRequest();
-									patchRequest.setRows(listHtmlPart.getRows());
-									patchRequest.setNumFound(Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listHtmlPart.size())));
-									patchRequest.initDeepPatchRequest(siteRequest);
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listPATCHHtmlPart(patchRequest, listHtmlPart, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection sqlConnection = siteRequest.getSqlConnection();
-														if(sqlConnection == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															sqlConnection.commit(e -> {
-																	if(e.succeeded()) {
-																	sqlConnection.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											PatchRequest patchRequest = new PatchRequest();
+											patchRequest.setRows(listHtmlPart.getRows());
+											patchRequest.setNumFound(Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listHtmlPart.size())));
+											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
+											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+											workerExecutor.executeBlocking(
+												blockingCodeHandler -> {
+													sqlHtmlPart(siteRequest, e -> {
+														if(e.succeeded()) {
+															try {
+																listPATCHHtmlPart(patchRequest, listHtmlPart, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
+																		if(sqlConnection2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			sqlConnection2.commit(g -> {
+																				if(f.succeeded()) {
+																					sqlConnection2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											response200PATCHHtmlPart(patchRequest, eventHandler);
+										} else {
+											errorHtmlPart(siteRequest, eventHandler, c);
 										}
-									);
-									response200PATCHHtmlPart(patchRequest, eventHandler);
+									});
 								} else {
-									errorHtmlPart(siteRequest, eventHandler, c);
+									errorHtmlPart(siteRequest, eventHandler, b);
 								}
 							});
 						} else {
@@ -403,9 +434,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(patchRequest.getNumFound() == 1 && listHtmlPart.size() == 1) {
+					HtmlPart o = listHtmlPart.get(0);
+					patchRequest.setPk(o.getPk());
+					patchRequestHtmlPart(o);
+				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listHtmlPart.size());
 				if(listHtmlPart.next(dt)) {
-				siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(patchRequest).toString());
+					siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHHtmlPart(patchRequest, listHtmlPart, dt, eventHandler);
 				} else {
 					response200PATCHHtmlPart(patchRequest, eventHandler);
@@ -414,6 +450,20 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				errorHtmlPart(listHtmlPart.getSiteRequest_(), eventHandler, a);
 			}
 		});
+	}
+
+	public void patchRequestHtmlPart(HtmlPart o) {
+		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
+		if(patchRequest != null) {
+			List<Long> pks = patchRequest.getPks();
+			List<String> classes = patchRequest.getClasses();
+			if(o.getEnrollmentDesignKey() != null) {
+				if(!pks.contains(o.getEnrollmentDesignKey())) {
+					pks.add(o.getEnrollmentDesignKey());
+					classes.add("EnrollmentDesign");
+				}
+			}
+		}
 	}
 
 	public Future<HtmlPart> futurePATCHHtmlPart(HtmlPart o,  Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -428,6 +478,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(c.succeeded()) {
 									indexHtmlPart(htmlPart, d -> {
 										if(d.succeeded()) {
+											patchRequestHtmlPart(htmlPart);
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -607,6 +658,16 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							patchSqlParams.addAll(Arrays.asList("htmlVar", o2.jsonHtmlVar(), pk));
 						}
 						break;
+					case "setHtmlVarForm":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForm"));
+						} else {
+							o2.setHtmlVarForm(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarForm", o2.jsonHtmlVarForm(), pk));
+						}
+						break;
 					case "setHtmlVarInput":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -615,6 +676,26 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							o2.setHtmlVarInput(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("htmlVarInput", o2.jsonHtmlVarInput(), pk));
+						}
+						break;
+					case "setHtmlVarForEach":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "htmlVarForEach"));
+						} else {
+							o2.setHtmlVarForEach(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("htmlVarForEach", o2.jsonHtmlVarForEach(), pk));
+						}
+						break;
+					case "setPdfExclude":
+						if(requestJson.getBoolean(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "pdfExclude"));
+						} else {
+							o2.setPdfExclude(requestJson.getBoolean(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("pdfExclude", o2.jsonPdfExclude(), pk));
 						}
 						break;
 					case "setSort1":
@@ -1001,16 +1082,20 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			AllWriter w = AllWriter.create(listHtmlPart.getSiteRequest_(), buffer);
 			HtmlPartPage page = new HtmlPartPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/html-part");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
+			if(listHtmlPart.size() == 1)
+				siteRequest.setRequestPk(listHtmlPart.get(0).getPk());
 			siteRequest.setW(w);
 			page.setListHtmlPart(listHtmlPart);
 			page.setSiteRequest_(siteRequest);
 			page.initDeepHtmlPartPage(siteRequest);
 			page.html();
-			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 		}
@@ -1066,8 +1151,14 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				return "htmlText_indexed_string";
 			case "htmlVar":
 				return "htmlVar_indexed_string";
+			case "htmlVarForm":
+				return "htmlVarForm_indexed_string";
 			case "htmlVarInput":
 				return "htmlVarInput_indexed_string";
+			case "htmlVarForEach":
+				return "htmlVarForEach_indexed_string";
+			case "pdfExclude":
+				return "pdfExclude_indexed_boolean";
 			case "sort1":
 				return "sort1_indexed_double";
 			case "sort2":

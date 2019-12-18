@@ -1436,7 +1436,11 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			String strReponseDescription = wReponseDescription.toString();
 			wChemins.t(5, "description: ").yamlStr(6, strReponseDescription);
 			wChemins.tl(5, "content:");
-			wChemins.tl(6, classeApiTypeMedia200Methode, "; charset=utf-8:");
+
+			if("application/pdf".equals(classeApiTypeMedia200Methode))
+				wChemins.tl(6, classeApiTypeMedia200Methode, ":");
+			else
+				wChemins.tl(6, classeApiTypeMedia200Methode, "; charset=utf-8:");
 		}
 		else {
 	
@@ -1511,7 +1515,12 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				}
 				wCorpsRequetes.tl(2, classeApiOperationIdMethodeReponse, ":");
 				wCorpsRequetes.tl(3, "content:");
-				wCorpsRequetes.tl(4, classeApiTypeMedia200Methode, "; charset=utf-8:");
+
+				if("application/pdf".equals(classeApiTypeMedia200Methode))
+					wCorpsRequetes.tl(4, classeApiTypeMedia200Methode, ":");
+				else
+					wCorpsRequetes.tl(4, classeApiTypeMedia200Methode, "; charset=utf-8:");
+
 				wCorpsRequetes.tl(5, "schema:");
 				wCorpsRequetes.tl(6, "$ref: '#/components/schemas/", classeApiOperationIdMethodeReponse, "'");
 			}
@@ -1533,6 +1542,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 				wSchemas.tl(tabsSchema + 1, "allOf:");
 				if("text/html".equals(classeApiTypeMedia200Methode)) {
 					wSchemas.tl(tabsSchema + 2, "- type: string");
+				}
+				else if("application/pdf".equals(classeApiTypeMedia200Methode)) {
+					wSchemas.tl(tabsSchema + 2, "- type: string");
+					wSchemas.tl(tabsSchema + 2, "- format: binary");
 				}
 				else {
 					if(BooleanUtils.isTrue(classeEtendBase)) {

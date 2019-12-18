@@ -50,7 +50,17 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	protected void _htmlVar(Wrap<String> c) {
 	}
 
+	protected void _htmlVarForm(Wrap<String> c) {
+	}
+
 	protected void _htmlVarInput(Wrap<String> c) {
+	}
+
+	protected void _htmlVarForEach(Wrap<String> c) {
+	}
+
+	protected void _pdfExclude(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _sort1(Wrap<Double> c) {
@@ -89,9 +99,13 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 		if(htmlBefore != null)
 			b.append(htmlBefore);
 		if(htmlVar != null)
-			b.append("{{").append(htmlVar).append("}}");
+			b.append("{").append(htmlVar).append("}");
+		if(htmlVarForEach != null)
+			b.append("for each {").append(htmlVar).append("}");
 		if(htmlVarInput != null)
-			b.append("**").append(htmlVarInput).append("**");
+			b.append("[").append(htmlVarInput).append("]");
+		if(htmlVarForm != null)
+			b.append("[[").append(htmlVarForm).append("]]");
 		if(htmlText != null)
 			b.append(htmlText);
 		if(htmlAfter != null)

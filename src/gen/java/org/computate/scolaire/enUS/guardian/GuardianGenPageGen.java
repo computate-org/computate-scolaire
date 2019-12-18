@@ -55,6 +55,8 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolGuardian == null)
 				setListSchoolGuardian(listSchoolGuardianWrap.o);
 		}
+		if(listSchoolGuardian != null)
+			listSchoolGuardian.initDeepForClass(siteRequest_);
 		listSchoolGuardianWrap.alreadyInitialized(true);
 		return (GuardianGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 			if(schoolGuardian == null)
 				setSchoolGuardian(schoolGuardianWrap.o);
 		}
+		if(schoolGuardian != null)
+			schoolGuardian.initDeepForClass(siteRequest_);
 		schoolGuardianWrap.alreadyInitialized(true);
 		return (GuardianGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestGuardianGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolGuardian != null)
+			listSchoolGuardian.setSiteRequest_(siteRequest_);
+		if(schoolGuardian != null)
+			schoolGuardian.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {

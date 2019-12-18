@@ -19,6 +19,8 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import org.computate.scolaire.enUS.user.SiteUser;
+import io.vertx.core.http.CaseInsensitiveHeaders;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -152,6 +154,43 @@ The site configuration.
 				setSiteRequest_(siteRequest_Wrap.o);
 		}
 		siteRequest_Wrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	///////////////////
+	// patchRequest_ //
+	///////////////////
+
+	/**	L'entité « patchRequest_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected PatchRequest patchRequest_;
+	@JsonIgnore
+	public Wrap<PatchRequest> patchRequest_Wrap = new Wrap<PatchRequest>().p(this).c(PatchRequest.class).var("patchRequest_").o(patchRequest_);
+
+	/**	<br/>L'entité « patchRequest_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:patchRequest_">Trouver l'entité patchRequest_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _patchRequest_(Wrap<PatchRequest> c);
+
+	public PatchRequest getPatchRequest_() {
+		return patchRequest_;
+	}
+
+	public void setPatchRequest_(PatchRequest patchRequest_) {
+		this.patchRequest_ = patchRequest_;
+		this.patchRequest_Wrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS patchRequest_Init() {
+		if(!patchRequest_Wrap.alreadyInitialized) {
+			_patchRequest_(patchRequest_Wrap);
+			if(patchRequest_ == null)
+				setPatchRequest_(patchRequest_Wrap.o);
+		}
+		patchRequest_Wrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -1269,6 +1308,43 @@ The site configuration.
 		return (SiteRequestEnUS)this;
 	}
 
+	////////////////////
+	// requestHeaders //
+	////////////////////
+
+	/**	L'entité « requestHeaders »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected CaseInsensitiveHeaders requestHeaders;
+	@JsonIgnore
+	public Wrap<CaseInsensitiveHeaders> requestHeadersWrap = new Wrap<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requestHeaders").o(requestHeaders);
+
+	/**	<br/>L'entité « requestHeaders »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:requestHeaders">Trouver l'entité requestHeaders dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _requestHeaders(Wrap<CaseInsensitiveHeaders> c);
+
+	public CaseInsensitiveHeaders getRequestHeaders() {
+		return requestHeaders;
+	}
+
+	public void setRequestHeaders(CaseInsensitiveHeaders requestHeaders) {
+		this.requestHeaders = requestHeaders;
+		this.requestHeadersWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS requestHeadersInit() {
+		if(!requestHeadersWrap.alreadyInitialized) {
+			_requestHeaders(requestHeadersWrap);
+			if(requestHeaders == null)
+				setRequestHeaders(requestHeadersWrap.o);
+		}
+		requestHeadersWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
 	////////////////////////
 	// encryptionPassword //
 	////////////////////////
@@ -1573,6 +1649,7 @@ The site configuration.
 		siteContext_Init();
 		siteConfig_Init();
 		siteRequest_Init();
+		patchRequest_Init();
 		vertxInit();
 		jsonObjectInit();
 		solrQueryInit();
@@ -1596,6 +1673,7 @@ The site configuration.
 		pageAdminInit();
 		requestPkInit();
 		sqlConnectionInit();
+		requestHeadersInit();
 		encryptionPasswordInit();
 		encryptionCipherInit();
 		decryptionCipherInit();
@@ -1650,6 +1728,8 @@ The site configuration.
 				return oSiteRequestEnUS.siteConfig_;
 			case "siteRequest_":
 				return oSiteRequestEnUS.siteRequest_;
+			case "patchRequest_":
+				return oSiteRequestEnUS.patchRequest_;
 			case "vertx":
 				return oSiteRequestEnUS.vertx;
 			case "jsonObject":
@@ -1696,6 +1776,8 @@ The site configuration.
 				return oSiteRequestEnUS.requestPk;
 			case "sqlConnection":
 				return oSiteRequestEnUS.sqlConnection;
+			case "requestHeaders":
+				return oSiteRequestEnUS.requestHeaders;
 			case "encryptionPassword":
 				return oSiteRequestEnUS.encryptionPassword;
 			case "encryptionCipher":

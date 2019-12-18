@@ -259,62 +259,75 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				if(a.succeeded()) {
 					utilisateurEcole(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheEcole(requeteSite, false, true, null, c -> {
+							SQLConnection connexionSql = requeteSite.getConnexionSql();
+							connexionSql.close(c -> {
 								if(c.succeeded()) {
-									ListeRecherche<Ecole> listeEcole = c.result();
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-									Date date = null;
-									if(facets != null)
-										date = (Date)facets.get("max_modifie");
-									String dt;
-									if(date == null)
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-									else
-										dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-									listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+									rechercheEcole(requeteSite, false, true, null, d -> {
+										if(d.succeeded()) {
+											ListeRecherche<Ecole> listeEcole = d.result();
+											SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+											Date date = null;
+											if(facets != null)
+												date = (Date)facets.get("max_modifie");
+											String dt;
+											if(date == null)
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+											else
+												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+											listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-									RequetePatch requetePatch = new RequetePatch();
-									requetePatch.setRows(listeEcole.getRows());
-									requetePatch.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
-									requetePatch.initLoinRequetePatch(requeteSite);
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											try {
-												listePATCHEcole(requetePatch, listeEcole, dt, d -> {
-													if(d.succeeded()) {
-														SQLConnection connexionSql = requeteSite.getConnexionSql();
-														if(connexionSql == null) {
-															blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-														} else {
-															connexionSql.commit(e -> {
-																	if(e.succeeded()) {
-																	connexionSql.close(f -> {
-																		if(f.succeeded()) {
-																			blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											RequetePatch requetePatch = new RequetePatch();
+											requetePatch.setRows(listeEcole.getRows());
+											requetePatch.setNumFound(Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeEcole.size())));
+											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
+											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+											executeurTravailleur.executeBlocking(
+												blockingCodeHandler -> {
+													sqlEcole(requeteSite, e -> {
+														if(e.succeeded()) {
+															try {
+																listePATCHEcole(requetePatch, listeEcole, dt, f -> {
+																	if(f.succeeded()) {
+																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
+																		if(connexionSql2 == null) {
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																		} else {
-																			blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																			connexionSql2.commit(g -> {
+																				if(f.succeeded()) {
+																					connexionSql2.close(h -> {
+																						if(g.succeeded()) {
+																							blockingCodeHandler.handle(Future.succeededFuture(h.result()));
+																						} else {
+																							blockingCodeHandler.handle(Future.failedFuture(h.cause()));
+																						}
+																					});
+																				} else {
+																					blockingCodeHandler.handle(Future.failedFuture(g.cause()));
+																				}
+																			});
 																		}
-																	});
-																} else {
-																	blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-																}
-															});
+																	} else {
+																		blockingCodeHandler.handle(Future.failedFuture(f.cause()));
+																	}
+																});
+															} catch(Exception ex) {
+																blockingCodeHandler.handle(Future.failedFuture(ex));
+															}
+														} else {
+															blockingCodeHandler.handle(Future.failedFuture(e.cause()));
 														}
-													} else {
-														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-													}
-												});
-											} catch(Exception e) {
-												blockingCodeHandler.handle(Future.failedFuture(e));
-											}
-										}, resultHandler -> {
-											LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
+													});
+												}, resultHandler -> {
+												}
+											);
+											reponse200PATCHEcole(requetePatch, gestionnaireEvenements);
+										} else {
+											erreurEcole(requeteSite, gestionnaireEvenements, c);
 										}
-									);
-									reponse200PATCHEcole(requetePatch, gestionnaireEvenements);
+									});
 								} else {
-									erreurEcole(requeteSite, gestionnaireEvenements, c);
+									erreurEcole(requeteSite, gestionnaireEvenements, b);
 								}
 							});
 						} else {
@@ -345,9 +358,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
+				if(requetePatch.getNumFound() == 1 && listeEcole.size() == 1) {
+					Ecole o = listeEcole.get(0);
+					requetePatch.setPk(o.getPk());
+					requetePatchEcole(o);
+				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeEcole.size());
 				if(listeEcole.next(dt)) {
-				requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requetePatch).toString());
+					requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requetePatch).toString());
 					listePATCHEcole(requetePatch, listeEcole, dt, gestionnaireEvenements);
 				} else {
 					reponse200PATCHEcole(requetePatch, gestionnaireEvenements);
@@ -356,6 +374,20 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				erreurEcole(listeEcole.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
+	}
+
+	public void requetePatchEcole(Ecole o) {
+		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
+		if(requetePatch != null) {
+			List<Long> pks = requetePatch.getPks();
+			List<String> classes = requetePatch.getClasses();
+			for(Long pk : o.getAnneeCles()) {
+				if(!pks.contains(pk)) {
+					pks.add(pk);
+					classes.add("AnneeScolaire");
+				}
+			}
+		}
 	}
 
 	public Future<Ecole> futurePATCHEcole(Ecole o,  Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
@@ -370,6 +402,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(c.succeeded()) {
 									indexerEcole(ecole, d -> {
 										if(d.succeeded()) {
+											requetePatchEcole(ecole);
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -807,15 +840,20 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			ToutEcrivain w = ToutEcrivain.creer(listeEcole.getRequeteSite_(), buffer);
 			EcolePage page = new EcolePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/ecole");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
+			if(listeEcole.size() == 1)
+				requeteSite.setRequetePk(listeEcole.get(0).getPk());
+			requeteSite.setW(w);
 			page.setListeEcole(listeEcole);
 			page.setRequeteSite_(requeteSite);
 			page.initLoinEcolePage(requeteSite);
 			page.html();
-			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, new CaseInsensitiveHeaders())));
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
@@ -1100,7 +1138,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			listeRecherche.setC(Ecole.class);
 			if(entiteListe != null)
 				listeRecherche.addFields(entiteListe);
-			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.set("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
@@ -1161,6 +1198,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
+			if(listeRecherche.getSorts().size() == 0)
+				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {

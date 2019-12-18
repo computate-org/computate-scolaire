@@ -50,6 +50,31 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
+import org.computate.scolaire.frFR.config.ConfigSite;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.page.MiseEnPage;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -125,13 +150,25 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptInscriptionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereInscriptionScolaireBlocCles($('#formInscriptionScolaireBlocCles'), $('#listInscriptionScolaireBlocCles_Page')); ");
-		tl(1, "suggereInscriptionScolaireEnfantCle($('#formInscriptionScolaireEnfantCle'), $('#listInscriptionScolaireEnfantCle_Page')); ");
-		tl(1, "suggereInscriptionScolaireMereCles($('#formInscriptionScolaireMereCles'), $('#listInscriptionScolaireMereCles_Page')); ");
-		tl(1, "suggereInscriptionScolairePereCles($('#formInscriptionScolairePereCles'), $('#listInscriptionScolairePereCles_Page')); ");
-		tl(1, "suggereInscriptionScolaireGardienCles($('#formInscriptionScolaireGardienCles'), $('#listInscriptionScolaireGardienCles_Page')); ");
-		tl(1, "suggereInscriptionScolairePaiementCles($('#formInscriptionScolairePaiementCles'), $('#listInscriptionScolairePaiementCles_Page')); ");
-		tl(1, "websocketInscriptionScolaire(); ");
+		tl(1, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolaireBlocCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolaireEnfantCle_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolaireMereCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolairePereCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolaireGardienCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCles:", requeteSite_.getRequetePk(), "'}], $('#listInscriptionScolairePaiementCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "websocketInscriptionScolaire(async function(requetePatch) {");
+		tl(2, "var pk = requetePatch['pk'];");
+		tl(2, "var pks = requetePatch['pks'];");
+		tl(2, "var classes = requetePatch['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchInscriptionScolaireVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -476,6 +513,10 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 						.a("type", "hidden")
 						.a("value", o.getPk())
 						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
+						.fg();
 					} g("form");
 					htmlFormPageInscriptionScolaire(o);
 				}
@@ -676,7 +717,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 							.a("name", "suggereInscriptionScolaire")
 							.a("id", "suggereInscriptionScolaire", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "')); ")
+							.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 							.fg();
 
 					} p.g("form");

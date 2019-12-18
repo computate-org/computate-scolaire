@@ -55,6 +55,8 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 			if(listSchoolDad == null)
 				setListSchoolDad(listSchoolDadWrap.o);
 		}
+		if(listSchoolDad != null)
+			listSchoolDad.initDeepForClass(siteRequest_);
 		listSchoolDadWrap.alreadyInitialized(true);
 		return (DadGenPage)this;
 	}
@@ -92,6 +94,8 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 			if(schoolDad == null)
 				setSchoolDad(schoolDadWrap.o);
 		}
+		if(schoolDad != null)
+			schoolDad.initDeepForClass(siteRequest_);
 		schoolDadWrap.alreadyInitialized(true);
 		return (DadGenPage)this;
 	}
@@ -131,6 +135,10 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestDadGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSchoolDad != null)
+			listSchoolDad.setSiteRequest_(siteRequest_);
+		if(schoolDad != null)
+			schoolDad.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
