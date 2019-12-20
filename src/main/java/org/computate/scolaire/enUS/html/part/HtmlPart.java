@@ -98,10 +98,14 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 		StringBuilder b = new StringBuilder();
 		if(htmlBefore != null)
 			b.append(htmlBefore);
-		if(htmlVar != null)
-			b.append("{").append(htmlVar).append("}");
+
 		if(htmlVarForEach != null)
-			b.append("for each {").append(htmlVar).append("}");
+			b.append("for each {").append(htmlVarForEach).append("}").append(" into {").append(htmlVar).append("}");
+		else {
+			if(htmlVar != null)
+				b.append("{").append(htmlVar).append("}");
+		}
+
 		if(htmlVarInput != null)
 			b.append("[").append(htmlVarInput).append("]");
 		if(htmlVarForm != null)

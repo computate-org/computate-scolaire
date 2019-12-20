@@ -28,6 +28,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import java.time.Instant;
 import java.time.ZoneId;
 import org.apache.solr.client.solrj.SolrClient;
@@ -35,6 +36,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import org.computate.scolaire.enUS.dad.SchoolDad;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -271,7 +273,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentBlockKeys($('#' + ($('#", classApiMethodMethod, "blockKeys').val() ? 'suggest' : 'form') + 'SchoolEnrollmentBlockKeys'), $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "blockKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); }); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+										.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
 										.f().sx("add a block")
 									.g("button");
 								} g("div");
@@ -872,7 +874,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentChildKey($('#' + ($('#", classApiMethodMethod, "childKey').val() ? 'suggest' : 'form') + 'SchoolEnrollmentChildKey'), $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "childKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "childKey')); }); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
+										.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
 										.f().sx("add a child")
 									.g("button");
 								} g("div");
@@ -1014,7 +1016,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentMomKeys($('#' + ($('#", classApiMethodMethod, "momKeys').val() ? 'suggest' : 'form') + 'SchoolEnrollmentMomKeys'), $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "momKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "momKeys')); }); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
+										.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
 										.f().sx("add a mom")
 									.g("button");
 								} g("div");
@@ -1156,7 +1158,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentDadKeys($('#' + ($('#", classApiMethodMethod, "dadKeys').val() ? 'suggest' : 'form') + 'SchoolEnrollmentDadKeys'), $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "dadKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); }); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
+										.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
 										.f().sx("add a dad")
 									.g("button");
 								} g("div");
@@ -1298,7 +1300,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentGuardianKeys($('#' + ($('#", classApiMethodMethod, "guardianKeys').val() ? 'suggest' : 'form') + 'SchoolEnrollmentGuardianKeys'), $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "guardianKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); }); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
+										.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
 										.f().sx("add a guardian")
 									.g("button");
 								} g("div");
@@ -1440,7 +1442,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolEnrollmentPaymentKeys($('#' + ($('#", classApiMethodMethod, "paymentKeys').val() ? 'suggest' : 'form') + 'SchoolEnrollmentPaymentKeys'), $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "paymentKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); }); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+										.a("onclick", "postSchoolPaymentVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 										.f().sx("add a payment")
 									.g("button");
 								} g("div");
@@ -2106,6 +2108,178 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return (SchoolEnrollment)this;
 	}
 
+	///////////////
+	// dadSearch //
+	///////////////
+
+	/**	L'entité « dadSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolDad>(). 
+	 */
+	@JsonIgnore
+	protected SearchList<SchoolDad> dadSearch = new SearchList<SchoolDad>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolDad>> dadSearchWrap = new Wrap<SearchList<SchoolDad>>().p(this).c(SearchList.class).var("dadSearch").o(dadSearch);
+
+	/**	<br/>L'entité « dadSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolDad>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadSearch">Trouver l'entité dadSearch dans Solr</a>
+	 * <br/>
+	 * @param dadSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _dadSearch(SearchList<SchoolDad> l);
+
+	public SearchList<SchoolDad> getDadSearch() {
+		return dadSearch;
+	}
+
+	public void setDadSearch(SearchList<SchoolDad> dadSearch) {
+		this.dadSearch = dadSearch;
+		this.dadSearchWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment dadSearchInit() {
+		if(!dadSearchWrap.alreadyInitialized) {
+			_dadSearch(dadSearch);
+		}
+		dadSearch.initDeepForClass(siteRequest_);
+		dadSearchWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	//////////
+	// dads //
+	//////////
+
+	/**	L'entité « dads »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected List<SchoolDad> dads;
+	@JsonIgnore
+	public Wrap<List<SchoolDad>> dadsWrap = new Wrap<List<SchoolDad>>().p(this).c(List.class).var("dads").o(dads);
+
+	/**	<br/>L'entité « dads »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dads">Trouver l'entité dads dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _dads(Wrap<List<SchoolDad>> c);
+
+	public List<SchoolDad> getDads() {
+		return dads;
+	}
+
+	public void setDads(List<SchoolDad> dads) {
+		this.dads = dads;
+		this.dadsWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addDads(SchoolDad...objets) {
+		for(SchoolDad o : objets) {
+			addDads(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addDads(SchoolDad o) {
+		if(o != null && !dads.contains(o))
+			this.dads.add(o);
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment dadsInit() {
+		if(!dadsWrap.alreadyInitialized) {
+			_dads(dadsWrap);
+			if(dads == null)
+				setDads(dadsWrap.o);
+		}
+		dadsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	////////////////////
+	// guardianSearch //
+	////////////////////
+
+	/**	L'entité « guardianSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolGuardian>(). 
+	 */
+	@JsonIgnore
+	protected SearchList<SchoolGuardian> guardianSearch = new SearchList<SchoolGuardian>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolGuardian>> guardianSearchWrap = new Wrap<SearchList<SchoolGuardian>>().p(this).c(SearchList.class).var("guardianSearch").o(guardianSearch);
+
+	/**	<br/>L'entité « guardianSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolGuardian>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianSearch">Trouver l'entité guardianSearch dans Solr</a>
+	 * <br/>
+	 * @param guardianSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _guardianSearch(SearchList<SchoolGuardian> l);
+
+	public SearchList<SchoolGuardian> getGuardianSearch() {
+		return guardianSearch;
+	}
+
+	public void setGuardianSearch(SearchList<SchoolGuardian> guardianSearch) {
+		this.guardianSearch = guardianSearch;
+		this.guardianSearchWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment guardianSearchInit() {
+		if(!guardianSearchWrap.alreadyInitialized) {
+			_guardianSearch(guardianSearch);
+		}
+		guardianSearch.initDeepForClass(siteRequest_);
+		guardianSearchWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	///////////////
+	// guardians //
+	///////////////
+
+	/**	L'entité « guardians »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected List<SchoolGuardian> guardians;
+	@JsonIgnore
+	public Wrap<List<SchoolGuardian>> guardiansWrap = new Wrap<List<SchoolGuardian>>().p(this).c(List.class).var("guardians").o(guardians);
+
+	/**	<br/>L'entité « guardians »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardians">Trouver l'entité guardians dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _guardians(Wrap<List<SchoolGuardian>> c);
+
+	public List<SchoolGuardian> getGuardians() {
+		return guardians;
+	}
+
+	public void setGuardians(List<SchoolGuardian> guardians) {
+		this.guardians = guardians;
+		this.guardiansWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addGuardians(SchoolGuardian...objets) {
+		for(SchoolGuardian o : objets) {
+			addGuardians(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addGuardians(SchoolGuardian o) {
+		if(o != null && !guardians.contains(o))
+			this.guardians.add(o);
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment guardiansInit() {
+		if(!guardiansWrap.alreadyInitialized) {
+			_guardians(guardiansWrap);
+			if(guardians == null)
+				setGuardians(guardiansWrap.o);
+		}
+		guardiansWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
 	///////////////////////
 	// childCompleteName //
 	///////////////////////
@@ -2409,6 +2583,58 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmSchoolAddress() {
 		return schoolAddress == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAddress());
+	}
+
+	public void inputSchoolAddress(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "address")
+			.a("id", classApiMethodMethod, "_schoolAddress");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSchoolAddress w3-input w3-border ");
+				a("name", "setSchoolAddress");
+			} else {
+				a("class", "valueSchoolAddress w3-input w3-border ");
+				a("name", "schoolAddress");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+			}
+			a("value", strSchoolAddress())
+		.fg();
+
+	}
+
+	public void htmSchoolAddress(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolEnrollmentSchoolAddress").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classApiMethodMethod, "_schoolAddress").a("class", "").f().sx("address").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSchoolAddress(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////
@@ -5324,6 +5550,232 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////////
+	// enrollmentParentSignature //
+	///////////////////////////////
+
+	/**	L'entité « enrollmentParentSignature »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enrollmentParentSignature;
+	@JsonIgnore
+	public Wrap<String> enrollmentParentSignatureWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentSignature").o(enrollmentParentSignature);
+
+	/**	<br/>L'entité « enrollmentParentSignature »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentSignature">Trouver l'entité enrollmentParentSignature dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentParentSignature(Wrap<String> c);
+
+	public String getEnrollmentParentSignature() {
+		return enrollmentParentSignature;
+	}
+
+	public void setEnrollmentParentSignature(String enrollmentParentSignature) {
+		this.enrollmentParentSignature = enrollmentParentSignature;
+		this.enrollmentParentSignatureWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentParentSignatureInit() {
+		if(!enrollmentParentSignatureWrap.alreadyInitialized) {
+			_enrollmentParentSignature(enrollmentParentSignatureWrap);
+			if(enrollmentParentSignature == null)
+				setEnrollmentParentSignature(enrollmentParentSignatureWrap.o);
+		}
+		enrollmentParentSignatureWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentParentSignature() {
+		return enrollmentParentSignature;
+	}
+
+	public String strEnrollmentParentSignature() {
+		return enrollmentParentSignature == null ? "" : enrollmentParentSignature;
+	}
+
+	public String jsonEnrollmentParentSignature() {
+		return enrollmentParentSignature == null ? "" : enrollmentParentSignature;
+	}
+
+	public String nomAffichageEnrollmentParentSignature() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentParentSignature() {
+		return null;
+	}
+
+	public String htmEnrollmentParentSignature() {
+		return enrollmentParentSignature == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentParentSignature());
+	}
+
+	public void inputEnrollmentParentSignature(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("id", classApiMethodMethod, "_enrollmentParentSignature");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentParentSignature w3-input w3-border ");
+				a("name", "setEnrollmentParentSignature");
+			} else {
+				a("class", "valueEnrollmentParentSignature w3-input w3-border ");
+				a("name", "enrollmentParentSignature");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentParentSignature', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentSignature')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentSignature')); }); ");
+			}
+			a("value", strEnrollmentParentSignature())
+		.fg();
+
+	}
+
+	public void htmEnrollmentParentSignature(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolEnrollmentEnrollmentParentSignature").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnrollmentParentSignature(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentParentSignature')); $('#", classApiMethodMethod, "_enrollmentParentSignature').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentParentSignature', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentSignature')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentSignature')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////////
+	// enrollmentParentDate //
+	//////////////////////////
+
+	/**	L'entité « enrollmentParentDate »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected LocalDate enrollmentParentDate;
+	@JsonIgnore
+	public Wrap<LocalDate> enrollmentParentDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentParentDate").o(enrollmentParentDate);
+
+	/**	<br/>L'entité « enrollmentParentDate »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentDate">Trouver l'entité enrollmentParentDate dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentParentDate(Wrap<LocalDate> c);
+
+	public LocalDate getEnrollmentParentDate() {
+		return enrollmentParentDate;
+	}
+
+	public void setEnrollmentParentDate(LocalDate enrollmentParentDate) {
+		this.enrollmentParentDate = enrollmentParentDate;
+		this.enrollmentParentDateWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setEnrollmentParentDate(Instant o) {
+		this.enrollmentParentDate = LocalDate.from(o);
+		this.enrollmentParentDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolEnrollment setEnrollmentParentDate(String o) {
+		this.enrollmentParentDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentParentDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setEnrollmentParentDate(Date o) {
+		this.enrollmentParentDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentParentDateWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentParentDateInit() {
+		if(!enrollmentParentDateWrap.alreadyInitialized) {
+			_enrollmentParentDate(enrollmentParentDateWrap);
+			if(enrollmentParentDate == null)
+				setEnrollmentParentDate(enrollmentParentDateWrap.o);
+		}
+		enrollmentParentDateWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Date solrEnrollmentParentDate() {
+		return enrollmentParentDate == null ? null : Date.from(enrollmentParentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strEnrollmentParentDate() {
+		return enrollmentParentDate == null ? "" : enrollmentParentDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	}
+
+	public String jsonEnrollmentParentDate() {
+		return enrollmentParentDate == null ? "" : enrollmentParentDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	}
+
+	public String nomAffichageEnrollmentParentDate() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentParentDate() {
+		return null;
+	}
+
+	public String htmEnrollmentParentDate() {
+		return enrollmentParentDate == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentParentDate());
+	}
+
+	public void inputEnrollmentParentDate(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("class", "w3-input w3-border datepicker ")
+			.a("placeholder", "MM/DD/YYYY")
+			.a("data-timeformat", "MM/DD/YYYY")
+			.a("id", classApiMethodMethod, "_enrollmentParentDate")
+			.a("onclick", "removeGlow($(this)); ")
+			.a("value", enrollmentParentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentParentDate))
+			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentParentDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentDate')); }); } ")
+			.fg();
+	}
+
+	public void htmEnrollmentParentDate(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolEnrollmentEnrollmentParentDate").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputEnrollmentParentDate(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentParentDate')); $('#", classApiMethodMethod, "_enrollmentParentDate').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentParentDate', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentDate')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////////////
 	// enrollmentCompleteName //
 	////////////////////////////
@@ -5456,6 +5908,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		child_Init();
 		momSearchInit();
 		momsInit();
+		dadSearchInit();
+		dadsInit();
+		guardianSearchInit();
+		guardiansInit();
 		childCompleteNameInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -5497,6 +5953,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		enrollmentGroupNameInit();
 		enrollmentPaymentEachMonthInit();
 		enrollmentPaymentCompleteInit();
+		enrollmentParentSignatureInit();
+		enrollmentParentDateInit();
 		enrollmentCompleteNameInit();
 	}
 
@@ -5516,6 +5974,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			childSearch.setSiteRequest_(siteRequest_);
 		if(momSearch != null)
 			momSearch.setSiteRequest_(siteRequest_);
+		if(dadSearch != null)
+			dadSearch.setSiteRequest_(siteRequest_);
+		if(guardianSearch != null)
+			guardianSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -5594,6 +6056,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.momSearch;
 			case "moms":
 				return oSchoolEnrollment.moms;
+			case "dadSearch":
+				return oSchoolEnrollment.dadSearch;
+			case "dads":
+				return oSchoolEnrollment.dads;
+			case "guardianSearch":
+				return oSchoolEnrollment.guardianSearch;
+			case "guardians":
+				return oSchoolEnrollment.guardians;
 			case "childCompleteName":
 				return oSchoolEnrollment.childCompleteName;
 			case "schoolName":
@@ -5676,6 +6146,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentPaymentEachMonth;
 			case "enrollmentPaymentComplete":
 				return oSchoolEnrollment.enrollmentPaymentComplete;
+			case "enrollmentParentSignature":
+				return oSchoolEnrollment.enrollmentParentSignature;
+			case "enrollmentParentDate":
+				return oSchoolEnrollment.enrollmentParentDate;
 			case "enrollmentCompleteName":
 				return oSchoolEnrollment.enrollmentCompleteName;
 			default:
@@ -5793,6 +6267,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return val;
 			case "enrollmentPaymentComplete":
 				setEnrollmentPaymentComplete(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentParentSignature":
+				setEnrollmentParentSignature(val);
+				savesSchoolEnrollment.add(var);
+				return val;
+			case "enrollmentParentDate":
+				setEnrollmentParentDate(val);
 				savesSchoolEnrollment.add(var);
 				return val;
 			default:
@@ -6172,6 +6654,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 			}
 
+			if(savesSchoolEnrollment.contains("enrollmentParentSignature")) {
+				String enrollmentParentSignature = (String)solrDocument.get("enrollmentParentSignature_stored_string");
+				if(enrollmentParentSignature != null)
+					oSchoolEnrollment.setEnrollmentParentSignature(enrollmentParentSignature);
+			}
+
+			if(savesSchoolEnrollment.contains("enrollmentParentDate")) {
+				Date enrollmentParentDate = (Date)solrDocument.get("enrollmentParentDate_stored_date");
+				if(enrollmentParentDate != null)
+					oSchoolEnrollment.setEnrollmentParentDate(enrollmentParentDate);
+			}
+
 			if(savesSchoolEnrollment.contains("enrollmentCompleteName")) {
 				String enrollmentCompleteName = (String)solrDocument.get("enrollmentCompleteName_stored_string");
 				if(enrollmentCompleteName != null)
@@ -6511,6 +7005,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentPaymentComplete_indexed_boolean", enrollmentPaymentComplete);
 			document.addField("enrollmentPaymentComplete_stored_boolean", enrollmentPaymentComplete);
 		}
+		if(enrollmentParentSignature != null) {
+			document.addField("enrollmentParentSignature_indexed_string", enrollmentParentSignature);
+			document.addField("enrollmentParentSignature_stored_string", enrollmentParentSignature);
+		}
+		if(enrollmentParentDate != null) {
+			document.addField("enrollmentParentDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentParentDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("enrollmentParentDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentParentDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(enrollmentCompleteName != null) {
 			document.addField("enrollmentCompleteName_indexed_string", enrollmentCompleteName);
 			document.addField("enrollmentCompleteName_stored_string", enrollmentCompleteName);
@@ -6790,6 +7292,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentPaymentComplete != null)
 			oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 
+		String enrollmentParentSignature = (String)solrDocument.get("enrollmentParentSignature_stored_string");
+		if(enrollmentParentSignature != null)
+			oSchoolEnrollment.setEnrollmentParentSignature(enrollmentParentSignature);
+
+		Date enrollmentParentDate = (Date)solrDocument.get("enrollmentParentDate_stored_date");
+		if(enrollmentParentDate != null)
+			oSchoolEnrollment.setEnrollmentParentDate(enrollmentParentDate);
+
 		String enrollmentCompleteName = (String)solrDocument.get("enrollmentCompleteName_stored_string");
 		if(enrollmentCompleteName != null)
 			oSchoolEnrollment.setEnrollmentCompleteName(enrollmentCompleteName);
@@ -6802,7 +7312,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete);
+		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, enrollmentParentSignature, enrollmentParentDate);
 	}
 
 	////////////
@@ -6833,7 +7343,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( enrollmentSpecialConsiderations, that.enrollmentSpecialConsiderations )
 				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
-				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete );
+				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete )
+				&& Objects.equals( enrollmentParentSignature, that.enrollmentParentSignature )
+				&& Objects.equals( enrollmentParentDate, that.enrollmentParentDate );
 	}
 
 	//////////////
@@ -6862,6 +7374,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
 		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
+		sb.append( ", enrollmentParentSignature: \"" ).append(enrollmentParentSignature).append( "\"" );
+		sb.append( ", enrollmentParentDate: " ).append(enrollmentParentDate);
 		sb.append(" }");
 		return sb.toString();
 	}

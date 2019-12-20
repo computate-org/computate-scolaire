@@ -311,6 +311,9 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentFormKey("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("PATCH");
+			o.htmEnrollmentParentSignature("PATCH");
+			o.htmEnrollmentParentDate("PATCH");
 			o.htmEnrollmentCompleteName("PATCH");
 		} g("div");
 	}
@@ -361,6 +364,9 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 			o.htmEnrollmentFormKey("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("Recherche");
+			o.htmEnrollmentParentSignature("Recherche");
+			o.htmEnrollmentParentDate("Recherche");
 			o.htmEnrollmentCompleteName("Recherche");
 		} g("div");
 	}

@@ -338,9 +338,6 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: occupation
 	 * NomAffichage.enUS: occupation
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 2
 	 */                   
 	protected void _personneOccupation(Couverture<String> c) {
 	}
@@ -375,9 +372,12 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Var.enUS: personRelation
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: relation
 	 * NomAffichage.enUS: relation
-	 */                   
+	 */                  
 	protected void _personneRelation(Couverture<String> c) {
 	}
 
@@ -409,6 +409,9 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Var.enUS: personEmergencyContact
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
 	 * NomAffichage.frFR: contacter en cas d'urgence
 	 * NomAffichage.enUS: contact in case of emergency
 	 */                  
@@ -420,6 +423,9 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Var.enUS: personPickup
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 4
 	 * NomAffichage.frFR: autorisé à venir chercher
 	 * NomAffichage.enUS: authorized to pickup
 	 */                   

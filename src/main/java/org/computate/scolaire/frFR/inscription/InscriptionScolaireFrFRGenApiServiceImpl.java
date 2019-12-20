@@ -101,6 +101,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					creerPOSTInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+						RequetePatch requetePatch = new RequetePatch();
+							requetePatch.setRows(1);
+							requetePatch.setNumFound(1L);
+							requetePatch.initLoinRequetePatch(requeteSite);
+							requeteSite.setRequetePatch_(requetePatch);
 							InscriptionScolaire inscriptionScolaire = b.result();
 							sqlPOSTInscriptionScolaire(inscriptionScolaire, c -> {
 								if(c.succeeded()) {
@@ -117,6 +122,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requetePatch).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, i);
@@ -276,6 +282,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "inscriptionSignatureParent":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignatureParent", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDateParent":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDateParent", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -375,7 +389,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 														}
 													});
 												}, resultHandler -> {
-													LOGGER.info(String.format("{}", JsonObject.mapFrom(requetePatch)));
 												}
 											);
 											reponse200PATCHInscriptionScolaire(requetePatch, gestionnaireEvenements);
@@ -817,6 +830,26 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+						}
+						break;
+					case "setInscriptionSignatureParent":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignatureParent"));
+						} else {
+							o2.setInscriptionSignatureParent(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignatureParent", o2.jsonInscriptionSignatureParent(), pk));
+						}
+						break;
+					case "setInscriptionDateParent":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDateParent"));
+						} else {
+							o2.setInscriptionDateParent(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDateParent", o2.jsonInscriptionDateParent(), pk));
 						}
 						break;
 				}
@@ -1442,6 +1475,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "inscriptionPaimentChaqueMois_indexed_boolean";
 			case "inscriptionPaimentComplet":
 				return "inscriptionPaimentComplet_indexed_boolean";
+			case "inscriptionSignatureParent":
+				return "inscriptionSignatureParent_indexed_string";
+			case "inscriptionDateParent":
+				return "inscriptionDateParent_indexed_date";
 			case "inscriptionNomComplet":
 				return "inscriptionNomComplet_indexed_string";
 			default:

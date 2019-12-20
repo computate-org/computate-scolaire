@@ -10,7 +10,9 @@ import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
+import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
+import org.computate.scolaire.frFR.pere.PereScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
 /**    
@@ -470,6 +472,66 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */      
 	protected void _meres(Couverture<List<MereScolaire>> c) {
 		c.o(mereRecherche.getList());
+	}
+
+	/**
+	 * Var.enUS: dadSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: enfantCle
+	 * r.enUS: childKey
+	 * Ignorer: true
+	 */
+	protected void _pereRecherche(ListeRecherche<PereScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+		l.setC(PereScolaire.class);
+		l.setStocker(true);
+	}
+
+	/**  
+	 * {@inheritDoc}
+	 * Var.enUS: dads
+	 * r: pereRecherche
+	 * r.enUS: dadSearch
+	 * Ignorer: true
+	 */      
+	protected void _peres(Couverture<List<PereScolaire>> c) {
+		c.o(pereRecherche.getList());
+	}
+
+	/**
+	 * Var.enUS: guardianSearch
+	 * r: inscriptionCles
+	 * r.enUS: enrollmentKeys
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: enfantCle
+	 * r.enUS: childKey
+	 * Ignorer: true
+	 */
+	protected void _gardienRecherche(ListeRecherche<GardienScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+		l.setC(GardienScolaire.class);
+		l.setStocker(true);
+	}
+
+	/**  
+	 * {@inheritDoc}
+	 * Var.enUS: guardians
+	 * r: gardienRecherche
+	 * r.enUS: guardianSearch
+	 * Ignorer: true
+	 */      
+	protected void _gardiens(Couverture<List<GardienScolaire>> c) {
+		c.o(gardienRecherche.getList());
 	}
 
 	/**
@@ -1142,6 +1204,27 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentParentSignature
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */
+	protected void _inscriptionSignatureParent(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentParentDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDateParent(Couverture<LocalDate> c) {
 	}
 
 	/**    

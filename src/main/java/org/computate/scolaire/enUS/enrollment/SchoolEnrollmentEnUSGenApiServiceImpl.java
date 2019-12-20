@@ -101,6 +101,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					createPOSTSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
+						PatchRequest patchRequest = new PatchRequest();
+							patchRequest.setRows(1);
+							patchRequest.setNumFound(1L);
+							patchRequest.initDeepPatchRequest(siteRequest);
+							siteRequest.setPatchRequest_(patchRequest);
 							SchoolEnrollment schoolEnrollment = b.result();
 							sqlPOSTSchoolEnrollment(schoolEnrollment, c -> {
 								if(c.succeeded()) {
@@ -117,6 +122,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(patchRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolEnrollment(siteRequest, eventHandler, i);
@@ -276,6 +282,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", jsonObject.getBoolean(entityVar), pk));
 						break;
+					case "enrollmentParentSignature":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentParentSignature", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentParentDate":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentParentDate", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -375,7 +389,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 														}
 													});
 												}, resultHandler -> {
-													LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 												}
 											);
 											response200PATCHSchoolEnrollment(patchRequest, eventHandler);
@@ -817,6 +830,26 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setEnrollmentPaymentComplete(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete(), pk));
+						}
+						break;
+					case "setEnrollmentParentSignature":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentParentSignature"));
+						} else {
+							o2.setEnrollmentParentSignature(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentParentSignature", o2.jsonEnrollmentParentSignature(), pk));
+						}
+						break;
+					case "setEnrollmentParentDate":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentParentDate"));
+						} else {
+							o2.setEnrollmentParentDate(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentParentDate", o2.jsonEnrollmentParentDate(), pk));
 						}
 						break;
 				}
@@ -1442,6 +1475,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "enrollmentPaymentEachMonth_indexed_boolean";
 			case "enrollmentPaymentComplete":
 				return "enrollmentPaymentComplete_indexed_boolean";
+			case "enrollmentParentSignature":
+				return "enrollmentParentSignature_indexed_string";
+			case "enrollmentParentDate":
+				return "enrollmentParentDate_indexed_date";
 			case "enrollmentCompleteName":
 				return "enrollmentCompleteName_indexed_string";
 			default:

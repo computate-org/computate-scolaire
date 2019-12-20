@@ -441,10 +441,14 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 		StringBuilder b = new StringBuilder();
 		if(htmlAvant != null)
 			b.append(htmlAvant);
-		if(htmlVar != null)
-			b.append("{").append(htmlVar).append("}");
+
 		if(htmlVarForEach != null)
-			b.append("for each {").append(htmlVar).append("}");
+			b.append("for each {").append(htmlVarForEach).append("}").append(" into {").append(htmlVar).append("}");
+		else {
+			if(htmlVar != null)
+				b.append("{").append(htmlVar).append("}");
+		}
+
 		if(htmlVarInput != null)
 			b.append("[").append(htmlVarInput).append("]");
 		if(htmlVarForm != null)

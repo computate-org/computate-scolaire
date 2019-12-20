@@ -312,6 +312,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFormInscriptionCle("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("PATCH");
+			o.htmInscriptionSignatureParent("PATCH");
+			o.htmInscriptionDateParent("PATCH");
 			o.htmInscriptionNomComplet("PATCH");
 		} g("div");
 	}
@@ -362,6 +365,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFormInscriptionCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("Recherche");
+			o.htmInscriptionSignatureParent("Recherche");
+			o.htmInscriptionDateParent("Recherche");
 			o.htmInscriptionNomComplet("Recherche");
 		} g("div");
 	}

@@ -129,7 +129,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneNumeroTelephone("Page");
-			o.htmPersonneOccupation("Page");
+			o.htmPersonneRelation("Page");
+			o.htmPersonneContactUrgence("Page");
+			o.htmPersonneChercher("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Page");
@@ -154,7 +156,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneNumeroTelephone("POST");
-			o.htmPersonneOccupation("POST");
+			o.htmPersonneRelation("POST");
+			o.htmPersonneContactUrgence("POST");
+			o.htmPersonneChercher("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("POST");
@@ -179,7 +183,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneNumeroTelephone("PATCH");
-			o.htmPersonneOccupation("PATCH");
+			o.htmPersonneRelation("PATCH");
+			o.htmPersonneContactUrgence("PATCH");
+			o.htmPersonneChercher("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
@@ -207,7 +213,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneNumeroTelephone("Recherche");
-			o.htmPersonneOccupation("Recherche");
+			o.htmPersonneRelation("Recherche");
+			o.htmPersonneContactUrgence("Recherche");
+			o.htmPersonneChercher("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Recherche");

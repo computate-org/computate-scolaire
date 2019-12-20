@@ -262,7 +262,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() { patchGardienScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereGardienScolaireInscriptionCles($('#' + ($('#", classeApiMethodeMethode, "inscriptionCles').val() ? 'suggere' : 'form') + 'GardienScolaireInscriptionCles'), $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+										.a("onclick", "postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() { patchGardienScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 										.f().sx("ajouter une inscription")
 									.g("button");
 								} g("div");
@@ -1500,58 +1500,6 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneOccupation == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneOccupation());
 	}
 
-	public void inputPersonneOccupation(String classeApiMethodeMethode) {
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "occupation")
-			.a("id", classeApiMethodeMethode, "_personneOccupation");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneOccupation w3-input w3-border ");
-				a("name", "setPersonneOccupation");
-			} else {
-				a("class", "valeurPersonneOccupation w3-input w3-border ");
-				a("name", "personneOccupation");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneOccupation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ");
-			}
-			a("value", strPersonneOccupation())
-		.fg();
-
-	}
-
-	public void htmPersonneOccupation(String classeApiMethodeMethode) {
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereGardienScolairePersonneOccupation").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", classeApiMethodeMethode, "_personneOccupation").a("class", "").f().sx("occupation").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputPersonneOccupation(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneOccupation')); $('#", classeApiMethodeMethode, "_personneOccupation').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneOccupation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////////////////
 	// personneNumeroTelephone //
 	/////////////////////////////
@@ -1787,6 +1735,58 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneRelation == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneRelation());
 	}
 
+	public void inputPersonneRelation(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "relation")
+			.a("id", classeApiMethodeMethode, "_personneRelation");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneRelation w3-input w3-border ");
+				a("name", "setPersonneRelation");
+			} else {
+				a("class", "valeurPersonneRelation w3-input w3-border ");
+				a("name", "personneRelation");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRelation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ");
+			}
+			a("value", strPersonneRelation())
+		.fg();
+
+	}
+
+	public void htmPersonneRelation(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereGardienScolairePersonneRelation").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_personneRelation").a("class", "").f().sx("relation").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonneRelation(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneRelation')); $('#", classeApiMethodeMethode, "_personneRelation').val(null); patchGardienScolaireVal([{ name: 'fq', value: 'pk:' + $('#GardienScolaireForm :input[name=pk]').val() }], 'setPersonneRelation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRelation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRelation')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////
 	// personneSms //
 	/////////////////
@@ -1985,6 +1985,48 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneContactUrgence == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneContactUrgence());
 	}
 
+	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classeApiMethodeMethode, "_personneContactUrgence")
+			.a("value", "true");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneContactUrgence");
+				a("name", "setPersonneContactUrgence");
+			} else {
+				a("class", "valeurPersonneContactUrgence");
+				a("name", "personneContactUrgence");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+			}
+			;
+			if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmPersonneContactUrgence(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereGardienScolairePersonneContactUrgence").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_personneContactUrgence").a("class", "").f().sx("contacter en cas d'urgence").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonneContactUrgence(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////
 	// personneChercher //
 	//////////////////////
@@ -2049,6 +2091,48 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String htmPersonneChercher() {
 		return personneChercher == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneChercher());
+	}
+
+	public void inputPersonneChercher(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classeApiMethodeMethode, "_personneChercher")
+			.a("value", "true");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPersonneChercher");
+				a("name", "setPersonneChercher");
+			} else {
+				a("class", "valeurPersonneChercher");
+				a("name", "personneChercher");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchGardienScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+			}
+			;
+			if(getPersonneChercher() != null && getPersonneChercher())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmPersonneChercher(String classeApiMethodeMethode) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereGardienScolairePersonneChercher").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classeApiMethodeMethode, "_personneChercher").a("class", "").f().sx("autorisé à venir chercher").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonneChercher(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////
@@ -2338,12 +2422,20 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				setFamilleNom(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
-			case "personneOccupation":
-				setPersonneOccupation(val);
-				sauvegardesGardienScolaire.add(var);
-				return val;
 			case "personneNumeroTelephone":
 				setPersonneNumeroTelephone(val);
+				sauvegardesGardienScolaire.add(var);
+				return val;
+			case "personneRelation":
+				setPersonneRelation(val);
+				sauvegardesGardienScolaire.add(var);
+				return val;
+			case "personneContactUrgence":
+				setPersonneContactUrgence(val);
+				sauvegardesGardienScolaire.add(var);
+				return val;
+			case "personneChercher":
+				setPersonneChercher(val);
 				sauvegardesGardienScolaire.add(var);
 				return val;
 			default:
@@ -2835,7 +2927,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneOccupation, personneNumeroTelephone);
+		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneNumeroTelephone, personneRelation, personneContactUrgence, personneChercher);
 	}
 
 	////////////
@@ -2853,8 +2945,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( personnePrenomPrefere, that.personnePrenomPrefere )
 				&& Objects.equals( familleNom, that.familleNom )
-				&& Objects.equals( personneOccupation, that.personneOccupation )
-				&& Objects.equals( personneNumeroTelephone, that.personneNumeroTelephone );
+				&& Objects.equals( personneNumeroTelephone, that.personneNumeroTelephone )
+				&& Objects.equals( personneRelation, that.personneRelation )
+				&& Objects.equals( personneContactUrgence, that.personneContactUrgence )
+				&& Objects.equals( personneChercher, that.personneChercher );
 	}
 
 	//////////////
@@ -2869,8 +2963,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		sb.append( ", personnePrenom: \"" ).append(personnePrenom).append( "\"" );
 		sb.append( ", personnePrenomPrefere: \"" ).append(personnePrenomPrefere).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
-		sb.append( ", personneOccupation: \"" ).append(personneOccupation).append( "\"" );
 		sb.append( ", personneNumeroTelephone: \"" ).append(personneNumeroTelephone).append( "\"" );
+		sb.append( ", personneRelation: \"" ).append(personneRelation).append( "\"" );
+		sb.append( ", personneContactUrgence: " ).append(personneContactUrgence);
+		sb.append( ", personneChercher: " ).append(personneChercher);
 		sb.append(" }");
 		return sb.toString();
 	}

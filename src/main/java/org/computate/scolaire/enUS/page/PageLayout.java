@@ -948,7 +948,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
-						l();
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}
@@ -958,7 +957,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
-						l();
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}

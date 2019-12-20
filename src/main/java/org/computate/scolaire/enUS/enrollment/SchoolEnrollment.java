@@ -9,7 +9,9 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.child.SchoolChild;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.search.SearchList;
 
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
@@ -133,6 +135,28 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _moms(Wrap<List<SchoolMom>> c) {
 		c.o(momSearch.getList());
+	}
+
+	protected void _dadSearch(SearchList<SchoolDad> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+		l.setC(SchoolDad.class);
+		l.setStore(true);
+	}
+
+	protected void _dads(Wrap<List<SchoolDad>> c) {
+		c.o(dadSearch.getList());
+	}
+
+	protected void _guardianSearch(SearchList<SchoolGuardian> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+		l.setC(SchoolGuardian.class);
+		l.setStore(true);
+	}
+
+	protected void _guardians(Wrap<List<SchoolGuardian>> c) {
+		c.o(guardianSearch.getList());
 	}
 
 	protected void _childCompleteName(Wrap<String> c) {
@@ -316,6 +340,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
+	}
+
+	protected void _enrollmentParentSignature(Wrap<String> c) {
+	}
+
+	protected void _enrollmentParentDate(Wrap<LocalDate> c) {
 	}
 
 	protected void _enrollmentCompleteName(Wrap<String> c) {

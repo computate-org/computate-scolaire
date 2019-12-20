@@ -261,7 +261,7 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", pk, "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolGuardianEnrollmentKeys($('#' + ($('#", classApiMethodMethod, "enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolGuardianEnrollmentKeys'), $('#listSchoolGuardianEnrollmentKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); }); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+										.a("onclick", "postSchoolEnrollmentVals({ guardianKeys: [ \"", pk, "\" ] }, function() { patchSchoolGuardianVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 										.f().sx("add an enrollment")
 									.g("button");
 								} g("div");
@@ -1499,58 +1499,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		return personOccupation == null ? "" : StringEscapeUtils.escapeHtml4(strPersonOccupation());
 	}
 
-	public void inputPersonOccupation(String classApiMethodMethod) {
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "occupation")
-			.a("id", classApiMethodMethod, "_personOccupation");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonOccupation w3-input w3-border ");
-				a("name", "setPersonOccupation");
-			} else {
-				a("class", "valuePersonOccupation w3-input w3-border ");
-				a("name", "personOccupation");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onclick", "removeGlow($(this)); ");
-				a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonOccupation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ");
-			}
-			a("value", strPersonOccupation())
-		.fg();
-
-	}
-
-	public void htmPersonOccupation(String classApiMethodMethod) {
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolGuardianPersonOccupation").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
-							e("label").a("for", classApiMethodMethod, "_personOccupation").a("class", "").f().sx("occupation").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputPersonOccupation(classApiMethodMethod);
-							} g("div");
-							if("Page".equals(classApiMethodMethod)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personOccupation')); $('#", classApiMethodMethod, "_personOccupation').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=pk]').val() }], 'setPersonOccupation', null, function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	///////////////////////
 	// personPhoneNumber //
 	///////////////////////
@@ -1786,6 +1734,58 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		return personRelation == null ? "" : StringEscapeUtils.escapeHtml4(strPersonRelation());
 	}
 
+	public void inputPersonRelation(String classApiMethodMethod) {
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "relation")
+			.a("id", classApiMethodMethod, "_personRelation");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPersonRelation w3-input w3-border ");
+				a("name", "setPersonRelation");
+			} else {
+				a("class", "valuePersonRelation w3-input w3-border ");
+				a("name", "personRelation");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonRelation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personRelation')); }, function() { addError($('#", classApiMethodMethod, "_personRelation')); }); ");
+			}
+			a("value", strPersonRelation())
+		.fg();
+
+	}
+
+	public void htmPersonRelation(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolGuardianPersonRelation").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_personRelation").a("class", "").f().sx("relation").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonRelation(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personRelation')); $('#", classApiMethodMethod, "_personRelation').val(null); patchSchoolGuardianVal([{ name: 'fq', value: 'pk:' + $('#SchoolGuardianForm :input[name=pk]').val() }], 'setPersonRelation', null, function() { addGlow($('#", classApiMethodMethod, "_personRelation')); }, function() { addError($('#", classApiMethodMethod, "_personRelation')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////
 	// personSms //
 	///////////////
@@ -1984,6 +1984,48 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		return personEmergencyContact == null ? "" : StringEscapeUtils.escapeHtml4(strPersonEmergencyContact());
 	}
 
+	public void inputPersonEmergencyContact(String classApiMethodMethod) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_personEmergencyContact")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPersonEmergencyContact");
+				a("name", "setPersonEmergencyContact");
+			} else {
+				a("class", "valuePersonEmergencyContact");
+				a("name", "personEmergencyContact");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personEmergencyContact')); }, function() { addError($('#", classApiMethodMethod, "_personEmergencyContact')); }); ");
+			}
+			;
+			if(getPersonEmergencyContact() != null && getPersonEmergencyContact())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmPersonEmergencyContact(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolGuardianPersonEmergencyContact").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_personEmergencyContact").a("class", "").f().sx("contact in case of emergency").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonEmergencyContact(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////
 	// personPickup //
 	//////////////////
@@ -2048,6 +2090,48 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 
 	public String htmPersonPickup() {
 		return personPickup == null ? "" : StringEscapeUtils.escapeHtml4(strPersonPickup());
+	}
+
+	public void inputPersonPickup(String classApiMethodMethod) {
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_personPickup")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPersonPickup");
+				a("name", "setPersonPickup");
+			} else {
+				a("class", "valuePersonPickup");
+				a("name", "personPickup");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolGuardianVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personPickup')); }, function() { addError($('#", classApiMethodMethod, "_personPickup')); }); ");
+			}
+			;
+			if(getPersonPickup() != null && getPersonPickup())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmPersonPickup(String classApiMethodMethod) {
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolGuardianPersonPickup").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_personPickup").a("class", "").f().sx("authorized to pickup").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPersonPickup(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////////////////
@@ -2337,12 +2421,20 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 				setFamilyName(val);
 				savesSchoolGuardian.add(var);
 				return val;
-			case "personOccupation":
-				setPersonOccupation(val);
-				savesSchoolGuardian.add(var);
-				return val;
 			case "personPhoneNumber":
 				setPersonPhoneNumber(val);
+				savesSchoolGuardian.add(var);
+				return val;
+			case "personRelation":
+				setPersonRelation(val);
+				savesSchoolGuardian.add(var);
+				return val;
+			case "personEmergencyContact":
+				setPersonEmergencyContact(val);
+				savesSchoolGuardian.add(var);
+				return val;
+			case "personPickup":
+				setPersonPickup(val);
 				savesSchoolGuardian.add(var);
 				return val;
 			default:
@@ -2834,7 +2926,7 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personOccupation, personPhoneNumber);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personPhoneNumber, personRelation, personEmergencyContact, personPickup);
 	}
 
 	////////////
@@ -2852,8 +2944,10 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 				&& Objects.equals( personFirstName, that.personFirstName )
 				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
-				&& Objects.equals( personOccupation, that.personOccupation )
-				&& Objects.equals( personPhoneNumber, that.personPhoneNumber );
+				&& Objects.equals( personPhoneNumber, that.personPhoneNumber )
+				&& Objects.equals( personRelation, that.personRelation )
+				&& Objects.equals( personEmergencyContact, that.personEmergencyContact )
+				&& Objects.equals( personPickup, that.personPickup );
 	}
 
 	//////////////
@@ -2868,8 +2962,10 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		sb.append( ", personFirstName: \"" ).append(personFirstName).append( "\"" );
 		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
-		sb.append( ", personOccupation: \"" ).append(personOccupation).append( "\"" );
 		sb.append( ", personPhoneNumber: \"" ).append(personPhoneNumber).append( "\"" );
+		sb.append( ", personRelation: \"" ).append(personRelation).append( "\"" );
+		sb.append( ", personEmergencyContact: " ).append(personEmergencyContact);
+		sb.append( ", personPickup: " ).append(personPickup);
 		sb.append(" }");
 		return sb.toString();
 	}
