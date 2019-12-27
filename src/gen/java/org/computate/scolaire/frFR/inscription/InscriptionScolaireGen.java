@@ -324,6 +324,55 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
+	////////////
+	// blocs_ //
+	////////////
+
+	/**	L'entité « blocs_ »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected List<BlocScolaire> blocs_;
+	@JsonIgnore
+	public Couverture<List<BlocScolaire>> blocs_Couverture = new Couverture<List<BlocScolaire>>().p(this).c(List.class).var("blocs_").o(blocs_);
+
+	/**	<br/>L'entité « blocs_ »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocs_">Trouver l'entité blocs_ dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocs_(Couverture<List<BlocScolaire>> c);
+
+	public List<BlocScolaire> getBlocs_() {
+		return blocs_;
+	}
+
+	public void setBlocs_(List<BlocScolaire> blocs_) {
+		this.blocs_ = blocs_;
+		this.blocs_Couverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addBlocs_(BlocScolaire...objets) {
+		for(BlocScolaire o : objets) {
+			addBlocs_(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addBlocs_(BlocScolaire o) {
+		if(o != null && !blocs_.contains(o))
+			this.blocs_.add(o);
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire blocs_Init() {
+		if(!blocs_Couverture.dejaInitialise) {
+			_blocs_(blocs_Couverture);
+			if(blocs_ == null)
+				setBlocs_(blocs_Couverture.o);
+		}
+		blocs_Couverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
 	///////////
 	// bloc_ //
 	///////////
@@ -5562,104 +5611,183 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	////////////////////////////////
-	// inscriptionSignatureParent //
-	////////////////////////////////
+	////////////////////////////
+	// inscriptionNomsParents //
+	////////////////////////////
 
-	/**	L'entité « inscriptionSignatureParent »
+	/**	L'entité « inscriptionNomsParents »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected String inscriptionSignatureParent;
+	protected String inscriptionNomsParents;
 	@JsonIgnore
-	public Couverture<String> inscriptionSignatureParentCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignatureParent").o(inscriptionSignatureParent);
+	public Couverture<String> inscriptionNomsParentsCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomsParents").o(inscriptionNomsParents);
 
-	/**	<br/>L'entité « inscriptionSignatureParent »
+	/**	<br/>L'entité « inscriptionNomsParents »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionSignatureParent">Trouver l'entité inscriptionSignatureParent dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNomsParents">Trouver l'entité inscriptionNomsParents dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _inscriptionSignatureParent(Couverture<String> c);
+	protected abstract void _inscriptionNomsParents(Couverture<String> c);
 
-	public String getInscriptionSignatureParent() {
-		return inscriptionSignatureParent;
+	public String getInscriptionNomsParents() {
+		return inscriptionNomsParents;
 	}
 
-	public void setInscriptionSignatureParent(String inscriptionSignatureParent) {
-		this.inscriptionSignatureParent = inscriptionSignatureParent;
-		this.inscriptionSignatureParentCouverture.dejaInitialise = true;
+	public void setInscriptionNomsParents(String inscriptionNomsParents) {
+		this.inscriptionNomsParents = inscriptionNomsParents;
+		this.inscriptionNomsParentsCouverture.dejaInitialise = true;
 	}
-	protected InscriptionScolaire inscriptionSignatureParentInit() {
-		if(!inscriptionSignatureParentCouverture.dejaInitialise) {
-			_inscriptionSignatureParent(inscriptionSignatureParentCouverture);
-			if(inscriptionSignatureParent == null)
-				setInscriptionSignatureParent(inscriptionSignatureParentCouverture.o);
+	protected InscriptionScolaire inscriptionNomsParentsInit() {
+		if(!inscriptionNomsParentsCouverture.dejaInitialise) {
+			_inscriptionNomsParents(inscriptionNomsParentsCouverture);
+			if(inscriptionNomsParents == null)
+				setInscriptionNomsParents(inscriptionNomsParentsCouverture.o);
 		}
-		inscriptionSignatureParentCouverture.dejaInitialise(true);
+		inscriptionNomsParentsCouverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public String solrInscriptionSignatureParent() {
-		return inscriptionSignatureParent;
+	public String solrInscriptionNomsParents() {
+		return inscriptionNomsParents;
 	}
 
-	public String strInscriptionSignatureParent() {
-		return inscriptionSignatureParent == null ? "" : inscriptionSignatureParent;
+	public String strInscriptionNomsParents() {
+		return inscriptionNomsParents == null ? "" : inscriptionNomsParents;
 	}
 
-	public String jsonInscriptionSignatureParent() {
-		return inscriptionSignatureParent == null ? "" : inscriptionSignatureParent;
+	public String jsonInscriptionNomsParents() {
+		return inscriptionNomsParents == null ? "" : inscriptionNomsParents;
 	}
 
-	public String nomAffichageInscriptionSignatureParent() {
+	public String nomAffichageInscriptionNomsParents() {
 		return null;
 	}
 
-	public String htmTooltipInscriptionSignatureParent() {
+	public String htmTooltipInscriptionNomsParents() {
 		return null;
 	}
 
-	public String htmInscriptionSignatureParent() {
-		return inscriptionSignatureParent == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionSignatureParent());
+	public String htmInscriptionNomsParents() {
+		return inscriptionNomsParents == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomsParents());
 	}
 
-	public void inputInscriptionSignatureParent(String classeApiMethodeMethode) {
-		e("input")
-			.a("type", "text")
-			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-			.a("id", classeApiMethodeMethode, "_inscriptionSignatureParent");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionSignatureParent w3-input w3-border ");
-				a("name", "setInscriptionSignatureParent");
-			} else {
-				a("class", "valeurInscriptionSignatureParent w3-input w3-border ");
-				a("name", "inscriptionSignatureParent");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignatureParent', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionSignatureParent')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionSignatureParent')); }); ");
-			}
-			a("value", strInscriptionSignatureParent())
-		.fg();
+	///////////////////////////
+	// inscriptionSignature1 //
+	///////////////////////////
 
+	/**	L'entité « inscriptionSignature1 »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String inscriptionSignature1;
+	@JsonIgnore
+	public Couverture<String> inscriptionSignature1Couverture = new Couverture<String>().p(this).c(String.class).var("inscriptionSignature1").o(inscriptionSignature1);
+
+	/**	<br/>L'entité « inscriptionSignature1 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionSignature1">Trouver l'entité inscriptionSignature1 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionSignature1(Couverture<String> c);
+
+	public String getInscriptionSignature1() {
+		return inscriptionSignature1;
 	}
 
-	public void htmInscriptionSignatureParent(String classeApiMethodeMethode) {
+	public void setInscriptionSignature1(String inscriptionSignature1) {
+		this.inscriptionSignature1 = inscriptionSignature1;
+		this.inscriptionSignature1Couverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionSignature1Init() {
+		if(!inscriptionSignature1Couverture.dejaInitialise) {
+			_inscriptionSignature1(inscriptionSignature1Couverture);
+			if(inscriptionSignature1 == null)
+				setInscriptionSignature1(inscriptionSignature1Couverture.o);
+		}
+		inscriptionSignature1Couverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionSignature1() {
+		return inscriptionSignature1;
+	}
+
+	public String strInscriptionSignature1() {
+		return inscriptionSignature1 == null ? "" : inscriptionSignature1;
+	}
+
+	public String jsonInscriptionSignature1() {
+		return inscriptionSignature1 == null ? "" : inscriptionSignature1;
+	}
+
+	public String nomAffichageInscriptionSignature1() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionSignature1() {
+		return null;
+	}
+
+	public String htmInscriptionSignature1() {
+		return inscriptionSignature1 == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionSignature1());
+	}
+
+	public void inputInscriptionSignature1(String classeApiMethodeMethode) {
+		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature1").f();
+			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature1");
+				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature1) ? "block" : "none", "; ");
+			f().g("div");
+			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature1");
+				a("src", inscriptionSignature1);
+				a("style", "border: 1px solid black; padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature1) ? "none" : "block", "; ");
+			fg();
+		g("div");
+		e("div").a("id", "signatureDiv2InscriptionScolaire", pk, "inscriptionSignature1").f();
+			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature1");
+				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+				s(" onclick=", "\"");
+					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature1').show(); ");
+					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature1').hide(); ");
+					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature1')); ");
+					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature1', null); ");
+					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature1')) { ");
+					s("window['inputInscriptionScolaire", pk, "inscriptionSignature1'].jSignature('reset'); ");
+					s(" } else { ");
+					s("window['inputInscriptionScolaire", pk, "inscriptionSignature1'] = $('#inputInscriptionScolaire", pk, "inscriptionSignature1');");
+					s("window['inputInscriptionScolaire", pk, "inscriptionSignature1'].jSignature({'height':200}); ");
+					s(" } ");
+				s("\"");
+				f().sx("Vider");
+			g("button");
+			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature1");
+				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
+				s(" onclick=", "\"");
+					s("var datapair = window['inputInscriptionScolaire", pk, "inscriptionSignature1'].jSignature('getData', 'svgbase64'); "); 
+					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature1', src); ");
+				s("\"");
+				f().sx("Accepter la signature");
+			g("button");
+		g("div");
+	}
+
+	public void htmInscriptionSignature1(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereInscriptionScolaireInscriptionSignatureParent").f();
+				{ e("div").a("id", "suggereInscriptionScolaireInscriptionSignature1").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								inputInscriptionSignatureParent(classeApiMethodeMethode);
+								inputInscriptionSignature1(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionSignatureParent')); $('#", classeApiMethodeMethode, "_inscriptionSignatureParent').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionSignatureParent', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionSignatureParent')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionSignatureParent')); }); ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionSignature1')); $('#", classeApiMethodeMethode, "_inscriptionSignature1').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionSignature1', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionSignature1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionSignature1')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -5672,112 +5800,112 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////
-	// inscriptionDateParent //
-	///////////////////////////
+	//////////////////////
+	// inscriptionDate1 //
+	//////////////////////
 
-	/**	L'entité « inscriptionDateParent »
+	/**	L'entité « inscriptionDate1 »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate inscriptionDateParent;
+	protected LocalDate inscriptionDate1;
 	@JsonIgnore
-	public Couverture<LocalDate> inscriptionDateParentCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("inscriptionDateParent").o(inscriptionDateParent);
+	public Couverture<LocalDate> inscriptionDate1Couverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("inscriptionDate1").o(inscriptionDate1);
 
-	/**	<br/>L'entité « inscriptionDateParent »
+	/**	<br/>L'entité « inscriptionDate1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionDateParent">Trouver l'entité inscriptionDateParent dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionDate1">Trouver l'entité inscriptionDate1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _inscriptionDateParent(Couverture<LocalDate> c);
+	protected abstract void _inscriptionDate1(Couverture<LocalDate> c);
 
-	public LocalDate getInscriptionDateParent() {
-		return inscriptionDateParent;
+	public LocalDate getInscriptionDate1() {
+		return inscriptionDate1;
 	}
 
-	public void setInscriptionDateParent(LocalDate inscriptionDateParent) {
-		this.inscriptionDateParent = inscriptionDateParent;
-		this.inscriptionDateParentCouverture.dejaInitialise = true;
+	public void setInscriptionDate1(LocalDate inscriptionDate1) {
+		this.inscriptionDate1 = inscriptionDate1;
+		this.inscriptionDate1Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDateParent(Instant o) {
-		this.inscriptionDateParent = LocalDate.from(o);
-		this.inscriptionDateParentCouverture.dejaInitialise = true;
+	public InscriptionScolaire setInscriptionDate1(Instant o) {
+		this.inscriptionDate1 = LocalDate.from(o);
+		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDateParent(String o) {
-		this.inscriptionDateParent = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.inscriptionDateParentCouverture.dejaInitialise = true;
+	public InscriptionScolaire setInscriptionDate1(String o) {
+		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setInscriptionDateParent(Date o) {
-		this.inscriptionDateParent = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.inscriptionDateParentCouverture.dejaInitialise = true;
+	public InscriptionScolaire setInscriptionDate1(Date o) {
+		this.inscriptionDate1 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
-	protected InscriptionScolaire inscriptionDateParentInit() {
-		if(!inscriptionDateParentCouverture.dejaInitialise) {
-			_inscriptionDateParent(inscriptionDateParentCouverture);
-			if(inscriptionDateParent == null)
-				setInscriptionDateParent(inscriptionDateParentCouverture.o);
+	protected InscriptionScolaire inscriptionDate1Init() {
+		if(!inscriptionDate1Couverture.dejaInitialise) {
+			_inscriptionDate1(inscriptionDate1Couverture);
+			if(inscriptionDate1 == null)
+				setInscriptionDate1(inscriptionDate1Couverture.o);
 		}
-		inscriptionDateParentCouverture.dejaInitialise(true);
+		inscriptionDate1Couverture.dejaInitialise(true);
 		return (InscriptionScolaire)this;
 	}
 
-	public Date solrInscriptionDateParent() {
-		return inscriptionDateParent == null ? null : Date.from(inscriptionDateParent.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrInscriptionDate1() {
+		return inscriptionDate1 == null ? null : Date.from(inscriptionDate1.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strInscriptionDateParent() {
-		return inscriptionDateParent == null ? "" : inscriptionDateParent.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	public String strInscriptionDate1() {
+		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
 	}
 
-	public String jsonInscriptionDateParent() {
-		return inscriptionDateParent == null ? "" : inscriptionDateParent.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	public String jsonInscriptionDate1() {
+		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
 	}
 
-	public String nomAffichageInscriptionDateParent() {
+	public String nomAffichageInscriptionDate1() {
 		return null;
 	}
 
-	public String htmTooltipInscriptionDateParent() {
+	public String htmTooltipInscriptionDate1() {
 		return null;
 	}
 
-	public String htmInscriptionDateParent() {
-		return inscriptionDateParent == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionDateParent());
+	public String htmInscriptionDate1() {
+		return inscriptionDate1 == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionDate1());
 	}
 
-	public void inputInscriptionDateParent(String classeApiMethodeMethode) {
+	public void inputInscriptionDate1(String classeApiMethodeMethode) {
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
-			.a("id", classeApiMethodeMethode, "_inscriptionDateParent")
+			.a("id", classeApiMethodeMethode, "_inscriptionDate1")
 			.a("onclick", "enleverLueur($(this)); ")
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
-			.a("value", inscriptionDateParent == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDateParent))
-			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDateParent', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDateParent')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDateParent')); }); } ")
+			.a("value", inscriptionDate1 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate1))
+			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate1', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }); } ")
 			.fg();
 	}
 
-	public void htmInscriptionDateParent(String classeApiMethodeMethode) {
+	public void htmInscriptionDate1(String classeApiMethodeMethode) {
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereInscriptionScolaireInscriptionDateParent").f();
+				{ e("div").a("id", "suggereInscriptionScolaireInscriptionDate1").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								inputInscriptionDateParent(classeApiMethodeMethode);
+								inputInscriptionDate1(classeApiMethodeMethode);
 							} g("div");
 							if("Page".equals(classeApiMethodeMethode)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionDateParent')); $('#", classeApiMethodeMethode, "_inscriptionDateParent').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionDateParent', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDateParent')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDateParent')); }); ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); $('#", classeApiMethodeMethode, "_inscriptionDate1').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionDate1', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -5899,6 +6027,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionCleInit();
 		blocClesInit();
 		blocRechercheInit();
+		blocs_Init();
 		bloc_Init();
 		ecoleCleInit();
 		anneeCleInit();
@@ -5967,8 +6096,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionNomGroupeInit();
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
-		inscriptionSignatureParentInit();
-		inscriptionDateParentInit();
+		inscriptionNomsParentsInit();
+		inscriptionSignature1Init();
+		inscriptionDate1Init();
 		inscriptionNomCompletInit();
 	}
 
@@ -6024,6 +6154,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.blocCles;
 			case "blocRecherche":
 				return oInscriptionScolaire.blocRecherche;
+			case "blocs_":
+				return oInscriptionScolaire.blocs_;
 			case "bloc_":
 				return oInscriptionScolaire.bloc_;
 			case "ecoleCle":
@@ -6160,10 +6292,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionPaimentChaqueMois;
 			case "inscriptionPaimentComplet":
 				return oInscriptionScolaire.inscriptionPaimentComplet;
-			case "inscriptionSignatureParent":
-				return oInscriptionScolaire.inscriptionSignatureParent;
-			case "inscriptionDateParent":
-				return oInscriptionScolaire.inscriptionDateParent;
+			case "inscriptionNomsParents":
+				return oInscriptionScolaire.inscriptionNomsParents;
+			case "inscriptionSignature1":
+				return oInscriptionScolaire.inscriptionSignature1;
+			case "inscriptionDate1":
+				return oInscriptionScolaire.inscriptionDate1;
 			case "inscriptionNomComplet":
 				return oInscriptionScolaire.inscriptionNomComplet;
 			default:
@@ -6283,12 +6417,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				setInscriptionPaimentComplet(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
-			case "inscriptionSignatureParent":
-				setInscriptionSignatureParent(val);
+			case "inscriptionSignature1":
+				setInscriptionSignature1(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
-			case "inscriptionDateParent":
-				setInscriptionDateParent(val);
+			case "inscriptionDate1":
+				setInscriptionDate1(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			default:
@@ -6668,16 +6802,22 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignatureParent")) {
-				String inscriptionSignatureParent = (String)solrDocument.get("inscriptionSignatureParent_stored_string");
-				if(inscriptionSignatureParent != null)
-					oInscriptionScolaire.setInscriptionSignatureParent(inscriptionSignatureParent);
+			if(sauvegardesInscriptionScolaire.contains("inscriptionNomsParents")) {
+				String inscriptionNomsParents = (String)solrDocument.get("inscriptionNomsParents_stored_string");
+				if(inscriptionNomsParents != null)
+					oInscriptionScolaire.setInscriptionNomsParents(inscriptionNomsParents);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDateParent")) {
-				Date inscriptionDateParent = (Date)solrDocument.get("inscriptionDateParent_stored_date");
-				if(inscriptionDateParent != null)
-					oInscriptionScolaire.setInscriptionDateParent(inscriptionDateParent);
+			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature1")) {
+				String inscriptionSignature1 = (String)solrDocument.get("inscriptionSignature1_stored_string");
+				if(inscriptionSignature1 != null)
+					oInscriptionScolaire.setInscriptionSignature1(inscriptionSignature1);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("inscriptionDate1")) {
+				Date inscriptionDate1 = (Date)solrDocument.get("inscriptionDate1_stored_date");
+				if(inscriptionDate1 != null)
+					oInscriptionScolaire.setInscriptionDate1(inscriptionDate1);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("inscriptionNomComplet")) {
@@ -7019,13 +7159,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
 			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
 		}
-		if(inscriptionSignatureParent != null) {
-			document.addField("inscriptionSignatureParent_indexed_string", inscriptionSignatureParent);
-			document.addField("inscriptionSignatureParent_stored_string", inscriptionSignatureParent);
+		if(inscriptionNomsParents != null) {
+			document.addField("inscriptionNomsParents_indexed_string", inscriptionNomsParents);
+			document.addField("inscriptionNomsParents_stored_string", inscriptionNomsParents);
 		}
-		if(inscriptionDateParent != null) {
-			document.addField("inscriptionDateParent_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateParent.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("inscriptionDateParent_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateParent.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(inscriptionSignature1 != null) {
+			document.addField("inscriptionSignature1_indexed_string", inscriptionSignature1);
+			document.addField("inscriptionSignature1_stored_string", inscriptionSignature1);
+		}
+		if(inscriptionDate1 != null) {
+			document.addField("inscriptionDate1_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDate1.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("inscriptionDate1_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDate1.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(inscriptionNomComplet != null) {
 			document.addField("inscriptionNomComplet_indexed_string", inscriptionNomComplet);
@@ -7306,13 +7450,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionPaimentComplet != null)
 			oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 
-		String inscriptionSignatureParent = (String)solrDocument.get("inscriptionSignatureParent_stored_string");
-		if(inscriptionSignatureParent != null)
-			oInscriptionScolaire.setInscriptionSignatureParent(inscriptionSignatureParent);
+		String inscriptionNomsParents = (String)solrDocument.get("inscriptionNomsParents_stored_string");
+		if(inscriptionNomsParents != null)
+			oInscriptionScolaire.setInscriptionNomsParents(inscriptionNomsParents);
 
-		Date inscriptionDateParent = (Date)solrDocument.get("inscriptionDateParent_stored_date");
-		if(inscriptionDateParent != null)
-			oInscriptionScolaire.setInscriptionDateParent(inscriptionDateParent);
+		String inscriptionSignature1 = (String)solrDocument.get("inscriptionSignature1_stored_string");
+		if(inscriptionSignature1 != null)
+			oInscriptionScolaire.setInscriptionSignature1(inscriptionSignature1);
+
+		Date inscriptionDate1 = (Date)solrDocument.get("inscriptionDate1_stored_date");
+		if(inscriptionDate1 != null)
+			oInscriptionScolaire.setInscriptionDate1(inscriptionDate1);
 
 		String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
 		if(inscriptionNomComplet != null)
@@ -7326,7 +7474,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionSignatureParent, inscriptionDateParent);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionSignature1, inscriptionDate1);
 	}
 
 	////////////
@@ -7358,8 +7506,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
-				&& Objects.equals( inscriptionSignatureParent, that.inscriptionSignatureParent )
-				&& Objects.equals( inscriptionDateParent, that.inscriptionDateParent );
+				&& Objects.equals( inscriptionSignature1, that.inscriptionSignature1 )
+				&& Objects.equals( inscriptionDate1, that.inscriptionDate1 );
 	}
 
 	//////////////
@@ -7388,8 +7536,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
-		sb.append( ", inscriptionSignatureParent: \"" ).append(inscriptionSignatureParent).append( "\"" );
-		sb.append( ", inscriptionDateParent: " ).append(inscriptionDateParent);
+		sb.append( ", inscriptionSignature1: \"" ).append(inscriptionSignature1).append( "\"" );
+		sb.append( ", inscriptionDate1: " ).append(inscriptionDate1);
 		sb.append(" }");
 		return sb.toString();
 	}

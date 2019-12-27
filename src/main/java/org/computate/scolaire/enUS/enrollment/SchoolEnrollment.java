@@ -34,6 +34,10 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 	}
 
+	protected void _blocks_(Wrap<List<SchoolBlock>> c) {
+		c.o(blockSearch.getList());
+	}
+
 	protected void _block_(Wrap<SchoolBlock> c) {
 		if(blockSearch.size() > 0) {
 			c.o(blockSearch.get(0));
@@ -342,7 +346,22 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
 	}
 
-	protected void _enrollmentParentSignature(Wrap<String> c) {
+	protected void _enrollmentParentNames(Wrap<String> c) {
+		StringBuilder b = new StringBuilder();
+		for(SchoolMom o : moms) {
+			if(b.length() > 0)
+				b.append(", ");
+			b.append(o.getPersonCompleteName());
+		}
+		for(SchoolDad o : dads) {
+			if(b.length() > 0)
+				b.append(", ");
+			b.append(o.getPersonCompleteName());
+		}
+		c.o(b.toString());
+	}
+
+	protected void _enrollmentSignature1(Wrap<String> c) {
 	}
 
 	protected void _enrollmentParentDate(Wrap<LocalDate> c) {

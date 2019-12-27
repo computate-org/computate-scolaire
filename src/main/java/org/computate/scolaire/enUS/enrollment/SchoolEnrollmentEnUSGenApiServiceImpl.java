@@ -282,9 +282,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", jsonObject.getBoolean(entityVar), pk));
 						break;
-					case "enrollmentParentSignature":
+					case "enrollmentSignature1":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enrollmentParentSignature", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature1", jsonObject.getString(entityVar), pk));
 						break;
 					case "enrollmentParentDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
@@ -832,14 +832,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							patchSqlParams.addAll(Arrays.asList("enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete(), pk));
 						}
 						break;
-					case "setEnrollmentParentSignature":
+					case "setEnrollmentSignature1":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentParentSignature"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1"));
 						} else {
-							o2.setEnrollmentParentSignature(requestJson.getString(methodName));
+							o2.setEnrollmentSignature1(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enrollmentParentSignature", o2.jsonEnrollmentParentSignature(), pk));
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature1", o2.jsonEnrollmentSignature1(), pk));
 						}
 						break;
 					case "setEnrollmentParentDate":
@@ -1475,8 +1475,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return "enrollmentPaymentEachMonth_indexed_boolean";
 			case "enrollmentPaymentComplete":
 				return "enrollmentPaymentComplete_indexed_boolean";
-			case "enrollmentParentSignature":
-				return "enrollmentParentSignature_indexed_string";
+			case "enrollmentParentNames":
+				return "enrollmentParentNames_indexed_string";
+			case "enrollmentSignature1":
+				return "enrollmentSignature1_indexed_string";
 			case "enrollmentParentDate":
 				return "enrollmentParentDate_indexed_date";
 			case "enrollmentCompleteName":

@@ -149,12 +149,15 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptEnrollmentPdfGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentBlockKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentChildKey_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentMomKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentDadKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentGuardianKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolEnrollmentPaymentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk); ");
+		tl(1, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk); ");
+		tl(1, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk); ");
+		tl(1, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk); ");
+		tl(1, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk); ");
+		tl(1, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk); ");
+		tl(1, "window['inputSchoolEnrollment' + pk + 'enrollmentSignature1'] = $('#inputSchoolEnrollment' + pk + 'enrollmentSignature1'); ");
+		tl(1, "window['inputSchoolEnrollment' + pk + 'enrollmentSignature1'].jSignature({'height':200}); ");
 		tl(1, "websocketSchoolEnrollment(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");
@@ -312,7 +315,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("PATCH");
-			o.htmEnrollmentParentSignature("PATCH");
+			o.htmEnrollmentSignature1("PATCH");
 			o.htmEnrollmentParentDate("PATCH");
 			o.htmEnrollmentCompleteName("PATCH");
 		} g("div");
@@ -365,7 +368,7 @@ public class EnrollmentPdfGenPage extends EnrollmentPdfGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("Recherche");
-			o.htmEnrollmentParentSignature("Recherche");
+			o.htmEnrollmentSignature1("Recherche");
 			o.htmEnrollmentParentDate("Recherche");
 			o.htmEnrollmentCompleteName("Recherche");
 		} g("div");

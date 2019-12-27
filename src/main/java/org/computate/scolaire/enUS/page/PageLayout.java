@@ -261,6 +261,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jquery.serialize-object.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/jSignature.min.js").f().g("script");
 		e("script").a("src", "https://kit.fontawesome.com/59d19567d5.js").f().g("script");
 	}
 

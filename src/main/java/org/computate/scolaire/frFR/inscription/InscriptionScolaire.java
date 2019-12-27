@@ -132,6 +132,17 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: blocks_
+	 * r: blocRecherche
+	 * r.enUS: blockSearch
+	 * Ignorer: true
+	 */   
+	protected void _blocs_(Couverture<List<BlocScolaire>> c) {
+		c.o(blocRecherche.getList());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: block_
 	 * r: blocRecherche
 	 * r.enUS: blockSearch
@@ -1202,32 +1213,63 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 2
-	 */                   
+	 */                         
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
 	}
 
-	/**
+	/**       
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentParentSignature
+	 * Var.enUS: enrollmentParentNames
+	 * Indexe: true
+	 * Stocke: true
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonneNomComplet
+	 * r.enUS: PersonCompleteName
+	 */     
+	protected void _inscriptionNomsParents(Couverture<String> c) {
+		StringBuilder b = new StringBuilder();
+		for(MereScolaire o : meres) {
+			if(b.length() > 0)
+				b.append(", ");
+			b.append(o.getPersonneNomComplet());
+		}
+		for(PereScolaire o : peres) {
+			if(b.length() > 0)
+				b.append(", ");
+			b.append(o.getPersonneNomComplet());
+		}
+		c.o(b.toString());
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature1
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
-	 */
-	protected void _inscriptionSignatureParent(Couverture<String> c) {
+	 */     
+	protected void _inscriptionSignature1(Couverture<String> c) {
 	}
 
-	/**
+	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentDate
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 */
-	protected void _inscriptionDateParent(Couverture<LocalDate> c) {
+	protected void _inscriptionDate1(Couverture<LocalDate> c) {
 	}
 
-	/**    
+	/**           
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentCompleteName
 	 * Indexe: true

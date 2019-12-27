@@ -282,13 +282,13 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
-					case "inscriptionSignatureParent":
+					case "inscriptionSignature1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionSignatureParent", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature1", jsonObject.getString(entiteVar), pk));
 						break;
-					case "inscriptionDateParent":
+					case "inscriptionDate1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("inscriptionDateParent", jsonObject.getString(entiteVar), pk));
+						postSqlParams.addAll(Arrays.asList("inscriptionDate1", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -832,24 +832,24 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
 						}
 						break;
-					case "setInscriptionSignatureParent":
+					case "setInscriptionSignature1":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignatureParent"));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature1"));
 						} else {
-							o2.setInscriptionSignatureParent(requeteJson.getString(methodeNom));
+							o2.setInscriptionSignature1(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionSignatureParent", o2.jsonInscriptionSignatureParent(), pk));
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature1", o2.jsonInscriptionSignature1(), pk));
 						}
 						break;
-					case "setInscriptionDateParent":
+					case "setInscriptionDate1":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDateParent"));
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate1"));
 						} else {
-							o2.setInscriptionDateParent(requeteJson.getString(methodeNom));
+							o2.setInscriptionDate1(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("inscriptionDateParent", o2.jsonInscriptionDateParent(), pk));
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate1", o2.jsonInscriptionDate1(), pk));
 						}
 						break;
 				}
@@ -1475,10 +1475,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				return "inscriptionPaimentChaqueMois_indexed_boolean";
 			case "inscriptionPaimentComplet":
 				return "inscriptionPaimentComplet_indexed_boolean";
-			case "inscriptionSignatureParent":
-				return "inscriptionSignatureParent_indexed_string";
-			case "inscriptionDateParent":
-				return "inscriptionDateParent_indexed_date";
+			case "inscriptionNomsParents":
+				return "inscriptionNomsParents_indexed_string";
+			case "inscriptionSignature1":
+				return "inscriptionSignature1_indexed_string";
+			case "inscriptionDate1":
+				return "inscriptionDate1_indexed_date";
 			case "inscriptionNomComplet":
 				return "inscriptionNomComplet_indexed_string";
 			default:

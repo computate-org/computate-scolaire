@@ -623,6 +623,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("script").a("src", statiqueUrlBase, "/js/moment.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/jSignature.min.js").f().g("script");
 		e("script").a("src", "https://kit.fontawesome.com/59d19567d5.js").f().g("script");
 	}
 
