@@ -311,6 +311,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSessionKeys(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -325,6 +326,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmSessionKeys(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonSessionKeys").f();
@@ -355,7 +357,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSchoolSessionVals({ seasonKey: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSeasonSessionKeys($('#' + ($('#", classApiMethodMethod, "sessionKeys').val() ? 'suggest' : 'form') + 'SchoolSeasonSessionKeys'), $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "sessionKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); }); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+										.a("onclick", "postSchoolSessionVals({ seasonKey: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
 										.f().sx("add a session")
 									.g("button");
 								} g("div");
@@ -703,6 +705,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputYearKey(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -717,6 +720,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmYearKey(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonYearKey").f();
@@ -747,7 +751,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSeasonYearKey($('#' + ($('#", classApiMethodMethod, "yearKey').val() ? 'suggest' : 'form') + 'SchoolSeasonYearKey'), $('#listSchoolSeasonYearKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "yearKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "yearKey')); }); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+										.a("onclick", "postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
 										.f().sx("add a year")
 									.g("button");
 								} g("div");
@@ -1479,6 +1483,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonStartDate(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
@@ -1492,6 +1497,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonStartDate(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonSeasonStartDate").f();
@@ -1588,6 +1594,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonSummer(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_seasonSummer")
@@ -1610,6 +1617,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonSummer(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonSeasonSummer").f();
@@ -1696,6 +1704,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonWinter(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_seasonWinter")
@@ -1718,6 +1727,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonWinter(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonSeasonWinter").f();
@@ -1796,7 +1806,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonEnrollmentFee() {
-		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.toString();
+		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.setScale(2).toString();
 	}
 
 	public String jsonSeasonEnrollmentFee() {
@@ -1816,6 +1826,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonEnrollmentFee(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "enrollment fee")
@@ -1837,6 +1848,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonEnrollmentFee(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSeasonSeasonEnrollmentFee").f();
@@ -1865,6 +1877,177 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	//////////////////
+	// seasonFuture //
+	//////////////////
+
+	/**	L'entité « seasonFuture »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean seasonFuture;
+	@JsonIgnore
+	public Wrap<Boolean> seasonFutureWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonFuture").o(seasonFuture);
+
+	/**	<br/>L'entité « seasonFuture »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonFuture">Trouver l'entité seasonFuture dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _seasonFuture(Wrap<Boolean> c);
+
+	public Boolean getSeasonFuture() {
+		return seasonFuture;
+	}
+
+	public void setSeasonFuture(Boolean seasonFuture) {
+		this.seasonFuture = seasonFuture;
+		this.seasonFutureWrap.alreadyInitialized = true;
+	}
+	public SchoolSeason setSeasonFuture(String o) {
+		this.seasonFuture = Boolean.parseBoolean(o);
+		this.seasonFutureWrap.alreadyInitialized = true;
+		return (SchoolSeason)this;
+	}
+	protected SchoolSeason seasonFutureInit() {
+		if(!seasonFutureWrap.alreadyInitialized) {
+			_seasonFuture(seasonFutureWrap);
+			if(seasonFuture == null)
+				setSeasonFuture(seasonFutureWrap.o);
+		}
+		seasonFutureWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public Boolean solrSeasonFuture() {
+		return seasonFuture;
+	}
+
+	public String strSeasonFuture() {
+		return seasonFuture == null ? "" : seasonFuture.toString();
+	}
+
+	public String jsonSeasonFuture() {
+		return seasonFuture == null ? "" : seasonFuture.toString();
+	}
+
+	public String nomAffichageSeasonFuture() {
+		return "future season";
+	}
+
+	public String htmTooltipSeasonFuture() {
+		return null;
+	}
+
+	public String htmSeasonFuture() {
+		return seasonFuture == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonFuture());
+	}
+
+	public void inputSeasonFuture(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_seasonFuture")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeasonFuture");
+				a("name", "setSeasonFuture");
+			} else {
+				a("class", "valueSeasonFuture");
+				a("name", "seasonFuture");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonFuture', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seasonFuture')); }, function() { addError($('#", classApiMethodMethod, "_seasonFuture')); }); ");
+			}
+			;
+			if(getSeasonFuture() != null && getSeasonFuture())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmSeasonFuture(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSeasonSeasonFuture").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_seasonFuture").a("class", "").f().sx("future season").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeasonFuture(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////
+	// seasonShortName //
+	/////////////////////
+
+	/**	L'entité « seasonShortName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String seasonShortName;
+	@JsonIgnore
+	public Wrap<String> seasonShortNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonShortName").o(seasonShortName);
+
+	/**	<br/>L'entité « seasonShortName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SchoolSeason&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonShortName">Trouver l'entité seasonShortName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _seasonShortName(Wrap<String> c);
+
+	public String getSeasonShortName() {
+		return seasonShortName;
+	}
+
+	public void setSeasonShortName(String seasonShortName) {
+		this.seasonShortName = seasonShortName;
+		this.seasonShortNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolSeason seasonShortNameInit() {
+		if(!seasonShortNameWrap.alreadyInitialized) {
+			_seasonShortName(seasonShortNameWrap);
+			if(seasonShortName == null)
+				setSeasonShortName(seasonShortNameWrap.o);
+		}
+		seasonShortNameWrap.alreadyInitialized(true);
+		return (SchoolSeason)this;
+	}
+
+	public String solrSeasonShortName() {
+		return seasonShortName;
+	}
+
+	public String strSeasonShortName() {
+		return seasonShortName == null ? "" : seasonShortName;
+	}
+
+	public String jsonSeasonShortName() {
+		return seasonShortName == null ? "" : seasonShortName;
+	}
+
+	public String nomAffichageSeasonShortName() {
+		return null;
+	}
+
+	public String htmTooltipSeasonShortName() {
+		return null;
+	}
+
+	public String htmSeasonShortName() {
+		return seasonShortName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonShortName());
 	}
 
 	////////////////////////
@@ -1929,9 +2112,11 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonCompleteName(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 	}
 
 	public void htmSeasonCompleteName(String classApiMethodMethod) {
+		SchoolSeason s = (SchoolSeason)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1996,6 +2181,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		seasonSummerInit();
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
+		seasonFutureInit();
+		seasonShortNameInit();
 		seasonCompleteNameInit();
 	}
 
@@ -2083,6 +2270,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return oSchoolSeason.seasonWinter;
 			case "seasonEnrollmentFee":
 				return oSchoolSeason.seasonEnrollmentFee;
+			case "seasonFuture":
+				return oSchoolSeason.seasonFuture;
+			case "seasonShortName":
+				return oSchoolSeason.seasonShortName;
 			case "seasonCompleteName":
 				return oSchoolSeason.seasonCompleteName;
 			default:
@@ -2156,6 +2347,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				return val;
 			case "seasonEnrollmentFee":
 				setSeasonEnrollmentFee(val);
+				savesSchoolSeason.add(var);
+				return val;
+			case "seasonFuture":
+				setSeasonFuture(val);
 				savesSchoolSeason.add(var);
 				return val;
 			default:
@@ -2301,6 +2496,18 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				Double seasonEnrollmentFee = (Double)solrDocument.get("seasonEnrollmentFee_stored_double");
 				if(seasonEnrollmentFee != null)
 					oSchoolSeason.setSeasonEnrollmentFee(seasonEnrollmentFee);
+			}
+
+			if(savesSchoolSeason.contains("seasonFuture")) {
+				Boolean seasonFuture = (Boolean)solrDocument.get("seasonFuture_stored_boolean");
+				if(seasonFuture != null)
+					oSchoolSeason.setSeasonFuture(seasonFuture);
+			}
+
+			if(savesSchoolSeason.contains("seasonShortName")) {
+				String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
+				if(seasonShortName != null)
+					oSchoolSeason.setSeasonShortName(seasonShortName);
 			}
 
 			if(savesSchoolSeason.contains("seasonCompleteName")) {
@@ -2470,6 +2677,14 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee.doubleValue());
 			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee.doubleValue());
 		}
+		if(seasonFuture != null) {
+			document.addField("seasonFuture_indexed_boolean", seasonFuture);
+			document.addField("seasonFuture_stored_boolean", seasonFuture);
+		}
+		if(seasonShortName != null) {
+			document.addField("seasonShortName_indexed_string", seasonShortName);
+			document.addField("seasonShortName_stored_string", seasonShortName);
+		}
 		if(seasonCompleteName != null) {
 			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
 			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
@@ -2492,6 +2707,75 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchoolSeason(String entityVar) {
+		switch(entityVar) {
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "seasonSort":
+				return "seasonSort_indexed_int";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
+			case "seasonSummer":
+				return "seasonSummer_indexed_boolean";
+			case "seasonWinter":
+				return "seasonWinter_indexed_boolean";
+			case "seasonEnrollmentFee":
+				return "seasonEnrollmentFee_indexed_double";
+			case "seasonFuture":
+				return "seasonFuture_indexed_boolean";
+			case "seasonShortName":
+				return "seasonShortName_indexed_string";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchSchoolSeason(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestSchoolSeason(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 
@@ -2589,6 +2873,14 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		if(seasonEnrollmentFee != null)
 			oSchoolSeason.setSeasonEnrollmentFee(seasonEnrollmentFee);
 
+		Boolean seasonFuture = (Boolean)solrDocument.get("seasonFuture_stored_boolean");
+		if(seasonFuture != null)
+			oSchoolSeason.setSeasonFuture(seasonFuture);
+
+		String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
+		if(seasonShortName != null)
+			oSchoolSeason.setSeasonShortName(seasonShortName);
+
 		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 		if(seasonCompleteName != null)
 			oSchoolSeason.setSeasonCompleteName(seasonCompleteName);
@@ -2601,7 +2893,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), sessionKeys, yearKey, seasonStartDate, seasonSummer, seasonWinter, seasonEnrollmentFee);
+		return Objects.hash(super.hashCode(), sessionKeys, yearKey, seasonStartDate, seasonSummer, seasonWinter, seasonEnrollmentFee, seasonFuture);
 	}
 
 	////////////
@@ -2620,7 +2912,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				&& Objects.equals( seasonStartDate, that.seasonStartDate )
 				&& Objects.equals( seasonSummer, that.seasonSummer )
 				&& Objects.equals( seasonWinter, that.seasonWinter )
-				&& Objects.equals( seasonEnrollmentFee, that.seasonEnrollmentFee );
+				&& Objects.equals( seasonEnrollmentFee, that.seasonEnrollmentFee )
+				&& Objects.equals( seasonFuture, that.seasonFuture );
 	}
 
 	//////////////
@@ -2637,6 +2930,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		sb.append( ", seasonSummer: " ).append(seasonSummer);
 		sb.append( ", seasonWinter: " ).append(seasonWinter);
 		sb.append( ", seasonEnrollmentFee: " ).append(seasonEnrollmentFee);
+		sb.append( ", seasonFuture: " ).append(seasonFuture);
 		sb.append(" }");
 		return sb.toString();
 	}

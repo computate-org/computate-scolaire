@@ -10,7 +10,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -45,6 +48,7 @@ import io.vertx.ext.web.api.OperationRequest;
  * NomCanonique.enUS: org.computate.scolaire.enUS.request.SiteRequestEnUS
  */    
 public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Serializable {  
+
 	private static final long serialVersionUID = -6737494107881513257L;
 
 	/**
@@ -58,6 +62,8 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 **/    
 	protected void _siteContexte_(Couverture<SiteContexteFrFR> c) {
 	}
+
+	private static final Pattern PATTERN_SESSION = Pattern.compile("vertx-web.session=(\\w+)");
 
 	/**	
 	 * Var.enUS: siteConfig_
@@ -193,6 +199,28 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		if(principalJson != null) {
 			String o = principalJson.getString("sub");
 			c.o(o);
+		}
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * r: operationRequete
+	 * r.enUS: operationRequest
+	 */                   
+	protected void _sessionId(Couverture<String> c) {
+		String cookie = operationRequete.getHeaders().get("Cookie");
+		if(StringUtils.isNotBlank(cookie)) {
+			Matcher m = PATTERN_SESSION.matcher(cookie);
+			if(m.matches()) {
+				c.o(m.group(1));
+				System.out.println(c.o);
+			}
 		}
 	}
 

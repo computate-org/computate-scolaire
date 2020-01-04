@@ -65,6 +65,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
 /**	
@@ -279,9 +280,13 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
 				router.route().handler(CookieHandler.create());
-				router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+//				ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx, "computate-scolaire-enUS-session");
+				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+				sessionHandler.setAuthProvider(authFournisseur);
+				router.route().handler(sessionHandler);
 
-				router.route().handler(UserSessionHandler.create(authFournisseur));
+//				router.route().handler(UserSessionHandler.create(authFournisseur));
 
 				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
 

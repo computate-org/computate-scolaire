@@ -224,6 +224,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -238,6 +239,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireInscriptionCles").f();
@@ -268,7 +270,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() { patchEnfantScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereEnfantScolaireInscriptionCles($('#' + ($('#", classeApiMethodeMethode, "inscriptionCles').val() ? 'suggere' : 'form') + 'EnfantScolaireInscriptionCles'), $('#listEnfantScolaireInscriptionCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+										.a("onclick", "postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() { patchEnfantScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 										.f().sx("ajouter une inscription")
 									.g("button");
 								} g("div");
@@ -985,6 +987,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonnePrenom(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "prénom")
@@ -1006,6 +1009,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolairePersonnePrenom").f();
@@ -1098,6 +1102,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonnePrenomPrefere(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "prénom préferé")
@@ -1119,6 +1124,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolairePersonnePrenomPrefere").f();
@@ -1211,6 +1217,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputFamilleNom(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "nom de famille")
@@ -1232,6 +1239,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireFamilleNom").f();
@@ -1523,6 +1531,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneDateNaissance(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
@@ -1536,6 +1545,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonneDateNaissance(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolairePersonneDateNaissance").f();
@@ -1627,9 +1637,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneAgeEnSeptembre(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 	}
 
 	public void htmPersonneAgeEnSeptembre(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1712,6 +1724,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantConditionsMedicales(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "conditions médicales")
@@ -1733,6 +1746,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantConditionsMedicales(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").f();
@@ -1825,6 +1839,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "écoles précedemment fréqentées")
@@ -1846,6 +1861,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").f();
@@ -1938,6 +1954,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantDescription(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("textarea")
 			.a("placeholder", "description")
 			.a("id", classeApiMethodeMethode, "_enfantDescription");
@@ -1957,6 +1974,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantDescription(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantDescription").f();
@@ -2049,6 +2067,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantObjectifs(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("textarea")
 			.a("placeholder", "objectifs")
 			.a("id", classeApiMethodeMethode, "_enfantObjectifs");
@@ -2068,6 +2087,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantObjectifs(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantObjectifs").f();
@@ -2165,6 +2185,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantVaccinsAJour(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_enfantVaccinsAJour")
@@ -2187,6 +2208,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantVaccinsAJour(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantVaccinsAJour").f();
@@ -2273,6 +2295,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantPropre(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_enfantPropre")
@@ -2295,6 +2318,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEnfantPropre(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEnfantScolaireEnfantPropre").f();
@@ -2376,9 +2400,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEnfantNomComplet(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 	}
 
 	public void htmEnfantNomComplet(String classeApiMethodeMethode) {
+		EnfantScolaire s = (EnfantScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -3004,6 +3030,123 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeEnfantScolaire(String entiteVar) {
+		switch(entiteVar) {
+			case "childKey":
+				return "childKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "familySort":
+				return "familySort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolKeys":
+				return "schoolKeys_indexed_longs";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageKeys":
+				return "ageKeys_indexed_longs";
+			case "personFirstName":
+				return "personFirstName_indexed_string";
+			case "personFirstNamePreferred":
+				return "personFirstNamePreferred_indexed_string";
+			case "familyName":
+				return "familyName_indexed_string";
+			case "personCompleteName":
+				return "personCompleteName_indexed_string";
+			case "personCompleteNamePreferred":
+				return "personCompleteNamePreferred_indexed_string";
+			case "personFormalName":
+				return "personFormalName_indexed_string";
+			case "personBirthDate":
+				return "personBirthDate_indexed_date";
+			case "personAgeInSeptember":
+				return "personAgeInSeptember_indexed_string";
+			case "childMedicalConditions":
+				return "childMedicalConditions_indexed_string";
+			case "childPreviousSchoolsAttended":
+				return "childPreviousSchoolsAttended_indexed_string";
+			case "childDescription":
+				return "childDescription_indexed_string";
+			case "childObjectives":
+				return "childObjectives_indexed_string";
+			case "enfantVaccinesCurrent":
+				return "enfantVaccinesCurrent_indexed_boolean";
+			case "childPottyTrained":
+				return "childPottyTrained_indexed_boolean";
+			case "childCompleteName":
+				return "childCompleteName_indexed_string";
+			case "enfantCle":
+				return "enfantCle_indexed_long";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "familleTri":
+				return "familleTri_indexed_int";
+			case "enfantTri":
+				return "enfantTri_indexed_int";
+			case "ecoleCles":
+				return "ecoleCles_indexed_longs";
+			case "anneeCles":
+				return "anneeCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "ageCles":
+				return "ageCles_indexed_longs";
+			case "personnePrenom":
+				return "personnePrenom_indexed_string";
+			case "personnePrenomPrefere":
+				return "personnePrenomPrefere_indexed_string";
+			case "familleNom":
+				return "familleNom_indexed_string";
+			case "personneNomComplet":
+				return "personneNomComplet_indexed_string";
+			case "personneNomCompletPrefere":
+				return "personneNomCompletPrefere_indexed_string";
+			case "personneNomFormel":
+				return "personneNomFormel_indexed_string";
+			case "personneDateNaissance":
+				return "personneDateNaissance_indexed_date";
+			case "personneAgeEnSeptembre":
+				return "personneAgeEnSeptembre_indexed_string";
+			case "enfantConditionsMedicales":
+				return "enfantConditionsMedicales_indexed_string";
+			case "enfantEcolesPrecedemmentFrequentees":
+				return "enfantEcolesPrecedemmentFrequentees_indexed_string";
+			case "enfantDescription":
+				return "enfantDescription_indexed_string";
+			case "enfantObjectifs":
+				return "enfantObjectifs_indexed_string";
+			case "enfantVaccinsAJour":
+				return "enfantVaccinsAJour_indexed_boolean";
+			case "enfantPropre":
+				return "enfantPropre_indexed_boolean";
+			case "enfantNomComplet":
+				return "enfantNomComplet_indexed_string";
+			default:
+				return Cluster.varIndexeCluster(entiteVar);
+		}
+	}
+
+	public static String varRechercheEnfantScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varRechercheCluster(entiteVar);
+		}
+	}
+
+	public static String varSuggereEnfantScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

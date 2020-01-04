@@ -436,6 +436,21 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
+	 * Var.enUS: seasonShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: SaisonNomCourt
+	 * r.enUS: SeasonShortName
+	 * r: saison
+	 * r.enUS: season
+	 */
+	protected void _saisonNomCourt(Couverture<String> c) {
+		if(saison_ != null)
+			c.o(saison_.getSaisonNomCourt());
+	}
+
+	/**   
+	 * {@inheritDoc}
 	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -451,7 +466,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionStartDay
+	 * Var.enUS: sessionStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -463,9 +478,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	protected void _sessionJourDebut(Couverture<LocalDate> c) {}
 
 	/**
-	 * Var.enUS: setSessionStartDay
+	 * Var.enUS: setSessionStartDate
 	 * r: SessionJourDebut
-	 * r.enUS: SessionStartDay
+	 * r.enUS: SessionStartDate
 	 */
 	@Override public SessionScolaire setSessionJourDebut(String o) {
 		if(StringUtils.contains(o, " "))
@@ -479,9 +494,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: setSessionEndDay
+	 * Var.enUS: setSessionEndDate
 	 * r: SessionJourFin
-	 * r.enUS: SessionEndDay
+	 * r.enUS: SessionEndDate
 	 */
 	@Override public SessionScolaire setSessionJourFin(String o) {
 		if(StringUtils.contains(o, " "))
@@ -496,7 +511,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionEndDay
+	 * Var.enUS: sessionEndDate
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
@@ -506,6 +521,45 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of the session
 	 */                   
 	protected void _sessionJourFin(Couverture<LocalDate> c) {}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: sessionShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: sessionEte
+	 * r.enUS: sessionSummer
+	 * r: strSessionJourDebut
+	 * r.enUS: strSessionStartDate
+	 * r: strSessionJourFin
+	 * r.enUS: strSessionEndDate
+	 * r: saisonNomComplet
+	 * r.enUS: seasonCompleteName
+	 * r: "%s - %s session d'été à %s"
+	 * r.enUS: "%s - %s summer session at %s"
+	 * r: "%s - %s session scolaire à %s"
+	 * r.enUS: "%s - %s school session at %s"
+	 * r: "%s - %s session à %s"
+	 * r.enUS: "%s - %s session at %s"
+	 * r: saisonEte
+	 * r.enUS: seasonSummer
+	 * r: saisonHiver
+	 * r.enUS: seasonWinter
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
+	 */
+	protected void _sessionNomCourt(Couverture<String> c) {
+		String o;
+
+		if(BooleanUtils.isTrue(saisonEte))
+			o = String.format("%s - %s session d'été à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+		if(BooleanUtils.isTrue(saisonHiver))
+			o = String.format("%s - %s session scolaire à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+		else
+			o = String.format("%s - %s session à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+
+		c.o(o);
+	}
 
 	/**   
 	 * {@inheritDoc}
@@ -520,9 +574,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
 	 * r: strSessionJourDebut
-	 * r.enUS: strSessionStartDay
+	 * r.enUS: strSessionStartDate
 	 * r: strSessionJourFin
-	 * r.enUS: strSessionEndDay
+	 * r.enUS: strSessionEndDate
 	 * r: saisonNomComplet
 	 * r.enUS: seasonCompleteName
 	 * r: "%s - %s session d'été à %s"
@@ -549,7 +603,6 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 			o = String.format("%s - %s session à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
 
 		c.o(o);
-
 	}
 
 	/**

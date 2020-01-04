@@ -70,6 +70,15 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	public static DateTimeFormatter FORMATDateCourt = DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE);
 
 	/**
+	 * Var.enUS: FORMATMonthYear
+	 * r: EEE d MMM yyyy
+	 * r.enUS: EEE MMM d yyyy
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */
+	public static DateTimeFormatter FORMATMoisAnnee = DateTimeFormatter.ofPattern("MMM yyyy", Locale.FRANCE);
+
+	/**
 	 * Var.enUS: FORMATDateDisplay
 	 * r: EEEE d MMMM yyyy
 	 * r.enUS: EEEE MMMM d yyyy
@@ -1554,21 +1563,22 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			if(!"application/pdf".equals(pageTypeContenu) || BooleanUtils.isNotTrue(pdfExclude)) {
 				s(htmlPart.getHtmlBefore());
 				if(htmlVar != null) {
+
+					Object parent = StringUtils.contains(htmlVar, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
+					if(parent == null)
+						parent = this;
+					String var = StringUtils.substringAfterLast(htmlVar, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVar;
+
 					if(htmlVarForEach != null) {
-	
-						Object parent = StringUtils.contains(htmlVar, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
-						if(parent == null)
-							parent = this;
-						String var = StringUtils.substringAfterLast(htmlVar, ".");
-						if(StringUtils.isBlank(var))
-							var = htmlVar;
 	
 						Object parentForEach = StringUtils.contains(htmlVarForEach, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarForEach, ".")) : null;
 						if(parentForEach == null)
 							parentForEach = this;
 						String varForEach = StringUtils.substringAfterLast(htmlVarForEach, ".");
 						if(StringUtils.isBlank(varForEach))
-							var = htmlVarForEach;
+							varForEach = htmlVarForEach;
 	
 						try {
 							Collection<?> collection = (Collection<?>)MethodUtils.invokeMethod(parentForEach, "get" + StringUtils.capitalize(varForEach), new Object[] {});
@@ -1584,12 +1594,19 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								}
 							}
 							i = i - 1;
+						} catch (RuntimeException e) {
+							throw e;
 						} catch (Exception e) {
-							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "get" + StringUtils.capitalize(var), varForEach, parentForEach), e);
+							throw new RuntimeException(String.format("Could not call method %s of object: %s", "get" + StringUtils.capitalize(varForEach), parentForEach), e);
 						}
 					}
 					else {
-						s(obtenirPourClasse(htmlVar));
+						try {
+							String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
+							s(s);
+						} catch (Exception e) {
+							s(obtenirPourClasse(htmlVar));
+						}
 					}
 				}
 				if(htmlVarForm != null) {
@@ -1597,6 +1614,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+					} catch (RuntimeException e) {
+						throw e;
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}
@@ -1606,6 +1625,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
+					} catch (RuntimeException e) {
+						throw e;
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}

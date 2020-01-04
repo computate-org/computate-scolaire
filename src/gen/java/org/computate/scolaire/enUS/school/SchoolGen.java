@@ -214,6 +214,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputYearKeys(String classApiMethodMethod) {
+		School s = (School)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -228,6 +229,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmYearKeys(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolYearKeys").f();
@@ -258,7 +260,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolYearKeys($('#' + ($('#", classApiMethodMethod, "yearKeys').val() ? 'suggest' : 'form') + 'SchoolYearKeys'), $('#listSchoolYearKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "yearKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "yearKeys')); }); }, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
+										.a("onclick", "postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() { patchSchoolVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
 										.f().sx("add a year")
 									.g("button");
 								} g("div");
@@ -891,6 +893,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolName(String classApiMethodMethod) {
+		School s = (School)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "name of the school")
@@ -912,6 +915,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolName(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSchoolName").f();
@@ -1004,6 +1008,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolPhoneNumber(String classApiMethodMethod) {
+		School s = (School)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "phone number")
@@ -1025,6 +1030,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolPhoneNumber(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSchoolPhoneNumber").f();
@@ -1117,6 +1123,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolAdministratorName(String classApiMethodMethod) {
+		School s = (School)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "administrator of the school")
@@ -1138,6 +1145,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolAdministratorName(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSchoolAdministratorName").f();
@@ -1230,6 +1238,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolLocation(String classApiMethodMethod) {
+		School s = (School)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "location")
@@ -1251,6 +1260,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolLocation(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSchoolLocation").f();
@@ -1343,6 +1353,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
+		School s = (School)this;
 		e("textarea")
 			.a("placeholder", "address")
 			.a("id", classApiMethodMethod, "_schoolAddress");
@@ -1362,6 +1373,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolAddress(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSchoolAddress").f();
@@ -1515,9 +1527,11 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolCompleteName(String classApiMethodMethod) {
+		School s = (School)this;
 	}
 
 	public void htmSchoolCompleteName(String classApiMethodMethod) {
+		School s = (School)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2011,6 +2025,59 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchool(String entityVar) {
+		switch(entityVar) {
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageGroupKeys":
+				return "ageGroupKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "childKeys":
+				return "childKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolShortName":
+				return "schoolShortName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSearchSchool(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSuggereSchool(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 

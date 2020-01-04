@@ -590,6 +590,67 @@ The site configuration.
 		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
 	}
 
+	///////////////
+	// sessionId //
+	///////////////
+
+	/**	L'entité « sessionId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String sessionId;
+	@JsonIgnore
+	public Wrap<String> sessionIdWrap = new Wrap<String>().p(this).c(String.class).var("sessionId").o(sessionId);
+
+	/**	<br/>L'entité « sessionId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionId">Trouver l'entité sessionId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionId(Wrap<String> c);
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+		this.sessionIdWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS sessionIdInit() {
+		if(!sessionIdWrap.alreadyInitialized) {
+			_sessionId(sessionIdWrap);
+			if(sessionId == null)
+				setSessionId(sessionIdWrap.o);
+		}
+		sessionIdWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public String solrSessionId() {
+		return sessionId;
+	}
+
+	public String strSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String jsonSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String nomAffichageSessionId() {
+		return null;
+	}
+
+	public String htmTooltipSessionId() {
+		return null;
+	}
+
+	public String htmSessionId() {
+		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
+	}
+
 	//////////////
 	// userName //
 	//////////////
@@ -1660,6 +1721,7 @@ The site configuration.
 		userVertxInit();
 		jsonPrincipalInit();
 		userIdInit();
+		sessionIdInit();
 		userNameInit();
 		userLastNameInit();
 		userFirstNameInit();
@@ -1750,6 +1812,8 @@ The site configuration.
 				return oSiteRequestEnUS.jsonPrincipal;
 			case "userId":
 				return oSiteRequestEnUS.userId;
+			case "sessionId":
+				return oSiteRequestEnUS.sessionId;
 			case "userName":
 				return oSiteRequestEnUS.userName;
 			case "userLastName":

@@ -310,6 +310,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputBlocCles(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -325,6 +326,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmBlocCles(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAgeScolaireBlocCles").f();
@@ -355,7 +357,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-										.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAgeScolaireBlocCles($('#' + ($('#", classeApiMethodeMethode, "blocCles').val() ? 'suggere' : 'form') + 'AgeScolaireBlocCles'), $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "blocCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+										.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
 										.f().sx("ajouter un bloc")
 									.g("button");
 								} g("div");
@@ -770,6 +772,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputSessionCle(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -785,6 +788,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmSessionCle(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAgeScolaireSessionCle").f();
@@ -815,7 +819,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-										.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAgeScolaireSessionCle($('#' + ($('#", classeApiMethodeMethode, "sessionCle').val() ? 'suggere' : 'form') + 'AgeScolaireSessionCle'), $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "sessionCle'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
+										.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
 										.f().sx("ajouter une session")
 									.g("button");
 								} g("div");
@@ -1347,6 +1351,61 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
 	}
 
+	public void inputEcoleAddresse(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "addresse")
+			.a("title", "L'année scolaire de la saison scolaire. ")
+			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEcoleAddresse w3-input w3-border ");
+				a("name", "setEcoleAddresse");
+			} else {
+				a("class", "valeurEcoleAddresse w3-input w3-border ");
+				a("name", "ecoleAddresse");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
+			}
+			a("value", strEcoleAddresse())
+		.fg();
+
+	}
+
+	public void htmEcoleAddresse(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAgeScolaireEcoleAddresse").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ecoleAddresse").a("class", "").f().sx("addresse").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEcoleAddresse(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////////
 	// ecoleNumeroTelephone //
 	//////////////////////////
@@ -1871,7 +1930,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonFraisInscription() {
-		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
+		return saisonFraisInscription == null ? "" : saisonFraisInscription.setScale(2).toString();
 	}
 
 	public String jsonSaisonFraisInscription() {
@@ -1888,6 +1947,67 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSaisonFraisInscription() {
 		return saisonFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonFraisInscription());
+	}
+
+	////////////////////
+	// saisonNomCourt //
+	////////////////////
+
+	/**	L'entité « saisonNomCourt »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String saisonNomCourt;
+	@JsonIgnore
+	public Couverture<String> saisonNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("saisonNomCourt").o(saisonNomCourt);
+
+	/**	<br/>L'entité « saisonNomCourt »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonNomCourt">Trouver l'entité saisonNomCourt dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonNomCourt(Couverture<String> c);
+
+	public String getSaisonNomCourt() {
+		return saisonNomCourt;
+	}
+
+	public void setSaisonNomCourt(String saisonNomCourt) {
+		this.saisonNomCourt = saisonNomCourt;
+		this.saisonNomCourtCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire saisonNomCourtInit() {
+		if(!saisonNomCourtCouverture.dejaInitialise) {
+			_saisonNomCourt(saisonNomCourtCouverture);
+			if(saisonNomCourt == null)
+				setSaisonNomCourt(saisonNomCourtCouverture.o);
+		}
+		saisonNomCourtCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrSaisonNomCourt() {
+		return saisonNomCourt;
+	}
+
+	public String strSaisonNomCourt() {
+		return saisonNomCourt == null ? "" : saisonNomCourt;
+	}
+
+	public String jsonSaisonNomCourt() {
+		return saisonNomCourt == null ? "" : saisonNomCourt;
+	}
+
+	public String nomAffichageSaisonNomCourt() {
+		return null;
+	}
+
+	public String htmTooltipSaisonNomCourt() {
+		return null;
+	}
+
+	public String htmSaisonNomCourt() {
+		return saisonNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonNomCourt());
 	}
 
 	//////////////////////
@@ -2234,6 +2354,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAgeDebut(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "début du groupe d'âge")
@@ -2256,6 +2377,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmAgeDebut(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAgeScolaireAgeDebut").f();
@@ -2354,6 +2476,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAgeFin(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "fin du groupe d'âge")
@@ -2376,6 +2499,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmAgeFin(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAgeScolaireAgeFin").f();
@@ -2404,6 +2528,67 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	/////////////////
+	// ageNomCourt //
+	/////////////////
+
+	/**	L'entité « ageNomCourt »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String ageNomCourt;
+	@JsonIgnore
+	public Couverture<String> ageNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("ageNomCourt").o(ageNomCourt);
+
+	/**	<br/>L'entité « ageNomCourt »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageNomCourt">Trouver l'entité ageNomCourt dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ageNomCourt(Couverture<String> c);
+
+	public String getAgeNomCourt() {
+		return ageNomCourt;
+	}
+
+	public void setAgeNomCourt(String ageNomCourt) {
+		this.ageNomCourt = ageNomCourt;
+		this.ageNomCourtCouverture.dejaInitialise = true;
+	}
+	protected AgeScolaire ageNomCourtInit() {
+		if(!ageNomCourtCouverture.dejaInitialise) {
+			_ageNomCourt(ageNomCourtCouverture);
+			if(ageNomCourt == null)
+				setAgeNomCourt(ageNomCourtCouverture.o);
+		}
+		ageNomCourtCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public String solrAgeNomCourt() {
+		return ageNomCourt;
+	}
+
+	public String strAgeNomCourt() {
+		return ageNomCourt == null ? "" : ageNomCourt;
+	}
+
+	public String jsonAgeNomCourt() {
+		return ageNomCourt == null ? "" : ageNomCourt;
+	}
+
+	public String nomAffichageAgeNomCourt() {
+		return null;
+	}
+
+	public String htmTooltipAgeNomCourt() {
+		return null;
+	}
+
+	public String htmAgeNomCourt() {
+		return ageNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strAgeNomCourt());
 	}
 
 	///////////////////
@@ -2468,9 +2653,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAgeNomComplet(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 	}
 
 	public void htmAgeNomComplet(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2538,12 +2725,14 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		saisonEteInit();
 		saisonHiverInit();
 		saisonFraisInscriptionInit();
+		saisonNomCourtInit();
 		saisonNomCompletInit();
 		sessionJourDebutInit();
 		sessionJourFinInit();
 		sessionNomCompletInit();
 		ageDebutInit();
 		ageFinInit();
+		ageNomCourtInit();
 		ageNomCompletInit();
 	}
 
@@ -2637,6 +2826,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.saisonHiver;
 			case "saisonFraisInscription":
 				return oAgeScolaire.saisonFraisInscription;
+			case "saisonNomCourt":
+				return oAgeScolaire.saisonNomCourt;
 			case "saisonNomComplet":
 				return oAgeScolaire.saisonNomComplet;
 			case "sessionJourDebut":
@@ -2649,6 +2840,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.ageDebut;
 			case "ageFin":
 				return oAgeScolaire.ageFin;
+			case "ageNomCourt":
+				return oAgeScolaire.ageNomCourt;
 			case "ageNomComplet":
 				return oAgeScolaire.ageNomComplet;
 			default:
@@ -2883,6 +3076,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSaisonFraisInscription(saisonFraisInscription);
 			}
 
+			if(sauvegardesAgeScolaire.contains("saisonNomCourt")) {
+				String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
+				if(saisonNomCourt != null)
+					oAgeScolaire.setSaisonNomCourt(saisonNomCourt);
+			}
+
 			if(sauvegardesAgeScolaire.contains("saisonNomComplet")) {
 				String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
 				if(saisonNomComplet != null)
@@ -2917,6 +3116,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 				if(ageFin != null)
 					oAgeScolaire.setAgeFin(ageFin);
+			}
+
+			if(sauvegardesAgeScolaire.contains("ageNomCourt")) {
+				String ageNomCourt = (String)solrDocument.get("ageNomCourt_stored_string");
+				if(ageNomCourt != null)
+					oAgeScolaire.setAgeNomCourt(ageNomCourt);
 			}
 
 			if(sauvegardesAgeScolaire.contains("ageNomComplet")) {
@@ -3098,6 +3303,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription.doubleValue());
 			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription.doubleValue());
 		}
+		if(saisonNomCourt != null) {
+			document.addField("saisonNomCourt_indexed_string", saisonNomCourt);
+			document.addField("saisonNomCourt_stored_string", saisonNomCourt);
+		}
 		if(saisonNomComplet != null) {
 			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);
 			document.addField("saisonNomComplet_stored_string", saisonNomComplet);
@@ -3122,6 +3331,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_indexed_int", ageFin);
 			document.addField("ageFin_stored_int", ageFin);
 		}
+		if(ageNomCourt != null) {
+			document.addField("ageNomCourt_indexed_string", ageNomCourt);
+			document.addField("ageNomCourt_stored_string", ageNomCourt);
+		}
 		if(ageNomComplet != null) {
 			document.addField("ageNomComplet_indexed_string", ageNomComplet);
 			document.addField("ageNomComplet_stored_string", ageNomComplet);
@@ -3144,6 +3357,159 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeAgeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			case "ageKey":
+				return "ageKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "seasonSort":
+				return "seasonSort_indexed_int";
+			case "sessionSort":
+				return "sessionSort_indexed_int";
+			case "sessionKey":
+				return "sessionKey_indexed_long";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
+			case "seasonSummer":
+				return "seasonSummer_indexed_boolean";
+			case "seasonWinter":
+				return "seasonWinter_indexed_boolean";
+			case "seasonEnrollmentFee":
+				return "seasonEnrollmentFee_indexed_double";
+			case "seasonShortName":
+				return "seasonShortName_indexed_string";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
+			case "sessionStartDate":
+				return "sessionStartDate_indexed_date";
+			case "sessionEndDate":
+				return "sessionEndDate_indexed_date";
+			case "sessionCompleteName":
+				return "sessionCompleteName_indexed_string";
+			case "ageStart":
+				return "ageStart_indexed_int";
+			case "ageEnd":
+				return "ageEnd_indexed_int";
+			case "ageShortName":
+				return "ageShortName_indexed_string";
+			case "ageCompleteName":
+				return "ageCompleteName_indexed_string";
+			case "ageCle":
+				return "ageCle_indexed_long";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "blocCles":
+				return "blocCles_indexed_longs";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
+			case "ecoleTri":
+				return "ecoleTri_indexed_int";
+			case "anneeTri":
+				return "anneeTri_indexed_int";
+			case "saisonTri":
+				return "saisonTri_indexed_int";
+			case "sessionTri":
+				return "sessionTri_indexed_int";
+			case "sessionCle":
+				return "sessionCle_indexed_long";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "saisonCle":
+				return "saisonCle_indexed_long";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
+			case "anneeDebut":
+				return "anneeDebut_indexed_int";
+			case "anneeFin":
+				return "anneeFin_indexed_int";
+			case "saisonJourDebut":
+				return "saisonJourDebut_indexed_date";
+			case "saisonEte":
+				return "saisonEte_indexed_boolean";
+			case "saisonHiver":
+				return "saisonHiver_indexed_boolean";
+			case "saisonFraisInscription":
+				return "saisonFraisInscription_indexed_double";
+			case "saisonNomCourt":
+				return "saisonNomCourt_indexed_string";
+			case "saisonNomComplet":
+				return "saisonNomComplet_indexed_string";
+			case "sessionJourDebut":
+				return "sessionJourDebut_indexed_date";
+			case "sessionJourFin":
+				return "sessionJourFin_indexed_date";
+			case "sessionNomComplet":
+				return "sessionNomComplet_indexed_string";
+			case "ageDebut":
+				return "ageDebut_indexed_int";
+			case "ageFin":
+				return "ageFin_indexed_int";
+			case "ageNomCourt":
+				return "ageNomCourt_indexed_string";
+			case "ageNomComplet":
+				return "ageNomComplet_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varRechercheAgeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varSuggereAgeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
 	}
 
@@ -3253,6 +3619,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(saisonFraisInscription != null)
 			oAgeScolaire.setSaisonFraisInscription(saisonFraisInscription);
 
+		String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
+		if(saisonNomCourt != null)
+			oAgeScolaire.setSaisonNomCourt(saisonNomCourt);
+
 		String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
 		if(saisonNomComplet != null)
 			oAgeScolaire.setSaisonNomComplet(saisonNomComplet);
@@ -3276,6 +3646,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 		if(ageFin != null)
 			oAgeScolaire.setAgeFin(ageFin);
+
+		String ageNomCourt = (String)solrDocument.get("ageNomCourt_stored_string");
+		if(ageNomCourt != null)
+			oAgeScolaire.setAgeNomCourt(ageNomCourt);
 
 		String ageNomComplet = (String)solrDocument.get("ageNomComplet_stored_string");
 		if(ageNomComplet != null)

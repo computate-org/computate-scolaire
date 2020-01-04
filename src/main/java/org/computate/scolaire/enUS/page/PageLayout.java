@@ -48,6 +48,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static DateTimeFormatter FORMATDateShort = DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US);
 
+	public static DateTimeFormatter FORMATMonthYear = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+
 	public static DateTimeFormatter FORMATDateDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy", Locale.US);
 
 	public static DateTimeFormatter FORMATDateTimeDisplay = DateTimeFormatter.ofPattern("EEEE MMMM d yyyy h:mm a:ss.SSS", Locale.US);
@@ -906,21 +908,22 @@ public class PageLayout extends PageLayoutGen<Object> {
 			if(!"application/pdf".equals(pageContentType) || BooleanUtils.isNotTrue(pdfExclude)) {
 				s(htmlPart.getHtmlBefore());
 				if(htmlVar != null) {
+
+					Object parent = StringUtils.contains(htmlVar, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
+					if(parent == null)
+						parent = this;
+					String var = StringUtils.substringAfterLast(htmlVar, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVar;
+
 					if(htmlVarForEach != null) {
-	
-						Object parent = StringUtils.contains(htmlVar, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
-						if(parent == null)
-							parent = this;
-						String var = StringUtils.substringAfterLast(htmlVar, ".");
-						if(StringUtils.isBlank(var))
-							var = htmlVar;
 	
 						Object parentForEach = StringUtils.contains(htmlVarForEach, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVarForEach, ".")) : null;
 						if(parentForEach == null)
 							parentForEach = this;
 						String varForEach = StringUtils.substringAfterLast(htmlVarForEach, ".");
 						if(StringUtils.isBlank(varForEach))
-							var = htmlVarForEach;
+							varForEach = htmlVarForEach;
 	
 						try {
 							Collection<?> collection = (Collection<?>)MethodUtils.invokeMethod(parentForEach, "get" + StringUtils.capitalize(varForEach), new Object[] {});
@@ -936,12 +939,19 @@ public class PageLayout extends PageLayoutGen<Object> {
 								}
 							}
 							i = i - 1;
+						} catch (RuntimeException e) {
+							throw e;
 						} catch (Exception e) {
-							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "get" + StringUtils.capitalize(var), varForEach, parentForEach), e);
+							throw new RuntimeException(String.format("Could not call method %s of object: %s", "get" + StringUtils.capitalize(varForEach), parentForEach), e);
 						}
 					}
 					else {
-						s(obtainForClass(htmlVar));
+						try {
+							String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
+							s(s);
+						} catch (Exception e) {
+							s(obtainForClass(htmlVar));
+						}
 					}
 				}
 				if(htmlVarForm != null) {
@@ -949,6 +959,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+					} catch (RuntimeException e) {
+						throw e;
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}
@@ -958,6 +970,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
 					try {
 						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
+					} catch (RuntimeException e) {
+						throw e;
 					} catch (Exception e) {
 						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
 					}

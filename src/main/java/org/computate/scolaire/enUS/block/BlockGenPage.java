@@ -95,8 +95,9 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptBlockGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolBlockAgeKey([{'name':'fq','value':'blockKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolBlockAgeKey_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolBlockEnrollmentKeys([{'name':'fq','value':'blockKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolBlockEnrollmentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolBlockAgeKey([{'name':'fq','value':'blockKeys:' + pk}], $('#listSchoolBlockAgeKey_Page'), pk); ");
+		tl(1, "suggestSchoolBlockEnrollmentKeys([{'name':'fq','value':'blockKeys:' + pk}], $('#listSchoolBlockEnrollmentKeys_Page'), pk); ");
 		tl(1, "websocketSchoolBlock(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");
@@ -199,6 +200,9 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("PATCH");
+			o.htmBlockSunday("PATCH");
+			o.htmBlockSaturday("PATCH");
 			o.htmBlockCompleteName("PATCH");
 		} g("div");
 	}
@@ -231,6 +235,9 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("Recherche");
+			o.htmBlockSunday("Recherche");
+			o.htmBlockSaturday("Recherche");
 			o.htmBlockCompleteName("Recherche");
 		} g("div");
 	}

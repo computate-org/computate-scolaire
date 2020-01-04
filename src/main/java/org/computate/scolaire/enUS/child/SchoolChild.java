@@ -2,8 +2,10 @@ package org.computate.scolaire.enUS.child;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
@@ -93,6 +95,11 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 	}
 
 	protected void _personBirthDate(Wrap<LocalDate> c) {
+	}
+
+	@Override()
+	public String strPersonBirthDate() {
+		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.US));
 	}
 
 	protected void _personAgeInSeptember(Wrap<String> c) {

@@ -10,6 +10,7 @@ import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.session.SchoolSession;
 
 public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
@@ -118,13 +119,32 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {}
 
+	protected void _seasonFuture(Wrap<Boolean> c) {}
+
+	protected void _seasonShortName(Wrap<String> c) {
+		String o;
+		
+		if(BooleanUtils.isTrue(seasonFuture))
+			o = String.format("Additional classes coming during the %s-%s school year at %s", yearStart, yearEnd, schoolName);
+		if(BooleanUtils.isTrue(seasonSummer))
+			o = String.format("Summer season classes (one time registration fee $%s)", strSeasonEnrollmentFee());
+		else if(BooleanUtils.isTrue(seasonWinter))
+			o = String.format("Regular school year classes (one time registration fee $%s)", strSeasonEnrollmentFee());
+		else
+			o = String.format("%s season at %s", strSeasonStartDate(), schoolCompleteName);
+		
+		c.o(o);
+	}
+
 	protected void _seasonCompleteName(Wrap<String> c) {
 		String o;
 		
+		if(BooleanUtils.isTrue(seasonFuture))
+			o = String.format("Additional classes coming during the %s-%s school year at %s", yearStart, yearEnd, schoolCompleteName);
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s summer season at %s", strSeasonStartDate(), schoolCompleteName);
+			o = String.format("%s summer season at %s", yearEnd, schoolCompleteName);
 		else if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s school season at %s", strSeasonStartDate(), schoolCompleteName);
+			o = String.format("%s-%s school season at %s", yearStart, yearEnd, schoolCompleteName);
 		else
 			o = String.format("%s season at %s", strSeasonStartDate(), schoolCompleteName);
 		
@@ -134,5 +154,10 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(seasonCompleteName);
+	}
+
+	@Override()
+	public String strSeasonEnrollmentFee() {
+		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.setScale(0).toString();
 	}
 }

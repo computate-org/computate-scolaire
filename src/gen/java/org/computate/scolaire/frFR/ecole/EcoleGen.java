@@ -215,6 +215,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputAnneeCles(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -230,6 +231,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmAnneeCles(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleAnneeCles").f();
@@ -260,7 +262,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-										.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", pk, "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereEcoleAnneeCles($('#' + ($('#", classeApiMethodeMethode, "anneeCles').val() ? 'suggere' : 'form') + 'EcoleAnneeCles'), $('#listEcoleAnneeCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "anneeCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); });")
+										.a("onclick", "postAnneeScolaireVals({ ecoleCle: \"", pk, "\" }, function() { patchEcoleVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); });")
 										.f().sx("ajouter une année")
 									.g("button");
 								} g("div");
@@ -893,6 +895,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleNom(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "nom de l'école")
@@ -915,6 +918,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleNom(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleEcoleNom").f();
@@ -1007,6 +1011,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleNumeroTelephone(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "numéro de téléphone")
@@ -1029,6 +1034,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleNumeroTelephone(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleEcoleNumeroTelephone").f();
@@ -1121,6 +1127,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleAdministrateurNom(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "administrateur de l'école")
@@ -1143,6 +1150,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleAdministrateurNom(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleEcoleAdministrateurNom").f();
@@ -1235,6 +1243,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleEmplacement(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "l'emplacement")
@@ -1257,6 +1266,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleEmplacement(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleEcoleEmplacement").f();
@@ -1349,6 +1359,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		e("textarea")
 			.a("placeholder", "addresse")
 			.a("title", "Description.enUS: ")
@@ -1369,6 +1380,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleAddresse(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereEcoleEcoleAddresse").f();
@@ -1522,9 +1534,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleNomComplet(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 	}
 
 	public void htmEcoleNomComplet(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2018,6 +2032,91 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeEcole(String entiteVar) {
+		switch(entiteVar) {
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageGroupKeys":
+				return "ageGroupKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "childKeys":
+				return "childKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolShortName":
+				return "schoolShortName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCles":
+				return "anneeCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "groupeAgeCles":
+				return "groupeAgeCles_indexed_longs";
+			case "blocCles":
+				return "blocCles_indexed_longs";
+			case "enfantCles":
+				return "enfantCles_indexed_longs";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
+			case "ecoleTri":
+				return "ecoleTri_indexed_int";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNomCourt":
+				return "ecoleNomCourt_indexed_string";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varRechercheEcole(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varSuggereEcole(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
 	}
 

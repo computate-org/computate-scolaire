@@ -96,8 +96,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSaisonGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereSaisonScolaireSessionCles([{'name':'fq','value':'saisonCle:", requeteSite_.getRequetePk(), "'}], $('#listSaisonScolaireSessionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
-		tl(1, "suggereSaisonScolaireAnneeCle([{'name':'fq','value':'saisonCles:", requeteSite_.getRequetePk(), "'}], $('#listSaisonScolaireAnneeCle_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereSaisonScolaireSessionCles([{'name':'fq','value':'saisonCle:' + pk}], $('#listSaisonScolaireSessionCles_Page'), pk); ");
+		tl(1, "suggereSaisonScolaireAnneeCle([{'name':'fq','value':'saisonCles:' + pk}], $('#listSaisonScolaireAnneeCle_Page'), pk); ");
 		tl(1, "websocketSaisonScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");
@@ -130,6 +131,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmSaisonEte("Page");
 			o.htmSaisonHiver("Page");
 			o.htmSaisonFraisInscription("Page");
+			o.htmSaisonFuture("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionCles("Page");
@@ -153,6 +155,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmSaisonEte("POST");
 			o.htmSaisonHiver("POST");
 			o.htmSaisonFraisInscription("POST");
+			o.htmSaisonFuture("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionCles("POST");
@@ -176,6 +179,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmSaisonEte("PATCH");
 			o.htmSaisonHiver("PATCH");
 			o.htmSaisonFraisInscription("PATCH");
+			o.htmSaisonFuture("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionCles("PATCH");
@@ -202,6 +206,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmSaisonEte("Recherche");
 			o.htmSaisonHiver("Recherche");
 			o.htmSaisonFraisInscription("Recherche");
+			o.htmSaisonFuture("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionCles("Recherche");

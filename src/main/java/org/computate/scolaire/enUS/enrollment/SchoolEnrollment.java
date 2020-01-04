@@ -13,6 +13,7 @@ import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.season.SchoolSeason;
 
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
@@ -36,6 +37,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _blocks_(Wrap<List<SchoolBlock>> c) {
 		c.o(blockSearch.getList());
+	}
+
+	protected void _seasons_(List<SchoolSeason> c) {
 	}
 
 	protected void _block_(Wrap<SchoolBlock> c) {
@@ -233,14 +237,14 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block_.getSeasonCompleteName());
 	}
 
-	protected void _sessionStartDay(Wrap<LocalDate> c) {
+	protected void _sessionStartDate(Wrap<LocalDate> c) {
 		if(block_ != null)
-			c.o((LocalDate)block_.getSessionStartDay());
+			c.o((LocalDate)block_.getSessionStartDate());
 	}
 
-	protected void _sessionEndDay(Wrap<LocalDate> c) {
+	protected void _sessionEndDate(Wrap<LocalDate> c) {
 		if(block_ != null)
-			c.o((LocalDate)block_.getSessionEndDay());
+			c.o((LocalDate)block_.getSessionEndDate());
 	}
 
 	protected void _ageCompleteName(Wrap<String> c) {
@@ -364,7 +368,61 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentSignature1(Wrap<String> c) {
 	}
 
-	protected void _enrollmentParentDate(Wrap<LocalDate> c) {
+	protected void _enrollmentSignature2(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature3(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature4(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature5(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature6(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature7(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature8(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature9(Wrap<String> c) {
+	}
+
+	protected void _enrollmentSignature10(Wrap<String> c) {
+	}
+
+	protected void _enrollmentDate1(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate2(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate3(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate4(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate5(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate6(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate7(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate8(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate9(Wrap<LocalDate> c) {
+	}
+
+	protected void _enrollmentDate10(Wrap<LocalDate> c) {
 	}
 
 	protected void _enrollmentCompleteName(Wrap<String> c) {

@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -101,6 +102,11 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				if(a.succeeded()) {
 					creerPOSTBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+						RequetePatch requetePatch = new RequetePatch();
+							requetePatch.setRows(1);
+							requetePatch.setNumFound(1L);
+							requetePatch.initLoinRequetePatch(requeteSite);
+							requeteSite.setRequetePatch_(requetePatch);
 							BlocScolaire blocScolaire = b.result();
 							sqlPOSTBlocScolaire(blocScolaire, c -> {
 								if(c.succeeded()) {
@@ -117,6 +123,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requetePatch).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurBlocScolaire(requeteSite, gestionnaireEvenements, i);
@@ -963,145 +970,6 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public String varIndexeBlocScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "objetTitre":
-				return "objetTitre_indexed_string";
-			case "objetId":
-				return "objetId_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "blocCle":
-				return "blocCle_indexed_long";
-			case "enfantCle":
-				return "enfantCle_indexed_long";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "anneeTri":
-				return "anneeTri_indexed_int";
-			case "saisonTri":
-				return "saisonTri_indexed_int";
-			case "sessionTri":
-				return "sessionTri_indexed_int";
-			case "ageTri":
-				return "ageTri_indexed_int";
-			case "ageCle":
-				return "ageCle_indexed_long";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "sessionCle":
-				return "sessionCle_indexed_long";
-			case "ecoleNom":
-				return "ecoleNom_indexed_string";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "ecoleEmplacement":
-				return "ecoleEmplacement_indexed_string";
-			case "ecoleAddresse":
-				return "ecoleAddresse_indexed_string";
-			case "ecoleNumeroTelephone":
-				return "ecoleNumeroTelephone_indexed_string";
-			case "ecoleAdministrateurNom":
-				return "ecoleAdministrateurNom_indexed_string";
-			case "anneeDebut":
-				return "anneeDebut_indexed_int";
-			case "anneeFin":
-				return "anneeFin_indexed_int";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
-			case "saisonEte":
-				return "saisonEte_indexed_boolean";
-			case "saisonHiver":
-				return "saisonHiver_indexed_boolean";
-			case "saisonFraisInscription":
-				return "saisonFraisInscription_indexed_double";
-			case "saisonNomComplet":
-				return "saisonNomComplet_indexed_string";
-			case "sessionJourDebut":
-				return "sessionJourDebut_indexed_date";
-			case "sessionJourFin":
-				return "sessionJourFin_indexed_date";
-			case "ageNomComplet":
-				return "ageNomComplet_indexed_string";
-			case "ageDebut":
-				return "ageDebut_indexed_int";
-			case "ageFin":
-				return "ageFin_indexed_int";
-			case "blocHeureDebut":
-				return "blocHeureDebut_indexed_string";
-			case "blocHeureFin":
-				return "blocHeureFin_indexed_string";
-			case "blocPrixParMois":
-				return "blocPrixParMois_indexed_double";
-			case "blocDimanche":
-				return "blocDimanche_indexed_boolean";
-			case "blocLundi":
-				return "blocLundi_indexed_boolean";
-			case "blocMardi":
-				return "blocMardi_indexed_boolean";
-			case "blocMercredi":
-				return "blocMercredi_indexed_boolean";
-			case "blocJeudi":
-				return "blocJeudi_indexed_boolean";
-			case "blocVendredi":
-				return "blocVendredi_indexed_boolean";
-			case "blocSamedi":
-				return "blocSamedi_indexed_boolean";
-			case "blocPrixTotal":
-				return "blocPrixTotal_indexed_double";
-			case "blocNomComplet":
-				return "blocNomComplet_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varRechercheBlocScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varSuggereBlocScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
 	// Partagé //
 
 	public void erreurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1305,6 +1173,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUserRealmRoles(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getSessionId()));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;
@@ -1321,7 +1197,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheBlocScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : BlocScolaire.varRechercheBlocScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1335,13 +1211,13 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeBlocScolaire(entiteVar);
+								varIndexe = BlocScolaire.varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeBlocScolaire(entiteVar);
+								varIndexe = BlocScolaire.varIndexeBlocScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "start":

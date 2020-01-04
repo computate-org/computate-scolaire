@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -101,6 +102,11 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				if(a.succeeded()) {
 					createPOSTSchoolChild(siteRequest, b -> {
 						if(b.succeeded()) {
+						PatchRequest patchRequest = new PatchRequest();
+							patchRequest.setRows(1);
+							patchRequest.setNumFound(1L);
+							patchRequest.initDeepPatchRequest(siteRequest);
+							siteRequest.setPatchRequest_(patchRequest);
 							SchoolChild schoolChild = b.result();
 							sqlPOSTSchoolChild(schoolChild, c -> {
 								if(c.succeeded()) {
@@ -117,6 +123,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(patchRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolChild(siteRequest, eventHandler, i);
@@ -339,7 +346,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 														}
 													});
 												}, resultHandler -> {
-													LOGGER.info(String.format("{}", JsonObject.mapFrom(patchRequest)));
 												}
 											);
 											response200PATCHSchoolChild(patchRequest, eventHandler);
@@ -930,105 +936,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 		}
 	}
 
-	public String varIndexedSchoolChild(String entityVar) {
-		switch(entityVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "objectTitle":
-				return "objectTitle_indexed_string";
-			case "objectId":
-				return "objectId_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "childKey":
-				return "childKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "familySort":
-				return "familySort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "schoolKeys":
-				return "schoolKeys_indexed_longs";
-			case "yearKeys":
-				return "yearKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "ageKeys":
-				return "ageKeys_indexed_longs";
-			case "personFirstName":
-				return "personFirstName_indexed_string";
-			case "personFirstNamePreferred":
-				return "personFirstNamePreferred_indexed_string";
-			case "familyName":
-				return "familyName_indexed_string";
-			case "personCompleteName":
-				return "personCompleteName_indexed_string";
-			case "personCompleteNamePreferred":
-				return "personCompleteNamePreferred_indexed_string";
-			case "personFormalName":
-				return "personFormalName_indexed_string";
-			case "personBirthDate":
-				return "personBirthDate_indexed_date";
-			case "personAgeInSeptember":
-				return "personAgeInSeptember_indexed_string";
-			case "childMedicalConditions":
-				return "childMedicalConditions_indexed_string";
-			case "childPreviousSchoolsAttended":
-				return "childPreviousSchoolsAttended_indexed_string";
-			case "childDescription":
-				return "childDescription_indexed_string";
-			case "childObjectives":
-				return "childObjectives_indexed_string";
-			case "enfantVaccinesCurrent":
-				return "enfantVaccinesCurrent_indexed_boolean";
-			case "childPottyTrained":
-				return "childPottyTrained_indexed_boolean";
-			case "childCompleteName":
-				return "childCompleteName_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSearchSchoolChild(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSuggereSchoolChild(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
 	// Partagé //
 
 	public void errorSchoolChild(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1232,6 +1139,14 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getSessionId()));
+			}
+
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
 				String entityVar = null;
 				String valueIndexed = null;
@@ -1248,7 +1163,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolChild(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : SchoolChild.varSearchSchoolChild(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1262,13 +1177,13 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolChild(entityVar);
+								varIndexed = SchoolChild.varIndexedSchoolChild(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolChild(entityVar);
+								varIndexed = SchoolChild.varIndexedSchoolChild(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":

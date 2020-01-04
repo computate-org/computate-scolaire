@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;   
+package org.computate.scolaire.frFR.cluster;     
 
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
@@ -191,12 +191,23 @@ public class Cluster extends ClusterGen<Object> {
 	 * Var.enUS: classCanonicalNames
 	 * Indexe: true
 	 * Stocke: true
-	 **/      
+	 **/       
 	protected void _classeNomsCanoniques(List<String> l) { 
 		Class<?> cl = getClass();
 		if(!cl.equals(Cluster.class))
 			l.add(cl.getCanonicalName());
 		l.add(Cluster.class.getCanonicalName());
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 */                  
+	protected void _sessionId(Couverture<String> c) {
+		c.o(requeteSite_.getSessionId());
 	}
 
 	/**

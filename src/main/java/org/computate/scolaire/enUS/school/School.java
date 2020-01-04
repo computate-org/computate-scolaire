@@ -54,7 +54,7 @@ public class School extends SchoolGen<Cluster> {
 
 	protected void _schoolCompleteName(Wrap<String> c) {
 		if(schoolLocation != null)
-			c.o(String.format("%s at %s", schoolName, schoolLocation));
+			c.o(String.format("%s in %s", schoolName, schoolLocation));
 		else 
 			c.o(schoolName);
 	}

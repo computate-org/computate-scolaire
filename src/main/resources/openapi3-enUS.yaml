@@ -16429,9 +16429,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -16492,9 +16492,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -16691,19 +16691,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setSessionCompleteName:
               type: string
@@ -16905,19 +16905,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setSessionCompleteName:
               type: string
@@ -16985,9 +16985,9 @@ components:
                 type: string
               seasonCompleteName:
                 type: string
-              sessionStartDay:
+              sessionStartDate:
                 type: string
-              sessionEndDay:
+              sessionEndDate:
                 type: string
               sessionCompleteName:
                 type: string
@@ -17048,9 +17048,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -17111,9 +17111,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -17182,9 +17182,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -17253,9 +17253,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -17465,19 +17465,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setSessionCompleteName:
               type: string
@@ -17707,19 +17707,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setSessionCompleteName:
               type: string
@@ -17810,9 +17810,9 @@ components:
                 type: string
               seasonCompleteName:
                 type: string
-              sessionStartDay:
+              sessionStartDate:
                 type: string
-              sessionEndDay:
+              sessionEndDate:
                 type: string
               sessionCompleteName:
                 type: string
@@ -17881,9 +17881,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -17952,9 +17952,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             sessionCompleteName:
               type: string
@@ -18025,9 +18025,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -18120,9 +18120,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -18358,19 +18358,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setAgeCompleteName:
               type: string
@@ -18681,19 +18681,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setAgeCompleteName:
               type: string
@@ -18863,9 +18863,9 @@ components:
                 type: string
               seasonCompleteName:
                 type: string
-              sessionStartDay:
+              sessionStartDate:
                 type: string
-              sessionEndDay:
+              sessionEndDate:
                 type: string
               ageCompleteName:
                 type: string
@@ -18958,9 +18958,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -19053,9 +19053,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -21372,9 +21372,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -21511,9 +21511,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -21860,19 +21860,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setAgeCompleteName:
               type: string
@@ -22349,19 +22349,19 @@ components:
               type: string
             removeAllSeasonCompleteName:
               type: string
-            setSessionStartDay:
+            setSessionStartDate:
               type: string
               nullable: true
-            removeSessionStartDay:
+            removeSessionStartDate:
               type: string
-            removeAllSessionStartDay:
+            removeAllSessionStartDate:
               type: string
-            setSessionEndDay:
+            setSessionEndDate:
               type: string
               nullable: true
-            removeSessionEndDay:
+            removeSessionEndDate:
               type: string
-            removeAllSessionEndDay:
+            removeAllSessionEndDate:
               type: string
             setAgeCompleteName:
               type: string
@@ -22630,9 +22630,9 @@ components:
                 type: string
               seasonCompleteName:
                 type: string
-              sessionStartDay:
+              sessionStartDate:
                 type: string
-              sessionEndDay:
+              sessionEndDate:
                 type: string
               ageCompleteName:
                 type: string
@@ -22769,9 +22769,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string
@@ -22908,9 +22908,9 @@ components:
               type: string
             seasonCompleteName:
               type: string
-            sessionStartDay:
+            sessionStartDate:
               type: string
-            sessionEndDay:
+            sessionEndDate:
               type: string
             ageCompleteName:
               type: string

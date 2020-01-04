@@ -95,7 +95,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptEcoleGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereEcoleAnneeCles([{'name':'fq','value':'ecoleCle:", requeteSite_.getRequetePk(), "'}], $('#listEcoleAnneeCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereEcoleAnneeCles([{'name':'fq','value':'ecoleCle:' + pk}], $('#listEcoleAnneeCles_Page'), pk); ");
 		tl(1, "websocketEcole(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

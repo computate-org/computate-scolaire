@@ -96,8 +96,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptAgeGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereAgeScolaireSessionCle([{'name':'fq','value':'ageCles:", requeteSite_.getRequetePk(), "'}], $('#listAgeScolaireSessionCle_Page'), ", requeteSite_.getRequetePk(), "); ");
-		tl(1, "suggereAgeScolaireBlocCles([{'name':'fq','value':'ageCle:", requeteSite_.getRequetePk(), "'}], $('#listAgeScolaireBlocCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereAgeScolaireSessionCle([{'name':'fq','value':'ageCles:' + pk}], $('#listAgeScolaireSessionCle_Page'), pk); ");
+		tl(1, "suggereAgeScolaireBlocCles([{'name':'fq','value':'ageCle:' + pk}], $('#listAgeScolaireBlocCles_Page'), pk); ");
 		tl(1, "websocketAgeScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");
@@ -176,6 +177,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlocCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("PATCH");
 			o.htmAgeNomComplet("PATCH");
 		} g("div");
 	}
@@ -200,6 +202,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlocCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("Recherche");
 			o.htmAgeNomComplet("Recherche");
 		} g("div");
 	}

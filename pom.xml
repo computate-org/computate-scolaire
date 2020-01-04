@@ -24,6 +24,7 @@
 		<vertx.verticle>org.computate.scolaire.enUS.vertx.AppVertx</vertx.verticle>
 		<!--<vertx.version>3.5.4</vertx.version> -->
 		<vertx.version>3.7.1</vertx.version>
+		<!--<vertx.version>3.8.4</vertx.version>-->
 		<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest</fabric8.generator.from>
 	</properties>
 

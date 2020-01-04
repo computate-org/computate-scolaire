@@ -490,6 +490,16 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: classRoleSession
+	 * r: classeDocumentSolr
+	 * r.enUS: classSolrDocument
+	 **/
+	protected void _classeRoleSession(Couverture<Boolean> c) {
+		c.o((Boolean)classeDocumentSolr.get("classeRoleSession_stored_boolean"));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: classRolesFound
 	 * r: classeDocumentSolr
 	 * r.enUS: classSolrDocument
@@ -1321,7 +1331,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
-			if(classeRolesTrouves) {
+			if(classeRolesTrouves && BooleanUtils.isFalse(classeRoleSession)) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
 				for(int i = 0; i < classeRoles.size(); i++) {

@@ -282,7 +282,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * r: ecoleEmplacement
 	 * r.enUS: schoolLocation
 	 * r: "%s à %s"
-	 * r.enUS: "%s at %s"
+	 * r.enUS: "%s in %s"
 	 */      
 	protected void _ecoleNomComplet(Couverture<String> c) {
 		if(ecoleEmplacement != null)

@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -101,6 +102,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				if(a.succeeded()) {
 					createPOSTSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
+						PatchRequest patchRequest = new PatchRequest();
+							patchRequest.setRows(1);
+							patchRequest.setNumFound(1L);
+							patchRequest.initDeepPatchRequest(siteRequest);
+							siteRequest.setPatchRequest_(patchRequest);
 							SchoolAge schoolAge = b.result();
 							sqlPOSTSchoolAge(schoolAge, c -> {
 								if(c.succeeded()) {
@@ -117,6 +123,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(patchRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolAge(siteRequest, eventHandler, i);
@@ -851,119 +858,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		}
 	}
 
-	public String varIndexedSchoolAge(String entityVar) {
-		switch(entityVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "objectTitle":
-				return "objectTitle_indexed_string";
-			case "objectId":
-				return "objectId_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "ageKey":
-				return "ageKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "sessionSort":
-				return "sessionSort_indexed_int";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "seasonStartDate":
-				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
-			case "sessionStartDay":
-				return "sessionStartDay_indexed_date";
-			case "sessionEndDay":
-				return "sessionEndDay_indexed_date";
-			case "sessionCompleteName":
-				return "sessionCompleteName_indexed_string";
-			case "ageStart":
-				return "ageStart_indexed_int";
-			case "ageEnd":
-				return "ageEnd_indexed_int";
-			case "ageCompleteName":
-				return "ageCompleteName_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSearchSchoolAge(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSuggereSchoolAge(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
 	// Partagé //
 
 	public void errorSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1167,6 +1061,14 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getSessionId()));
+			}
+
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
 				String entityVar = null;
 				String valueIndexed = null;
@@ -1183,7 +1085,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolAge(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : SchoolAge.varSearchSchoolAge(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1197,13 +1099,13 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolAge(entityVar);
+								varIndexed = SchoolAge.varIndexedSchoolAge(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolAge(entityVar);
+								varIndexed = SchoolAge.varIndexedSchoolAge(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":

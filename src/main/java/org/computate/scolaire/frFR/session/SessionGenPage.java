@@ -96,8 +96,9 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereSessionScolaireSaisonCle([{'name':'fq','value':'sessionCles:", requeteSite_.getRequetePk(), "'}], $('#listSessionScolaireSaisonCle_Page'), ", requeteSite_.getRequetePk(), "); ");
-		tl(1, "suggereSessionScolaireAgeCles([{'name':'fq','value':'sessionCle:", requeteSite_.getRequetePk(), "'}], $('#listSessionScolaireAgeCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereSessionScolaireSaisonCle([{'name':'fq','value':'sessionCles:' + pk}], $('#listSessionScolaireSaisonCle_Page'), pk); ");
+		tl(1, "suggereSessionScolaireAgeCles([{'name':'fq','value':'sessionCle:' + pk}], $('#listSessionScolaireAgeCles_Page'), pk); ");
 		tl(1, "websocketSessionScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");
@@ -176,6 +177,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmAgeCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("PATCH");
 			o.htmSessionNomComplet("PATCH");
 		} g("div");
 	}
@@ -200,6 +202,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmAgeCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("Recherche");
 			o.htmSessionNomComplet("Recherche");
 		} g("div");
 	}

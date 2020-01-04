@@ -96,8 +96,9 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptAnneeGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:", requeteSite_.getRequetePk(), "'}], $('#listAnneeScolaireEcoleCle_Page'), ", requeteSite_.getRequetePk(), "); ");
-		tl(1, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:", requeteSite_.getRequetePk(), "'}], $('#listAnneeScolaireSaisonCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk); ");
+		tl(1, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk); ");
 		tl(1, "websocketAnneeScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

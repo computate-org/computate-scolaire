@@ -92,7 +92,20 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 	@Override public void htmlScriptClusterGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "websocketCluster(); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "websocketCluster(async function(requetePatch) {");
+		tl(2, "var pk = requetePatch['pk'];");
+		tl(2, "var pks = requetePatch['pks'];");
+		tl(2, "var classes = requetePatch['classes'];");
+		tl(2, "if(pks) {");
+		tl(3, "for(i=0; i < pks.length; i++) {");
+		tl(4, "var pk2 = pks[i];");
+		tl(4, "var c = classes[i];");
+		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
+		tl(3, "}");
+		tl(2, "}");
+		tl(2, "await patchClusterVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
+		tl(1, "});");
 		l("});");
 	}
 
@@ -285,6 +298,10 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 						.a("class", "valeurPk")
 						.a("type", "hidden")
 						.a("value", o.getPk())
+						.fg();
+						e("input")
+						.a("name", "focusId")
+						.a("type", "hidden")
 						.fg();
 					} g("form");
 					htmlFormPageCluster(o);
@@ -486,7 +503,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							.a("name", "suggereCluster")
 							.a("id", "suggereCluster", id)
 							.a("autocomplete", "off")
-							.a("oninput", "suggereClusterObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListCluster", id, "')); ")
+							.a("oninput", "suggereClusterObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListCluster", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 							.fg();
 
 					} p.g("form");

@@ -95,8 +95,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptAgeGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolAgeSessionKey_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:", siteRequest_.getRequestPk(), "'}], $('#listSchoolAgeBlockKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk); ");
+		tl(1, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:' + pk}], $('#listSchoolAgeBlockKeys_Page'), pk); ");
 		tl(1, "websocketSchoolAge(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");
@@ -175,6 +176,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("PATCH");
 			o.htmAgeCompleteName("PATCH");
 		} g("div");
 	}
@@ -199,6 +201,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmBlockKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("Recherche");
 			o.htmAgeCompleteName("Recherche");
 		} g("div");
 	}

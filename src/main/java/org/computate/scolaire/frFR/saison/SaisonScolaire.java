@@ -11,6 +11,7 @@ import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.session.SessionScolaire;
 
 /**   
  * NomCanonique.enUS: org.computate.scolaire.enUS.season.SchoolSeason
@@ -52,7 +53,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/                              
+*/                             
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
@@ -405,6 +406,66 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 */         
 	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {}
 
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonFuture
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 2
+	 * NomAffichage.frFR: saison future
+	 * NomAffichage.enUS: future season
+	 */                 
+	protected void _saisonFuture(Couverture<Boolean> c) {}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: seasonShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: saisonEte
+	 * r.enUS: seasonSummer
+	 * r: saisonHiver
+	 * r.enUS: seasonWinter
+	 * r: "Classes de la saison d'été (frais d'inscription singulaire $%s)"
+	 * r.enUS: "Summer season classes (one time registration fee $%s)"
+	 * r: "Classes de la saison scolaire (frais d'inscription singulaire $%s)"
+	 * r.enUS: "Regular school year classes (one time registration fee $%s)"
+	 * r: "Classes supplimentaires pendant l'année scolaire %s-%s à %s"
+	 * r.enUS: "Additional classes coming during the %s-%s school year at %s"
+	 * r: "%s saison à %s"
+	 * r.enUS: "%s season at %s"
+	 * r: strSaisonJourDebut
+	 * r.enUS: strSeasonStartDate
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
+	 * r: ecoleNom
+	 * r.enUS: schoolName
+	 * r: anneeDebut
+	 * r.enUS: yearStart
+	 * r: anneeFin
+	 * r.enUS: yearEnd
+	 * r: saisonFuture
+	 * r.enUS: seasonFuture
+	 * r: SaisonFraisInscription
+	 * r.enUS: SeasonEnrollmentFee
+	 */           
+	protected void _saisonNomCourt(Couverture<String> c) {
+		String o;
+		
+		if(BooleanUtils.isTrue(saisonFuture))
+			o = String.format("Classes supplimentaires pendant l'année scolaire %s-%s à %s", anneeDebut, anneeFin, ecoleNom);
+		if(BooleanUtils.isTrue(saisonEte))
+			o = String.format("Classes de la saison d'été (frais d'inscription singulaire $%s)", strSaisonFraisInscription());
+		else if(BooleanUtils.isTrue(saisonHiver))
+			o = String.format("Classes de la saison scolaire (frais d'inscription singulaire $%s)", strSaisonFraisInscription());
+		else
+			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
+		
+		c.o(o);
+	}
+
 	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: seasonCompleteName
@@ -421,22 +482,32 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: seasonWinter
 	 * r: "%s saison d'été à %s"
 	 * r.enUS: "%s summer season at %s"
-	 * r: "%s saison scolaire à %s"
-	 * r.enUS: "%s school season at %s"
+	 * r: "%s-%s saison scolaire à %s"
+	 * r.enUS: "%s-%s school season at %s"
 	 * r: "%s saison à %s"
 	 * r.enUS: "%s season at %s"
+	 * r: "Classes supplimentaires pendant l'année scolaire %s-%s à %s"
+	 * r.enUS: "Additional classes coming during the %s-%s school year at %s"
+	 * r: saisonFuture
+	 * r.enUS: seasonFuture
 	 * r: strSaisonJourDebut
 	 * r.enUS: strSeasonStartDate
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
+	 * r: anneeDebut
+	 * r.enUS: yearStart
+	 * r: anneeFin
+	 * r.enUS: yearEnd
 	 */              
 	protected void _saisonNomComplet(Couverture<String> c) {
 		String o;
 		
+		if(BooleanUtils.isTrue(saisonFuture))
+			o = String.format("Classes supplimentaires pendant l'année scolaire %s-%s à %s", anneeDebut, anneeFin, ecoleNomComplet);
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("%s saison d'été à %s", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison d'été à %s", anneeFin, ecoleNomComplet);
 		else if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("%s saison scolaire à %s", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s-%s saison scolaire à %s", anneeDebut, anneeFin, ecoleNomComplet);
 		else
 			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
 		
@@ -452,5 +523,14 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	@Override
 	protected void _objetTitre(Couverture<String> c) {
 		c.o(saisonNomComplet);
+	}
+
+	/**
+	 * Var.enUS: strSeasonEnrollmentFee
+	 * r: saisonFraisInscription
+	 * r.enUS: seasonEnrollmentFee
+	 */
+	@Override public String strSaisonFraisInscription() {
+		return saisonFraisInscription == null ? "" : saisonFraisInscription.setScale(0).toString();
 	}
 }

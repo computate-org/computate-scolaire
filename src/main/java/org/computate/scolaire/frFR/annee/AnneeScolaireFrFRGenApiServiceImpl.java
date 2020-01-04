@@ -101,6 +101,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				if(a.succeeded()) {
 					creerPOSTAnneeScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+						RequetePatch requetePatch = new RequetePatch();
+							requetePatch.setRows(1);
+							requetePatch.setNumFound(1L);
+							requetePatch.initLoinRequetePatch(requeteSite);
+							requeteSite.setRequetePatch_(requetePatch);
 							AnneeScolaire anneeScolaire = b.result();
 							sqlPOSTAnneeScolaire(anneeScolaire, c -> {
 								if(c.succeeded()) {
@@ -117,6 +122,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requetePatch).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, i);
@@ -837,93 +843,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
-	public String varIndexeAnneeScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "objetTitre":
-				return "objetTitre_indexed_string";
-			case "objetId":
-				return "objetId_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "anneeTri":
-				return "anneeTri_indexed_int";
-			case "ecoleNom":
-				return "ecoleNom_indexed_string";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "ecoleEmplacement":
-				return "ecoleEmplacement_indexed_string";
-			case "ecoleAddresse":
-				return "ecoleAddresse_indexed_string";
-			case "ecoleNumeroTelephone":
-				return "ecoleNumeroTelephone_indexed_string";
-			case "ecoleAdministrateurNom":
-				return "ecoleAdministrateurNom_indexed_string";
-			case "formInscriptionCle":
-				return "formInscriptionCle_indexed_long";
-			case "anneeDebut":
-				return "anneeDebut_indexed_int";
-			case "anneeFin":
-				return "anneeFin_indexed_int";
-			case "anneeNomCourt":
-				return "anneeNomCourt_indexed_string";
-			case "anneeNomComplet":
-				return "anneeNomComplet_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varRechercheAnneeScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varSuggereAnneeScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
 	// Partagé //
 
 	public void erreurAnneeScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1143,7 +1062,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheAnneeScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : AnneeScolaire.varRechercheAnneeScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1157,13 +1076,13 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeAnneeScolaire(entiteVar);
+								varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeAnneeScolaire(entiteVar);
+								varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "start":

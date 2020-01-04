@@ -95,8 +95,9 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSessionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolSessionSeasonKey([{'name':'fq','value':'sessionKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolSessionSeasonKey_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolSessionAgeKeys([{'name':'fq','value':'sessionKey:", siteRequest_.getRequestPk(), "'}], $('#listSchoolSessionAgeKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolSessionSeasonKey([{'name':'fq','value':'sessionKeys:' + pk}], $('#listSchoolSessionSeasonKey_Page'), pk); ");
+		tl(1, "suggestSchoolSessionAgeKeys([{'name':'fq','value':'sessionKey:' + pk}], $('#listSchoolSessionAgeKeys_Page'), pk); ");
 		tl(1, "websocketSchoolSession(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");
@@ -125,8 +126,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmDeleted("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDay("Page");
-			o.htmSessionEndDay("Page");
+			o.htmSessionStartDate("Page");
+			o.htmSessionEndDate("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonKey("Page");
@@ -146,8 +147,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmDeleted("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDay("POST");
-			o.htmSessionEndDay("POST");
+			o.htmSessionStartDate("POST");
+			o.htmSessionEndDate("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonKey("POST");
@@ -167,14 +168,15 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmDeleted("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDay("PATCH");
-			o.htmSessionEndDay("PATCH");
+			o.htmSessionStartDate("PATCH");
+			o.htmSessionEndDate("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonKey("PATCH");
 			o.htmAgeKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("PATCH");
 			o.htmSessionCompleteName("PATCH");
 		} g("div");
 	}
@@ -191,14 +193,15 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmDeleted("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionStartDay("Recherche");
-			o.htmSessionEndDay("Recherche");
+			o.htmSessionStartDate("Recherche");
+			o.htmSessionEndDate("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSeasonKey("Recherche");
 			o.htmAgeKeys("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolAddress("Recherche");
 			o.htmSessionCompleteName("Recherche");
 		} g("div");
 	}

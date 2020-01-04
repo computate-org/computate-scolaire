@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -101,6 +102,11 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				if(a.succeeded()) {
 					createPOSTSchoolSession(siteRequest, b -> {
 						if(b.succeeded()) {
+						PatchRequest patchRequest = new PatchRequest();
+							patchRequest.setRows(1);
+							patchRequest.setNumFound(1L);
+							patchRequest.initDeepPatchRequest(siteRequest);
+							siteRequest.setPatchRequest_(patchRequest);
 							SchoolSession schoolSession = b.result();
 							sqlPOSTSchoolSession(schoolSession, c -> {
 								if(c.succeeded()) {
@@ -117,6 +123,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(patchRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolSession(siteRequest, eventHandler, i);
@@ -208,13 +215,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("schoolAddress", jsonObject.getString(entityVar), pk));
 						break;
-					case "sessionStartDay":
+					case "sessionStartDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionStartDay", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionStartDate", jsonObject.getString(entityVar), pk));
 						break;
-					case "sessionEndDay":
+					case "sessionEndDate":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("sessionEndDay", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("sessionEndDate", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -528,24 +535,24 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							patchSqlParams.addAll(Arrays.asList("schoolAddress", o2.jsonSchoolAddress(), pk));
 						}
 						break;
-					case "setSessionStartDay":
+					case "setSessionStartDate":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionStartDay"));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionStartDate"));
 						} else {
-							o2.setSessionStartDay(requestJson.getString(methodName));
+							o2.setSessionStartDate(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionStartDay", o2.jsonSessionStartDay(), pk));
+							patchSqlParams.addAll(Arrays.asList("sessionStartDate", o2.jsonSessionStartDate(), pk));
 						}
 						break;
-					case "setSessionEndDay":
+					case "setSessionEndDate":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionEndDay"));
+							patchSqlParams.addAll(Arrays.asList(pk, "sessionEndDate"));
 						} else {
-							o2.setSessionEndDay(requestJson.getString(methodName));
+							o2.setSessionEndDate(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("sessionEndDay", o2.jsonSessionEndDay(), pk));
+							patchSqlParams.addAll(Arrays.asList("sessionEndDate", o2.jsonSessionEndDate(), pk));
 						}
 						break;
 				}
@@ -851,111 +858,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public String varIndexedSchoolSession(String entityVar) {
-		switch(entityVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "objectTitle":
-				return "objectTitle_indexed_string";
-			case "objectId":
-				return "objectId_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "ageKeys":
-				return "ageKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "sessionSort":
-				return "sessionSort_indexed_int";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "seasonStartDate":
-				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
-			case "sessionStartDay":
-				return "sessionStartDay_indexed_date";
-			case "sessionEndDay":
-				return "sessionEndDay_indexed_date";
-			case "sessionCompleteName":
-				return "sessionCompleteName_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSearchSchoolSession(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSuggereSchoolSession(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
 	// Partagé //
 
 	public void errorSchoolSession(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1159,6 +1061,14 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getSessionId()));
+			}
+
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
 				String entityVar = null;
 				String valueIndexed = null;
@@ -1175,7 +1085,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolSession(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : SchoolSession.varSearchSchoolSession(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1189,13 +1099,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolSession(entityVar);
+								varIndexed = SchoolSession.varIndexedSchoolSession(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolSession(entityVar);
+								varIndexed = SchoolSession.varIndexedSchoolSession(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":

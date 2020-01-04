@@ -176,7 +176,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postSchoolVals({ yearKeys: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolYearSchoolKey($('#' + ($('#", classApiMethodMethod, "schoolKey').val() ? 'suggest' : 'form') + 'SchoolYearSchoolKey'), $('#listSchoolYearSchoolKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "schoolKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); }); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
+										.a("onclick", "postSchoolVals({ yearKeys: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
 										.f().sx("add a school")
 									.g("button");
 								} g("div");
@@ -470,7 +470,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolYearSeasonKeys($('#' + ($('#", classApiMethodMethod, "seasonKeys').val() ? 'suggest' : 'form') + 'SchoolYearSeasonKeys'), $('#listSchoolYearSeasonKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "seasonKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); }); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
+										.a("onclick", "postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
 										.f().sx("add a season")
 									.g("button");
 								} g("div");
@@ -2118,6 +2118,63 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchoolYear(String entityVar) {
+		switch(entityVar) {
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "enrollmentFormKey":
+				return "enrollmentFormKey_indexed_long";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "yearShortName":
+				return "yearShortName_indexed_string";
+			case "yearCompleteName":
+				return "yearCompleteName_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSearchSchoolYear(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSuggereSchoolYear(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 

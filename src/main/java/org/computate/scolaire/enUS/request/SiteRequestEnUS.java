@@ -10,7 +10,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -46,6 +49,8 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	 **/
 	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
+
+	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+).*");
 
 	/**	
 	 *	The site configuration. 
@@ -116,6 +121,17 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		if(jsonPrincipal != null) {
 			String o = jsonPrincipal.getString("sub");
 			c.o(o);
+		}
+	}
+
+	protected void _sessionId(Wrap<String> c) {
+		String cookie = operationRequest.getHeaders().get("Cookie");
+		if(StringUtils.isNotBlank(cookie)) {
+			Matcher m = PATTERN_SESSION.matcher(cookie);
+			if(m.matches()) {
+				c.o(m.group(1));
+				System.out.println(c.o);
+			}
 		}
 	}
 

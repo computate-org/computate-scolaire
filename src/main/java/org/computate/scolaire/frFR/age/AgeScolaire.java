@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.page.MiseEnPage;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.session.SessionScolaire;
 
@@ -44,7 +45,10 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * Couleur: blue
  * IconeGroupe: duotone
  * IconeNom: birthday-cake
-*/                                                   
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
+*/                                                  
 public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
@@ -448,6 +452,21 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
+	 * Var.enUS: seasonShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: SaisonNomCourt
+	 * r.enUS: SeasonShortName
+	 * r: session
+	 * r.enUS: session
+	 */
+	protected void _saisonNomCourt(Couverture<String> c) {
+		if(session_ != null)
+			c.o(session_.getSaisonNomCourt());
+	}
+
+	/**   
+	 * {@inheritDoc}
 	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -463,13 +482,13 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionStartDay
+	 * Var.enUS: sessionStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
 	 * r: SessionJourDebut
-	 * r.enUS: SessionStartDay
+	 * r.enUS: SessionStartDate
 	 * r: session
 	 * r.enUS: session
 	 */                   
@@ -480,13 +499,13 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionEndDay
+	 * Var.enUS: sessionEndDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
 	 * r: SessionJourFin
-	 * r.enUS: SessionEndDay
+	 * r.enUS: SessionEndDate
 	 * r: session
 	 * r.enUS: session
 	 */                   
@@ -536,6 +555,36 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of the age group
 	 */                  
 	protected void _ageFin(Couverture<Integer> c) {
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: ageShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: ageEte
+	 * r.enUS: ageSummer
+	 * r: âges %s-%s %s - %s
+	 * r.enUS: %s-%s year olds (%s - %s)
+	 * r: strAgeDebut
+	 * r.enUS: strAgeStart
+	 * r: strAgeFin
+	 * r.enUS: strAgeEnd
+	 * r: sessionNomComplet
+	 * r.enUS: sessionCompleteName
+	 * r: MiseEnPage
+	 * r.enUS: PageLayout
+	 * r: sessionJourDebut
+	 * r.enUS: sessionStartDate
+	 * r: sessionJourFin
+	 * r.enUS: sessionEndDate
+	 * r: FORMATMoisAnnee
+	 * r.enUS: FORMATMonthYear
+	 */ 
+	protected void _ageNomCourt(Couverture<String> c) {
+		String o;
+		o = String.format("âges %s-%s %s - %s", strAgeDebut(), strAgeFin(), MiseEnPage.FORMATMoisAnnee.format(sessionJourDebut), MiseEnPage.FORMATMoisAnnee.format(sessionJourFin));
+		c.o(o);
 	}
 
 	/**   

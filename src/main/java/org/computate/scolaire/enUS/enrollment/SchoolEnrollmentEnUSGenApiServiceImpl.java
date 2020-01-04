@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.writer.AllWriter;
 
@@ -286,9 +287,81 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSql.append(SiteContextEnUS.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enrollmentSignature1", jsonObject.getString(entityVar), pk));
 						break;
-					case "enrollmentParentDate":
+					case "enrollmentSignature2":
 						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enrollmentParentDate", jsonObject.getString(entityVar), pk));
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature2", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature3":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature3", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature4":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature4", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature5":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature5", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature6":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature6", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature7":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature7", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature8":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature8", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature9":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature9", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentSignature10":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentSignature10", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate1":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate1", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate2":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate2", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate3":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate3", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate4":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate4", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate5":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate5", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate6":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate6", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate7":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate7", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate8":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate8", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate9":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate9", jsonObject.getString(entityVar), pk));
+						break;
+					case "enrollmentDate10":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDate10", jsonObject.getString(entityVar), pk));
 						break;
 					}
 				}
@@ -842,14 +915,194 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							patchSqlParams.addAll(Arrays.asList("enrollmentSignature1", o2.jsonEnrollmentSignature1(), pk));
 						}
 						break;
-					case "setEnrollmentParentDate":
+					case "setEnrollmentSignature2":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentParentDate"));
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2"));
 						} else {
-							o2.setEnrollmentParentDate(requestJson.getString(methodName));
+							o2.setEnrollmentSignature2(requestJson.getString(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enrollmentParentDate", o2.jsonEnrollmentParentDate(), pk));
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature2", o2.jsonEnrollmentSignature2(), pk));
+						}
+						break;
+					case "setEnrollmentSignature3":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3"));
+						} else {
+							o2.setEnrollmentSignature3(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature3", o2.jsonEnrollmentSignature3(), pk));
+						}
+						break;
+					case "setEnrollmentSignature4":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4"));
+						} else {
+							o2.setEnrollmentSignature4(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature4", o2.jsonEnrollmentSignature4(), pk));
+						}
+						break;
+					case "setEnrollmentSignature5":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5"));
+						} else {
+							o2.setEnrollmentSignature5(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature5", o2.jsonEnrollmentSignature5(), pk));
+						}
+						break;
+					case "setEnrollmentSignature6":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6"));
+						} else {
+							o2.setEnrollmentSignature6(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature6", o2.jsonEnrollmentSignature6(), pk));
+						}
+						break;
+					case "setEnrollmentSignature7":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7"));
+						} else {
+							o2.setEnrollmentSignature7(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature7", o2.jsonEnrollmentSignature7(), pk));
+						}
+						break;
+					case "setEnrollmentSignature8":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8"));
+						} else {
+							o2.setEnrollmentSignature8(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature8", o2.jsonEnrollmentSignature8(), pk));
+						}
+						break;
+					case "setEnrollmentSignature9":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9"));
+						} else {
+							o2.setEnrollmentSignature9(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature9", o2.jsonEnrollmentSignature9(), pk));
+						}
+						break;
+					case "setEnrollmentSignature10":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10"));
+						} else {
+							o2.setEnrollmentSignature10(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentSignature10", o2.jsonEnrollmentSignature10(), pk));
+						}
+						break;
+					case "setEnrollmentDate1":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1"));
+						} else {
+							o2.setEnrollmentDate1(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate1", o2.jsonEnrollmentDate1(), pk));
+						}
+						break;
+					case "setEnrollmentDate2":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2"));
+						} else {
+							o2.setEnrollmentDate2(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate2", o2.jsonEnrollmentDate2(), pk));
+						}
+						break;
+					case "setEnrollmentDate3":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3"));
+						} else {
+							o2.setEnrollmentDate3(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate3", o2.jsonEnrollmentDate3(), pk));
+						}
+						break;
+					case "setEnrollmentDate4":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4"));
+						} else {
+							o2.setEnrollmentDate4(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate4", o2.jsonEnrollmentDate4(), pk));
+						}
+						break;
+					case "setEnrollmentDate5":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5"));
+						} else {
+							o2.setEnrollmentDate5(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate5", o2.jsonEnrollmentDate5(), pk));
+						}
+						break;
+					case "setEnrollmentDate6":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6"));
+						} else {
+							o2.setEnrollmentDate6(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate6", o2.jsonEnrollmentDate6(), pk));
+						}
+						break;
+					case "setEnrollmentDate7":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7"));
+						} else {
+							o2.setEnrollmentDate7(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate7", o2.jsonEnrollmentDate7(), pk));
+						}
+						break;
+					case "setEnrollmentDate8":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8"));
+						} else {
+							o2.setEnrollmentDate8(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate8", o2.jsonEnrollmentDate8(), pk));
+						}
+						break;
+					case "setEnrollmentDate9":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9"));
+						} else {
+							o2.setEnrollmentDate9(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate9", o2.jsonEnrollmentDate9(), pk));
+						}
+						break;
+					case "setEnrollmentDate10":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10"));
+						} else {
+							o2.setEnrollmentDate10(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDate10", o2.jsonEnrollmentDate10(), pk));
 						}
 						break;
 				}
@@ -1325,187 +1578,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public String varIndexedSchoolEnrollment(String entityVar) {
-		switch(entityVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "created":
-				return "created_indexed_date";
-			case "modified":
-				return "modified_indexed_date";
-			case "archived":
-				return "archived_indexed_boolean";
-			case "deleted":
-				return "deleted_indexed_boolean";
-			case "classCanonicalName":
-				return "classCanonicalName_indexed_string";
-			case "classSimpleName":
-				return "classSimpleName_indexed_string";
-			case "classCanonicalNames":
-				return "classCanonicalNames_indexed_strings";
-			case "objectTitle":
-				return "objectTitle_indexed_string";
-			case "objectId":
-				return "objectId_indexed_string";
-			case "objectSuggest":
-				return "objectSuggest_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "enrollmentKey":
-				return "enrollmentKey_indexed_long";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "ageKey":
-				return "ageKey_indexed_long";
-			case "blockKey":
-				return "blockKey_indexed_long";
-			case "childKey":
-				return "childKey_indexed_long";
-			case "momKeys":
-				return "momKeys_indexed_longs";
-			case "dadKeys":
-				return "dadKeys_indexed_longs";
-			case "guardianKeys":
-				return "guardianKeys_indexed_longs";
-			case "paymentKeys":
-				return "paymentKeys_indexed_longs";
-			case "enrollmentFormKey":
-				return "enrollmentFormKey_indexed_long";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "sessionSort":
-				return "sessionSort_indexed_int";
-			case "ageSort":
-				return "ageSort_indexed_int";
-			case "childCompleteName":
-				return "childCompleteName_indexed_string";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "seasonStartDate":
-				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
-			case "sessionStartDay":
-				return "sessionStartDay_indexed_date";
-			case "sessionEndDay":
-				return "sessionEndDay_indexed_date";
-			case "ageCompleteName":
-				return "ageCompleteName_indexed_string";
-			case "ageStart":
-				return "ageStart_indexed_int";
-			case "ageEnd":
-				return "ageEnd_indexed_int";
-			case "blockStartTime":
-				return "blockStartTime_indexed_string";
-			case "blockEndTime":
-				return "blockEndTime_indexed_string";
-			case "blockPricePerMonth":
-				return "blockPricePerMonth_indexed_double";
-			case "blockSunday":
-				return "blockSunday_indexed_boolean";
-			case "blockMonday":
-				return "blockMonday_indexed_boolean";
-			case "blockTuesday":
-				return "blockTuesday_indexed_boolean";
-			case "blockWednesday":
-				return "blockWednesday_indexed_boolean";
-			case "blockThursday":
-				return "blockThursday_indexed_boolean";
-			case "blockFriday":
-				return "blockFriday_indexed_boolean";
-			case "blockSaturday":
-				return "blockSaturday_indexed_boolean";
-			case "blockTotalPrice":
-				return "blockTotalPrice_indexed_double";
-			case "enrollmentApproved":
-				return "enrollmentApproved_indexed_boolean";
-			case "enrollmentImmunizations":
-				return "enrollmentImmunizations_indexed_boolean";
-			case "familyMarried":
-				return "familyMarried_indexed_boolean";
-			case "familySeparated":
-				return "familySeparated_indexed_boolean";
-			case "familyDivorced":
-				return "familyDivorced_indexed_boolean";
-			case "familyAddress":
-				return "familyAddress_indexed_string";
-			case "familyHowDoYouKnowTheSchool":
-				return "familyHowDoYouKnowTheSchool_indexed_string";
-			case "enrollmentSpecialConsiderations":
-				return "enrollmentSpecialConsiderations_indexed_string";
-			case "enrollmentGroupName":
-				return "enrollmentGroupName_indexed_string";
-			case "enrollmentPaymentEachMonth":
-				return "enrollmentPaymentEachMonth_indexed_boolean";
-			case "enrollmentPaymentComplete":
-				return "enrollmentPaymentComplete_indexed_boolean";
-			case "enrollmentParentNames":
-				return "enrollmentParentNames_indexed_string";
-			case "enrollmentSignature1":
-				return "enrollmentSignature1_indexed_string";
-			case "enrollmentParentDate":
-				return "enrollmentParentDate_indexed_date";
-			case "enrollmentCompleteName":
-				return "enrollmentCompleteName_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSearchSchoolEnrollment(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
-	public String varSuggereSchoolEnrollment(String entityVar) {
-		switch(entityVar) {
-			case "objectSuggest":
-				return "objectSuggest_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		}
-	}
-
 	// Partagé //
 
 	public void errorSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1709,6 +1781,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					) {
+				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getSessionId()));
+			}
+
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
 				String entityVar = null;
 				String valueIndexed = null;
@@ -1725,7 +1805,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						switch(paramName) {
 							case "q":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : varSearchSchoolEnrollment(entityVar);
+								varIndexed = "*".equals(entityVar) ? entityVar : SchoolEnrollment.varSearchSchoolEnrollment(entityVar);
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
 								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
 								listSearch.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
@@ -1739,13 +1819,13 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							case "fq":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = varIndexedSchoolEnrollment(entityVar);
+								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
 								listSearch.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
 								break;
 							case "sort":
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueSort = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = varIndexedSchoolEnrollment(entityVar);
+								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
 								listSearch.addSort(varIndexed, ORDER.valueOf(valueSort));
 								break;
 							case "start":

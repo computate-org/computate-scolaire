@@ -52,7 +52,7 @@ echo 'Her current school year 2017 to 2018... '"
 computate "xdg-open 'https://school.computate.org/api/season?fl=seasonStartDate,seasonWinter,seasonSummer,seasonCompleteName&fq=yearStart:2017';\
 echo 'Her winter school season... '"
 
-computate "xdg-open 'https://school.computate.org/api/session?fl=sessionStartDay,sessionEndDay,sessionCompleteName&fq=yearStart:2017';\
+computate "xdg-open 'https://school.computate.org/api/session?fl=sessionStartDate,sessionEndDate,sessionCompleteName&fq=yearStart:2017';\
 echo 'The session start and end date during that season... '"
 
 computate "xdg-open 'https://school.computate.org/api/age?fl=ageStart,ageEnd,ageCompleteName&fq=yearStart:2017';\

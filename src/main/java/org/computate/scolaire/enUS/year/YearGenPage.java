@@ -95,8 +95,9 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptYearGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolYearSchoolKey([{'name':'fq','value':'yearKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolYearSchoolKey_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolYearSeasonKeys([{'name':'fq','value':'yearKey:", siteRequest_.getRequestPk(), "'}], $('#listSchoolYearSeasonKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolYearSchoolKey([{'name':'fq','value':'yearKeys:' + pk}], $('#listSchoolYearSchoolKey_Page'), pk); ");
+		tl(1, "suggestSchoolYearSeasonKeys([{'name':'fq','value':'yearKey:' + pk}], $('#listSchoolYearSeasonKeys_Page'), pk); ");
 		tl(1, "websocketSchoolYear(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");

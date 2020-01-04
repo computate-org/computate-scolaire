@@ -61,6 +61,10 @@ public class Cluster extends ClusterGen<Object> {
 		l.add(Cluster.class.getCanonicalName());
 	}
 
+	protected void _sessionId(Wrap<String> c) {
+		c.o(siteRequest_.getSessionId());
+	}
+
 	protected void _objectTitle(Wrap<String> c) {
 	}
 

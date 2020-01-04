@@ -222,6 +222,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
 	}
 
+	public void inputPk(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
 	public void htmPk(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -382,6 +386,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return created == null ? "" : StringEscapeUtils.escapeHtml4(strCreated());
 	}
 
+	public void inputCreated(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
 	public void htmCreated(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -481,6 +489,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		return modified == null ? "" : StringEscapeUtils.escapeHtml4(strModified());
 	}
 
+	public void inputModified(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+	}
+
 	public void htmModified(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
@@ -569,18 +581,33 @@ public abstract class ClusterGen<DEV> extends Object {
 		return archived == null ? "" : StringEscapeUtils.escapeHtml4(strArchived());
 	}
 
+	public void inputArchived(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		s.e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_archived")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				s.a("class", "setArchived");
+				s.a("name", "setArchived");
+			} else {
+				s.a("class", "valueArchived");
+				s.a("name", "archived");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
+			}
+			;
+			if(getArchived() != null && getArchived())
+				s.a("checked", "checked");
+		s.fg();
+
+	}
+
 	public void htmArchived(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
-				{ s.e("span").a("id", "formClusterArchived").f();
-					s.e("input")
-						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", pk)
-						.fg();
-				} s.g("span");
 				{ s.e("div").a("id", "suggestClusterArchived").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
@@ -589,25 +616,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 
-								s.e("input")
-									.a("type", "checkbox")
-									.a("id", classApiMethodMethod, "_archived")
-									.a("value", "true");
-									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-										s.a("class", "setArchived");
-										s.a("name", "setArchived");
-									} else {
-										s.a("class", "valueArchived");
-										s.a("name", "archived");
-									}
-									if("Page".equals(classApiMethodMethod)) {
-										s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=\"pk\"]').val() }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_archived')); }, function() { addError($('#\", classApiMethodMethod, \"_archived')); }); ");
-									}
-									;
-									if(getArchived() != null && getArchived())
-										s.a("checked", "checked");
-								s.fg();
-
+								inputArchived(classApiMethodMethod);
 							} s.g("div");
 						} s.g("div");
 					} s.g("div");
@@ -682,18 +691,33 @@ public abstract class ClusterGen<DEV> extends Object {
 		return deleted == null ? "" : StringEscapeUtils.escapeHtml4(strDeleted());
 	}
 
+	public void inputDeleted(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
+		s.e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_deleted")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				s.a("class", "setDeleted");
+				s.a("name", "setDeleted");
+			} else {
+				s.a("class", "valueDeleted");
+				s.a("name", "deleted");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
+			}
+			;
+			if(getDeleted() != null && getDeleted())
+				s.a("checked", "checked");
+		s.fg();
+
+	}
+
 	public void htmDeleted(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
 		{ s.e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ s.e("div").a("class", "w3-padding ").f();
-				{ s.e("span").a("id", "formClusterDeleted").f();
-					s.e("input")
-						.a("type", "hidden")
-						.a("name", "value")
-						.a("class", "value ")
-						.a("value", pk)
-						.fg();
-				} s.g("span");
 				{ s.e("div").a("id", "suggestClusterDeleted").f();
 					{ s.e("div").a("class", "w3-card ").f();
 						{ s.e("div").a("class", "w3-cell-row w3-green ").f();
@@ -702,25 +726,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 
-								s.e("input")
-									.a("type", "checkbox")
-									.a("id", classApiMethodMethod, "_deleted")
-									.a("value", "true");
-									if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-										s.a("class", "setDeleted");
-										s.a("name", "setDeleted");
-									} else {
-										s.a("class", "valueDeleted");
-										s.a("name", "deleted");
-									}
-									if("Page".equals(classApiMethodMethod)) {
-										s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=\"pk\"]').val() }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#\", classApiMethodMethod, \"_deleted')); }, function() { addError($('#\", classApiMethodMethod, \"_deleted')); }); ");
-									}
-									;
-									if(getDeleted() != null && getDeleted())
-										s.a("checked", "checked");
-								s.fg();
-
+								inputDeleted(classApiMethodMethod);
 							} s.g("div");
 						} s.g("div");
 					} s.g("div");
@@ -929,6 +935,67 @@ public abstract class ClusterGen<DEV> extends Object {
 		return classCanonicalNames == null ? "" : StringEscapeUtils.escapeHtml4(strClassCanonicalNames());
 	}
 
+	///////////////
+	// sessionId //
+	///////////////
+
+	/**	L'entité « sessionId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String sessionId;
+	@JsonIgnore
+	public Wrap<String> sessionIdWrap = new Wrap<String>().p(this).c(String.class).var("sessionId").o(sessionId);
+
+	/**	<br/>L'entité « sessionId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionId">Trouver l'entité sessionId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionId(Wrap<String> c);
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+		this.sessionIdWrap.alreadyInitialized = true;
+	}
+	protected Cluster sessionIdInit() {
+		if(!sessionIdWrap.alreadyInitialized) {
+			_sessionId(sessionIdWrap);
+			if(sessionId == null)
+				setSessionId(sessionIdWrap.o);
+		}
+		sessionIdWrap.alreadyInitialized(true);
+		return (Cluster)this;
+	}
+
+	public String solrSessionId() {
+		return sessionId;
+	}
+
+	public String strSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String jsonSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String nomAffichageSessionId() {
+		return null;
+	}
+
+	public String htmTooltipSessionId() {
+		return null;
+	}
+
+	public String htmSessionId() {
+		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
+	}
+
 	/////////////////
 	// objectTitle //
 	/////////////////
@@ -1049,6 +1116,10 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public String htmObjectId() {
 		return objectId == null ? "" : StringEscapeUtils.escapeHtml4(strObjectId());
+	}
+
+	public void inputObjectId(String classApiMethodMethod) {
+		Cluster s = (Cluster)this;
 	}
 
 	public void htmObjectId(String classApiMethodMethod) {
@@ -1348,6 +1419,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		classCanonicalNameInit();
 		classSimpleNameInit();
 		classCanonicalNamesInit();
+		sessionIdInit();
 		objectTitleInit();
 		objectIdInit();
 		objectNameVarInit();
@@ -1413,6 +1485,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classSimpleName;
 			case "classCanonicalNames":
 				return oCluster.classCanonicalNames;
+			case "sessionId":
+				return oCluster.sessionId;
 			case "objectTitle":
 				return oCluster.objectTitle;
 			case "objectId":
@@ -1563,6 +1637,12 @@ public abstract class ClusterGen<DEV> extends Object {
 					oCluster.classCanonicalNames.addAll(classCanonicalNames);
 			}
 
+			if(savesCluster.contains("sessionId")) {
+				String sessionId = (String)solrDocument.get("sessionId_stored_string");
+				if(sessionId != null)
+					oCluster.setSessionId(sessionId);
+			}
+
 			if(savesCluster.contains("objectTitle")) {
 				String objectTitle = (String)solrDocument.get("objectTitle_stored_string");
 				if(objectTitle != null)
@@ -1693,6 +1773,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				document.addField("classCanonicalNames_stored_strings", o);
 			}
 		}
+		if(sessionId != null) {
+			document.addField("sessionId_indexed_string", sessionId);
+			document.addField("sessionId_stored_string", sessionId);
+		}
 		if(objectTitle != null) {
 			document.addField("objectTitle_indexed_string", objectTitle);
 			document.addField("objectTitle_stored_string", objectTitle);
@@ -1724,6 +1808,59 @@ public abstract class ClusterGen<DEV> extends Object {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedCluster(String entityVar) {
+		switch(entityVar) {
+			case "pk":
+				return "pk_indexed_long";
+			case "id":
+				return "id_indexed_string";
+			case "created":
+				return "created_indexed_date";
+			case "modified":
+				return "modified_indexed_date";
+			case "archived":
+				return "archived_indexed_boolean";
+			case "deleted":
+				return "deleted_indexed_boolean";
+			case "classCanonicalName":
+				return "classCanonicalName_indexed_string";
+			case "classSimpleName":
+				return "classSimpleName_indexed_string";
+			case "classCanonicalNames":
+				return "classCanonicalNames_indexed_strings";
+			case "sessionId":
+				return "sessionId_indexed_string";
+			case "objectTitle":
+				return "objectTitle_indexed_string";
+			case "objectId":
+				return "objectId_indexed_string";
+			case "objectSuggest":
+				return "objectSuggest_indexed_string";
+			case "pageUrl":
+				return "pageUrl_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSearchCluster(String entityVar) {
+		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSuggestCluster(String entityVar) {
+		switch(entityVar) {
+			case "objectSuggest":
+				return "objectSuggest_suggested";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
@@ -1771,6 +1908,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		List<String> classCanonicalNames = (List<String>)solrDocument.get("classCanonicalNames_stored_strings");
 		if(classCanonicalNames != null)
 			oCluster.classCanonicalNames.addAll(classCanonicalNames);
+
+		String sessionId = (String)solrDocument.get("sessionId_stored_string");
+		if(sessionId != null)
+			oCluster.setSessionId(sessionId);
 
 		String objectTitle = (String)solrDocument.get("objectTitle_stored_string");
 		if(objectTitle != null)

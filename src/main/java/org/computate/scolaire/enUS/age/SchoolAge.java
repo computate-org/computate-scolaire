@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.session.SchoolSession;
 
@@ -129,19 +130,24 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session_.getSeasonEnrollmentFee());
 	}
 
+	protected void _seasonShortName(Wrap<String> c) {
+		if(session_ != null)
+			c.o(session_.getSeasonShortName());
+	}
+
 	protected void _seasonCompleteName(Wrap<String> c) {
 		if(session_ != null)
 			c.o(session_.getSeasonCompleteName());
 	}
 
-	protected void _sessionStartDay(Wrap<LocalDate> c) {
+	protected void _sessionStartDate(Wrap<LocalDate> c) {
 		if(session_ != null)
-			c.o((LocalDate)session_.getSessionStartDay());
+			c.o((LocalDate)session_.getSessionStartDate());
 	}
 
-	protected void _sessionEndDay(Wrap<LocalDate> c) {
+	protected void _sessionEndDate(Wrap<LocalDate> c) {
 		if(session_ != null)
-			c.o((LocalDate)session_.getSessionEndDay());
+			c.o((LocalDate)session_.getSessionEndDate());
 	}
 
 	protected void _sessionCompleteName(Wrap<String> c) {
@@ -153,6 +159,12 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 	}
 
 	protected void _ageEnd(Wrap<Integer> c) {
+	}
+
+	protected void _ageShortName(Wrap<String> c) {
+		String o;
+		o = String.format("%s-%s year olds (%s - %s)", strAgeStart(), strAgeEnd(), PageLayout.FORMATMonthYear.format(sessionStartDate), PageLayout.FORMATMonthYear.format(sessionEndDate));
+		c.o(o);
 	}
 
 	protected void _ageCompleteName(Wrap<String> c) {

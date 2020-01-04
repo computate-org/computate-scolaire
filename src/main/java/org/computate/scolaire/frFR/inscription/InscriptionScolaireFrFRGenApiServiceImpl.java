@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -286,9 +287,81 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionSignature1", jsonObject.getString(entiteVar), pk));
 						break;
+					case "inscriptionSignature2":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature2", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature3":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature3", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature4":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature4", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature5":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature5", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature6":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature6", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature7":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature7", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature8":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature8", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature9":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature9", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionSignature10":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionSignature10", jsonObject.getString(entiteVar), pk));
+						break;
 					case "inscriptionDate1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionDate1", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate2":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate2", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate3":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate3", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate4":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate4", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate5":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate5", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate6":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate6", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate7":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate7", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate8":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate8", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate9":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate9", jsonObject.getString(entiteVar), pk));
+						break;
+					case "inscriptionDate10":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionDate10", jsonObject.getString(entiteVar), pk));
 						break;
 					}
 				}
@@ -842,6 +915,96 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							patchSqlParams.addAll(Arrays.asList("inscriptionSignature1", o2.jsonInscriptionSignature1(), pk));
 						}
 						break;
+					case "setInscriptionSignature2":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature2"));
+						} else {
+							o2.setInscriptionSignature2(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature2", o2.jsonInscriptionSignature2(), pk));
+						}
+						break;
+					case "setInscriptionSignature3":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature3"));
+						} else {
+							o2.setInscriptionSignature3(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature3", o2.jsonInscriptionSignature3(), pk));
+						}
+						break;
+					case "setInscriptionSignature4":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature4"));
+						} else {
+							o2.setInscriptionSignature4(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature4", o2.jsonInscriptionSignature4(), pk));
+						}
+						break;
+					case "setInscriptionSignature5":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature5"));
+						} else {
+							o2.setInscriptionSignature5(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature5", o2.jsonInscriptionSignature5(), pk));
+						}
+						break;
+					case "setInscriptionSignature6":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature6"));
+						} else {
+							o2.setInscriptionSignature6(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature6", o2.jsonInscriptionSignature6(), pk));
+						}
+						break;
+					case "setInscriptionSignature7":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature7"));
+						} else {
+							o2.setInscriptionSignature7(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature7", o2.jsonInscriptionSignature7(), pk));
+						}
+						break;
+					case "setInscriptionSignature8":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature8"));
+						} else {
+							o2.setInscriptionSignature8(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature8", o2.jsonInscriptionSignature8(), pk));
+						}
+						break;
+					case "setInscriptionSignature9":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature9"));
+						} else {
+							o2.setInscriptionSignature9(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature9", o2.jsonInscriptionSignature9(), pk));
+						}
+						break;
+					case "setInscriptionSignature10":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionSignature10"));
+						} else {
+							o2.setInscriptionSignature10(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionSignature10", o2.jsonInscriptionSignature10(), pk));
+						}
+						break;
 					case "setInscriptionDate1":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -850,6 +1013,96 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setInscriptionDate1(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inscriptionDate1", o2.jsonInscriptionDate1(), pk));
+						}
+						break;
+					case "setInscriptionDate2":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate2"));
+						} else {
+							o2.setInscriptionDate2(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate2", o2.jsonInscriptionDate2(), pk));
+						}
+						break;
+					case "setInscriptionDate3":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate3"));
+						} else {
+							o2.setInscriptionDate3(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate3", o2.jsonInscriptionDate3(), pk));
+						}
+						break;
+					case "setInscriptionDate4":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate4"));
+						} else {
+							o2.setInscriptionDate4(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate4", o2.jsonInscriptionDate4(), pk));
+						}
+						break;
+					case "setInscriptionDate5":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate5"));
+						} else {
+							o2.setInscriptionDate5(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate5", o2.jsonInscriptionDate5(), pk));
+						}
+						break;
+					case "setInscriptionDate6":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate6"));
+						} else {
+							o2.setInscriptionDate6(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate6", o2.jsonInscriptionDate6(), pk));
+						}
+						break;
+					case "setInscriptionDate7":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate7"));
+						} else {
+							o2.setInscriptionDate7(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate7", o2.jsonInscriptionDate7(), pk));
+						}
+						break;
+					case "setInscriptionDate8":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate8"));
+						} else {
+							o2.setInscriptionDate8(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate8", o2.jsonInscriptionDate8(), pk));
+						}
+						break;
+					case "setInscriptionDate9":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate9"));
+						} else {
+							o2.setInscriptionDate9(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate9", o2.jsonInscriptionDate9(), pk));
+						}
+						break;
+					case "setInscriptionDate10":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionDate10"));
+						} else {
+							o2.setInscriptionDate10(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionDate10", o2.jsonInscriptionDate10(), pk));
 						}
 						break;
 				}
@@ -1325,187 +1578,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
-	public String varIndexeInscriptionScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "objetTitre":
-				return "objetTitre_indexed_string";
-			case "objetId":
-				return "objetId_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "inscriptionCle":
-				return "inscriptionCle_indexed_long";
-			case "blocCles":
-				return "blocCles_indexed_longs";
-			case "ecoleCle":
-				return "ecoleCle_indexed_long";
-			case "anneeCle":
-				return "anneeCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
-			case "sessionCle":
-				return "sessionCle_indexed_long";
-			case "ageCle":
-				return "ageCle_indexed_long";
-			case "blocCle":
-				return "blocCle_indexed_long";
-			case "enfantCle":
-				return "enfantCle_indexed_long";
-			case "mereCles":
-				return "mereCles_indexed_longs";
-			case "pereCles":
-				return "pereCles_indexed_longs";
-			case "gardienCles":
-				return "gardienCles_indexed_longs";
-			case "paiementCles":
-				return "paiementCles_indexed_longs";
-			case "formInscriptionCle":
-				return "formInscriptionCle_indexed_long";
-			case "scolaireTri":
-				return "scolaireTri_indexed_int";
-			case "ecoleTri":
-				return "ecoleTri_indexed_int";
-			case "anneeTri":
-				return "anneeTri_indexed_int";
-			case "saisonTri":
-				return "saisonTri_indexed_int";
-			case "sessionTri":
-				return "sessionTri_indexed_int";
-			case "ageTri":
-				return "ageTri_indexed_int";
-			case "enfantNomComplet":
-				return "enfantNomComplet_indexed_string";
-			case "ecoleNom":
-				return "ecoleNom_indexed_string";
-			case "ecoleNomComplet":
-				return "ecoleNomComplet_indexed_string";
-			case "ecoleEmplacement":
-				return "ecoleEmplacement_indexed_string";
-			case "ecoleAddresse":
-				return "ecoleAddresse_indexed_string";
-			case "ecoleNumeroTelephone":
-				return "ecoleNumeroTelephone_indexed_string";
-			case "ecoleAdministrateurNom":
-				return "ecoleAdministrateurNom_indexed_string";
-			case "anneeDebut":
-				return "anneeDebut_indexed_int";
-			case "anneeFin":
-				return "anneeFin_indexed_int";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
-			case "saisonEte":
-				return "saisonEte_indexed_boolean";
-			case "saisonHiver":
-				return "saisonHiver_indexed_boolean";
-			case "saisonFraisInscription":
-				return "saisonFraisInscription_indexed_double";
-			case "saisonNomComplet":
-				return "saisonNomComplet_indexed_string";
-			case "sessionJourDebut":
-				return "sessionJourDebut_indexed_date";
-			case "sessionJourFin":
-				return "sessionJourFin_indexed_date";
-			case "ageNomComplet":
-				return "ageNomComplet_indexed_string";
-			case "ageDebut":
-				return "ageDebut_indexed_int";
-			case "ageFin":
-				return "ageFin_indexed_int";
-			case "blocHeureDebut":
-				return "blocHeureDebut_indexed_string";
-			case "blocHeureFin":
-				return "blocHeureFin_indexed_string";
-			case "blocPrixParMois":
-				return "blocPrixParMois_indexed_double";
-			case "blocDimanche":
-				return "blocDimanche_indexed_boolean";
-			case "blocLundi":
-				return "blocLundi_indexed_boolean";
-			case "blocMardi":
-				return "blocMardi_indexed_boolean";
-			case "blocMercredi":
-				return "blocMercredi_indexed_boolean";
-			case "blocJeudi":
-				return "blocJeudi_indexed_boolean";
-			case "blocVendredi":
-				return "blocVendredi_indexed_boolean";
-			case "blocSamedi":
-				return "blocSamedi_indexed_boolean";
-			case "blocPrixTotal":
-				return "blocPrixTotal_indexed_double";
-			case "inscriptionApprouve":
-				return "inscriptionApprouve_indexed_boolean";
-			case "inscriptionImmunisations":
-				return "inscriptionImmunisations_indexed_boolean";
-			case "familleMarie":
-				return "familleMarie_indexed_boolean";
-			case "familleSepare":
-				return "familleSepare_indexed_boolean";
-			case "familleDivorce":
-				return "familleDivorce_indexed_boolean";
-			case "familleAddresse":
-				return "familleAddresse_indexed_string";
-			case "familleCommentVousConnaissezEcole":
-				return "familleCommentVousConnaissezEcole_indexed_string";
-			case "inscriptionConsiderationsSpeciales":
-				return "inscriptionConsiderationsSpeciales_indexed_string";
-			case "inscriptionNomGroupe":
-				return "inscriptionNomGroupe_indexed_string";
-			case "inscriptionPaimentChaqueMois":
-				return "inscriptionPaimentChaqueMois_indexed_boolean";
-			case "inscriptionPaimentComplet":
-				return "inscriptionPaimentComplet_indexed_boolean";
-			case "inscriptionNomsParents":
-				return "inscriptionNomsParents_indexed_string";
-			case "inscriptionSignature1":
-				return "inscriptionSignature1_indexed_string";
-			case "inscriptionDate1":
-				return "inscriptionDate1_indexed_date";
-			case "inscriptionNomComplet":
-				return "inscriptionNomComplet_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varRechercheInscriptionScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varSuggereInscriptionScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
 	// Partagé //
 
 	public void erreurInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1709,6 +1781,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUserRealmRoles(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getSessionId()));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;
@@ -1725,7 +1805,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRechercheInscriptionScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : InscriptionScolaire.varRechercheInscriptionScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1739,13 +1819,13 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexeInscriptionScolaire(entiteVar);
+								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexeInscriptionScolaire(entiteVar);
+								varIndexe = InscriptionScolaire.varIndexeInscriptionScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "start":

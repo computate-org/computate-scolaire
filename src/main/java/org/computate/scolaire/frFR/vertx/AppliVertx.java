@@ -68,6 +68,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.UserSessionHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 
 /**
@@ -441,6 +442,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: openapi3-enUS.yaml
 	 * r: /ecole
 	 * r.enUS: /school
+	 * r: "computate-scolaire-frFR-session"
+	 * r.enUS: "computate-scolaire-enUS-session"
 	 */
 	private Future<Void> configurerOpenApi() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -478,9 +481,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
 
 				routeur.route().handler(CookieHandler.create());
-				routeur.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
+				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
+//				ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx, "computate-scolaire-frFR-session");
+				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+				sessionHandler.setAuthProvider(authFournisseur);
+				routeur.route().handler(sessionHandler);
 
-				routeur.route().handler(UserSessionHandler.create(authFournisseur));
+//				routeur.route().handler(UserSessionHandler.create(authFournisseur));
 
 				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
 

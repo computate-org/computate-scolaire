@@ -128,51 +128,68 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getSeasonEnrollmentFee());
 	}
 
+	protected void _seasonShortName(Wrap<String> c) {
+		if(season_ != null)
+			c.o(season_.getSeasonShortName());
+	}
+
 	protected void _seasonCompleteName(Wrap<String> c) {
 		if(season_ != null)
 			c.o(season_.getSeasonCompleteName());
 	}
 
-	protected void _sessionStartDay(Wrap<LocalDate> c) {}
+	protected void _sessionStartDate(Wrap<LocalDate> c) {}
 
 	@Override()
-	public SchoolSession setSessionStartDay(String o) {
+	public SchoolSession setSessionStartDate(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionStartDay(o);
+			return super.setSessionStartDate(o);
 		} catch (Exception e) {
-			setSessionStartDay(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			setSessionStartDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
 			return this;
 		}
 	}
 
 	@Override()
-	public SchoolSession setSessionEndDay(String o) {
+	public SchoolSession setSessionEndDate(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionEndDay(o);
+			return super.setSessionEndDate(o);
 		} catch (Exception e) {
-			setSessionEndDay(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			setSessionEndDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
 			return this;
 		}
 	}
 
-	protected void _sessionEndDay(Wrap<LocalDate> c) {}
+	protected void _sessionEndDate(Wrap<LocalDate> c) {}
+
+	protected void _sessionShortName(Wrap<String> c) {
+		String o;
+
+		if(BooleanUtils.isTrue(seasonSummer))
+			o = String.format("%s - %s summer session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
+		if(BooleanUtils.isTrue(seasonWinter))
+			o = String.format("%s - %s school session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
+		else
+			o = String.format("%s - %s session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
+
+		c.o(o);
+	}
 
 	protected void _sessionCompleteName(Wrap<String> c) {
 		String o;
 
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("%s - %s summer session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
+			o = String.format("%s - %s summer session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
 		if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("%s - %s school session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
+			o = String.format("%s - %s school session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
 		else
-			o = String.format("%s - %s session at %s", strSessionStartDay(), strSessionEndDay(), schoolCompleteName);
+			o = String.format("%s - %s session at %s", strSessionStartDate(), strSessionEndDate(), schoolCompleteName);
 
 		c.o(o);
-
 	}
 
 	@Override()

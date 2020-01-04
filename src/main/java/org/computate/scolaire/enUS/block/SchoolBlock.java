@@ -23,6 +23,10 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _enrollmentKeys(List<Long> o) {}
 
+	protected void _enrollmentKey(Wrap<Long> o) {}
+
+	protected void _enrollmentAttribute(Wrap<Boolean> o) {}
+
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(6);
 	}
@@ -143,19 +147,29 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age_.getSeasonEnrollmentFee());
 	}
 
+	protected void _seasonShortName(Wrap<String> c) {
+		if(age_ != null)
+			c.o(age_.getSeasonShortName());
+	}
+
 	protected void _seasonCompleteName(Wrap<String> c) {
 		if(age_ != null)
 			c.o(age_.getSeasonCompleteName());
 	}
 
-	protected void _sessionStartDay(Wrap<LocalDate> c) {
+	protected void _sessionStartDate(Wrap<LocalDate> c) {
 		if(age_ != null)
-			c.o((LocalDate)age_.getSessionStartDay());
+			c.o((LocalDate)age_.getSessionStartDate());
 	}
 
-	protected void _sessionEndDay(Wrap<LocalDate> c) {
+	protected void _sessionEndDate(Wrap<LocalDate> c) {
 		if(age_ != null)
-			c.o((LocalDate)age_.getSessionEndDay());
+			c.o((LocalDate)age_.getSessionEndDate());
+	}
+
+	protected void _ageShortName(Wrap<String> c) {
+		if(age_ != null)
+			c.o(age_.getAgeShortName());
 	}
 
 	protected void _ageCompleteName(Wrap<String> c) {
@@ -211,9 +225,33 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 	}
 
 	protected void _blockTotalPrice(Wrap<BigDecimal> c) {
-		if(blockPricePerMonth != null && sessionStartDay != null && sessionEndDay != null) {
-			c.o(blockPricePerMonth.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionStartDay, sessionEndDay))));
+		if(blockPricePerMonth != null && sessionStartDate != null && sessionEndDate != null) {
+			c.o(blockPricePerMonth.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionStartDate, sessionEndDate))));
 		}
+	}
+
+	protected void _sessionBlocks(List<SchoolBlock> l) {}
+
+	protected void _ageBlocks(List<SchoolBlock> l) {}
+
+	protected void _blockBlocks(List<SchoolBlock> l) {}
+
+	protected void _blockShortName(Wrap<String> c) {
+		String o;
+		String weekdays = "";
+		if(BooleanUtils.isTrue(blockSunday)) weekdays += " Su";
+		if(BooleanUtils.isTrue(blockMonday)) weekdays += " Mo";
+		if(BooleanUtils.isTrue(blockTuesday)) weekdays += " Tu";
+		if(BooleanUtils.isTrue(blockWednesday)) weekdays += " We";
+		if(BooleanUtils.isTrue(blockThursday)) weekdays += " Th";
+		if(BooleanUtils.isTrue(blockFriday)) weekdays += " Fr";
+		if(BooleanUtils.isTrue(blockSaturday)) weekdays += " Sa";
+		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
+		if(blockPricePerMonth == null)
+			o = String.format("%s %s at %s", strBlockStartTime(), strBlockEndTime(), weekdays, schoolCompleteName);
+		else
+			o = String.format("%s - %s %s ($%s/month) at %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), schoolCompleteName);
+		c.o(o);
 	}
 
 	protected void _blockCompleteName(Wrap<String> c) {
@@ -230,12 +268,30 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		if(blockPricePerMonth == null)
 			o = String.format("%s - %s %s %s", strBlockStartTime(), strBlockEndTime(), weekdays, ageCompleteName);
 		else
-			o = String.format("%s - %s %s %s per month %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
+			o = String.format("%s - %s %s ($%s/month) %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), ageCompleteName);
 		c.o(o);
 	}
 
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(blockCompleteName);
+	}
+
+	@Override()
+	public String strBlockPricePerMonth() {
+		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(0).toString();
+	}
+
+	public void  inputEnrollmentBlockKeys(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "checkbox")
+//			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
+			.a("class", "setInscriptionApprouve")
+			.a("name", "setInscriptionApprouve")
+			.a("onchange", "patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", enrollmentKey, "' }], { [($(this).prop('checked') ? 'add' : 'remove') + 'BlockKeys']: '", pk, "' } ); ");
+			if(enrollmentAttribute)
+				a("checked", "checked");
+		fg();
+
 	}
 }

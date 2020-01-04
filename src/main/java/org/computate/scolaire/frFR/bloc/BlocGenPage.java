@@ -96,8 +96,9 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptBlocGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereBlocScolaireAgeCle([{'name':'fq','value':'blocCles:", requeteSite_.getRequetePk(), "'}], $('#listBlocScolaireAgeCle_Page'), ", requeteSite_.getRequetePk(), "); ");
-		tl(1, "suggereBlocScolaireInscriptionCles([{'name':'fq','value':'blocCles:", requeteSite_.getRequetePk(), "'}], $('#listBlocScolaireInscriptionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereBlocScolaireAgeCle([{'name':'fq','value':'blocCles:' + pk}], $('#listBlocScolaireAgeCle_Page'), pk); ");
+		tl(1, "suggereBlocScolaireInscriptionCles([{'name':'fq','value':'blocCles:' + pk}], $('#listBlocScolaireInscriptionCles_Page'), pk); ");
 		tl(1, "websocketBlocScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");
@@ -200,6 +201,9 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("PATCH");
+			o.htmBlocDimanche("PATCH");
+			o.htmBlocSamedi("PATCH");
 			o.htmBlocNomComplet("PATCH");
 		} g("div");
 	}
@@ -232,6 +236,9 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmInscriptionCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleAddresse("Recherche");
+			o.htmBlocDimanche("Recherche");
+			o.htmBlocSamedi("Recherche");
 			o.htmBlocNomComplet("Recherche");
 		} g("div");
 	}

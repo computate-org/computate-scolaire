@@ -2123,6 +2123,72 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		return classeMotsCles == null ? "" : StringEscapeUtils.escapeHtml4(strClasseMotsCles());
 	}
 
+	///////////////////////
+	// classeRoleSession //
+	///////////////////////
+
+	/**	L'entité « classeRoleSession »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean classeRoleSession;
+	@JsonIgnore
+	public Couverture<Boolean> classeRoleSessionCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("classeRoleSession").o(classeRoleSession);
+
+	/**	<br/>L'entité « classeRoleSession »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.ApiEcrivain&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classeRoleSession">Trouver l'entité classeRoleSession dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _classeRoleSession(Couverture<Boolean> c);
+
+	public Boolean getClasseRoleSession() {
+		return classeRoleSession;
+	}
+
+	public void setClasseRoleSession(Boolean classeRoleSession) {
+		this.classeRoleSession = classeRoleSession;
+		this.classeRoleSessionCouverture.dejaInitialise = true;
+	}
+	public ApiEcrivain setClasseRoleSession(String o) {
+		this.classeRoleSession = Boolean.parseBoolean(o);
+		this.classeRoleSessionCouverture.dejaInitialise = true;
+		return (ApiEcrivain)this;
+	}
+	protected ApiEcrivain classeRoleSessionInit() {
+		if(!classeRoleSessionCouverture.dejaInitialise) {
+			_classeRoleSession(classeRoleSessionCouverture);
+			if(classeRoleSession == null)
+				setClasseRoleSession(classeRoleSessionCouverture.o);
+		}
+		classeRoleSessionCouverture.dejaInitialise(true);
+		return (ApiEcrivain)this;
+	}
+
+	public Boolean solrClasseRoleSession() {
+		return classeRoleSession;
+	}
+
+	public String strClasseRoleSession() {
+		return classeRoleSession == null ? "" : classeRoleSession.toString();
+	}
+
+	public String jsonClasseRoleSession() {
+		return classeRoleSession == null ? "" : classeRoleSession.toString();
+	}
+
+	public String nomAffichageClasseRoleSession() {
+		return null;
+	}
+
+	public String htmTooltipClasseRoleSession() {
+		return null;
+	}
+
+	public String htmClasseRoleSession() {
+		return classeRoleSession == null ? "" : StringEscapeUtils.escapeHtml4(strClasseRoleSession());
+	}
+
 	////////////////////////
 	// classeRolesTrouves //
 	////////////////////////
@@ -2506,6 +2572,7 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 		classePageNomCanoniqueMethodeInit();
 		classeMotsClesTrouvesInit();
 		classeMotsClesInit();
+		classeRoleSessionInit();
 		classeRolesTrouvesInit();
 		classeRolesInit();
 		classeRolesLangueInit();
@@ -2650,6 +2717,8 @@ public abstract class ApiEcrivainGen<DEV> extends Object {
 				return oApiEcrivain.classeMotsClesTrouves;
 			case "classeMotsCles":
 				return oApiEcrivain.classeMotsCles;
+			case "classeRoleSession":
+				return oApiEcrivain.classeRoleSession;
 			case "classeRolesTrouves":
 				return oApiEcrivain.classeRolesTrouves;
 			case "classeRoles":

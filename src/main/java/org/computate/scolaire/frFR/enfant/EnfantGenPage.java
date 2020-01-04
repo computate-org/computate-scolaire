@@ -95,7 +95,8 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptEnfantGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereEnfantScolaireInscriptionCles([{'name':'fq','value':'enfantCle:", requeteSite_.getRequetePk(), "'}], $('#listEnfantScolaireInscriptionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereEnfantScolaireInscriptionCles([{'name':'fq','value':'enfantCle:' + pk}], $('#listEnfantScolaireInscriptionCles_Page'), pk); ");
 		tl(1, "websocketEnfantScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

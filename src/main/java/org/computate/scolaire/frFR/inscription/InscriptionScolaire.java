@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                                                                         
+package org.computate.scolaire.frFR.inscription;           
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +14,7 @@ import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
 import org.computate.scolaire.frFR.pere.PereScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.saison.SaisonScolaire;
 
 /**    
  * NomCanonique.enUS: org.computate.scolaire.enUS.enrollment.SchoolEnrollment
@@ -74,7 +75,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/  
+ * RoleSession: true
+*/     
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -86,7 +88,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */                      
+	 */                              
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -103,7 +105,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school blocks in the database. 
 	 * NomAffichage.frFR: blocs
 	 * NomAffichage.enUS: blocks
-	 */   
+	 */            
 	protected void _blocCles(List<Long> o) {}
 
 	/**
@@ -136,9 +138,19 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: blocRecherche
 	 * r.enUS: blockSearch
 	 * Ignorer: true
-	 */   
+	 */     
 	protected void _blocs_(Couverture<List<BlocScolaire>> c) {
 		c.o(blocRecherche.getList());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasons_
+	 * r: blocRecherche
+	 * r.enUS: blockSearch
+	 * Ignorer: true
+	 */    
+	protected void _saisons_(List<SaisonScolaire> c) {
 	}
 
 	/**
@@ -792,13 +804,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionStartDay
+	 * Var.enUS: sessionStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
 	 * r: SessionJourDebut
-	 * r.enUS: SessionStartDay
+	 * r.enUS: SessionStartDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
@@ -809,13 +821,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionEndDay
+	 * Var.enUS: sessionEndDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
 	 * r: SessionJourFin
-	 * r.enUS: SessionEndDay
+	 * r.enUS: SessionEndDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
@@ -1261,12 +1273,201 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
-	 * Var.enUS: enrollmentParentDate
+	 * Var.enUS: enrollmentSignature2
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature2(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature3
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature3(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature4
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature4(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature5
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature5(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature6
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature6(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature7
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature7(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature8
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature8(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature9
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature9(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentSignature10
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Signature: true
+	 */     
+	protected void _inscriptionSignature10(Couverture<String> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate1
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 */
 	protected void _inscriptionDate1(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate2
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate2(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate3
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate3(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate4
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate4(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate5
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate5(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate6
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate6(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate7
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate7(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate8
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate8(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate9
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate9(Couverture<LocalDate> c) {
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentDate10
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */
+	protected void _inscriptionDate10(Couverture<LocalDate> c) {
 	}
 
 	/**           

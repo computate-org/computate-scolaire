@@ -2,8 +2,10 @@ package org.computate.scolaire.frFR.enfant;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -346,6 +348,19 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * NomAffichage.enUS: birth date
 	 */                   
 	protected void _personneDateNaissance(Couverture<LocalDate> c) {
+	}
+
+	/**
+	 * Var.enUS: strPersonBirthDate
+	 * r: "d MMMM yyyy"
+	 * r.enUS: "MMMM d, yyyy"
+	 * r: FRANCE
+	 * r.enUS: US
+	 * r: personneDateNaissance
+	 * r.enUS: personBirthDate
+	 */
+	@Override public String strPersonneDateNaissance() {
+		return personneDateNaissance == null ? "" : personneDateNaissance.format(DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRANCE));
 	}
 
 	/**

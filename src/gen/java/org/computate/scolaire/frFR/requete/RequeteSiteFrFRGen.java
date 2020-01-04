@@ -586,6 +586,67 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurId == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurId());
 	}
 
+	///////////////
+	// sessionId //
+	///////////////
+
+	/**	L'entité « sessionId »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String sessionId;
+	@JsonIgnore
+	public Couverture<String> sessionIdCouverture = new Couverture<String>().p(this).c(String.class).var("sessionId").o(sessionId);
+
+	/**	<br/>L'entité « sessionId »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionId">Trouver l'entité sessionId dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionId(Couverture<String> c);
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+		this.sessionIdCouverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR sessionIdInit() {
+		if(!sessionIdCouverture.dejaInitialise) {
+			_sessionId(sessionIdCouverture);
+			if(sessionId == null)
+				setSessionId(sessionIdCouverture.o);
+		}
+		sessionIdCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	public String solrSessionId() {
+		return sessionId;
+	}
+
+	public String strSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String jsonSessionId() {
+		return sessionId == null ? "" : sessionId;
+	}
+
+	public String nomAffichageSessionId() {
+		return null;
+	}
+
+	public String htmTooltipSessionId() {
+		return null;
+	}
+
+	public String htmSessionId() {
+		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
+	}
+
 	////////////////////
 	// utilisateurNom //
 	////////////////////
@@ -1656,6 +1717,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		utilisateurVertxInit();
 		principalJsonInit();
 		utilisateurIdInit();
+		sessionIdInit();
 		utilisateurNomInit();
 		utilisateurNomFamilleInit();
 		utilisateurPrenomInit();
@@ -1746,6 +1808,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.principalJson;
 			case "utilisateurId":
 				return oRequeteSiteFrFR.utilisateurId;
+			case "sessionId":
+				return oRequeteSiteFrFR.sessionId;
 			case "utilisateurNom":
 				return oRequeteSiteFrFR.utilisateurNom;
 			case "utilisateurNomFamille":

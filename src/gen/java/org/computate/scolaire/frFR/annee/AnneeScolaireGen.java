@@ -178,7 +178,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-										.a("onclick", "postEcoleVals({ anneeCles: \"", pk, "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAnneeScolaireEcoleCle($('#' + ($('#", classeApiMethodeMethode, "ecoleCle').val() ? 'suggere' : 'form') + 'AnneeScolaireEcoleCle'), $('#listAnneeScolaireEcoleCle_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "ecoleCle'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ecoleCle')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ecoleCle')); });")
+										.a("onclick", "postEcoleVals({ anneeCles: \"", pk, "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ecoleCle')); });")
 										.f().sx("ajouter une école")
 									.g("button");
 								} g("div");
@@ -473,7 +473,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", pk, "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggereAnneeScolaireSaisonCles($('#' + ($('#", classeApiMethodeMethode, "saisonCles').val() ? 'suggere' : 'form') + 'AnneeScolaireSaisonCles'), $('#listAnneeScolaireSaisonCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "saisonCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "saisonCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "saisonCles')); });")
+										.a("onclick", "postSaisonScolaireVals({ anneeCle: \"", pk, "\" }, function() { patchAnneeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "saisonCles')); });")
 										.f().sx("ajouter une saison")
 									.g("button");
 								} g("div");
@@ -2123,6 +2123,99 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeAnneeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "enrollmentFormKey":
+				return "enrollmentFormKey_indexed_long";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "yearShortName":
+				return "yearShortName_indexed_string";
+			case "yearCompleteName":
+				return "yearCompleteName_indexed_string";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "scolaireTri":
+				return "scolaireTri_indexed_int";
+			case "ecoleTri":
+				return "ecoleTri_indexed_int";
+			case "anneeTri":
+				return "anneeTri_indexed_int";
+			case "ecoleNom":
+				return "ecoleNom_indexed_string";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleAdministrateurNom":
+				return "ecoleAdministrateurNom_indexed_string";
+			case "formInscriptionCle":
+				return "formInscriptionCle_indexed_long";
+			case "anneeDebut":
+				return "anneeDebut_indexed_int";
+			case "anneeFin":
+				return "anneeFin_indexed_int";
+			case "anneeNomCourt":
+				return "anneeNomCourt_indexed_string";
+			case "anneeNomComplet":
+				return "anneeNomComplet_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varRechercheAnneeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+		}
+	}
+
+	public static String varSuggereAnneeScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
 		}
 	}
 

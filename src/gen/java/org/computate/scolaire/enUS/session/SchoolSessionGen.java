@@ -309,6 +309,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public void inputAgeKeys(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -323,6 +324,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public void htmAgeKeys(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSessionAgeKeys").f();
@@ -353,7 +355,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-										.a("onclick", "postSchoolAgeVals({ sessionKey: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSessionAgeKeys($('#' + ($('#", classApiMethodMethod, "ageKeys').val() ? 'suggest' : 'form') + 'SchoolSessionAgeKeys'), $('#listSchoolSessionAgeKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "ageKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "ageKeys')); }); }, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
+										.a("onclick", "postSchoolAgeVals({ sessionKey: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
 										.f().sx("add an age")
 									.g("button");
 								} g("div");
@@ -768,6 +770,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonKey(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -782,6 +785,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonKey(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolSessionSeasonKey").f();
@@ -812,7 +816,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-										.a("onclick", "postSchoolSeasonVals({ sessionKeys: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolSessionSeasonKey($('#' + ($('#", classApiMethodMethod, "seasonKey').val() ? 'suggest' : 'form') + 'SchoolSessionSeasonKey'), $('#listSchoolSessionSeasonKey_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "seasonKey'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "seasonKey')); }); }, function() { addError($('#", classApiMethodMethod, "seasonKey')); });")
+										.a("onclick", "postSchoolSeasonVals({ sessionKeys: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKey')); });")
 										.f().sx("add a season")
 									.g("button");
 								} g("div");
@@ -1275,6 +1279,60 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 
 	public String htmSchoolAddress() {
 		return schoolAddress == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolAddress());
+	}
+
+	public void inputSchoolAddress(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "address")
+			.a("id", classApiMethodMethod, "_schoolAddress");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSchoolAddress w3-input w3-border ");
+				a("name", "setSchoolAddress");
+			} else {
+				a("class", "valueSchoolAddress w3-input w3-border ");
+				a("name", "schoolAddress");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+			}
+			a("value", strSchoolAddress())
+		.fg();
+
+	}
+
+	public void htmSchoolAddress(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolSessionSchoolAddress").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_schoolAddress").a("class", "").f().sx("address").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSchoolAddress(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////////////
@@ -1801,7 +1859,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonEnrollmentFee() {
-		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.toString();
+		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.setScale(2).toString();
 	}
 
 	public String jsonSeasonEnrollmentFee() {
@@ -1818,6 +1876,67 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 
 	public String htmSeasonEnrollmentFee() {
 		return seasonEnrollmentFee == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonEnrollmentFee());
+	}
+
+	/////////////////////
+	// seasonShortName //
+	/////////////////////
+
+	/**	L'entité « seasonShortName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String seasonShortName;
+	@JsonIgnore
+	public Wrap<String> seasonShortNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonShortName").o(seasonShortName);
+
+	/**	<br/>L'entité « seasonShortName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonShortName">Trouver l'entité seasonShortName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _seasonShortName(Wrap<String> c);
+
+	public String getSeasonShortName() {
+		return seasonShortName;
+	}
+
+	public void setSeasonShortName(String seasonShortName) {
+		this.seasonShortName = seasonShortName;
+		this.seasonShortNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolSession seasonShortNameInit() {
+		if(!seasonShortNameWrap.alreadyInitialized) {
+			_seasonShortName(seasonShortNameWrap);
+			if(seasonShortName == null)
+				setSeasonShortName(seasonShortNameWrap.o);
+		}
+		seasonShortNameWrap.alreadyInitialized(true);
+		return (SchoolSession)this;
+	}
+
+	public String solrSeasonShortName() {
+		return seasonShortName;
+	}
+
+	public String strSeasonShortName() {
+		return seasonShortName == null ? "" : seasonShortName;
+	}
+
+	public String jsonSeasonShortName() {
+		return seasonShortName == null ? "" : seasonShortName;
+	}
+
+	public String nomAffichageSeasonShortName() {
+		return null;
+	}
+
+	public String htmTooltipSeasonShortName() {
+		return null;
+	}
+
+	public String htmSeasonShortName() {
+		return seasonShortName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonShortName());
 	}
 
 	////////////////////////
@@ -1881,114 +2000,116 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return seasonCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonCompleteName());
 	}
 
-	/////////////////////
-	// sessionStartDay //
-	/////////////////////
+	//////////////////////
+	// sessionStartDate //
+	//////////////////////
 
-	/**	L'entité « sessionStartDay »
+	/**	L'entité « sessionStartDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate sessionStartDay;
+	protected LocalDate sessionStartDate;
 	@JsonIgnore
-	public Wrap<LocalDate> sessionStartDayWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionStartDay").o(sessionStartDay);
+	public Wrap<LocalDate> sessionStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionStartDate").o(sessionStartDate);
 
-	/**	<br/>L'entité « sessionStartDay »
+	/**	<br/>L'entité « sessionStartDate »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionStartDay">Trouver l'entité sessionStartDay dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionStartDate">Trouver l'entité sessionStartDate dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionStartDay(Wrap<LocalDate> c);
+	protected abstract void _sessionStartDate(Wrap<LocalDate> c);
 
-	public LocalDate getSessionStartDay() {
-		return sessionStartDay;
+	public LocalDate getSessionStartDate() {
+		return sessionStartDate;
 	}
 
-	public void setSessionStartDay(LocalDate sessionStartDay) {
-		this.sessionStartDay = sessionStartDay;
-		this.sessionStartDayWrap.alreadyInitialized = true;
+	public void setSessionStartDate(LocalDate sessionStartDate) {
+		this.sessionStartDate = sessionStartDate;
+		this.sessionStartDateWrap.alreadyInitialized = true;
 	}
-	public SchoolSession setSessionStartDay(Instant o) {
-		this.sessionStartDay = LocalDate.from(o);
-		this.sessionStartDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionStartDate(Instant o) {
+		this.sessionStartDate = LocalDate.from(o);
+		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolSession setSessionStartDay(String o) {
-		this.sessionStartDay = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.sessionStartDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionStartDate(String o) {
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
-	public SchoolSession setSessionStartDay(Date o) {
-		this.sessionStartDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
-		this.sessionStartDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionStartDate(Date o) {
+		this.sessionStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
-	protected SchoolSession sessionStartDayInit() {
-		if(!sessionStartDayWrap.alreadyInitialized) {
-			_sessionStartDay(sessionStartDayWrap);
-			if(sessionStartDay == null)
-				setSessionStartDay(sessionStartDayWrap.o);
+	protected SchoolSession sessionStartDateInit() {
+		if(!sessionStartDateWrap.alreadyInitialized) {
+			_sessionStartDate(sessionStartDateWrap);
+			if(sessionStartDate == null)
+				setSessionStartDate(sessionStartDateWrap.o);
 		}
-		sessionStartDayWrap.alreadyInitialized(true);
+		sessionStartDateWrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
-	public Date solrSessionStartDay() {
-		return sessionStartDay == null ? null : Date.from(sessionStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionStartDate() {
+		return sessionStartDate == null ? null : Date.from(sessionStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionStartDay() {
-		return sessionStartDay == null ? "" : sessionStartDay.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	public String strSessionStartDate() {
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
 	}
 
-	public String jsonSessionStartDay() {
-		return sessionStartDay == null ? "" : sessionStartDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	public String jsonSessionStartDate() {
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
 	}
 
-	public String nomAffichageSessionStartDay() {
+	public String nomAffichageSessionStartDate() {
 		return "start of the session";
 	}
 
-	public String htmTooltipSessionStartDay() {
+	public String htmTooltipSessionStartDate() {
 		return null;
 	}
 
-	public String htmSessionStartDay() {
-		return sessionStartDay == null ? "" : StringEscapeUtils.escapeHtml4(strSessionStartDay());
+	public String htmSessionStartDate() {
+		return sessionStartDate == null ? "" : StringEscapeUtils.escapeHtml4(strSessionStartDate());
 	}
 
-	public void inputSessionStartDay(String classApiMethodMethod) {
+	public void inputSessionStartDate(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_sessionStartDay")
+			.a("id", classApiMethodMethod, "_sessionStartDate")
 			.a("onclick", "removeGlow($(this)); ")
-			.a("value", sessionStartDay == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionStartDay))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDay', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDay')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDay')); }); } ")
+			.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionStartDate))
+			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); } ")
 			.fg();
 	}
 
-	public void htmSessionStartDay(String classApiMethodMethod) {
+	public void htmSessionStartDate(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSessionStartDay").f();
+				{ e("div").a("id", "suggestSchoolSessionSessionStartDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_sessionStartDay").a("class", "").f().sx("start of the session").g("label");
+							e("label").a("for", classApiMethodMethod, "_sessionStartDate").a("class", "").f().sx("start of the session").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								inputSessionStartDay(classApiMethodMethod);
+								inputSessionStartDate(classApiMethodMethod);
 							} g("div");
 							if("Page".equals(classApiMethodMethod)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sessionStartDay')); $('#", classApiMethodMethod, "_sessionStartDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=pk]').val() }], 'setSessionStartDay', null, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDay')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDay')); }); ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sessionStartDate')); $('#", classApiMethodMethod, "_sessionStartDate').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=pk]').val() }], 'setSessionStartDate', null, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -2001,114 +2122,116 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////
-	// sessionEndDay //
-	///////////////////
+	////////////////////
+	// sessionEndDate //
+	////////////////////
 
-	/**	L'entité « sessionEndDay »
+	/**	L'entité « sessionEndDate »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected LocalDate sessionEndDay;
+	protected LocalDate sessionEndDate;
 	@JsonIgnore
-	public Wrap<LocalDate> sessionEndDayWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDay").o(sessionEndDay);
+	public Wrap<LocalDate> sessionEndDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDate").o(sessionEndDate);
 
-	/**	<br/>L'entité « sessionEndDay »
+	/**	<br/>L'entité « sessionEndDate »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionEndDay">Trouver l'entité sessionEndDay dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionEndDate">Trouver l'entité sessionEndDate dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionEndDay(Wrap<LocalDate> c);
+	protected abstract void _sessionEndDate(Wrap<LocalDate> c);
 
-	public LocalDate getSessionEndDay() {
-		return sessionEndDay;
+	public LocalDate getSessionEndDate() {
+		return sessionEndDate;
 	}
 
-	public void setSessionEndDay(LocalDate sessionEndDay) {
-		this.sessionEndDay = sessionEndDay;
-		this.sessionEndDayWrap.alreadyInitialized = true;
+	public void setSessionEndDate(LocalDate sessionEndDate) {
+		this.sessionEndDate = sessionEndDate;
+		this.sessionEndDateWrap.alreadyInitialized = true;
 	}
-	public SchoolSession setSessionEndDay(Instant o) {
-		this.sessionEndDay = LocalDate.from(o);
-		this.sessionEndDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionEndDate(Instant o) {
+		this.sessionEndDate = LocalDate.from(o);
+		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolSession setSessionEndDay(String o) {
-		this.sessionEndDay = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-		this.sessionEndDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionEndDate(String o) {
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
-	public SchoolSession setSessionEndDay(Date o) {
-		this.sessionEndDay = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
-		this.sessionEndDayWrap.alreadyInitialized = true;
+	public SchoolSession setSessionEndDate(Date o) {
+		this.sessionEndDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
-	protected SchoolSession sessionEndDayInit() {
-		if(!sessionEndDayWrap.alreadyInitialized) {
-			_sessionEndDay(sessionEndDayWrap);
-			if(sessionEndDay == null)
-				setSessionEndDay(sessionEndDayWrap.o);
+	protected SchoolSession sessionEndDateInit() {
+		if(!sessionEndDateWrap.alreadyInitialized) {
+			_sessionEndDate(sessionEndDateWrap);
+			if(sessionEndDate == null)
+				setSessionEndDate(sessionEndDateWrap.o);
 		}
-		sessionEndDayWrap.alreadyInitialized(true);
+		sessionEndDateWrap.alreadyInitialized(true);
 		return (SchoolSession)this;
 	}
 
-	public Date solrSessionEndDay() {
-		return sessionEndDay == null ? null : Date.from(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionEndDate() {
+		return sessionEndDate == null ? null : Date.from(sessionEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionEndDay() {
-		return sessionEndDay == null ? "" : sessionEndDay.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+	public String strSessionEndDate() {
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
 	}
 
-	public String jsonSessionEndDay() {
-		return sessionEndDay == null ? "" : sessionEndDay.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+	public String jsonSessionEndDate() {
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
 	}
 
-	public String nomAffichageSessionEndDay() {
+	public String nomAffichageSessionEndDate() {
 		return "end of the session";
 	}
 
-	public String htmTooltipSessionEndDay() {
+	public String htmTooltipSessionEndDate() {
 		return null;
 	}
 
-	public String htmSessionEndDay() {
-		return sessionEndDay == null ? "" : StringEscapeUtils.escapeHtml4(strSessionEndDay());
+	public String htmSessionEndDate() {
+		return sessionEndDate == null ? "" : StringEscapeUtils.escapeHtml4(strSessionEndDate());
 	}
 
-	public void inputSessionEndDay(String classApiMethodMethod) {
+	public void inputSessionEndDate(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
-			.a("id", classApiMethodMethod, "_sessionEndDay")
+			.a("id", classApiMethodMethod, "_sessionEndDate")
 			.a("onclick", "removeGlow($(this)); ")
-			.a("value", sessionEndDay == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionEndDay))
-			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDay', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDay')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDay')); }); } ")
+			.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionEndDate))
+			.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); } ")
 			.fg();
 	}
 
-	public void htmSessionEndDay(String classApiMethodMethod) {
+	public void htmSessionEndDate(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolSessionSessionEndDay").f();
+				{ e("div").a("id", "suggestSchoolSessionSessionEndDate").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_sessionEndDay").a("class", "").f().sx("end of the session").g("label");
+							e("label").a("for", classApiMethodMethod, "_sessionEndDate").a("class", "").f().sx("end of the session").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								inputSessionEndDay(classApiMethodMethod);
+								inputSessionEndDate(classApiMethodMethod);
 							} g("div");
 							if("Page".equals(classApiMethodMethod)) {
 								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 									{ e("button")
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sessionEndDay')); $('#", classApiMethodMethod, "_sessionEndDay').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=pk]').val() }], 'setSessionEndDay', null, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDay')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDay')); }); ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_sessionEndDate')); $('#", classApiMethodMethod, "_sessionEndDate').val(null); patchSchoolSessionVal([{ name: 'fq', value: 'pk:' + $('#SchoolSessionForm :input[name=pk]').val() }], 'setSessionEndDate', null, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -2119,6 +2242,67 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	//////////////////////
+	// sessionShortName //
+	//////////////////////
+
+	/**	L'entité « sessionShortName »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String sessionShortName;
+	@JsonIgnore
+	public Wrap<String> sessionShortNameWrap = new Wrap<String>().p(this).c(String.class).var("sessionShortName").o(sessionShortName);
+
+	/**	<br/>L'entité « sessionShortName »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionShortName">Trouver l'entité sessionShortName dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionShortName(Wrap<String> c);
+
+	public String getSessionShortName() {
+		return sessionShortName;
+	}
+
+	public void setSessionShortName(String sessionShortName) {
+		this.sessionShortName = sessionShortName;
+		this.sessionShortNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolSession sessionShortNameInit() {
+		if(!sessionShortNameWrap.alreadyInitialized) {
+			_sessionShortName(sessionShortNameWrap);
+			if(sessionShortName == null)
+				setSessionShortName(sessionShortNameWrap.o);
+		}
+		sessionShortNameWrap.alreadyInitialized(true);
+		return (SchoolSession)this;
+	}
+
+	public String solrSessionShortName() {
+		return sessionShortName;
+	}
+
+	public String strSessionShortName() {
+		return sessionShortName == null ? "" : sessionShortName;
+	}
+
+	public String jsonSessionShortName() {
+		return sessionShortName == null ? "" : sessionShortName;
+	}
+
+	public String nomAffichageSessionShortName() {
+		return null;
+	}
+
+	public String htmTooltipSessionShortName() {
+		return null;
+	}
+
+	public String htmSessionShortName() {
+		return sessionShortName == null ? "" : StringEscapeUtils.escapeHtml4(strSessionShortName());
 	}
 
 	/////////////////////////
@@ -2183,9 +2367,11 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public void inputSessionCompleteName(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 	}
 
 	public void htmSessionCompleteName(String classApiMethodMethod) {
+		SchoolSession s = (SchoolSession)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2252,9 +2438,11 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		seasonSummerInit();
 		seasonWinterInit();
 		seasonEnrollmentFeeInit();
+		seasonShortNameInit();
 		seasonCompleteNameInit();
-		sessionStartDayInit();
-		sessionEndDayInit();
+		sessionStartDateInit();
+		sessionEndDateInit();
+		sessionShortNameInit();
 		sessionCompleteNameInit();
 	}
 
@@ -2346,12 +2534,16 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.seasonWinter;
 			case "seasonEnrollmentFee":
 				return oSchoolSession.seasonEnrollmentFee;
+			case "seasonShortName":
+				return oSchoolSession.seasonShortName;
 			case "seasonCompleteName":
 				return oSchoolSession.seasonCompleteName;
-			case "sessionStartDay":
-				return oSchoolSession.sessionStartDay;
-			case "sessionEndDay":
-				return oSchoolSession.sessionEndDay;
+			case "sessionStartDate":
+				return oSchoolSession.sessionStartDate;
+			case "sessionEndDate":
+				return oSchoolSession.sessionEndDate;
+			case "sessionShortName":
+				return oSchoolSession.sessionShortName;
 			case "sessionCompleteName":
 				return oSchoolSession.sessionCompleteName;
 			default:
@@ -2415,12 +2607,12 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				setSchoolAddress(val);
 				savesSchoolSession.add(var);
 				return val;
-			case "sessionStartDay":
-				setSessionStartDay(val);
+			case "sessionStartDate":
+				setSessionStartDate(val);
 				savesSchoolSession.add(var);
 				return val;
-			case "sessionEndDay":
-				setSessionEndDay(val);
+			case "sessionEndDate":
+				setSessionEndDate(val);
 				savesSchoolSession.add(var);
 				return val;
 			default:
@@ -2580,22 +2772,34 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					oSchoolSession.setSeasonEnrollmentFee(seasonEnrollmentFee);
 			}
 
+			if(savesSchoolSession.contains("seasonShortName")) {
+				String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
+				if(seasonShortName != null)
+					oSchoolSession.setSeasonShortName(seasonShortName);
+			}
+
 			if(savesSchoolSession.contains("seasonCompleteName")) {
 				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 				if(seasonCompleteName != null)
 					oSchoolSession.setSeasonCompleteName(seasonCompleteName);
 			}
 
-			if(savesSchoolSession.contains("sessionStartDay")) {
-				Date sessionStartDay = (Date)solrDocument.get("sessionStartDay_stored_date");
-				if(sessionStartDay != null)
-					oSchoolSession.setSessionStartDay(sessionStartDay);
+			if(savesSchoolSession.contains("sessionStartDate")) {
+				Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
+				if(sessionStartDate != null)
+					oSchoolSession.setSessionStartDate(sessionStartDate);
 			}
 
-			if(savesSchoolSession.contains("sessionEndDay")) {
-				Date sessionEndDay = (Date)solrDocument.get("sessionEndDay_stored_date");
-				if(sessionEndDay != null)
-					oSchoolSession.setSessionEndDay(sessionEndDay);
+			if(savesSchoolSession.contains("sessionEndDate")) {
+				Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
+				if(sessionEndDate != null)
+					oSchoolSession.setSessionEndDate(sessionEndDate);
+			}
+
+			if(savesSchoolSession.contains("sessionShortName")) {
+				String sessionShortName = (String)solrDocument.get("sessionShortName_stored_string");
+				if(sessionShortName != null)
+					oSchoolSession.setSessionShortName(sessionShortName);
 			}
 
 			if(savesSchoolSession.contains("sessionCompleteName")) {
@@ -2773,17 +2977,25 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("seasonEnrollmentFee_indexed_double", seasonEnrollmentFee.doubleValue());
 			document.addField("seasonEnrollmentFee_stored_double", seasonEnrollmentFee.doubleValue());
 		}
+		if(seasonShortName != null) {
+			document.addField("seasonShortName_indexed_string", seasonShortName);
+			document.addField("seasonShortName_stored_string", seasonShortName);
+		}
 		if(seasonCompleteName != null) {
 			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
 			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
 		}
-		if(sessionStartDay != null) {
-			document.addField("sessionStartDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionStartDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionStartDate != null) {
+			document.addField("sessionStartDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionStartDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(sessionEndDay != null) {
-			document.addField("sessionEndDay_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionEndDay_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDay.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionEndDate != null) {
+			document.addField("sessionEndDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionEndDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(sessionShortName != null) {
+			document.addField("sessionShortName_indexed_string", sessionShortName);
+			document.addField("sessionShortName_stored_string", sessionShortName);
 		}
 		if(sessionCompleteName != null) {
 			document.addField("sessionCompleteName_indexed_string", sessionCompleteName);
@@ -2807,6 +3019,85 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchoolSession(String entityVar) {
+		switch(entityVar) {
+			case "sessionKey":
+				return "sessionKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "ageKeys":
+				return "ageKeys_indexed_longs";
+			case "educationSort":
+				return "educationSort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "yearSort":
+				return "yearSort_indexed_int";
+			case "seasonSort":
+				return "seasonSort_indexed_int";
+			case "sessionSort":
+				return "sessionSort_indexed_int";
+			case "seasonKey":
+				return "seasonKey_indexed_long";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "schoolName":
+				return "schoolName_indexed_string";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "schoolAddress":
+				return "schoolAddress_indexed_string";
+			case "schoolPhoneNumber":
+				return "schoolPhoneNumber_indexed_string";
+			case "schoolAdministratorName":
+				return "schoolAdministratorName_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "seasonStartDate":
+				return "seasonStartDate_indexed_date";
+			case "seasonSummer":
+				return "seasonSummer_indexed_boolean";
+			case "seasonWinter":
+				return "seasonWinter_indexed_boolean";
+			case "seasonEnrollmentFee":
+				return "seasonEnrollmentFee_indexed_double";
+			case "seasonShortName":
+				return "seasonShortName_indexed_string";
+			case "seasonCompleteName":
+				return "seasonCompleteName_indexed_string";
+			case "sessionStartDate":
+				return "sessionStartDate_indexed_date";
+			case "sessionEndDate":
+				return "sessionEndDate_indexed_date";
+			case "sessionShortName":
+				return "sessionShortName_indexed_string";
+			case "sessionCompleteName":
+				return "sessionCompleteName_indexed_string";
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSearchSchoolSession(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+		}
+	}
+
+	public static String varSuggereSchoolSession(String entityVar) {
+		switch(entityVar) {
+			default:
+				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		}
 	}
 
@@ -2912,17 +3203,25 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		if(seasonEnrollmentFee != null)
 			oSchoolSession.setSeasonEnrollmentFee(seasonEnrollmentFee);
 
+		String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
+		if(seasonShortName != null)
+			oSchoolSession.setSeasonShortName(seasonShortName);
+
 		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 		if(seasonCompleteName != null)
 			oSchoolSession.setSeasonCompleteName(seasonCompleteName);
 
-		Date sessionStartDay = (Date)solrDocument.get("sessionStartDay_stored_date");
-		if(sessionStartDay != null)
-			oSchoolSession.setSessionStartDay(sessionStartDay);
+		Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
+		if(sessionStartDate != null)
+			oSchoolSession.setSessionStartDate(sessionStartDate);
 
-		Date sessionEndDay = (Date)solrDocument.get("sessionEndDay_stored_date");
-		if(sessionEndDay != null)
-			oSchoolSession.setSessionEndDay(sessionEndDay);
+		Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
+		if(sessionEndDate != null)
+			oSchoolSession.setSessionEndDate(sessionEndDate);
+
+		String sessionShortName = (String)solrDocument.get("sessionShortName_stored_string");
+		if(sessionShortName != null)
+			oSchoolSession.setSessionShortName(sessionShortName);
 
 		String sessionCompleteName = (String)solrDocument.get("sessionCompleteName_stored_string");
 		if(sessionCompleteName != null)
@@ -2936,7 +3235,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageKeys, seasonKey, schoolAddress, sessionStartDay, sessionEndDay);
+		return Objects.hash(super.hashCode(), ageKeys, seasonKey, schoolAddress, sessionStartDate, sessionEndDate);
 	}
 
 	////////////
@@ -2953,8 +3252,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				&& Objects.equals( ageKeys, that.ageKeys )
 				&& Objects.equals( seasonKey, that.seasonKey )
 				&& Objects.equals( schoolAddress, that.schoolAddress )
-				&& Objects.equals( sessionStartDay, that.sessionStartDay )
-				&& Objects.equals( sessionEndDay, that.sessionEndDay );
+				&& Objects.equals( sessionStartDate, that.sessionStartDate )
+				&& Objects.equals( sessionEndDate, that.sessionEndDate );
 	}
 
 	//////////////
@@ -2968,8 +3267,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		sb.append( "ageKeys: " ).append(ageKeys);
 		sb.append( ", seasonKey: " ).append(seasonKey);
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
-		sb.append( ", sessionStartDay: " ).append(sessionStartDay);
-		sb.append( ", sessionEndDay: " ).append(sessionEndDay);
+		sb.append( ", sessionStartDate: " ).append(sessionStartDate);
+		sb.append( ", sessionEndDate: " ).append(sessionEndDate);
 		sb.append(" }");
 		return sb.toString();
 	}

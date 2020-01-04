@@ -96,6 +96,18 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: enrollmentKey
+	 */               
+	protected void _inscriptionCle(Couverture<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentAttribute
+	 */               
+	protected void _inscriptionAttribuer(Couverture<Boolean> o) {}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: educationSort
 	 * Indexe: true
 	 * Stocke: true
@@ -491,6 +503,21 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**   
 	 * {@inheritDoc}
+	 * Var.enUS: seasonShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: SaisonNomCourt
+	 * r.enUS: SeasonShortName
+	 * r: age
+	 * r.enUS: age
+	 */
+	protected void _saisonNomCourt(Couverture<String> c) {
+		if(age_ != null)
+			c.o(age_.getSaisonNomCourt());
+	}
+
+	/**   
+	 * {@inheritDoc}
 	 * Var.enUS: seasonCompleteName
 	 * Indexe: true
 	 * Stocke: true
@@ -506,13 +533,13 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionStartDay
+	 * Var.enUS: sessionStartDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
 	 * r: SessionJourDebut
-	 * r.enUS: SessionStartDay
+	 * r.enUS: SessionStartDate
 	 * r: age
 	 * r.enUS: age
 	 */                   
@@ -523,19 +550,34 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sessionEndDay
+	 * Var.enUS: sessionEndDate
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
 	 * r: SessionJourFin
-	 * r.enUS: SessionEndDay
+	 * r.enUS: SessionEndDate
 	 * r: age
 	 * r.enUS: age
 	 */                   
 	protected void _sessionJourFin(Couverture<LocalDate> c) {
 		if(age_ != null)
 			c.o((LocalDate)age_.getSessionJourFin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: AgeNomCourt
+	 * r.enUS: AgeShortName
+	 * r: age
+	 * r.enUS: age
+	 */                   
+	protected void _ageNomCourt(Couverture<String> c) {
+		if(age_ != null)
+			c.o(age_.getAgeNomCourt());
 	}
 
 	/**
@@ -740,14 +782,97 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: blocPrixParMois
 	 * r.enUS: blockPricePerMonth
 	 * r: sessionJourDebut
-	 * r.enUS: sessionStartDay
+	 * r.enUS: sessionStartDate
 	 * r: sessionJourFin
-	 * r.enUS: sessionEndDay
+	 * r.enUS: sessionEndDate
 	 */                   
 	protected void _blocPrixTotal(Couverture<BigDecimal> c) {
 		if(blocPrixParMois != null && sessionJourDebut != null && sessionJourFin != null) {
 			c.o(blocPrixParMois.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionJourDebut, sessionJourFin))));
 		}
+	}
+
+	/**
+	 * Var.enUS: sessionBlocks
+	 */
+	protected void _blocsSession(List<BlocScolaire> l) {}
+
+	/**
+	 * Var.enUS: ageBlocks
+	 */
+	protected void _blocsAge(List<BlocScolaire> l) {}
+
+	/**
+	 * Var.enUS: blockBlocks
+	 */
+	protected void _blocsBloc(List<BlocScolaire> l) {}
+
+	/**    
+	 * {@inheritDoc}
+	 * Var.enUS: blockShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: %s - %s %s à %s
+	 * r.enUS: %s %s at %s
+	 * r: %s - %s %s (%s€ par mois) à %s
+	 * r.enUS: %s - %s %s ($%s/month) at %s
+	 * r: strBlocHeureDebut
+	 * r.enUS: strBlockStartTime
+	 * r: strBlocHeureFin
+	 * r.enUS: strBlockEndTime
+	 * r: strBlocPrixParMois
+	 * r.enUS: strBlockPricePerMonth
+	 * r: blocPrixParMois
+	 * r.enUS: blockPricePerMonth
+	 * r: blocDimanche
+	 * r.enUS: blockSunday
+	 * r: blocLundi
+	 * r.enUS: blockMonday
+	 * r: blocMardi
+	 * r.enUS: blockTuesday
+	 * r: blocMercredi
+	 * r.enUS: blockWednesday
+	 * r: blocJeudi
+	 * r.enUS: blockThursday
+	 * r: blocVendredi
+	 * r.enUS: blockFriday
+	 * r: blocSamedi
+	 * r.enUS: blockSaturday
+	 * r: ageNomComplet
+	 * r.enUS: ageCompleteName
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
+	 * r: " Dim"
+	 * r.enUS: " Su"
+	 * r: " Lun"
+	 * r.enUS: " Mo"
+	 * r: " Mar"
+	 * r.enUS: " Tu"
+	 * r: " Mer"
+	 * r.enUS: " We"
+	 * r: " Jeu"
+	 * r.enUS: " Th"
+	 * r: " Ven"
+	 * r.enUS: " Fr"
+	 * r: " Sam"
+	 * r.enUS: " Sa"
+	 */   
+	protected void _blocNomCourt(Couverture<String> c) {
+		String o;
+		String weekdays = "";
+		if(BooleanUtils.isTrue(blocDimanche)) weekdays += " Dim";
+		if(BooleanUtils.isTrue(blocLundi)) weekdays += " Lun";
+		if(BooleanUtils.isTrue(blocMardi)) weekdays += " Mar";
+		if(BooleanUtils.isTrue(blocMercredi)) weekdays += " Mer";
+		if(BooleanUtils.isTrue(blocJeudi)) weekdays += " Jeu";
+		if(BooleanUtils.isTrue(blocVendredi)) weekdays += " Ven";
+		if(BooleanUtils.isTrue(blocSamedi)) weekdays += " Sam";
+		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
+		if(blocPrixParMois == null)
+			o = String.format("%s - %s %s à %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ecoleNomComplet);
+		else
+			o = String.format("%s - %s %s (%s€ par mois) à %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ecoleNomComplet);
+		c.o(o);
 	}
 
 	/**    
@@ -760,8 +885,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
-	 * r: %s - %s %s %s par mois %s
-	 * r.enUS: %s - %s %s %s per month %s
+	 * r: %s - %s %s (%s€ par mois) %s
+	 * r.enUS: %s - %s %s ($%s/month) %s
 	 * r: strBlocHeureDebut
 	 * r.enUS: strBlockStartTime
 	 * r: strBlocHeureFin
@@ -815,7 +940,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(blocPrixParMois == null)
 			o = String.format("%s - %s %s %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ageNomComplet);
 		else
-			o = String.format("%s - %s %s %s par mois %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
+			o = String.format("%s - %s %s (%s€ par mois) %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ageNomComplet);
 		c.o(o);
 	}
 
@@ -825,8 +950,40 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: blocNomComplet
 	 * r.enUS: blockCompleteName
 	 */
-	@Override
-	protected void _objetTitre(Couverture<String> c) {
+	@Override protected void _objetTitre(Couverture<String> c) {
 		c.o(blocNomComplet);
+	}
+
+	/**
+	 * Var.enUS: strBlockPricePerMonth
+	 * r: blocPrixParMois
+	 * r.enUS: blockPricePerMonth
+	 */
+	@Override public String strBlocPrixParMois() {
+		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(0).toString();
+	}
+
+	/**
+	 * Var.enUS: inputEnrollmentBlockKeys
+	 * r: patchInscriptionScolaireVals
+	 * r.enUS: patchSchoolEnrollmentVals
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: BlocCles
+	 * r.enUS: BlockKeys
+	 * r: inscriptionAttribuer
+	 * r.enUS: enrollmentAttribute
+	 */
+	public void inputInscriptionBlocCles(String classeApiMethodeMethode) {
+		e("input")
+			.a("type", "checkbox")
+//			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
+			.a("class", "setInscriptionApprouve")
+			.a("name", "setInscriptionApprouve")
+			.a("onchange", "patchInscriptionScolaireVals([{ name: 'fq', value: 'pk:", inscriptionCle, "' }], { [($(this).prop('checked') ? 'add' : 'remove') + 'BlocCles']: '", pk, "' } ); ");
+			if(inscriptionAttribuer)
+				a("checked", "checked");
+		fg();
+
 	}
 }

@@ -95,8 +95,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSeasonGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolSeasonSessionKeys([{'name':'fq','value':'seasonKey:", siteRequest_.getRequestPk(), "'}], $('#listSchoolSeasonSessionKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
-		tl(1, "suggestSchoolSeasonYearKey([{'name':'fq','value':'seasonKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolSeasonYearKey_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolSeasonSessionKeys([{'name':'fq','value':'seasonKey:' + pk}], $('#listSchoolSeasonSessionKeys_Page'), pk); ");
+		tl(1, "suggestSchoolSeasonYearKey([{'name':'fq','value':'seasonKeys:' + pk}], $('#listSchoolSeasonYearKey_Page'), pk); ");
 		tl(1, "websocketSchoolSeason(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");
@@ -129,6 +130,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonSummer("Page");
 			o.htmSeasonWinter("Page");
 			o.htmSeasonEnrollmentFee("Page");
+			o.htmSeasonFuture("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionKeys("Page");
@@ -152,6 +154,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonSummer("POST");
 			o.htmSeasonWinter("POST");
 			o.htmSeasonEnrollmentFee("POST");
+			o.htmSeasonFuture("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionKeys("POST");
@@ -175,6 +178,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonSummer("PATCH");
 			o.htmSeasonWinter("PATCH");
 			o.htmSeasonEnrollmentFee("PATCH");
+			o.htmSeasonFuture("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionKeys("PATCH");
@@ -201,6 +205,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonSummer("Recherche");
 			o.htmSeasonWinter("Recherche");
 			o.htmSeasonEnrollmentFee("Recherche");
+			o.htmSeasonFuture("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionKeys("Recherche");

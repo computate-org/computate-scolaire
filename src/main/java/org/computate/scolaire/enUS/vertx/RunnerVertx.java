@@ -42,8 +42,7 @@ public class RunnerVertx {
 		ClusterManager gestionnaireCluster = new ZookeeperClusterManager(zkConfig);
 		VertxOptions optionsVertx = new VertxOptions();
 		// For OpenShift
-		optionsVertx.setEventBusOptions(new EventBusOptions());
-
+		EventBusOptions eventBusOptions = new EventBusOptions();
 		String hostname = System.getenv("HOSTNAME");
 		String openshiftService = System.getenv("openshiftService");
 		if(clusterHost == null) {
@@ -56,23 +55,23 @@ public class RunnerVertx {
 		}
 		if(clusterHost != null) {
 			LOGGER.info(String.format("clusterHost: %s", clusterHost));
-			optionsVertx.setClusterHost(clusterHost);
+			eventBusOptions.setHost(clusterHost);
 		}
 		if(clusterPort != null) {
 			LOGGER.info(String.format("clusterPort: %s", clusterPort));
-			optionsVertx.setClusterPort(clusterPort);
+			eventBusOptions.setPort(clusterPort);
 		}
 		if(clusterPublicHost != null) {
 			LOGGER.info(String.format("clusterPublicHost: %s", clusterPublicHost));
-			optionsVertx.setClusterPublicHost(clusterPublicHost);
+			eventBusOptions.setClusterPublicHost(clusterPublicHost);
 		}
 		if(clusterPublicPort != null) {
 			LOGGER.info(String.format("clusterPublicPort: %s", clusterPublicPort));
-			optionsVertx.setClusterPublicPort(clusterPublicPort);
+			eventBusOptions.setClusterPublicPort(clusterPublicPort);
 		}
-
+		eventBusOptions.setClustered(true);
+		optionsVertx.setEventBusOptions(eventBusOptions);
 		optionsVertx.setClusterManager(gestionnaireCluster);
-		optionsVertx.setClustered(true);
 
 		run(c, optionsVertx, null);
 	}
@@ -87,20 +86,15 @@ public class RunnerVertx {
 				vertx.deployVerticle(verticleID);
 			}
 		};
-		if (options.isClustered()) {
-			Vertx.clusteredVertx(options, res -> {
-				if (res.succeeded()) {
-					Vertx vertx = res.result();
-					EventBus eventBus = vertx.eventBus();
-					LOGGER.info("We now have a clustered event bus: {}", eventBus);
-					runner.accept(vertx);
-				} else {
-					res.cause().printStackTrace();
-				}
-			});
-		} else {
-			Vertx vertx = Vertx.vertx(options);
-			runner.accept(vertx);
-		}
+		Vertx.clusteredVertx(options, res -> {
+			if (res.succeeded()) {
+				Vertx vertx = res.result();
+				EventBus eventBus = vertx.eventBus();
+				LOGGER.info("We now have a clustered event bus: {}", eventBus);
+				runner.accept(vertx);
+			} else {
+				res.cause().printStackTrace();
+			}
+		});
 	}
 }
