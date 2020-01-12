@@ -1490,6 +1490,12 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: obtainForClass
 	 * r: pageTypeContenu
 	 * r.enUS: pageContentType
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: StatiqueUrlBase
+	 * r.enUS: StaticBaseUrl
 	 */
 	public Integer htmlPageLayout2(List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
 
@@ -1610,25 +1616,62 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					}
 				}
 				if(htmlVarForm != null) {
-					Object o = obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarForm, "."));
+					Object parent = StringUtils.contains(htmlVarForm, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarForm, ".")) : null;
+					if(parent == null)
+						parent = this;
 					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVarForm;
+
+//					Object o = obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarForm, "."));
+//					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
 					try {
-						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+						MethodUtils.invokeExactMethod(parent, "htm" + StringUtils.capitalize(var), "Page");
 					} catch (RuntimeException e) {
 						throw e;
 					} catch (Exception e) {
-						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 					}
 				}
 				if(htmlVarInput != null) {
-					Object o = obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarInput, "."));
+					Object parent = StringUtils.contains(htmlVarInput, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarInput, ".")) : null;
+					if(parent == null)
+						parent = this;
 					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVarInput;
+
 					try {
-						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
+//					Object o = obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarInput, "."));
+//					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+						if("application/pdf".equals(pageTypeContenu)) {
+							Object o = obtenirPourClasse(htmlVarInput);
+							if(o instanceof Boolean) {
+								e("img").a("class", "").a("style", "width: 1em; height: 1em; position: relative; top: 3px; ").a("src", requeteSite_.getConfigSite_().getStatiqueUrlBase(), ((Boolean)o) ? "/png/check-square-o.png" : "/png/square-o.png").fg();
+							}
+							else if (o instanceof String && o.toString().startsWith("data:image")) {
+								e("img").a("class", "").a("style", "").a("src", o.toString()).fg();
+							}
+							else {
+								e("span").a("style", "border-bottom: 1px solid black; display: block; ").f();
+								String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
+								s(s);
+								g("span");
+							}
+						}
+						else {
+							try {
+								MethodUtils.invokeExactMethod(parent, "input" + StringUtils.capitalize(var), "Page");
+							} catch (RuntimeException e) {
+								throw e;
+							} catch (Exception e) {
+								throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, parent), e);
+							}
+						}
 					} catch (RuntimeException e) {
 						throw e;
 					} catch (Exception e) {
-						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 					}
 				}
 				s(htmlPart.getHtmlAfter());

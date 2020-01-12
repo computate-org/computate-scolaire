@@ -1578,6 +1578,91 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+	// EmailSearchPage //
+
+	@Override
+	public void emailsearchpageSchoolEnrollmentId(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		emailsearchpageSchoolEnrollment(operationRequest, eventHandler);
+	}
+
+	@Override
+	public void emailsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+			sqlSchoolEnrollment(siteRequest, a -> {
+				if(a.succeeded()) {
+					userSchoolEnrollment(siteRequest, b -> {
+						if(b.succeeded()) {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/email", c -> {
+								if(c.succeeded()) {
+									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+									response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
+										if(d.succeeded()) {
+											SQLConnection sqlConnection = siteRequest.getSqlConnection();
+											if(sqlConnection == null) {
+												eventHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												sqlConnection.commit(e -> {
+													if(e.succeeded()) {
+														sqlConnection.close(f -> {
+															if(f.succeeded()) {
+																eventHandler.handle(Future.succeededFuture(d.result()));
+															} else {
+																errorSchoolEnrollment(siteRequest, eventHandler, f);
+															}
+														});
+													} else {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											errorSchoolEnrollment(siteRequest, eventHandler, d);
+										}
+									});
+								} else {
+									errorSchoolEnrollment(siteRequest, eventHandler, c);
+								}
+							});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, b);
+						}
+					});
+				} else {
+					errorSchoolEnrollment(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception e) {
+			errorSchoolEnrollment(null, eventHandler, Future.failedFuture(e));
+		}
+	}
+
+	public void response200EmailSearchPageSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			Buffer buffer = Buffer.buffer();
+			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
+			EnrollmentEmailPage page = new EnrollmentEmailPage();
+			SolrDocument pageSolrDocument = new SolrDocument();
+			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/email");
+			page.setPageSolrDocument(pageSolrDocument);
+			page.setW(w);
+			if(listSchoolEnrollment.size() == 1)
+				siteRequest.setRequestPk(listSchoolEnrollment.get(0).getPk());
+			siteRequest.setW(w);
+			page.setListSchoolEnrollment(listSchoolEnrollment);
+			page.setSiteRequest_(siteRequest);
+			page.initDeepEnrollmentEmailPage(siteRequest);
+			page.html();
+			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	// Partagé //
 
 	public void errorSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
@@ -1786,7 +1871,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
-				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(siteRequest.getSessionId()));
+				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

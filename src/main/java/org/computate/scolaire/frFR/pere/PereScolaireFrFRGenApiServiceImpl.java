@@ -71,6 +71,7 @@ import java.util.stream.Stream;
 import java.net.URLDecoder;
 import java.time.ZonedDateTime;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 
@@ -101,6 +102,11 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					creerPOSTPereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
+						RequetePatch requetePatch = new RequetePatch();
+							requetePatch.setRows(1);
+							requetePatch.setNumFound(1L);
+							requetePatch.initLoinRequetePatch(requeteSite);
+							requeteSite.setRequetePatch_(requetePatch);
 							PereScolaire pereScolaire = b.result();
 							sqlPOSTPereScolaire(pereScolaire, c -> {
 								if(c.succeeded()) {
@@ -117,6 +123,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
+																					requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requetePatch).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurPereScolaire(requeteSite, gestionnaireEvenements, i);
@@ -929,105 +936,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		}
 	}
 
-	public String varIndexePereScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "pk":
-				return "pk_indexed_long";
-			case "id":
-				return "id_indexed_string";
-			case "cree":
-				return "cree_indexed_date";
-			case "modifie":
-				return "modifie_indexed_date";
-			case "archive":
-				return "archive_indexed_boolean";
-			case "supprime":
-				return "supprime_indexed_boolean";
-			case "classeNomCanonique":
-				return "classeNomCanonique_indexed_string";
-			case "classeNomSimple":
-				return "classeNomSimple_indexed_string";
-			case "classeNomsCanoniques":
-				return "classeNomsCanoniques_indexed_strings";
-			case "objetTitre":
-				return "objetTitre_indexed_string";
-			case "objetId":
-				return "objetId_indexed_string";
-			case "objetSuggere":
-				return "objetSuggere_indexed_string";
-			case "pageUrl":
-				return "pageUrl_indexed_string";
-			case "pereCle":
-				return "pereCle_indexed_long";
-			case "inscriptionCles":
-				return "inscriptionCles_indexed_longs";
-			case "familleTri":
-				return "familleTri_indexed_int";
-			case "pereTri":
-				return "pereTri_indexed_int";
-			case "ecoleCles":
-				return "ecoleCles_indexed_longs";
-			case "anneeCles":
-				return "anneeCles_indexed_longs";
-			case "saisonCles":
-				return "saisonCles_indexed_longs";
-			case "sessionCles":
-				return "sessionCles_indexed_longs";
-			case "ageCles":
-				return "ageCles_indexed_longs";
-			case "personnePrenom":
-				return "personnePrenom_indexed_string";
-			case "personnePrenomPrefere":
-				return "personnePrenomPrefere_indexed_string";
-			case "familleNom":
-				return "familleNom_indexed_string";
-			case "personneNomComplet":
-				return "personneNomComplet_indexed_string";
-			case "personneNomCompletPrefere":
-				return "personneNomCompletPrefere_indexed_string";
-			case "personneNomFormel":
-				return "personneNomFormel_indexed_string";
-			case "personneOccupation":
-				return "personneOccupation_indexed_string";
-			case "personneNumeroTelephone":
-				return "personneNumeroTelephone_indexed_string";
-			case "personneMail":
-				return "personneMail_indexed_string";
-			case "personneRelation":
-				return "personneRelation_indexed_string";
-			case "personneSms":
-				return "personneSms_indexed_boolean";
-			case "personneRecevoirMail":
-				return "personneRecevoirMail_indexed_boolean";
-			case "personneContactUrgence":
-				return "personneContactUrgence_indexed_boolean";
-			case "personneChercher":
-				return "personneChercher_indexed_boolean";
-			case "pereNomComplet":
-				return "pereNomComplet_indexed_string";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varRecherchePereScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
-	public String varSuggerePereScolaire(String entiteVar) {
-		switch(entiteVar) {
-			case "objetSuggere":
-				return "objetSuggere_suggested";
-			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
-		}
-	}
-
 	// Partagé //
 
 	public void erreurPereScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1231,6 +1139,14 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
+			List<String> roles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					) {
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
+			}
+
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
 				String entiteVar = null;
 				String valeurIndexe = null;
@@ -1247,7 +1163,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 						switch(paramNom) {
 							case "q":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : varRecherchePereScolaire(entiteVar);
+								varIndexe = "*".equals(entiteVar) ? entiteVar : PereScolaire.varRecherchePereScolaire(entiteVar);
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
 								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
 								listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
@@ -1261,13 +1177,13 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							case "fq":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
 								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = varIndexePereScolaire(entiteVar);
+								varIndexe = PereScolaire.varIndexePereScolaire(entiteVar);
 								listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
 								break;
 							case "sort":
 								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
 								valeurTri = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = varIndexePereScolaire(entiteVar);
+								varIndexe = PereScolaire.varIndexePereScolaire(entiteVar);
 								listeRecherche.addSort(varIndexe, ORDER.valueOf(valeurTri));
 								break;
 							case "start":

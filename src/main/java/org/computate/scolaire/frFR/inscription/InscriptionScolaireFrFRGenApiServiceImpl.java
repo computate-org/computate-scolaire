@@ -1578,6 +1578,91 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
+	// MailPageRecherche //
+
+	@Override
+	public void mailpagerechercheInscriptionScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		mailpagerechercheInscriptionScolaire(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void mailpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
+			sqlInscriptionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					utilisateurInscriptionScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription/mail", c -> {
+								if(c.succeeded()) {
+									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+									reponse200MailPageRechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											SQLConnection connexionSql = requeteSite.getConnexionSql();
+											if(connexionSql == null) {
+												gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+											} else {
+												connexionSql.commit(e -> {
+													if(e.succeeded()) {
+														connexionSql.close(f -> {
+															if(f.succeeded()) {
+																gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+															} else {
+																erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, f);
+															}
+														});
+													} else {
+														gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+													}
+												});
+											}
+										} else {
+											erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+										}
+									});
+								} else {
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+								}
+							});
+						} else {
+							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+						}
+					});
+				} else {
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception e) {
+			erreurInscriptionScolaire(null, gestionnaireEvenements, Future.failedFuture(e));
+		}
+	}
+
+	public void reponse200MailPageRechercheInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(listeInscriptionScolaire.getRequeteSite_(), buffer);
+			InscriptionMailPage page = new InscriptionMailPage();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/mail");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			if(listeInscriptionScolaire.size() == 1)
+				requeteSite.setRequetePk(listeInscriptionScolaire.get(0).getPk());
+			requeteSite.setW(w);
+			page.setListeInscriptionScolaire(listeInscriptionScolaire);
+			page.setRequeteSite_(requeteSite);
+			page.initLoinInscriptionMailPage(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
+		} catch(Exception e) {
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// Partagé //
 
 	public void erreurInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
@@ -1783,10 +1868,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
-					!CollectionUtils.containsAny(requeteSite.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUserRealmRoles(), roles)
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getSessionId()));
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

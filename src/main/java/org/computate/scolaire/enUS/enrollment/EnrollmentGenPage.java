@@ -75,6 +75,31 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import org.computate.scolaire.enUS.cluster.ClusterPage;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import org.computate.scolaire.enUS.user.SiteUser;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.page.PageLayout;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -394,16 +419,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("Recherche");
-			o.htmEnrollmentSignature1("Recherche");
-			o.htmEnrollmentSignature2("Recherche");
-			o.htmEnrollmentSignature3("Recherche");
-			o.htmEnrollmentSignature4("Recherche");
-			o.htmEnrollmentSignature5("Recherche");
-			o.htmEnrollmentSignature6("Recherche");
-			o.htmEnrollmentSignature7("Recherche");
-			o.htmEnrollmentSignature8("Recherche");
-			o.htmEnrollmentSignature9("Recherche");
-			o.htmEnrollmentSignature10("Recherche");
 			o.htmEnrollmentDate1("Recherche");
 			o.htmEnrollmentDate2("Recherche");
 			o.htmEnrollmentDate3("Recherche");

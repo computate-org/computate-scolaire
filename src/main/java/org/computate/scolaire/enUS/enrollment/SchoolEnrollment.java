@@ -318,18 +318,23 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentApproved(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _enrollmentImmunizations(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _familyMarried(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _familySeparated(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _familyDivorced(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _familyAddress(Wrap<String> c) {
@@ -345,9 +350,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentPaymentEachMonth(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _enrollmentParentNames(Wrap<String> c) {

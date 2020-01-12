@@ -95,7 +95,8 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptPereGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggerePereScolaireInscriptionCles([{'name':'fq','value':'pereCles:", requeteSite_.getRequetePk(), "'}], $('#listPereScolaireInscriptionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggerePereScolaireInscriptionCles([{'name':'fq','value':'pereCles:' + pk}], $('#listPereScolaireInscriptionCles_Page'), pk); ");
 		tl(1, "websocketPereScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

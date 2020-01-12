@@ -1063,10 +1063,10 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
-					!CollectionUtils.containsAny(requeteSite.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUserRealmRoles(), roles)
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getSessionId()));
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

@@ -50,7 +50,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
 
-	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+).*");
+	private static final Pattern PATTERN_SESSION = Pattern.compile("vertx-web.session=(\\w+)");
 
 	/**	
 	 *	The site configuration. 
@@ -125,12 +125,13 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _sessionId(Wrap<String> c) {
-		String cookie = operationRequest.getHeaders().get("Cookie");
-		if(StringUtils.isNotBlank(cookie)) {
-			Matcher m = PATTERN_SESSION.matcher(cookie);
-			if(m.matches()) {
-				c.o(m.group(1));
-				System.out.println(c.o);
+		if(operationRequest != null) {
+			String cookie = operationRequest.getHeaders().get("Cookie");
+			if(StringUtils.isNotBlank(cookie)) {
+				Matcher m = PATTERN_SESSION.matcher(cookie);
+				if(m.matches()) {
+					c.o(m.group(1));
+				}
 			}
 		}
 	}

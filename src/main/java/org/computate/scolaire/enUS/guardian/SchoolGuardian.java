@@ -110,9 +110,11 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 	}
 
 	protected void _personEmergencyContact(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _personPickup(Wrap<Boolean> c) {
+		c.o(false);
 	}
 
 	protected void _guardianCompleteName(Wrap<String> c) {

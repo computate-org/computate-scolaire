@@ -567,7 +567,7 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			wPaths.tl(3, "operationId: ", classApiOperationIdMethod, (id ? "Id" : ""));
 			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-", classSimpleName);
 	
-			if(classRolesFound && BooleanUtils.isFalse(classeRoleSession)) {
+			if(classRolesFound && BooleanUtils.isNotTrue(classRoleSession)) {
 				wPaths.tl(3, "security:");
 				wPaths.tl(4, "- openIdConnect:");
 				for(int i = 0; i < classRoles.size(); i++) {

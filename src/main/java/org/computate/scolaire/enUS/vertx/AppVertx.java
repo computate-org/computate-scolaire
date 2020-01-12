@@ -52,6 +52,9 @@ import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.mail.StartTLSOptions;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
@@ -138,7 +141,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					configureHealthChecks().compose(d -> 
 						configureSharedWorkerExecutor().compose(e -> 
 							configureWebsockets().compose(f -> 
-								startServer()
+								configureEmail().compose(g -> 
+									startServer()
+								)
 							)
 						)
 					)
@@ -381,6 +386,24 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
 		SockJSHandler sockJsHandler = SockJSHandler.create(vertx).bridge(options);
 		siteRouter.route("/eventbus/*").handler(sockJsHandler);
+		future.complete();
+		return future;
+	}
+
+	/**	
+	 *	Configure sending email. 
+	 **/
+	private Future<Void> configureEmail() {
+		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
+		Future<Void> future = Future.future();
+		MailConfig config = new MailConfig();
+		config.setHostname(siteConfig.getEmailHost());
+		config.setPort(siteConfig.getEmailPort());
+		config.setSsl(siteConfig.getEmailSsl());
+		config.setUsername(siteConfig.getEmailUsername());
+		config.setPassword(siteConfig.getEmailPassword());
+		MailClient mailClient = MailClient.createShared(vertx, config);
+		siteContextEnUS.setMailClient(mailClient);
 		future.complete();
 		return future;
 	}

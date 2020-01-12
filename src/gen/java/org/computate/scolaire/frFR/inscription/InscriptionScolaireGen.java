@@ -5849,8 +5849,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature1");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature1', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -5978,8 +5977,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature2");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature2', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6107,8 +6105,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature3");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature3', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6236,8 +6233,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature4");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature4', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6365,8 +6361,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature5");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature5', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6494,8 +6489,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature6");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature6', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6623,8 +6617,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature7");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature7', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6752,8 +6745,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature8");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature8', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6881,8 +6873,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature9");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature9', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7010,8 +7001,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature10");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature10', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -9733,43 +9723,33 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionNomsParents_stored_string", inscriptionNomsParents);
 		}
 		if(inscriptionSignature1 != null) {
-			document.addField("inscriptionSignature1_indexed_string", inscriptionSignature1);
 			document.addField("inscriptionSignature1_stored_string", inscriptionSignature1);
 		}
 		if(inscriptionSignature2 != null) {
-			document.addField("inscriptionSignature2_indexed_string", inscriptionSignature2);
 			document.addField("inscriptionSignature2_stored_string", inscriptionSignature2);
 		}
 		if(inscriptionSignature3 != null) {
-			document.addField("inscriptionSignature3_indexed_string", inscriptionSignature3);
 			document.addField("inscriptionSignature3_stored_string", inscriptionSignature3);
 		}
 		if(inscriptionSignature4 != null) {
-			document.addField("inscriptionSignature4_indexed_string", inscriptionSignature4);
 			document.addField("inscriptionSignature4_stored_string", inscriptionSignature4);
 		}
 		if(inscriptionSignature5 != null) {
-			document.addField("inscriptionSignature5_indexed_string", inscriptionSignature5);
 			document.addField("inscriptionSignature5_stored_string", inscriptionSignature5);
 		}
 		if(inscriptionSignature6 != null) {
-			document.addField("inscriptionSignature6_indexed_string", inscriptionSignature6);
 			document.addField("inscriptionSignature6_stored_string", inscriptionSignature6);
 		}
 		if(inscriptionSignature7 != null) {
-			document.addField("inscriptionSignature7_indexed_string", inscriptionSignature7);
 			document.addField("inscriptionSignature7_stored_string", inscriptionSignature7);
 		}
 		if(inscriptionSignature8 != null) {
-			document.addField("inscriptionSignature8_indexed_string", inscriptionSignature8);
 			document.addField("inscriptionSignature8_stored_string", inscriptionSignature8);
 		}
 		if(inscriptionSignature9 != null) {
-			document.addField("inscriptionSignature9_indexed_string", inscriptionSignature9);
 			document.addField("inscriptionSignature9_stored_string", inscriptionSignature9);
 		}
 		if(inscriptionSignature10 != null) {
-			document.addField("inscriptionSignature10_indexed_string", inscriptionSignature10);
 			document.addField("inscriptionSignature10_stored_string", inscriptionSignature10);
 		}
 		if(inscriptionDate1 != null) {
@@ -9839,172 +9819,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public static String varIndexeInscriptionScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "enrollmentKey":
-				return "enrollmentKey_indexed_long";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "sessionKey":
-				return "sessionKey_indexed_long";
-			case "ageKey":
-				return "ageKey_indexed_long";
-			case "blockKey":
-				return "blockKey_indexed_long";
-			case "childKey":
-				return "childKey_indexed_long";
-			case "momKeys":
-				return "momKeys_indexed_longs";
-			case "dadKeys":
-				return "dadKeys_indexed_longs";
-			case "guardianKeys":
-				return "guardianKeys_indexed_longs";
-			case "paymentKeys":
-				return "paymentKeys_indexed_longs";
-			case "enrollmentFormKey":
-				return "enrollmentFormKey_indexed_long";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "sessionSort":
-				return "sessionSort_indexed_int";
-			case "ageSort":
-				return "ageSort_indexed_int";
-			case "childCompleteName":
-				return "childCompleteName_indexed_string";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "seasonStartDate":
-				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
-			case "sessionStartDate":
-				return "sessionStartDate_indexed_date";
-			case "sessionEndDate":
-				return "sessionEndDate_indexed_date";
-			case "ageCompleteName":
-				return "ageCompleteName_indexed_string";
-			case "ageStart":
-				return "ageStart_indexed_int";
-			case "ageEnd":
-				return "ageEnd_indexed_int";
-			case "blockStartTime":
-				return "blockStartTime_indexed_string";
-			case "blockEndTime":
-				return "blockEndTime_indexed_string";
-			case "blockPricePerMonth":
-				return "blockPricePerMonth_indexed_double";
-			case "blockSunday":
-				return "blockSunday_indexed_boolean";
-			case "blockMonday":
-				return "blockMonday_indexed_boolean";
-			case "blockTuesday":
-				return "blockTuesday_indexed_boolean";
-			case "blockWednesday":
-				return "blockWednesday_indexed_boolean";
-			case "blockThursday":
-				return "blockThursday_indexed_boolean";
-			case "blockFriday":
-				return "blockFriday_indexed_boolean";
-			case "blockSaturday":
-				return "blockSaturday_indexed_boolean";
-			case "blockTotalPrice":
-				return "blockTotalPrice_indexed_double";
-			case "enrollmentApproved":
-				return "enrollmentApproved_indexed_boolean";
-			case "enrollmentImmunizations":
-				return "enrollmentImmunizations_indexed_boolean";
-			case "familyMarried":
-				return "familyMarried_indexed_boolean";
-			case "familySeparated":
-				return "familySeparated_indexed_boolean";
-			case "familyDivorced":
-				return "familyDivorced_indexed_boolean";
-			case "familyAddress":
-				return "familyAddress_indexed_string";
-			case "familyHowDoYouKnowTheSchool":
-				return "familyHowDoYouKnowTheSchool_indexed_string";
-			case "enrollmentSpecialConsiderations":
-				return "enrollmentSpecialConsiderations_indexed_string";
-			case "enrollmentGroupName":
-				return "enrollmentGroupName_indexed_string";
-			case "enrollmentPaymentEachMonth":
-				return "enrollmentPaymentEachMonth_indexed_boolean";
-			case "enrollmentPaymentComplete":
-				return "enrollmentPaymentComplete_indexed_boolean";
-			case "enrollmentParentNames":
-				return "enrollmentParentNames_indexed_string";
-			case "enrollmentSignature1":
-				return "enrollmentSignature1_indexed_string";
-			case "enrollmentSignature2":
-				return "enrollmentSignature2_indexed_string";
-			case "enrollmentSignature3":
-				return "enrollmentSignature3_indexed_string";
-			case "enrollmentSignature4":
-				return "enrollmentSignature4_indexed_string";
-			case "enrollmentSignature5":
-				return "enrollmentSignature5_indexed_string";
-			case "enrollmentSignature6":
-				return "enrollmentSignature6_indexed_string";
-			case "enrollmentSignature7":
-				return "enrollmentSignature7_indexed_string";
-			case "enrollmentSignature8":
-				return "enrollmentSignature8_indexed_string";
-			case "enrollmentSignature9":
-				return "enrollmentSignature9_indexed_string";
-			case "enrollmentSignature10":
-				return "enrollmentSignature10_indexed_string";
-			case "enrollmentDate1":
-				return "enrollmentDate1_indexed_date";
-			case "enrollmentDate2":
-				return "enrollmentDate2_indexed_date";
-			case "enrollmentDate3":
-				return "enrollmentDate3_indexed_date";
-			case "enrollmentDate4":
-				return "enrollmentDate4_indexed_date";
-			case "enrollmentDate5":
-				return "enrollmentDate5_indexed_date";
-			case "enrollmentDate6":
-				return "enrollmentDate6_indexed_date";
-			case "enrollmentDate7":
-				return "enrollmentDate7_indexed_date";
-			case "enrollmentDate8":
-				return "enrollmentDate8_indexed_date";
-			case "enrollmentDate9":
-				return "enrollmentDate9_indexed_date";
-			case "enrollmentDate10":
-				return "enrollmentDate10_indexed_date";
-			case "enrollmentCompleteName":
-				return "enrollmentCompleteName_indexed_string";
 			case "inscriptionCle":
 				return "inscriptionCle_indexed_long";
 			case "blocCles":
@@ -10129,26 +9943,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionPaimentComplet_indexed_boolean";
 			case "inscriptionNomsParents":
 				return "inscriptionNomsParents_indexed_string";
-			case "inscriptionSignature1":
-				return "inscriptionSignature1_indexed_string";
-			case "inscriptionSignature2":
-				return "inscriptionSignature2_indexed_string";
-			case "inscriptionSignature3":
-				return "inscriptionSignature3_indexed_string";
-			case "inscriptionSignature4":
-				return "inscriptionSignature4_indexed_string";
-			case "inscriptionSignature5":
-				return "inscriptionSignature5_indexed_string";
-			case "inscriptionSignature6":
-				return "inscriptionSignature6_indexed_string";
-			case "inscriptionSignature7":
-				return "inscriptionSignature7_indexed_string";
-			case "inscriptionSignature8":
-				return "inscriptionSignature8_indexed_string";
-			case "inscriptionSignature9":
-				return "inscriptionSignature9_indexed_string";
-			case "inscriptionSignature10":
-				return "inscriptionSignature10_indexed_string";
 			case "inscriptionDate1":
 				return "inscriptionDate1_indexed_date";
 			case "inscriptionDate2":

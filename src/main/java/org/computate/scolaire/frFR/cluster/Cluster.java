@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;     
+package org.computate.scolaire.frFR.cluster;        
 
 import java.text.Normalizer;
 import java.time.ZonedDateTime;
@@ -46,7 +46,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * 
  * UnNom.frFR: un cluster
  * UnNom.enUS: a cluster
- * Couleur: green
+ * Couleur: gray
  * IconeGroupe: regular
  * IconeNom: fort-awesome
  * MotCle: classeNomSimpleCluster
@@ -306,7 +306,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * {@inheritDoc}
 	 * Indexe: true
 	 * Stocke: true
-	 * VarUrl: true
+	 * VarUrlId: true
 	 * r: objetId
 	 * r.enUS: objectId
 	 * r: requeteSite
@@ -318,9 +318,32 @@ public class Cluster extends ClusterGen<Object> {
 	 * r: objetNomVar
 	 * r.enUS: objectNameVar
 	 * **/   
-	protected void _pageUrl(Couverture<String> c)  {
+	protected void _pageUrlId(Couverture<String> c)  {
 		if(objetId != null) {
 			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/" + objetNomVar + "/" + objetId;
+			c.o(o);
+		}
+	}
+
+	/**	la version plus courte de l'URL qui commence avec « / » 
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * VarUrlPk: true
+	 * r: objetId
+	 * r.enUS: objectId
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * r: objetNomVar
+	 * r.enUS: objectNameVar
+	 * **/   
+	protected void _pageUrlPk(Couverture<String> c)  {
+		if(pk != null) {
+			String o = requeteSite_.getConfigSite_().getSiteUrlBase() + "/" + objetNomVar + "/" + pk;
 			c.o(o);
 		}
 	}

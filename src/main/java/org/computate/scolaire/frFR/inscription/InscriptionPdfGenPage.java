@@ -75,6 +75,31 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import org.computate.scolaire.frFR.cluster.ClusterPage;
+import org.computate.scolaire.frFR.config.ConfigSite;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
+import java.io.IOException;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpServerResponse;
+import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.page.MiseEnPage;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.core.json.JsonArray;
+import java.net.URLDecoder;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -394,16 +419,6 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAddresse("Recherche");
-			o.htmInscriptionSignature1("Recherche");
-			o.htmInscriptionSignature2("Recherche");
-			o.htmInscriptionSignature3("Recherche");
-			o.htmInscriptionSignature4("Recherche");
-			o.htmInscriptionSignature5("Recherche");
-			o.htmInscriptionSignature6("Recherche");
-			o.htmInscriptionSignature7("Recherche");
-			o.htmInscriptionSignature8("Recherche");
-			o.htmInscriptionSignature9("Recherche");
-			o.htmInscriptionSignature10("Recherche");
 			o.htmInscriptionDate1("Recherche");
 			o.htmInscriptionDate2("Recherche");
 			o.htmInscriptionDate3("Recherche");

@@ -94,7 +94,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGardienGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereGardienScolaireInscriptionCles([{'name':'fq','value':'gardienCles:", requeteSite_.getRequetePk(), "'}], $('#listGardienScolaireInscriptionCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereGardienScolaireInscriptionCles([{'name':'fq','value':'gardienCles:' + pk}], $('#listGardienScolaireInscriptionCles_Page'), pk); ");
 		tl(1, "websocketGardienScolaire(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

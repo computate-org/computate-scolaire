@@ -93,7 +93,8 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptHtmlPartGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:", siteRequest_.getRequestPk(), "'}], $('#listHtmlPartEnrollmentDesignKey_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartEnrollmentDesignKey_Page'), pk); ");
 		tl(1, "websocketHtmlPart(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");

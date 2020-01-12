@@ -4,19 +4,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
-import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 
 
 /**   
@@ -293,6 +291,11 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	protected void _clientSolr(Couverture<HttpSolrClient> c) {
 		HttpSolrClient o = new HttpSolrClient.Builder(configSite.getSolrUrl()).build();
 		c.o(o);
+	}
+
+	/**	
+	 **/
+	protected void _mailClient(Couverture<MailClient> c) {
 	}
 
 	/**	

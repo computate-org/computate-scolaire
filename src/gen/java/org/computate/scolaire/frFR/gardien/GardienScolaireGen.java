@@ -218,6 +218,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -232,6 +233,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolaireInscriptionCles").f();
@@ -979,6 +981,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonnePrenom(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "prénom")
@@ -1000,6 +1003,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonnePrenom(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonnePrenom").f();
@@ -1092,6 +1096,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonnePrenomPrefere(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "prénom préferé")
@@ -1113,6 +1118,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonnePrenomPrefere(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonnePrenomPrefere").f();
@@ -1205,6 +1211,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputFamilleNom(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "nom de famille")
@@ -1226,6 +1233,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmFamilleNom(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolaireFamilleNom").f();
@@ -1562,6 +1570,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneNumeroTelephone(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "numéro de téléphone")
@@ -1583,6 +1592,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonneNumeroTelephone(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonneNumeroTelephone").f();
@@ -1736,6 +1746,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneRelation(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "relation")
@@ -1757,6 +1768,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonneRelation(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonneRelation").f();
@@ -1986,6 +1998,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneContactUrgence(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_personneContactUrgence")
@@ -2008,6 +2021,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonneContactUrgence(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonneContactUrgence").f();
@@ -2094,6 +2108,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonneChercher(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_personneChercher")
@@ -2116,6 +2131,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonneChercher(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereGardienScolairePersonneChercher").f();
@@ -2197,9 +2213,11 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputGardienNomComplet(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 	}
 
 	public void htmGardienNomComplet(String classeApiMethodeMethode) {
+		GardienScolaire s = (GardienScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2810,6 +2828,75 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeGardienScolaire(String entiteVar) {
+		switch(entiteVar) {
+			case "gardienCle":
+				return "gardienCle_indexed_long";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "familleTri":
+				return "familleTri_indexed_int";
+			case "gardienTri":
+				return "gardienTri_indexed_int";
+			case "ecoleCles":
+				return "ecoleCles_indexed_longs";
+			case "anneeCles":
+				return "anneeCles_indexed_longs";
+			case "saisonCles":
+				return "saisonCles_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "ageCles":
+				return "ageCles_indexed_longs";
+			case "personnePrenom":
+				return "personnePrenom_indexed_string";
+			case "personnePrenomPrefere":
+				return "personnePrenomPrefere_indexed_string";
+			case "familleNom":
+				return "familleNom_indexed_string";
+			case "personneNomComplet":
+				return "personneNomComplet_indexed_string";
+			case "personneNomCompletPrefere":
+				return "personneNomCompletPrefere_indexed_string";
+			case "personneNomFormel":
+				return "personneNomFormel_indexed_string";
+			case "personneOccupation":
+				return "personneOccupation_indexed_string";
+			case "personneNumeroTelephone":
+				return "personneNumeroTelephone_indexed_string";
+			case "personneMail":
+				return "personneMail_indexed_string";
+			case "personneRelation":
+				return "personneRelation_indexed_string";
+			case "personneSms":
+				return "personneSms_indexed_boolean";
+			case "personneRecevoirMail":
+				return "personneRecevoirMail_indexed_boolean";
+			case "personneContactUrgence":
+				return "personneContactUrgence_indexed_boolean";
+			case "personneChercher":
+				return "personneChercher_indexed_boolean";
+			case "gardienNomComplet":
+				return "gardienNomComplet_indexed_string";
+			default:
+				return Cluster.varIndexeCluster(entiteVar);
+		}
+	}
+
+	public static String varRechercheGardienScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varRechercheCluster(entiteVar);
+		}
+	}
+
+	public static String varSuggereGardienScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

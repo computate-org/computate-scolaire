@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;           
+package org.computate.scolaire.frFR.inscription;             
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -60,12 +60,25 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * PagePdfPageRecherche.frFR: InscriptionPdfPage
  * PageSuperPdfPageRecherche.frFR: ClusterPage
  * ApiUriPdfPageRecherche.frFR: /inscription/pdf
+ * ApiTypeMedia200PdfPageRecherche: application/pdf
  * 
  * ApiMethode.enUS: PdfSearchPage
  * PagePdfSearchPage.enUS: EnrollmentPdfPage
  * PageSuperPdfSearchPage.enUS: ClusterPage
  * ApiUriPdfSearchPage.enUS: /enrollment/pdf
  * ApiTypeMedia200PdfSearchPage: application/pdf
+ * 
+ * ApiMethode.frFR: MailPageRecherche
+ * PageMailPageRecherche.frFR: InscriptionMailPage
+ * PageSuperMailPageRecherche.frFR: ClusterPage
+ * ApiUriMailPageRecherche.frFR: /inscription/mail
+ * ApiTypeMedia200MailPageRecherche: application/pdf
+ * 
+ * ApiMethode.enUS: EmailSearchPage
+ * PageEmailSearchPage.enUS: EnrollmentEmailPage
+ * PageSuperEmailSearchPage.enUS: ClusterPage
+ * ApiUriEmailSearchPage.enUS: /enrollment/email
+ * ApiTypeMedia200EmailSearchPage: application/pdf
  * 
  * UnNom.frFR: une inscription
  * UnNom.enUS: an enrollment
@@ -76,7 +89,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * RoleSession: true
-*/     
+*/      
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -1084,6 +1097,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 1
 	 */                   
 	protected void _inscriptionApprouve(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1098,6 +1112,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1112,6 +1127,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 1
 	 */                   
 	protected void _familleMarie(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1126,6 +1142,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _familleSepare(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1140,6 +1157,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 3
 	 */                   
 	protected void _familleDivorce(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1213,6 +1231,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 3
 	 */                   
 	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -1225,8 +1244,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 2
-	 */                         
+	 */                       
 	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**       
@@ -1263,7 +1283,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature1
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1274,7 +1293,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature2
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1285,7 +1303,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature3
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1296,7 +1313,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature4
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1307,7 +1323,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature5
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1318,7 +1333,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature6
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1329,7 +1343,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature7
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1340,7 +1353,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature8
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1351,7 +1363,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature9
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true
@@ -1362,7 +1373,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentSignature10
-	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * Signature: true

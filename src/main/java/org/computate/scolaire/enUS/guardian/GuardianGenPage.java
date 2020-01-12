@@ -93,7 +93,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGuardianGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolGuardianEnrollmentKeys([{'name':'fq','value':'guardianKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolGuardianEnrollmentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolGuardianEnrollmentKeys([{'name':'fq','value':'guardianKeys:' + pk}], $('#listSchoolGuardianEnrollmentKeys_Page'), pk); ");
 		tl(1, "websocketSchoolGuardian(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");

@@ -55,6 +55,9 @@ import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.mail.MailClient;
+import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.mail.StartTLSOptions;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
@@ -198,6 +201,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: configureSharedWorkerExecutor
 	 * r: configurerWebsockets
 	 * r.enUS: configureWebsockets
+	 * r: configurerMail
+	 * r.enUS: configureEmail
 	 * r: demarrerServeur
 	 * r.enUS: startServer
 	 * r: etapesFutures
@@ -220,7 +225,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					configurerControlesSante().compose(d -> 
 						configurerExecuteurTravailleurPartage().compose(e -> 
 							configurerWebsockets().compose(f -> 
-								demarrerServeur()
+								configurerMail().compose(g -> 
+									demarrerServeur()
+								)
 							)
 						)
 					)
@@ -641,6 +648,43 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
 		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx).bridge(options);
 		siteRouteur.route("/eventbus/*").handler(gestionnaireSockJs);
+		future.complete();
+		return future;
+	}
+
+	/**
+	 * Var.enUS: configureEmail
+	 * 
+	 * enUS: Configure sending email. 
+	 * 
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: MailHote
+	 * r.enUS: EmailHost
+	 * r: MailPort
+	 * r.enUS: EmailPort
+	 * r: MailSsl
+	 * r.enUS: EmailSsl
+	 * r: MailUtilisateur
+	 * r.enUS: EmailUsername
+	 * r: MailMotDePasse
+	 * r.enUS: EmailPassword
+	 */
+	private Future<Void> configurerMail() {
+		ConfigSite configSite = siteContexteFrFR.getConfigSite();
+		Future<Void> future = Future.future();
+		MailConfig config = new MailConfig();
+		config.setHostname(configSite.getMailHote());
+		config.setPort(configSite.getMailPort());
+		config.setSsl(configSite.getMailSsl());
+		config.setUsername(configSite.getMailUtilisateur());
+		config.setPassword(configSite.getMailMotDePasse());
+		MailClient mailClient = MailClient.createShared(vertx, config);
+		siteContexteFrFR.setMailClient(mailClient);
 		future.complete();
 		return future;
 	}

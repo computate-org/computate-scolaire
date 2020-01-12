@@ -134,7 +134,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			o.htmPersonneAgeEnSeptembre("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnfantVaccinsAJour("Page");
 			o.htmEnfantPropre("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -171,7 +170,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			o.htmPersonneAgeEnSeptembre("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnfantVaccinsAJour("POST");
 			o.htmEnfantPropre("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -208,7 +206,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			o.htmPersonneAgeEnSeptembre("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnfantVaccinsAJour("PATCH");
 			o.htmEnfantPropre("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -248,7 +245,6 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 			o.htmPersonneAgeEnSeptembre("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnfantVaccinsAJour("Recherche");
 			o.htmEnfantPropre("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

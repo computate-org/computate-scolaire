@@ -163,7 +163,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _ageShortName(Wrap<String> c) {
 		String o;
-		o = String.format("%s-%s year olds (%s - %s)", strAgeStart(), strAgeEnd(), PageLayout.FORMATMonthYear.format(sessionStartDate), PageLayout.FORMATMonthYear.format(sessionEndDate));
+		o = String.format("%s-%s year olds (%s - %s)", strAgeStart(), strAgeEnd(), sessionStartDate == null ? "" : PageLayout.FORMATMonthYear.format(sessionStartDate), sessionEndDate == null ? "" : PageLayout.FORMATMonthYear.format(sessionEndDate));
 		c.o(o);
 	}
 

@@ -3,19 +3,18 @@ package org.computate.scolaire.enUS.enrollment;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.enrollment.design.EnrollmentDesign;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
@@ -24,12 +23,15 @@ import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xhtmlrenderer.resource.FSEntityResolver;
 import org.xml.sax.SAXException;
 
 import com.itextpdf.text.DocumentException;
+
+import io.vertx.ext.web.api.OperationRequest;
 
 /**
  * Translate: false
@@ -85,6 +87,84 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 			c.o(listEnrollmentDesign.get(0));
 	}
 
+	protected void _yearSearch(SearchList<SchoolYear> l) {
+		l.setStore(true);
+		l.setQuery("*:*");
+		l.setC(SchoolYear.class);
+		l.addFilterQuery("yearKey_indexed_long:" + schoolEnrollment.getYearKey());
+	}
+
+	protected void _year_(Wrap<SchoolYear> c) {
+		if(yearSearch.size() == 0) {
+			throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+		}
+		else if(yearSearch.size() == 1) {
+			c.o(yearSearch.get(0));
+		}
+		else  {
+			throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+		}
+	}
+
+	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
+		OperationRequest operationRequest = siteRequest_.getOperationRequest();
+		l.setStore(true);
+		l.setQuery("*:*");
+		l.setC(SchoolEnrollment.class);
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null) {
+			l.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		}
+	}
+
+	protected void _schoolKey(Wrap<Long> c) {
+		if(year_ != null)
+			c.o(year_.getSchoolKey());
+	}
+
+	protected void _schoolName(Wrap<String> c) {
+		if(year_ != null)
+			c.o(year_.getSchoolName());
+	}
+
+	protected void _schoolCompleteName(Wrap<String> c) {
+		if(year_ != null)
+			c.o(year_.getSchoolCompleteName());
+	}
+
+	protected void _schoolLocation(Wrap<String> c) {
+		if(year_ != null)
+			c.o((String)year_.getSchoolLocation());
+	}
+
+	protected void _schoolAddress(Wrap<String> c) {
+		if(year_ != null)
+			c.o((String)year_.getSchoolAddress());
+	}
+
+	protected void _schoolPhoneNumber(Wrap<String> c) {
+		if(year_ != null)
+			c.o((String)year_.getSchoolPhoneNumber());
+	}
+
+	protected void _schoolAdministratorName(Wrap<String> c) {
+		if(year_ != null)
+			c.o((String)year_.getSchoolAdministratorName());
+	}
+
+	protected void _yearStart(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o(year_.getYearStart());
+	}
+
+	protected void _yearEnd(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o(year_.getYearEnd());
+	}
+
+	protected void _seasonStartDate(Wrap<LocalDate> c) {}
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -104,6 +184,102 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * 
 	 **/
 	protected void _guardian_(Wrap<SchoolGuardian> c) {
+	}
+
+	protected void _blockSearch(SearchList<SchoolBlock> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
+		l.setC(SchoolBlock.class);
+		l.setStore(true);
+		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
+		l.addSort("sessionEndDate_indexed_date", ORDER.asc);
+		l.addSort("ageStart_indexed_int", ORDER.asc);
+		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
+		l.addSort("blockStartTime_indexed_string", ORDER.asc);
+	}
+
+	protected void _blocks(Wrap<List<SchoolBlock>> c) {
+		Integer i = 0;
+		Integer size = blockSearch.size();
+		LocalDate seasonStartDateBefore = null;
+		LocalDate seasonStartDateCurrent = null;
+		LocalDate sessionStartDateBefore = null;
+		LocalDate sessionStartDateCurrent = null;
+		Integer ageStartBefore = null;
+		Integer ageStartCurrent = null;
+		SchoolBlock block = null;
+		List<SchoolBlock> sessionBlocks = null;
+		List<SchoolBlock> ageBlocks = null;
+		List<SchoolBlock> blockBlocks = null;
+
+		blocks = blockSearch.getList();
+		c.o(blocks);
+		if(schoolEnrollment != null && size > 0) {
+			block = blocks.get(i);
+			seasonStartDateCurrent = block.getSeasonStartDate();
+			sessionStartDateCurrent = block.getSessionStartDate();
+			ageStartCurrent = block.getAgeStart();
+			while(i < size) {
+				block = blocks.get(i);
+				if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0) {
+					seasonStartDateBefore = block.getSeasonStartDate();
+					sessionBlocks = block.getSessionBlocks();
+					seasonBlocks.add(block);
+				}
+				while(i < size) {
+					block = blocks.get(i);
+					if(ObjectUtils.compare(sessionStartDateCurrent, sessionStartDateBefore) != 0) {
+						sessionStartDateBefore = block.getSessionStartDate();
+						ageBlocks = block.getAgeBlocks();
+						sessionBlocks.add(block);
+					}
+					while(i < size) {
+						block = blocks.get(i);
+						if(ObjectUtils.compare(ageStartCurrent, ageStartBefore) != 0) {
+							ageStartBefore = block.getAgeStart();
+							blockBlocks = block.getBlockBlocks();
+							ageBlocks.add(block);
+						}
+						if((i + 2) > size)
+							break;
+						seasonStartDateCurrent = block.getSeasonStartDate();
+						sessionStartDateCurrent = block.getSessionStartDate();
+						ageStartCurrent = block.getAgeStart();
+						block.setEnrollmentKey(schoolEnrollment.getPk());
+						block.setEnrollmentAttribute(schoolEnrollment.getBlockKeys().contains(block.getPk()));
+						blockBlocks.add(block);
+						if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0)
+							break;
+						i++;
+					}
+					seasonStartDateCurrent = block.getSeasonStartDate();
+					sessionStartDateCurrent = block.getSessionStartDate();
+					ageStartCurrent = block.getAgeStart();
+					if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0)
+						break;
+					i++;
+				}
+				seasonStartDateCurrent = block.getSeasonStartDate();
+				sessionStartDateCurrent = block.getSessionStartDate();
+				ageStartCurrent = block.getAgeStart();
+				i++;
+			}
+		}
+	}
+
+	protected void _seasonBlocks(List<SchoolBlock> l) {
+	}
+
+	protected void _seasonBlock(Wrap<SchoolBlock> c) {
+	}
+
+	protected void _sessionBlock(Wrap<SchoolBlock> c) {
+	}
+
+	protected void _ageBlock(Wrap<SchoolBlock> c) {
+	}
+
+	protected void _blockBlock(Wrap<SchoolBlock> c) {
 	}
 
 	/**

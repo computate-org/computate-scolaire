@@ -200,9 +200,11 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void inputAnneeCle(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 	}
 
 	public void htmAnneeCle(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -309,6 +311,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void inputPartHtmlCles(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -323,6 +326,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void htmPartHtmlCles(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereDesignInscriptionPartHtmlCles").f();
@@ -451,9 +455,11 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1142,9 +1148,11 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 
 	public void inputDesignInscriptionNomComplet(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 	}
 
 	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {
+		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1566,6 +1574,51 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexeDesignInscription(String entiteVar) {
+		switch(entiteVar) {
+			case "designInscriptionCle":
+				return "designInscriptionCle_indexed_long";
+			case "anneeCle":
+				return "anneeCle_indexed_long";
+			case "partHtmlCles":
+				return "partHtmlCles_indexed_longs";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "ecoleCle":
+				return "ecoleCle_indexed_long";
+			case "ecoleNomComplet":
+				return "ecoleNomComplet_indexed_string";
+			case "ecoleEmplacement":
+				return "ecoleEmplacement_indexed_string";
+			case "anneeDebut":
+				return "anneeDebut_indexed_int";
+			case "anneeFin":
+				return "anneeFin_indexed_int";
+			case "anneeNomCourt":
+				return "anneeNomCourt_indexed_string";
+			case "anneeNomComplet":
+				return "anneeNomComplet_indexed_string";
+			case "designInscriptionNomComplet":
+				return "designInscriptionNomComplet_indexed_string";
+			default:
+				return Cluster.varIndexeCluster(entiteVar);
+		}
+	}
+
+	public static String varRechercheDesignInscription(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varRechercheCluster(entiteVar);
+		}
+	}
+
+	public static String varSuggereDesignInscription(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

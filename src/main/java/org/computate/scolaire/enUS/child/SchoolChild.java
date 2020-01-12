@@ -123,10 +123,6 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 	protected void _childObjectives(Wrap<String> c) {
 	}
 
-	protected void _enfantVaccinesCurrent(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
 	protected void _childPottyTrained(Wrap<Boolean> c) {
 		c.o(false);
 	}

@@ -94,7 +94,8 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptPartHtmlGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:", requeteSite_.getRequetePk(), "'}], $('#listPartHtmlDesignInscriptionCle_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk); ");
 		tl(1, "websocketPartHtml(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

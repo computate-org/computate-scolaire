@@ -239,10 +239,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantObjectifs", jsonObject.getString(entiteVar), pk));
 						break;
-					case "enfantVaccinsAJour":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", jsonObject.getBoolean(entiteVar), pk));
-						break;
 					case "enfantPropre":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("enfantPropre", jsonObject.getBoolean(entiteVar), pk));
@@ -611,16 +607,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 							o2.setEnfantObjectifs(requeteJson.getString(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("enfantObjectifs", o2.jsonEnfantObjectifs(), pk));
-						}
-						break;
-					case "setEnfantVaccinsAJour":
-						if(requeteJson.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enfantVaccinsAJour"));
-						} else {
-							o2.setEnfantVaccinsAJour(requeteJson.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("enfantVaccinsAJour", o2.jsonEnfantVaccinsAJour(), pk));
 						}
 						break;
 					case "setEnfantPropre":
@@ -1141,10 +1127,10 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
-					!CollectionUtils.containsAny(requeteSite.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUserRealmRoles(), roles)
+					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
 					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(requeteSite.getSessionId()));
+				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

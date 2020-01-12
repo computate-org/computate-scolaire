@@ -94,7 +94,8 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptDadGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestSchoolDadEnrollmentKeys([{'name':'fq','value':'dadKeys:", siteRequest_.getRequestPk(), "'}], $('#listSchoolDadEnrollmentKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestSchoolDadEnrollmentKeys([{'name':'fq','value':'dadKeys:' + pk}], $('#listSchoolDadEnrollmentKeys_Page'), pk); ");
 		tl(1, "websocketSchoolDad(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");

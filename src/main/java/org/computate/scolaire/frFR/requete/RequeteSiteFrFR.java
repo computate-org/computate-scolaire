@@ -214,12 +214,13 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * r.enUS: operationRequest
 	 */                   
 	protected void _sessionId(Couverture<String> c) {
-		String cookie = operationRequete.getHeaders().get("Cookie");
-		if(StringUtils.isNotBlank(cookie)) {
-			Matcher m = PATTERN_SESSION.matcher(cookie);
-			if(m.matches()) {
-				c.o(m.group(1));
-				System.out.println(c.o);
+		if(operationRequete != null) {
+			String cookie = operationRequete.getHeaders().get("Cookie");
+			if(StringUtils.isNotBlank(cookie)) {
+				Matcher m = PATTERN_SESSION.matcher(cookie);
+				if(m.matches()) {
+					c.o(m.group(1));
+				}
 			}
 		}
 	}

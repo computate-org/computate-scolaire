@@ -2118,116 +2118,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	////////////////////////
-	// enfantVaccinsAJour //
-	////////////////////////
-
-	/**	L'entité « enfantVaccinsAJour »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean enfantVaccinsAJour;
-	@JsonIgnore
-	public Couverture<Boolean> enfantVaccinsAJourCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("enfantVaccinsAJour").o(enfantVaccinsAJour);
-
-	/**	<br/>L'entité « enfantVaccinsAJour »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantVaccinsAJour">Trouver l'entité enfantVaccinsAJour dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantVaccinsAJour(Couverture<Boolean> c);
-
-	public Boolean getEnfantVaccinsAJour() {
-		return enfantVaccinsAJour;
-	}
-
-	public void setEnfantVaccinsAJour(Boolean enfantVaccinsAJour) {
-		this.enfantVaccinsAJour = enfantVaccinsAJour;
-		this.enfantVaccinsAJourCouverture.dejaInitialise = true;
-	}
-	public EnfantScolaire setEnfantVaccinsAJour(String o) {
-		this.enfantVaccinsAJour = Boolean.parseBoolean(o);
-		this.enfantVaccinsAJourCouverture.dejaInitialise = true;
-		return (EnfantScolaire)this;
-	}
-	protected EnfantScolaire enfantVaccinsAJourInit() {
-		if(!enfantVaccinsAJourCouverture.dejaInitialise) {
-			_enfantVaccinsAJour(enfantVaccinsAJourCouverture);
-			if(enfantVaccinsAJour == null)
-				setEnfantVaccinsAJour(enfantVaccinsAJourCouverture.o);
-		}
-		enfantVaccinsAJourCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public Boolean solrEnfantVaccinsAJour() {
-		return enfantVaccinsAJour;
-	}
-
-	public String strEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : enfantVaccinsAJour.toString();
-	}
-
-	public String jsonEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : enfantVaccinsAJour.toString();
-	}
-
-	public String nomAffichageEnfantVaccinsAJour() {
-		return "vaccins à jour";
-	}
-
-	public String htmTooltipEnfantVaccinsAJour() {
-		return null;
-	}
-
-	public String htmEnfantVaccinsAJour() {
-		return enfantVaccinsAJour == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantVaccinsAJour());
-	}
-
-	public void inputEnfantVaccinsAJour(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_enfantVaccinsAJour")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantVaccinsAJour");
-				a("name", "setEnfantVaccinsAJour");
-			} else {
-				a("class", "valeurEnfantVaccinsAJour");
-				a("name", "enfantVaccinsAJour");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantVaccinsAJour', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantVaccinsAJour')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantVaccinsAJour')); }); ");
-			}
-			;
-			if(getEnfantVaccinsAJour() != null && getEnfantVaccinsAJour())
-				a("checked", "checked");
-		fg();
-
-	}
-
-	public void htmEnfantVaccinsAJour(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantVaccinsAJour").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantVaccinsAJour").a("class", "").f().sx("vaccins à jour").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantVaccinsAJour(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	//////////////////
 	// enfantPropre //
 	//////////////////
@@ -2469,7 +2359,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		enfantEcolesPrecedemmentFrequenteesInit();
 		enfantDescriptionInit();
 		enfantObjectifsInit();
-		enfantVaccinsAJourInit();
 		enfantPropreInit();
 		enfantNomCompletInit();
 	}
@@ -2558,8 +2447,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.enfantDescription;
 			case "enfantObjectifs":
 				return oEnfantScolaire.enfantObjectifs;
-			case "enfantVaccinsAJour":
-				return oEnfantScolaire.enfantVaccinsAJour;
 			case "enfantPropre":
 				return oEnfantScolaire.enfantPropre;
 			case "enfantNomComplet":
@@ -2648,10 +2535,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return val;
 			case "enfantObjectifs":
 				setEnfantObjectifs(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantVaccinsAJour":
-				setEnfantVaccinsAJour(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			case "enfantPropre":
@@ -2803,12 +2686,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
 				if(enfantObjectifs != null)
 					oEnfantScolaire.setEnfantObjectifs(enfantObjectifs);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantVaccinsAJour")) {
-				Boolean enfantVaccinsAJour = (Boolean)solrDocument.get("enfantVaccinsAJour_stored_boolean");
-				if(enfantVaccinsAJour != null)
-					oEnfantScolaire.setEnfantVaccinsAJour(enfantVaccinsAJour);
 			}
 
 			if(sauvegardesEnfantScolaire.contains("enfantPropre")) {
@@ -3000,10 +2877,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("enfantObjectifs_indexed_string", enfantObjectifs);
 			document.addField("enfantObjectifs_stored_string", enfantObjectifs);
 		}
-		if(enfantVaccinsAJour != null) {
-			document.addField("enfantVaccinsAJour_indexed_boolean", enfantVaccinsAJour);
-			document.addField("enfantVaccinsAJour_stored_boolean", enfantVaccinsAJour);
-		}
 		if(enfantPropre != null) {
 			document.addField("enfantPropre_indexed_boolean", enfantPropre);
 			document.addField("enfantPropre_stored_boolean", enfantPropre);
@@ -3035,54 +2908,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 
 	public static String varIndexeEnfantScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "childKey":
-				return "childKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "familySort":
-				return "familySort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "schoolKeys":
-				return "schoolKeys_indexed_longs";
-			case "yearKeys":
-				return "yearKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "ageKeys":
-				return "ageKeys_indexed_longs";
-			case "personFirstName":
-				return "personFirstName_indexed_string";
-			case "personFirstNamePreferred":
-				return "personFirstNamePreferred_indexed_string";
-			case "familyName":
-				return "familyName_indexed_string";
-			case "personCompleteName":
-				return "personCompleteName_indexed_string";
-			case "personCompleteNamePreferred":
-				return "personCompleteNamePreferred_indexed_string";
-			case "personFormalName":
-				return "personFormalName_indexed_string";
-			case "personBirthDate":
-				return "personBirthDate_indexed_date";
-			case "personAgeInSeptember":
-				return "personAgeInSeptember_indexed_string";
-			case "childMedicalConditions":
-				return "childMedicalConditions_indexed_string";
-			case "childPreviousSchoolsAttended":
-				return "childPreviousSchoolsAttended_indexed_string";
-			case "childDescription":
-				return "childDescription_indexed_string";
-			case "childObjectives":
-				return "childObjectives_indexed_string";
-			case "enfantVaccinesCurrent":
-				return "enfantVaccinesCurrent_indexed_boolean";
-			case "childPottyTrained":
-				return "childPottyTrained_indexed_boolean";
-			case "childCompleteName":
-				return "childCompleteName_indexed_string";
 			case "enfantCle":
 				return "enfantCle_indexed_long";
 			case "inscriptionCles":
@@ -3125,8 +2950,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return "enfantDescription_indexed_string";
 			case "enfantObjectifs":
 				return "enfantObjectifs_indexed_string";
-			case "enfantVaccinsAJour":
-				return "enfantVaccinsAJour_indexed_boolean";
 			case "enfantPropre":
 				return "enfantPropre_indexed_boolean";
 			case "enfantNomComplet":
@@ -3244,10 +3067,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		if(enfantObjectifs != null)
 			oEnfantScolaire.setEnfantObjectifs(enfantObjectifs);
 
-		Boolean enfantVaccinsAJour = (Boolean)solrDocument.get("enfantVaccinsAJour_stored_boolean");
-		if(enfantVaccinsAJour != null)
-			oEnfantScolaire.setEnfantVaccinsAJour(enfantVaccinsAJour);
-
 		Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
 		if(enfantPropre != null)
 			oEnfantScolaire.setEnfantPropre(enfantPropre);
@@ -3264,7 +3083,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantVaccinsAJour, enfantPropre);
+		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre);
 	}
 
 	////////////
@@ -3287,7 +3106,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( enfantEcolesPrecedemmentFrequentees, that.enfantEcolesPrecedemmentFrequentees )
 				&& Objects.equals( enfantDescription, that.enfantDescription )
 				&& Objects.equals( enfantObjectifs, that.enfantObjectifs )
-				&& Objects.equals( enfantVaccinsAJour, that.enfantVaccinsAJour )
 				&& Objects.equals( enfantPropre, that.enfantPropre );
 	}
 
@@ -3308,7 +3126,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		sb.append( ", enfantEcolesPrecedemmentFrequentees: \"" ).append(enfantEcolesPrecedemmentFrequentees).append( "\"" );
 		sb.append( ", enfantDescription: \"" ).append(enfantDescription).append( "\"" );
 		sb.append( ", enfantObjectifs: \"" ).append(enfantObjectifs).append( "\"" );
-		sb.append( ", enfantVaccinsAJour: " ).append(enfantVaccinsAJour);
 		sb.append( ", enfantPropre: " ).append(enfantPropre);
 		sb.append(" }");
 		return sb.toString();

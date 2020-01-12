@@ -667,6 +667,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -682,6 +683,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmInscriptionCles(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolaireInscriptionCles").f();
@@ -712,7 +714,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggerePaiementScolaireInscriptionCles($('#' + ($('#", classeApiMethodeMethode, "inscriptionCles').val() ? 'suggere' : 'form') + 'PaiementScolaireInscriptionCles'), $('#listPaiementScolaireInscriptionCles_", classeApiMethodeMethode, "')); var $e = $('#", classeApiMethodeMethode, "inscriptionCles'); $e.html($e.val()); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); }); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+										.a("onclick", "postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() { patchPaiementScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 										.f().sx("ajouter une inscription")
 									.g("button");
 								} g("div");
@@ -1353,6 +1355,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementDescription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "description")
@@ -1375,6 +1378,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPaiementDescription(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolairePaiementDescription").f();
@@ -1483,6 +1487,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementDate(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
@@ -1497,6 +1502,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPaiementDate(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolairePaiementDate").f();
@@ -1585,7 +1591,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementMontant() {
-		return paiementMontant == null ? "" : paiementMontant.toString();
+		return paiementMontant == null ? "" : paiementMontant.setScale(2).toString();
 	}
 
 	public String jsonPaiementMontant() {
@@ -1605,6 +1611,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "montant")
@@ -1627,6 +1634,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPaiementMontant(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolairePaiementMontant").f();
@@ -1724,6 +1732,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementEspeces(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_paiementEspeces")
@@ -1746,6 +1755,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPaiementEspeces(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolairePaiementEspeces").f();
@@ -1832,6 +1842,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementCheque(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classeApiMethodeMethode, "_paiementCheque")
@@ -1854,6 +1865,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmPaiementCheque(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggerePaiementScolairePaiementCheque").f();
@@ -2001,9 +2013,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputPaiementNomComplet(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 	}
 
 	public void htmPaiementNomComplet(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2567,6 +2581,65 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexePaiementScolaire(String entiteVar) {
+		switch(entiteVar) {
+			case "ecoleCles":
+				return "ecoleCles_indexed_longs";
+			case "saisonCle":
+				return "saisonCle_indexed_longs";
+			case "sessionCles":
+				return "sessionCles_indexed_longs";
+			case "ageCles":
+				return "ageCles_indexed_longs";
+			case "blocCles":
+				return "blocCles_indexed_longs";
+			case "inscriptionCles":
+				return "inscriptionCles_indexed_longs";
+			case "paiementCle":
+				return "paiementCle_indexed_long";
+			case "enfantCles":
+				return "enfantCles_indexed_longs";
+			case "mereCles":
+				return "mereCles_indexed_longs";
+			case "pereCles":
+				return "pereCles_indexed_longs";
+			case "gardienCles":
+				return "gardienCles_indexed_longs";
+			case "contactCles":
+				return "contactCles_indexed_longs";
+			case "paiementDescription":
+				return "paiementDescription_indexed_string";
+			case "paiementDate":
+				return "paiementDate_indexed_date";
+			case "paiementMontant":
+				return "paiementMontant_indexed_double";
+			case "paiementEspeces":
+				return "paiementEspeces_indexed_boolean";
+			case "paiementCheque":
+				return "paiementCheque_indexed_boolean";
+			case "paiementSysteme":
+				return "paiementSysteme_indexed_boolean";
+			case "paiementNomComplet":
+				return "paiementNomComplet_indexed_string";
+			default:
+				return Cluster.varIndexeCluster(entiteVar);
+		}
+	}
+
+	public static String varRecherchePaiementScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varRechercheCluster(entiteVar);
+		}
+	}
+
+	public static String varSuggerePaiementScolaire(String entiteVar) {
+		switch(entiteVar) {
+			default:
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

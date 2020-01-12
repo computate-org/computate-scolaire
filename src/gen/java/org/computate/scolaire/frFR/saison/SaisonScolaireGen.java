@@ -2717,54 +2717,6 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public static String varIndexeSaisonScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "seasonKey":
-				return "seasonKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "seasonSort":
-				return "seasonSort_indexed_int";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "seasonStartDate":
-				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
-			case "seasonEnrollmentFee":
-				return "seasonEnrollmentFee_indexed_double";
-			case "seasonFuture":
-				return "seasonFuture_indexed_boolean";
-			case "seasonShortName":
-				return "seasonShortName_indexed_string";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
 			case "saisonCle":
 				return "saisonCle_indexed_long";
 			case "inscriptionCles":

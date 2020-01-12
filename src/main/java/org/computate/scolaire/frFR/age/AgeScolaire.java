@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;        
+package org.computate.scolaire.frFR.age;           
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -583,7 +583,7 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 */ 
 	protected void _ageNomCourt(Couverture<String> c) {
 		String o;
-		o = String.format("âges %s-%s %s - %s", strAgeDebut(), strAgeFin(), MiseEnPage.FORMATMoisAnnee.format(sessionJourDebut), MiseEnPage.FORMATMoisAnnee.format(sessionJourFin));
+		o = String.format("âges %s-%s %s - %s", strAgeDebut(), strAgeFin(), sessionJourDebut == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionJourDebut), sessionJourFin == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionJourFin));
 		c.o(o);
 	}
 

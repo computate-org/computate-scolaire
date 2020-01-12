@@ -955,25 +955,63 @@ public class PageLayout extends PageLayoutGen<Object> {
 					}
 				}
 				if(htmlVarForm != null) {
-					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarForm, "."));
+					Object parent = StringUtils.contains(htmlVarForm, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVarForm, ".")) : null;
+					if(parent == null)
+						parent = this;
 					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVarForm;
+
+//					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarForm, "."));
+//					String var = StringUtils.substringAfterLast(htmlVarForm, ".");
 					try {
-						MethodUtils.invokeExactMethod(o, "htm" + StringUtils.capitalize(var), "Page");
+						MethodUtils.invokeExactMethod(parent, "htm" + StringUtils.capitalize(var), "Page");
 					} catch (RuntimeException e) {
 						throw e;
 					} catch (Exception e) {
-						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, o), e);
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 					}
 				}
 				if(htmlVarInput != null) {
-					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, "."));
+					Object parent = StringUtils.contains(htmlVarInput, ".") ? obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, ".")) : null;
+					if(parent == null)
+						parent = this;
 					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+					if(StringUtils.isBlank(var))
+						var = htmlVarInput;
+
 					try {
-						MethodUtils.invokeExactMethod(o, "input" + StringUtils.capitalize(var), "Page");
+//					Object o = obtainForClass(StringUtils.substringBeforeLast(htmlVarInput, "."));
+//					String var = StringUtils.substringAfterLast(htmlVarInput, ".");
+						if("application/pdf".equals(pageContentType)) {
+							Object o = obtainForClass(htmlVarInput);
+							if(o instanceof Boolean) {
+								e("img").a("class", "").a("style", "width: 1em; height: 1em; position: relative; top: 3px; ").a("src", siteRequest_.getSiteConfig_().getStaticBaseUrl(), ((Boolean)o) ? "/png/check-square-o.png" : "/png/square-o.png").fg();
+							}
+							else if (o instanceof String && o.toString().startsWith("data:image")) {
+								e("img").a("class", "").a("style", "height: 100px; width: 100px; ").a("src", o.toString()).fg();
+								e("div").a("class", "").a("style", "height: 400px; width: 800px; background: url('", o.toString(), "'); ").f().g("div");
+							}
+							else {
+								e("span").a("style", "border-bottom: 1px solid black; display: block; ").f();
+								String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
+								s(s);
+								g("span");
+							}
+						}
+						else {
+							try {
+								MethodUtils.invokeExactMethod(parent, "input" + StringUtils.capitalize(var), "Page");
+							} catch (RuntimeException e) {
+								throw e;
+							} catch (Exception e) {
+								throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, parent), e);
+							}
+						}
 					} catch (RuntimeException e) {
 						throw e;
 					} catch (Exception e) {
-						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "input" + StringUtils.capitalize(var), htmlVarInput, o), e);
+						throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 					}
 				}
 				s(htmlPart.getHtmlAfter());

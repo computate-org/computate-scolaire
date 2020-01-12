@@ -95,7 +95,8 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 
 	@Override public void htmlScriptDesignInscriptionGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggereDesignInscriptionPartHtmlCles([{'name':'fq','value':'designInscriptionCle:", requeteSite_.getRequetePk(), "'}], $('#listDesignInscriptionPartHtmlCles_Page'), ", requeteSite_.getRequetePk(), "); ");
+		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
+		tl(1, "suggereDesignInscriptionPartHtmlCles([{'name':'fq','value':'designInscriptionCle:' + pk}], $('#listDesignInscriptionPartHtmlCles_Page'), pk); ");
 		tl(1, "websocketDesignInscription(async function(requetePatch) {");
 		tl(2, "var pk = requetePatch['pk'];");
 		tl(2, "var pks = requetePatch['pks'];");

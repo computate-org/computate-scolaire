@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import org.apache.commons.configuration2.INIConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -650,6 +651,69 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 			o = System.getenv(c.var);
 		else
 			o = StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "/static");
+		c.o(o);
+	}
+
+	protected void _emailHost(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _emailPort(Wrap<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = NumberUtils.toInt(System.getenv(c.var));
+		else
+			o = config.getInt(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _emailUsername(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _emailPassword(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _emailFrom(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _emailAuth(Wrap<Boolean> c) {
+		Boolean o;
+		if(config == null)
+			o = BooleanUtils.toBoolean(System.getenv(c.var));
+		else
+			o = BooleanUtils.toBoolean(StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "false"));
+		c.o(o);
+	}
+
+	protected void _emailSsl(Wrap<Boolean> c) {
+		Boolean o;
+		if(config == null)
+			o = BooleanUtils.toBoolean(System.getenv(c.var));
+		else
+			o = BooleanUtils.toBoolean(StringUtils.defaultIfBlank(config.getString(prefixEscaped + c.var), "false"));
 		c.o(o);
 	}
 

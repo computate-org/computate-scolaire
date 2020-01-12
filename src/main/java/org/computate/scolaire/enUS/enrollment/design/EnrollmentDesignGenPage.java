@@ -94,7 +94,8 @@ public class EnrollmentDesignGenPage extends EnrollmentDesignGenPageGen<ClusterP
 
 	@Override public void htmlScriptEnrollmentDesignGenPage() {
 		l("$(document).ready(function() {");
-		tl(1, "suggestEnrollmentDesignHtmlPartKeys([{'name':'fq','value':'enrollmentDesignKey:", siteRequest_.getRequestPk(), "'}], $('#listEnrollmentDesignHtmlPartKeys_Page'), ", siteRequest_.getRequestPk(), "); ");
+		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
+		tl(1, "suggestEnrollmentDesignHtmlPartKeys([{'name':'fq','value':'enrollmentDesignKey:' + pk}], $('#listEnrollmentDesignHtmlPartKeys_Page'), pk); ");
 		tl(1, "websocketEnrollmentDesign(async function(patchRequest) {");
 		tl(2, "var pk = patchRequest['pk'];");
 		tl(2, "var pks = patchRequest['pks'];");

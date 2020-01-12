@@ -337,7 +337,7 @@ public class AppRestore extends AbstractVerticle {
 			}
 			if(StringUtils.equals("personFirstName", path))
 				value = getScrambledWord(value);
-			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate")) {
+			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate", "enrollmentDate1", "enrollmentDate2", "enrollmentDate3", "enrollmentDate4", "enrollmentDate5", "enrollmentDate6", "enrollmentDate7", "enrollmentDate8", "enrollmentDate9", "enrollmentDate10")) {
 				try {
 					value = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).parse(value));
 				} catch (Exception e) {

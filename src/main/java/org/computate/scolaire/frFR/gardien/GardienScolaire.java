@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.gardien;         
+package org.computate.scolaire.frFR.gardien;          
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -416,6 +416,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * NomAffichage.enUS: contact in case of emergency
 	 */                  
 	protected void _personneContactUrgence(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -430,6 +431,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * NomAffichage.enUS: authorized to pickup
 	 */                   
 	protected void _personneChercher(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**    

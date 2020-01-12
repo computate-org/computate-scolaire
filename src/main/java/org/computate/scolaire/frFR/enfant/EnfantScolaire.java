@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                          
+package org.computate.scolaire.frFR.enfant;                            
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -446,21 +446,6 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantObjectifs(Couverture<String> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: enfantVaccinesCurrent
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: vaccins à jour
-	 * NomAffichage.enUS: current vaccines
-	 * Definir: true
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
-	 */                   
-	protected void _enfantVaccinsAJour(Couverture<Boolean> c) {
-		c.o(false);
 	}
 
 	/**

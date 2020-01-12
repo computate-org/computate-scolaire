@@ -1319,6 +1319,8 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 	 * r.enUS: writeApi
 	 * r: appliNom
 	 * r.enUS: appName
+	 * r: classeRoleSession
+	 * r.enUS: classRoleSession
 	 */
 	public void ecrireApi(Boolean id) throws Exception {
 
@@ -1331,7 +1333,7 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
-			if(classeRolesTrouves && BooleanUtils.isFalse(classeRoleSession)) {
+			if(classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession)) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
 				for(int i = 0; i < classeRoles.size(); i++) {
