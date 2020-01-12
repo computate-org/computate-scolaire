@@ -198,6 +198,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentDesignKey(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -212,6 +213,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmEnrollmentDesignKey(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartEnrollmentDesignKey").f();
@@ -316,6 +318,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlLink(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "link")
@@ -337,6 +340,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlLink(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlLink").f();
@@ -429,6 +433,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlElement(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "HTML element")
@@ -450,6 +455,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlElement(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlElement").f();
@@ -542,6 +548,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlId(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "HTML ID")
@@ -563,6 +570,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlId(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlId").f();
@@ -655,6 +663,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlClasses(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "HTML classes")
@@ -676,6 +685,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlClasses(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlClasses").f();
@@ -768,6 +778,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlStyle(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "HTML style")
@@ -789,6 +800,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlStyle(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlStyle").f();
@@ -881,6 +893,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlBefore(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("textarea")
 			.a("placeholder", "HTML before")
 			.a("id", classApiMethodMethod, "_htmlBefore");
@@ -900,6 +913,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlBefore(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlBefore").f();
@@ -992,6 +1006,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlAfter(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("textarea")
 			.a("placeholder", "HTML after")
 			.a("id", classApiMethodMethod, "_htmlAfter");
@@ -1011,6 +1026,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlAfter(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlAfter").f();
@@ -1103,6 +1119,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlText(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("textarea")
 			.a("placeholder", "text")
 			.a("id", classApiMethodMethod, "_htmlText");
@@ -1122,6 +1139,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlText(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlText").f();
@@ -1214,6 +1232,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlVar(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "var")
@@ -1235,6 +1254,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlVar(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlVar").f();
@@ -1327,6 +1347,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlVarForm(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "var form")
@@ -1348,6 +1369,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlVarForm(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlVarForm").f();
@@ -1440,6 +1462,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlVarInput(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "var input")
@@ -1461,6 +1484,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlVarInput(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlVarInput").f();
@@ -1553,6 +1577,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlVarForEach(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "var for each")
@@ -1574,6 +1599,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlVarForEach(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartHtmlVarForEach").f();
@@ -1671,6 +1697,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputPdfExclude(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_pdfExclude")
@@ -1693,6 +1720,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmPdfExclude(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartPdfExclude").f();
@@ -1780,6 +1808,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort1(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort1")
@@ -1801,6 +1830,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort1(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort1").f();
@@ -1899,6 +1929,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort2(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort2")
@@ -1920,6 +1951,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort2(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort2").f();
@@ -2018,6 +2050,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort3(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort3")
@@ -2039,6 +2072,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort3(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort3").f();
@@ -2137,6 +2171,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort4(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort4")
@@ -2158,6 +2193,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort4(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort4").f();
@@ -2256,6 +2292,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort5(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort5")
@@ -2277,6 +2314,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort5(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort5").f();
@@ -2375,6 +2413,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort6(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort6")
@@ -2396,6 +2435,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort6(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort6").f();
@@ -2494,6 +2534,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort7(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort7")
@@ -2515,6 +2556,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort7(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort7").f();
@@ -2613,6 +2655,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort8(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort8")
@@ -2634,6 +2677,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort8(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort8").f();
@@ -2732,6 +2776,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort9(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort9")
@@ -2753,6 +2798,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort9(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort9").f();
@@ -2851,6 +2897,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void inputSort10(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "sort10")
@@ -2872,6 +2919,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void htmSort10(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestHtmlPartSort10").f();
@@ -3540,6 +3588,77 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedHtmlPart(String entityVar) {
+		switch(entityVar) {
+			case "htmlPartKey":
+				return "htmlPartKey_indexed_long";
+			case "enrollmentDesignKey":
+				return "enrollmentDesignKey_indexed_long";
+			case "htmlLink":
+				return "htmlLink_indexed_string";
+			case "htmlElement":
+				return "htmlElement_indexed_string";
+			case "htmlId":
+				return "htmlId_indexed_string";
+			case "htmlClasses":
+				return "htmlClasses_indexed_string";
+			case "htmlStyle":
+				return "htmlStyle_indexed_string";
+			case "htmlBefore":
+				return "htmlBefore_indexed_string";
+			case "htmlAfter":
+				return "htmlAfter_indexed_string";
+			case "htmlText":
+				return "htmlText_indexed_string";
+			case "htmlVar":
+				return "htmlVar_indexed_string";
+			case "htmlVarForm":
+				return "htmlVarForm_indexed_string";
+			case "htmlVarInput":
+				return "htmlVarInput_indexed_string";
+			case "htmlVarForEach":
+				return "htmlVarForEach_indexed_string";
+			case "pdfExclude":
+				return "pdfExclude_indexed_boolean";
+			case "sort1":
+				return "sort1_indexed_double";
+			case "sort2":
+				return "sort2_indexed_double";
+			case "sort3":
+				return "sort3_indexed_double";
+			case "sort4":
+				return "sort4_indexed_double";
+			case "sort5":
+				return "sort5_indexed_double";
+			case "sort6":
+				return "sort6_indexed_double";
+			case "sort7":
+				return "sort7_indexed_double";
+			case "sort8":
+				return "sort8_indexed_double";
+			case "sort9":
+				return "sort9_indexed_double";
+			case "sort10":
+				return "sort10_indexed_double";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchHtmlPart(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestHtmlPart(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

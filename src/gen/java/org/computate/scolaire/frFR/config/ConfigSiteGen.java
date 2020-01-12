@@ -13,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -3282,6 +3283,449 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	}
 
 	//////////////
+	// mailHote //
+	//////////////
+
+	/**	L'entité « mailHote »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String mailHote;
+	@JsonIgnore
+	public Couverture<String> mailHoteCouverture = new Couverture<String>().p(this).c(String.class).var("mailHote").o(mailHote);
+
+	/**	<br/>L'entité « mailHote »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailHote">Trouver l'entité mailHote dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailHote(Couverture<String> c);
+
+	public String getMailHote() {
+		return mailHote;
+	}
+
+	public void setMailHote(String mailHote) {
+		this.mailHote = mailHote;
+		this.mailHoteCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite mailHoteInit() {
+		if(!mailHoteCouverture.dejaInitialise) {
+			_mailHote(mailHoteCouverture);
+			if(mailHote == null)
+				setMailHote(mailHoteCouverture.o);
+		}
+		mailHoteCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrMailHote() {
+		return mailHote;
+	}
+
+	public String strMailHote() {
+		return mailHote == null ? "" : mailHote;
+	}
+
+	public String jsonMailHote() {
+		return mailHote == null ? "" : mailHote;
+	}
+
+	public String nomAffichageMailHote() {
+		return null;
+	}
+
+	public String htmTooltipMailHote() {
+		return null;
+	}
+
+	public String htmMailHote() {
+		return mailHote == null ? "" : StringEscapeUtils.escapeHtml4(strMailHote());
+	}
+
+	//////////////
+	// mailPort //
+	//////////////
+
+	/**	L'entité « mailPort »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Integer mailPort;
+	@JsonIgnore
+	public Couverture<Integer> mailPortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("mailPort").o(mailPort);
+
+	/**	<br/>L'entité « mailPort »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailPort">Trouver l'entité mailPort dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailPort(Couverture<Integer> c);
+
+	public Integer getMailPort() {
+		return mailPort;
+	}
+
+	public void setMailPort(Integer mailPort) {
+		this.mailPort = mailPort;
+		this.mailPortCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setMailPort(String o) {
+		if(NumberUtils.isParsable(o))
+			this.mailPort = Integer.parseInt(o);
+		this.mailPortCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite mailPortInit() {
+		if(!mailPortCouverture.dejaInitialise) {
+			_mailPort(mailPortCouverture);
+			if(mailPort == null)
+				setMailPort(mailPortCouverture.o);
+		}
+		mailPortCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Integer solrMailPort() {
+		return mailPort;
+	}
+
+	public String strMailPort() {
+		return mailPort == null ? "" : mailPort.toString();
+	}
+
+	public String jsonMailPort() {
+		return mailPort == null ? "" : mailPort.toString();
+	}
+
+	public String nomAffichageMailPort() {
+		return null;
+	}
+
+	public String htmTooltipMailPort() {
+		return null;
+	}
+
+	public String htmMailPort() {
+		return mailPort == null ? "" : StringEscapeUtils.escapeHtml4(strMailPort());
+	}
+
+	/////////////////////
+	// mailUtilisateur //
+	/////////////////////
+
+	/**	L'entité « mailUtilisateur »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String mailUtilisateur;
+	@JsonIgnore
+	public Couverture<String> mailUtilisateurCouverture = new Couverture<String>().p(this).c(String.class).var("mailUtilisateur").o(mailUtilisateur);
+
+	/**	<br/>L'entité « mailUtilisateur »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailUtilisateur">Trouver l'entité mailUtilisateur dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailUtilisateur(Couverture<String> c);
+
+	public String getMailUtilisateur() {
+		return mailUtilisateur;
+	}
+
+	public void setMailUtilisateur(String mailUtilisateur) {
+		this.mailUtilisateur = mailUtilisateur;
+		this.mailUtilisateurCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite mailUtilisateurInit() {
+		if(!mailUtilisateurCouverture.dejaInitialise) {
+			_mailUtilisateur(mailUtilisateurCouverture);
+			if(mailUtilisateur == null)
+				setMailUtilisateur(mailUtilisateurCouverture.o);
+		}
+		mailUtilisateurCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrMailUtilisateur() {
+		return mailUtilisateur;
+	}
+
+	public String strMailUtilisateur() {
+		return mailUtilisateur == null ? "" : mailUtilisateur;
+	}
+
+	public String jsonMailUtilisateur() {
+		return mailUtilisateur == null ? "" : mailUtilisateur;
+	}
+
+	public String nomAffichageMailUtilisateur() {
+		return null;
+	}
+
+	public String htmTooltipMailUtilisateur() {
+		return null;
+	}
+
+	public String htmMailUtilisateur() {
+		return mailUtilisateur == null ? "" : StringEscapeUtils.escapeHtml4(strMailUtilisateur());
+	}
+
+	////////////////////
+	// mailMotDePasse //
+	////////////////////
+
+	/**	L'entité « mailMotDePasse »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String mailMotDePasse;
+	@JsonIgnore
+	public Couverture<String> mailMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("mailMotDePasse").o(mailMotDePasse);
+
+	/**	<br/>L'entité « mailMotDePasse »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailMotDePasse">Trouver l'entité mailMotDePasse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailMotDePasse(Couverture<String> c);
+
+	public String getMailMotDePasse() {
+		return mailMotDePasse;
+	}
+
+	public void setMailMotDePasse(String mailMotDePasse) {
+		this.mailMotDePasse = mailMotDePasse;
+		this.mailMotDePasseCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite mailMotDePasseInit() {
+		if(!mailMotDePasseCouverture.dejaInitialise) {
+			_mailMotDePasse(mailMotDePasseCouverture);
+			if(mailMotDePasse == null)
+				setMailMotDePasse(mailMotDePasseCouverture.o);
+		}
+		mailMotDePasseCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrMailMotDePasse() {
+		return mailMotDePasse;
+	}
+
+	public String strMailMotDePasse() {
+		return mailMotDePasse == null ? "" : mailMotDePasse;
+	}
+
+	public String jsonMailMotDePasse() {
+		return mailMotDePasse == null ? "" : mailMotDePasse;
+	}
+
+	public String nomAffichageMailMotDePasse() {
+		return null;
+	}
+
+	public String htmTooltipMailMotDePasse() {
+		return null;
+	}
+
+	public String htmMailMotDePasse() {
+		return mailMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strMailMotDePasse());
+	}
+
+	////////////
+	// mailDe //
+	////////////
+
+	/**	L'entité « mailDe »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String mailDe;
+	@JsonIgnore
+	public Couverture<String> mailDeCouverture = new Couverture<String>().p(this).c(String.class).var("mailDe").o(mailDe);
+
+	/**	<br/>L'entité « mailDe »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailDe">Trouver l'entité mailDe dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailDe(Couverture<String> c);
+
+	public String getMailDe() {
+		return mailDe;
+	}
+
+	public void setMailDe(String mailDe) {
+		this.mailDe = mailDe;
+		this.mailDeCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite mailDeInit() {
+		if(!mailDeCouverture.dejaInitialise) {
+			_mailDe(mailDeCouverture);
+			if(mailDe == null)
+				setMailDe(mailDeCouverture.o);
+		}
+		mailDeCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrMailDe() {
+		return mailDe;
+	}
+
+	public String strMailDe() {
+		return mailDe == null ? "" : mailDe;
+	}
+
+	public String jsonMailDe() {
+		return mailDe == null ? "" : mailDe;
+	}
+
+	public String nomAffichageMailDe() {
+		return null;
+	}
+
+	public String htmTooltipMailDe() {
+		return null;
+	}
+
+	public String htmMailDe() {
+		return mailDe == null ? "" : StringEscapeUtils.escapeHtml4(strMailDe());
+	}
+
+	//////////////
+	// mailAuth //
+	//////////////
+
+	/**	L'entité « mailAuth »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean mailAuth;
+	@JsonIgnore
+	public Couverture<Boolean> mailAuthCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("mailAuth").o(mailAuth);
+
+	/**	<br/>L'entité « mailAuth »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailAuth">Trouver l'entité mailAuth dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailAuth(Couverture<Boolean> c);
+
+	public Boolean getMailAuth() {
+		return mailAuth;
+	}
+
+	public void setMailAuth(Boolean mailAuth) {
+		this.mailAuth = mailAuth;
+		this.mailAuthCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setMailAuth(String o) {
+		this.mailAuth = Boolean.parseBoolean(o);
+		this.mailAuthCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite mailAuthInit() {
+		if(!mailAuthCouverture.dejaInitialise) {
+			_mailAuth(mailAuthCouverture);
+			if(mailAuth == null)
+				setMailAuth(mailAuthCouverture.o);
+		}
+		mailAuthCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Boolean solrMailAuth() {
+		return mailAuth;
+	}
+
+	public String strMailAuth() {
+		return mailAuth == null ? "" : mailAuth.toString();
+	}
+
+	public String jsonMailAuth() {
+		return mailAuth == null ? "" : mailAuth.toString();
+	}
+
+	public String nomAffichageMailAuth() {
+		return null;
+	}
+
+	public String htmTooltipMailAuth() {
+		return null;
+	}
+
+	public String htmMailAuth() {
+		return mailAuth == null ? "" : StringEscapeUtils.escapeHtml4(strMailAuth());
+	}
+
+	/////////////
+	// mailSsl //
+	/////////////
+
+	/**	L'entité « mailSsl »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean mailSsl;
+	@JsonIgnore
+	public Couverture<Boolean> mailSslCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("mailSsl").o(mailSsl);
+
+	/**	<br/>L'entité « mailSsl »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailSsl">Trouver l'entité mailSsl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailSsl(Couverture<Boolean> c);
+
+	public Boolean getMailSsl() {
+		return mailSsl;
+	}
+
+	public void setMailSsl(Boolean mailSsl) {
+		this.mailSsl = mailSsl;
+		this.mailSslCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setMailSsl(String o) {
+		this.mailSsl = Boolean.parseBoolean(o);
+		this.mailSslCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite mailSslInit() {
+		if(!mailSslCouverture.dejaInitialise) {
+			_mailSsl(mailSslCouverture);
+			if(mailSsl == null)
+				setMailSsl(mailSslCouverture.o);
+		}
+		mailSslCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Boolean solrMailSsl() {
+		return mailSsl;
+	}
+
+	public String strMailSsl() {
+		return mailSsl == null ? "" : mailSsl.toString();
+	}
+
+	public String jsonMailSsl() {
+		return mailSsl == null ? "" : mailSsl.toString();
+	}
+
+	public String nomAffichageMailSsl() {
+		return null;
+	}
+
+	public String htmTooltipMailSsl() {
+		return null;
+	}
+
+	public String htmMailSsl() {
+		return mailSsl == null ? "" : StringEscapeUtils.escapeHtml4(strMailSsl());
+	}
+
+	//////////////
 	// siteZone //
 	//////////////
 
@@ -3414,6 +3858,13 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		apiNomHoteInit();
 		apiCheminBaseInit();
 		statiqueUrlBaseInit();
+		mailHoteInit();
+		mailPortInit();
+		mailUtilisateurInit();
+		mailMotDePasseInit();
+		mailDeInit();
+		mailAuthInit();
+		mailSslInit();
 		siteZoneInit();
 	}
 
@@ -3547,6 +3998,20 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.apiCheminBase;
 			case "statiqueUrlBase":
 				return oConfigSite.statiqueUrlBase;
+			case "mailHote":
+				return oConfigSite.mailHote;
+			case "mailPort":
+				return oConfigSite.mailPort;
+			case "mailUtilisateur":
+				return oConfigSite.mailUtilisateur;
+			case "mailMotDePasse":
+				return oConfigSite.mailMotDePasse;
+			case "mailDe":
+				return oConfigSite.mailDe;
+			case "mailAuth":
+				return oConfigSite.mailAuth;
+			case "mailSsl":
+				return oConfigSite.mailSsl;
 			case "siteZone":
 				return oConfigSite.siteZone;
 			default:

@@ -3423,21 +3423,21 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			case "ageCompleteName":
 				return "ageCompleteName_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varIndexedCluster(entityVar);
 		}
 	}
 
 	public static String varSearchSchoolAge(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSearchCluster(entityVar);
 		}
 	}
 
-	public static String varSuggereSchoolAge(String entityVar) {
+	public static String varSuggestSchoolAge(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

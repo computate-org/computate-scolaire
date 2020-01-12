@@ -217,6 +217,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -231,6 +232,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadEnrollmentKeys").f();
@@ -261,7 +263,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postSchoolEnrollmentVals({ dadKeys: [ \"", pk, "\" ] }, function() { patchSchoolDadVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolDadEnrollmentKeys($('#' + ($('#", classApiMethodMethod, "enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolDadEnrollmentKeys'), $('#listSchoolDadEnrollmentKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); }); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+										.a("onclick", "postSchoolEnrollmentVals({ dadKeys: [ \"", pk, "\" ] }, function() { patchSchoolDadVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 										.f().sx("add an enrollment")
 									.g("button");
 								} g("div");
@@ -978,6 +980,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonFirstName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "first name")
@@ -999,6 +1002,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonFirstName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonFirstName").f();
@@ -1091,6 +1095,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonFirstNamePreferred(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "preferred first name")
@@ -1112,6 +1117,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonFirstNamePreferred(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonFirstNamePreferred").f();
@@ -1204,6 +1210,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputFamilyName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "last name")
@@ -1225,6 +1232,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmFamilyName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadFamilyName").f();
@@ -1500,6 +1508,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonOccupation(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "occupation")
@@ -1521,6 +1530,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonOccupation(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonOccupation").f();
@@ -1613,6 +1623,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonPhoneNumber(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "phone number")
@@ -1634,6 +1645,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonPhoneNumber(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonPhoneNumber").f();
@@ -1726,6 +1738,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonEmail(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "email")
@@ -1747,6 +1760,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonEmail(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonEmail").f();
@@ -1905,6 +1919,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonSms(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_personSms")
@@ -1927,6 +1942,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonSms(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonSms").f();
@@ -2013,6 +2029,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonReceiveEmail(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_personReceiveEmail")
@@ -2035,6 +2052,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonReceiveEmail(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonReceiveEmail").f();
@@ -2121,6 +2139,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonEmergencyContact(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_personEmergencyContact")
@@ -2143,6 +2162,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonEmergencyContact(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonEmergencyContact").f();
@@ -2229,6 +2249,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputPersonPickup(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_personPickup")
@@ -2251,6 +2272,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void htmPersonPickup(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolDadPersonPickup").f();
@@ -2332,9 +2354,11 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void inputDadCompleteName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 	}
 
 	public void htmDadCompleteName(String classApiMethodMethod) {
+		SchoolDad s = (SchoolDad)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2960,6 +2984,75 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchoolDad(String entityVar) {
+		switch(entityVar) {
+			case "dadKey":
+				return "dadKey_indexed_long";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "familySort":
+				return "familySort_indexed_int";
+			case "schoolSort":
+				return "schoolSort_indexed_int";
+			case "schoolKeys":
+				return "schoolKeys_indexed_longs";
+			case "yearKeys":
+				return "yearKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageKeys":
+				return "ageKeys_indexed_longs";
+			case "personFirstName":
+				return "personFirstName_indexed_string";
+			case "personFirstNamePreferred":
+				return "personFirstNamePreferred_indexed_string";
+			case "familyName":
+				return "familyName_indexed_string";
+			case "personCompleteName":
+				return "personCompleteName_indexed_string";
+			case "personCompleteNamePreferred":
+				return "personCompleteNamePreferred_indexed_string";
+			case "personFormalName":
+				return "personFormalName_indexed_string";
+			case "personOccupation":
+				return "personOccupation_indexed_string";
+			case "personPhoneNumber":
+				return "personPhoneNumber_indexed_string";
+			case "personEmail":
+				return "personEmail_indexed_string";
+			case "personRelation":
+				return "personRelation_indexed_string";
+			case "personSms":
+				return "personSms_indexed_boolean";
+			case "personReceiveEmail":
+				return "personReceiveEmail_indexed_boolean";
+			case "personEmergencyContact":
+				return "personEmergencyContact_indexed_boolean";
+			case "personPickup":
+				return "personPickup_indexed_boolean";
+			case "dadCompleteName":
+				return "dadCompleteName_indexed_string";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchSchoolDad(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestSchoolDad(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

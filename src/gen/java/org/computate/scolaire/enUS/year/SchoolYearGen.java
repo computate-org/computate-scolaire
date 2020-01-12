@@ -132,6 +132,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputSchoolKey(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -146,6 +147,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void htmSchoolKey(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolYearSchoolKey").f();
@@ -426,6 +428,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputSeasonKeys(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -440,6 +443,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void htmSeasonKeys(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolYearSeasonKeys").f();
@@ -1192,9 +1196,11 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentFormKey(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 	}
 
 	public void htmEnrollmentFormKey(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1320,6 +1326,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputYearStart(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "start of year")
@@ -1341,6 +1348,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void htmYearStart(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolYearYearStart").f();
@@ -1439,6 +1447,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputYearEnd(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "end of year")
@@ -1460,6 +1469,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void htmYearEnd(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolYearYearEnd").f();
@@ -1613,9 +1623,11 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void inputYearCompleteName(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 	}
 
 	public void htmYearCompleteName(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2160,21 +2172,21 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			case "yearCompleteName":
 				return "yearCompleteName_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varIndexedCluster(entityVar);
 		}
 	}
 
 	public static String varSearchSchoolYear(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSearchCluster(entityVar);
 		}
 	}
 
-	public static String varSuggereSchoolYear(String entityVar) {
+	public static String varSuggestSchoolYear(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

@@ -199,9 +199,11 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 
 	public void inputYearKey(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 	}
 
 	public void htmYearKey(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -308,6 +310,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 
 	public void inputHtmlPartKeys(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -322,6 +325,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 
 	public void htmHtmlPartKeys(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestEnrollmentDesignHtmlPartKeys").f();
@@ -450,9 +454,11 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1141,9 +1147,11 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentDesignCompleteName(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 	}
 
 	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {
+		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1565,6 +1573,51 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedEnrollmentDesign(String entityVar) {
+		switch(entityVar) {
+			case "enrollmentDesignKey":
+				return "enrollmentDesignKey_indexed_long";
+			case "yearKey":
+				return "yearKey_indexed_long";
+			case "htmlPartKeys":
+				return "htmlPartKeys_indexed_longs";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "schoolKey":
+				return "schoolKey_indexed_long";
+			case "schoolCompleteName":
+				return "schoolCompleteName_indexed_string";
+			case "schoolLocation":
+				return "schoolLocation_indexed_string";
+			case "yearStart":
+				return "yearStart_indexed_int";
+			case "yearEnd":
+				return "yearEnd_indexed_int";
+			case "yearShortName":
+				return "yearShortName_indexed_string";
+			case "yearCompleteName":
+				return "yearCompleteName_indexed_string";
+			case "enrollmentDesignCompleteName":
+				return "enrollmentDesignCompleteName_indexed_string";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchEnrollmentDesign(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestEnrollmentDesign(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

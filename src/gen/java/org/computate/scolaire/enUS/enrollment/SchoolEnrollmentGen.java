@@ -5837,8 +5837,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature1");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -5966,8 +5965,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature2");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6095,8 +6093,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature3");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6224,8 +6221,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature4");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6353,8 +6349,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature5");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6482,8 +6477,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature6");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6611,8 +6605,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature7");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6740,8 +6733,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature8");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6869,8 +6861,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature9");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -6998,8 +6989,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonClearSchoolEnrollment", pk, "enrollmentSignature10");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var datapair = $('#inputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('getData', 'svgbase64'); "); 
-					s("var src = 'data:' + datapair[0] + ',' + datapair[1]; ");
+					s("var src = $('#inputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('getData', 'default'); "); 
 					s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', src); ");
 				s("\"");
 				f().sx("Accept the signature");
@@ -9711,43 +9701,33 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentParentNames_stored_string", enrollmentParentNames);
 		}
 		if(enrollmentSignature1 != null) {
-			document.addField("enrollmentSignature1_indexed_string", enrollmentSignature1);
 			document.addField("enrollmentSignature1_stored_string", enrollmentSignature1);
 		}
 		if(enrollmentSignature2 != null) {
-			document.addField("enrollmentSignature2_indexed_string", enrollmentSignature2);
 			document.addField("enrollmentSignature2_stored_string", enrollmentSignature2);
 		}
 		if(enrollmentSignature3 != null) {
-			document.addField("enrollmentSignature3_indexed_string", enrollmentSignature3);
 			document.addField("enrollmentSignature3_stored_string", enrollmentSignature3);
 		}
 		if(enrollmentSignature4 != null) {
-			document.addField("enrollmentSignature4_indexed_string", enrollmentSignature4);
 			document.addField("enrollmentSignature4_stored_string", enrollmentSignature4);
 		}
 		if(enrollmentSignature5 != null) {
-			document.addField("enrollmentSignature5_indexed_string", enrollmentSignature5);
 			document.addField("enrollmentSignature5_stored_string", enrollmentSignature5);
 		}
 		if(enrollmentSignature6 != null) {
-			document.addField("enrollmentSignature6_indexed_string", enrollmentSignature6);
 			document.addField("enrollmentSignature6_stored_string", enrollmentSignature6);
 		}
 		if(enrollmentSignature7 != null) {
-			document.addField("enrollmentSignature7_indexed_string", enrollmentSignature7);
 			document.addField("enrollmentSignature7_stored_string", enrollmentSignature7);
 		}
 		if(enrollmentSignature8 != null) {
-			document.addField("enrollmentSignature8_indexed_string", enrollmentSignature8);
 			document.addField("enrollmentSignature8_stored_string", enrollmentSignature8);
 		}
 		if(enrollmentSignature9 != null) {
-			document.addField("enrollmentSignature9_indexed_string", enrollmentSignature9);
 			document.addField("enrollmentSignature9_stored_string", enrollmentSignature9);
 		}
 		if(enrollmentSignature10 != null) {
-			document.addField("enrollmentSignature10_indexed_string", enrollmentSignature10);
 			document.addField("enrollmentSignature10_stored_string", enrollmentSignature10);
 		}
 		if(enrollmentDate1 != null) {
@@ -9941,26 +9921,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentPaymentComplete_indexed_boolean";
 			case "enrollmentParentNames":
 				return "enrollmentParentNames_indexed_string";
-			case "enrollmentSignature1":
-				return "enrollmentSignature1_indexed_string";
-			case "enrollmentSignature2":
-				return "enrollmentSignature2_indexed_string";
-			case "enrollmentSignature3":
-				return "enrollmentSignature3_indexed_string";
-			case "enrollmentSignature4":
-				return "enrollmentSignature4_indexed_string";
-			case "enrollmentSignature5":
-				return "enrollmentSignature5_indexed_string";
-			case "enrollmentSignature6":
-				return "enrollmentSignature6_indexed_string";
-			case "enrollmentSignature7":
-				return "enrollmentSignature7_indexed_string";
-			case "enrollmentSignature8":
-				return "enrollmentSignature8_indexed_string";
-			case "enrollmentSignature9":
-				return "enrollmentSignature9_indexed_string";
-			case "enrollmentSignature10":
-				return "enrollmentSignature10_indexed_string";
 			case "enrollmentDate1":
 				return "enrollmentDate1_indexed_date";
 			case "enrollmentDate2":

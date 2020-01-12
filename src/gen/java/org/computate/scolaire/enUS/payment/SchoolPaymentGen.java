@@ -666,6 +666,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -680,6 +681,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmEnrollmentKeys(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentEnrollmentKeys").f();
@@ -710,7 +712,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 								{ e("div").a("class", "w3-cell-row ").f();
 									e("button")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-purple ")
-										.a("onclick", "postSchoolEnrollmentVals({ paymentKeys: [ \"", pk, "\" ] }, function() { patchSchoolPaymentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}, function() { suggestSchoolPaymentEnrollmentKeys($('#' + ($('#", classApiMethodMethod, "enrollmentKeys').val() ? 'suggest' : 'form') + 'SchoolPaymentEnrollmentKeys'), $('#listSchoolPaymentEnrollmentKeys_", classApiMethodMethod, "')); var $e = $('#", classApiMethodMethod, "enrollmentKeys'); $e.html($e.val()); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); }); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+										.a("onclick", "postSchoolEnrollmentVals({ paymentKeys: [ \"", pk, "\" ] }, function() { patchSchoolPaymentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 										.f().sx("add an enrollment")
 									.g("button");
 								} g("div");
@@ -1351,6 +1353,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentDescription(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "description")
@@ -1372,6 +1375,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmPaymentDescription(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentPaymentDescription").f();
@@ -1480,6 +1484,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentDate(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
 			.a("class", "w3-input w3-border datepicker ")
@@ -1493,6 +1498,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmPaymentDate(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentPaymentDate").f();
@@ -1581,7 +1587,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strPaymentAmount() {
-		return paymentAmount == null ? "" : paymentAmount.toString();
+		return paymentAmount == null ? "" : paymentAmount.setScale(2).toString();
 	}
 
 	public String jsonPaymentAmount() {
@@ -1601,6 +1607,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentAmount(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "amount")
@@ -1622,6 +1629,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmPaymentAmount(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentPaymentAmount").f();
@@ -1719,6 +1727,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentCash(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_paymentCash")
@@ -1741,6 +1750,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmPaymentCash(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentPaymentCash").f();
@@ -1827,6 +1837,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentCheck(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "checkbox")
 			.a("id", classApiMethodMethod, "_paymentCheck")
@@ -1849,6 +1860,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void htmPaymentCheck(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggestSchoolPaymentPaymentCheck").f();
@@ -1996,9 +2008,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void inputPaymentCompleteName(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 	}
 
 	public void htmPaymentCompleteName(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classApiMethodMethod)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2562,6 +2576,65 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSchoolPayment(String entityVar) {
+		switch(entityVar) {
+			case "schoolKeys":
+				return "schoolKeys_indexed_longs";
+			case "seasonKeys":
+				return "seasonKeys_indexed_longs";
+			case "sessionKeys":
+				return "sessionKeys_indexed_longs";
+			case "ageKeys":
+				return "ageKeys_indexed_longs";
+			case "blockKeys":
+				return "blockKeys_indexed_longs";
+			case "enrollmentKeys":
+				return "enrollmentKeys_indexed_longs";
+			case "paymentKey":
+				return "paymentKey_indexed_long";
+			case "childKeys":
+				return "childKeys_indexed_longs";
+			case "momKeys":
+				return "momKeys_indexed_longs";
+			case "dadKeys":
+				return "dadKeys_indexed_longs";
+			case "guardianKeys":
+				return "guardianKeys_indexed_longs";
+			case "contactKeys":
+				return "contactKeys_indexed_longs";
+			case "paymentDescription":
+				return "paymentDescription_indexed_string";
+			case "paymentDate":
+				return "paymentDate_indexed_date";
+			case "paymentAmount":
+				return "paymentAmount_indexed_double";
+			case "paymentCash":
+				return "paymentCash_indexed_boolean";
+			case "paymentCheck":
+				return "paymentCheck_indexed_boolean";
+			case "paymentSystem":
+				return "paymentSystem_indexed_boolean";
+			case "paymentCompleteName":
+				return "paymentCompleteName_indexed_string";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchSchoolPayment(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestSchoolPayment(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

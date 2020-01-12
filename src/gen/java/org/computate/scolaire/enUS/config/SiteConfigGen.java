@@ -13,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.lang.Boolean;
 import java.lang.Object;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -3387,6 +3388,449 @@ The base URL of your static files.
 		return staticBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strStaticBaseUrl());
 	}
 
+	///////////////
+	// emailHost //
+	///////////////
+
+	/**	L'entité « emailHost »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String emailHost;
+	@JsonIgnore
+	public Wrap<String> emailHostWrap = new Wrap<String>().p(this).c(String.class).var("emailHost").o(emailHost);
+
+	/**	<br/>L'entité « emailHost »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailHost">Trouver l'entité emailHost dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailHost(Wrap<String> c);
+
+	public String getEmailHost() {
+		return emailHost;
+	}
+
+	public void setEmailHost(String emailHost) {
+		this.emailHost = emailHost;
+		this.emailHostWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig emailHostInit() {
+		if(!emailHostWrap.alreadyInitialized) {
+			_emailHost(emailHostWrap);
+			if(emailHost == null)
+				setEmailHost(emailHostWrap.o);
+		}
+		emailHostWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrEmailHost() {
+		return emailHost;
+	}
+
+	public String strEmailHost() {
+		return emailHost == null ? "" : emailHost;
+	}
+
+	public String jsonEmailHost() {
+		return emailHost == null ? "" : emailHost;
+	}
+
+	public String nomAffichageEmailHost() {
+		return null;
+	}
+
+	public String htmTooltipEmailHost() {
+		return null;
+	}
+
+	public String htmEmailHost() {
+		return emailHost == null ? "" : StringEscapeUtils.escapeHtml4(strEmailHost());
+	}
+
+	///////////////
+	// emailPort //
+	///////////////
+
+	/**	L'entité « emailPort »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Integer emailPort;
+	@JsonIgnore
+	public Wrap<Integer> emailPortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("emailPort").o(emailPort);
+
+	/**	<br/>L'entité « emailPort »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPort">Trouver l'entité emailPort dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailPort(Wrap<Integer> c);
+
+	public Integer getEmailPort() {
+		return emailPort;
+	}
+
+	public void setEmailPort(Integer emailPort) {
+		this.emailPort = emailPort;
+		this.emailPortWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setEmailPort(String o) {
+		if(NumberUtils.isParsable(o))
+			this.emailPort = Integer.parseInt(o);
+		this.emailPortWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig emailPortInit() {
+		if(!emailPortWrap.alreadyInitialized) {
+			_emailPort(emailPortWrap);
+			if(emailPort == null)
+				setEmailPort(emailPortWrap.o);
+		}
+		emailPortWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Integer solrEmailPort() {
+		return emailPort;
+	}
+
+	public String strEmailPort() {
+		return emailPort == null ? "" : emailPort.toString();
+	}
+
+	public String jsonEmailPort() {
+		return emailPort == null ? "" : emailPort.toString();
+	}
+
+	public String nomAffichageEmailPort() {
+		return null;
+	}
+
+	public String htmTooltipEmailPort() {
+		return null;
+	}
+
+	public String htmEmailPort() {
+		return emailPort == null ? "" : StringEscapeUtils.escapeHtml4(strEmailPort());
+	}
+
+	///////////////////
+	// emailUsername //
+	///////////////////
+
+	/**	L'entité « emailUsername »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String emailUsername;
+	@JsonIgnore
+	public Wrap<String> emailUsernameWrap = new Wrap<String>().p(this).c(String.class).var("emailUsername").o(emailUsername);
+
+	/**	<br/>L'entité « emailUsername »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailUsername">Trouver l'entité emailUsername dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailUsername(Wrap<String> c);
+
+	public String getEmailUsername() {
+		return emailUsername;
+	}
+
+	public void setEmailUsername(String emailUsername) {
+		this.emailUsername = emailUsername;
+		this.emailUsernameWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig emailUsernameInit() {
+		if(!emailUsernameWrap.alreadyInitialized) {
+			_emailUsername(emailUsernameWrap);
+			if(emailUsername == null)
+				setEmailUsername(emailUsernameWrap.o);
+		}
+		emailUsernameWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrEmailUsername() {
+		return emailUsername;
+	}
+
+	public String strEmailUsername() {
+		return emailUsername == null ? "" : emailUsername;
+	}
+
+	public String jsonEmailUsername() {
+		return emailUsername == null ? "" : emailUsername;
+	}
+
+	public String nomAffichageEmailUsername() {
+		return null;
+	}
+
+	public String htmTooltipEmailUsername() {
+		return null;
+	}
+
+	public String htmEmailUsername() {
+		return emailUsername == null ? "" : StringEscapeUtils.escapeHtml4(strEmailUsername());
+	}
+
+	///////////////////
+	// emailPassword //
+	///////////////////
+
+	/**	L'entité « emailPassword »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String emailPassword;
+	@JsonIgnore
+	public Wrap<String> emailPasswordWrap = new Wrap<String>().p(this).c(String.class).var("emailPassword").o(emailPassword);
+
+	/**	<br/>L'entité « emailPassword »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPassword">Trouver l'entité emailPassword dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailPassword(Wrap<String> c);
+
+	public String getEmailPassword() {
+		return emailPassword;
+	}
+
+	public void setEmailPassword(String emailPassword) {
+		this.emailPassword = emailPassword;
+		this.emailPasswordWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig emailPasswordInit() {
+		if(!emailPasswordWrap.alreadyInitialized) {
+			_emailPassword(emailPasswordWrap);
+			if(emailPassword == null)
+				setEmailPassword(emailPasswordWrap.o);
+		}
+		emailPasswordWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrEmailPassword() {
+		return emailPassword;
+	}
+
+	public String strEmailPassword() {
+		return emailPassword == null ? "" : emailPassword;
+	}
+
+	public String jsonEmailPassword() {
+		return emailPassword == null ? "" : emailPassword;
+	}
+
+	public String nomAffichageEmailPassword() {
+		return null;
+	}
+
+	public String htmTooltipEmailPassword() {
+		return null;
+	}
+
+	public String htmEmailPassword() {
+		return emailPassword == null ? "" : StringEscapeUtils.escapeHtml4(strEmailPassword());
+	}
+
+	///////////////
+	// emailFrom //
+	///////////////
+
+	/**	L'entité « emailFrom »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String emailFrom;
+	@JsonIgnore
+	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
+
+	/**	<br/>L'entité « emailFrom »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailFrom(Wrap<String> c);
+
+	public String getEmailFrom() {
+		return emailFrom;
+	}
+
+	public void setEmailFrom(String emailFrom) {
+		this.emailFrom = emailFrom;
+		this.emailFromWrap.alreadyInitialized = true;
+	}
+	protected SiteConfig emailFromInit() {
+		if(!emailFromWrap.alreadyInitialized) {
+			_emailFrom(emailFromWrap);
+			if(emailFrom == null)
+				setEmailFrom(emailFromWrap.o);
+		}
+		emailFromWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public String solrEmailFrom() {
+		return emailFrom;
+	}
+
+	public String strEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String jsonEmailFrom() {
+		return emailFrom == null ? "" : emailFrom;
+	}
+
+	public String nomAffichageEmailFrom() {
+		return null;
+	}
+
+	public String htmTooltipEmailFrom() {
+		return null;
+	}
+
+	public String htmEmailFrom() {
+		return emailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strEmailFrom());
+	}
+
+	///////////////
+	// emailAuth //
+	///////////////
+
+	/**	L'entité « emailAuth »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean emailAuth;
+	@JsonIgnore
+	public Wrap<Boolean> emailAuthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailAuth").o(emailAuth);
+
+	/**	<br/>L'entité « emailAuth »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAuth">Trouver l'entité emailAuth dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailAuth(Wrap<Boolean> c);
+
+	public Boolean getEmailAuth() {
+		return emailAuth;
+	}
+
+	public void setEmailAuth(Boolean emailAuth) {
+		this.emailAuth = emailAuth;
+		this.emailAuthWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setEmailAuth(String o) {
+		this.emailAuth = Boolean.parseBoolean(o);
+		this.emailAuthWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig emailAuthInit() {
+		if(!emailAuthWrap.alreadyInitialized) {
+			_emailAuth(emailAuthWrap);
+			if(emailAuth == null)
+				setEmailAuth(emailAuthWrap.o);
+		}
+		emailAuthWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Boolean solrEmailAuth() {
+		return emailAuth;
+	}
+
+	public String strEmailAuth() {
+		return emailAuth == null ? "" : emailAuth.toString();
+	}
+
+	public String jsonEmailAuth() {
+		return emailAuth == null ? "" : emailAuth.toString();
+	}
+
+	public String nomAffichageEmailAuth() {
+		return null;
+	}
+
+	public String htmTooltipEmailAuth() {
+		return null;
+	}
+
+	public String htmEmailAuth() {
+		return emailAuth == null ? "" : StringEscapeUtils.escapeHtml4(strEmailAuth());
+	}
+
+	//////////////
+	// emailSsl //
+	//////////////
+
+	/**	L'entité « emailSsl »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean emailSsl;
+	@JsonIgnore
+	public Wrap<Boolean> emailSslWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailSsl").o(emailSsl);
+
+	/**	<br/>L'entité « emailSsl »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailSsl">Trouver l'entité emailSsl dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _emailSsl(Wrap<Boolean> c);
+
+	public Boolean getEmailSsl() {
+		return emailSsl;
+	}
+
+	public void setEmailSsl(Boolean emailSsl) {
+		this.emailSsl = emailSsl;
+		this.emailSslWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setEmailSsl(String o) {
+		this.emailSsl = Boolean.parseBoolean(o);
+		this.emailSslWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig emailSslInit() {
+		if(!emailSslWrap.alreadyInitialized) {
+			_emailSsl(emailSslWrap);
+			if(emailSsl == null)
+				setEmailSsl(emailSslWrap.o);
+		}
+		emailSslWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Boolean solrEmailSsl() {
+		return emailSsl;
+	}
+
+	public String strEmailSsl() {
+		return emailSsl == null ? "" : emailSsl.toString();
+	}
+
+	public String jsonEmailSsl() {
+		return emailSsl == null ? "" : emailSsl.toString();
+	}
+
+	public String nomAffichageEmailSsl() {
+		return null;
+	}
+
+	public String htmTooltipEmailSsl() {
+		return null;
+	}
+
+	public String htmEmailSsl() {
+		return emailSsl == null ? "" : StringEscapeUtils.escapeHtml4(strEmailSsl());
+	}
+
 	//////////////
 	// siteZone //
 	//////////////
@@ -3522,6 +3966,13 @@ The default timezone of the site.
 		apiHostNameInit();
 		apiBasePathInit();
 		staticBaseUrlInit();
+		emailHostInit();
+		emailPortInit();
+		emailUsernameInit();
+		emailPasswordInit();
+		emailFromInit();
+		emailAuthInit();
+		emailSslInit();
 		siteZoneInit();
 	}
 
@@ -3655,6 +4106,20 @@ The default timezone of the site.
 				return oSiteConfig.apiBasePath;
 			case "staticBaseUrl":
 				return oSiteConfig.staticBaseUrl;
+			case "emailHost":
+				return oSiteConfig.emailHost;
+			case "emailPort":
+				return oSiteConfig.emailPort;
+			case "emailUsername":
+				return oSiteConfig.emailUsername;
+			case "emailPassword":
+				return oSiteConfig.emailPassword;
+			case "emailFrom":
+				return oSiteConfig.emailFrom;
+			case "emailAuth":
+				return oSiteConfig.emailAuth;
+			case "emailSsl":
+				return oSiteConfig.emailSsl;
 			case "siteZone":
 				return oSiteConfig.siteZone;
 			default:

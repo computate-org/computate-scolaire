@@ -2037,38 +2037,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public static String varIndexeEcole(String entiteVar) {
 		switch(entiteVar) {
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKeys":
-				return "yearKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
-			case "sessionKeys":
-				return "sessionKeys_indexed_longs";
-			case "ageGroupKeys":
-				return "ageGroupKeys_indexed_longs";
-			case "blockKeys":
-				return "blockKeys_indexed_longs";
-			case "childKeys":
-				return "childKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolShortName":
-				return "schoolShortName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCles":
@@ -2102,21 +2070,21 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			case "ecoleNomComplet":
 				return "ecoleNomComplet_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varIndexeCluster(entiteVar);
 		}
 	}
 
 	public static String varRechercheEcole(String entiteVar) {
 		switch(entiteVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varRechercheCluster(entiteVar);
 		}
 	}
 
 	public static String varSuggereEcole(String entiteVar) {
 		switch(entiteVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

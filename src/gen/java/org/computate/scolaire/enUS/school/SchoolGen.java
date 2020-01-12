@@ -2063,21 +2063,21 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			case "schoolCompleteName":
 				return "schoolCompleteName_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varIndexedCluster(entityVar);
 		}
 	}
 
 	public static String varSearchSchool(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSearchCluster(entityVar);
 		}
 	}
 
-	public static String varSuggereSchool(String entityVar) {
+	public static String varSuggestSchool(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 

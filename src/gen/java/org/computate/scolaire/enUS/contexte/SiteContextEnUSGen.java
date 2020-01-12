@@ -21,6 +21,7 @@ import java.lang.Object;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.sql.SQLClient;
 
 /**	
@@ -361,6 +362,43 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		return (SiteContextEnUS)this;
 	}
 
+	////////////////
+	// mailClient //
+	////////////////
+
+	/**	L'entité « mailClient »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected MailClient mailClient;
+	@JsonIgnore
+	public Wrap<MailClient> mailClientWrap = new Wrap<MailClient>().p(this).c(MailClient.class).var("mailClient").o(mailClient);
+
+	/**	<br/>L'entité « mailClient »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.contexte.SiteContextEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mailClient">Trouver l'entité mailClient dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mailClient(Wrap<MailClient> c);
+
+	public MailClient getMailClient() {
+		return mailClient;
+	}
+
+	public void setMailClient(MailClient mailClient) {
+		this.mailClient = mailClient;
+		this.mailClientWrap.alreadyInitialized = true;
+	}
+	protected SiteContextEnUS mailClientInit() {
+		if(!mailClientWrap.alreadyInitialized) {
+			_mailClient(mailClientWrap);
+			if(mailClient == null)
+				setMailClient(mailClientWrap.o);
+		}
+		mailClientWrap.alreadyInitialized(true);
+		return (SiteContextEnUS)this;
+	}
+
 	/////////////////////////
 	// solrClientComputate //
 	/////////////////////////
@@ -426,6 +464,7 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		siteConfigInit();
 		sqlClientInit();
 		solrClientInit();
+		mailClientInit();
 		solrClientComputateInit();
 	}
 
@@ -471,6 +510,8 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 				return oSiteContextEnUS.sqlClient;
 			case "solrClient":
 				return oSiteContextEnUS.solrClient;
+			case "mailClient":
+				return oSiteContextEnUS.mailClient;
 			case "solrClientComputate":
 				return oSiteContextEnUS.solrClientComputate;
 			default:

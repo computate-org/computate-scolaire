@@ -2117,116 +2117,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////
-	// enfantVaccinesCurrent //
-	///////////////////////////
-
-	/**	L'entité « enfantVaccinesCurrent »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean enfantVaccinesCurrent;
-	@JsonIgnore
-	public Wrap<Boolean> enfantVaccinesCurrentWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enfantVaccinesCurrent").o(enfantVaccinesCurrent);
-
-	/**	<br/>L'entité « enfantVaccinesCurrent »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enfantVaccinesCurrent">Trouver l'entité enfantVaccinesCurrent dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantVaccinesCurrent(Wrap<Boolean> c);
-
-	public Boolean getEnfantVaccinesCurrent() {
-		return enfantVaccinesCurrent;
-	}
-
-	public void setEnfantVaccinesCurrent(Boolean enfantVaccinesCurrent) {
-		this.enfantVaccinesCurrent = enfantVaccinesCurrent;
-		this.enfantVaccinesCurrentWrap.alreadyInitialized = true;
-	}
-	public SchoolChild setEnfantVaccinesCurrent(String o) {
-		this.enfantVaccinesCurrent = Boolean.parseBoolean(o);
-		this.enfantVaccinesCurrentWrap.alreadyInitialized = true;
-		return (SchoolChild)this;
-	}
-	protected SchoolChild enfantVaccinesCurrentInit() {
-		if(!enfantVaccinesCurrentWrap.alreadyInitialized) {
-			_enfantVaccinesCurrent(enfantVaccinesCurrentWrap);
-			if(enfantVaccinesCurrent == null)
-				setEnfantVaccinesCurrent(enfantVaccinesCurrentWrap.o);
-		}
-		enfantVaccinesCurrentWrap.alreadyInitialized(true);
-		return (SchoolChild)this;
-	}
-
-	public Boolean solrEnfantVaccinesCurrent() {
-		return enfantVaccinesCurrent;
-	}
-
-	public String strEnfantVaccinesCurrent() {
-		return enfantVaccinesCurrent == null ? "" : enfantVaccinesCurrent.toString();
-	}
-
-	public String jsonEnfantVaccinesCurrent() {
-		return enfantVaccinesCurrent == null ? "" : enfantVaccinesCurrent.toString();
-	}
-
-	public String nomAffichageEnfantVaccinesCurrent() {
-		return "current vaccines";
-	}
-
-	public String htmTooltipEnfantVaccinesCurrent() {
-		return null;
-	}
-
-	public String htmEnfantVaccinesCurrent() {
-		return enfantVaccinesCurrent == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantVaccinesCurrent());
-	}
-
-	public void inputEnfantVaccinesCurrent(String classApiMethodMethod) {
-		SchoolChild s = (SchoolChild)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classApiMethodMethod, "_enfantVaccinesCurrent")
-			.a("value", "true");
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnfantVaccinesCurrent");
-				a("name", "setEnfantVaccinesCurrent");
-			} else {
-				a("class", "valueEnfantVaccinesCurrent");
-				a("name", "enfantVaccinesCurrent");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantVaccinesCurrent', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enfantVaccinesCurrent')); }, function() { addError($('#", classApiMethodMethod, "_enfantVaccinesCurrent')); }); ");
-			}
-			;
-			if(getEnfantVaccinesCurrent() != null && getEnfantVaccinesCurrent())
-				a("checked", "checked");
-		fg();
-
-	}
-
-	public void htmEnfantVaccinesCurrent(String classApiMethodMethod) {
-		SchoolChild s = (SchoolChild)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggestSchoolChildEnfantVaccinesCurrent").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_enfantVaccinesCurrent").a("class", "").f().sx("current vaccines").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantVaccinesCurrent(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	///////////////////////
 	// childPottyTrained //
 	///////////////////////
@@ -2468,7 +2358,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		childPreviousSchoolsAttendedInit();
 		childDescriptionInit();
 		childObjectivesInit();
-		enfantVaccinesCurrentInit();
 		childPottyTrainedInit();
 		childCompleteNameInit();
 	}
@@ -2557,8 +2446,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.childDescription;
 			case "childObjectives":
 				return oSchoolChild.childObjectives;
-			case "enfantVaccinesCurrent":
-				return oSchoolChild.enfantVaccinesCurrent;
 			case "childPottyTrained":
 				return oSchoolChild.childPottyTrained;
 			case "childCompleteName":
@@ -2647,10 +2534,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return val;
 			case "childObjectives":
 				setChildObjectives(val);
-				savesSchoolChild.add(var);
-				return val;
-			case "enfantVaccinesCurrent":
-				setEnfantVaccinesCurrent(val);
 				savesSchoolChild.add(var);
 				return val;
 			case "childPottyTrained":
@@ -2802,12 +2685,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				String childObjectives = (String)solrDocument.get("childObjectives_stored_string");
 				if(childObjectives != null)
 					oSchoolChild.setChildObjectives(childObjectives);
-			}
-
-			if(savesSchoolChild.contains("enfantVaccinesCurrent")) {
-				Boolean enfantVaccinesCurrent = (Boolean)solrDocument.get("enfantVaccinesCurrent_stored_boolean");
-				if(enfantVaccinesCurrent != null)
-					oSchoolChild.setEnfantVaccinesCurrent(enfantVaccinesCurrent);
 			}
 
 			if(savesSchoolChild.contains("childPottyTrained")) {
@@ -2999,10 +2876,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("childObjectives_indexed_string", childObjectives);
 			document.addField("childObjectives_stored_string", childObjectives);
 		}
-		if(enfantVaccinesCurrent != null) {
-			document.addField("enfantVaccinesCurrent_indexed_boolean", enfantVaccinesCurrent);
-			document.addField("enfantVaccinesCurrent_stored_boolean", enfantVaccinesCurrent);
-		}
 		if(childPottyTrained != null) {
 			document.addField("childPottyTrained_indexed_boolean", childPottyTrained);
 			document.addField("childPottyTrained_stored_boolean", childPottyTrained);
@@ -3076,8 +2949,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return "childDescription_indexed_string";
 			case "childObjectives":
 				return "childObjectives_indexed_string";
-			case "enfantVaccinesCurrent":
-				return "enfantVaccinesCurrent_indexed_boolean";
 			case "childPottyTrained":
 				return "childPottyTrained_indexed_boolean";
 			case "childCompleteName":
@@ -3195,10 +3066,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(childObjectives != null)
 			oSchoolChild.setChildObjectives(childObjectives);
 
-		Boolean enfantVaccinesCurrent = (Boolean)solrDocument.get("enfantVaccinesCurrent_stored_boolean");
-		if(enfantVaccinesCurrent != null)
-			oSchoolChild.setEnfantVaccinesCurrent(enfantVaccinesCurrent);
-
 		Boolean childPottyTrained = (Boolean)solrDocument.get("childPottyTrained_stored_boolean");
 		if(childPottyTrained != null)
 			oSchoolChild.setChildPottyTrained(childPottyTrained);
@@ -3215,7 +3082,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personBirthDate, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, enfantVaccinesCurrent, childPottyTrained);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personBirthDate, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained);
 	}
 
 	////////////
@@ -3238,7 +3105,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				&& Objects.equals( childPreviousSchoolsAttended, that.childPreviousSchoolsAttended )
 				&& Objects.equals( childDescription, that.childDescription )
 				&& Objects.equals( childObjectives, that.childObjectives )
-				&& Objects.equals( enfantVaccinesCurrent, that.enfantVaccinesCurrent )
 				&& Objects.equals( childPottyTrained, that.childPottyTrained );
 	}
 
@@ -3259,7 +3125,6 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		sb.append( ", childPreviousSchoolsAttended: \"" ).append(childPreviousSchoolsAttended).append( "\"" );
 		sb.append( ", childDescription: \"" ).append(childDescription).append( "\"" );
 		sb.append( ", childObjectives: \"" ).append(childObjectives).append( "\"" );
-		sb.append( ", enfantVaccinesCurrent: " ).append(enfantVaccinesCurrent);
 		sb.append( ", childPottyTrained: " ).append(childPottyTrained);
 		sb.append(" }");
 		return sb.toString();

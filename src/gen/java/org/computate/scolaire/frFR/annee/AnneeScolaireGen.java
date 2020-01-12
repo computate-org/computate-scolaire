@@ -133,6 +133,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputEcoleCle(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -148,6 +149,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmEcoleCle(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAnneeScolaireEcoleCle").f();
@@ -428,6 +430,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputSaisonCles(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 			e("input")
 				.a("type", "text")
@@ -443,6 +446,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmSaisonCles(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAnneeScolaireSaisonCles").f();
@@ -1195,9 +1199,11 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputFormInscriptionCle(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 	}
 
 	public void htmFormInscriptionCle(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -1323,6 +1329,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAnneeDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "début de l'année")
@@ -1345,6 +1352,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmAnneeDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAnneeScolaireAnneeDebut").f();
@@ -1443,6 +1451,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAnneeFin(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		e("input")
 			.a("type", "text")
 			.a("placeholder", "le fin de l'année")
@@ -1465,6 +1474,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void htmAnneeFin(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggereAnneeScolaireAnneeFin").f();
@@ -1618,9 +1628,11 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public void inputAnneeNomComplet(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 	}
 
 	public void htmAnneeNomComplet(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
 			if("Page".equals(classeApiMethodeMethode)) {
 				{ e("div").a("class", "w3-padding ").f();
@@ -2128,42 +2140,6 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public static String varIndexeAnneeScolaire(String entiteVar) {
 		switch(entiteVar) {
-			case "schoolKey":
-				return "schoolKey_indexed_long";
-			case "yearKey":
-				return "yearKey_indexed_long";
-			case "enrollmentKeys":
-				return "enrollmentKeys_indexed_longs";
-			case "seasonKeys":
-				return "seasonKeys_indexed_longs";
-			case "educationSort":
-				return "educationSort_indexed_int";
-			case "schoolSort":
-				return "schoolSort_indexed_int";
-			case "yearSort":
-				return "yearSort_indexed_int";
-			case "schoolName":
-				return "schoolName_indexed_string";
-			case "schoolCompleteName":
-				return "schoolCompleteName_indexed_string";
-			case "schoolLocation":
-				return "schoolLocation_indexed_string";
-			case "schoolAddress":
-				return "schoolAddress_indexed_string";
-			case "schoolPhoneNumber":
-				return "schoolPhoneNumber_indexed_string";
-			case "schoolAdministratorName":
-				return "schoolAdministratorName_indexed_string";
-			case "enrollmentFormKey":
-				return "enrollmentFormKey_indexed_long";
-			case "yearStart":
-				return "yearStart_indexed_int";
-			case "yearEnd":
-				return "yearEnd_indexed_int";
-			case "yearShortName":
-				return "yearShortName_indexed_string";
-			case "yearCompleteName":
-				return "yearCompleteName_indexed_string";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
@@ -2201,21 +2177,21 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			case "anneeNomComplet":
 				return "anneeNomComplet_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varIndexeCluster(entiteVar);
 		}
 	}
 
 	public static String varRechercheAnneeScolaire(String entiteVar) {
 		switch(entiteVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varRechercheCluster(entiteVar);
 		}
 	}
 
 	public static String varSuggereAnneeScolaire(String entiteVar) {
 		switch(entiteVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" n'est pas une entité indexé. ", entiteVar));
+				return Cluster.varSuggereCluster(entiteVar);
 		}
 	}
 

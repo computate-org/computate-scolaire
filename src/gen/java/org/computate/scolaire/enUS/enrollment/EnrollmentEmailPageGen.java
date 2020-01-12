@@ -8,13 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import org.computate.scolaire.enUS.block.SchoolBlock;
-import org.computate.scolaire.enUS.enrollment.EnrollmentPdfGenPage;
 import java.lang.Long;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.String;
 import java.time.ZoneOffset;
 import org.computate.scolaire.enUS.dad.SchoolDad;
+import org.computate.scolaire.enUS.enrollment.EnrollmentEmailGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
@@ -35,10 +35,10 @@ import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
+public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage {
 
 	////////
 	// w1 //
@@ -53,7 +53,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « w1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:w1">Trouver l'entité w1 dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:w1">Trouver l'entité w1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -67,7 +67,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.w1 = w1;
 		this.w1Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage w1Init() {
+	protected EnrollmentEmailPage w1Init() {
 		if(!w1Wrap.alreadyInitialized) {
 			_w1(w1Wrap);
 			if(w1 == null)
@@ -76,7 +76,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(w1 != null)
 			w1.initDeepForClass(siteRequest_);
 		w1Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	////////
@@ -92,7 +92,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « w2 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:w2">Trouver l'entité w2 dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:w2">Trouver l'entité w2 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -106,7 +106,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.w2 = w2;
 		this.w2Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage w2Init() {
+	protected EnrollmentEmailPage w2Init() {
 		if(!w2Wrap.alreadyInitialized) {
 			_w2(w2Wrap);
 			if(w2 == null)
@@ -115,7 +115,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(w2 != null)
 			w2.initDeepForClass(siteRequest_);
 		w2Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////////////
@@ -131,7 +131,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « listEnrollmentDesign »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<EnrollmentDesign>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listEnrollmentDesign">Trouver l'entité listEnrollmentDesign dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listEnrollmentDesign">Trouver l'entité listEnrollmentDesign dans Solr</a>
 	 * <br/>
 	 * @param listEnrollmentDesign est l'entité déjà construit. 
 	 **/
@@ -145,13 +145,13 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.listEnrollmentDesign = listEnrollmentDesign;
 		this.listEnrollmentDesignWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage listEnrollmentDesignInit() {
+	protected EnrollmentEmailPage listEnrollmentDesignInit() {
 		if(!listEnrollmentDesignWrap.alreadyInitialized) {
 			_listEnrollmentDesign(listEnrollmentDesign);
 		}
 		listEnrollmentDesign.initDeepForClass(siteRequest_);
 		listEnrollmentDesignWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////////
@@ -167,7 +167,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « enrollmentDesign »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesign">Trouver l'entité enrollmentDesign dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDesign">Trouver l'entité enrollmentDesign dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -181,7 +181,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.enrollmentDesign = enrollmentDesign;
 		this.enrollmentDesignWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage enrollmentDesignInit() {
+	protected EnrollmentEmailPage enrollmentDesignInit() {
 		if(!enrollmentDesignWrap.alreadyInitialized) {
 			_enrollmentDesign(enrollmentDesignWrap);
 			if(enrollmentDesign == null)
@@ -190,7 +190,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(enrollmentDesign != null)
 			enrollmentDesign.initDeepForClass(siteRequest_);
 		enrollmentDesignWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	////////////////
@@ -206,7 +206,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « yearSearch »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
 	 * <br/>
 	 * @param yearSearch est l'entité déjà construit. 
 	 **/
@@ -220,13 +220,13 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.yearSearch = yearSearch;
 		this.yearSearchWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage yearSearchInit() {
+	protected EnrollmentEmailPage yearSearchInit() {
 		if(!yearSearchWrap.alreadyInitialized) {
 			_yearSearch(yearSearch);
 		}
 		yearSearch.initDeepForClass(siteRequest_);
 		yearSearchWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	///////////
@@ -242,7 +242,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « year_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -256,14 +256,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.year_ = year_;
 		this.year_Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage year_Init() {
+	protected EnrollmentEmailPage year_Init() {
 		if(!year_Wrap.alreadyInitialized) {
 			_year_(year_Wrap);
 			if(year_ == null)
 				setYear_(year_Wrap.o);
 		}
 		year_Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////////
@@ -279,7 +279,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « enrollmentSearch »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
 	 * <br/>
 	 * @param enrollmentSearch est l'entité déjà construit. 
 	 **/
@@ -293,13 +293,13 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.enrollmentSearch = enrollmentSearch;
 		this.enrollmentSearchWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage enrollmentSearchInit() {
+	protected EnrollmentEmailPage enrollmentSearchInit() {
 		if(!enrollmentSearchWrap.alreadyInitialized) {
 			_enrollmentSearch(enrollmentSearch);
 		}
 		enrollmentSearch.initDeepForClass(siteRequest_);
 		enrollmentSearchWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	///////////////
@@ -315,7 +315,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolKey »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -329,20 +329,20 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolKey = schoolKey;
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage setSchoolKey(String o) {
+	public EnrollmentEmailPage setSchoolKey(String o) {
 		if(NumberUtils.isParsable(o))
 			this.schoolKey = Long.parseLong(o);
 		this.schoolKeyWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage schoolKeyInit() {
+	protected EnrollmentEmailPage schoolKeyInit() {
 		if(!schoolKeyWrap.alreadyInitialized) {
 			_schoolKey(schoolKeyWrap);
 			if(schoolKey == null)
 				setSchoolKey(schoolKeyWrap.o);
 		}
 		schoolKeyWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public Long solrSchoolKey() {
@@ -382,7 +382,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Trouver l'entité schoolName dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Trouver l'entité schoolName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -396,14 +396,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolName = schoolName;
 		this.schoolNameWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolNameInit() {
+	protected EnrollmentEmailPage schoolNameInit() {
 		if(!schoolNameWrap.alreadyInitialized) {
 			_schoolName(schoolNameWrap);
 			if(schoolName == null)
 				setSchoolName(schoolNameWrap.o);
 		}
 		schoolNameWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolName() {
@@ -443,7 +443,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolCompleteName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -457,14 +457,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolCompleteName = schoolCompleteName;
 		this.schoolCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolCompleteNameInit() {
+	protected EnrollmentEmailPage schoolCompleteNameInit() {
 		if(!schoolCompleteNameWrap.alreadyInitialized) {
 			_schoolCompleteName(schoolCompleteNameWrap);
 			if(schoolCompleteName == null)
 				setSchoolCompleteName(schoolCompleteNameWrap.o);
 		}
 		schoolCompleteNameWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolCompleteName() {
@@ -504,7 +504,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolLocation »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -518,14 +518,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolLocation = schoolLocation;
 		this.schoolLocationWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolLocationInit() {
+	protected EnrollmentEmailPage schoolLocationInit() {
 		if(!schoolLocationWrap.alreadyInitialized) {
 			_schoolLocation(schoolLocationWrap);
 			if(schoolLocation == null)
 				setSchoolLocation(schoolLocationWrap.o);
 		}
 		schoolLocationWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolLocation() {
@@ -565,7 +565,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolAddress »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Trouver l'entité schoolAddress dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Trouver l'entité schoolAddress dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -579,14 +579,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolAddress = schoolAddress;
 		this.schoolAddressWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolAddressInit() {
+	protected EnrollmentEmailPage schoolAddressInit() {
 		if(!schoolAddressWrap.alreadyInitialized) {
 			_schoolAddress(schoolAddressWrap);
 			if(schoolAddress == null)
 				setSchoolAddress(schoolAddressWrap.o);
 		}
 		schoolAddressWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolAddress() {
@@ -626,7 +626,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolPhoneNumber »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Trouver l'entité schoolPhoneNumber dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Trouver l'entité schoolPhoneNumber dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -640,14 +640,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolPhoneNumber = schoolPhoneNumber;
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolPhoneNumberInit() {
+	protected EnrollmentEmailPage schoolPhoneNumberInit() {
 		if(!schoolPhoneNumberWrap.alreadyInitialized) {
 			_schoolPhoneNumber(schoolPhoneNumberWrap);
 			if(schoolPhoneNumber == null)
 				setSchoolPhoneNumber(schoolPhoneNumberWrap.o);
 		}
 		schoolPhoneNumberWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolPhoneNumber() {
@@ -687,7 +687,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « schoolAdministratorName »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Trouver l'entité schoolAdministratorName dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Trouver l'entité schoolAdministratorName dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -701,14 +701,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.schoolAdministratorName = schoolAdministratorName;
 		this.schoolAdministratorNameWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage schoolAdministratorNameInit() {
+	protected EnrollmentEmailPage schoolAdministratorNameInit() {
 		if(!schoolAdministratorNameWrap.alreadyInitialized) {
 			_schoolAdministratorName(schoolAdministratorNameWrap);
 			if(schoolAdministratorName == null)
 				setSchoolAdministratorName(schoolAdministratorNameWrap.o);
 		}
 		schoolAdministratorNameWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public String solrSchoolAdministratorName() {
@@ -748,7 +748,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « yearStart »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -762,20 +762,20 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.yearStart = yearStart;
 		this.yearStartWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage setYearStart(String o) {
+	public EnrollmentEmailPage setYearStart(String o) {
 		if(NumberUtils.isParsable(o))
 			this.yearStart = Integer.parseInt(o);
 		this.yearStartWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage yearStartInit() {
+	protected EnrollmentEmailPage yearStartInit() {
 		if(!yearStartWrap.alreadyInitialized) {
 			_yearStart(yearStartWrap);
 			if(yearStart == null)
 				setYearStart(yearStartWrap.o);
 		}
 		yearStartWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public Integer solrYearStart() {
@@ -815,7 +815,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « yearEnd »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -829,20 +829,20 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.yearEnd = yearEnd;
 		this.yearEndWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage setYearEnd(String o) {
+	public EnrollmentEmailPage setYearEnd(String o) {
 		if(NumberUtils.isParsable(o))
 			this.yearEnd = Integer.parseInt(o);
 		this.yearEndWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage yearEndInit() {
+	protected EnrollmentEmailPage yearEndInit() {
 		if(!yearEndWrap.alreadyInitialized) {
 			_yearEnd(yearEndWrap);
 			if(yearEnd == null)
 				setYearEnd(yearEndWrap.o);
 		}
 		yearEndWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public Integer solrYearEnd() {
@@ -882,7 +882,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « seasonStartDate »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Trouver l'entité seasonStartDate dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Trouver l'entité seasonStartDate dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -896,30 +896,30 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.seasonStartDate = seasonStartDate;
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage setSeasonStartDate(Instant o) {
+	public EnrollmentEmailPage setSeasonStartDate(Instant o) {
 		this.seasonStartDate = LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public EnrollmentPdfPage setSeasonStartDate(String o) {
+	public EnrollmentEmailPage setSeasonStartDate(String o) {
 		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	public EnrollmentPdfPage setSeasonStartDate(Date o) {
+	public EnrollmentEmailPage setSeasonStartDate(Date o) {
 		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage seasonStartDateInit() {
+	protected EnrollmentEmailPage seasonStartDateInit() {
 		if(!seasonStartDateWrap.alreadyInitialized) {
 			_seasonStartDate(seasonStartDateWrap);
 			if(seasonStartDate == null)
 				setSeasonStartDate(seasonStartDateWrap.o);
 		}
 		seasonStartDateWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	public Date solrSeasonStartDate() {
@@ -959,7 +959,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « mom_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mom_">Trouver l'entité mom_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mom_">Trouver l'entité mom_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -973,14 +973,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.mom_ = mom_;
 		this.mom_Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage mom_Init() {
+	protected EnrollmentEmailPage mom_Init() {
 		if(!mom_Wrap.alreadyInitialized) {
 			_mom_(mom_Wrap);
 			if(mom_ == null)
 				setMom_(mom_Wrap.o);
 		}
 		mom_Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////
@@ -996,7 +996,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « dad_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dad_">Trouver l'entité dad_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dad_">Trouver l'entité dad_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1010,14 +1010,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.dad_ = dad_;
 		this.dad_Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage dad_Init() {
+	protected EnrollmentEmailPage dad_Init() {
 		if(!dad_Wrap.alreadyInitialized) {
 			_dad_(dad_Wrap);
 			if(dad_ == null)
 				setDad_(dad_Wrap.o);
 		}
 		dad_Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	///////////////
@@ -1033,7 +1033,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « guardian_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardian_">Trouver l'entité guardian_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardian_">Trouver l'entité guardian_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1047,14 +1047,14 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.guardian_ = guardian_;
 		this.guardian_Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage guardian_Init() {
+	protected EnrollmentEmailPage guardian_Init() {
 		if(!guardian_Wrap.alreadyInitialized) {
 			_guardian_(guardian_Wrap);
 			if(guardian_ == null)
 				setGuardian_(guardian_Wrap.o);
 		}
 		guardian_Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	/////////////////
@@ -1070,7 +1070,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « blockSearch »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Trouver l'entité blockSearch dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Trouver l'entité blockSearch dans Solr</a>
 	 * <br/>
 	 * @param blockSearch est l'entité déjà construit. 
 	 **/
@@ -1084,13 +1084,13 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.blockSearch = blockSearch;
 		this.blockSearchWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage blockSearchInit() {
+	protected EnrollmentEmailPage blockSearchInit() {
 		if(!blockSearchWrap.alreadyInitialized) {
 			_blockSearch(blockSearch);
 		}
 		blockSearch.initDeepForClass(siteRequest_);
 		blockSearchWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	////////////
@@ -1106,7 +1106,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « blocks »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks">Trouver l'entité blocks dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks">Trouver l'entité blocks dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1120,25 +1120,25 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.blocks = blocks;
 		this.blocksWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage addBlocks(SchoolBlock...objets) {
+	public EnrollmentEmailPage addBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
 			addBlocks(o);
 		}
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	public EnrollmentPdfPage addBlocks(SchoolBlock o) {
+	public EnrollmentEmailPage addBlocks(SchoolBlock o) {
 		if(o != null && !blocks.contains(o))
 			this.blocks.add(o);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage blocksInit() {
+	protected EnrollmentEmailPage blocksInit() {
 		if(!blocksWrap.alreadyInitialized) {
 			_blocks(blocksWrap);
 			if(blocks == null)
 				setBlocks(blocksWrap.o);
 		}
 		blocksWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////
@@ -1154,7 +1154,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « seasonBlocks »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlocks">Trouver l'entité seasonBlocks dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlocks">Trouver l'entité seasonBlocks dans Solr</a>
 	 * <br/>
 	 * @param seasonBlocks est l'entité déjà construit. 
 	 **/
@@ -1168,23 +1168,23 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.seasonBlocks = seasonBlocks;
 		this.seasonBlocksWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage addSeasonBlocks(SchoolBlock...objets) {
+	public EnrollmentEmailPage addSeasonBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
 			addSeasonBlocks(o);
 		}
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	public EnrollmentPdfPage addSeasonBlocks(SchoolBlock o) {
+	public EnrollmentEmailPage addSeasonBlocks(SchoolBlock o) {
 		if(o != null && !seasonBlocks.contains(o))
 			this.seasonBlocks.add(o);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage seasonBlocksInit() {
+	protected EnrollmentEmailPage seasonBlocksInit() {
 		if(!seasonBlocksWrap.alreadyInitialized) {
 			_seasonBlocks(seasonBlocks);
 		}
 		seasonBlocksWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	/////////////////
@@ -1200,7 +1200,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « seasonBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlock">Trouver l'entité seasonBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlock">Trouver l'entité seasonBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1214,7 +1214,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.seasonBlock = seasonBlock;
 		this.seasonBlockWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage seasonBlockInit() {
+	protected EnrollmentEmailPage seasonBlockInit() {
 		if(!seasonBlockWrap.alreadyInitialized) {
 			_seasonBlock(seasonBlockWrap);
 			if(seasonBlock == null)
@@ -1223,7 +1223,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(seasonBlock != null)
 			seasonBlock.initDeepForClass(siteRequest_);
 		seasonBlockWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////
@@ -1239,7 +1239,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « sessionBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionBlock">Trouver l'entité sessionBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionBlock">Trouver l'entité sessionBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1253,7 +1253,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.sessionBlock = sessionBlock;
 		this.sessionBlockWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage sessionBlockInit() {
+	protected EnrollmentEmailPage sessionBlockInit() {
 		if(!sessionBlockWrap.alreadyInitialized) {
 			_sessionBlock(sessionBlockWrap);
 			if(sessionBlock == null)
@@ -1262,7 +1262,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(sessionBlock != null)
 			sessionBlock.initDeepForClass(siteRequest_);
 		sessionBlockWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////
@@ -1278,7 +1278,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « ageBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageBlock">Trouver l'entité ageBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageBlock">Trouver l'entité ageBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1292,7 +1292,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.ageBlock = ageBlock;
 		this.ageBlockWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage ageBlockInit() {
+	protected EnrollmentEmailPage ageBlockInit() {
 		if(!ageBlockWrap.alreadyInitialized) {
 			_ageBlock(ageBlockWrap);
 			if(ageBlock == null)
@@ -1301,7 +1301,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(ageBlock != null)
 			ageBlock.initDeepForClass(siteRequest_);
 		ageBlockWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	////////////////
@@ -1317,7 +1317,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « blockBlock »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockBlock">Trouver l'entité blockBlock dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockBlock">Trouver l'entité blockBlock dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1331,7 +1331,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.blockBlock = blockBlock;
 		this.blockBlockWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage blockBlockInit() {
+	protected EnrollmentEmailPage blockBlockInit() {
 		if(!blockBlockWrap.alreadyInitialized) {
 			_blockBlock(blockBlockWrap);
 			if(blockBlock == null)
@@ -1340,7 +1340,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(blockBlock != null)
 			blockBlock.initDeepForClass(siteRequest_);
 		blockBlockWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	////////////////////
@@ -1356,7 +1356,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « htmlPartSearch »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Trouver l'entité htmlPartSearch dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Trouver l'entité htmlPartSearch dans Solr</a>
 	 * <br/>
 	 * @param htmlPartSearch est l'entité déjà construit. 
 	 **/
@@ -1370,13 +1370,13 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.htmlPartSearch = htmlPartSearch;
 		this.htmlPartSearchWrap.alreadyInitialized = true;
 	}
-	protected EnrollmentPdfPage htmlPartSearchInit() {
+	protected EnrollmentEmailPage htmlPartSearchInit() {
 		if(!htmlPartSearchWrap.alreadyInitialized) {
 			_htmlPartSearch(htmlPartSearch);
 		}
 		htmlPartSearch.initDeepForClass(siteRequest_);
 		htmlPartSearchWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////////
@@ -1392,7 +1392,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 
 	/**	<br/>L'entité « htmlPartList »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Trouver l'entité htmlPartList dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentEmailPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Trouver l'entité htmlPartList dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1406,48 +1406,48 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		this.htmlPartList = htmlPartList;
 		this.htmlPartListWrap.alreadyInitialized = true;
 	}
-	public EnrollmentPdfPage addHtmlPartList(HtmlPart...objets) {
+	public EnrollmentEmailPage addHtmlPartList(HtmlPart...objets) {
 		for(HtmlPart o : objets) {
 			addHtmlPartList(o);
 		}
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	public EnrollmentPdfPage addHtmlPartList(HtmlPart o) {
+	public EnrollmentEmailPage addHtmlPartList(HtmlPart o) {
 		if(o != null && !htmlPartList.contains(o))
 			this.htmlPartList.add(o);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
-	protected EnrollmentPdfPage htmlPartListInit() {
+	protected EnrollmentEmailPage htmlPartListInit() {
 		if(!htmlPartListWrap.alreadyInitialized) {
 			_htmlPartList(htmlPartListWrap);
 			if(htmlPartList == null)
 				setHtmlPartList(htmlPartListWrap.o);
 		}
 		htmlPartListWrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	protected boolean alreadyInitializedEnrollmentPdfPage = false;
+	protected boolean alreadyInitializedEnrollmentEmailPage = false;
 
-	public EnrollmentPdfPage initDeepEnrollmentPdfPage(SiteRequestEnUS siteRequest_) {
+	public EnrollmentEmailPage initDeepEnrollmentEmailPage(SiteRequestEnUS siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		if(!alreadyInitializedEnrollmentPdfPage) {
-			alreadyInitializedEnrollmentPdfPage = true;
-			initDeepEnrollmentPdfPage();
+		if(!alreadyInitializedEnrollmentEmailPage) {
+			alreadyInitializedEnrollmentEmailPage = true;
+			initDeepEnrollmentEmailPage();
 		}
-		return (EnrollmentPdfPage)this;
+		return (EnrollmentEmailPage)this;
 	}
 
-	public void initDeepEnrollmentPdfPage() {
-		initEnrollmentPdfPage();
-		super.initDeepEnrollmentPdfGenPage(siteRequest_);
+	public void initDeepEnrollmentEmailPage() {
+		initEnrollmentEmailPage();
+		super.initDeepEnrollmentEmailGenPage(siteRequest_);
 	}
 
-	public void initEnrollmentPdfPage() {
+	public void initEnrollmentEmailPage() {
 		w1Init();
 		w2Init();
 		listEnrollmentDesignInit();
@@ -1480,15 +1480,15 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
-		initDeepEnrollmentPdfPage(siteRequest_);
+		initDeepEnrollmentEmailPage(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestEnrollmentPdfPage(SiteRequestEnUS siteRequest_) {
-			super.siteRequestEnrollmentPdfGenPage(siteRequest_);
+	public void siteRequestEnrollmentEmailPage(SiteRequestEnUS siteRequest_) {
+			super.siteRequestEnrollmentEmailGenPage(siteRequest_);
 		if(w1 != null)
 			w1.setSiteRequest_(siteRequest_);
 		if(w2 != null)
@@ -1516,7 +1516,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
-		siteRequestEnrollmentPdfPage(siteRequest_);
+		siteRequestEnrollmentEmailPage(siteRequest_);
 	}
 
 	/////////////
@@ -1528,7 +1528,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainEnrollmentPdfPage(v);
+				o = obtainEnrollmentEmailPage(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
@@ -1536,69 +1536,69 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		}
 		return o;
 	}
-	public Object obtainEnrollmentPdfPage(String var) {
-		EnrollmentPdfPage oEnrollmentPdfPage = (EnrollmentPdfPage)this;
+	public Object obtainEnrollmentEmailPage(String var) {
+		EnrollmentEmailPage oEnrollmentEmailPage = (EnrollmentEmailPage)this;
 		switch(var) {
 			case "w1":
-				return oEnrollmentPdfPage.w1;
+				return oEnrollmentEmailPage.w1;
 			case "w2":
-				return oEnrollmentPdfPage.w2;
+				return oEnrollmentEmailPage.w2;
 			case "listEnrollmentDesign":
-				return oEnrollmentPdfPage.listEnrollmentDesign;
+				return oEnrollmentEmailPage.listEnrollmentDesign;
 			case "enrollmentDesign":
-				return oEnrollmentPdfPage.enrollmentDesign;
+				return oEnrollmentEmailPage.enrollmentDesign;
 			case "yearSearch":
-				return oEnrollmentPdfPage.yearSearch;
+				return oEnrollmentEmailPage.yearSearch;
 			case "year_":
-				return oEnrollmentPdfPage.year_;
+				return oEnrollmentEmailPage.year_;
 			case "enrollmentSearch":
-				return oEnrollmentPdfPage.enrollmentSearch;
+				return oEnrollmentEmailPage.enrollmentSearch;
 			case "schoolKey":
-				return oEnrollmentPdfPage.schoolKey;
+				return oEnrollmentEmailPage.schoolKey;
 			case "schoolName":
-				return oEnrollmentPdfPage.schoolName;
+				return oEnrollmentEmailPage.schoolName;
 			case "schoolCompleteName":
-				return oEnrollmentPdfPage.schoolCompleteName;
+				return oEnrollmentEmailPage.schoolCompleteName;
 			case "schoolLocation":
-				return oEnrollmentPdfPage.schoolLocation;
+				return oEnrollmentEmailPage.schoolLocation;
 			case "schoolAddress":
-				return oEnrollmentPdfPage.schoolAddress;
+				return oEnrollmentEmailPage.schoolAddress;
 			case "schoolPhoneNumber":
-				return oEnrollmentPdfPage.schoolPhoneNumber;
+				return oEnrollmentEmailPage.schoolPhoneNumber;
 			case "schoolAdministratorName":
-				return oEnrollmentPdfPage.schoolAdministratorName;
+				return oEnrollmentEmailPage.schoolAdministratorName;
 			case "yearStart":
-				return oEnrollmentPdfPage.yearStart;
+				return oEnrollmentEmailPage.yearStart;
 			case "yearEnd":
-				return oEnrollmentPdfPage.yearEnd;
+				return oEnrollmentEmailPage.yearEnd;
 			case "seasonStartDate":
-				return oEnrollmentPdfPage.seasonStartDate;
+				return oEnrollmentEmailPage.seasonStartDate;
 			case "mom_":
-				return oEnrollmentPdfPage.mom_;
+				return oEnrollmentEmailPage.mom_;
 			case "dad_":
-				return oEnrollmentPdfPage.dad_;
+				return oEnrollmentEmailPage.dad_;
 			case "guardian_":
-				return oEnrollmentPdfPage.guardian_;
+				return oEnrollmentEmailPage.guardian_;
 			case "blockSearch":
-				return oEnrollmentPdfPage.blockSearch;
+				return oEnrollmentEmailPage.blockSearch;
 			case "blocks":
-				return oEnrollmentPdfPage.blocks;
+				return oEnrollmentEmailPage.blocks;
 			case "seasonBlocks":
-				return oEnrollmentPdfPage.seasonBlocks;
+				return oEnrollmentEmailPage.seasonBlocks;
 			case "seasonBlock":
-				return oEnrollmentPdfPage.seasonBlock;
+				return oEnrollmentEmailPage.seasonBlock;
 			case "sessionBlock":
-				return oEnrollmentPdfPage.sessionBlock;
+				return oEnrollmentEmailPage.sessionBlock;
 			case "ageBlock":
-				return oEnrollmentPdfPage.ageBlock;
+				return oEnrollmentEmailPage.ageBlock;
 			case "blockBlock":
-				return oEnrollmentPdfPage.blockBlock;
+				return oEnrollmentEmailPage.blockBlock;
 			case "htmlPartSearch":
-				return oEnrollmentPdfPage.htmlPartSearch;
+				return oEnrollmentEmailPage.htmlPartSearch;
 			case "htmlPartList":
-				return oEnrollmentPdfPage.htmlPartList;
+				return oEnrollmentEmailPage.htmlPartList;
 			default:
-				return super.obtainEnrollmentPdfGenPage(var);
+				return super.obtainEnrollmentEmailGenPage(var);
 		}
 	}
 
@@ -1611,7 +1611,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attributeEnrollmentPdfPage(v, val);
+				o = attributeEnrollmentEmailPage(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attributeForClass(v, val);
@@ -1619,11 +1619,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		}
 		return o != null;
 	}
-	public Object attributeEnrollmentPdfPage(String var, Object val) {
-		EnrollmentPdfPage oEnrollmentPdfPage = (EnrollmentPdfPage)this;
+	public Object attributeEnrollmentEmailPage(String var, Object val) {
+		EnrollmentEmailPage oEnrollmentEmailPage = (EnrollmentEmailPage)this;
 		switch(var) {
 			default:
-				return super.attributeEnrollmentPdfGenPage(var, val);
+				return super.attributeEnrollmentEmailGenPage(var, val);
 		}
 	}
 
@@ -1637,7 +1637,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = defineEnrollmentPdfPage(v, val);
+					o = defineEnrollmentEmailPage(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.defineForClass(v, val);
@@ -1646,10 +1646,10 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		}
 		return o != null;
 	}
-	public Object defineEnrollmentPdfPage(String var, String val) {
+	public Object defineEnrollmentEmailPage(String var, String val) {
 		switch(var) {
 			default:
-				return super.defineEnrollmentPdfGenPage(var, val);
+				return super.defineEnrollmentEmailGenPage(var, val);
 		}
 	}
 
@@ -1658,11 +1658,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	/////////////////
 
 	@Override public void htmlScripts() {
-		htmlScriptsEnrollmentPdfPage();
+		htmlScriptsEnrollmentEmailPage();
 		super.htmlScripts();
 	}
 
-	public void htmlScriptsEnrollmentPdfPage() {
+	public void htmlScriptsEnrollmentEmailPage() {
 	}
 
 	////////////////
@@ -1670,11 +1670,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	////////////////
 
 	@Override public void htmlScript() {
-		htmlScriptEnrollmentPdfPage();
+		htmlScriptEnrollmentEmailPage();
 		super.htmlScript();
 	}
 
-	public void htmlScriptEnrollmentPdfPage() {
+	public void htmlScriptEnrollmentEmailPage() {
 	}
 
 	//////////////
@@ -1682,11 +1682,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	//////////////
 
 	@Override public void htmlBody() {
-		htmlBodyEnrollmentPdfPage();
+		htmlBodyEnrollmentEmailPage();
 		super.htmlBody();
 	}
 
-	public void htmlBodyEnrollmentPdfPage() {
+	public void htmlBodyEnrollmentEmailPage() {
 	}
 
 	//////////
@@ -1694,11 +1694,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	//////////
 
 	@Override public void html() {
-		htmlEnrollmentPdfPage();
+		htmlEnrollmentEmailPage();
 		super.html();
 	}
 
-	public void htmlEnrollmentPdfPage() {
+	public void htmlEnrollmentEmailPage() {
 	}
 
 	//////////////
@@ -1706,11 +1706,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	//////////////
 
 	@Override public void htmlMeta() {
-		htmlMetaEnrollmentPdfPage();
+		htmlMetaEnrollmentEmailPage();
 		super.htmlMeta();
 	}
 
-	public void htmlMetaEnrollmentPdfPage() {
+	public void htmlMetaEnrollmentEmailPage() {
 	}
 
 	////////////////
@@ -1718,11 +1718,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	////////////////
 
 	@Override public void htmlStyles() {
-		htmlStylesEnrollmentPdfPage();
+		htmlStylesEnrollmentEmailPage();
 		super.htmlStyles();
 	}
 
-	public void htmlStylesEnrollmentPdfPage() {
+	public void htmlStylesEnrollmentEmailPage() {
 	}
 
 	///////////////
@@ -1730,11 +1730,11 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	///////////////
 
 	@Override public void htmlStyle() {
-		htmlStyleEnrollmentPdfPage();
+		htmlStyleEnrollmentEmailPage();
 		super.htmlStyle();
 	}
 
-	public void htmlStyleEnrollmentPdfPage() {
+	public void htmlStyleEnrollmentEmailPage() {
 	}
 
 	//////////////
@@ -1752,9 +1752,9 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof EnrollmentPdfPage))
+		if(!(o instanceof EnrollmentEmailPage))
 			return false;
-		EnrollmentPdfPage that = (EnrollmentPdfPage)o;
+		EnrollmentEmailPage that = (EnrollmentEmailPage)o;
 		return super.equals(o);
 	}
 
@@ -1765,7 +1765,7 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
-		sb.append("EnrollmentPdfPage { ");
+		sb.append("EnrollmentEmailPage { ");
 		sb.append(" }");
 		return sb.toString();
 	}

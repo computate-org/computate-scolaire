@@ -3083,21 +3083,21 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			case "sessionCompleteName":
 				return "sessionCompleteName_indexed_string";
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varIndexedCluster(entityVar);
 		}
 	}
 
 	public static String varSearchSchoolSession(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSearchCluster(entityVar);
 		}
 	}
 
-	public static String varSuggereSchoolSession(String entityVar) {
+	public static String varSuggestSchoolSession(String entityVar) {
 		switch(entityVar) {
 			default:
-				throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 
