@@ -198,32 +198,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
-	public void inputYearKey(String classApiMethodMethod) {
-		EnrollmentDesign s = (EnrollmentDesign)this;
-	}
-
-	public void htmYearKey(String classApiMethodMethod) {
-		EnrollmentDesign s = (EnrollmentDesign)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("year").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strYearKey()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////////
 	// htmlPartKeys //
 	//////////////////
@@ -1148,27 +1122,55 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 
 	public void inputEnrollmentDesignCompleteName(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "name")
+			.a("id", classApiMethodMethod, "_enrollmentDesignCompleteName");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentDesignCompleteName w3-input w3-border ");
+				a("name", "setEnrollmentDesignCompleteName");
+			} else {
+				a("class", "valueEnrollmentDesignCompleteName w3-input w3-border ");
+				a("name", "enrollmentDesignCompleteName");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDesignCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ");
+			}
+			a("value", strEnrollmentDesignCompleteName())
+		.fg();
+
 	}
 
 	public void htmEnrollmentDesignCompleteName(String classApiMethodMethod) {
 		EnrollmentDesign s = (EnrollmentDesign)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestEnrollmentDesignEnrollmentDesignCompleteName").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("name").g("label");
+							e("label").a("for", classApiMethodMethod, "_enrollmentDesignCompleteName").a("class", "").f().sx("name").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strEnrollmentDesignCompleteName()).g("span");
-								} g("div");
+
+								inputEnrollmentDesignCompleteName(classApiMethodMethod);
 							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); $('#", classApiMethodMethod, "_enrollmentDesignCompleteName').val(null); patchEnrollmentDesignVal([{ name: 'fq', value: 'pk:' + $('#EnrollmentDesignForm :input[name=pk]').val() }], 'setEnrollmentDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDesignCompleteName')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
 						} g("div");
 					} g("div");
 				} g("div");
-			}
+			} g("div");
 		} g("div");
 	}
 
@@ -1337,6 +1339,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	}
 	public Object defineEnrollmentDesign(String var, String val) {
 		switch(var) {
+			case "enrollmentDesignCompleteName":
+				setEnrollmentDesignCompleteName(val);
+				savesEnrollmentDesign.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -1687,7 +1693,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), htmlPartKeys);
+		return Objects.hash(super.hashCode(), htmlPartKeys, enrollmentDesignCompleteName);
 	}
 
 	////////////
@@ -1701,7 +1707,8 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			return false;
 		EnrollmentDesign that = (EnrollmentDesign)o;
 		return super.equals(o)
-				&& Objects.equals( htmlPartKeys, that.htmlPartKeys );
+				&& Objects.equals( htmlPartKeys, that.htmlPartKeys )
+				&& Objects.equals( enrollmentDesignCompleteName, that.enrollmentDesignCompleteName );
 	}
 
 	//////////////
@@ -1713,6 +1720,7 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("EnrollmentDesign { ");
 		sb.append( "htmlPartKeys: " ).append(htmlPartKeys);
+		sb.append( ", enrollmentDesignCompleteName: \"" ).append(enrollmentDesignCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

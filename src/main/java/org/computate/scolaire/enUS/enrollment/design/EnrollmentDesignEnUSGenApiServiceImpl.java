@@ -207,6 +207,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 							postSqlParams.addAll(Arrays.asList("enrollmentDesignKey", l, "htmlPartKeys", pk));
 						}
 						break;
+					case "enrollmentDesignCompleteName":
+						postSql.append(SiteContextEnUS.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enrollmentDesignCompleteName", jsonObject.getString(entityVar), pk));
+						break;
 					}
 				}
 			}
@@ -492,6 +496,16 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					case "removeHtmlPartKeys":
 						patchSql.append(SiteContextEnUS.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("enrollmentDesignKey", Long.parseLong(requestJson.getString(methodName)), "htmlPartKeys", pk));
+						break;
+					case "setEnrollmentDesignCompleteName":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDesignCompleteName"));
+						} else {
+							o2.setEnrollmentDesignCompleteName(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enrollmentDesignCompleteName", o2.jsonEnrollmentDesignCompleteName(), pk));
+						}
 						break;
 				}
 			}
@@ -999,7 +1013,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
-			List<String> roles = Arrays.asList("");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)

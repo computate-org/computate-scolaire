@@ -346,6 +346,22 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentSpecialConsiderations(Wrap<String> c) {
 	}
 
+	protected void _childMedicalConditions(Wrap<String> c) {
+	}
+
+	protected void _childPreviousSchoolsAttended(Wrap<String> c) {
+	}
+
+	protected void _childDescription(Wrap<String> c) {
+	}
+
+	protected void _childObjectives(Wrap<String> c) {
+	}
+
+	protected void _childPottyTrained(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	protected void _enrollmentGroupName(Wrap<String> c) {
 	}
 

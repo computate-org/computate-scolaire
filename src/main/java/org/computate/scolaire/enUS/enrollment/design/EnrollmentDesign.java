@@ -82,9 +82,9 @@ public class EnrollmentDesign extends EnrollmentDesignGen<Cluster> {
 	protected void _enrollmentDesignCompleteName(Wrap<String> c) {
 		String o;
 		if(yearCompleteName == null)
-			o = String.format("designulaire d'inscription");
+			o = String.format("enrollment design");
 		else
-			o = String.format("designulaire d'inscription pour l'%s", yearCompleteName);
+			o = String.format("enrollment design for the %s", yearCompleteName);
 		c.o(o);
 	}
 

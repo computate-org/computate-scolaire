@@ -207,6 +207,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							postSqlParams.addAll(Arrays.asList("designInscriptionCle", l, "partHtmlCles", pk));
 						}
 						break;
+					case "designInscriptionNomComplet":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("designInscriptionNomComplet", jsonObject.getString(entiteVar), pk));
+						break;
 					}
 				}
 			}
@@ -492,6 +496,16 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					case "removePartHtmlCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("designInscriptionCle", Long.parseLong(requeteJson.getString(methodeNom)), "partHtmlCles", pk));
+						break;
+					case "setDesignInscriptionNomComplet":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "designInscriptionNomComplet"));
+						} else {
+							o2.setDesignInscriptionNomComplet(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("designInscriptionNomComplet", o2.jsonDesignInscriptionNomComplet(), pk));
+						}
 						break;
 				}
 			}
@@ -999,7 +1013,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
-			List<String> roles = Arrays.asList("");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)

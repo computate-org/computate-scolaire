@@ -30,8 +30,8 @@ import io.vertx.ext.web.api.OperationRequest;
 public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenPage> {
 
 	public void initDeepEnrollmentFormPage() {
-		super.initDeepEnrollmentFormGenPage(siteRequest_);
 		initEnrollmentFormPage();
+		super.initDeepEnrollmentFormGenPage(siteRequest_);
 	}
 
 	/**
@@ -39,13 +39,10 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 	 * 
 	 **/
 	protected void _listEnrollmentDesign(SearchList<EnrollmentDesign> l) {
-		if(schoolEnrollment != null && schoolEnrollment.getPk() != null) {
-			l.setQuery("*:*");
-//			l.addFilterQuery("enrollmentKeys_indexed_longs:" + schoolEnrollment.getPk());
-			l.addFilterQuery("pk_indexed_long:12697");
-			l.setC(EnrollmentDesign.class);
-			l.setStore(true);
-		}
+		l.setQuery("*:*");
+		l.addFilterQuery("objectId_indexed_string:main-enrollment-form");
+		l.setC(EnrollmentDesign.class);
+		l.setStore(true);
 	}
 
 	/**
@@ -140,6 +137,11 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		if(id != null) {
 			l.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 		}
+	}
+
+	@Override protected void _schoolEnrollment(Wrap<SchoolEnrollment> c) {
+		if(enrollmentSearch.size() == 1)
+			c.o(enrollmentSearch.get(0));
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
@@ -237,6 +239,7 @@ public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenP
 		List<SchoolBlock> sessionBlocks = null;
 		List<SchoolBlock> ageBlocks = null;
 		List<SchoolBlock> blockBlocks = null;
+		SchoolEnrollment schoolEnrollment = enrollmentSearch.size() == 1 ? enrollmentSearch.first() : null;
 
 		blocks = blockSearch.getList();
 		c.o(blocks);

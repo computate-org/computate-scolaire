@@ -125,7 +125,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("Page");
+			o.htmDesignInscriptionNomComplet("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Page");
@@ -147,7 +147,7 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmSupprime("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("POST");
+			o.htmDesignInscriptionNomComplet("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("POST");
@@ -169,16 +169,13 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmSupprime("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("PATCH");
+			o.htmDesignInscriptionNomComplet("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignInscriptionNomComplet("PATCH");
 		} g("div");
 	}
 
@@ -194,16 +191,13 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 			o.htmSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("Recherche");
+			o.htmDesignInscriptionNomComplet("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Recherche");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignInscriptionNomComplet("Recherche");
 		} g("div");
 	}
 

@@ -46,6 +46,8 @@ public class AppRestore extends AbstractVerticle {
 	Base64.Decoder decoder;
 	Cipher cipher;
 
+	Boolean scramble = false;
+
 	public static void main(String[] args) {
 
 		final Vertx vertx = Vertx.vertx();
@@ -335,7 +337,7 @@ public class AppRestore extends AbstractVerticle {
 				System.err.println(o);
 //				e1.printStackTrace();
 			}
-			if(StringUtils.equals("personFirstName", path))
+			if(scramble && StringUtils.equalsAny(path, "personFirstName", "personEmail", "childMedicalConditions", "childPreviousSchoolsAttended", "childDescription", "childObjectives"))
 				value = getScrambledWord(value);
 			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate", "enrollmentDate1", "enrollmentDate2", "enrollmentDate3", "enrollmentDate4", "enrollmentDate5", "enrollmentDate6", "enrollmentDate7", "enrollmentDate8", "enrollmentDate9", "enrollmentDate10")) {
 				try {
@@ -566,7 +568,7 @@ public class AppRestore extends AbstractVerticle {
 	}
 
 	public static String getScrambledWord(String str) {
-	    char[] character = str.toCharArray();
+	    char[] character = str.toLowerCase().toCharArray();
 	    String question1 = new String();
 
 	    ArrayList<Character> chars = new ArrayList<Character>(); //an arraylist is an array wich dynamically changes its size depending on the amount of its elements

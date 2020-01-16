@@ -46,8 +46,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * NomVar.frFR: design-inscription
  * NomVar.enUS: enrollment-design
  * 
- * Rolex.frFR: SiteAdmin
- * Rolex.enUS: SiteAdmin
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
 */           
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
@@ -71,8 +71,6 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.designInscriptionCle
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
 	 * NomAffichage.frFR: année
 	 * NomAffichage.enUS: year
 	 * r: AnneeCle
@@ -295,6 +293,9 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * Stocke: true
 	 * VarH2: true
 	 * VarTitre: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 1
 	 * HtmlColonne: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
@@ -310,9 +311,9 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	protected void _designInscriptionNomComplet(Couverture<String> c) {
 		String o;
 		if(anneeNomComplet == null)
-			o = String.format("designulaire d'inscription");
+			o = String.format("design d'inscription");
 		else
-			o = String.format("designulaire d'inscription pour l'%s", anneeNomComplet);
+			o = String.format("design d'inscription pour l'%s", anneeNomComplet);
 		c.o(o);
 	}
 

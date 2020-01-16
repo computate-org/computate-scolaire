@@ -199,32 +199,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
 	}
 
-	public void inputAnneeCle(String classeApiMethodeMethode) {
-		DesignInscription s = (DesignInscription)this;
-	}
-
-	public void htmAnneeCle(String classeApiMethodeMethode) {
-		DesignInscription s = (DesignInscription)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("année").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strAnneeCle()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	//////////////////
 	// partHtmlCles //
 	//////////////////
@@ -1149,27 +1123,55 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 
 	public void inputDesignInscriptionNomComplet(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "nom")
+			.a("id", classeApiMethodeMethode, "_designInscriptionNomComplet");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setDesignInscriptionNomComplet w3-input w3-border ");
+				a("name", "setDesignInscriptionNomComplet");
+			} else {
+				a("class", "valeurDesignInscriptionNomComplet w3-input w3-border ");
+				a("name", "designInscriptionNomComplet");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchDesignInscriptionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignInscriptionNomComplet', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ");
+			}
+			a("value", strDesignInscriptionNomComplet())
+		.fg();
+
 	}
 
 	public void htmDesignInscriptionNomComplet(String classeApiMethodeMethode) {
 		DesignInscription s = (DesignInscription)this;
 		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereDesignInscriptionDesignInscriptionNomComplet").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("nom").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_designInscriptionNomComplet").a("class", "").f().sx("nom").g("label");
 						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strDesignInscriptionNomComplet()).g("span");
-								} g("div");
+
+								inputDesignInscriptionNomComplet(classeApiMethodeMethode);
 							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); $('#", classeApiMethodeMethode, "_designInscriptionNomComplet').val(null); patchDesignInscriptionVal([{ name: 'fq', value: 'pk:' + $('#DesignInscriptionForm :input[name=pk]').val() }], 'setDesignInscriptionNomComplet', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionNomComplet')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
 						} g("div");
 					} g("div");
 				} g("div");
-			}
+			} g("div");
 		} g("div");
 	}
 
@@ -1338,6 +1340,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	}
 	public Object definirDesignInscription(String var, String val) {
 		switch(var) {
+			case "designInscriptionNomComplet":
+				setDesignInscriptionNomComplet(val);
+				sauvegardesDesignInscription.add(var);
+				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
@@ -1688,7 +1694,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), partHtmlCles);
+		return Objects.hash(super.hashCode(), partHtmlCles, designInscriptionNomComplet);
 	}
 
 	////////////
@@ -1702,7 +1708,8 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			return false;
 		DesignInscription that = (DesignInscription)o;
 		return super.equals(o)
-				&& Objects.equals( partHtmlCles, that.partHtmlCles );
+				&& Objects.equals( partHtmlCles, that.partHtmlCles )
+				&& Objects.equals( designInscriptionNomComplet, that.designInscriptionNomComplet );
 	}
 
 	//////////////
@@ -1714,6 +1721,7 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("DesignInscription { ");
 		sb.append( "partHtmlCles: " ).append(partHtmlCles);
+		sb.append( ", designInscriptionNomComplet: \"" ).append(designInscriptionNomComplet).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

@@ -282,7 +282,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(0).toString();
 	}
 
-	public void  inputEnrollmentBlockKeys(String classeApiMethodeMethode) {
+	public void  inputEnrollmentAttribute(String classeApiMethodeMethode) {
 		e("input")
 			.a("type", "checkbox")
 //			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")

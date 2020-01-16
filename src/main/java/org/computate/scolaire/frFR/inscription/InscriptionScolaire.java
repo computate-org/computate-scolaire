@@ -89,7 +89,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * RoleSession: true
-*/      
+*/        
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -1203,6 +1203,79 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _inscriptionConsiderationsSpeciales(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childMedicalConditions
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: conditions médicales
+	 * NomAffichage.enUS: medical conditions
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 1
+	 */                   
+	protected void _enfantConditionsMedicales(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childPreviousSchoolsAttended
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: écoles précedemment fréqentées
+	 * NomAffichage.enUS: schools previously attended
+	 * Definir: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 2
+	 */                   
+	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childDescription
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: description
+	 * NomAffichage.enUS: description
+	 * Multiligne: true
+	 * Definir: true
+	 * HtmlLigne: 7
+	 * HtmlCellule: 1
+	 */                   
+	protected void _enfantDescription(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childObjectives
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: objectifs
+	 * NomAffichage.enUS: objectives
+	 * Multiligne: true
+	 * Definir: true
+	 * HtmlLigne: 7
+	 * HtmlCellule: 2
+	 */                   
+	protected void _enfantObjectifs(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childPottyTrained
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: propre
+	 * NomAffichage.enUS: potty trained
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
+	 */                  
+	protected void _enfantPropre(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**

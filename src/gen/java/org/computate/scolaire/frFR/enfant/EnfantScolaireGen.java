@@ -14,7 +14,6 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -1662,572 +1661,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////////
-	// enfantConditionsMedicales //
-	///////////////////////////////
-
-	/**	L'entité « enfantConditionsMedicales »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String enfantConditionsMedicales;
-	@JsonIgnore
-	public Couverture<String> enfantConditionsMedicalesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantConditionsMedicales").o(enfantConditionsMedicales);
-
-	/**	<br/>L'entité « enfantConditionsMedicales »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantConditionsMedicales">Trouver l'entité enfantConditionsMedicales dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantConditionsMedicales(Couverture<String> c);
-
-	public String getEnfantConditionsMedicales() {
-		return enfantConditionsMedicales;
-	}
-
-	public void setEnfantConditionsMedicales(String enfantConditionsMedicales) {
-		this.enfantConditionsMedicales = enfantConditionsMedicales;
-		this.enfantConditionsMedicalesCouverture.dejaInitialise = true;
-	}
-	protected EnfantScolaire enfantConditionsMedicalesInit() {
-		if(!enfantConditionsMedicalesCouverture.dejaInitialise) {
-			_enfantConditionsMedicales(enfantConditionsMedicalesCouverture);
-			if(enfantConditionsMedicales == null)
-				setEnfantConditionsMedicales(enfantConditionsMedicalesCouverture.o);
-		}
-		enfantConditionsMedicalesCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public String solrEnfantConditionsMedicales() {
-		return enfantConditionsMedicales;
-	}
-
-	public String strEnfantConditionsMedicales() {
-		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
-	}
-
-	public String jsonEnfantConditionsMedicales() {
-		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
-	}
-
-	public String nomAffichageEnfantConditionsMedicales() {
-		return "conditions médicales";
-	}
-
-	public String htmTooltipEnfantConditionsMedicales() {
-		return null;
-	}
-
-	public String htmEnfantConditionsMedicales() {
-		return enfantConditionsMedicales == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantConditionsMedicales());
-	}
-
-	public void inputEnfantConditionsMedicales(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "conditions médicales")
-			.a("id", classeApiMethodeMethode, "_enfantConditionsMedicales");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantConditionsMedicales w3-input w3-border ");
-				a("name", "setEnfantConditionsMedicales");
-			} else {
-				a("class", "valeurEnfantConditionsMedicales w3-input w3-border ");
-				a("name", "enfantConditionsMedicales");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantConditionsMedicales', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }); ");
-			}
-			a("value", strEnfantConditionsMedicales())
-		.fg();
-
-	}
-
-	public void htmEnfantConditionsMedicales(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantConditionsMedicales").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantConditionsMedicales(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); $('#", classeApiMethodeMethode, "_enfantConditionsMedicales').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setEnfantConditionsMedicales', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////////////////////////////
-	// enfantEcolesPrecedemmentFrequentees //
-	/////////////////////////////////////////
-
-	/**	L'entité « enfantEcolesPrecedemmentFrequentees »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String enfantEcolesPrecedemmentFrequentees;
-	@JsonIgnore
-	public Couverture<String> enfantEcolesPrecedemmentFrequenteesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantEcolesPrecedemmentFrequentees").o(enfantEcolesPrecedemmentFrequentees);
-
-	/**	<br/>L'entité « enfantEcolesPrecedemmentFrequentees »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantEcolesPrecedemmentFrequentees">Trouver l'entité enfantEcolesPrecedemmentFrequentees dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c);
-
-	public String getEnfantEcolesPrecedemmentFrequentees() {
-		return enfantEcolesPrecedemmentFrequentees;
-	}
-
-	public void setEnfantEcolesPrecedemmentFrequentees(String enfantEcolesPrecedemmentFrequentees) {
-		this.enfantEcolesPrecedemmentFrequentees = enfantEcolesPrecedemmentFrequentees;
-		this.enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise = true;
-	}
-	protected EnfantScolaire enfantEcolesPrecedemmentFrequenteesInit() {
-		if(!enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise) {
-			_enfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequenteesCouverture);
-			if(enfantEcolesPrecedemmentFrequentees == null)
-				setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequenteesCouverture.o);
-		}
-		enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public String solrEnfantEcolesPrecedemmentFrequentees() {
-		return enfantEcolesPrecedemmentFrequentees;
-	}
-
-	public String strEnfantEcolesPrecedemmentFrequentees() {
-		return enfantEcolesPrecedemmentFrequentees == null ? "" : enfantEcolesPrecedemmentFrequentees;
-	}
-
-	public String jsonEnfantEcolesPrecedemmentFrequentees() {
-		return enfantEcolesPrecedemmentFrequentees == null ? "" : enfantEcolesPrecedemmentFrequentees;
-	}
-
-	public String nomAffichageEnfantEcolesPrecedemmentFrequentees() {
-		return "écoles précedemment fréqentées";
-	}
-
-	public String htmTooltipEnfantEcolesPrecedemmentFrequentees() {
-		return null;
-	}
-
-	public String htmEnfantEcolesPrecedemmentFrequentees() {
-		return enfantEcolesPrecedemmentFrequentees == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantEcolesPrecedemmentFrequentees());
-	}
-
-	public void inputEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "text")
-			.a("placeholder", "écoles précedemment fréqentées")
-			.a("id", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
-				a("name", "setEnfantEcolesPrecedemmentFrequentees");
-			} else {
-				a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
-				a("name", "enfantEcolesPrecedemmentFrequentees");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantEcolesPrecedemmentFrequentees', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }); ");
-			}
-			a("value", strEnfantEcolesPrecedemmentFrequentees())
-		.fg();
-
-	}
-
-	public void htmEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantEcolesPrecedemmentFrequentees").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantEcolesPrecedemmentFrequentees(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); $('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////////
-	// enfantDescription //
-	///////////////////////
-
-	/**	L'entité « enfantDescription »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String enfantDescription;
-	@JsonIgnore
-	public Couverture<String> enfantDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("enfantDescription").o(enfantDescription);
-
-	/**	<br/>L'entité « enfantDescription »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantDescription">Trouver l'entité enfantDescription dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantDescription(Couverture<String> c);
-
-	public String getEnfantDescription() {
-		return enfantDescription;
-	}
-
-	public void setEnfantDescription(String enfantDescription) {
-		this.enfantDescription = enfantDescription;
-		this.enfantDescriptionCouverture.dejaInitialise = true;
-	}
-	protected EnfantScolaire enfantDescriptionInit() {
-		if(!enfantDescriptionCouverture.dejaInitialise) {
-			_enfantDescription(enfantDescriptionCouverture);
-			if(enfantDescription == null)
-				setEnfantDescription(enfantDescriptionCouverture.o);
-		}
-		enfantDescriptionCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public String solrEnfantDescription() {
-		return enfantDescription;
-	}
-
-	public String strEnfantDescription() {
-		return enfantDescription == null ? "" : enfantDescription;
-	}
-
-	public String jsonEnfantDescription() {
-		return enfantDescription == null ? "" : enfantDescription;
-	}
-
-	public String nomAffichageEnfantDescription() {
-		return "description";
-	}
-
-	public String htmTooltipEnfantDescription() {
-		return null;
-	}
-
-	public String htmEnfantDescription() {
-		return enfantDescription == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantDescription());
-	}
-
-	public void inputEnfantDescription(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("textarea")
-			.a("placeholder", "description")
-			.a("id", classeApiMethodeMethode, "_enfantDescription");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantDescription w3-input w3-border ");
-				a("name", "setEnfantDescription");
-			} else {
-				a("class", "valeurEnfantDescription w3-input w3-border ");
-				a("name", "enfantDescription");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDescription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDescription')); }); ");
-			}
-		f().sx(strEnfantDescription()).g("textarea");
-
-	}
-
-	public void htmEnfantDescription(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantDescription").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantDescription").a("class", "").f().sx("description").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantDescription(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDescription')); $('#", classeApiMethodeMethode, "_enfantDescription').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setEnfantDescription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDescription')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////////
-	// enfantObjectifs //
-	/////////////////////
-
-	/**	L'entité « enfantObjectifs »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected String enfantObjectifs;
-	@JsonIgnore
-	public Couverture<String> enfantObjectifsCouverture = new Couverture<String>().p(this).c(String.class).var("enfantObjectifs").o(enfantObjectifs);
-
-	/**	<br/>L'entité « enfantObjectifs »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantObjectifs">Trouver l'entité enfantObjectifs dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantObjectifs(Couverture<String> c);
-
-	public String getEnfantObjectifs() {
-		return enfantObjectifs;
-	}
-
-	public void setEnfantObjectifs(String enfantObjectifs) {
-		this.enfantObjectifs = enfantObjectifs;
-		this.enfantObjectifsCouverture.dejaInitialise = true;
-	}
-	protected EnfantScolaire enfantObjectifsInit() {
-		if(!enfantObjectifsCouverture.dejaInitialise) {
-			_enfantObjectifs(enfantObjectifsCouverture);
-			if(enfantObjectifs == null)
-				setEnfantObjectifs(enfantObjectifsCouverture.o);
-		}
-		enfantObjectifsCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public String solrEnfantObjectifs() {
-		return enfantObjectifs;
-	}
-
-	public String strEnfantObjectifs() {
-		return enfantObjectifs == null ? "" : enfantObjectifs;
-	}
-
-	public String jsonEnfantObjectifs() {
-		return enfantObjectifs == null ? "" : enfantObjectifs;
-	}
-
-	public String nomAffichageEnfantObjectifs() {
-		return "objectifs";
-	}
-
-	public String htmTooltipEnfantObjectifs() {
-		return null;
-	}
-
-	public String htmEnfantObjectifs() {
-		return enfantObjectifs == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantObjectifs());
-	}
-
-	public void inputEnfantObjectifs(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("textarea")
-			.a("placeholder", "objectifs")
-			.a("id", classeApiMethodeMethode, "_enfantObjectifs");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantObjectifs w3-input w3-border ");
-				a("name", "setEnfantObjectifs");
-			} else {
-				a("class", "valeurEnfantObjectifs w3-input w3-border ");
-				a("name", "enfantObjectifs");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onclick", "enleverLueur($(this)); ");
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantObjectifs', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }); ");
-			}
-		f().sx(strEnfantObjectifs()).g("textarea");
-
-	}
-
-	public void htmEnfantObjectifs(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantObjectifs").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantObjectifs(classeApiMethodeMethode);
-							} g("div");
-							if("Page".equals(classeApiMethodeMethode)) {
-								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-									{ e("button")
-										.a("tabindex", "-1")
-										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); $('#", classeApiMethodeMethode, "_enfantObjectifs').val(null); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:' + $('#EnfantScolaireForm :input[name=pk]').val() }], 'setEnfantObjectifs', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }); ")
-										.f();
-										e("i").a("class", "far fa-eraser ").f().g("i");
-									} g("button");
-								} g("div");
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	//////////////////
-	// enfantPropre //
-	//////////////////
-
-	/**	L'entité « enfantPropre »
-	 *	 is defined as null before being initialized. 
-	 */
-	protected Boolean enfantPropre;
-	@JsonIgnore
-	public Couverture<Boolean> enfantPropreCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("enfantPropre").o(enfantPropre);
-
-	/**	<br/>L'entité « enfantPropre »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantPropre">Trouver l'entité enfantPropre dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _enfantPropre(Couverture<Boolean> c);
-
-	public Boolean getEnfantPropre() {
-		return enfantPropre;
-	}
-
-	public void setEnfantPropre(Boolean enfantPropre) {
-		this.enfantPropre = enfantPropre;
-		this.enfantPropreCouverture.dejaInitialise = true;
-	}
-	public EnfantScolaire setEnfantPropre(String o) {
-		this.enfantPropre = Boolean.parseBoolean(o);
-		this.enfantPropreCouverture.dejaInitialise = true;
-		return (EnfantScolaire)this;
-	}
-	protected EnfantScolaire enfantPropreInit() {
-		if(!enfantPropreCouverture.dejaInitialise) {
-			_enfantPropre(enfantPropreCouverture);
-			if(enfantPropre == null)
-				setEnfantPropre(enfantPropreCouverture.o);
-		}
-		enfantPropreCouverture.dejaInitialise(true);
-		return (EnfantScolaire)this;
-	}
-
-	public Boolean solrEnfantPropre() {
-		return enfantPropre;
-	}
-
-	public String strEnfantPropre() {
-		return enfantPropre == null ? "" : enfantPropre.toString();
-	}
-
-	public String jsonEnfantPropre() {
-		return enfantPropre == null ? "" : enfantPropre.toString();
-	}
-
-	public String nomAffichageEnfantPropre() {
-		return "propre";
-	}
-
-	public String htmTooltipEnfantPropre() {
-		return null;
-	}
-
-	public String htmEnfantPropre() {
-		return enfantPropre == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantPropre());
-	}
-
-	public void inputEnfantPropre(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		e("input")
-			.a("type", "checkbox")
-			.a("id", classeApiMethodeMethode, "_enfantPropre")
-			.a("value", "true");
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantPropre");
-				a("name", "setEnfantPropre");
-			} else {
-				a("class", "valeurEnfantPropre");
-				a("name", "enfantPropre");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantPropre', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantPropre')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantPropre')); }); ");
-			}
-			;
-			if(getEnfantPropre() != null && getEnfantPropre())
-				a("checked", "checked");
-		fg();
-
-	}
-
-	public void htmEnfantPropre(String classeApiMethodeMethode) {
-		EnfantScolaire s = (EnfantScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggereEnfantScolaireEnfantPropre").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_enfantPropre").a("class", "").f().sx("propre").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnfantPropre(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	//////////////////////
 	// enfantNomComplet //
 	//////////////////////
@@ -2355,11 +1788,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		personneNomFormelInit();
 		personneDateNaissanceInit();
 		personneAgeEnSeptembreInit();
-		enfantConditionsMedicalesInit();
-		enfantEcolesPrecedemmentFrequenteesInit();
-		enfantDescriptionInit();
-		enfantObjectifsInit();
-		enfantPropreInit();
 		enfantNomCompletInit();
 	}
 
@@ -2439,16 +1867,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.personneDateNaissance;
 			case "personneAgeEnSeptembre":
 				return oEnfantScolaire.personneAgeEnSeptembre;
-			case "enfantConditionsMedicales":
-				return oEnfantScolaire.enfantConditionsMedicales;
-			case "enfantEcolesPrecedemmentFrequentees":
-				return oEnfantScolaire.enfantEcolesPrecedemmentFrequentees;
-			case "enfantDescription":
-				return oEnfantScolaire.enfantDescription;
-			case "enfantObjectifs":
-				return oEnfantScolaire.enfantObjectifs;
-			case "enfantPropre":
-				return oEnfantScolaire.enfantPropre;
 			case "enfantNomComplet":
 				return oEnfantScolaire.enfantNomComplet;
 			default:
@@ -2519,26 +1937,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return val;
 			case "personneDateNaissance":
 				setPersonneDateNaissance(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantConditionsMedicales":
-				setEnfantConditionsMedicales(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantEcolesPrecedemmentFrequentees":
-				setEnfantEcolesPrecedemmentFrequentees(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantDescription":
-				setEnfantDescription(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantObjectifs":
-				setEnfantObjectifs(val);
-				sauvegardesEnfantScolaire.add(var);
-				return val;
-			case "enfantPropre":
-				setEnfantPropre(val);
 				sauvegardesEnfantScolaire.add(var);
 				return val;
 			default:
@@ -2662,36 +2060,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				String personneAgeEnSeptembre = (String)solrDocument.get("personneAgeEnSeptembre_stored_string");
 				if(personneAgeEnSeptembre != null)
 					oEnfantScolaire.setPersonneAgeEnSeptembre(personneAgeEnSeptembre);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantConditionsMedicales")) {
-				String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
-				if(enfantConditionsMedicales != null)
-					oEnfantScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantEcolesPrecedemmentFrequentees")) {
-				String enfantEcolesPrecedemmentFrequentees = (String)solrDocument.get("enfantEcolesPrecedemmentFrequentees_stored_string");
-				if(enfantEcolesPrecedemmentFrequentees != null)
-					oEnfantScolaire.setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequentees);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantDescription")) {
-				String enfantDescription = (String)solrDocument.get("enfantDescription_stored_string");
-				if(enfantDescription != null)
-					oEnfantScolaire.setEnfantDescription(enfantDescription);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantObjectifs")) {
-				String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
-				if(enfantObjectifs != null)
-					oEnfantScolaire.setEnfantObjectifs(enfantObjectifs);
-			}
-
-			if(sauvegardesEnfantScolaire.contains("enfantPropre")) {
-				Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
-				if(enfantPropre != null)
-					oEnfantScolaire.setEnfantPropre(enfantPropre);
 			}
 
 			if(sauvegardesEnfantScolaire.contains("enfantNomComplet")) {
@@ -2861,26 +2229,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("personneAgeEnSeptembre_indexed_string", personneAgeEnSeptembre);
 			document.addField("personneAgeEnSeptembre_stored_string", personneAgeEnSeptembre);
 		}
-		if(enfantConditionsMedicales != null) {
-			document.addField("enfantConditionsMedicales_indexed_string", enfantConditionsMedicales);
-			document.addField("enfantConditionsMedicales_stored_string", enfantConditionsMedicales);
-		}
-		if(enfantEcolesPrecedemmentFrequentees != null) {
-			document.addField("enfantEcolesPrecedemmentFrequentees_indexed_string", enfantEcolesPrecedemmentFrequentees);
-			document.addField("enfantEcolesPrecedemmentFrequentees_stored_string", enfantEcolesPrecedemmentFrequentees);
-		}
-		if(enfantDescription != null) {
-			document.addField("enfantDescription_indexed_string", enfantDescription);
-			document.addField("enfantDescription_stored_string", enfantDescription);
-		}
-		if(enfantObjectifs != null) {
-			document.addField("enfantObjectifs_indexed_string", enfantObjectifs);
-			document.addField("enfantObjectifs_stored_string", enfantObjectifs);
-		}
-		if(enfantPropre != null) {
-			document.addField("enfantPropre_indexed_boolean", enfantPropre);
-			document.addField("enfantPropre_stored_boolean", enfantPropre);
-		}
 		if(enfantNomComplet != null) {
 			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
 			document.addField("enfantNomComplet_stored_string", enfantNomComplet);
@@ -2942,16 +2290,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return "personneDateNaissance_indexed_date";
 			case "personneAgeEnSeptembre":
 				return "personneAgeEnSeptembre_indexed_string";
-			case "enfantConditionsMedicales":
-				return "enfantConditionsMedicales_indexed_string";
-			case "enfantEcolesPrecedemmentFrequentees":
-				return "enfantEcolesPrecedemmentFrequentees_indexed_string";
-			case "enfantDescription":
-				return "enfantDescription_indexed_string";
-			case "enfantObjectifs":
-				return "enfantObjectifs_indexed_string";
-			case "enfantPropre":
-				return "enfantPropre_indexed_boolean";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
 			default:
@@ -3051,26 +2389,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		if(personneAgeEnSeptembre != null)
 			oEnfantScolaire.setPersonneAgeEnSeptembre(personneAgeEnSeptembre);
 
-		String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
-		if(enfantConditionsMedicales != null)
-			oEnfantScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
-
-		String enfantEcolesPrecedemmentFrequentees = (String)solrDocument.get("enfantEcolesPrecedemmentFrequentees_stored_string");
-		if(enfantEcolesPrecedemmentFrequentees != null)
-			oEnfantScolaire.setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequentees);
-
-		String enfantDescription = (String)solrDocument.get("enfantDescription_stored_string");
-		if(enfantDescription != null)
-			oEnfantScolaire.setEnfantDescription(enfantDescription);
-
-		String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
-		if(enfantObjectifs != null)
-			oEnfantScolaire.setEnfantObjectifs(enfantObjectifs);
-
-		Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
-		if(enfantPropre != null)
-			oEnfantScolaire.setEnfantPropre(enfantPropre);
-
 		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
 		if(enfantNomComplet != null)
 			oEnfantScolaire.setEnfantNomComplet(enfantNomComplet);
@@ -3083,7 +2401,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre);
+		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance);
 	}
 
 	////////////
@@ -3101,12 +2419,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( personnePrenomPrefere, that.personnePrenomPrefere )
 				&& Objects.equals( familleNom, that.familleNom )
-				&& Objects.equals( personneDateNaissance, that.personneDateNaissance )
-				&& Objects.equals( enfantConditionsMedicales, that.enfantConditionsMedicales )
-				&& Objects.equals( enfantEcolesPrecedemmentFrequentees, that.enfantEcolesPrecedemmentFrequentees )
-				&& Objects.equals( enfantDescription, that.enfantDescription )
-				&& Objects.equals( enfantObjectifs, that.enfantObjectifs )
-				&& Objects.equals( enfantPropre, that.enfantPropre );
+				&& Objects.equals( personneDateNaissance, that.personneDateNaissance );
 	}
 
 	//////////////
@@ -3122,11 +2435,6 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		sb.append( ", personnePrenomPrefere: \"" ).append(personnePrenomPrefere).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
 		sb.append( ", personneDateNaissance: " ).append(personneDateNaissance);
-		sb.append( ", enfantConditionsMedicales: \"" ).append(enfantConditionsMedicales).append( "\"" );
-		sb.append( ", enfantEcolesPrecedemmentFrequentees: \"" ).append(enfantEcolesPrecedemmentFrequentees).append( "\"" );
-		sb.append( ", enfantDescription: \"" ).append(enfantDescription).append( "\"" );
-		sb.append( ", enfantObjectifs: \"" ).append(enfantObjectifs).append( "\"" );
-		sb.append( ", enfantPropre: " ).append(enfantPropre);
 		sb.append(" }");
 		return sb.toString();
 	}

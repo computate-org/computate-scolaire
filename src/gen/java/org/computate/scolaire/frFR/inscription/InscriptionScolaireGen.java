@@ -5361,6 +5361,576 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////////
+	// enfantConditionsMedicales //
+	///////////////////////////////
+
+	/**	L'entité « enfantConditionsMedicales »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantConditionsMedicales;
+	@JsonIgnore
+	public Couverture<String> enfantConditionsMedicalesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantConditionsMedicales").o(enfantConditionsMedicales);
+
+	/**	<br/>L'entité « enfantConditionsMedicales »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantConditionsMedicales">Trouver l'entité enfantConditionsMedicales dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantConditionsMedicales(Couverture<String> c);
+
+	public String getEnfantConditionsMedicales() {
+		return enfantConditionsMedicales;
+	}
+
+	public void setEnfantConditionsMedicales(String enfantConditionsMedicales) {
+		this.enfantConditionsMedicales = enfantConditionsMedicales;
+		this.enfantConditionsMedicalesCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantConditionsMedicalesInit() {
+		if(!enfantConditionsMedicalesCouverture.dejaInitialise) {
+			_enfantConditionsMedicales(enfantConditionsMedicalesCouverture);
+			if(enfantConditionsMedicales == null)
+				setEnfantConditionsMedicales(enfantConditionsMedicalesCouverture.o);
+		}
+		enfantConditionsMedicalesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantConditionsMedicales() {
+		return enfantConditionsMedicales;
+	}
+
+	public String strEnfantConditionsMedicales() {
+		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
+	}
+
+	public String jsonEnfantConditionsMedicales() {
+		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
+	}
+
+	public String nomAffichageEnfantConditionsMedicales() {
+		return "conditions médicales";
+	}
+
+	public String htmTooltipEnfantConditionsMedicales() {
+		return null;
+	}
+
+	public String htmEnfantConditionsMedicales() {
+		return enfantConditionsMedicales == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantConditionsMedicales());
+	}
+
+	public void inputEnfantConditionsMedicales(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "conditions médicales")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantConditionsMedicales");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantConditionsMedicales w3-input w3-border ");
+				a("name", "setEnfantConditionsMedicales");
+			} else {
+				a("class", "valeurEnfantConditionsMedicales w3-input w3-border ");
+				a("name", "enfantConditionsMedicales");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantConditionsMedicales', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }); ");
+			}
+			a("value", strEnfantConditionsMedicales())
+		.fg();
+
+	}
+
+	public void htmEnfantConditionsMedicales(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantConditionsMedicales").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantConditionsMedicales").a("class", "").f().sx("conditions médicales").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantConditionsMedicales(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); $('#", classeApiMethodeMethode, "_enfantConditionsMedicales').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantConditionsMedicales', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantConditionsMedicales')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////////////////////
+	// enfantEcolesPrecedemmentFrequentees //
+	/////////////////////////////////////////
+
+	/**	L'entité « enfantEcolesPrecedemmentFrequentees »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantEcolesPrecedemmentFrequentees;
+	@JsonIgnore
+	public Couverture<String> enfantEcolesPrecedemmentFrequenteesCouverture = new Couverture<String>().p(this).c(String.class).var("enfantEcolesPrecedemmentFrequentees").o(enfantEcolesPrecedemmentFrequentees);
+
+	/**	<br/>L'entité « enfantEcolesPrecedemmentFrequentees »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantEcolesPrecedemmentFrequentees">Trouver l'entité enfantEcolesPrecedemmentFrequentees dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c);
+
+	public String getEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees;
+	}
+
+	public void setEnfantEcolesPrecedemmentFrequentees(String enfantEcolesPrecedemmentFrequentees) {
+		this.enfantEcolesPrecedemmentFrequentees = enfantEcolesPrecedemmentFrequentees;
+		this.enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantEcolesPrecedemmentFrequenteesInit() {
+		if(!enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise) {
+			_enfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequenteesCouverture);
+			if(enfantEcolesPrecedemmentFrequentees == null)
+				setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequenteesCouverture.o);
+		}
+		enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees;
+	}
+
+	public String strEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees == null ? "" : enfantEcolesPrecedemmentFrequentees;
+	}
+
+	public String jsonEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees == null ? "" : enfantEcolesPrecedemmentFrequentees;
+	}
+
+	public String nomAffichageEnfantEcolesPrecedemmentFrequentees() {
+		return "écoles précedemment fréqentées";
+	}
+
+	public String htmTooltipEnfantEcolesPrecedemmentFrequentees() {
+		return null;
+	}
+
+	public String htmEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantEcolesPrecedemmentFrequentees());
+	}
+
+	public void inputEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "écoles précedemment fréqentées")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
+				a("name", "setEnfantEcolesPrecedemmentFrequentees");
+			} else {
+				a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
+				a("name", "enfantEcolesPrecedemmentFrequentees");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantEcolesPrecedemmentFrequentees', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }); ");
+			}
+			a("value", strEnfantEcolesPrecedemmentFrequentees())
+		.fg();
+
+	}
+
+	public void htmEnfantEcolesPrecedemmentFrequentees(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantEcolesPrecedemmentFrequentees").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees").a("class", "").f().sx("écoles précedemment fréqentées").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantEcolesPrecedemmentFrequentees(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); $('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantEcolesPrecedemmentFrequentees', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// enfantDescription //
+	///////////////////////
+
+	/**	L'entité « enfantDescription »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantDescription;
+	@JsonIgnore
+	public Couverture<String> enfantDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("enfantDescription").o(enfantDescription);
+
+	/**	<br/>L'entité « enfantDescription »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantDescription">Trouver l'entité enfantDescription dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantDescription(Couverture<String> c);
+
+	public String getEnfantDescription() {
+		return enfantDescription;
+	}
+
+	public void setEnfantDescription(String enfantDescription) {
+		this.enfantDescription = enfantDescription;
+		this.enfantDescriptionCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantDescriptionInit() {
+		if(!enfantDescriptionCouverture.dejaInitialise) {
+			_enfantDescription(enfantDescriptionCouverture);
+			if(enfantDescription == null)
+				setEnfantDescription(enfantDescriptionCouverture.o);
+		}
+		enfantDescriptionCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantDescription() {
+		return enfantDescription;
+	}
+
+	public String strEnfantDescription() {
+		return enfantDescription == null ? "" : enfantDescription;
+	}
+
+	public String jsonEnfantDescription() {
+		return enfantDescription == null ? "" : enfantDescription;
+	}
+
+	public String nomAffichageEnfantDescription() {
+		return "description";
+	}
+
+	public String htmTooltipEnfantDescription() {
+		return null;
+	}
+
+	public String htmEnfantDescription() {
+		return enfantDescription == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantDescription());
+	}
+
+	public void inputEnfantDescription(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("textarea")
+			.a("placeholder", "description")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantDescription");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantDescription w3-input w3-border ");
+				a("name", "setEnfantDescription");
+			} else {
+				a("class", "valeurEnfantDescription w3-input w3-border ");
+				a("name", "enfantDescription");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDescription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDescription')); }); ");
+			}
+		f().sx(strEnfantDescription()).g("textarea");
+
+	}
+
+	public void htmEnfantDescription(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantDescription").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantDescription").a("class", "").f().sx("description").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantDescription(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDescription')); $('#", classeApiMethodeMethode, "_enfantDescription').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantDescription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDescription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDescription')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////
+	// enfantObjectifs //
+	/////////////////////
+
+	/**	L'entité « enfantObjectifs »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String enfantObjectifs;
+	@JsonIgnore
+	public Couverture<String> enfantObjectifsCouverture = new Couverture<String>().p(this).c(String.class).var("enfantObjectifs").o(enfantObjectifs);
+
+	/**	<br/>L'entité « enfantObjectifs »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantObjectifs">Trouver l'entité enfantObjectifs dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantObjectifs(Couverture<String> c);
+
+	public String getEnfantObjectifs() {
+		return enfantObjectifs;
+	}
+
+	public void setEnfantObjectifs(String enfantObjectifs) {
+		this.enfantObjectifs = enfantObjectifs;
+		this.enfantObjectifsCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire enfantObjectifsInit() {
+		if(!enfantObjectifsCouverture.dejaInitialise) {
+			_enfantObjectifs(enfantObjectifsCouverture);
+			if(enfantObjectifs == null)
+				setEnfantObjectifs(enfantObjectifsCouverture.o);
+		}
+		enfantObjectifsCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrEnfantObjectifs() {
+		return enfantObjectifs;
+	}
+
+	public String strEnfantObjectifs() {
+		return enfantObjectifs == null ? "" : enfantObjectifs;
+	}
+
+	public String jsonEnfantObjectifs() {
+		return enfantObjectifs == null ? "" : enfantObjectifs;
+	}
+
+	public String nomAffichageEnfantObjectifs() {
+		return "objectifs";
+	}
+
+	public String htmTooltipEnfantObjectifs() {
+		return null;
+	}
+
+	public String htmEnfantObjectifs() {
+		return enfantObjectifs == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantObjectifs());
+	}
+
+	public void inputEnfantObjectifs(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("textarea")
+			.a("placeholder", "objectifs")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantObjectifs");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantObjectifs w3-input w3-border ");
+				a("name", "setEnfantObjectifs");
+			} else {
+				a("class", "valeurEnfantObjectifs w3-input w3-border ");
+				a("name", "enfantObjectifs");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantObjectifs', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }); ");
+			}
+		f().sx(strEnfantObjectifs()).g("textarea");
+
+	}
+
+	public void htmEnfantObjectifs(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantObjectifs").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantObjectifs").a("class", "").f().sx("objectifs").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantObjectifs(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); $('#", classeApiMethodeMethode, "_enfantObjectifs').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantObjectifs', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantObjectifs')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////
+	// enfantPropre //
+	//////////////////
+
+	/**	L'entité « enfantPropre »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean enfantPropre;
+	@JsonIgnore
+	public Couverture<Boolean> enfantPropreCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("enfantPropre").o(enfantPropre);
+
+	/**	<br/>L'entité « enfantPropre »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantPropre">Trouver l'entité enfantPropre dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantPropre(Couverture<Boolean> c);
+
+	public Boolean getEnfantPropre() {
+		return enfantPropre;
+	}
+
+	public void setEnfantPropre(Boolean enfantPropre) {
+		this.enfantPropre = enfantPropre;
+		this.enfantPropreCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setEnfantPropre(String o) {
+		this.enfantPropre = Boolean.parseBoolean(o);
+		this.enfantPropreCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire enfantPropreInit() {
+		if(!enfantPropreCouverture.dejaInitialise) {
+			_enfantPropre(enfantPropreCouverture);
+			if(enfantPropre == null)
+				setEnfantPropre(enfantPropreCouverture.o);
+		}
+		enfantPropreCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrEnfantPropre() {
+		return enfantPropre;
+	}
+
+	public String strEnfantPropre() {
+		return enfantPropre == null ? "" : enfantPropre.toString();
+	}
+
+	public String jsonEnfantPropre() {
+		return enfantPropre == null ? "" : enfantPropre.toString();
+	}
+
+	public String nomAffichageEnfantPropre() {
+		return "propre";
+	}
+
+	public String htmTooltipEnfantPropre() {
+		return null;
+	}
+
+	public String htmEnfantPropre() {
+		return enfantPropre == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantPropre());
+	}
+
+	public void inputEnfantPropre(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classeApiMethodeMethode, "_enfantPropre")
+			.a("value", "true");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantPropre");
+				a("name", "setEnfantPropre");
+			} else {
+				a("class", "valeurEnfantPropre");
+				a("name", "enfantPropre");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantPropre', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantPropre')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantPropre')); }); ");
+			}
+			;
+			if(getEnfantPropre() != null && getEnfantPropre())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmEnfantPropre(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantPropre").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantPropre").a("class", "").f().sx("propre").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantPropre(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////////
 	// inscriptionNomGroupe //
 	//////////////////////////
@@ -8416,6 +8986,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		familleAddresseInit();
 		familleCommentVousConnaissezEcoleInit();
 		inscriptionConsiderationsSpecialesInit();
+		enfantConditionsMedicalesInit();
+		enfantEcolesPrecedemmentFrequenteesInit();
+		enfantDescriptionInit();
+		enfantObjectifsInit();
+		enfantPropreInit();
 		inscriptionNomGroupeInit();
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
@@ -8629,6 +9204,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.familleCommentVousConnaissezEcole;
 			case "inscriptionConsiderationsSpeciales":
 				return oInscriptionScolaire.inscriptionConsiderationsSpeciales;
+			case "enfantConditionsMedicales":
+				return oInscriptionScolaire.enfantConditionsMedicales;
+			case "enfantEcolesPrecedemmentFrequentees":
+				return oInscriptionScolaire.enfantEcolesPrecedemmentFrequentees;
+			case "enfantDescription":
+				return oInscriptionScolaire.enfantDescription;
+			case "enfantObjectifs":
+				return oInscriptionScolaire.enfantObjectifs;
+			case "enfantPropre":
+				return oInscriptionScolaire.enfantPropre;
 			case "inscriptionNomGroupe":
 				return oInscriptionScolaire.inscriptionNomGroupe;
 			case "inscriptionPaimentChaqueMois":
@@ -8782,6 +9367,26 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return val;
 			case "inscriptionConsiderationsSpeciales":
 				setInscriptionConsiderationsSpeciales(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantConditionsMedicales":
+				setEnfantConditionsMedicales(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantEcolesPrecedemmentFrequentees":
+				setEnfantEcolesPrecedemmentFrequentees(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantDescription":
+				setEnfantDescription(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantObjectifs":
+				setEnfantObjectifs(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantPropre":
+				setEnfantPropre(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
 			case "inscriptionNomGroupe":
@@ -9233,6 +9838,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String inscriptionConsiderationsSpeciales = (String)solrDocument.get("inscriptionConsiderationsSpeciales_stored_string");
 				if(inscriptionConsiderationsSpeciales != null)
 					oInscriptionScolaire.setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpeciales);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantConditionsMedicales")) {
+				String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
+				if(enfantConditionsMedicales != null)
+					oInscriptionScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantEcolesPrecedemmentFrequentees")) {
+				String enfantEcolesPrecedemmentFrequentees = (String)solrDocument.get("enfantEcolesPrecedemmentFrequentees_stored_string");
+				if(enfantEcolesPrecedemmentFrequentees != null)
+					oInscriptionScolaire.setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequentees);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantDescription")) {
+				String enfantDescription = (String)solrDocument.get("enfantDescription_stored_string");
+				if(enfantDescription != null)
+					oInscriptionScolaire.setEnfantDescription(enfantDescription);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantObjectifs")) {
+				String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
+				if(enfantObjectifs != null)
+					oInscriptionScolaire.setEnfantObjectifs(enfantObjectifs);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("enfantPropre")) {
+				Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
+				if(enfantPropre != null)
+					oInscriptionScolaire.setEnfantPropre(enfantPropre);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("inscriptionNomGroupe")) {
@@ -9706,6 +10341,26 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionConsiderationsSpeciales_indexed_string", inscriptionConsiderationsSpeciales);
 			document.addField("inscriptionConsiderationsSpeciales_stored_string", inscriptionConsiderationsSpeciales);
 		}
+		if(enfantConditionsMedicales != null) {
+			document.addField("enfantConditionsMedicales_indexed_string", enfantConditionsMedicales);
+			document.addField("enfantConditionsMedicales_stored_string", enfantConditionsMedicales);
+		}
+		if(enfantEcolesPrecedemmentFrequentees != null) {
+			document.addField("enfantEcolesPrecedemmentFrequentees_indexed_string", enfantEcolesPrecedemmentFrequentees);
+			document.addField("enfantEcolesPrecedemmentFrequentees_stored_string", enfantEcolesPrecedemmentFrequentees);
+		}
+		if(enfantDescription != null) {
+			document.addField("enfantDescription_indexed_string", enfantDescription);
+			document.addField("enfantDescription_stored_string", enfantDescription);
+		}
+		if(enfantObjectifs != null) {
+			document.addField("enfantObjectifs_indexed_string", enfantObjectifs);
+			document.addField("enfantObjectifs_stored_string", enfantObjectifs);
+		}
+		if(enfantPropre != null) {
+			document.addField("enfantPropre_indexed_boolean", enfantPropre);
+			document.addField("enfantPropre_stored_boolean", enfantPropre);
+		}
 		if(inscriptionNomGroupe != null) {
 			document.addField("inscriptionNomGroupe_indexed_string", inscriptionNomGroupe);
 			document.addField("inscriptionNomGroupe_stored_string", inscriptionNomGroupe);
@@ -9935,6 +10590,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "familleCommentVousConnaissezEcole_indexed_string";
 			case "inscriptionConsiderationsSpeciales":
 				return "inscriptionConsiderationsSpeciales_indexed_string";
+			case "enfantConditionsMedicales":
+				return "enfantConditionsMedicales_indexed_string";
+			case "enfantEcolesPrecedemmentFrequentees":
+				return "enfantEcolesPrecedemmentFrequentees_indexed_string";
+			case "enfantDescription":
+				return "enfantDescription_indexed_string";
+			case "enfantObjectifs":
+				return "enfantObjectifs_indexed_string";
+			case "enfantPropre":
+				return "enfantPropre_indexed_boolean";
 			case "inscriptionNomGroupe":
 				return "inscriptionNomGroupe_indexed_string";
 			case "inscriptionPaimentChaqueMois":
@@ -10226,6 +10891,26 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionConsiderationsSpeciales != null)
 			oInscriptionScolaire.setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpeciales);
 
+		String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
+		if(enfantConditionsMedicales != null)
+			oInscriptionScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
+
+		String enfantEcolesPrecedemmentFrequentees = (String)solrDocument.get("enfantEcolesPrecedemmentFrequentees_stored_string");
+		if(enfantEcolesPrecedemmentFrequentees != null)
+			oInscriptionScolaire.setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequentees);
+
+		String enfantDescription = (String)solrDocument.get("enfantDescription_stored_string");
+		if(enfantDescription != null)
+			oInscriptionScolaire.setEnfantDescription(enfantDescription);
+
+		String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
+		if(enfantObjectifs != null)
+			oInscriptionScolaire.setEnfantObjectifs(enfantObjectifs);
+
+		Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
+		if(enfantPropre != null)
+			oInscriptionScolaire.setEnfantPropre(enfantPropre);
+
 		String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
 		if(inscriptionNomGroupe != null)
 			oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
@@ -10334,7 +11019,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -10363,6 +11048,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( familleAddresse, that.familleAddresse )
 				&& Objects.equals( familleCommentVousConnaissezEcole, that.familleCommentVousConnaissezEcole )
 				&& Objects.equals( inscriptionConsiderationsSpeciales, that.inscriptionConsiderationsSpeciales )
+				&& Objects.equals( enfantConditionsMedicales, that.enfantConditionsMedicales )
+				&& Objects.equals( enfantEcolesPrecedemmentFrequentees, that.enfantEcolesPrecedemmentFrequentees )
+				&& Objects.equals( enfantDescription, that.enfantDescription )
+				&& Objects.equals( enfantObjectifs, that.enfantObjectifs )
+				&& Objects.equals( enfantPropre, that.enfantPropre )
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
@@ -10411,6 +11101,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", familleAddresse: \"" ).append(familleAddresse).append( "\"" );
 		sb.append( ", familleCommentVousConnaissezEcole: \"" ).append(familleCommentVousConnaissezEcole).append( "\"" );
 		sb.append( ", inscriptionConsiderationsSpeciales: \"" ).append(inscriptionConsiderationsSpeciales).append( "\"" );
+		sb.append( ", enfantConditionsMedicales: \"" ).append(enfantConditionsMedicales).append( "\"" );
+		sb.append( ", enfantEcolesPrecedemmentFrequentees: \"" ).append(enfantEcolesPrecedemmentFrequentees).append( "\"" );
+		sb.append( ", enfantDescription: \"" ).append(enfantDescription).append( "\"" );
+		sb.append( ", enfantObjectifs: \"" ).append(enfantObjectifs).append( "\"" );
+		sb.append( ", enfantPropre: " ).append(enfantPropre);
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
