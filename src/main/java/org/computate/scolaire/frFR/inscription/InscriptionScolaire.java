@@ -1229,7 +1229,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 6
 	 * HtmlCellule: 2
-	 */                   
+	 */                  
 	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
 	}
 

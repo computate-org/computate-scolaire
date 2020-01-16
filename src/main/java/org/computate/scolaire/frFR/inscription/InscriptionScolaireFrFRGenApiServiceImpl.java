@@ -2019,7 +2019,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(definirAsync.succeeded()) {
 					try {
 						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
+							try {
+								o.definirPourClasse(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {

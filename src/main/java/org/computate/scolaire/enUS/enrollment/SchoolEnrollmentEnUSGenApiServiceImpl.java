@@ -530,7 +530,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(listSchoolEnrollment.next(dt)) {
 					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(patchRequest).toString());
 					listPATCHSchoolEnrollment(patchRequest, listSchoolEnrollment, dt, eventHandler);
-					LOGGER.info("patch " + patchRequest.getNumFound());
+					LOGGER.info("patch " + patchRequest.getNumPATCH());
 				} else {
 					response200PATCHSchoolEnrollment(patchRequest, eventHandler);
 				}
@@ -2020,7 +2020,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(defineAsync.succeeded()) {
 					try {
 						for(JsonArray definition : defineAsync.result().getResults()) {
-							o.defineForClass(definition.getString(0), definition.getString(1));
+							try {
+								o.defineForClass(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} catch(Exception e) {
