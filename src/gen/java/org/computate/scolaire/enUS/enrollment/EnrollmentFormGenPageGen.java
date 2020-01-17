@@ -5,6 +5,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -307,6 +309,18 @@ public abstract class EnrollmentFormGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlStyleEnrollmentFormGenPage() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestEnrollmentFormGenPage() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		EnrollmentFormGenPage original = (EnrollmentFormGenPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			super.patchRequestClusterPage();
+		}
 	}
 
 	//////////////

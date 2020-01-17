@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription.design;                               
+package org.computate.scolaire.frFR.inscription.design;                                
 
 import java.util.List;
 

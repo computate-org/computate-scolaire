@@ -303,6 +303,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", jsonObject.getBoolean(entiteVar), pk));
 						break;
+					case "inscriptionNomsParents":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("inscriptionNomsParents", jsonObject.getString(entiteVar), pk));
+						break;
 					case "inscriptionSignature1":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("inscriptionSignature1", jsonObject.getString(entiteVar), pk));
@@ -443,6 +447,11 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 											requetePatch.setRows(listeInscriptionScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeInscriptionScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											if(listeInscriptionScolaire.size() == 1) {
+												InscriptionScolaire o = listeInscriptionScolaire.get(0);
+												requetePatch.setPk(o.getPk());
+												requetePatch.setOriginal(o);
+											}
 											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -521,11 +530,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(requetePatch.getNumFound() == 1 && listeInscriptionScolaire.size() == 1) {
-					InscriptionScolaire o = listeInscriptionScolaire.get(0);
-					requetePatch.setPk(o.getPk());
-					requetePatchInscriptionScolaire(o);
-				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeInscriptionScolaire.size());
 				if(listeInscriptionScolaire.next(dt)) {
 					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requetePatch).toString());
@@ -580,6 +584,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					classes.add("PaiementScolaire");
 				}
 			}
+			o.requetePatchInscriptionScolaire();
 		}
 	}
 
@@ -635,16 +640,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -673,6 +668,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "addBlocCles":
@@ -973,6 +978,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							o2.setInscriptionPaimentComplet(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet(), pk));
+						}
+						break;
+					case "setInscriptionNomsParents":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "inscriptionNomsParents"));
+						} else {
+							o2.setInscriptionNomsParents(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("inscriptionNomsParents", o2.jsonInscriptionNomsParents(), pk));
 						}
 						break;
 					case "setInscriptionSignature1":
@@ -1840,6 +1855,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUtilisateur = creerLigne.getLong(0);
 								UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
@@ -1877,6 +1893,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
 							UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(

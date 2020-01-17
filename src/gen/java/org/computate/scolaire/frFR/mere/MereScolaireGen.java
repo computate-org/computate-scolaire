@@ -18,6 +18,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -31,13 +32,14 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe momCompleteName dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe familyName dans Solr</a>
  * <br/>
  **/
 public abstract class MereScolaireGen<DEV> extends Cluster {
@@ -987,10 +989,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "prénom")
 			.a("id", classeApiMethodeMethode, "_personnePrenom");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenom w3-input w3-border ");
+				a("class", "setPersonnePrenom inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
 				a("name", "setPersonnePrenom");
 			} else {
-				a("class", "valeurPersonnePrenom w3-input w3-border ");
+				a("class", "valeurPersonnePrenom w3-input w3-border inputMereScolaire", pk, "PersonnePrenom w3-input w3-border ");
 				a("name", "personnePrenom");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1102,10 +1104,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "prénom préferé")
 			.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonnePrenomPrefere w3-input w3-border ");
+				a("class", "setPersonnePrenomPrefere inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 				a("name", "setPersonnePrenomPrefere");
 			} else {
-				a("class", "valeurPersonnePrenomPrefere w3-input w3-border ");
+				a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputMereScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 				a("name", "personnePrenomPrefere");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1217,10 +1219,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "nom de famille")
 			.a("id", classeApiMethodeMethode, "_familleNom");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleNom w3-input w3-border ");
+				a("class", "setFamilleNom inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
 				a("name", "setFamilleNom");
 			} else {
-				a("class", "valeurFamilleNom w3-input w3-border ");
+				a("class", "valeurFamilleNom w3-input w3-border inputMereScolaire", pk, "FamilleNom w3-input w3-border ");
 				a("name", "familleNom");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1515,10 +1517,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "occupation")
 			.a("id", classeApiMethodeMethode, "_personneOccupation");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneOccupation w3-input w3-border ");
+				a("class", "setPersonneOccupation inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
 				a("name", "setPersonneOccupation");
 			} else {
-				a("class", "valeurPersonneOccupation w3-input w3-border ");
+				a("class", "valeurPersonneOccupation w3-input w3-border inputMereScolaire", pk, "PersonneOccupation w3-input w3-border ");
 				a("name", "personneOccupation");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1630,10 +1632,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "numéro de téléphone")
 			.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneNumeroTelephone w3-input w3-border ");
+				a("class", "setPersonneNumeroTelephone inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
 				a("name", "setPersonneNumeroTelephone");
 			} else {
-				a("class", "valeurPersonneNumeroTelephone w3-input w3-border ");
+				a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputMereScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
 				a("name", "personneNumeroTelephone");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1745,10 +1747,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("placeholder", "mail")
 			.a("id", classeApiMethodeMethode, "_personneMail");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneMail w3-input w3-border ");
+				a("class", "setPersonneMail inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
 				a("name", "setPersonneMail");
 			} else {
-				a("class", "valeurPersonneMail w3-input w3-border ");
+				a("class", "valeurPersonneMail w3-input w3-border inputMereScolaire", pk, "PersonneMail w3-input w3-border ");
 				a("name", "personneMail");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1926,10 +1928,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_personneSms")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneSms");
+				a("class", "setPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
 				a("name", "setPersonneSms");
 			} else {
-				a("class", "valeurPersonneSms");
+				a("class", "valeurPersonneSms inputMereScolaire", pk, "PersonneSms w3-input w3-border ");
 				a("name", "personneSms");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2036,10 +2038,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_personneRecevoirMail")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneRecevoirMail");
+				a("class", "setPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
 				a("name", "setPersonneRecevoirMail");
 			} else {
-				a("class", "valeurPersonneRecevoirMail");
+				a("class", "valeurPersonneRecevoirMail inputMereScolaire", pk, "PersonneRecevoirMail w3-input w3-border ");
 				a("name", "personneRecevoirMail");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2146,10 +2148,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_personneContactUrgence")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneContactUrgence");
+				a("class", "setPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
 				a("name", "setPersonneContactUrgence");
 			} else {
-				a("class", "valeurPersonneContactUrgence");
+				a("class", "valeurPersonneContactUrgence inputMereScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
 				a("name", "personneContactUrgence");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2256,10 +2258,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_personneChercher")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneChercher");
+				a("class", "setPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
 				a("name", "setPersonneChercher");
 			} else {
-				a("class", "valeurPersonneChercher");
+				a("class", "valeurPersonneChercher inputMereScolaire", pk, "PersonneChercher w3-input w3-border ");
 				a("name", "personneChercher");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3164,6 +3166,40 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			oMereScolaire.setMereNomComplet(mereNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchMereScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		MereScolaire original = (MereScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requetePatch.addVars("inscriptionCles");
+			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
+				requetePatch.addVars("personnePrenom");
+			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
+				requetePatch.addVars("personnePrenomPrefere");
+			if(!Objects.equals(familleNom, original.getFamilleNom()))
+				requetePatch.addVars("familleNom");
+			if(!Objects.equals(personneOccupation, original.getPersonneOccupation()))
+				requetePatch.addVars("personneOccupation");
+			if(!Objects.equals(personneNumeroTelephone, original.getPersonneNumeroTelephone()))
+				requetePatch.addVars("personneNumeroTelephone");
+			if(!Objects.equals(personneMail, original.getPersonneMail()))
+				requetePatch.addVars("personneMail");
+			if(!Objects.equals(personneSms, original.getPersonneSms()))
+				requetePatch.addVars("personneSms");
+			if(!Objects.equals(personneRecevoirMail, original.getPersonneRecevoirMail()))
+				requetePatch.addVars("personneRecevoirMail");
+			if(!Objects.equals(personneContactUrgence, original.getPersonneContactUrgence()))
+				requetePatch.addVars("personneContactUrgence");
+			if(!Objects.equals(personneChercher, original.getPersonneChercher()))
+				requetePatch.addVars("personneChercher");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

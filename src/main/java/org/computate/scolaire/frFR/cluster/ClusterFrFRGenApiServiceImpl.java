@@ -277,6 +277,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 											requetePatch.setRows(listeCluster.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeCluster.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											if(listeCluster.size() == 1) {
+												Cluster o = listeCluster.get(0);
+												requetePatch.setPk(o.getPk());
+												requetePatch.setOriginal(o);
+											}
 											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -355,11 +360,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(requetePatch.getNumFound() == 1 && listeCluster.size() == 1) {
-					Cluster o = listeCluster.get(0);
-					requetePatch.setPk(o.getPk());
-					requetePatchCluster(o);
-				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeCluster.size());
 				if(listeCluster.next(dt)) {
 					requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requetePatch).toString());
@@ -378,6 +378,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		if(requetePatch != null) {
 			List<Long> pks = requetePatch.getPks();
 			List<String> classes = requetePatch.getClasses();
+			o.requetePatchCluster();
 		}
 	}
 
@@ -433,16 +434,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.cluster.Cluster"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -471,6 +462,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 				}
@@ -883,6 +884,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUtilisateur = creerLigne.getLong(0);
 								UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
@@ -920,6 +922,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
 							UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(
@@ -1062,7 +1065,11 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 				if(definirAsync.succeeded()) {
 					try {
 						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
+							try {
+								o.definirPourClasse(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {

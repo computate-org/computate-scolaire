@@ -18,6 +18,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -31,6 +32,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -3164,6 +3166,40 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			oPereScolaire.setPereNomComplet(pereNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchPereScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		PereScolaire original = (PereScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requetePatch.addVars("inscriptionCles");
+			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
+				requetePatch.addVars("personnePrenom");
+			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
+				requetePatch.addVars("personnePrenomPrefere");
+			if(!Objects.equals(familleNom, original.getFamilleNom()))
+				requetePatch.addVars("familleNom");
+			if(!Objects.equals(personneOccupation, original.getPersonneOccupation()))
+				requetePatch.addVars("personneOccupation");
+			if(!Objects.equals(personneNumeroTelephone, original.getPersonneNumeroTelephone()))
+				requetePatch.addVars("personneNumeroTelephone");
+			if(!Objects.equals(personneMail, original.getPersonneMail()))
+				requetePatch.addVars("personneMail");
+			if(!Objects.equals(personneSms, original.getPersonneSms()))
+				requetePatch.addVars("personneSms");
+			if(!Objects.equals(personneRecevoirMail, original.getPersonneRecevoirMail()))
+				requetePatch.addVars("personneRecevoirMail");
+			if(!Objects.equals(personneContactUrgence, original.getPersonneContactUrgence()))
+				requetePatch.addVars("personneContactUrgence");
+			if(!Objects.equals(personneChercher, original.getPersonneChercher()))
+				requetePatch.addVars("personneChercher");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

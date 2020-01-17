@@ -287,6 +287,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 											patchRequest.setRows(listSchool.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											if(listSchool.size() == 1) {
+												School o = listSchool.get(0);
+												patchRequest.setPk(o.getPk());
+												patchRequest.setOriginal(o);
+											}
 											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -365,11 +370,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(patchRequest.getNumFound() == 1 && listSchool.size() == 1) {
-					School o = listSchool.get(0);
-					patchRequest.setPk(o.getPk());
-					patchRequestSchool(o);
-				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchool.size());
 				if(listSchool.next(dt)) {
 					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
@@ -394,6 +394,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					classes.add("SchoolYear");
 				}
 			}
+			o.patchRequestSchool();
 		}
 	}
 
@@ -449,16 +450,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.school.School"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
-						}
-						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -487,6 +478,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "addYearKeys":
@@ -973,6 +974,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUser = createLine.getLong(0);
 								SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 								siteUser.setPk(pkUser);
 
 								sqlConnection.queryWithParams(
@@ -1010,6 +1012,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 						} else {
 							Long pkUser = userValues.getLong(0);
 							SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 							siteUser.setPk(pkUser);
 
 							sqlConnection.queryWithParams(
@@ -1152,7 +1155,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(defineAsync.succeeded()) {
 					try {
 						for(JsonArray definition : defineAsync.result().getResults()) {
-							o.defineForClass(definition.getString(0), definition.getString(1));
+							try {
+								o.defineForClass(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} catch(Exception e) {

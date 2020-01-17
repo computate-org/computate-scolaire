@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.gardien;          
+package org.computate.scolaire.frFR.gardien;           
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -49,7 +49,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/   
+*/     
 public class GardienScolaire extends GardienScolaireGen<Cluster> {
 
 	/**

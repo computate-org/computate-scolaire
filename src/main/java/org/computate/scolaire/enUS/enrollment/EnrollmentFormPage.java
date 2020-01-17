@@ -29,11 +29,6 @@ import io.vertx.ext.web.api.OperationRequest;
  **/  
 public class EnrollmentFormPage extends EnrollmentFormPageGen<EnrollmentFormGenPage> {
 
-	public void initDeepEnrollmentFormPage() {
-		initEnrollmentFormPage();
-		super.initDeepEnrollmentFormGenPage(siteRequest_);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * 

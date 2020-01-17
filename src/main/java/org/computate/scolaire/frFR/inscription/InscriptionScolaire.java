@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;             
+package org.computate.scolaire.frFR.inscription;           
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -1229,7 +1229,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 6
 	 * HtmlCellule: 2
-	 */                  
+	 */                   
 	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
 	}
 
@@ -1327,6 +1327,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentParentNames
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * r: MereScolaire
 	 * r.enUS: SchoolMom
 	 * r: PereScolaire

@@ -114,10 +114,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormPagePartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCree("Page");
-			o.htmModifie("Page");
+			o.htmPk("Page");
 			o.htmObjetId("Page");
+			o.htmModifie("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -169,10 +169,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTPartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCree("POST");
-			o.htmModifie("POST");
+			o.htmPk("POST");
 			o.htmObjetId("POST");
+			o.htmModifie("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -224,10 +224,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHPartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
-			o.htmModifie("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjetId("PATCH");
+			o.htmModifie("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -279,10 +279,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormRecherchePartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCree("Recherche");
-			o.htmModifie("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjetId("Recherche");
+			o.htmModifie("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");

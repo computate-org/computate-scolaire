@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.annee;
 
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -12,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
@@ -307,6 +309,18 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlStyleAnneeGenPage() {
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchAnneeGenPage() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		AnneeGenPage original = (AnneeGenPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			super.requetePatchClusterPage();
+		}
 	}
 
 	//////////////

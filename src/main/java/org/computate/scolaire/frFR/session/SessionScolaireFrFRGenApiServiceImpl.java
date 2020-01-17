@@ -283,6 +283,11 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 											requetePatch.setRows(listeSessionScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeSessionScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeSessionScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											if(listeSessionScolaire.size() == 1) {
+												SessionScolaire o = listeSessionScolaire.get(0);
+												requetePatch.setPk(o.getPk());
+												requetePatch.setOriginal(o);
+											}
 											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -361,11 +366,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(requetePatch.getNumFound() == 1 && listeSessionScolaire.size() == 1) {
-					SessionScolaire o = listeSessionScolaire.get(0);
-					requetePatch.setPk(o.getPk());
-					requetePatchSessionScolaire(o);
-				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeSessionScolaire.size());
 				if(listeSessionScolaire.next(dt)) {
 					requeteSite.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requetePatch).toString());
@@ -396,6 +396,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 					classes.add("SaisonScolaire");
 				}
 			}
+			o.requetePatchSessionScolaire();
 		}
 	}
 
@@ -451,16 +452,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.session.SessionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -489,6 +480,16 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "addAgeCles":
@@ -965,6 +966,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUtilisateur = creerLigne.getLong(0);
 								UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
@@ -1002,6 +1004,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
 							UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(
@@ -1144,7 +1147,11 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				if(definirAsync.succeeded()) {
 					try {
 						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
+							try {
+								o.definirPourClasse(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {

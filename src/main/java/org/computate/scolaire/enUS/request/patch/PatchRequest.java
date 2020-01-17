@@ -40,9 +40,15 @@ public class PatchRequest extends PatchRequestGen<Object> {
 	protected void _pk(Wrap<Long> c) {
 	}
 
+	protected void _original(Wrap<Object> c) {
+	}
+
 	protected void _pks(List<Long> c) {
 	}
 
 	protected void _classes(List<String> c) {
+	}
+
+	protected void _vars(List<String> c) {
 	}
 }

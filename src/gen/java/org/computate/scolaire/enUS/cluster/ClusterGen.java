@@ -19,6 +19,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -32,10 +33,12 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -337,18 +340,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.createdWrap.alreadyInitialized = true;
 	}
 	public Cluster setCreated(Instant o) {
-		this.created = ZonedDateTime.from(o);
+		this.created = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCreated(String o) {
-		this.created = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.created = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setCreated(Date o) {
-		this.created = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()));
+		this.created = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -440,18 +443,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.modifiedWrap.alreadyInitialized = true;
 	}
 	public Cluster setModified(Instant o) {
-		this.modified = ZonedDateTime.from(o);
+		this.modified = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModified(String o) {
-		this.modified = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.modified = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setModified(Date o) {
-		this.modified = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()));
+		this.modified = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -2007,6 +2010,25 @@ public abstract class ClusterGen<DEV> extends Object {
 		String pageUrlPk = (String)solrDocument.get("pageUrlPk_stored_string");
 		if(pageUrlPk != null)
 			oCluster.setPageUrlPk(pageUrlPk);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestCluster() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		Cluster original = (Cluster)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(created, original.getCreated()))
+				patchRequest.addVars("created");
+			if(!Objects.equals(modified, original.getModified()))
+				patchRequest.addVars("modified");
+			if(!Objects.equals(archived, original.getArchived()))
+				patchRequest.addVars("archived");
+			if(!Objects.equals(deleted, original.getDeleted()))
+				patchRequest.addVars("deleted");
+		}
 	}
 
 	//////////////

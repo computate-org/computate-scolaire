@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;               
+package org.computate.scolaire.frFR.bloc;                
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -964,7 +964,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: inputEnrollmentBlockKeys
+	 * Var.enUS: inputEnrollmentAttribute
 	 * r: patchInscriptionScolaireVals
 	 * r.enUS: patchSchoolEnrollmentVals
 	 * r: inscriptionCle
@@ -974,7 +974,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r: inscriptionAttribuer
 	 * r.enUS: enrollmentAttribute
 	 */
-	public void inputInscriptionBlocCles(String classeApiMethodeMethode) {
+	public void inputInscriptionAttribuer(String classeApiMethodeMethode) {
 		e("input")
 			.a("type", "checkbox")
 //			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")

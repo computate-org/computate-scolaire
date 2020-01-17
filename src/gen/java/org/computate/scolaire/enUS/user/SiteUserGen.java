@@ -14,6 +14,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -27,6 +28,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -121,47 +123,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userId == null ? "" : StringEscapeUtils.escapeHtml4(strUserId());
 	}
 
-	public void htmUserId(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserId\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserId() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserId\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserId()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userId\"");
-							r.s(" value=\"", htmUserId(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserId());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// userName //
 	//////////////
@@ -221,47 +182,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public String htmUserName() {
 		return userName == null ? "" : StringEscapeUtils.escapeHtml4(strUserName());
-	}
-
-	public void htmUserName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userName\"");
-							r.s(" value=\"", htmUserName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////
@@ -325,47 +245,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userEmail == null ? "" : StringEscapeUtils.escapeHtml4(strUserEmail());
 	}
 
-	public void htmUserEmail(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserEmail\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserEmail() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserEmail\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserEmail()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userEmail\"");
-							r.s(" value=\"", htmUserEmail(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserEmail());
-			}
-			r.l("</div>");
-		}
-	}
-
 	///////////////////
 	// userFirstName //
 	///////////////////
@@ -425,47 +304,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public String htmUserFirstName() {
 		return userFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFirstName());
-	}
-
-	public void htmUserFirstName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserFirstName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserFirstName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserFirstName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserFirstName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userFirstName\"");
-							r.s(" value=\"", htmUserFirstName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserFirstName());
-			}
-			r.l("</div>");
-		}
 	}
 
 	//////////////////
@@ -529,47 +367,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userLastName == null ? "" : StringEscapeUtils.escapeHtml4(strUserLastName());
 	}
 
-	public void htmUserLastName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserLastName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserLastName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserLastName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserLastName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userLastName\"");
-							r.s(" value=\"", htmUserLastName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserLastName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////////
 	// userFullName //
 	//////////////////
@@ -631,47 +428,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userFullName == null ? "" : StringEscapeUtils.escapeHtml4(strUserFullName());
 	}
 
-	public void htmUserFullName(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserFullName\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserFullName() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserFullName\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserFullName()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userFullName\"");
-							r.s(" value=\"", htmUserFullName(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserFullName());
-			}
-			r.l("</div>");
-		}
-	}
-
 	//////////////
 	// userSite //
 	//////////////
@@ -731,47 +487,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 
 	public String htmUserSite() {
 		return userSite == null ? "" : StringEscapeUtils.escapeHtml4(strUserSite());
-	}
-
-	public void htmUserSite(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserSite\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserSite() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserSite\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserSite()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userSite\"");
-							r.s(" value=\"", htmUserSite(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
-			} else {
-				r.s(htmUserSite());
-			}
-			r.l("</div>");
-		}
 	}
 
 	///////////////////////
@@ -840,45 +555,48 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return userReceiveEmails == null ? "" : StringEscapeUtils.escapeHtml4(strUserReceiveEmails());
 	}
 
-	public void htmUserReceiveEmails(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "UserReceiveEmails\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "UserReceiveEmails() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setUserReceiveEmails\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageUserReceiveEmails()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"userReceiveEmails\"");
-							r.s(" value=\"", htmUserReceiveEmails(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputUserReceiveEmails(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_userReceiveEmails")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setUserReceiveEmails");
+				a("name", "setUserReceiveEmails");
 			} else {
-				r.s(htmUserReceiveEmails());
+				a("class", "valueUserReceiveEmails");
+				a("name", "userReceiveEmails");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setUserReceiveEmails', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_userReceiveEmails')); }, function() { addError($('#", classApiMethodMethod, "_userReceiveEmails')); }); ");
+			}
+			;
+			if(getUserReceiveEmails() != null && getUserReceiveEmails())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmUserReceiveEmails(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSiteUserUserReceiveEmails").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_userReceiveEmails").a("class", "").f().sx("receive email").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputUserReceiveEmails(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	/////////////////
@@ -947,45 +665,48 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return seeArchived == null ? "" : StringEscapeUtils.escapeHtml4(strSeeArchived());
 	}
 
-	public void htmSeeArchived(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "SeeArchived\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "SeeArchived() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeeArchived\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeeArchived()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seeArchived\"");
-							r.s(" value=\"", htmSeeArchived(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputSeeArchived(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_seeArchived")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeeArchived");
+				a("name", "setSeeArchived");
 			} else {
-				r.s(htmSeeArchived());
+				a("class", "valueSeeArchived");
+				a("name", "seeArchived");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeArchived')); }, function() { addError($('#", classApiMethodMethod, "_seeArchived')); }); ");
+			}
+			;
+			if(getSeeArchived() != null && getSeeArchived())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmSeeArchived(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSiteUserSeeArchived").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_seeArchived").a("class", "").f().sx("see archived").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeeArchived(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	////////////////
@@ -1054,45 +775,48 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		return seeDeleted == null ? "" : StringEscapeUtils.escapeHtml4(strSeeDeleted());
 	}
 
-	public void htmSeeDeleted(AllWriter r, Boolean patchRights) {
-		if(pk!= null) {
-			r.s("<div id=\"patchSiteUser", strPk(), "SeeDeleted\">");
-			if(patchRights) {
-				r.l();
-				r.l("	<script>//<![CDATA[");
-				r.l("		function patchSiteUser", strPk(), "SeeDeleted() {");
-				r.l("			$.ajax({");
-				r.l("				url: '?fq=pk:", strPk(), "',");
-				r.l("				dataType: 'json',");
-				r.l("				type: 'patch',");
-				r.l("				contentType: 'application/json',");
-				r.l("				processData: false,");
-				r.l("				success: function( data, textStatus, jQxhr ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				error: function( jqXhr, textStatus, errorThrown ) {");
-				r.l("					");
-				r.l("				},");
-				r.l("				data: {\"setSeeDeleted\": this.value },");
-				r.l("				");
-				r.l("			});");
-				r.l("		}");
-				r.l("	//]]></script>");
-				r.l("	<div class=\"\">");
-				r.l("		<label class=\"w3-tooltip \">");
-				r.l("			<span>", StringEscapeUtils.escapeHtml4(nomAffichageSeeDeleted()), "</span>");
-				r.s("			<input");
-							r.s(" name=\"seeDeleted\"");
-							r.s(" value=\"", htmSeeDeleted(), "\");");
-							r.s(" onchange=\"\"");
-							r.l("/>");
-				r.l("		</label>");
-				r.l("	</div>");
+	public void inputSeeDeleted(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_seeDeleted")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setSeeDeleted");
+				a("name", "setSeeDeleted");
 			} else {
-				r.s(htmSeeDeleted());
+				a("class", "valueSeeDeleted");
+				a("name", "seeDeleted");
 			}
-			r.l("</div>");
-		}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchSiteUserVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeeDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_seeDeleted')); }, function() { addError($('#", classApiMethodMethod, "_seeDeleted')); }); ");
+			}
+			;
+			if(getSeeDeleted() != null && getSeeDeleted())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmSeeDeleted(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSiteUserSeeDeleted").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_seeDeleted").a("class", "").f().sx("see deleted").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSeeDeleted(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	//////////////
@@ -1371,7 +1095,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			SolrInputDocument document = new SolrInputDocument();
 			indexSiteUser(document);
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1383,7 +1107,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			indexSiteUser(document);
 			SolrClient clientSolr = siteRequest_.getSiteContext_().getSolrClient();
 			clientSolr.add(document);
-			clientSolr.commit(false, false, false);
+			clientSolr.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
 		}
@@ -1444,9 +1168,48 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			initDeepSiteUser(siteRequest);
 			SolrClient solrClient = siteContext.getSolrClient();
 			solrClient.deleteById(id.toString());
-			solrClient.commit(false, false, false);
+			solrClient.commit(false, false, true);
 		} catch(Exception e) {
 			ExceptionUtils.rethrow(e);
+		}
+	}
+
+	public static String varIndexedSiteUser(String entityVar) {
+		switch(entityVar) {
+			case "userName":
+				return "userName_indexed_string";
+			case "userEmail":
+				return "userEmail_indexed_string";
+			case "userFirstName":
+				return "userFirstName_indexed_string";
+			case "userLastName":
+				return "userLastName_indexed_string";
+			case "userFullName":
+				return "userFullName_indexed_string";
+			case "userSite":
+				return "userSite_indexed_string";
+			case "userReceiveEmails":
+				return "userReceiveEmails_indexed_boolean";
+			case "seeArchived":
+				return "seeArchived_indexed_boolean";
+			case "seeDeleted":
+				return "seeDeleted_indexed_boolean";
+			default:
+				return Cluster.varIndexedCluster(entityVar);
+		}
+	}
+
+	public static String varSearchSiteUser(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSearchCluster(entityVar);
+		}
+	}
+
+	public static String varSuggestSiteUser(String entityVar) {
+		switch(entityVar) {
+			default:
+				return Cluster.varSuggestCluster(entityVar);
 		}
 	}
 
@@ -1508,6 +1271,24 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public void htmlBodySiteUser() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSiteUser() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SiteUser original = (SiteUser)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(userReceiveEmails, original.getUserReceiveEmails()))
+				patchRequest.addVars("userReceiveEmails");
+			if(!Objects.equals(seeArchived, original.getSeeArchived()))
+				patchRequest.addVars("seeArchived");
+			if(!Objects.equals(seeDeleted, original.getSeeDeleted()))
+				patchRequest.addVars("seeDeleted");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.cluster;
 
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -12,6 +13,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.cluster.ClusterGenPage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**	
@@ -217,6 +219,18 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 	}
 
 	public void htmlStyleClusterPage() {
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchClusterPage() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		ClusterPage original = (ClusterPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			super.requetePatchClusterGenPage();
+		}
 	}
 
 	//////////////

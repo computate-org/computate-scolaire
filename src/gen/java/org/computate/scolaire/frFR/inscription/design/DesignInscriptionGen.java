@@ -18,6 +18,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -31,6 +32,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -1687,6 +1689,22 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 			oDesignInscription.setDesignInscriptionNomComplet(designInscriptionNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchDesignInscription() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		DesignInscription original = (DesignInscription)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(partHtmlCles, original.getPartHtmlCles()))
+				requetePatch.addVars("partHtmlCles");
+			if(!Objects.equals(designInscriptionNomComplet, original.getDesignInscriptionNomComplet()))
+				requetePatch.addVars("designInscriptionNomComplet");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

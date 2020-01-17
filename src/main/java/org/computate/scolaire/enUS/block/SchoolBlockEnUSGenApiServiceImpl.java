@@ -315,6 +315,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 											patchRequest.setRows(listSchoolBlock.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolBlock.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolBlock.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											if(listSchoolBlock.size() == 1) {
+												SchoolBlock o = listSchoolBlock.get(0);
+												patchRequest.setPk(o.getPk());
+												patchRequest.setOriginal(o);
+											}
 											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -393,11 +398,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(patchRequest.getNumFound() == 1 && listSchoolBlock.size() == 1) {
-					SchoolBlock o = listSchoolBlock.get(0);
-					patchRequest.setPk(o.getPk());
-					patchRequestSchoolBlock(o);
-				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolBlock.size());
 				if(listSchoolBlock.next(dt)) {
 					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(patchRequest).toString());
@@ -428,6 +428,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 					classes.add("SchoolAge");
 				}
 			}
+			o.patchRequestSchoolBlock();
 		}
 	}
 
@@ -483,16 +484,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.block.SchoolBlock"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
-						}
-						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -521,6 +512,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
+						}
+						break;
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 					case "addEnrollmentKeys":
@@ -1077,6 +1078,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUser = createLine.getLong(0);
 								SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 								siteUser.setPk(pkUser);
 
 								sqlConnection.queryWithParams(
@@ -1114,6 +1116,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						} else {
 							Long pkUser = userValues.getLong(0);
 							SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 							siteUser.setPk(pkUser);
 
 							sqlConnection.queryWithParams(
@@ -1256,7 +1259,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(defineAsync.succeeded()) {
 					try {
 						for(JsonArray definition : defineAsync.result().getResults()) {
-							o.defineForClass(definition.getString(0), definition.getString(1));
+							try {
+								o.defineForClass(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} catch(Exception e) {

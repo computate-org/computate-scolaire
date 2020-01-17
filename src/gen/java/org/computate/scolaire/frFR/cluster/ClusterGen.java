@@ -19,6 +19,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -32,10 +33,12 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Object;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -43,7 +46,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageH1 dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageUrlId dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -338,18 +341,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.creeCouverture.dejaInitialise = true;
 	}
 	public Cluster setCree(Instant o) {
-		this.cree = ZonedDateTime.from(o);
+		this.cree = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCree(String o) {
-		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
 	public Cluster setCree(Date o) {
-		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
+		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
@@ -441,18 +444,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.modifieCouverture.dejaInitialise = true;
 	}
 	public Cluster setModifie(Instant o) {
-		this.modifie = ZonedDateTime.from(o);
+		this.modifie = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModifie(String o) {
-		this.modifie = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.modifie = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
 	public Cluster setModifie(Date o) {
-		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
+		this.modifie = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
 	}
@@ -2008,6 +2011,25 @@ public abstract class ClusterGen<DEV> extends Object {
 		String pageUrlPk = (String)solrDocument.get("pageUrlPk_stored_string");
 		if(pageUrlPk != null)
 			oCluster.setPageUrlPk(pageUrlPk);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchCluster() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		Cluster original = (Cluster)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(cree, original.getCree()))
+				requetePatch.addVars("cree");
+			if(!Objects.equals(modifie, original.getModifie()))
+				requetePatch.addVars("modifie");
+			if(!Objects.equals(archive, original.getArchive()))
+				requetePatch.addVars("archive");
+			if(!Objects.equals(supprime, original.getSupprime()))
+				requetePatch.addVars("supprime");
+		}
 	}
 
 	//////////////

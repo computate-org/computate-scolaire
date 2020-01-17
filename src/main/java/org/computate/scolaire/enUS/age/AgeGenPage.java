@@ -116,10 +116,10 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	public void htmlFormPageSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCreated("Page");
-			o.htmModified("Page");
+			o.htmPk("Page");
 			o.htmObjectId("Page");
+			o.htmModified("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -137,10 +137,10 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCreated("POST");
-			o.htmModified("POST");
+			o.htmPk("POST");
 			o.htmObjectId("POST");
+			o.htmModified("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -158,10 +158,10 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
-			o.htmModified("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjectId("PATCH");
+			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -183,10 +183,10 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolAge(SchoolAge o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjectId("Recherche");
+			o.htmModified("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");

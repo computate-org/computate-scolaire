@@ -604,6 +604,44 @@ public abstract class PatchRequestGen<DEV> extends Object {
 		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
 	}
 
+	//////////////
+	// original //
+	//////////////
+
+	/**	L'entité « original »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected Object original;
+	@JsonIgnore
+	public Wrap<Object> originalWrap = new Wrap<Object>().p(this).c(Object.class).var("original").o(original);
+
+	/**	<br/>L'entité « original »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:original">Trouver l'entité original dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _original(Wrap<Object> c);
+
+	public Object getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(Object original) {
+		this.original = original;
+		this.originalWrap.alreadyInitialized = true;
+	}
+	protected PatchRequest originalInit() {
+		if(!originalWrap.alreadyInitialized) {
+			_original(originalWrap);
+			if(original == null)
+				setOriginal(originalWrap.o);
+		}
+		originalWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
 	/////////
 	// pks //
 	/////////
@@ -767,6 +805,84 @@ public abstract class PatchRequestGen<DEV> extends Object {
 		return classes == null ? "" : StringEscapeUtils.escapeHtml4(strClasses());
 	}
 
+	//////////
+	// vars //
+	//////////
+
+	/**	L'entité « vars »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> vars = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Wrap<List<String>> varsWrap = new Wrap<List<String>>().p(this).c(List.class).var("vars").o(vars);
+
+	/**	<br/>L'entité « vars »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.patch.PatchRequest&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:vars">Trouver l'entité vars dans Solr</a>
+	 * <br/>
+	 * @param vars est l'entité déjà construit. 
+	 **/
+	protected abstract void _vars(List<String> c);
+
+	public List<String> getVars() {
+		return vars;
+	}
+
+	public void setVars(List<String> vars) {
+		this.vars = vars;
+		this.varsWrap.alreadyInitialized = true;
+	}
+	public PatchRequest addVars(String...objets) {
+		for(String o : objets) {
+			addVars(o);
+		}
+		return (PatchRequest)this;
+	}
+	public PatchRequest addVars(String o) {
+		if(o != null && !vars.contains(o))
+			this.vars.add(o);
+		return (PatchRequest)this;
+	}
+	public PatchRequest setVars(JsonArray objets) {
+		vars.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addVars(o);
+		}
+		return (PatchRequest)this;
+	}
+	protected PatchRequest varsInit() {
+		if(!varsWrap.alreadyInitialized) {
+			_vars(vars);
+		}
+		varsWrap.alreadyInitialized(true);
+		return (PatchRequest)this;
+	}
+
+	public List<String> solrVars() {
+		return vars;
+	}
+
+	public String strVars() {
+		return vars == null ? "" : vars.toString();
+	}
+
+	public String jsonVars() {
+		return vars == null ? "" : vars.toString();
+	}
+
+	public String nomAffichageVars() {
+		return null;
+	}
+
+	public String htmTooltipVars() {
+		return null;
+	}
+
+	public String htmVars() {
+		return vars == null ? "" : StringEscapeUtils.escapeHtml4(strVars());
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -796,8 +912,10 @@ public abstract class PatchRequestGen<DEV> extends Object {
 		idInit();
 		emptyInit();
 		pkInit();
+		originalInit();
 		pksInit();
 		classesInit();
+		varsInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -853,10 +971,14 @@ public abstract class PatchRequestGen<DEV> extends Object {
 				return oPatchRequest.empty;
 			case "pk":
 				return oPatchRequest.pk;
+			case "original":
+				return oPatchRequest.original;
 			case "pks":
 				return oPatchRequest.pks;
 			case "classes":
 				return oPatchRequest.classes;
+			case "vars":
+				return oPatchRequest.vars;
 			default:
 				return null;
 		}

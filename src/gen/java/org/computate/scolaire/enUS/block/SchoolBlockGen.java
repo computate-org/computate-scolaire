@@ -21,6 +21,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -33,12 +34,14 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.age.SchoolAge;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
@@ -5443,6 +5446,44 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			oSchoolBlock.setBlockCompleteName(blockCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolBlock() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolBlock original = (SchoolBlock)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
+				patchRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(ageKey, original.getAgeKey()))
+				patchRequest.addVars("ageKey");
+			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
+				patchRequest.addVars("schoolAddress");
+			if(!Objects.equals(blockStartTime, original.getBlockStartTime()))
+				patchRequest.addVars("blockStartTime");
+			if(!Objects.equals(blockEndTime, original.getBlockEndTime()))
+				patchRequest.addVars("blockEndTime");
+			if(!Objects.equals(blockPricePerMonth, original.getBlockPricePerMonth()))
+				patchRequest.addVars("blockPricePerMonth");
+			if(!Objects.equals(blockSunday, original.getBlockSunday()))
+				patchRequest.addVars("blockSunday");
+			if(!Objects.equals(blockMonday, original.getBlockMonday()))
+				patchRequest.addVars("blockMonday");
+			if(!Objects.equals(blockTuesday, original.getBlockTuesday()))
+				patchRequest.addVars("blockTuesday");
+			if(!Objects.equals(blockWednesday, original.getBlockWednesday()))
+				patchRequest.addVars("blockWednesday");
+			if(!Objects.equals(blockThursday, original.getBlockThursday()))
+				patchRequest.addVars("blockThursday");
+			if(!Objects.equals(blockFriday, original.getBlockFriday()))
+				patchRequest.addVars("blockFriday");
+			if(!Objects.equals(blockSaturday, original.getBlockSaturday()))
+				patchRequest.addVars("blockSaturday");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

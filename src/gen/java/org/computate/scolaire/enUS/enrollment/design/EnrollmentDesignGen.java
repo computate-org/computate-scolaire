@@ -18,6 +18,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -31,6 +32,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -1686,6 +1688,22 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			oEnrollmentDesign.setEnrollmentDesignCompleteName(enrollmentDesignCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestEnrollmentDesign() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		EnrollmentDesign original = (EnrollmentDesign)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(htmlPartKeys, original.getHtmlPartKeys()))
+				patchRequest.addVars("htmlPartKeys");
+			if(!Objects.equals(enrollmentDesignCompleteName, original.getEnrollmentDesignCompleteName()))
+				patchRequest.addVars("enrollmentDesignCompleteName");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

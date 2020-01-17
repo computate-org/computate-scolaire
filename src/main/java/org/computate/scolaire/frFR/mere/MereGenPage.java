@@ -97,28 +97,16 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		l("$(document).ready(function() {");
 		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
 		tl(1, "suggereMereScolaireInscriptionCles([{'name':'fq','value':'mereCles:' + pk}], $('#listMereScolaireInscriptionCles_Page'), pk); ");
-		tl(1, "websocketMereScolaire(async function(requetePatch) {");
-		tl(2, "var pk = requetePatch['pk'];");
-		tl(2, "var pks = requetePatch['pks'];");
-		tl(2, "var classes = requetePatch['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchMereScolaireVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketMereScolaire(websocketMereScolaireInner(requetePatch));");
 		l("});");
 	}
 
 	public void htmlFormPageMereScolaire(MereScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCree("Page");
-			o.htmModifie("Page");
+			o.htmPk("Page");
 			o.htmObjetId("Page");
+			o.htmModifie("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -147,10 +135,10 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTMereScolaire(MereScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCree("POST");
-			o.htmModifie("POST");
+			o.htmPk("POST");
 			o.htmObjetId("POST");
+			o.htmModifie("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -179,10 +167,10 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHMereScolaire(MereScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
-			o.htmModifie("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjetId("PATCH");
+			o.htmModifie("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -214,10 +202,10 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 	public void htmlFormRechercheMereScolaire(MereScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCree("Recherche");
-			o.htmModifie("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjetId("Recherche");
+			o.htmModifie("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");

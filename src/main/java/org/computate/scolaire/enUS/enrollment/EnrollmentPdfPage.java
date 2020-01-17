@@ -38,11 +38,6 @@ import io.vertx.ext.web.api.OperationRequest;
  **/
 public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage> {
 
-	public void initDeepEnrollmentPdfPage() {
-		super.initDeepEnrollmentPdfGenPage(siteRequest_);
-		initEnrollmentPdfPage();
-	}
-
 	@Override protected void _pageContentType(Wrap<String> c) {
 		c.o("application/pdf");
 	}
@@ -69,13 +64,11 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 	 * 
 	 **/
 	protected void _listEnrollmentDesign(SearchList<EnrollmentDesign> l) {
-		if(schoolEnrollment != null && schoolEnrollment.getPk() != null) {
-			l.setQuery("*:*");
+		l.setQuery("*:*");
 //			l.addFilterQuery("enrollmentKeys_indexed_longs:" + schoolEnrollment.getPk());
-			l.addFilterQuery("pk_indexed_long:12697");
-			l.setC(EnrollmentDesign.class);
-			l.setStore(true);
-		}
+		l.addFilterQuery("objectId_indexed_string:main-enrollment-form");
+		l.setC(EnrollmentDesign.class);
+		l.setStore(true);
 	}
 
 	/**
@@ -87,7 +80,25 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 			c.o(listEnrollmentDesign.get(0));
 	}
 
+	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
+		OperationRequest operationRequest = siteRequest_.getOperationRequest();
+		l.setStore(true);
+		l.setQuery("*:*");
+		l.setC(SchoolEnrollment.class);
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null) {
+			l.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		}
+	}
+
+	@Override protected void _schoolEnrollment(Wrap<SchoolEnrollment> c) {
+		if(enrollmentSearch.size() == 1)
+			c.o(enrollmentSearch.get(0));
+	}
+
 	protected void _yearSearch(SearchList<SchoolYear> l) {
+		SchoolEnrollment schoolEnrollment = enrollmentSearch.size() == 1 ? enrollmentSearch.first() : null;
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolYear.class);
@@ -103,18 +114,6 @@ public class EnrollmentPdfPage extends EnrollmentPdfPageGen<EnrollmentPdfGenPage
 		}
 		else  {
 			throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
-		}
-	}
-
-	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
-		l.setStore(true);
-		l.setQuery("*:*");
-		l.setC(SchoolEnrollment.class);
-
-		String id = operationRequest.getParams().getJsonObject("path").getString("id");
-		if(id != null) {
-			l.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 		}
 	}
 

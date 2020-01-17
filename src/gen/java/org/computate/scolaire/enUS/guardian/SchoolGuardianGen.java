@@ -18,6 +18,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -31,6 +32,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -3006,6 +3008,34 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 			oSchoolGuardian.setGuardianCompleteName(guardianCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolGuardian() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolGuardian original = (SchoolGuardian)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
+				patchRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(personFirstName, original.getPersonFirstName()))
+				patchRequest.addVars("personFirstName");
+			if(!Objects.equals(personFirstNamePreferred, original.getPersonFirstNamePreferred()))
+				patchRequest.addVars("personFirstNamePreferred");
+			if(!Objects.equals(familyName, original.getFamilyName()))
+				patchRequest.addVars("familyName");
+			if(!Objects.equals(personPhoneNumber, original.getPersonPhoneNumber()))
+				patchRequest.addVars("personPhoneNumber");
+			if(!Objects.equals(personRelation, original.getPersonRelation()))
+				patchRequest.addVars("personRelation");
+			if(!Objects.equals(personEmergencyContact, original.getPersonEmergencyContact()))
+				patchRequest.addVars("personEmergencyContact");
+			if(!Objects.equals(personPickup, original.getPersonPickup()))
+				patchRequest.addVars("personPickup");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

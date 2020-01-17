@@ -6,6 +6,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.session.SchoolSession;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -307,6 +309,18 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlStyleSessionGenPage() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSessionGenPage() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SessionGenPage original = (SessionGenPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			super.patchRequestClusterPage();
+		}
 	}
 
 	//////////////

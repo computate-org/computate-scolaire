@@ -21,6 +21,7 @@ import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -33,11 +34,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -2886,6 +2889,32 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			oSchoolSeason.setSeasonCompleteName(seasonCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolSeason() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolSeason original = (SchoolSeason)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
+				patchRequest.addVars("sessionKeys");
+			if(!Objects.equals(yearKey, original.getYearKey()))
+				patchRequest.addVars("yearKey");
+			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
+				patchRequest.addVars("seasonStartDate");
+			if(!Objects.equals(seasonSummer, original.getSeasonSummer()))
+				patchRequest.addVars("seasonSummer");
+			if(!Objects.equals(seasonWinter, original.getSeasonWinter()))
+				patchRequest.addVars("seasonWinter");
+			if(!Objects.equals(seasonEnrollmentFee, original.getSeasonEnrollmentFee()))
+				patchRequest.addVars("seasonEnrollmentFee");
+			if(!Objects.equals(seasonFuture, original.getSeasonFuture()))
+				patchRequest.addVars("seasonFuture");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

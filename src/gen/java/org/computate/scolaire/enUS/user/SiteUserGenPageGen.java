@@ -6,6 +6,7 @@ import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -55,6 +57,8 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 			if(listSiteUser == null)
 				setListSiteUser(listSiteUserWrap.o);
 		}
+		if(listSiteUser != null)
+			listSiteUser.initDeepForClass(siteRequest_);
 		listSiteUserWrap.alreadyInitialized(true);
 		return (SiteUserGenPage)this;
 	}
@@ -92,6 +96,8 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 			if(siteUser == null)
 				setSiteUser(siteUserWrap.o);
 		}
+		if(siteUser != null)
+			siteUser.initDeepForClass(siteRequest_);
 		siteUserWrap.alreadyInitialized(true);
 		return (SiteUserGenPage)this;
 	}
@@ -131,6 +137,10 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 
 	public void siteRequestSiteUserGenPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestClusterPage(siteRequest_);
+		if(listSiteUser != null)
+			listSiteUser.setSiteRequest_(siteRequest_);
+		if(siteUser != null)
+			siteUser.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -301,6 +311,18 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 	}
 
 	public void htmlStyleSiteUserGenPage() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSiteUserGenPage() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SiteUserGenPage original = (SiteUserGenPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			super.patchRequestClusterPage();
+		}
 	}
 
 	//////////////

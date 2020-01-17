@@ -271,6 +271,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 											requetePatch.setRows(listeDesignInscription.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											if(listeDesignInscription.size() == 1) {
+												DesignInscription o = listeDesignInscription.get(0);
+												requetePatch.setPk(o.getPk());
+												requetePatch.setOriginal(o);
+											}
 											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -349,11 +354,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(requetePatch.getNumFound() == 1 && listeDesignInscription.size() == 1) {
-					DesignInscription o = listeDesignInscription.get(0);
-					requetePatch.setPk(o.getPk());
-					requetePatchDesignInscription(o);
-				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeDesignInscription.size());
 				if(listeDesignInscription.next(dt)) {
 					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requetePatch).toString());
@@ -378,6 +378,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					classes.add("PartHtml");
 				}
 			}
+			o.requetePatchDesignInscription();
 		}
 	}
 
@@ -433,16 +434,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.design.DesignInscription"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -471,6 +462,16 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "addPartHtmlCles":
@@ -917,6 +918,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUtilisateur = creerLigne.getLong(0);
 								UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
@@ -954,6 +956,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
 							UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(
@@ -1096,7 +1099,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(definirAsync.succeeded()) {
 					try {
 						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
+							try {
+								o.definirPourClasse(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {

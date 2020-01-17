@@ -21,6 +21,7 @@ import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -33,11 +34,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -2891,6 +2894,32 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 			oSaisonScolaire.setSaisonNomComplet(saisonNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchSaisonScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		SaisonScolaire original = (SaisonScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(sessionCles, original.getSessionCles()))
+				requetePatch.addVars("sessionCles");
+			if(!Objects.equals(anneeCle, original.getAnneeCle()))
+				requetePatch.addVars("anneeCle");
+			if(!Objects.equals(saisonJourDebut, original.getSaisonJourDebut()))
+				requetePatch.addVars("saisonJourDebut");
+			if(!Objects.equals(saisonEte, original.getSaisonEte()))
+				requetePatch.addVars("saisonEte");
+			if(!Objects.equals(saisonHiver, original.getSaisonHiver()))
+				requetePatch.addVars("saisonHiver");
+			if(!Objects.equals(saisonFraisInscription, original.getSaisonFraisInscription()))
+				requetePatch.addVars("saisonFraisInscription");
+			if(!Objects.equals(saisonFuture, original.getSaisonFuture()))
+				requetePatch.addVars("saisonFuture");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

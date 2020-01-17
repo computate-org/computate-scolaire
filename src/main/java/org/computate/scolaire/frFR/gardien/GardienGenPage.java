@@ -116,8 +116,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPk("Page");
 			o.htmCree("Page");
-			o.htmModifie("Page");
 			o.htmObjetId("Page");
+			o.htmModifie("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -143,8 +143,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPk("POST");
 			o.htmCree("POST");
-			o.htmModifie("POST");
 			o.htmObjetId("POST");
+			o.htmModifie("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -170,8 +170,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPk("PATCH");
 			o.htmCree("PATCH");
-			o.htmModifie("PATCH");
 			o.htmObjetId("PATCH");
+			o.htmModifie("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -200,8 +200,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPk("Recherche");
 			o.htmCree("Recherche");
-			o.htmModifie("Recherche");
 			o.htmObjetId("Recherche");
+			o.htmModifie("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");

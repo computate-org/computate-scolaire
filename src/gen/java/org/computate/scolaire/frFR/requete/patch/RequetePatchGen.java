@@ -604,6 +604,44 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		return pk == null ? "" : StringEscapeUtils.escapeHtml4(strPk());
 	}
 
+	//////////////
+	// original //
+	//////////////
+
+	/**	L'entité « original »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	protected Object original;
+	@JsonIgnore
+	public Couverture<Object> originalCouverture = new Couverture<Object>().p(this).c(Object.class).var("original").o(original);
+
+	/**	<br/>L'entité « original »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:original">Trouver l'entité original dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _original(Couverture<Object> c);
+
+	public Object getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(Object original) {
+		this.original = original;
+		this.originalCouverture.dejaInitialise = true;
+	}
+	protected RequetePatch originalInit() {
+		if(!originalCouverture.dejaInitialise) {
+			_original(originalCouverture);
+			if(original == null)
+				setOriginal(originalCouverture.o);
+		}
+		originalCouverture.dejaInitialise(true);
+		return (RequetePatch)this;
+	}
+
 	/////////
 	// pks //
 	/////////
@@ -767,6 +805,84 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		return classes == null ? "" : StringEscapeUtils.escapeHtml4(strClasses());
 	}
 
+	//////////
+	// vars //
+	//////////
+
+	/**	L'entité « vars »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	protected List<String> vars = new java.util.ArrayList<java.lang.String>();
+	@JsonIgnore
+	public Couverture<List<String>> varsCouverture = new Couverture<List<String>>().p(this).c(List.class).var("vars").o(vars);
+
+	/**	<br/>L'entité « vars »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vars">Trouver l'entité vars dans Solr</a>
+	 * <br/>
+	 * @param vars est l'entité déjà construit. 
+	 **/
+	protected abstract void _vars(List<String> c);
+
+	public List<String> getVars() {
+		return vars;
+	}
+
+	public void setVars(List<String> vars) {
+		this.vars = vars;
+		this.varsCouverture.dejaInitialise = true;
+	}
+	public RequetePatch addVars(String...objets) {
+		for(String o : objets) {
+			addVars(o);
+		}
+		return (RequetePatch)this;
+	}
+	public RequetePatch addVars(String o) {
+		if(o != null && !vars.contains(o))
+			this.vars.add(o);
+		return (RequetePatch)this;
+	}
+	public RequetePatch setVars(JsonArray objets) {
+		vars.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addVars(o);
+		}
+		return (RequetePatch)this;
+	}
+	protected RequetePatch varsInit() {
+		if(!varsCouverture.dejaInitialise) {
+			_vars(vars);
+		}
+		varsCouverture.dejaInitialise(true);
+		return (RequetePatch)this;
+	}
+
+	public List<String> solrVars() {
+		return vars;
+	}
+
+	public String strVars() {
+		return vars == null ? "" : vars.toString();
+	}
+
+	public String jsonVars() {
+		return vars == null ? "" : vars.toString();
+	}
+
+	public String nomAffichageVars() {
+		return null;
+	}
+
+	public String htmTooltipVars() {
+		return null;
+	}
+
+	public String htmVars() {
+		return vars == null ? "" : StringEscapeUtils.escapeHtml4(strVars());
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -796,8 +912,10 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		idInit();
 		emptyInit();
 		pkInit();
+		originalInit();
 		pksInit();
 		classesInit();
+		varsInit();
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -853,10 +971,14 @@ public abstract class RequetePatchGen<DEV> extends Object {
 				return oRequetePatch.empty;
 			case "pk":
 				return oRequetePatch.pk;
+			case "original":
+				return oRequetePatch.original;
 			case "pks":
 				return oRequetePatch.pks;
 			case "classes":
 				return oRequetePatch.classes;
+			case "vars":
+				return oRequetePatch.vars;
 			default:
 				return null;
 		}

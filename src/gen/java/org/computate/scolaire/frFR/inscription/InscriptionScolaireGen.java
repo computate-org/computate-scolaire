@@ -3,51 +3,54 @@ package org.computate.scolaire.frFR.inscription;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.math.BigDecimal;
-import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalTime;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.gardien.GardienScolaire;
 import java.time.Instant;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.frFR.pere.PereScolaire;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import org.computate.scolaire.frFR.pere.PereScolaire;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe enrollmentCompleteName dans Solr</a>
@@ -6328,6 +6331,57 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionNomsParents == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomsParents());
 	}
 
+	public void inputInscriptionNomsParents(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_inscriptionNomsParents");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setInscriptionNomsParents w3-input w3-border ");
+				a("name", "setInscriptionNomsParents");
+			} else {
+				a("class", "valeurInscriptionNomsParents w3-input w3-border ");
+				a("name", "inscriptionNomsParents");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionNomsParents', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionNomsParents')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionNomsParents')); }); ");
+			}
+			a("value", strInscriptionNomsParents())
+		.fg();
+
+	}
+
+	public void htmInscriptionNomsParents(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireInscriptionNomsParents").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputInscriptionNomsParents(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionNomsParents')); $('#", classeApiMethodeMethode, "_inscriptionNomsParents').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionNomsParents', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionNomsParents')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionNomsParents')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////////////
 	// inscriptionSignature1 //
 	///////////////////////////
@@ -9401,6 +9455,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				setInscriptionPaimentComplet(val);
 				sauvegardesInscriptionScolaire.add(var);
 				return val;
+			case "inscriptionNomsParents":
+				setInscriptionNomsParents(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
 			case "inscriptionSignature1":
 				setInscriptionSignature1(val);
 				sauvegardesInscriptionScolaire.add(var);
@@ -11014,12 +11072,112 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		super.stockerCluster(solrDocument);
 	}
 
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchInscriptionScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		InscriptionScolaire original = (InscriptionScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(blocCles, original.getBlocCles()))
+				requetePatch.addVars("blocCles");
+			if(!Objects.equals(enfantCle, original.getEnfantCle()))
+				requetePatch.addVars("enfantCle");
+			if(!Objects.equals(mereCles, original.getMereCles()))
+				requetePatch.addVars("mereCles");
+			if(!Objects.equals(pereCles, original.getPereCles()))
+				requetePatch.addVars("pereCles");
+			if(!Objects.equals(gardienCles, original.getGardienCles()))
+				requetePatch.addVars("gardienCles");
+			if(!Objects.equals(paiementCles, original.getPaiementCles()))
+				requetePatch.addVars("paiementCles");
+			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
+				requetePatch.addVars("ecoleAddresse");
+			if(!Objects.equals(inscriptionApprouve, original.getInscriptionApprouve()))
+				requetePatch.addVars("inscriptionApprouve");
+			if(!Objects.equals(inscriptionImmunisations, original.getInscriptionImmunisations()))
+				requetePatch.addVars("inscriptionImmunisations");
+			if(!Objects.equals(familleMarie, original.getFamilleMarie()))
+				requetePatch.addVars("familleMarie");
+			if(!Objects.equals(familleSepare, original.getFamilleSepare()))
+				requetePatch.addVars("familleSepare");
+			if(!Objects.equals(familleDivorce, original.getFamilleDivorce()))
+				requetePatch.addVars("familleDivorce");
+			if(!Objects.equals(familleAddresse, original.getFamilleAddresse()))
+				requetePatch.addVars("familleAddresse");
+			if(!Objects.equals(familleCommentVousConnaissezEcole, original.getFamilleCommentVousConnaissezEcole()))
+				requetePatch.addVars("familleCommentVousConnaissezEcole");
+			if(!Objects.equals(inscriptionConsiderationsSpeciales, original.getInscriptionConsiderationsSpeciales()))
+				requetePatch.addVars("inscriptionConsiderationsSpeciales");
+			if(!Objects.equals(enfantConditionsMedicales, original.getEnfantConditionsMedicales()))
+				requetePatch.addVars("enfantConditionsMedicales");
+			if(!Objects.equals(enfantEcolesPrecedemmentFrequentees, original.getEnfantEcolesPrecedemmentFrequentees()))
+				requetePatch.addVars("enfantEcolesPrecedemmentFrequentees");
+			if(!Objects.equals(enfantDescription, original.getEnfantDescription()))
+				requetePatch.addVars("enfantDescription");
+			if(!Objects.equals(enfantObjectifs, original.getEnfantObjectifs()))
+				requetePatch.addVars("enfantObjectifs");
+			if(!Objects.equals(enfantPropre, original.getEnfantPropre()))
+				requetePatch.addVars("enfantPropre");
+			if(!Objects.equals(inscriptionNomGroupe, original.getInscriptionNomGroupe()))
+				requetePatch.addVars("inscriptionNomGroupe");
+			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
+				requetePatch.addVars("inscriptionPaimentChaqueMois");
+			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
+				requetePatch.addVars("inscriptionPaimentComplet");
+			if(!Objects.equals(inscriptionNomsParents, original.getInscriptionNomsParents()))
+				requetePatch.addVars("inscriptionNomsParents");
+			if(!Objects.equals(inscriptionSignature1, original.getInscriptionSignature1()))
+				requetePatch.addVars("inscriptionSignature1");
+			if(!Objects.equals(inscriptionSignature2, original.getInscriptionSignature2()))
+				requetePatch.addVars("inscriptionSignature2");
+			if(!Objects.equals(inscriptionSignature3, original.getInscriptionSignature3()))
+				requetePatch.addVars("inscriptionSignature3");
+			if(!Objects.equals(inscriptionSignature4, original.getInscriptionSignature4()))
+				requetePatch.addVars("inscriptionSignature4");
+			if(!Objects.equals(inscriptionSignature5, original.getInscriptionSignature5()))
+				requetePatch.addVars("inscriptionSignature5");
+			if(!Objects.equals(inscriptionSignature6, original.getInscriptionSignature6()))
+				requetePatch.addVars("inscriptionSignature6");
+			if(!Objects.equals(inscriptionSignature7, original.getInscriptionSignature7()))
+				requetePatch.addVars("inscriptionSignature7");
+			if(!Objects.equals(inscriptionSignature8, original.getInscriptionSignature8()))
+				requetePatch.addVars("inscriptionSignature8");
+			if(!Objects.equals(inscriptionSignature9, original.getInscriptionSignature9()))
+				requetePatch.addVars("inscriptionSignature9");
+			if(!Objects.equals(inscriptionSignature10, original.getInscriptionSignature10()))
+				requetePatch.addVars("inscriptionSignature10");
+			if(!Objects.equals(inscriptionDate1, original.getInscriptionDate1()))
+				requetePatch.addVars("inscriptionDate1");
+			if(!Objects.equals(inscriptionDate2, original.getInscriptionDate2()))
+				requetePatch.addVars("inscriptionDate2");
+			if(!Objects.equals(inscriptionDate3, original.getInscriptionDate3()))
+				requetePatch.addVars("inscriptionDate3");
+			if(!Objects.equals(inscriptionDate4, original.getInscriptionDate4()))
+				requetePatch.addVars("inscriptionDate4");
+			if(!Objects.equals(inscriptionDate5, original.getInscriptionDate5()))
+				requetePatch.addVars("inscriptionDate5");
+			if(!Objects.equals(inscriptionDate6, original.getInscriptionDate6()))
+				requetePatch.addVars("inscriptionDate6");
+			if(!Objects.equals(inscriptionDate7, original.getInscriptionDate7()))
+				requetePatch.addVars("inscriptionDate7");
+			if(!Objects.equals(inscriptionDate8, original.getInscriptionDate8()))
+				requetePatch.addVars("inscriptionDate8");
+			if(!Objects.equals(inscriptionDate9, original.getInscriptionDate9()))
+				requetePatch.addVars("inscriptionDate9");
+			if(!Objects.equals(inscriptionDate10, original.getInscriptionDate10()))
+				requetePatch.addVars("inscriptionDate10");
+			super.requetePatchCluster();
+		}
+	}
+
 	//////////////
 	// hashCode //
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -11056,6 +11214,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
+				&& Objects.equals( inscriptionNomsParents, that.inscriptionNomsParents )
 				&& Objects.equals( inscriptionSignature1, that.inscriptionSignature1 )
 				&& Objects.equals( inscriptionSignature2, that.inscriptionSignature2 )
 				&& Objects.equals( inscriptionSignature3, that.inscriptionSignature3 )
@@ -11109,6 +11268,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
+		sb.append( ", inscriptionNomsParents: \"" ).append(inscriptionNomsParents).append( "\"" );
 		sb.append( ", inscriptionSignature1: \"" ).append(inscriptionSignature1).append( "\"" );
 		sb.append( ", inscriptionSignature2: \"" ).append(inscriptionSignature2).append( "\"" );
 		sb.append( ", inscriptionSignature3: \"" ).append(inscriptionSignature3).append( "\"" );

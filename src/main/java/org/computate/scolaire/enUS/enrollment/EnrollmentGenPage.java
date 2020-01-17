@@ -209,10 +209,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormPageSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCreated("Page");
-			o.htmModified("Page");
+			o.htmPk("Page");
 			o.htmObjectId("Page");
+			o.htmModified("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -261,10 +261,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCreated("POST");
-			o.htmModified("POST");
+			o.htmPk("POST");
 			o.htmObjectId("POST");
+			o.htmModified("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -313,10 +313,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
-			o.htmModified("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjectId("PATCH");
+			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -363,6 +363,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("PATCH");
+			o.htmEnrollmentParentNames("PATCH");
 			o.htmEnrollmentSignature1("PATCH");
 			o.htmEnrollmentSignature2("PATCH");
 			o.htmEnrollmentSignature3("PATCH");
@@ -389,10 +390,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjectId("Recherche");
+			o.htmModified("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");
@@ -439,6 +440,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAddress("Recherche");
+			o.htmEnrollmentParentNames("Recherche");
 			o.htmEnrollmentDate1("Recherche");
 			o.htmEnrollmentDate2("Recherche");
 			o.htmEnrollmentDate3("Recherche");

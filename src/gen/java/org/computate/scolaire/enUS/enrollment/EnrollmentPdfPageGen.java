@@ -21,10 +21,12 @@ import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.time.Instant;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
@@ -32,6 +34,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -193,6 +196,42 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		return (EnrollmentPdfPage)this;
 	}
 
+	//////////////////////
+	// enrollmentSearch //
+	//////////////////////
+
+	/**	L'entité « enrollmentSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
+	 */
+	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
+
+	/**	<br/>L'entité « enrollmentSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
+	 * <br/>
+	 * @param enrollmentSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
+
+	public SearchList<SchoolEnrollment> getEnrollmentSearch() {
+		return enrollmentSearch;
+	}
+
+	public void setEnrollmentSearch(SearchList<SchoolEnrollment> enrollmentSearch) {
+		this.enrollmentSearch = enrollmentSearch;
+		this.enrollmentSearchWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentPdfPage enrollmentSearchInit() {
+		if(!enrollmentSearchWrap.alreadyInitialized) {
+			_enrollmentSearch(enrollmentSearch);
+		}
+		enrollmentSearch.initDeepForClass(siteRequest_);
+		enrollmentSearchWrap.alreadyInitialized(true);
+		return (EnrollmentPdfPage)this;
+	}
+
 	////////////////
 	// yearSearch //
 	////////////////
@@ -263,42 +302,6 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 				setYear_(year_Wrap.o);
 		}
 		year_Wrap.alreadyInitialized(true);
-		return (EnrollmentPdfPage)this;
-	}
-
-	//////////////////////
-	// enrollmentSearch //
-	//////////////////////
-
-	/**	L'entité « enrollmentSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 */
-	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
-	@JsonIgnore
-	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
-
-	/**	<br/>L'entité « enrollmentSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
-	 * <br/>
-	 * @param enrollmentSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
-
-	public SearchList<SchoolEnrollment> getEnrollmentSearch() {
-		return enrollmentSearch;
-	}
-
-	public void setEnrollmentSearch(SearchList<SchoolEnrollment> enrollmentSearch) {
-		this.enrollmentSearch = enrollmentSearch;
-		this.enrollmentSearchWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentPdfPage enrollmentSearchInit() {
-		if(!enrollmentSearchWrap.alreadyInitialized) {
-			_enrollmentSearch(enrollmentSearch);
-		}
-		enrollmentSearch.initDeepForClass(siteRequest_);
-		enrollmentSearchWrap.alreadyInitialized(true);
 		return (EnrollmentPdfPage)this;
 	}
 
@@ -1452,9 +1455,9 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 		w2Init();
 		listEnrollmentDesignInit();
 		enrollmentDesignInit();
+		enrollmentSearchInit();
 		yearSearchInit();
 		year_Init();
-		enrollmentSearchInit();
 		schoolKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -1497,10 +1500,10 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 			listEnrollmentDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentDesign != null)
 			enrollmentDesign.setSiteRequest_(siteRequest_);
-		if(yearSearch != null)
-			yearSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
+		if(yearSearch != null)
+			yearSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -1547,12 +1550,12 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 				return oEnrollmentPdfPage.listEnrollmentDesign;
 			case "enrollmentDesign":
 				return oEnrollmentPdfPage.enrollmentDesign;
+			case "enrollmentSearch":
+				return oEnrollmentPdfPage.enrollmentSearch;
 			case "yearSearch":
 				return oEnrollmentPdfPage.yearSearch;
 			case "year_":
 				return oEnrollmentPdfPage.year_;
-			case "enrollmentSearch":
-				return oEnrollmentPdfPage.enrollmentSearch;
 			case "schoolKey":
 				return oEnrollmentPdfPage.schoolKey;
 			case "schoolName":
@@ -1735,6 +1738,18 @@ public abstract class EnrollmentPdfPageGen<DEV> extends EnrollmentPdfGenPage {
 	}
 
 	public void htmlStyleEnrollmentPdfPage() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestEnrollmentPdfPage() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		EnrollmentPdfPage original = (EnrollmentPdfPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			super.patchRequestEnrollmentPdfGenPage();
+		}
 	}
 
 	//////////////

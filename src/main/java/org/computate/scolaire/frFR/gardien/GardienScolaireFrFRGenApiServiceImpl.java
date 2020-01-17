@@ -376,7 +376,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(requetePatch.getNumFound() == 1 && listeGardienScolaire.size() == 1) {
 					GardienScolaire o = listeGardienScolaire.get(0);
 					requetePatch.setPk(o.getPk());
-					requetePatchGardienScolaire(o);
+					requetePatch.setOriginal(o);
+					o.requetePatchGardienScolaire();
 				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeGardienScolaire.size());
 				if(listeGardienScolaire.next(dt)) {
@@ -457,16 +458,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.gardien.GardienScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
-						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -495,6 +486,16 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
+						}
+						break;
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 					case "addInscriptionCles":
@@ -1180,7 +1181,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(definirAsync.succeeded()) {
 					try {
 						for(JsonArray definition : definirAsync.result().getResults()) {
-							o.definirPourClasse(definition.getString(0), definition.getString(1));
+							try {
+								o.definirPourClasse(definition.getString(0), definition.getString(1));
+							} catch(Exception e) {
+								LOGGER.error(e);
+							}
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {

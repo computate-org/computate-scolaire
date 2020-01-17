@@ -21,10 +21,12 @@ import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.time.Instant;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
@@ -32,6 +34,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
 /**	
@@ -1735,6 +1738,18 @@ public abstract class EnrollmentEmailPageGen<DEV> extends EnrollmentEmailGenPage
 	}
 
 	public void htmlStyleEnrollmentEmailPage() {
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestEnrollmentEmailPage() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		EnrollmentEmailPage original = (EnrollmentEmailPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			super.patchRequestEnrollmentEmailGenPage();
+		}
 	}
 
 	//////////////

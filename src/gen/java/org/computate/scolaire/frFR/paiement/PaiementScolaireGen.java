@@ -20,6 +20,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -32,11 +33,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -2730,6 +2733,30 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			oPaiementScolaire.setPaiementNomComplet(paiementNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchPaiementScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		PaiementScolaire original = (PaiementScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requetePatch.addVars("inscriptionCles");
+			if(!Objects.equals(paiementDescription, original.getPaiementDescription()))
+				requetePatch.addVars("paiementDescription");
+			if(!Objects.equals(paiementDate, original.getPaiementDate()))
+				requetePatch.addVars("paiementDate");
+			if(!Objects.equals(paiementMontant, original.getPaiementMontant()))
+				requetePatch.addVars("paiementMontant");
+			if(!Objects.equals(paiementEspeces, original.getPaiementEspeces()))
+				requetePatch.addVars("paiementEspeces");
+			if(!Objects.equals(paiementCheque, original.getPaiementCheque()))
+				requetePatch.addVars("paiementCheque");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

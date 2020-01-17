@@ -15,6 +15,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -28,6 +29,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -2163,6 +2165,30 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			oEcole.setEcoleNomComplet(ecoleNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchEcole() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		Ecole original = (Ecole)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(anneeCles, original.getAnneeCles()))
+				requetePatch.addVars("anneeCles");
+			if(!Objects.equals(ecoleNom, original.getEcoleNom()))
+				requetePatch.addVars("ecoleNom");
+			if(!Objects.equals(ecoleNumeroTelephone, original.getEcoleNumeroTelephone()))
+				requetePatch.addVars("ecoleNumeroTelephone");
+			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
+				requetePatch.addVars("ecoleAdministrateurNom");
+			if(!Objects.equals(ecoleEmplacement, original.getEcoleEmplacement()))
+				requetePatch.addVars("ecoleEmplacement");
+			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
+				requetePatch.addVars("ecoleAddresse");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

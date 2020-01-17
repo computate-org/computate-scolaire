@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.inscription;
 
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.inscription.InscriptionFormGenPage;
@@ -12,6 +13,7 @@ import io.vertx.core.json.JsonArray;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**	
@@ -217,6 +219,18 @@ public abstract class InscriptionFormPageGen<DEV> extends InscriptionFormGenPage
 	}
 
 	public void htmlStyleInscriptionFormPage() {
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchInscriptionFormPage() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		InscriptionFormPage original = (InscriptionFormPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			super.requetePatchInscriptionFormGenPage();
+		}
 	}
 
 	//////////////

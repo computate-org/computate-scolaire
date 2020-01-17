@@ -3,51 +3,54 @@ package org.computate.scolaire.enUS.enrollment;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.computate.scolaire.enUS.writer.AllWriter;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.math.BigDecimal;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalTime;
 import org.computate.scolaire.enUS.season.SchoolSeason;
-import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import java.time.Instant;
 import java.time.ZoneId;
-import org.apache.solr.client.solrj.SolrClient;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
-import org.computate.scolaire.enUS.dad.SchoolDad;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
-import io.vertx.ext.sql.SQLConnection;
-import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import org.computate.scolaire.enUS.dad.SchoolDad;
+import java.time.format.DateTimeFormatter;
+import io.vertx.ext.sql.SQLConnection;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -6312,6 +6315,56 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentParentNames == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentParentNames());
 	}
 
+	public void inputEnrollmentParentNames(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		e("input")
+			.a("type", "text")
+			.a("id", classApiMethodMethod, "_enrollmentParentNames");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setEnrollmentParentNames w3-input w3-border ");
+				a("name", "setEnrollmentParentNames");
+			} else {
+				a("class", "valueEnrollmentParentNames w3-input w3-border ");
+				a("name", "enrollmentParentNames");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentParentNames', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ");
+			}
+			a("value", strEnrollmentParentNames())
+		.fg();
+
+	}
+
+	public void htmEnrollmentParentNames(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolEnrollmentEnrollmentParentNames").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnrollmentParentNames(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); $('#", classApiMethodMethod, "_enrollmentParentNames').val(null); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentParentNames', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentParentNames')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentParentNames')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////////
 	// enrollmentSignature1 //
 	//////////////////////////
@@ -9375,6 +9428,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				setEnrollmentPaymentComplete(val);
 				savesSchoolEnrollment.add(var);
 				return val;
+			case "enrollmentParentNames":
+				setEnrollmentParentNames(val);
+				savesSchoolEnrollment.add(var);
+				return val;
 			case "enrollmentSignature1":
 				setEnrollmentSignature1(val);
 				savesSchoolEnrollment.add(var);
@@ -10988,12 +11045,112 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		super.storeCluster(solrDocument);
 	}
 
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolEnrollment() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolEnrollment original = (SchoolEnrollment)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(blockKeys, original.getBlockKeys()))
+				patchRequest.addVars("blockKeys");
+			if(!Objects.equals(childKey, original.getChildKey()))
+				patchRequest.addVars("childKey");
+			if(!Objects.equals(momKeys, original.getMomKeys()))
+				patchRequest.addVars("momKeys");
+			if(!Objects.equals(dadKeys, original.getDadKeys()))
+				patchRequest.addVars("dadKeys");
+			if(!Objects.equals(guardianKeys, original.getGuardianKeys()))
+				patchRequest.addVars("guardianKeys");
+			if(!Objects.equals(paymentKeys, original.getPaymentKeys()))
+				patchRequest.addVars("paymentKeys");
+			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
+				patchRequest.addVars("schoolAddress");
+			if(!Objects.equals(enrollmentApproved, original.getEnrollmentApproved()))
+				patchRequest.addVars("enrollmentApproved");
+			if(!Objects.equals(enrollmentImmunizations, original.getEnrollmentImmunizations()))
+				patchRequest.addVars("enrollmentImmunizations");
+			if(!Objects.equals(familyMarried, original.getFamilyMarried()))
+				patchRequest.addVars("familyMarried");
+			if(!Objects.equals(familySeparated, original.getFamilySeparated()))
+				patchRequest.addVars("familySeparated");
+			if(!Objects.equals(familyDivorced, original.getFamilyDivorced()))
+				patchRequest.addVars("familyDivorced");
+			if(!Objects.equals(familyAddress, original.getFamilyAddress()))
+				patchRequest.addVars("familyAddress");
+			if(!Objects.equals(familyHowDoYouKnowTheSchool, original.getFamilyHowDoYouKnowTheSchool()))
+				patchRequest.addVars("familyHowDoYouKnowTheSchool");
+			if(!Objects.equals(enrollmentSpecialConsiderations, original.getEnrollmentSpecialConsiderations()))
+				patchRequest.addVars("enrollmentSpecialConsiderations");
+			if(!Objects.equals(childMedicalConditions, original.getChildMedicalConditions()))
+				patchRequest.addVars("childMedicalConditions");
+			if(!Objects.equals(childPreviousSchoolsAttended, original.getChildPreviousSchoolsAttended()))
+				patchRequest.addVars("childPreviousSchoolsAttended");
+			if(!Objects.equals(childDescription, original.getChildDescription()))
+				patchRequest.addVars("childDescription");
+			if(!Objects.equals(childObjectives, original.getChildObjectives()))
+				patchRequest.addVars("childObjectives");
+			if(!Objects.equals(childPottyTrained, original.getChildPottyTrained()))
+				patchRequest.addVars("childPottyTrained");
+			if(!Objects.equals(enrollmentGroupName, original.getEnrollmentGroupName()))
+				patchRequest.addVars("enrollmentGroupName");
+			if(!Objects.equals(enrollmentPaymentEachMonth, original.getEnrollmentPaymentEachMonth()))
+				patchRequest.addVars("enrollmentPaymentEachMonth");
+			if(!Objects.equals(enrollmentPaymentComplete, original.getEnrollmentPaymentComplete()))
+				patchRequest.addVars("enrollmentPaymentComplete");
+			if(!Objects.equals(enrollmentParentNames, original.getEnrollmentParentNames()))
+				patchRequest.addVars("enrollmentParentNames");
+			if(!Objects.equals(enrollmentSignature1, original.getEnrollmentSignature1()))
+				patchRequest.addVars("enrollmentSignature1");
+			if(!Objects.equals(enrollmentSignature2, original.getEnrollmentSignature2()))
+				patchRequest.addVars("enrollmentSignature2");
+			if(!Objects.equals(enrollmentSignature3, original.getEnrollmentSignature3()))
+				patchRequest.addVars("enrollmentSignature3");
+			if(!Objects.equals(enrollmentSignature4, original.getEnrollmentSignature4()))
+				patchRequest.addVars("enrollmentSignature4");
+			if(!Objects.equals(enrollmentSignature5, original.getEnrollmentSignature5()))
+				patchRequest.addVars("enrollmentSignature5");
+			if(!Objects.equals(enrollmentSignature6, original.getEnrollmentSignature6()))
+				patchRequest.addVars("enrollmentSignature6");
+			if(!Objects.equals(enrollmentSignature7, original.getEnrollmentSignature7()))
+				patchRequest.addVars("enrollmentSignature7");
+			if(!Objects.equals(enrollmentSignature8, original.getEnrollmentSignature8()))
+				patchRequest.addVars("enrollmentSignature8");
+			if(!Objects.equals(enrollmentSignature9, original.getEnrollmentSignature9()))
+				patchRequest.addVars("enrollmentSignature9");
+			if(!Objects.equals(enrollmentSignature10, original.getEnrollmentSignature10()))
+				patchRequest.addVars("enrollmentSignature10");
+			if(!Objects.equals(enrollmentDate1, original.getEnrollmentDate1()))
+				patchRequest.addVars("enrollmentDate1");
+			if(!Objects.equals(enrollmentDate2, original.getEnrollmentDate2()))
+				patchRequest.addVars("enrollmentDate2");
+			if(!Objects.equals(enrollmentDate3, original.getEnrollmentDate3()))
+				patchRequest.addVars("enrollmentDate3");
+			if(!Objects.equals(enrollmentDate4, original.getEnrollmentDate4()))
+				patchRequest.addVars("enrollmentDate4");
+			if(!Objects.equals(enrollmentDate5, original.getEnrollmentDate5()))
+				patchRequest.addVars("enrollmentDate5");
+			if(!Objects.equals(enrollmentDate6, original.getEnrollmentDate6()))
+				patchRequest.addVars("enrollmentDate6");
+			if(!Objects.equals(enrollmentDate7, original.getEnrollmentDate7()))
+				patchRequest.addVars("enrollmentDate7");
+			if(!Objects.equals(enrollmentDate8, original.getEnrollmentDate8()))
+				patchRequest.addVars("enrollmentDate8");
+			if(!Objects.equals(enrollmentDate9, original.getEnrollmentDate9()))
+				patchRequest.addVars("enrollmentDate9");
+			if(!Objects.equals(enrollmentDate10, original.getEnrollmentDate10()))
+				patchRequest.addVars("enrollmentDate10");
+			super.patchRequestCluster();
+		}
+	}
+
 	//////////////
 	// hashCode //
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
+		return Objects.hash(super.hashCode(), blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
 	}
 
 	////////////
@@ -11030,6 +11187,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
 				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete )
+				&& Objects.equals( enrollmentParentNames, that.enrollmentParentNames )
 				&& Objects.equals( enrollmentSignature1, that.enrollmentSignature1 )
 				&& Objects.equals( enrollmentSignature2, that.enrollmentSignature2 )
 				&& Objects.equals( enrollmentSignature3, that.enrollmentSignature3 )
@@ -11083,6 +11241,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
 		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
+		sb.append( ", enrollmentParentNames: \"" ).append(enrollmentParentNames).append( "\"" );
 		sb.append( ", enrollmentSignature1: \"" ).append(enrollmentSignature1).append( "\"" );
 		sb.append( ", enrollmentSignature2: \"" ).append(enrollmentSignature2).append( "\"" );
 		sb.append( ", enrollmentSignature3: \"" ).append(enrollmentSignature3).append( "\"" );

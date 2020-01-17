@@ -209,10 +209,10 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 
 	public void htmlFormPageInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCree("Page");
-			o.htmModifie("Page");
+			o.htmPk("Page");
 			o.htmObjetId("Page");
+			o.htmModifie("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -261,10 +261,10 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 
 	public void htmlFormPOSTInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCree("POST");
-			o.htmModifie("POST");
+			o.htmPk("POST");
 			o.htmObjetId("POST");
+			o.htmModifie("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -313,10 +313,10 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 
 	public void htmlFormPATCHInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
-			o.htmModifie("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjetId("PATCH");
+			o.htmModifie("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -363,6 +363,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAddresse("PATCH");
+			o.htmInscriptionNomsParents("PATCH");
 			o.htmInscriptionSignature1("PATCH");
 			o.htmInscriptionSignature2("PATCH");
 			o.htmInscriptionSignature3("PATCH");
@@ -389,10 +390,10 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 
 	public void htmlFormRechercheInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCree("Recherche");
-			o.htmModifie("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjetId("Recherche");
+			o.htmModifie("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");
@@ -439,6 +440,7 @@ public class InscriptionPdfGenPage extends InscriptionPdfGenPageGen<ClusterPage>
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAddresse("Recherche");
+			o.htmInscriptionNomsParents("Recherche");
 			o.htmInscriptionDate1("Recherche");
 			o.htmInscriptionDate2("Recherche");
 			o.htmInscriptionDate3("Recherche");

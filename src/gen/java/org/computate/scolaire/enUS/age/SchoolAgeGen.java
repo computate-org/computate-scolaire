@@ -21,6 +21,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -33,11 +34,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -3584,6 +3587,28 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			oSchoolAge.setAgeCompleteName(ageCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolAge() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolAge original = (SchoolAge)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(blockKeys, original.getBlockKeys()))
+				patchRequest.addVars("blockKeys");
+			if(!Objects.equals(sessionKey, original.getSessionKey()))
+				patchRequest.addVars("sessionKey");
+			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
+				patchRequest.addVars("schoolAddress");
+			if(!Objects.equals(ageStart, original.getAgeStart()))
+				patchRequest.addVars("ageStart");
+			if(!Objects.equals(ageEnd, original.getAgeEnd()))
+				patchRequest.addVars("ageEnd");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////

@@ -86,10 +86,19 @@ public class RequetePatch extends RequetePatchGen<Object> {
 	protected void _pk(Couverture<Long> c) {
 	}
 
+	/**
+	 * Ignorer: true
+	 */
+	protected void _original(Couverture<Object> c) {
+	}
+
 	protected void _pks(List<Long> c) {
 	}
 
 	protected void _classes(List<String> c) {
+	}
+
+	protected void _vars(List<String> c) {
 	}
 
 //	/**

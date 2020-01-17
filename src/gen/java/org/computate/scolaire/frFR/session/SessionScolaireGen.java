@@ -21,6 +21,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -33,11 +34,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -3234,6 +3237,28 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			oSessionScolaire.setSessionNomComplet(sessionNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchSessionScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		SessionScolaire original = (SessionScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(ageCles, original.getAgeCles()))
+				requetePatch.addVars("ageCles");
+			if(!Objects.equals(saisonCle, original.getSaisonCle()))
+				requetePatch.addVars("saisonCle");
+			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
+				requetePatch.addVars("ecoleAddresse");
+			if(!Objects.equals(sessionJourDebut, original.getSessionJourDebut()))
+				requetePatch.addVars("sessionJourDebut");
+			if(!Objects.equals(sessionJourFin, original.getSessionJourFin()))
+				requetePatch.addVars("sessionJourFin");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

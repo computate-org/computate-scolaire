@@ -21,6 +21,7 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -33,12 +34,14 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.frFR.age.AgeScolaire;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
@@ -5448,6 +5451,44 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			oBlocScolaire.setBlocNomComplet(blocNomComplet);
 
 		super.stockerCluster(solrDocument);
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchBlocScolaire() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		BlocScolaire original = (BlocScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requetePatch.addVars("inscriptionCles");
+			if(!Objects.equals(ageCle, original.getAgeCle()))
+				requetePatch.addVars("ageCle");
+			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
+				requetePatch.addVars("ecoleAddresse");
+			if(!Objects.equals(blocHeureDebut, original.getBlocHeureDebut()))
+				requetePatch.addVars("blocHeureDebut");
+			if(!Objects.equals(blocHeureFin, original.getBlocHeureFin()))
+				requetePatch.addVars("blocHeureFin");
+			if(!Objects.equals(blocPrixParMois, original.getBlocPrixParMois()))
+				requetePatch.addVars("blocPrixParMois");
+			if(!Objects.equals(blocDimanche, original.getBlocDimanche()))
+				requetePatch.addVars("blocDimanche");
+			if(!Objects.equals(blocLundi, original.getBlocLundi()))
+				requetePatch.addVars("blocLundi");
+			if(!Objects.equals(blocMardi, original.getBlocMardi()))
+				requetePatch.addVars("blocMardi");
+			if(!Objects.equals(blocMercredi, original.getBlocMercredi()))
+				requetePatch.addVars("blocMercredi");
+			if(!Objects.equals(blocJeudi, original.getBlocJeudi()))
+				requetePatch.addVars("blocJeudi");
+			if(!Objects.equals(blocVendredi, original.getBlocVendredi()))
+				requetePatch.addVars("blocVendredi");
+			if(!Objects.equals(blocSamedi, original.getBlocSamedi()))
+				requetePatch.addVars("blocSamedi");
+			super.requetePatchCluster();
+		}
 	}
 
 	//////////////

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;           
+package org.computate.scolaire.frFR.paiement;            
 
 import java.math.BigDecimal;
 import java.text.Normalizer;

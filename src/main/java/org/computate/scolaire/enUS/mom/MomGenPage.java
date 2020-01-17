@@ -96,28 +96,16 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		l("$(document).ready(function() {");
 		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
 		tl(1, "suggestSchoolMomEnrollmentKeys([{'name':'fq','value':'momKeys:' + pk}], $('#listSchoolMomEnrollmentKeys_Page'), pk); ");
-		tl(1, "websocketSchoolMom(async function(patchRequest) {");
-		tl(2, "var pk = patchRequest['pk'];");
-		tl(2, "var pks = patchRequest['pks'];");
-		tl(2, "var classes = patchRequest['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchSchoolMomVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketSchoolMom(websocketSchoolMomInner(patchRequest));");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCreated("Page");
-			o.htmModified("Page");
+			o.htmPk("Page");
 			o.htmObjectId("Page");
+			o.htmModified("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -146,10 +134,10 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCreated("POST");
-			o.htmModified("POST");
+			o.htmPk("POST");
 			o.htmObjectId("POST");
+			o.htmModified("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -178,10 +166,10 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
-			o.htmModified("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjectId("PATCH");
+			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -213,10 +201,10 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolMom(SchoolMom o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjectId("Recherche");
+			o.htmModified("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");

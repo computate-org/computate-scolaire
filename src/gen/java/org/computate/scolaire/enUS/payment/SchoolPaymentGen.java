@@ -20,6 +20,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -32,11 +33,13 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.solr.client.solrj.SolrQuery;
 import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
@@ -2725,6 +2728,30 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
 
 		super.storeCluster(solrDocument);
+	}
+
+	//////////////////
+	// patchRequest //
+	//////////////////
+
+	public void patchRequestSchoolPayment() {
+		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
+		SchoolPayment original = (SchoolPayment)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+		if(original != null) {
+			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
+				patchRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(paymentDescription, original.getPaymentDescription()))
+				patchRequest.addVars("paymentDescription");
+			if(!Objects.equals(paymentDate, original.getPaymentDate()))
+				patchRequest.addVars("paymentDate");
+			if(!Objects.equals(paymentAmount, original.getPaymentAmount()))
+				patchRequest.addVars("paymentAmount");
+			if(!Objects.equals(paymentCash, original.getPaymentCash()))
+				patchRequest.addVars("paymentCash");
+			if(!Objects.equals(paymentCheck, original.getPaymentCheck()))
+				patchRequest.addVars("paymentCheck");
+			super.patchRequestCluster();
+		}
 	}
 
 	//////////////
