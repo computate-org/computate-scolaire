@@ -271,12 +271,13 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 											patchRequest.setRows(listEnrollmentDesign.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listEnrollmentDesign.size() == 1) {
 												EnrollmentDesign o = listEnrollmentDesign.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestEnrollmentDesign(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -378,7 +379,6 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					classes.add("HtmlPart");
 				}
 			}
-			o.patchRequestEnrollmentDesign();
 		}
 	}
 
@@ -395,6 +395,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 									indexEnrollmentDesign(enrollmentDesign, d -> {
 										if(d.succeeded()) {
 											patchRequestEnrollmentDesign(enrollmentDesign);
+											enrollmentDesign.patchRequestEnrollmentDesign();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

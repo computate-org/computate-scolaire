@@ -271,12 +271,13 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 											requetePatch.setRows(listeDesignInscription.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeDesignInscription.size() == 1) {
 												DesignInscription o = listeDesignInscription.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchDesignInscription(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -378,7 +379,6 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 					classes.add("PartHtml");
 				}
 			}
-			o.requetePatchDesignInscription();
 		}
 	}
 
@@ -395,6 +395,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 									indexerDesignInscription(designInscription, d -> {
 										if(d.succeeded()) {
 											requetePatchDesignInscription(designInscription);
+											designInscription.requetePatchDesignInscription();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

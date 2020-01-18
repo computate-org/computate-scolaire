@@ -287,12 +287,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 											requetePatch.setRows(listeEcole.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeEcole.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeEcole.size() == 1) {
 												Ecole o = listeEcole.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchEcole(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -394,7 +395,6 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 					classes.add("AnneeScolaire");
 				}
 			}
-			o.requetePatchEcole();
 		}
 	}
 
@@ -411,6 +411,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									indexerEcole(ecole, d -> {
 										if(d.succeeded()) {
 											requetePatchEcole(ecole);
+											ecole.requetePatchEcole();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

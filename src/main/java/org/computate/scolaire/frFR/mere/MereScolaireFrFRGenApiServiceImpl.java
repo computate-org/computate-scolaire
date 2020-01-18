@@ -307,12 +307,13 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 											requetePatch.setRows(listeMereScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeMereScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeMereScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeMereScolaire.size() == 1) {
 												MereScolaire o = listeMereScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchMereScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -414,7 +415,6 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 					classes.add("InscriptionScolaire");
 				}
 			}
-			o.requetePatchMereScolaire();
 		}
 	}
 
@@ -431,6 +431,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 									indexerMereScolaire(mereScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchMereScolaire(mereScolaire);
+											mereScolaire.requetePatchMereScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

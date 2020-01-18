@@ -287,12 +287,13 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 											requetePatch.setRows(listePaiementScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePaiementScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listePaiementScolaire.size() == 1) {
 												PaiementScolaire o = listePaiementScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchPaiementScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -394,7 +395,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					classes.add("InscriptionScolaire");
 				}
 			}
-			o.requetePatchPaiementScolaire();
 		}
 	}
 
@@ -411,6 +411,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									indexerPaiementScolaire(paiementScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchPaiementScolaire(paiementScolaire);
+											paiementScolaire.requetePatchPaiementScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

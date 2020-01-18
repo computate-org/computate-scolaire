@@ -283,12 +283,13 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 											requetePatch.setRows(listeAgeScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeAgeScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeAgeScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeAgeScolaire.size() == 1) {
 												AgeScolaire o = listeAgeScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchAgeScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -396,7 +397,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 					classes.add("SessionScolaire");
 				}
 			}
-			o.requetePatchAgeScolaire();
 		}
 	}
 
@@ -413,6 +413,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									indexerAgeScolaire(ageScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchAgeScolaire(ageScolaire);
+											ageScolaire.requetePatchAgeScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

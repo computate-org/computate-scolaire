@@ -283,12 +283,13 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 											patchRequest.setRows(listSchoolChild.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolChild.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolChild.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchoolChild.size() == 1) {
 												SchoolChild o = listSchoolChild.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchoolChild(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -390,7 +391,6 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 					classes.add("SchoolEnrollment");
 				}
 			}
-			o.patchRequestSchoolChild();
 		}
 	}
 
@@ -407,6 +407,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 									indexSchoolChild(schoolChild, d -> {
 										if(d.succeeded()) {
 											patchRequestSchoolChild(schoolChild);
+											schoolChild.patchRequestSchoolChild();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

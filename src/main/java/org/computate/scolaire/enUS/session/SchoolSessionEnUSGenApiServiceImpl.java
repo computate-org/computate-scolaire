@@ -283,12 +283,13 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 											patchRequest.setRows(listSchoolSession.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolSession.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchoolSession.size() == 1) {
 												SchoolSession o = listSchoolSession.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchoolSession(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -396,7 +397,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 					classes.add("SchoolSeason");
 				}
 			}
-			o.patchRequestSchoolSession();
 		}
 	}
 
@@ -413,6 +413,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									indexSchoolSession(schoolSession, d -> {
 										if(d.succeeded()) {
 											patchRequestSchoolSession(schoolSession);
+											schoolSession.patchRequestSchoolSession();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

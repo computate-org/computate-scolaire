@@ -365,12 +365,13 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											requetePatch.setRows(listePartHtml.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listePartHtml.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePartHtml.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listePartHtml.size() == 1) {
 												PartHtml o = listePartHtml.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchPartHtml(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -472,7 +473,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					classes.add("DesignInscription");
 				}
 			}
-			o.requetePatchPartHtml();
 		}
 	}
 
@@ -489,6 +489,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									indexerPartHtml(partHtml, d -> {
 										if(d.succeeded()) {
 											requetePatchPartHtml(partHtml);
+											partHtml.requetePatchPartHtml();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

@@ -307,12 +307,13 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 											requetePatch.setRows(listePereScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listePereScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listePereScolaire.size() == 1) {
 												PereScolaire o = listePereScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchPereScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -414,7 +415,6 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					classes.add("InscriptionScolaire");
 				}
 			}
-			o.requetePatchPereScolaire();
 		}
 	}
 
@@ -431,6 +431,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 									indexerPereScolaire(pereScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchPereScolaire(pereScolaire);
+											pereScolaire.requetePatchPereScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

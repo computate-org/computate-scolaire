@@ -283,12 +283,13 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 											requetePatch.setRows(listeEnfantScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeEnfantScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeEnfantScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeEnfantScolaire.size() == 1) {
 												EnfantScolaire o = listeEnfantScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchEnfantScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -390,7 +391,6 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 					classes.add("InscriptionScolaire");
 				}
 			}
-			o.requetePatchEnfantScolaire();
 		}
 	}
 
@@ -407,6 +407,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 									indexerEnfantScolaire(enfantScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchEnfantScolaire(enfantScolaire);
+											enfantScolaire.requetePatchEnfantScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

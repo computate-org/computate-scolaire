@@ -295,12 +295,13 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 											patchRequest.setRows(listSchoolGuardian.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolGuardian.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchoolGuardian.size() == 1) {
 												SchoolGuardian o = listSchoolGuardian.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchoolGuardian(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -402,7 +403,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					classes.add("SchoolEnrollment");
 				}
 			}
-			o.patchRequestSchoolGuardian();
 		}
 	}
 
@@ -419,6 +419,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 									indexSchoolGuardian(schoolGuardian, d -> {
 										if(d.succeeded()) {
 											patchRequestSchoolGuardian(schoolGuardian);
+											schoolGuardian.patchRequestSchoolGuardian();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

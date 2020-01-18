@@ -287,12 +287,13 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 											patchRequest.setRows(listSchool.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchool.size() == 1) {
 												School o = listSchool.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchool(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -394,7 +395,6 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 					classes.add("SchoolYear");
 				}
 			}
-			o.patchRequestSchool();
 		}
 	}
 
@@ -411,6 +411,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									indexSchool(school, d -> {
 										if(d.succeeded()) {
 											patchRequestSchool(school);
+											school.patchRequestSchool();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

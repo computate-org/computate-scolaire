@@ -279,12 +279,13 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											requetePatch.setRows(listeAnneeScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeAnneeScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeAnneeScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeAnneeScolaire.size() == 1) {
 												AnneeScolaire o = listeAnneeScolaire.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchAnneeScolaire(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -392,7 +393,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					classes.add("SaisonScolaire");
 				}
 			}
-			o.requetePatchAnneeScolaire();
 		}
 	}
 
@@ -409,6 +409,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									indexerAnneeScolaire(anneeScolaire, d -> {
 										if(d.succeeded()) {
 											requetePatchAnneeScolaire(anneeScolaire);
+											anneeScolaire.requetePatchAnneeScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {

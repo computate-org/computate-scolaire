@@ -307,12 +307,13 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 											patchRequest.setRows(listSchoolMom.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolMom.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchoolMom.size() == 1) {
 												SchoolMom o = listSchoolMom.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchoolMom(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -414,7 +415,6 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 					classes.add("SchoolEnrollment");
 				}
 			}
-			o.patchRequestSchoolMom();
 		}
 	}
 
@@ -431,6 +431,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 									indexSchoolMom(schoolMom, d -> {
 										if(d.succeeded()) {
 											patchRequestSchoolMom(schoolMom);
+											schoolMom.patchRequestSchoolMom();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {

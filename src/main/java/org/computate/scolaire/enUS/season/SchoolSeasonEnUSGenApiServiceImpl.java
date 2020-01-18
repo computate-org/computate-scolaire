@@ -291,12 +291,13 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											patchRequest.setRows(listSchoolSeason.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolSeason.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSchoolSeason.size() == 1) {
 												SchoolSeason o = listSchoolSeason.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSchoolSeason(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -404,7 +405,6 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					classes.add("SchoolYear");
 				}
 			}
-			o.patchRequestSchoolSeason();
 		}
 	}
 
@@ -421,6 +421,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									indexSchoolSeason(schoolSeason, d -> {
 										if(d.succeeded()) {
 											patchRequestSchoolSeason(schoolSeason);
+											schoolSeason.patchRequestSchoolSeason();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
