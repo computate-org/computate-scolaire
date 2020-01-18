@@ -563,10 +563,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurRecevoirCourriels");
+				a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
 				a("name", "setUtilisateurRecevoirCourriels");
 			} else {
-				a("class", "valeurUtilisateurRecevoirCourriels");
+				a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
 				a("name", "utilisateurRecevoirCourriels");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -673,10 +673,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_voirArchive")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirArchive");
+				a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
 				a("name", "setVoirArchive");
 			} else {
-				a("class", "valeurVoirArchive");
+				a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
 				a("name", "voirArchive");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -783,10 +783,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_voirSupprime")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirSupprime");
+				a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
 				a("name", "setVoirSupprime");
 			} else {
-				a("class", "valeurVoirSupprime");
+				a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
 				a("name", "voirSupprime");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

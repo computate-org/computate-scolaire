@@ -1129,10 +1129,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 			.a("placeholder", "name")
 			.a("id", classApiMethodMethod, "_enrollmentDesignCompleteName");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentDesignCompleteName w3-input w3-border ");
+				a("class", "setEnrollmentDesignCompleteName inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
 				a("name", "setEnrollmentDesignCompleteName");
 			} else {
-				a("class", "valueEnrollmentDesignCompleteName w3-input w3-border ");
+				a("class", "valueEnrollmentDesignCompleteName w3-input w3-border inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
 				a("name", "enrollmentDesignCompleteName");
 			}
 			if("Page".equals(classApiMethodMethod)) {

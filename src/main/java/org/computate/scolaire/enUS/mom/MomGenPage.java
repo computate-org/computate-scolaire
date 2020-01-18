@@ -94,9 +94,10 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptMomGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
 		tl(1, "suggestSchoolMomEnrollmentKeys([{'name':'fq','value':'momKeys:' + pk}], $('#listSchoolMomEnrollmentKeys_Page'), pk); ");
-		tl(1, "websocketSchoolMom(websocketSchoolMomInner(patchRequest));");
+		tl(1, "websocketSchoolMom(websocketSchoolMomInner);");
 		l("});");
 	}
 

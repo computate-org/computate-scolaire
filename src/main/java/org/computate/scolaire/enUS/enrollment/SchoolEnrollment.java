@@ -169,7 +169,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _childCompleteName(Wrap<String> c) {
 		if(child_ != null)
-			c.o((String)child_.getPersonCompleteName());
+			c.o(child_.getPersonCompleteName());
+	}
+
+	protected void _childBirthDate(Wrap<LocalDate> c) {
+		if(child_ != null)
+			c.o(child_.getPersonBirthDate());
 	}
 
 	protected void _schoolName(Wrap<String> c) {
@@ -189,17 +194,17 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _schoolAddress(Wrap<String> c) {
 		if(block_ != null)
-			c.o((String)block_.getSchoolAddress());
+			c.o(block_.getSchoolAddress());
 	}
 
 	protected void _schoolPhoneNumber(Wrap<String> c) {
 		if(block_ != null)
-			c.o((String)block_.getSchoolPhoneNumber());
+			c.o(block_.getSchoolPhoneNumber());
 	}
 
 	protected void _schoolAdministratorName(Wrap<String> c) {
 		if(block_ != null)
-			c.o((String)block_.getSchoolAdministratorName());
+			c.o(block_.getSchoolAdministratorName());
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {
@@ -315,6 +320,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _blockTotalPrice(Wrap<BigDecimal> c) {
 		if(block_ != null)
 			c.o(block_.getBlockTotalPrice());
+	}
+
+	protected void _blockAdminName(Wrap<String> c) {
+		if(block_ != null)
+			c.o(block_.getBlockAdminName());
 	}
 
 	protected void _enrollmentApproved(Wrap<Boolean> c) {

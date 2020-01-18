@@ -96,22 +96,11 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptAgeGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
 		tl(1, "suggereAgeScolaireSessionCle([{'name':'fq','value':'ageCles:' + pk}], $('#listAgeScolaireSessionCle_Page'), pk); ");
 		tl(1, "suggereAgeScolaireBlocCles([{'name':'fq','value':'ageCle:' + pk}], $('#listAgeScolaireBlocCles_Page'), pk); ");
-		tl(1, "websocketAgeScolaire(async function(requetePatch) {");
-		tl(2, "var pk = requetePatch['pk'];");
-		tl(2, "var pks = requetePatch['pks'];");
-		tl(2, "var classes = requetePatch['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchAgeScolaireVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketAgeScolaire(websocketAgeScolaireInner);");
 		l("});");
 	}
 

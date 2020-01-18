@@ -235,6 +235,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							postSqlParams.addAll(Arrays.asList("inscriptionCles", l, "paiementCles", pk));
 						}
 						break;
+					case "enfantNomComplet":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantNomComplet", jsonObject.getString(entiteVar), pk));
+						break;
+					case "enfantDateNaissance":
+						postSql.append(SiteContexteFrFR.SQL_setD);
+						postSqlParams.addAll(Arrays.asList("enfantDateNaissance", jsonObject.getString(entiteVar), pk));
+						break;
 					case "ecoleAddresse":
 						postSql.append(SiteContexteFrFR.SQL_setD);
 						postSqlParams.addAll(Arrays.asList("ecoleAddresse", jsonObject.getString(entiteVar), pk));
@@ -809,6 +817,26 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 					case "removePaiementCles":
 						patchSql.append(SiteContexteFrFR.SQL_removeA);
 						patchSqlParams.addAll(Arrays.asList("inscriptionCles", Long.parseLong(requeteJson.getString(methodeNom)), "paiementCles", pk));
+						break;
+					case "setEnfantNomComplet":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantNomComplet"));
+						} else {
+							o2.setEnfantNomComplet(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantNomComplet", o2.jsonEnfantNomComplet(), pk));
+						}
+						break;
+					case "setEnfantDateNaissance":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "enfantDateNaissance"));
+						} else {
+							o2.setEnfantDateNaissance(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("enfantDateNaissance", o2.jsonEnfantDateNaissance(), pk));
+						}
 						break;
 					case "setEcoleAddresse":
 						if(requeteJson.getString(methodeNom) == null) {

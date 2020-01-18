@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;           
+package org.computate.scolaire.frFR.inscription;                 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -299,7 +299,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: EnfantScolaire.inscriptionCles
-	 * HtmlLigne: 7
+	 * HtmlLigne: 9
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
@@ -314,7 +314,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: MereScolaire.inscriptionCles
-	 * HtmlLigne: 8
+	 * HtmlLigne: 10
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des mères dans la base de données. 
 	 * Description.enUS: The primary key of the school moms in the database. 
@@ -329,7 +329,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PereScolaire.inscriptionCles
-	 * HtmlLigne: 8
+	 * HtmlLigne: 10
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des pères dans la base de données. 
 	 * Description.enUS: The primary key of the school dads in the database. 
@@ -344,7 +344,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: GardienScolaire.inscriptionCles
-	 * HtmlLigne: 9
+	 * HtmlLigne: 11
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
 	 * Description.enUS: The primary key of the school gardians in the database. 
@@ -359,7 +359,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PaiementScolaire.inscriptionCles
-	 * HtmlLigne: 9
+	 * HtmlLigne: 11
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
@@ -575,6 +575,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: childCompleteName
 	 * Indexe: true
 	 * Stocke: true
+	 * Definir: true
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: 
@@ -588,7 +589,27 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */   
 	protected void _enfantNomComplet(Couverture<String> c) {
 		if(enfant_ != null)
-			c.o((String)enfant_.getPersonneNomComplet());
+			c.o(enfant_.getPersonneNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: 
+	 * NomAffichage.enUS: 
+	 * r: enfant_
+	 * r.enUS: child_
+	 * r: PersonneDateNaissance
+	 * r.enUS: PersonBirthDate
+	 */    
+	protected void _enfantDateNaissance(Couverture<LocalDate> c) {
+		if(enfant_ != null)
+			c.o(enfant_.getPersonneDateNaissance());
 	}
 
 	/**
@@ -661,7 +682,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _ecoleAddresse(Couverture<String> c) {
 		if(bloc_ != null)
-			c.o((String)bloc_.getEcoleAddresse());
+			c.o(bloc_.getEcoleAddresse());
 	}
 
 	/**
@@ -678,7 +699,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */    
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
 		if(bloc_ != null)
-			c.o((String)bloc_.getEcoleNumeroTelephone());
+			c.o(bloc_.getEcoleNumeroTelephone());
 	}
 
 	/**
@@ -695,7 +716,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */             
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
 		if(bloc_ != null)
-			c.o((String)bloc_.getEcoleAdministrateurNom());
+			c.o(bloc_.getEcoleAdministrateurNom());
 	}
 
 	/**
@@ -1087,6 +1108,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: blockAdminName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocNomAdmin
+	 * r.enUS: BlockAdminName
+	 */                
+	protected void _blocNomAdmin(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getBlocNomAdmin());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: enrollmentApproved
 	 * Indexe: true
 	 * Stocke: true
@@ -1213,7 +1249,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: conditions médicales
 	 * NomAffichage.enUS: medical conditions
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantConditionsMedicales(Couverture<String> c) {
@@ -1227,7 +1263,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: écoles précedemment fréqentées
 	 * NomAffichage.enUS: schools previously attended
 	 * Definir: true
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantEcolesPrecedemmentFrequentees(Couverture<String> c) {
@@ -1242,7 +1278,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: description
 	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCellule: 1
 	 */                   
 	protected void _enfantDescription(Couverture<String> c) {
@@ -1257,7 +1293,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: objectives
 	 * Multiligne: true
 	 * Definir: true
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantObjectifs(Couverture<String> c) {
@@ -1271,8 +1307,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: propre
 	 * NomAffichage.enUS: potty trained
 	 * Definir: true
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
 	 */                  
 	protected void _enfantPropre(Couverture<Boolean> c) {
 		c.o(false);

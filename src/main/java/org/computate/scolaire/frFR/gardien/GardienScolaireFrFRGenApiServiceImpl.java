@@ -295,6 +295,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 											requetePatch.setRows(listeGardienScolaire.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeGardienScolaire.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											if(listeGardienScolaire.size() == 1) {
+												GardienScolaire o = listeGardienScolaire.get(0);
+												requetePatch.setPk(o.getPk());
+												requetePatch.setOriginal(o);
+											}
 											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -373,12 +378,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(requetePatch.getNumFound() == 1 && listeGardienScolaire.size() == 1) {
-					GardienScolaire o = listeGardienScolaire.get(0);
-					requetePatch.setPk(o.getPk());
-					requetePatch.setOriginal(o);
-					o.requetePatchGardienScolaire();
-				}
 				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeGardienScolaire.size());
 				if(listeGardienScolaire.next(dt)) {
 					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
@@ -403,6 +402,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 					classes.add("InscriptionScolaire");
 				}
 			}
+			o.requetePatchGardienScolaire();
 		}
 	}
 
@@ -1002,6 +1002,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUtilisateur = creerLigne.getLong(0);
 								UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 								utilisateurSite.setPk(pkUtilisateur);
 
 								connexionSql.queryWithParams(
@@ -1039,6 +1040,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 						} else {
 							Long pkUtilisateur = utilisateurValeurs.getLong(0);
 							UtilisateurSite utilisateurSite = new UtilisateurSite();
+								utilisateurSite.setRequeteSite_(requeteSite);
 							utilisateurSite.setPk(pkUtilisateur);
 
 							connexionSql.queryWithParams(

@@ -295,6 +295,11 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 											patchRequest.setRows(listSchoolGuardian.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolGuardian.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											if(listSchoolGuardian.size() == 1) {
+												SchoolGuardian o = listSchoolGuardian.get(0);
+												patchRequest.setPk(o.getPk());
+												patchRequest.setOriginal(o);
+											}
 											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -373,12 +378,6 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				if(patchRequest.getNumFound() == 1 && listSchoolGuardian.size() == 1) {
-					SchoolGuardian o = listSchoolGuardian.get(0);
-					patchRequest.setPk(o.getPk());
-					patchRequest.setOriginal(o);
-					o.patchRequestSchoolGuardian();
-				}
 				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolGuardian.size());
 				if(listSchoolGuardian.next(dt)) {
 					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(patchRequest).toString());
@@ -403,6 +402,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 					classes.add("SchoolEnrollment");
 				}
 			}
+			o.patchRequestSchoolGuardian();
 		}
 	}
 
@@ -1002,6 +1002,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
 								Long pkUser = createLine.getLong(0);
 								SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 								siteUser.setPk(pkUser);
 
 								sqlConnection.queryWithParams(
@@ -1039,6 +1040,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 						} else {
 							Long pkUser = userValues.getLong(0);
 							SiteUser siteUser = new SiteUser();
+								siteUser.setSiteRequest_(siteRequest);
 							siteUser.setPk(pkUser);
 
 							sqlConnection.queryWithParams(

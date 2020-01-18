@@ -94,28 +94,17 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptGardienGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
 		tl(1, "suggereGardienScolaireInscriptionCles([{'name':'fq','value':'gardienCles:' + pk}], $('#listGardienScolaireInscriptionCles_Page'), pk); ");
-		tl(1, "websocketGardienScolaire(async function(requetePatch) {");
-		tl(2, "var pk = requetePatch['pk'];");
-		tl(2, "var pks = requetePatch['pks'];");
-		tl(2, "var classes = requetePatch['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchGardienScolaireVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketGardienScolaire(websocketGardienScolaireInner);");
 		l("});");
 	}
 
 	public void htmlFormPageGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCree("Page");
+			o.htmPk("Page");
 			o.htmObjetId("Page");
 			o.htmModifie("Page");
 		} g("div");
@@ -141,8 +130,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCree("POST");
+			o.htmPk("POST");
 			o.htmObjetId("POST");
 			o.htmModifie("POST");
 		} g("div");
@@ -168,8 +157,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCree("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjetId("PATCH");
 			o.htmModifie("PATCH");
 		} g("div");
@@ -198,8 +187,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 
 	public void htmlFormRechercheGardienScolaire(GardienScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCree("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjetId("Recherche");
 			o.htmModifie("Recherche");
 		} g("div");

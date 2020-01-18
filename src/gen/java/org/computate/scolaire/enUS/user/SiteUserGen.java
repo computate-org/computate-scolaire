@@ -562,10 +562,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_userReceiveEmails")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserReceiveEmails");
+				a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
 				a("name", "setUserReceiveEmails");
 			} else {
-				a("class", "valueUserReceiveEmails");
+				a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
 				a("name", "userReceiveEmails");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -672,10 +672,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_seeArchived")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeArchived");
+				a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
 				a("name", "setSeeArchived");
 			} else {
-				a("class", "valueSeeArchived");
+				a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
 				a("name", "seeArchived");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -782,10 +782,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_seeDeleted")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeDeleted");
+				a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
 				a("name", "setSeeDeleted");
 			} else {
-				a("class", "valueSeeDeleted");
+				a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
 				a("name", "seeDeleted");
 			}
 			if("Page".equals(classApiMethodMethod)) {

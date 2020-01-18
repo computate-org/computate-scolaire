@@ -254,6 +254,21 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		c.o(o);
 	}
 
+	protected void _blockAdminName(Wrap<String> c) {
+		String o;
+		String weekdays = "";
+		if(BooleanUtils.isTrue(blockSunday)) weekdays += " Su";
+		if(BooleanUtils.isTrue(blockMonday)) weekdays += " M";
+		if(BooleanUtils.isTrue(blockTuesday)) weekdays += " Tu";
+		if(BooleanUtils.isTrue(blockWednesday)) weekdays += " W";
+		if(BooleanUtils.isTrue(blockThursday)) weekdays += " Th";
+		if(BooleanUtils.isTrue(blockFriday)) weekdays += " F";
+		if(BooleanUtils.isTrue(blockSaturday)) weekdays += " S";
+		weekdays = StringUtils.trim(weekdays);
+			o = String.format("%s %s - %s", weekdays, strBlockStartTime(), strBlockEndTime());
+		c.o(o);
+	}
+
 	protected void _blockCompleteName(Wrap<String> c) {
 		String o;
 		String weekdays = "";

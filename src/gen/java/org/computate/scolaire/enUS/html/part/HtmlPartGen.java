@@ -326,10 +326,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "link")
 			.a("id", classApiMethodMethod, "_htmlLink");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlLink w3-input w3-border ");
+				a("class", "setHtmlLink inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
 				a("name", "setHtmlLink");
 			} else {
-				a("class", "valueHtmlLink w3-input w3-border ");
+				a("class", "valueHtmlLink w3-input w3-border inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
 				a("name", "htmlLink");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -441,10 +441,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML element")
 			.a("id", classApiMethodMethod, "_htmlElement");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlElement w3-input w3-border ");
+				a("class", "setHtmlElement inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
 				a("name", "setHtmlElement");
 			} else {
-				a("class", "valueHtmlElement w3-input w3-border ");
+				a("class", "valueHtmlElement w3-input w3-border inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
 				a("name", "htmlElement");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -556,10 +556,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML ID")
 			.a("id", classApiMethodMethod, "_htmlId");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlId w3-input w3-border ");
+				a("class", "setHtmlId inputHtmlPart", pk, "HtmlId w3-input w3-border ");
 				a("name", "setHtmlId");
 			} else {
-				a("class", "valueHtmlId w3-input w3-border ");
+				a("class", "valueHtmlId w3-input w3-border inputHtmlPart", pk, "HtmlId w3-input w3-border ");
 				a("name", "htmlId");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -671,10 +671,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML classes")
 			.a("id", classApiMethodMethod, "_htmlClasses");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlClasses w3-input w3-border ");
+				a("class", "setHtmlClasses inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
 				a("name", "setHtmlClasses");
 			} else {
-				a("class", "valueHtmlClasses w3-input w3-border ");
+				a("class", "valueHtmlClasses w3-input w3-border inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
 				a("name", "htmlClasses");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -786,10 +786,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML style")
 			.a("id", classApiMethodMethod, "_htmlStyle");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlStyle w3-input w3-border ");
+				a("class", "setHtmlStyle inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
 				a("name", "setHtmlStyle");
 			} else {
-				a("class", "valueHtmlStyle w3-input w3-border ");
+				a("class", "valueHtmlStyle w3-input w3-border inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
 				a("name", "htmlStyle");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -900,10 +900,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML before")
 			.a("id", classApiMethodMethod, "_htmlBefore");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlBefore w3-input w3-border ");
+				a("class", "setHtmlBefore inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
 				a("name", "setHtmlBefore");
 			} else {
-				a("class", "valueHtmlBefore w3-input w3-border ");
+				a("class", "valueHtmlBefore w3-input w3-border inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
 				a("name", "htmlBefore");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1013,10 +1013,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "HTML after")
 			.a("id", classApiMethodMethod, "_htmlAfter");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlAfter w3-input w3-border ");
+				a("class", "setHtmlAfter inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
 				a("name", "setHtmlAfter");
 			} else {
-				a("class", "valueHtmlAfter w3-input w3-border ");
+				a("class", "valueHtmlAfter w3-input w3-border inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
 				a("name", "htmlAfter");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1126,10 +1126,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "text")
 			.a("id", classApiMethodMethod, "_htmlText");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlText w3-input w3-border ");
+				a("class", "setHtmlText inputHtmlPart", pk, "HtmlText w3-input w3-border ");
 				a("name", "setHtmlText");
 			} else {
-				a("class", "valueHtmlText w3-input w3-border ");
+				a("class", "valueHtmlText w3-input w3-border inputHtmlPart", pk, "HtmlText w3-input w3-border ");
 				a("name", "htmlText");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1240,10 +1240,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "var")
 			.a("id", classApiMethodMethod, "_htmlVar");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlVar w3-input w3-border ");
+				a("class", "setHtmlVar inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
 				a("name", "setHtmlVar");
 			} else {
-				a("class", "valueHtmlVar w3-input w3-border ");
+				a("class", "valueHtmlVar w3-input w3-border inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
 				a("name", "htmlVar");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1275,6 +1275,121 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 										.a("tabindex", "-1")
 										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
 									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlVar')); $('#", classApiMethodMethod, "_htmlVar').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlVar', null, function() { addGlow($('#", classApiMethodMethod, "_htmlVar')); }, function() { addError($('#", classApiMethodMethod, "_htmlVar')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// htmlVarSpan //
+	/////////////////
+
+	/**	L'entité « htmlVarSpan »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String htmlVarSpan;
+	@JsonIgnore
+	public Wrap<String> htmlVarSpanWrap = new Wrap<String>().p(this).c(String.class).var("htmlVarSpan").o(htmlVarSpan);
+
+	/**	<br/>L'entité « htmlVarSpan »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlVarSpan">Trouver l'entité htmlVarSpan dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVarSpan(Wrap<String> c);
+
+	public String getHtmlVarSpan() {
+		return htmlVarSpan;
+	}
+
+	public void setHtmlVarSpan(String htmlVarSpan) {
+		this.htmlVarSpan = htmlVarSpan;
+		this.htmlVarSpanWrap.alreadyInitialized = true;
+	}
+	protected HtmlPart htmlVarSpanInit() {
+		if(!htmlVarSpanWrap.alreadyInitialized) {
+			_htmlVarSpan(htmlVarSpanWrap);
+			if(htmlVarSpan == null)
+				setHtmlVarSpan(htmlVarSpanWrap.o);
+		}
+		htmlVarSpanWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+
+	public String solrHtmlVarSpan() {
+		return htmlVarSpan;
+	}
+
+	public String strHtmlVarSpan() {
+		return htmlVarSpan == null ? "" : htmlVarSpan;
+	}
+
+	public String jsonHtmlVarSpan() {
+		return htmlVarSpan == null ? "" : htmlVarSpan;
+	}
+
+	public String nomAffichageHtmlVarSpan() {
+		return "var span";
+	}
+
+	public String htmTooltipHtmlVarSpan() {
+		return null;
+	}
+
+	public String htmHtmlVarSpan() {
+		return htmlVarSpan == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarSpan());
+	}
+
+	public void inputHtmlVarSpan(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "var span")
+			.a("id", classApiMethodMethod, "_htmlVarSpan");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setHtmlVarSpan inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
+				a("name", "setHtmlVarSpan");
+			} else {
+				a("class", "valueHtmlVarSpan w3-input w3-border inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
+				a("name", "htmlVarSpan");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarSpan', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_htmlVarSpan')); }, function() { addError($('#", classApiMethodMethod, "_htmlVarSpan')); }); ");
+			}
+			a("value", strHtmlVarSpan())
+		.fg();
+
+	}
+
+	public void htmHtmlVarSpan(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestHtmlPartHtmlVarSpan").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlVarSpan").a("class", "").f().sx("var span").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputHtmlVarSpan(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_htmlVarSpan')); $('#", classApiMethodMethod, "_htmlVarSpan').val(null); patchHtmlPartVal([{ name: 'fq', value: 'pk:' + $('#HtmlPartForm :input[name=pk]').val() }], 'setHtmlVarSpan', null, function() { addGlow($('#", classApiMethodMethod, "_htmlVarSpan')); }, function() { addError($('#", classApiMethodMethod, "_htmlVarSpan')); }); ")
 										.f();
 										e("i").a("class", "far fa-eraser ").f().g("i");
 									} g("button");
@@ -1355,10 +1470,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "var form")
 			.a("id", classApiMethodMethod, "_htmlVarForm");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlVarForm w3-input w3-border ");
+				a("class", "setHtmlVarForm inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
 				a("name", "setHtmlVarForm");
 			} else {
-				a("class", "valueHtmlVarForm w3-input w3-border ");
+				a("class", "valueHtmlVarForm w3-input w3-border inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
 				a("name", "htmlVarForm");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1470,10 +1585,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "var input")
 			.a("id", classApiMethodMethod, "_htmlVarInput");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlVarInput w3-input w3-border ");
+				a("class", "setHtmlVarInput inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
 				a("name", "setHtmlVarInput");
 			} else {
-				a("class", "valueHtmlVarInput w3-input w3-border ");
+				a("class", "valueHtmlVarInput w3-input w3-border inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
 				a("name", "htmlVarInput");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1585,10 +1700,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "var for each")
 			.a("id", classApiMethodMethod, "_htmlVarForEach");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlVarForEach w3-input w3-border ");
+				a("class", "setHtmlVarForEach inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
 				a("name", "setHtmlVarForEach");
 			} else {
-				a("class", "valueHtmlVarForEach w3-input w3-border ");
+				a("class", "valueHtmlVarForEach w3-input w3-border inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
 				a("name", "htmlVarForEach");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1625,6 +1740,116 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 									} g("button");
 								} g("div");
 							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// htmlExclude //
+	/////////////////
+
+	/**	L'entité « htmlExclude »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Boolean htmlExclude;
+	@JsonIgnore
+	public Wrap<Boolean> htmlExcludeWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("htmlExclude").o(htmlExclude);
+
+	/**	<br/>L'entité « htmlExclude »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPart&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlExclude">Trouver l'entité htmlExclude dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlExclude(Wrap<Boolean> c);
+
+	public Boolean getHtmlExclude() {
+		return htmlExclude;
+	}
+
+	public void setHtmlExclude(Boolean htmlExclude) {
+		this.htmlExclude = htmlExclude;
+		this.htmlExcludeWrap.alreadyInitialized = true;
+	}
+	public HtmlPart setHtmlExclude(String o) {
+		this.htmlExclude = Boolean.parseBoolean(o);
+		this.htmlExcludeWrap.alreadyInitialized = true;
+		return (HtmlPart)this;
+	}
+	protected HtmlPart htmlExcludeInit() {
+		if(!htmlExcludeWrap.alreadyInitialized) {
+			_htmlExclude(htmlExcludeWrap);
+			if(htmlExclude == null)
+				setHtmlExclude(htmlExcludeWrap.o);
+		}
+		htmlExcludeWrap.alreadyInitialized(true);
+		return (HtmlPart)this;
+	}
+
+	public Boolean solrHtmlExclude() {
+		return htmlExclude;
+	}
+
+	public String strHtmlExclude() {
+		return htmlExclude == null ? "" : htmlExclude.toString();
+	}
+
+	public String jsonHtmlExclude() {
+		return htmlExclude == null ? "" : htmlExclude.toString();
+	}
+
+	public String nomAffichageHtmlExclude() {
+		return "HTML exclude";
+	}
+
+	public String htmTooltipHtmlExclude() {
+		return null;
+	}
+
+	public String htmHtmlExclude() {
+		return htmlExclude == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlExclude());
+	}
+
+	public void inputHtmlExclude(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		e("input")
+			.a("type", "checkbox")
+			.a("id", classApiMethodMethod, "_htmlExclude")
+			.a("value", "true");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setHtmlExclude inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
+				a("name", "setHtmlExclude");
+			} else {
+				a("class", "valueHtmlExclude inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
+				a("name", "htmlExclude");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patchHtmlPartVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlExclude', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_htmlExclude')); }, function() { addError($('#", classApiMethodMethod, "_htmlExclude')); }); ");
+			}
+			;
+			if(getHtmlExclude() != null && getHtmlExclude())
+				a("checked", "checked");
+		fg();
+
+	}
+
+	public void htmHtmlExclude(String classApiMethodMethod) {
+		HtmlPart s = (HtmlPart)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestHtmlPartHtmlExclude").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+							e("label").a("for", classApiMethodMethod, "_htmlExclude").a("class", "").f().sx("HTML exclude").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputHtmlExclude(classApiMethodMethod);
+							} g("div");
 						} g("div");
 					} g("div");
 				} g("div");
@@ -1705,10 +1930,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_pdfExclude")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPdfExclude");
+				a("class", "setPdfExclude inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
 				a("name", "setPdfExclude");
 			} else {
-				a("class", "valuePdfExclude");
+				a("class", "valuePdfExclude inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
 				a("name", "pdfExclude");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1816,10 +2041,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort1")
 			.a("id", classApiMethodMethod, "_sort1");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort1 w3-input w3-border ");
+				a("class", "setSort1 inputHtmlPart", pk, "Sort1 w3-input w3-border ");
 				a("name", "setSort1");
 			} else {
-				a("class", "valueSort1 w3-input w3-border ");
+				a("class", "valueSort1 w3-input w3-border inputHtmlPart", pk, "Sort1 w3-input w3-border ");
 				a("name", "sort1");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1937,10 +2162,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort2")
 			.a("id", classApiMethodMethod, "_sort2");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort2 w3-input w3-border ");
+				a("class", "setSort2 inputHtmlPart", pk, "Sort2 w3-input w3-border ");
 				a("name", "setSort2");
 			} else {
-				a("class", "valueSort2 w3-input w3-border ");
+				a("class", "valueSort2 w3-input w3-border inputHtmlPart", pk, "Sort2 w3-input w3-border ");
 				a("name", "sort2");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2058,10 +2283,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort3")
 			.a("id", classApiMethodMethod, "_sort3");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort3 w3-input w3-border ");
+				a("class", "setSort3 inputHtmlPart", pk, "Sort3 w3-input w3-border ");
 				a("name", "setSort3");
 			} else {
-				a("class", "valueSort3 w3-input w3-border ");
+				a("class", "valueSort3 w3-input w3-border inputHtmlPart", pk, "Sort3 w3-input w3-border ");
 				a("name", "sort3");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2179,10 +2404,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort4")
 			.a("id", classApiMethodMethod, "_sort4");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort4 w3-input w3-border ");
+				a("class", "setSort4 inputHtmlPart", pk, "Sort4 w3-input w3-border ");
 				a("name", "setSort4");
 			} else {
-				a("class", "valueSort4 w3-input w3-border ");
+				a("class", "valueSort4 w3-input w3-border inputHtmlPart", pk, "Sort4 w3-input w3-border ");
 				a("name", "sort4");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2300,10 +2525,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort5")
 			.a("id", classApiMethodMethod, "_sort5");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort5 w3-input w3-border ");
+				a("class", "setSort5 inputHtmlPart", pk, "Sort5 w3-input w3-border ");
 				a("name", "setSort5");
 			} else {
-				a("class", "valueSort5 w3-input w3-border ");
+				a("class", "valueSort5 w3-input w3-border inputHtmlPart", pk, "Sort5 w3-input w3-border ");
 				a("name", "sort5");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2421,10 +2646,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort6")
 			.a("id", classApiMethodMethod, "_sort6");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort6 w3-input w3-border ");
+				a("class", "setSort6 inputHtmlPart", pk, "Sort6 w3-input w3-border ");
 				a("name", "setSort6");
 			} else {
-				a("class", "valueSort6 w3-input w3-border ");
+				a("class", "valueSort6 w3-input w3-border inputHtmlPart", pk, "Sort6 w3-input w3-border ");
 				a("name", "sort6");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2542,10 +2767,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort7")
 			.a("id", classApiMethodMethod, "_sort7");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort7 w3-input w3-border ");
+				a("class", "setSort7 inputHtmlPart", pk, "Sort7 w3-input w3-border ");
 				a("name", "setSort7");
 			} else {
-				a("class", "valueSort7 w3-input w3-border ");
+				a("class", "valueSort7 w3-input w3-border inputHtmlPart", pk, "Sort7 w3-input w3-border ");
 				a("name", "sort7");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2663,10 +2888,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort8")
 			.a("id", classApiMethodMethod, "_sort8");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort8 w3-input w3-border ");
+				a("class", "setSort8 inputHtmlPart", pk, "Sort8 w3-input w3-border ");
 				a("name", "setSort8");
 			} else {
-				a("class", "valueSort8 w3-input w3-border ");
+				a("class", "valueSort8 w3-input w3-border inputHtmlPart", pk, "Sort8 w3-input w3-border ");
 				a("name", "sort8");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2784,10 +3009,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort9")
 			.a("id", classApiMethodMethod, "_sort9");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort9 w3-input w3-border ");
+				a("class", "setSort9 inputHtmlPart", pk, "Sort9 w3-input w3-border ");
 				a("name", "setSort9");
 			} else {
-				a("class", "valueSort9 w3-input w3-border ");
+				a("class", "valueSort9 w3-input w3-border inputHtmlPart", pk, "Sort9 w3-input w3-border ");
 				a("name", "sort9");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2905,10 +3130,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			.a("placeholder", "sort10")
 			.a("id", classApiMethodMethod, "_sort10");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSort10 w3-input w3-border ");
+				a("class", "setSort10 inputHtmlPart", pk, "Sort10 w3-input w3-border ");
 				a("name", "setSort10");
 			} else {
-				a("class", "valueSort10 w3-input w3-border ");
+				a("class", "valueSort10 w3-input w3-border inputHtmlPart", pk, "Sort10 w3-input w3-border ");
 				a("name", "sort10");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2984,9 +3209,11 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		htmlAfterInit();
 		htmlTextInit();
 		htmlVarInit();
+		htmlVarSpanInit();
 		htmlVarFormInit();
 		htmlVarInputInit();
 		htmlVarForEachInit();
+		htmlExcludeInit();
 		pdfExcludeInit();
 		sort1Init();
 		sort2Init();
@@ -3058,12 +3285,16 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return oHtmlPart.htmlText;
 			case "htmlVar":
 				return oHtmlPart.htmlVar;
+			case "htmlVarSpan":
+				return oHtmlPart.htmlVarSpan;
 			case "htmlVarForm":
 				return oHtmlPart.htmlVarForm;
 			case "htmlVarInput":
 				return oHtmlPart.htmlVarInput;
 			case "htmlVarForEach":
 				return oHtmlPart.htmlVarForEach;
+			case "htmlExclude":
+				return oHtmlPart.htmlExclude;
 			case "pdfExclude":
 				return oHtmlPart.pdfExclude;
 			case "sort1":
@@ -3176,6 +3407,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				setHtmlVar(val);
 				savesHtmlPart.add(var);
 				return val;
+			case "htmlVarSpan":
+				setHtmlVarSpan(val);
+				savesHtmlPart.add(var);
+				return val;
 			case "htmlVarForm":
 				setHtmlVarForm(val);
 				savesHtmlPart.add(var);
@@ -3186,6 +3421,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return val;
 			case "htmlVarForEach":
 				setHtmlVarForEach(val);
+				savesHtmlPart.add(var);
+				return val;
+			case "htmlExclude":
+				setHtmlExclude(val);
 				savesHtmlPart.add(var);
 				return val;
 			case "pdfExclude":
@@ -3319,6 +3558,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					oHtmlPart.setHtmlVar(htmlVar);
 			}
 
+			if(savesHtmlPart.contains("htmlVarSpan")) {
+				String htmlVarSpan = (String)solrDocument.get("htmlVarSpan_stored_string");
+				if(htmlVarSpan != null)
+					oHtmlPart.setHtmlVarSpan(htmlVarSpan);
+			}
+
 			if(savesHtmlPart.contains("htmlVarForm")) {
 				String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
 				if(htmlVarForm != null)
@@ -3335,6 +3580,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
 				if(htmlVarForEach != null)
 					oHtmlPart.setHtmlVarForEach(htmlVarForEach);
+			}
+
+			if(savesHtmlPart.contains("htmlExclude")) {
+				Boolean htmlExclude = (Boolean)solrDocument.get("htmlExclude_stored_boolean");
+				if(htmlExclude != null)
+					oHtmlPart.setHtmlExclude(htmlExclude);
 			}
 
 			if(savesHtmlPart.contains("pdfExclude")) {
@@ -3516,6 +3767,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			document.addField("htmlVar_indexed_string", htmlVar);
 			document.addField("htmlVar_stored_string", htmlVar);
 		}
+		if(htmlVarSpan != null) {
+			document.addField("htmlVarSpan_indexed_string", htmlVarSpan);
+			document.addField("htmlVarSpan_stored_string", htmlVarSpan);
+		}
 		if(htmlVarForm != null) {
 			document.addField("htmlVarForm_indexed_string", htmlVarForm);
 			document.addField("htmlVarForm_stored_string", htmlVarForm);
@@ -3527,6 +3782,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(htmlVarForEach != null) {
 			document.addField("htmlVarForEach_indexed_string", htmlVarForEach);
 			document.addField("htmlVarForEach_stored_string", htmlVarForEach);
+		}
+		if(htmlExclude != null) {
+			document.addField("htmlExclude_indexed_boolean", htmlExclude);
+			document.addField("htmlExclude_stored_boolean", htmlExclude);
 		}
 		if(pdfExclude != null) {
 			document.addField("pdfExclude_indexed_boolean", pdfExclude);
@@ -3617,12 +3876,16 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				return "htmlText_indexed_string";
 			case "htmlVar":
 				return "htmlVar_indexed_string";
+			case "htmlVarSpan":
+				return "htmlVarSpan_indexed_string";
 			case "htmlVarForm":
 				return "htmlVarForm_indexed_string";
 			case "htmlVarInput":
 				return "htmlVarInput_indexed_string";
 			case "htmlVarForEach":
 				return "htmlVarForEach_indexed_string";
+			case "htmlExclude":
+				return "htmlExclude_indexed_boolean";
 			case "pdfExclude":
 				return "pdfExclude_indexed_boolean";
 			case "sort1":
@@ -3718,6 +3981,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		if(htmlVar != null)
 			oHtmlPart.setHtmlVar(htmlVar);
 
+		String htmlVarSpan = (String)solrDocument.get("htmlVarSpan_stored_string");
+		if(htmlVarSpan != null)
+			oHtmlPart.setHtmlVarSpan(htmlVarSpan);
+
 		String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
 		if(htmlVarForm != null)
 			oHtmlPart.setHtmlVarForm(htmlVarForm);
@@ -3729,6 +3996,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
 		if(htmlVarForEach != null)
 			oHtmlPart.setHtmlVarForEach(htmlVarForEach);
+
+		Boolean htmlExclude = (Boolean)solrDocument.get("htmlExclude_stored_boolean");
+		if(htmlExclude != null)
+			oHtmlPart.setHtmlExclude(htmlExclude);
 
 		Boolean pdfExclude = (Boolean)solrDocument.get("pdfExclude_stored_boolean");
 		if(pdfExclude != null)
@@ -3805,12 +4076,16 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				patchRequest.addVars("htmlText");
 			if(!Objects.equals(htmlVar, original.getHtmlVar()))
 				patchRequest.addVars("htmlVar");
+			if(!Objects.equals(htmlVarSpan, original.getHtmlVarSpan()))
+				patchRequest.addVars("htmlVarSpan");
 			if(!Objects.equals(htmlVarForm, original.getHtmlVarForm()))
 				patchRequest.addVars("htmlVarForm");
 			if(!Objects.equals(htmlVarInput, original.getHtmlVarInput()))
 				patchRequest.addVars("htmlVarInput");
 			if(!Objects.equals(htmlVarForEach, original.getHtmlVarForEach()))
 				patchRequest.addVars("htmlVarForEach");
+			if(!Objects.equals(htmlExclude, original.getHtmlExclude()))
+				patchRequest.addVars("htmlExclude");
 			if(!Objects.equals(pdfExclude, original.getPdfExclude()))
 				patchRequest.addVars("pdfExclude");
 			if(!Objects.equals(sort1, original.getSort1()))
@@ -3842,7 +4117,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentDesignKey, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlAfter, htmlText, htmlVar, htmlVarForm, htmlVarInput, htmlVarForEach, pdfExclude, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
+		return Objects.hash(super.hashCode(), enrollmentDesignKey, htmlLink, htmlElement, htmlId, htmlClasses, htmlStyle, htmlBefore, htmlAfter, htmlText, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlVarForEach, htmlExclude, pdfExclude, sort1, sort2, sort3, sort4, sort5, sort6, sort7, sort8, sort9, sort10);
 	}
 
 	////////////
@@ -3866,9 +4141,11 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				&& Objects.equals( htmlAfter, that.htmlAfter )
 				&& Objects.equals( htmlText, that.htmlText )
 				&& Objects.equals( htmlVar, that.htmlVar )
+				&& Objects.equals( htmlVarSpan, that.htmlVarSpan )
 				&& Objects.equals( htmlVarForm, that.htmlVarForm )
 				&& Objects.equals( htmlVarInput, that.htmlVarInput )
 				&& Objects.equals( htmlVarForEach, that.htmlVarForEach )
+				&& Objects.equals( htmlExclude, that.htmlExclude )
 				&& Objects.equals( pdfExclude, that.pdfExclude )
 				&& Objects.equals( sort1, that.sort1 )
 				&& Objects.equals( sort2, that.sort2 )
@@ -3900,9 +4177,11 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		sb.append( ", htmlAfter: \"" ).append(htmlAfter).append( "\"" );
 		sb.append( ", htmlText: \"" ).append(htmlText).append( "\"" );
 		sb.append( ", htmlVar: \"" ).append(htmlVar).append( "\"" );
+		sb.append( ", htmlVarSpan: \"" ).append(htmlVarSpan).append( "\"" );
 		sb.append( ", htmlVarForm: \"" ).append(htmlVarForm).append( "\"" );
 		sb.append( ", htmlVarInput: \"" ).append(htmlVarInput).append( "\"" );
 		sb.append( ", htmlVarForEach: \"" ).append(htmlVarForEach).append( "\"" );
+		sb.append( ", htmlExclude: " ).append(htmlExclude);
 		sb.append( ", pdfExclude: " ).append(pdfExclude);
 		sb.append( ", sort1: " ).append(sort1);
 		sb.append( ", sort2: " ).append(sort2);

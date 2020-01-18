@@ -2462,6 +2462,184 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantNomComplet());
 	}
 
+	public void inputEnfantNomComplet(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "NomAffichage.enUS: ")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+			.a("id", classeApiMethodeMethode, "_enfantNomComplet");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setEnfantNomComplet inputInscriptionScolaire", pk, "EnfantNomComplet w3-input w3-border ");
+				a("name", "setEnfantNomComplet");
+			} else {
+				a("class", "valeurEnfantNomComplet w3-input w3-border inputInscriptionScolaire", pk, "EnfantNomComplet w3-input w3-border ");
+				a("name", "enfantNomComplet");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantNomComplet', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomComplet')); }); ");
+			}
+			a("value", strEnfantNomComplet())
+		.fg();
+
+	}
+
+	public void htmEnfantNomComplet(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantNomComplet").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantNomComplet").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnfantNomComplet(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantNomComplet')); $('#", classeApiMethodeMethode, "_enfantNomComplet').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantNomComplet', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantNomComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantNomComplet')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////
+	// enfantDateNaissance //
+	/////////////////////////
+
+	/**	L'entité « enfantDateNaissance »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected LocalDate enfantDateNaissance;
+	@JsonIgnore
+	public Couverture<LocalDate> enfantDateNaissanceCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("enfantDateNaissance").o(enfantDateNaissance);
+
+	/**	<br/>L'entité « enfantDateNaissance »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantDateNaissance">Trouver l'entité enfantDateNaissance dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enfantDateNaissance(Couverture<LocalDate> c);
+
+	public LocalDate getEnfantDateNaissance() {
+		return enfantDateNaissance;
+	}
+
+	public void setEnfantDateNaissance(LocalDate enfantDateNaissance) {
+		this.enfantDateNaissance = enfantDateNaissance;
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setEnfantDateNaissance(Instant o) {
+		this.enfantDateNaissance = LocalDate.from(o);
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public InscriptionScolaire setEnfantDateNaissance(String o) {
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setEnfantDateNaissance(Date o) {
+		this.enfantDateNaissance = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.enfantDateNaissanceCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire enfantDateNaissanceInit() {
+		if(!enfantDateNaissanceCouverture.dejaInitialise) {
+			_enfantDateNaissance(enfantDateNaissanceCouverture);
+			if(enfantDateNaissance == null)
+				setEnfantDateNaissance(enfantDateNaissanceCouverture.o);
+		}
+		enfantDateNaissanceCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Date solrEnfantDateNaissance() {
+		return enfantDateNaissance == null ? null : Date.from(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+
+	public String strEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+	}
+
+	public String jsonEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+	}
+
+	public String nomAffichageEnfantDateNaissance() {
+		return "NomAffichage.enUS: ";
+	}
+
+	public String htmTooltipEnfantDateNaissance() {
+		return null;
+	}
+
+	public String htmEnfantDateNaissance() {
+		return enfantDateNaissance == null ? "" : StringEscapeUtils.escapeHtml4(strEnfantDateNaissance());
+	}
+
+	public void inputEnfantDateNaissance(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("class", "w3-input w3-border datepicker setEnfantDateNaissance inputInscriptionScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
+			.a("placeholder", "DD-MM-YYYY")
+			.a("data-timeformat", "DD-MM-YYYY")
+			.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
+			.a("onclick", "enleverLueur($(this)); ")
+			.a("title", "La clé primaire des contacts d'urgence dans la base de données.  (DD-MM-YYYY)")
+			.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
+			.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
+			.fg();
+	}
+
+	public void htmEnfantDateNaissance(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereInscriptionScolaireEnfantDateNaissance").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-purple ").f();
+							e("label").a("for", classeApiMethodeMethode, "_enfantDateNaissance").a("class", "").f().sx("NomAffichage.enUS: ").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputEnfantDateNaissance(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-purple ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); $('#", classeApiMethodeMethode, "_enfantDateNaissance').val(null); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setEnfantDateNaissance', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// ecoleNom //
 	//////////////
@@ -2714,10 +2892,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse w3-input w3-border ");
+				a("class", "setEcoleAddresse inputInscriptionScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "setEcoleAddresse");
 			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border ");
+				a("class", "valeurEcoleAddresse w3-input w3-border inputInscriptionScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "ecoleAddresse");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4472,6 +4650,67 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocPrixTotal == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixTotal());
 	}
 
+	//////////////////
+	// blocNomAdmin //
+	//////////////////
+
+	/**	L'entité « blocNomAdmin »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String blocNomAdmin;
+	@JsonIgnore
+	public Couverture<String> blocNomAdminCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomAdmin").o(blocNomAdmin);
+
+	/**	<br/>L'entité « blocNomAdmin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocNomAdmin">Trouver l'entité blocNomAdmin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocNomAdmin(Couverture<String> c);
+
+	public String getBlocNomAdmin() {
+		return blocNomAdmin;
+	}
+
+	public void setBlocNomAdmin(String blocNomAdmin) {
+		this.blocNomAdmin = blocNomAdmin;
+		this.blocNomAdminCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire blocNomAdminInit() {
+		if(!blocNomAdminCouverture.dejaInitialise) {
+			_blocNomAdmin(blocNomAdminCouverture);
+			if(blocNomAdmin == null)
+				setBlocNomAdmin(blocNomAdminCouverture.o);
+		}
+		blocNomAdminCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrBlocNomAdmin() {
+		return blocNomAdmin;
+	}
+
+	public String strBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : blocNomAdmin;
+	}
+
+	public String jsonBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : blocNomAdmin;
+	}
+
+	public String nomAffichageBlocNomAdmin() {
+		return null;
+	}
+
+	public String htmTooltipBlocNomAdmin() {
+		return null;
+	}
+
+	public String htmBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomAdmin());
+	}
+
 	/////////////////////////
 	// inscriptionApprouve //
 	/////////////////////////
@@ -4545,10 +4784,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionApprouve");
+				a("class", "setInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
 				a("name", "setInscriptionApprouve");
 			} else {
-				a("class", "valeurInscriptionApprouve");
+				a("class", "valeurInscriptionApprouve inputInscriptionScolaire", pk, "InscriptionApprouve w3-input w3-border ");
 				a("name", "inscriptionApprouve");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4655,10 +4894,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_inscriptionImmunisations")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionImmunisations");
+				a("class", "setInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
 				a("name", "setInscriptionImmunisations");
 			} else {
-				a("class", "valeurInscriptionImmunisations");
+				a("class", "valeurInscriptionImmunisations inputInscriptionScolaire", pk, "InscriptionImmunisations w3-input w3-border ");
 				a("name", "inscriptionImmunisations");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4765,10 +5004,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_familleMarie")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleMarie");
+				a("class", "setFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
 				a("name", "setFamilleMarie");
 			} else {
-				a("class", "valeurFamilleMarie");
+				a("class", "valeurFamilleMarie inputInscriptionScolaire", pk, "FamilleMarie w3-input w3-border ");
 				a("name", "familleMarie");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4875,10 +5114,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_familleSepare")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleSepare");
+				a("class", "setFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
 				a("name", "setFamilleSepare");
 			} else {
-				a("class", "valeurFamilleSepare");
+				a("class", "valeurFamilleSepare inputInscriptionScolaire", pk, "FamilleSepare w3-input w3-border ");
 				a("name", "familleSepare");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4985,10 +5224,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_familleDivorce")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleDivorce");
+				a("class", "setFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
 				a("name", "setFamilleDivorce");
 			} else {
-				a("class", "valeurFamilleDivorce");
+				a("class", "valeurFamilleDivorce inputInscriptionScolaire", pk, "FamilleDivorce w3-input w3-border ");
 				a("name", "familleDivorce");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5090,10 +5329,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_familleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleAddresse w3-input w3-border ");
+				a("class", "setFamilleAddresse inputInscriptionScolaire", pk, "FamilleAddresse w3-input w3-border ");
 				a("name", "setFamilleAddresse");
 			} else {
-				a("class", "valeurFamilleAddresse w3-input w3-border ");
+				a("class", "valeurFamilleAddresse w3-input w3-border inputInscriptionScolaire", pk, "FamilleAddresse w3-input w3-border ");
 				a("name", "familleAddresse");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5204,10 +5443,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_familleCommentVousConnaissezEcole");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setFamilleCommentVousConnaissezEcole w3-input w3-border ");
+				a("class", "setFamilleCommentVousConnaissezEcole inputInscriptionScolaire", pk, "FamilleCommentVousConnaissezEcole w3-input w3-border ");
 				a("name", "setFamilleCommentVousConnaissezEcole");
 			} else {
-				a("class", "valeurFamilleCommentVousConnaissezEcole w3-input w3-border ");
+				a("class", "valeurFamilleCommentVousConnaissezEcole w3-input w3-border inputInscriptionScolaire", pk, "FamilleCommentVousConnaissezEcole w3-input w3-border ");
 				a("name", "familleCommentVousConnaissezEcole");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5318,10 +5557,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionConsiderationsSpeciales");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionConsiderationsSpeciales w3-input w3-border ");
+				a("class", "setInscriptionConsiderationsSpeciales inputInscriptionScolaire", pk, "InscriptionConsiderationsSpeciales w3-input w3-border ");
 				a("name", "setInscriptionConsiderationsSpeciales");
 			} else {
-				a("class", "valeurInscriptionConsiderationsSpeciales w3-input w3-border ");
+				a("class", "valeurInscriptionConsiderationsSpeciales w3-input w3-border inputInscriptionScolaire", pk, "InscriptionConsiderationsSpeciales w3-input w3-border ");
 				a("name", "inscriptionConsiderationsSpeciales");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5433,10 +5672,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantConditionsMedicales");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantConditionsMedicales w3-input w3-border ");
+				a("class", "setEnfantConditionsMedicales inputInscriptionScolaire", pk, "EnfantConditionsMedicales w3-input w3-border ");
 				a("name", "setEnfantConditionsMedicales");
 			} else {
-				a("class", "valeurEnfantConditionsMedicales w3-input w3-border ");
+				a("class", "valeurEnfantConditionsMedicales w3-input w3-border inputInscriptionScolaire", pk, "EnfantConditionsMedicales w3-input w3-border ");
 				a("name", "enfantConditionsMedicales");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5549,10 +5788,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantEcolesPrecedemmentFrequentees");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
+				a("class", "setEnfantEcolesPrecedemmentFrequentees inputInscriptionScolaire", pk, "EnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
 				a("name", "setEnfantEcolesPrecedemmentFrequentees");
 			} else {
-				a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
+				a("class", "valeurEnfantEcolesPrecedemmentFrequentees w3-input w3-border inputInscriptionScolaire", pk, "EnfantEcolesPrecedemmentFrequentees w3-input w3-border ");
 				a("name", "enfantEcolesPrecedemmentFrequentees");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5664,10 +5903,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantDescription");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantDescription w3-input w3-border ");
+				a("class", "setEnfantDescription inputInscriptionScolaire", pk, "EnfantDescription w3-input w3-border ");
 				a("name", "setEnfantDescription");
 			} else {
-				a("class", "valeurEnfantDescription w3-input w3-border ");
+				a("class", "valeurEnfantDescription w3-input w3-border inputInscriptionScolaire", pk, "EnfantDescription w3-input w3-border ");
 				a("name", "enfantDescription");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5778,10 +6017,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_enfantObjectifs");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantObjectifs w3-input w3-border ");
+				a("class", "setEnfantObjectifs inputInscriptionScolaire", pk, "EnfantObjectifs w3-input w3-border ");
 				a("name", "setEnfantObjectifs");
 			} else {
-				a("class", "valeurEnfantObjectifs w3-input w3-border ");
+				a("class", "valeurEnfantObjectifs w3-input w3-border inputInscriptionScolaire", pk, "EnfantObjectifs w3-input w3-border ");
 				a("name", "enfantObjectifs");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -5897,10 +6136,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_enfantPropre")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEnfantPropre");
+				a("class", "setEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
 				a("name", "setEnfantPropre");
 			} else {
-				a("class", "valeurEnfantPropre");
+				a("class", "valeurEnfantPropre inputInscriptionScolaire", pk, "EnfantPropre w3-input w3-border ");
 				a("name", "enfantPropre");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -6003,10 +6242,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionNomGroupe");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionNomGroupe w3-input w3-border ");
+				a("class", "setInscriptionNomGroupe inputInscriptionScolaire", pk, "InscriptionNomGroupe w3-input w3-border ");
 				a("name", "setInscriptionNomGroupe");
 			} else {
-				a("class", "valeurInscriptionNomGroupe w3-input w3-border ");
+				a("class", "valeurInscriptionNomGroupe w3-input w3-border inputInscriptionScolaire", pk, "InscriptionNomGroupe w3-input w3-border ");
 				a("name", "inscriptionNomGroupe");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -6123,10 +6362,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentChaqueMois");
+				a("class", "setInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
 				a("name", "setInscriptionPaimentChaqueMois");
 			} else {
-				a("class", "valeurInscriptionPaimentChaqueMois");
+				a("class", "valeurInscriptionPaimentChaqueMois inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
 				a("name", "inscriptionPaimentChaqueMois");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -6233,10 +6472,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentComplet");
+				a("class", "setInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
 				a("name", "setInscriptionPaimentComplet");
 			} else {
-				a("class", "valeurInscriptionPaimentComplet");
+				a("class", "valeurInscriptionPaimentComplet inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
 				a("name", "inscriptionPaimentComplet");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -6338,10 +6577,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_inscriptionNomsParents");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionNomsParents w3-input w3-border ");
+				a("class", "setInscriptionNomsParents inputInscriptionScolaire", pk, "InscriptionNomsParents w3-input w3-border ");
 				a("name", "setInscriptionNomsParents");
 			} else {
-				a("class", "valeurInscriptionNomsParents w3-input w3-border ");
+				a("class", "valeurInscriptionNomsParents w3-input w3-border inputInscriptionScolaire", pk, "InscriptionNomsParents w3-input w3-border ");
 				a("name", "inscriptionNomsParents");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -6446,7 +6685,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature1(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature1").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature1");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature1");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature1) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature1");
@@ -6458,14 +6697,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature1");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature1').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature1').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature1')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature1', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature1')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature1').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -6473,7 +6712,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature1");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature1').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature1', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6574,7 +6813,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature2(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature2").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature2");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature2");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature2) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature2");
@@ -6586,14 +6825,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature2");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature2').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature2').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature2')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature2', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature2')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature2').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -6601,7 +6840,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature2");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature2').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature2', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6702,7 +6941,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature3(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature3").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature3");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature3");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature3) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature3");
@@ -6714,14 +6953,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature3");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature3').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature3').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature3')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature3', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature3')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature3').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -6729,7 +6968,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature3");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature3').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature3', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6830,7 +7069,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature4(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature4").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature4");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature4");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature4) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature4");
@@ -6842,14 +7081,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature4");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature4').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature4').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature4')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature4', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature4')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature4').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -6857,7 +7096,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature4");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature4').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature4', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -6958,7 +7197,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature5(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature5").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature5");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature5");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature5) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature5");
@@ -6970,14 +7209,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature5");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature5').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature5').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature5')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature5', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature5')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature5').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -6985,7 +7224,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature5");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature5').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature5', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7086,7 +7325,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature6(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature6").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature6");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature6");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature6) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature6");
@@ -7098,14 +7337,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature6");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature6').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature6').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature6')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature6', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature6')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature6').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -7113,7 +7352,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature6");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature6').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature6', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7214,7 +7453,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature7(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature7").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature7");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature7");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature7) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature7");
@@ -7226,14 +7465,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature7");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature7').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature7').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature7')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature7', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature7')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature7').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -7241,7 +7480,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature7");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature7').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature7', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7342,7 +7581,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature8(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature8").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature8");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature8");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature8) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature8");
@@ -7354,14 +7593,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature8");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature8').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature8').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature8')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature8', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature8')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature8').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -7369,7 +7608,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature8");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature8').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature8', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7470,7 +7709,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature9(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature9").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature9");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature9");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature9) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature9");
@@ -7482,14 +7721,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature9");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature9').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature9').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature9')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature9', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature9')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature9').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -7497,7 +7736,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature9");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature9').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature9', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7598,7 +7837,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public void inputInscriptionSignature10(String classeApiMethodeMethode) {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("div").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature10").f();
-			e("div").a("id", "inputInscriptionScolaire", pk, "inscriptionSignature10");
+			e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature10");
 				a("style", "border: 1px solid black; display: ", StringUtils.isBlank(inscriptionSignature10) ? "block" : "none", "; ");
 			f().g("div");
 			e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature10");
@@ -7610,14 +7849,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature10");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature10').show(); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10').show(); ");
 					s("$('#signatureImgInscriptionScolaire", pk, "inscriptionSignature10').hide(); ");
-					s("enleverLueur($('#inputInscriptionScolaire", pk, "inscriptionSignature10')); ");
+					s("enleverLueur($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10')); ");
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature10', null); ");
-					s("if($('#inputInscriptionScolaire", pk, "inscriptionSignature10')) { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('reset'); ");
+					s("if($('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10')) { ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('reset'); ");
 					s(" } else { ");
-					s("$('#inputInscriptionScolaire", pk, "inscriptionSignature10').jSignature({'height':200}); ");
+					s("$('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10').jSignature({'height':200}); ");
 					s(" } ");
 				s("\"");
 				f().sx("Vider");
@@ -7625,7 +7864,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			e("button").a("id", "signatureButtonViderInscriptionScolaire", pk, "inscriptionSignature10");
 				a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
 				s(" onclick=", "\"");
-					s("var src = $('#inputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('getData', 'default'); "); 
+					s("var src = $('#signatureInputInscriptionScolaire", pk, "inscriptionSignature10').jSignature('getData', 'default'); "); 
 					s("patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionSignature10', src); ");
 				s("\"");
 				f().sx("Accepter la signature");
@@ -7743,7 +7982,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate1 inputInscriptionScolaire", pk, "InscriptionDate1 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate1")
@@ -7863,7 +8102,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate2 inputInscriptionScolaire", pk, "InscriptionDate2 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate2")
@@ -7983,7 +8222,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate3 inputInscriptionScolaire", pk, "InscriptionDate3 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate3")
@@ -8103,7 +8342,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate4 inputInscriptionScolaire", pk, "InscriptionDate4 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate4")
@@ -8223,7 +8462,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate5 inputInscriptionScolaire", pk, "InscriptionDate5 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate5")
@@ -8343,7 +8582,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate6 inputInscriptionScolaire", pk, "InscriptionDate6 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate6")
@@ -8463,7 +8702,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate7 inputInscriptionScolaire", pk, "InscriptionDate7 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate7")
@@ -8583,7 +8822,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate8 inputInscriptionScolaire", pk, "InscriptionDate8 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate8")
@@ -8703,7 +8942,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate9 inputInscriptionScolaire", pk, "InscriptionDate9 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate9")
@@ -8823,7 +9062,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire s = (InscriptionScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setInscriptionDate10 inputInscriptionScolaire", pk, "InscriptionDate10 w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_inscriptionDate10")
@@ -9003,6 +9242,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		gardienRechercheInit();
 		gardiensInit();
 		enfantNomCompletInit();
+		enfantDateNaissanceInit();
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
@@ -9032,6 +9272,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		blocVendrediInit();
 		blocSamediInit();
 		blocPrixTotalInit();
+		blocNomAdminInit();
 		inscriptionApprouveInit();
 		inscriptionImmunisationsInit();
 		familleMarieInit();
@@ -9184,6 +9425,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.gardiens;
 			case "enfantNomComplet":
 				return oInscriptionScolaire.enfantNomComplet;
+			case "enfantDateNaissance":
+				return oInscriptionScolaire.enfantDateNaissance;
 			case "ecoleNom":
 				return oInscriptionScolaire.ecoleNom;
 			case "ecoleNomComplet":
@@ -9242,6 +9485,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.blocSamedi;
 			case "blocPrixTotal":
 				return oInscriptionScolaire.blocPrixTotal;
+			case "blocNomAdmin":
+				return oInscriptionScolaire.blocNomAdmin;
 			case "inscriptionApprouve":
 				return oInscriptionScolaire.inscriptionApprouve;
 			case "inscriptionImmunisations":
@@ -9387,6 +9632,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirInscriptionScolaire(String var, String val) {
 		switch(var) {
+			case "enfantNomComplet":
+				setEnfantNomComplet(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
+			case "enfantDateNaissance":
+				setEnfantDateNaissance(val);
+				sauvegardesInscriptionScolaire.add(var);
+				return val;
 			case "ecoleAddresse":
 				setEcoleAddresse(val);
 				sauvegardesInscriptionScolaire.add(var);
@@ -9676,6 +9929,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setEnfantNomComplet(enfantNomComplet);
 			}
 
+			if(sauvegardesInscriptionScolaire.contains("enfantDateNaissance")) {
+				Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
+				if(enfantDateNaissance != null)
+					oInscriptionScolaire.setEnfantDateNaissance(enfantDateNaissance);
+			}
+
 			if(sauvegardesInscriptionScolaire.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
@@ -9848,6 +10107,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
 				if(blocPrixTotal != null)
 					oInscriptionScolaire.setBlocPrixTotal(blocPrixTotal);
+			}
+
+			if(sauvegardesInscriptionScolaire.contains("blocNomAdmin")) {
+				String blocNomAdmin = (String)solrDocument.get("blocNomAdmin_stored_string");
+				if(blocNomAdmin != null)
+					oInscriptionScolaire.setBlocNomAdmin(blocNomAdmin);
 			}
 
 			if(sauvegardesInscriptionScolaire.contains("inscriptionApprouve")) {
@@ -10251,6 +10516,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
 			document.addField("enfantNomComplet_stored_string", enfantNomComplet);
 		}
+		if(enfantDateNaissance != null) {
+			document.addField("enfantDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("enfantDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enfantDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(ecoleNom != null) {
 			document.addField("ecoleNom_indexed_string", ecoleNom);
 			document.addField("ecoleNom_stored_string", ecoleNom);
@@ -10366,6 +10635,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(blocPrixTotal != null) {
 			document.addField("blocPrixTotal_indexed_double", blocPrixTotal.doubleValue());
 			document.addField("blocPrixTotal_stored_double", blocPrixTotal.doubleValue());
+		}
+		if(blocNomAdmin != null) {
+			document.addField("blocNomAdmin_indexed_string", blocNomAdmin);
+			document.addField("blocNomAdmin_stored_string", blocNomAdmin);
 		}
 		if(inscriptionApprouve != null) {
 			document.addField("inscriptionApprouve_indexed_boolean", inscriptionApprouve);
@@ -10574,6 +10847,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "ageTri_indexed_int";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
+			case "enfantDateNaissance":
+				return "enfantDateNaissance_indexed_date";
 			case "ecoleNom":
 				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
@@ -10632,6 +10907,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "blocSamedi_indexed_boolean";
 			case "blocPrixTotal":
 				return "blocPrixTotal_indexed_double";
+			case "blocNomAdmin":
+				return "blocNomAdmin_indexed_string";
 			case "inscriptionApprouve":
 				return "inscriptionApprouve_indexed_boolean";
 			case "inscriptionImmunisations":
@@ -10801,6 +11078,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(enfantNomComplet != null)
 			oInscriptionScolaire.setEnfantNomComplet(enfantNomComplet);
 
+		Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
+		if(enfantDateNaissance != null)
+			oInscriptionScolaire.setEnfantDateNaissance(enfantDateNaissance);
+
 		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 		if(ecoleNom != null)
 			oInscriptionScolaire.setEcoleNom(ecoleNom);
@@ -10916,6 +11197,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
 		if(blocPrixTotal != null)
 			oInscriptionScolaire.setBlocPrixTotal(blocPrixTotal);
+
+		String blocNomAdmin = (String)solrDocument.get("blocNomAdmin_stored_string");
+		if(blocNomAdmin != null)
+			oInscriptionScolaire.setBlocNomAdmin(blocNomAdmin);
 
 		Boolean inscriptionApprouve = (Boolean)solrDocument.get("inscriptionApprouve_stored_boolean");
 		if(inscriptionApprouve != null)
@@ -11092,6 +11377,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requetePatch.addVars("gardienCles");
 			if(!Objects.equals(paiementCles, original.getPaiementCles()))
 				requetePatch.addVars("paiementCles");
+			if(!Objects.equals(enfantNomComplet, original.getEnfantNomComplet()))
+				requetePatch.addVars("enfantNomComplet");
+			if(!Objects.equals(enfantDateNaissance, original.getEnfantDateNaissance()))
+				requetePatch.addVars("enfantDateNaissance");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
 				requetePatch.addVars("ecoleAddresse");
 			if(!Objects.equals(inscriptionApprouve, original.getInscriptionApprouve()))
@@ -11177,7 +11466,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, enfantNomComplet, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -11197,6 +11486,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( pereCles, that.pereCles )
 				&& Objects.equals( gardienCles, that.gardienCles )
 				&& Objects.equals( paiementCles, that.paiementCles )
+				&& Objects.equals( enfantNomComplet, that.enfantNomComplet )
+				&& Objects.equals( enfantDateNaissance, that.enfantDateNaissance )
 				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( inscriptionApprouve, that.inscriptionApprouve )
 				&& Objects.equals( inscriptionImmunisations, that.inscriptionImmunisations )
@@ -11251,6 +11542,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", pereCles: " ).append(pereCles);
 		sb.append( ", gardienCles: " ).append(gardienCles);
 		sb.append( ", paiementCles: " ).append(paiementCles);
+		sb.append( ", enfantNomComplet: \"" ).append(enfantNomComplet).append( "\"" );
+		sb.append( ", enfantDateNaissance: " ).append(enfantDateNaissance);
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", inscriptionApprouve: " ).append(inscriptionApprouve);
 		sb.append( ", inscriptionImmunisations: " ).append(inscriptionImmunisations);

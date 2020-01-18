@@ -92,29 +92,18 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptSiteUserGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "websocketSiteUser(async function(patchRequest) {");
-		tl(2, "var pk = patchRequest['pk'];");
-		tl(2, "var pks = patchRequest['pks'];");
-		tl(2, "var classes = patchRequest['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchSiteUserVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketSiteUser(websocketSiteUserInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Page");
 			o.htmCreated("Page");
-			o.htmModified("Page");
+			o.htmPk("Page");
 			o.htmObjectId("Page");
+			o.htmModified("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -129,10 +118,10 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("POST");
 			o.htmCreated("POST");
-			o.htmModified("POST");
+			o.htmPk("POST");
 			o.htmObjectId("POST");
+			o.htmModified("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -147,10 +136,10 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("PATCH");
 			o.htmCreated("PATCH");
-			o.htmModified("PATCH");
+			o.htmPk("PATCH");
 			o.htmObjectId("PATCH");
+			o.htmModified("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -165,10 +154,10 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSiteUser(SiteUser o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPk("Recherche");
 			o.htmCreated("Recherche");
-			o.htmModified("Recherche");
+			o.htmPk("Recherche");
 			o.htmObjectId("Recherche");
+			o.htmModified("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");

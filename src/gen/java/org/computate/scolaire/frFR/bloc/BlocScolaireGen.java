@@ -1613,10 +1613,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("title", "L'année scolaire de la saison scolaire. ")
 			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse w3-input w3-border ");
+				a("class", "setEcoleAddresse inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "setEcoleAddresse");
 			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border ");
+				a("class", "valeurEcoleAddresse w3-input w3-border inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "ecoleAddresse");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2809,7 +2809,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		BlocScolaire s = (BlocScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker ")
+			a("class", "w3-input w3-border timepicker setBlocHeureDebut inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ");
 			.a("placeholder", "HH:MM AM")
 			.a("id", classeApiMethodeMethode, "_blocHeureDebut")
 			.a("onclick", "enleverLueur($(this)); ")
@@ -2923,7 +2923,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		BlocScolaire s = (BlocScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border timepicker ")
+			a("class", "w3-input w3-border timepicker setBlocHeureFin inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ");
 			.a("placeholder", "HH:MM AM")
 			.a("id", classeApiMethodeMethode, "_blocHeureFin")
 			.a("onclick", "enleverLueur($(this)); ")
@@ -3049,10 +3049,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("title", "L'année scolaire de la saison scolaire. ")
 			.a("id", classeApiMethodeMethode, "_blocPrixParMois");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocPrixParMois w3-input w3-border ");
+				a("class", "setBlocPrixParMois inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
 				a("name", "setBlocPrixParMois");
 			} else {
-				a("class", "valeurBlocPrixParMois w3-input w3-border ");
+				a("class", "valeurBlocPrixParMois w3-input w3-border inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
 				a("name", "blocPrixParMois");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3169,10 +3169,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocDimanche")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocDimanche");
+				a("class", "setBlocDimanche inputBlocScolaire", pk, "BlocDimanche w3-input w3-border ");
 				a("name", "setBlocDimanche");
 			} else {
-				a("class", "valeurBlocDimanche");
+				a("class", "valeurBlocDimanche inputBlocScolaire", pk, "BlocDimanche w3-input w3-border ");
 				a("name", "blocDimanche");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3279,10 +3279,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocLundi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocLundi");
+				a("class", "setBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
 				a("name", "setBlocLundi");
 			} else {
-				a("class", "valeurBlocLundi");
+				a("class", "valeurBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
 				a("name", "blocLundi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3389,10 +3389,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocMardi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocMardi");
+				a("class", "setBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
 				a("name", "setBlocMardi");
 			} else {
-				a("class", "valeurBlocMardi");
+				a("class", "valeurBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
 				a("name", "blocMardi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3499,10 +3499,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocMercredi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocMercredi");
+				a("class", "setBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
 				a("name", "setBlocMercredi");
 			} else {
-				a("class", "valeurBlocMercredi");
+				a("class", "valeurBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
 				a("name", "blocMercredi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3609,10 +3609,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocJeudi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocJeudi");
+				a("class", "setBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
 				a("name", "setBlocJeudi");
 			} else {
-				a("class", "valeurBlocJeudi");
+				a("class", "valeurBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
 				a("name", "blocJeudi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3719,10 +3719,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocVendredi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocVendredi");
+				a("class", "setBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
 				a("name", "setBlocVendredi");
 			} else {
-				a("class", "valeurBlocVendredi");
+				a("class", "valeurBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
 				a("name", "blocVendredi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3829,10 +3829,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_blocSamedi")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocSamedi");
+				a("class", "setBlocSamedi inputBlocScolaire", pk, "BlocSamedi w3-input w3-border ");
 				a("name", "setBlocSamedi");
 			} else {
-				a("class", "valeurBlocSamedi");
+				a("class", "valeurBlocSamedi inputBlocScolaire", pk, "BlocSamedi w3-input w3-border ");
 				a("name", "blocSamedi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -4143,6 +4143,67 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return blocNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomCourt());
 	}
 
+	//////////////////
+	// blocNomAdmin //
+	//////////////////
+
+	/**	L'entité « blocNomAdmin »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected String blocNomAdmin;
+	@JsonIgnore
+	public Couverture<String> blocNomAdminCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomAdmin").o(blocNomAdmin);
+
+	/**	<br/>L'entité « blocNomAdmin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocNomAdmin">Trouver l'entité blocNomAdmin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocNomAdmin(Couverture<String> c);
+
+	public String getBlocNomAdmin() {
+		return blocNomAdmin;
+	}
+
+	public void setBlocNomAdmin(String blocNomAdmin) {
+		this.blocNomAdmin = blocNomAdmin;
+		this.blocNomAdminCouverture.dejaInitialise = true;
+	}
+	protected BlocScolaire blocNomAdminInit() {
+		if(!blocNomAdminCouverture.dejaInitialise) {
+			_blocNomAdmin(blocNomAdminCouverture);
+			if(blocNomAdmin == null)
+				setBlocNomAdmin(blocNomAdminCouverture.o);
+		}
+		blocNomAdminCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public String solrBlocNomAdmin() {
+		return blocNomAdmin;
+	}
+
+	public String strBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : blocNomAdmin;
+	}
+
+	public String jsonBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : blocNomAdmin;
+	}
+
+	public String nomAffichageBlocNomAdmin() {
+		return null;
+	}
+
+	public String htmTooltipBlocNomAdmin() {
+		return null;
+	}
+
+	public String htmBlocNomAdmin() {
+		return blocNomAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomAdmin());
+	}
+
 	////////////////////
 	// blocNomComplet //
 	////////////////////
@@ -4304,6 +4365,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		blocsAgeInit();
 		blocsBlocInit();
 		blocNomCourtInit();
+		blocNomAdminInit();
 		blocNomCompletInit();
 	}
 
@@ -4451,6 +4513,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.blocsBloc;
 			case "blocNomCourt":
 				return oBlocScolaire.blocNomCourt;
+			case "blocNomAdmin":
+				return oBlocScolaire.blocNomAdmin;
 			case "blocNomComplet":
 				return oBlocScolaire.blocNomComplet;
 			default:
@@ -4849,6 +4913,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setBlocNomCourt(blocNomCourt);
 			}
 
+			if(sauvegardesBlocScolaire.contains("blocNomAdmin")) {
+				String blocNomAdmin = (String)solrDocument.get("blocNomAdmin_stored_string");
+				if(blocNomAdmin != null)
+					oBlocScolaire.setBlocNomAdmin(blocNomAdmin);
+			}
+
 			if(sauvegardesBlocScolaire.contains("blocNomComplet")) {
 				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 				if(blocNomComplet != null)
@@ -5112,6 +5182,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("blocNomCourt_indexed_string", blocNomCourt);
 			document.addField("blocNomCourt_stored_string", blocNomCourt);
 		}
+		if(blocNomAdmin != null) {
+			document.addField("blocNomAdmin_indexed_string", blocNomAdmin);
+			document.addField("blocNomAdmin_stored_string", blocNomAdmin);
+		}
 		if(blocNomComplet != null) {
 			document.addField("blocNomComplet_indexed_string", blocNomComplet);
 			document.addField("blocNomComplet_stored_string", blocNomComplet);
@@ -5231,6 +5305,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return "blocPrixTotal_indexed_double";
 			case "blocNomCourt":
 				return "blocNomCourt_indexed_string";
+			case "blocNomAdmin":
+				return "blocNomAdmin_indexed_string";
 			case "blocNomComplet":
 				return "blocNomComplet_indexed_string";
 			default:
@@ -5445,6 +5521,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		String blocNomCourt = (String)solrDocument.get("blocNomCourt_stored_string");
 		if(blocNomCourt != null)
 			oBlocScolaire.setBlocNomCourt(blocNomCourt);
+
+		String blocNomAdmin = (String)solrDocument.get("blocNomAdmin_stored_string");
+		if(blocNomAdmin != null)
+			oBlocScolaire.setBlocNomAdmin(blocNomAdmin);
 
 		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 		if(blocNomComplet != null)

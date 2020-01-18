@@ -1358,10 +1358,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			.a("placeholder", "address")
 			.a("id", classApiMethodMethod, "_schoolAddress");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress w3-input w3-border ");
+				a("class", "setSchoolAddress inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "setSchoolAddress");
 			} else {
-				a("class", "valueSchoolAddress w3-input w3-border ");
+				a("class", "valueSchoolAddress w3-input w3-border inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "schoolAddress");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2359,10 +2359,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			.a("placeholder", "start of the age group")
 			.a("id", classApiMethodMethod, "_ageStart");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setAgeStart w3-input w3-border ");
+				a("class", "setAgeStart inputSchoolAge", pk, "AgeStart w3-input w3-border ");
 				a("name", "setAgeStart");
 			} else {
-				a("class", "valueAgeStart w3-input w3-border ");
+				a("class", "valueAgeStart w3-input w3-border inputSchoolAge", pk, "AgeStart w3-input w3-border ");
 				a("name", "ageStart");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2480,10 +2480,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			.a("placeholder", "end of the age group")
 			.a("id", classApiMethodMethod, "_ageEnd");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setAgeEnd w3-input w3-border ");
+				a("class", "setAgeEnd inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
 				a("name", "setAgeEnd");
 			} else {
-				a("class", "valueAgeEnd w3-input w3-border ");
+				a("class", "valueAgeEnd w3-input w3-border inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
 				a("name", "ageEnd");
 			}
 			if("Page".equals(classApiMethodMethod)) {

@@ -94,21 +94,10 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptDadGenPage() {
 		l("$(document).ready(function() {");
+		tl(1, "window.eventBus = new EventBus('/eventbus');");
 		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
 		tl(1, "suggestSchoolDadEnrollmentKeys([{'name':'fq','value':'dadKeys:' + pk}], $('#listSchoolDadEnrollmentKeys_Page'), pk); ");
-		tl(1, "websocketSchoolDad(async function(patchRequest) {");
-		tl(2, "var pk = patchRequest['pk'];");
-		tl(2, "var pks = patchRequest['pks'];");
-		tl(2, "var classes = patchRequest['classes'];");
-		tl(2, "if(pks) {");
-		tl(3, "for(i=0; i < pks.length; i++) {");
-		tl(4, "var pk2 = pks[i];");
-		tl(4, "var c = classes[i];");
-		tl(4, "await window['patch' + c + 'Vals']( [ {name: 'fq', value: 'pk:' + pk2} ], {});");
-		tl(3, "}");
-		tl(2, "}");
-		tl(2, "await patchSchoolDadVals( [ {name: 'fq', value: 'pk:' + pk} ], {});");
-		tl(1, "});");
+		tl(1, "websocketSchoolDad(websocketSchoolDadInner);");
 		l("});");
 	}
 

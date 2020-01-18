@@ -1334,10 +1334,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			.a("placeholder", "start of year")
 			.a("id", classApiMethodMethod, "_yearStart");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setYearStart w3-input w3-border ");
+				a("class", "setYearStart inputSchoolYear", pk, "YearStart w3-input w3-border ");
 				a("name", "setYearStart");
 			} else {
-				a("class", "valueYearStart w3-input w3-border ");
+				a("class", "valueYearStart w3-input w3-border inputSchoolYear", pk, "YearStart w3-input w3-border ");
 				a("name", "yearStart");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1455,10 +1455,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			.a("placeholder", "end of year")
 			.a("id", classApiMethodMethod, "_yearEnd");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setYearEnd w3-input w3-border ");
+				a("class", "setYearEnd inputSchoolYear", pk, "YearEnd w3-input w3-border ");
 				a("name", "setYearEnd");
 			} else {
-				a("class", "valueYearEnd w3-input w3-border ");
+				a("class", "valueYearEnd w3-input w3-border inputSchoolYear", pk, "YearEnd w3-input w3-border ");
 				a("name", "yearEnd");
 			}
 			if("Page".equals(classApiMethodMethod)) {

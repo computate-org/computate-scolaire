@@ -1492,6 +1492,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: pageContentType
 	 * r: requeteSite
 	 * r.enUS: siteRequest
+	 * r: RequetePk
+	 * r.enUS: RequestPk
 	 * r: ConfigSite
 	 * r.enUS: SiteConfig
 	 * r: StatiqueUrlBase
@@ -1563,12 +1565,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			if(start >= 0) {
 	
 				String htmlVar = htmlPart.getHtmlVar();
+				String htmlVarSpan = htmlPart.getHtmlVarSpan();
 				String htmlVarInput = htmlPart.getHtmlVarInput();
 				String htmlVarForm = htmlPart.getHtmlVarForm();
 				String htmlVarForEach = htmlPart.getHtmlVarForEach();
 				Boolean pdfExclude = htmlPart.getPdfExclude();
+				Boolean htmlExclude = htmlPart.getHtmlExclude();
+
+				if(htmlVarSpan != null)
+					htmlVar = htmlVarSpan;
 	
-				if(!"application/pdf".equals(pageTypeContenu) || BooleanUtils.isNotTrue(pdfExclude)) {
+				if(
+						"application/pdf".equals(pageTypeContenu) && BooleanUtils.isNotTrue(pdfExclude)
+						|| !"application/pdf".equals(pageTypeContenu) && BooleanUtils.isNotTrue(htmlExclude)
+						) {
 					s(htmlPart.getHtmlBefore());
 					if(htmlVar != null) {
 	
@@ -1614,7 +1624,13 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						else {
 							try {
 								String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
-								s(s);
+								if(htmlVarSpan != null) {
+									Long pk = (Long)MethodUtils.invokeExactMethod(parent, "getPk");
+									e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().s(s).g("span");
+								}
+								else {
+									s(s);
+								}
 							} catch (Exception e) {
 								s(obtenirPourClasse(htmlVar));
 							}

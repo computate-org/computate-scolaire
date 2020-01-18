@@ -1338,10 +1338,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_anneeDebut");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAnneeDebut w3-input w3-border ");
+				a("class", "setAnneeDebut inputAnneeScolaire", pk, "AnneeDebut w3-input w3-border ");
 				a("name", "setAnneeDebut");
 			} else {
-				a("class", "valeurAnneeDebut w3-input w3-border ");
+				a("class", "valeurAnneeDebut w3-input w3-border inputAnneeScolaire", pk, "AnneeDebut w3-input w3-border ");
 				a("name", "anneeDebut");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1460,10 +1460,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_anneeFin");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAnneeFin w3-input w3-border ");
+				a("class", "setAnneeFin inputAnneeScolaire", pk, "AnneeFin w3-input w3-border ");
 				a("name", "setAnneeFin");
 			} else {
-				a("class", "valeurAnneeFin w3-input w3-border ");
+				a("class", "valeurAnneeFin w3-input w3-border inputAnneeScolaire", pk, "AnneeFin w3-input w3-border ");
 				a("name", "anneeFin");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

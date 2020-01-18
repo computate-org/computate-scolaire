@@ -901,10 +901,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			.a("placeholder", "name of the school")
 			.a("id", classApiMethodMethod, "_schoolName");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolName w3-input w3-border ");
+				a("class", "setSchoolName inputSchool", pk, "SchoolName w3-input w3-border ");
 				a("name", "setSchoolName");
 			} else {
-				a("class", "valueSchoolName w3-input w3-border ");
+				a("class", "valueSchoolName w3-input w3-border inputSchool", pk, "SchoolName w3-input w3-border ");
 				a("name", "schoolName");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1016,10 +1016,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			.a("placeholder", "phone number")
 			.a("id", classApiMethodMethod, "_schoolPhoneNumber");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolPhoneNumber w3-input w3-border ");
+				a("class", "setSchoolPhoneNumber inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
 				a("name", "setSchoolPhoneNumber");
 			} else {
-				a("class", "valueSchoolPhoneNumber w3-input w3-border ");
+				a("class", "valueSchoolPhoneNumber w3-input w3-border inputSchool", pk, "SchoolPhoneNumber w3-input w3-border ");
 				a("name", "schoolPhoneNumber");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1131,10 +1131,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			.a("placeholder", "administrator of the school")
 			.a("id", classApiMethodMethod, "_schoolAdministratorName");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAdministratorName w3-input w3-border ");
+				a("class", "setSchoolAdministratorName inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
 				a("name", "setSchoolAdministratorName");
 			} else {
-				a("class", "valueSchoolAdministratorName w3-input w3-border ");
+				a("class", "valueSchoolAdministratorName w3-input w3-border inputSchool", pk, "SchoolAdministratorName w3-input w3-border ");
 				a("name", "schoolAdministratorName");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1246,10 +1246,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			.a("placeholder", "location")
 			.a("id", classApiMethodMethod, "_schoolLocation");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolLocation w3-input w3-border ");
+				a("class", "setSchoolLocation inputSchool", pk, "SchoolLocation w3-input w3-border ");
 				a("name", "setSchoolLocation");
 			} else {
-				a("class", "valueSchoolLocation w3-input w3-border ");
+				a("class", "valueSchoolLocation w3-input w3-border inputSchool", pk, "SchoolLocation w3-input w3-border ");
 				a("name", "schoolLocation");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1360,10 +1360,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			.a("placeholder", "address")
 			.a("id", classApiMethodMethod, "_schoolAddress");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress w3-input w3-border ");
+				a("class", "setSchoolAddress inputSchool", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "setSchoolAddress");
 			} else {
-				a("class", "valueSchoolAddress w3-input w3-border ");
+				a("class", "valueSchoolAddress w3-input w3-border inputSchool", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "schoolAddress");
 			}
 			if("Page".equals(classApiMethodMethod)) {

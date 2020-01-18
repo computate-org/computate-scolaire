@@ -904,10 +904,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_ecoleNom");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleNom w3-input w3-border ");
+				a("class", "setEcoleNom inputEcole", pk, "EcoleNom w3-input w3-border ");
 				a("name", "setEcoleNom");
 			} else {
-				a("class", "valeurEcoleNom w3-input w3-border ");
+				a("class", "valeurEcoleNom w3-input w3-border inputEcole", pk, "EcoleNom w3-input w3-border ");
 				a("name", "ecoleNom");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1020,10 +1020,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_ecoleNumeroTelephone");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleNumeroTelephone w3-input w3-border ");
+				a("class", "setEcoleNumeroTelephone inputEcole", pk, "EcoleNumeroTelephone w3-input w3-border ");
 				a("name", "setEcoleNumeroTelephone");
 			} else {
-				a("class", "valeurEcoleNumeroTelephone w3-input w3-border ");
+				a("class", "valeurEcoleNumeroTelephone w3-input w3-border inputEcole", pk, "EcoleNumeroTelephone w3-input w3-border ");
 				a("name", "ecoleNumeroTelephone");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1136,10 +1136,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_ecoleAdministrateurNom");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAdministrateurNom w3-input w3-border ");
+				a("class", "setEcoleAdministrateurNom inputEcole", pk, "EcoleAdministrateurNom w3-input w3-border ");
 				a("name", "setEcoleAdministrateurNom");
 			} else {
-				a("class", "valeurEcoleAdministrateurNom w3-input w3-border ");
+				a("class", "valeurEcoleAdministrateurNom w3-input w3-border inputEcole", pk, "EcoleAdministrateurNom w3-input w3-border ");
 				a("name", "ecoleAdministrateurNom");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1252,10 +1252,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_ecoleEmplacement");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleEmplacement w3-input w3-border ");
+				a("class", "setEcoleEmplacement inputEcole", pk, "EcoleEmplacement w3-input w3-border ");
 				a("name", "setEcoleEmplacement");
 			} else {
-				a("class", "valeurEcoleEmplacement w3-input w3-border ");
+				a("class", "valeurEcoleEmplacement w3-input w3-border inputEcole", pk, "EcoleEmplacement w3-input w3-border ");
 				a("name", "ecoleEmplacement");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1367,10 +1367,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			.a("title", "Description.enUS: ")
 			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse w3-input w3-border ");
+				a("class", "setEcoleAddresse inputEcole", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "setEcoleAddresse");
 			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border ");
+				a("class", "valeurEcoleAddresse w3-input w3-border inputEcole", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "ecoleAddresse");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

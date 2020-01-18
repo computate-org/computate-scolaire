@@ -1362,10 +1362,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			.a("placeholder", "description")
 			.a("id", classApiMethodMethod, "_paymentDescription");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentDescription w3-input w3-border ");
+				a("class", "setPaymentDescription inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
 				a("name", "setPaymentDescription");
 			} else {
-				a("class", "valuePaymentDescription w3-input w3-border ");
+				a("class", "valuePaymentDescription w3-input w3-border inputSchoolPayment", pk, "PaymentDescription w3-input w3-border ");
 				a("name", "paymentDescription");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1490,7 +1490,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment s = (SchoolPayment)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setPaymentDate inputSchoolPayment", pk, "PaymentDate w3-input w3-border ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
 			.a("id", classApiMethodMethod, "_paymentDate")
@@ -1616,10 +1616,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			.a("placeholder", "amount")
 			.a("id", classApiMethodMethod, "_paymentAmount");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentAmount w3-input w3-border ");
+				a("class", "setPaymentAmount inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
 				a("name", "setPaymentAmount");
 			} else {
-				a("class", "valuePaymentAmount w3-input w3-border ");
+				a("class", "valuePaymentAmount w3-input w3-border inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
 				a("name", "paymentAmount");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1736,10 +1736,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_paymentCash")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentCash");
+				a("class", "setPaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
 				a("name", "setPaymentCash");
 			} else {
-				a("class", "valuePaymentCash");
+				a("class", "valuePaymentCash inputSchoolPayment", pk, "PaymentCash w3-input w3-border ");
 				a("name", "paymentCash");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1846,10 +1846,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_paymentCheck")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPaymentCheck");
+				a("class", "setPaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
 				a("name", "setPaymentCheck");
 			} else {
-				a("class", "valuePaymentCheck");
+				a("class", "valuePaymentCheck inputSchoolPayment", pk, "PaymentCheck w3-input w3-border ");
 				a("name", "paymentCheck");
 			}
 			if("Page".equals(classApiMethodMethod)) {

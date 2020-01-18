@@ -1489,7 +1489,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason s = (SchoolSeason)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setSeasonStartDate inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
 			.a("id", classApiMethodMethod, "_seasonStartDate")
@@ -1603,10 +1603,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_seasonSummer")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonSummer");
+				a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
 				a("name", "setSeasonSummer");
 			} else {
-				a("class", "valueSeasonSummer");
+				a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
 				a("name", "seasonSummer");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1713,10 +1713,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_seasonWinter")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonWinter");
+				a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
 				a("name", "setSeasonWinter");
 			} else {
-				a("class", "valueSeasonWinter");
+				a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
 				a("name", "seasonWinter");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1835,10 +1835,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			.a("placeholder", "enrollment fee")
 			.a("id", classApiMethodMethod, "_seasonEnrollmentFee");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonEnrollmentFee w3-input w3-border ");
+				a("class", "setSeasonEnrollmentFee inputSchoolSeason", pk, "SeasonEnrollmentFee w3-input w3-border ");
 				a("name", "setSeasonEnrollmentFee");
 			} else {
-				a("class", "valueSeasonEnrollmentFee w3-input w3-border ");
+				a("class", "valueSeasonEnrollmentFee w3-input w3-border inputSchoolSeason", pk, "SeasonEnrollmentFee w3-input w3-border ");
 				a("name", "seasonEnrollmentFee");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1955,10 +1955,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 			.a("id", classApiMethodMethod, "_seasonFuture")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonFuture");
+				a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
 				a("name", "setSeasonFuture");
 			} else {
-				a("class", "valueSeasonFuture");
+				a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
 				a("name", "seasonFuture");
 			}
 			if("Page".equals(classApiMethodMethod)) {

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;       
+package org.computate.scolaire.frFR.html.part;        
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -229,14 +229,28 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: htmlVarSpan
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var span
+	 * NomAffichage.frFR: var span
+	 * Definir: true
+	 * HtmlLigne: 8
+	 * HtmlCelulle: 2
+	 */               
+	protected void _htmlVarSpan(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: htmlVarForm
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: var form
 	 * NomAffichage.frFR: var form
 	 * Definir: true
-	 * HtmlLigne: 8
-	 * HtmlCelulle: 2
+	 * HtmlLigne: 9
+	 * HtmlCelulle: 1
 	 */            
 	protected void _htmlVarForm(Couverture<String> c) {
 	}
@@ -249,8 +263,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: var input
 	 * NomAffichage.frFR: var input
 	 * Definir: true
-	 * HtmlLigne: 8
-	 * HtmlCelulle: 3
+	 * HtmlLigne: 9
+	 * HtmlCelulle: 2
 	 */            
 	protected void _htmlVarInput(Couverture<String> c) {
 	}
@@ -263,10 +277,25 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: var for each
 	 * NomAffichage.frFR: var for each
 	 * Definir: true
-	 * HtmlLigne: 9
+	 * HtmlLigne: 10
 	 * HtmlCelulle: 1
 	 */             
 	protected void _htmlVarForEach(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: htmlExclude
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: HTML exclude
+	 * NomAffichage.frFR: HTML exclure
+	 * Definir: true
+	 * HtmlLigne: 10
+	 * HtmlCelulle: 2
+	 */            
+	protected void _htmlExclure(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**
@@ -277,8 +306,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: PDF exclude
 	 * NomAffichage.frFR: PDF exclure
 	 * Definir: true
-	 * HtmlLigne: 9
-	 * HtmlCelulle: 2
+	 * HtmlLigne: 10
+	 * HtmlCelulle: 3
 	 */            
 	protected void _pdfExclure(Couverture<Boolean> c) {
 		c.o(false);
@@ -292,7 +321,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 1
 	 */               
 	protected void _tri1(Couverture<Double> c) {
@@ -306,7 +335,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 2
 	 */               
 	protected void _tri2(Couverture<Double> c) {
@@ -320,7 +349,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 3
 	 */               
 	protected void _tri3(Couverture<Double> c) {
@@ -334,7 +363,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 4
 	 */               
 	protected void _tri4(Couverture<Double> c) {
@@ -348,7 +377,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
 	 * Definir: true
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCelulle: 5
 	 */               
 	protected void _tri5(Couverture<Double> c) {
@@ -362,7 +391,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 6
 	 */               
 	protected void _tri6(Couverture<Double> c) {
@@ -376,7 +405,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 7
 	 */               
 	protected void _tri7(Couverture<Double> c) {
@@ -390,7 +419,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 8
 	 */               
 	protected void _tri8(Couverture<Double> c) {
@@ -404,7 +433,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 9
 	 */               
 	protected void _tri9(Couverture<Double> c) {
@@ -418,7 +447,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 10
 	 */              
 	protected void _tri10(Couverture<Double> c) {
@@ -445,7 +474,9 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 		if(htmlVarForEach != null)
 			b.append("for each {").append(htmlVarForEach).append("}").append(" into {").append(htmlVar).append("}");
 		else {
-			if(htmlVar != null)
+			if(htmlVarSpan != null)
+				b.append("<span>").append(htmlVar).append("</span>");
+			else if(htmlVar != null)
 				b.append("{").append(htmlVar).append("}");
 		}
 
@@ -465,7 +496,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	@Override
 	/**
 	 * Var.enUS: _objectId
-	 */
+	 */   
 	protected void _objetId(Couverture<String> c) {
 		if(pk != null){
 			c.o(pk.toString());

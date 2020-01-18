@@ -1291,10 +1291,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			.a("placeholder", "address")
 			.a("id", classApiMethodMethod, "_schoolAddress");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSchoolAddress w3-input w3-border ");
+				a("class", "setSchoolAddress inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "setSchoolAddress");
 			} else {
-				a("class", "valueSchoolAddress w3-input w3-border ");
+				a("class", "valueSchoolAddress w3-input w3-border inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
 				a("name", "schoolAddress");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2084,7 +2084,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setSessionStartDate inputSchoolSession", pk, "SessionStartDate w3-input w3-border ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
 			.a("id", classApiMethodMethod, "_sessionStartDate")
@@ -2206,7 +2206,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		SchoolSession s = (SchoolSession)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setSessionEndDate inputSchoolSession", pk, "SessionEndDate w3-input w3-border ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
 			.a("id", classApiMethodMethod, "_sessionEndDate")

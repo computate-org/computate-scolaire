@@ -14,6 +14,7 @@ import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
+import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -24,8 +25,10 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Object;
 
 /**	
@@ -1720,18 +1723,18 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageCreeCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageCree(Instant o) {
-		this.pageCree = LocalDateTime.from(o);
+		this.pageCree = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageCree(String o) {
-		this.pageCree = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.pageCree = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageCree(Date o) {
-		this.pageCree = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
+		this.pageCree = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -1797,18 +1800,18 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageModifieeCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageModifiee(Instant o) {
-		this.pageModifiee = LocalDateTime.from(o);
+		this.pageModifiee = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageModifiee(String o) {
-		this.pageModifiee = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+		this.pageModifiee = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageModifiee(Date o) {
-		this.pageModifiee = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
+		this.pageModifiee = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -2510,6 +2513,17 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public void htmlBodyMiseEnPage() {
+	}
+
+	//////////////////
+	// requetePatch //
+	//////////////////
+
+	public void requetePatchMiseEnPage() {
+		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
+		MiseEnPage original = (MiseEnPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+		if(original != null) {
+		}
 	}
 
 	//////////////

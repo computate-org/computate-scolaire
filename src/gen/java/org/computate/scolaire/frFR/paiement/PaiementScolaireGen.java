@@ -1365,10 +1365,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des enfants dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_paiementDescription");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementDescription w3-input w3-border ");
+				a("class", "setPaiementDescription inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
 				a("name", "setPaiementDescription");
 			} else {
-				a("class", "valeurPaiementDescription w3-input w3-border ");
+				a("class", "valeurPaiementDescription w3-input w3-border inputPaiementScolaire", pk, "PaiementDescription w3-input w3-border ");
 				a("name", "paiementDescription");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1493,7 +1493,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire s = (PaiementScolaire)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setPaiementDate inputPaiementScolaire", pk, "PaiementDate w3-input w3-border ")
 			.a("placeholder", "DD-MM-YYYY")
 			.a("data-timeformat", "DD-MM-YYYY")
 			.a("id", classeApiMethodeMethode, "_paiementDate")
@@ -1621,10 +1621,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.a("title", "La clé primaire des enfants dans la base de données. ")
 			.a("id", classeApiMethodeMethode, "_paiementMontant");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementMontant w3-input w3-border ");
+				a("class", "setPaiementMontant inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
 				a("name", "setPaiementMontant");
 			} else {
-				a("class", "valeurPaiementMontant w3-input w3-border ");
+				a("class", "valeurPaiementMontant w3-input w3-border inputPaiementScolaire", pk, "PaiementMontant w3-input w3-border ");
 				a("name", "paiementMontant");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1741,10 +1741,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_paiementEspeces")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementEspeces");
+				a("class", "setPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
 				a("name", "setPaiementEspeces");
 			} else {
-				a("class", "valeurPaiementEspeces");
+				a("class", "valeurPaiementEspeces inputPaiementScolaire", pk, "PaiementEspeces w3-input w3-border ");
 				a("name", "paiementEspeces");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1851,10 +1851,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.a("id", classeApiMethodeMethode, "_paiementCheque")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPaiementCheque");
+				a("class", "setPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
 				a("name", "setPaiementCheque");
 			} else {
-				a("class", "valeurPaiementCheque");
+				a("class", "valeurPaiementCheque inputPaiementScolaire", pk, "PaiementCheque w3-input w3-border ");
 				a("name", "paiementCheque");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

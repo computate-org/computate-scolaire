@@ -1362,10 +1362,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			.a("title", "L'année scolaire de la saison scolaire. ")
 			.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setEcoleAddresse w3-input w3-border ");
+				a("class", "setEcoleAddresse inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "setEcoleAddresse");
 			} else {
-				a("class", "valeurEcoleAddresse w3-input w3-border ");
+				a("class", "valeurEcoleAddresse w3-input w3-border inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
 				a("name", "ecoleAddresse");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2364,10 +2364,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			.a("title", "L'année scolaire de la saison scolaire. ")
 			.a("id", classeApiMethodeMethode, "_ageDebut");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAgeDebut w3-input w3-border ");
+				a("class", "setAgeDebut inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
 				a("name", "setAgeDebut");
 			} else {
-				a("class", "valeurAgeDebut w3-input w3-border ");
+				a("class", "valeurAgeDebut w3-input w3-border inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
 				a("name", "ageDebut");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2486,10 +2486,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			.a("title", "L'année scolaire de la saison scolaire. ")
 			.a("id", classeApiMethodeMethode, "_ageFin");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setAgeFin w3-input w3-border ");
+				a("class", "setAgeFin inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
 				a("name", "setAgeFin");
 			} else {
-				a("class", "valeurAgeFin w3-input w3-border ");
+				a("class", "valeurAgeFin w3-input w3-border inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
 				a("name", "ageFin");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

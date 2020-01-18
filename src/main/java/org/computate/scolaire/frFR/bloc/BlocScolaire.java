@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                
+package org.computate.scolaire.frFR.bloc;                   
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -872,6 +872,71 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 			o = String.format("%s - %s %s à %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, ecoleNomComplet);
 		else
 			o = String.format("%s - %s %s (%s€ par mois) à %s", strBlocHeureDebut(), strBlocHeureFin(), weekdays, strBlocPrixParMois(), ecoleNomComplet);
+		c.o(o);
+	}
+
+	/**    
+	 * {@inheritDoc}
+	 * Var.enUS: blockAdminName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: %s - %s %s à %s
+	 * r.enUS: %s %s at %s
+	 * r: %s - %s %s (%s€ par mois) à %s
+	 * r.enUS: %s - %s %s ($%s/month) at %s
+	 * r: strBlocHeureDebut
+	 * r.enUS: strBlockStartTime
+	 * r: strBlocHeureFin
+	 * r.enUS: strBlockEndTime
+	 * r: strBlocPrixParMois
+	 * r.enUS: strBlockPricePerMonth
+	 * r: blocPrixParMois
+	 * r.enUS: blockPricePerMonth
+	 * r: blocDimanche
+	 * r.enUS: blockSunday
+	 * r: blocLundi
+	 * r.enUS: blockMonday
+	 * r: blocMardi
+	 * r.enUS: blockTuesday
+	 * r: blocMercredi
+	 * r.enUS: blockWednesday
+	 * r: blocJeudi
+	 * r.enUS: blockThursday
+	 * r: blocVendredi
+	 * r.enUS: blockFriday
+	 * r: blocSamedi
+	 * r.enUS: blockSaturday
+	 * r: ageNomComplet
+	 * r.enUS: ageCompleteName
+	 * r: ecoleNomComplet
+	 * r.enUS: schoolCompleteName
+	 * r: " Di"
+	 * r.enUS: " Su"
+	 * r: " Lu"
+	 * r.enUS: " M"
+	 * r: " Ma"
+	 * r.enUS: " Tu"
+	 * r: " Me"
+	 * r.enUS: " W"
+	 * r: " Je"
+	 * r.enUS: " Th"
+	 * r: " Ve"
+	 * r.enUS: " F"
+	 * r: " Sa"
+	 * r.enUS: " S"
+	 */   
+	protected void _blocNomAdmin(Couverture<String> c) {
+		String o;
+		String weekdays = "";
+		if(BooleanUtils.isTrue(blocDimanche)) weekdays += " Di";
+		if(BooleanUtils.isTrue(blocLundi)) weekdays += " Lu";
+		if(BooleanUtils.isTrue(blocMardi)) weekdays += " Ma";
+		if(BooleanUtils.isTrue(blocMercredi)) weekdays += " Me";
+		if(BooleanUtils.isTrue(blocJeudi)) weekdays += " Je";
+		if(BooleanUtils.isTrue(blocVendredi)) weekdays += " Ve";
+		if(BooleanUtils.isTrue(blocSamedi)) weekdays += " Sa";
+		weekdays = StringUtils.trim(weekdays);
+			o = String.format("%s %s - %s", weekdays, strBlocHeureDebut(), strBlocHeureFin());
 		c.o(o);
 	}
 

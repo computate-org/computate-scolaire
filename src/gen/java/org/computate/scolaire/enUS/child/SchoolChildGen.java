@@ -994,10 +994,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			.a("placeholder", "first name")
 			.a("id", classApiMethodMethod, "_personFirstName");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonFirstName w3-input w3-border ");
+				a("class", "setPersonFirstName inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
 				a("name", "setPersonFirstName");
 			} else {
-				a("class", "valuePersonFirstName w3-input w3-border ");
+				a("class", "valuePersonFirstName w3-input w3-border inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
 				a("name", "personFirstName");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1109,10 +1109,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			.a("placeholder", "preferred first name")
 			.a("id", classApiMethodMethod, "_personFirstNamePreferred");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPersonFirstNamePreferred w3-input w3-border ");
+				a("class", "setPersonFirstNamePreferred inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
 				a("name", "setPersonFirstNamePreferred");
 			} else {
-				a("class", "valuePersonFirstNamePreferred w3-input w3-border ");
+				a("class", "valuePersonFirstNamePreferred w3-input w3-border inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
 				a("name", "personFirstNamePreferred");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1224,10 +1224,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			.a("placeholder", "last name")
 			.a("id", classApiMethodMethod, "_familyName");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilyName w3-input w3-border ");
+				a("class", "setFamilyName inputSchoolChild", pk, "FamilyName w3-input w3-border ");
 				a("name", "setFamilyName");
 			} else {
-				a("class", "valueFamilyName w3-input w3-border ");
+				a("class", "valueFamilyName w3-input w3-border inputSchoolChild", pk, "FamilyName w3-input w3-border ");
 				a("name", "familyName");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1535,7 +1535,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		SchoolChild s = (SchoolChild)this;
 		e("input")
 			.a("type", "text")
-			.a("class", "w3-input w3-border datepicker ")
+			.a("class", "w3-input w3-border datepicker setPersonBirthDate inputSchoolChild", pk, "PersonBirthDate w3-input w3-border ")
 			.a("placeholder", "MM/DD/YYYY")
 			.a("data-timeformat", "MM/DD/YYYY")
 			.a("id", classApiMethodMethod, "_personBirthDate")
