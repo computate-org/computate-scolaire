@@ -125,9 +125,9 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 			c.o(session_.getSeasonWinter());
 	}
 
-	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
 		if(session_ != null)
-			c.o(session_.getSeasonEnrollmentFee());
+			c.o(session_.getYearEnrollmentFee());
 	}
 
 	protected void _seasonShortName(Wrap<String> c) {

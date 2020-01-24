@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -50,6 +51,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -75,6 +77,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.enUS.cluster.ClusterPage;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -100,6 +103,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -164,6 +168,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsEnrollmentGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/ChildPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/MomPage.js").f().g("script");
@@ -175,33 +180,36 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	@Override public void htmlScriptEnrollmentGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk); ");
-		tl(1, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk); ");
-		tl(1, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk); ");
-		tl(1, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk); ");
-		tl(1, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk); ");
-		tl(1, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature4').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature5').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature6').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature7').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature8').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature9').jSignature({'height':200}); ");
-		tl(1, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature10').jSignature({'height':200}); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentMomKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentMomKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentDadKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentDadKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk); ");
+		tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature4').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature5').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature6').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature7').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature8').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature9').jSignature({'height':200}); ");
+		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature10').jSignature({'height':200}); ");
+		tl(1, "}");
 		tl(1, "websocketSchoolEnrollment(websocketSchoolEnrollmentInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -252,10 +260,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -306,10 +314,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
+			o.htmCreated("PATCH");
 			o.htmModified("PATCH");
+			o.htmObjectId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -387,10 +395,10 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");

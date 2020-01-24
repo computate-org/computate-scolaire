@@ -591,10 +591,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			.a("id", classApiMethodMethod, "_archived")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setArchived");
+				s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
 				s.a("name", "setArchived");
 			} else {
-				s.a("class", "valueArchived");
+				s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
 				s.a("name", "archived");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -701,10 +701,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			.a("id", classApiMethodMethod, "_deleted")
 			.a("value", "true");
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setDeleted");
+				s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
 				s.a("name", "setDeleted");
 			} else {
-				s.a("class", "valueDeleted");
+				s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
 				s.a("name", "deleted");
 			}
 			if("Page".equals(classApiMethodMethod)) {

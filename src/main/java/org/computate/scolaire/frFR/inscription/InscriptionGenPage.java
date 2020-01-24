@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -50,6 +51,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -75,6 +77,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -100,6 +103,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -165,6 +169,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsInscriptionGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/MerePage.js").f().g("script");
@@ -176,33 +181,36 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	@Override public void htmlScriptInscriptionGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
-		tl(1, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature4').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature5').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature6').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature7').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature8').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature9').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature10').jSignature({'height':200}); ");
+		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature4').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature5').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature6').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature7').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature8').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature9').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature10').jSignature({'height':200}); ");
+		tl(1, "}");
 		tl(1, "websocketInscriptionScolaire(websocketInscriptionScolaireInner);");
 		l("});");
 	}
 
 	public void htmlFormPageInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Page");
 			o.htmPk("Page");
-			o.htmObjetId("Page");
+			o.htmCree("Page");
 			o.htmModifie("Page");
+			o.htmObjetId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -253,10 +261,10 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("POST");
 			o.htmPk("POST");
-			o.htmObjetId("POST");
+			o.htmCree("POST");
 			o.htmModifie("POST");
+			o.htmObjetId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -307,10 +315,10 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjetId("PATCH");
+			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
+			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -388,10 +396,10 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 	public void htmlFormRechercheInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjetId("Recherche");
+			o.htmCree("Recherche");
 			o.htmModifie("Recherche");
+			o.htmObjetId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");

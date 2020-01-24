@@ -429,32 +429,6 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 		return enrollmentKeys == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentKeys());
 	}
 
-	public void inputEnrollmentKeys(String classApiMethodMethod) {
-		EnrollmentDesign s = (EnrollmentDesign)this;
-	}
-
-	public void htmEnrollmentKeys(String classApiMethodMethod) {
-		EnrollmentDesign s = (EnrollmentDesign)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classApiMethodMethod)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("enrollments").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strEnrollmentKeys()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	////////////////
 	// yearSearch //
 	////////////////

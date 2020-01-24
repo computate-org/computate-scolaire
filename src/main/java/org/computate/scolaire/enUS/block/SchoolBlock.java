@@ -142,9 +142,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age_.getSeasonWinter());
 	}
 
-	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
 		if(age_ != null)
-			c.o(age_.getSeasonEnrollmentFee());
+			c.o(age_.getYearEnrollmentFee());
 	}
 
 	protected void _seasonShortName(Wrap<String> c) {

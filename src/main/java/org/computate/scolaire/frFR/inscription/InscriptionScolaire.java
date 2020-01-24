@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -49,35 +50,35 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiMethode.frFR: FormPageRecherche
  * PageFormPageRecherche.frFR: InscriptionFormPage
  * PageSuperFormPageRecherche.frFR: ClusterPage
- * ApiUriFormPageRecherche.frFR: /inscription/form
+ * ApiUriFormPageRecherche.frFR: /inscription-form
  * 
  * ApiMethode.enUS: FormSearchPage
  * PageFormSearchPage.enUS: EnrollmentFormPage
  * PageSuperFormSearchPage.enUS: ClusterPage
- * ApiUriFormSearchPage.enUS: /enrollment/form
+ * ApiUriFormSearchPage.enUS: /enrollment-form
  * 
  * ApiMethode.frFR: PdfPageRecherche
  * PagePdfPageRecherche.frFR: InscriptionPdfPage
  * PageSuperPdfPageRecherche.frFR: ClusterPage
- * ApiUriPdfPageRecherche.frFR: /inscription/pdf
+ * ApiUriPdfPageRecherche.frFR: /inscription-pdf
  * ApiTypeMedia200PdfPageRecherche: application/pdf
  * 
  * ApiMethode.enUS: PdfSearchPage
  * PagePdfSearchPage.enUS: EnrollmentPdfPage
  * PageSuperPdfSearchPage.enUS: ClusterPage
- * ApiUriPdfSearchPage.enUS: /enrollment/pdf
+ * ApiUriPdfSearchPage.enUS: /enrollment-pdf
  * ApiTypeMedia200PdfSearchPage: application/pdf
  * 
  * ApiMethode.frFR: MailPageRecherche
  * PageMailPageRecherche.frFR: InscriptionMailPage
  * PageSuperMailPageRecherche.frFR: ClusterPage
- * ApiUriMailPageRecherche.frFR: /inscription/mail
+ * ApiUriMailPageRecherche.frFR: /inscription-mail
  * ApiTypeMedia200MailPageRecherche: application/pdf
  * 
  * ApiMethode.enUS: EmailSearchPage
  * PageEmailSearchPage.enUS: EnrollmentEmailPage
  * PageSuperEmailSearchPage.enUS: ClusterPage
- * ApiUriEmailSearchPage.enUS: /enrollment/email
+ * ApiUriEmailSearchPage.enUS: /enrollment-email
  * ApiTypeMedia200EmailSearchPage: application/pdf
  * 
  * UnNom.frFR: une inscription
@@ -86,10 +87,10 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: solid
  * IconeNom: edit
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
- * RoleSession: true
 */        
+// * Role.frFR: SiteAdmin
+// * Role.enUS: SiteAdmin
+// * RoleSession: true
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -104,6 +105,55 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */                              
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearKey
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: AnneeScolaire.inscriptionCles
+	 * Description.frFR: L'année scolaire de la saison scolaire. 
+	 * Description.enUS: The school year of the school season. 
+	 * NomAffichage.frFR: année
+	 * NomAffichage.enUS: year
+	*/            
+	protected void _anneeCle(Couverture<Long> c) {
+	}
+
+	/**
+	 * Var.enUS: yearSearch
+	 * r: anneeCle
+	 * r.enUS: yearKey
+	 * r: AnneeScolaire
+	 * r.enUS: SchoolYear
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * Ignorer: true
+	 */
+	protected void _anneeRecherche(ListeRecherche<AnneeScolaire> l) {
+		if(anneeCle != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:" + anneeCle);
+			l.setC(AnneeScolaire.class);
+			l.setStocker(true);
+		}
+		else {
+			l.setQuery(null);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: year_
+	 * r: anneeRecherche
+	 * r.enUS: yearSearch
+	 * Ignorer: true
+	 */   
+	protected void _annee_(Couverture<AnneeScolaire> c) {
+		if(anneeRecherche.size() > 0) {
+			c.o(anneeRecherche.get(0));
+		}
 	}
 
 	/**
@@ -190,31 +240,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: school
 	 * r: EcoleCle
 	 * r.enUS: SchoolKey
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */              
 	protected void _ecoleCle(Couverture<Long> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleCle());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: yearKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 * r: AnneeCle
-	 * r.enUS: YearKey
-	 * r: bloc
-	 * r.enUS: block
-	*/             
-	protected void _anneeCle(Couverture<Long> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getAnneeCle());
+		if(annee_ != null)
+			c.o(annee_.getEcoleCle());
 	}
 
 	/**
@@ -460,7 +491,6 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
 			l.addFilterQuery("pk_indexed_long:" + enfantCle);
 			l.setC(EnfantScolaire.class);
 			l.setStocker(true);
@@ -623,12 +653,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: EcoleNom
 	 * r.enUS: SchoolName
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */   
 	protected void _ecoleNom(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleNom());
+		if(annee_ != null)
+			c.o(annee_.getEcoleNom());
 	}
 
 	/**
@@ -642,12 +672,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
 	 * r.enUS: SchoolCompleteName
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleNomComplet());
+		if(annee_ != null)
+			c.o(annee_.getEcoleNomComplet());
 	}
 
 	/**
@@ -659,12 +689,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: l'emplacement
 	 * r: EcoleEmplacement
 	 * r.enUS: SchoolLocation
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */           
 	protected void _ecoleEmplacement(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleEmplacement());
+		if(annee_ != null)
+			c.o(annee_.getEcoleEmplacement());
 	}
 
 	/**
@@ -677,12 +707,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: address
 	 * r: EcoleAddresse
 	 * r.enUS: SchoolAddress
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */
 	protected void _ecoleAddresse(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleAddresse());
+		if(annee_ != null)
+			c.o(annee_.getEcoleAddresse());
 	}
 
 	/**
@@ -694,12 +724,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: phone number
 	 * r: EcoleNumeroTelephone
 	 * r.enUS: SchoolPhoneNumber
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */    
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleNumeroTelephone());
+		if(annee_ != null)
+			c.o(annee_.getEcoleNumeroTelephone());
 	}
 
 	/**
@@ -711,12 +741,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: administrateur de l'école
 	 * r: EcoleAdministrateurNom
 	 * r.enUS: SchoolAdministratorName
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */             
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getEcoleAdministrateurNom());
+		if(annee_ != null)
+			c.o(annee_.getEcoleAdministrateurNom());
 	}
 
 	/**
@@ -728,12 +758,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: start of year
 	 * r: AnneeDebut
 	 * r.enUS: YearStart
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */               
 	protected void _anneeDebut(Couverture<Integer> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getAnneeDebut());
+		if(annee_ != null)
+			c.o(annee_.getAnneeDebut());
 	}
 
 	/**
@@ -745,12 +775,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: end of year
 	 * r: AnneeFin
 	 * r.enUS: YearEnd
-	 * r: bloc
-	 * r.enUS: block
+	 * r: annee
+	 * r.enUS: year
 	 */                     
 	protected void _anneeFin(Couverture<Integer> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getAnneeFin());
+		if(annee_ != null)
+			c.o(annee_.getAnneeFin());
 	}
 
 	/**
@@ -806,19 +836,19 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonEnrollmentFee
+	 * Var.enUS: yearEnrollmentFee
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 * r: SaisonFraisInscription
-	 * r.enUS: SeasonEnrollmentFee
-	 * r: bloc
-	 * r.enUS: block
-	 */                   
-	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
-		if(bloc_ != null)
-			c.o(bloc_.getSaisonFraisInscription());
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
+	 * r: annee
+	 * r.enUS: year
+	 */                
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
+		if(annee_ != null)
+			c.o(annee_.getAnneeFraisInscription());
 	}
 
 	/**   
@@ -1115,10 +1145,40 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: block
 	 * r: BlocNomAdmin
 	 * r.enUS: BlockAdminName
-	 */                
+	 */               
 	protected void _blocNomAdmin(Couverture<String> c) {
 		if(bloc_ != null)
 			c.o(bloc_.getBlocNomAdmin());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockShortName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocNomCourt
+	 * r.enUS: BlockShortName
+	 */               
+	protected void _blocNomCourt(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getBlocNomCourt());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: blockCompleteName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: bloc
+	 * r.enUS: block
+	 * r: BlocNomComplet
+	 * r.enUS: BlockCompleteName
+	 */               
+	protected void _blocNomComplet(Couverture<String> c) {
+		if(bloc_ != null)
+			c.o(bloc_.getBlocNomComplet());
 	}
 
 	/**
@@ -1251,7 +1311,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 7
 	 * HtmlCellule: 1
-	 */                   
+	 */                  
 	protected void _enfantConditionsMedicales(Couverture<String> c) {
 	}
 
@@ -1589,6 +1649,16 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionDate10(Couverture<LocalDate> c) {
 	}
+
+	/**
+	 * Var.enUS: enrollmentEnrollments
+	 */
+	protected void _inscriptionsInscription(List<InscriptionScolaire> l) {}
+
+	/**
+	 * Var.enUS: enrollmentNumber
+	 */
+	protected void _inscriptionNumero(Couverture<Integer> l) {}
 
 	/**           
 	 * {@inheritDoc}

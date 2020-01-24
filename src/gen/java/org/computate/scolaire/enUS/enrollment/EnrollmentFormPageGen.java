@@ -118,6 +118,214 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 		return (EnrollmentFormPage)this;
 	}
 
+	//////////////////////
+	// enrollmentSearch //
+	//////////////////////
+
+	/**	L'entité « enrollmentSearch »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
+	 */
+	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
+
+	/**	<br/>L'entité « enrollmentSearch »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
+	 * <br/>
+	 * @param enrollmentSearch est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
+
+	public SearchList<SchoolEnrollment> getEnrollmentSearch() {
+		return enrollmentSearch;
+	}
+
+	public void setEnrollmentSearch(SearchList<SchoolEnrollment> enrollmentSearch) {
+		this.enrollmentSearch = enrollmentSearch;
+		this.enrollmentSearchWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage enrollmentSearchInit() {
+		if(!enrollmentSearchWrap.alreadyInitialized) {
+			_enrollmentSearch(enrollmentSearch);
+		}
+		enrollmentSearch.initDeepForClass(siteRequest_);
+		enrollmentSearchWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	/////////////////
+	// enrollments //
+	/////////////////
+
+	/**	L'entité « enrollments »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected List<SchoolEnrollment> enrollments;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
+
+	/**	<br/>L'entité « enrollments »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Trouver l'entité enrollments dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollments(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollments() {
+		return enrollments;
+	}
+
+	public void setEnrollments(List<SchoolEnrollment> enrollments) {
+		this.enrollments = enrollments;
+		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public EnrollmentFormPage addEnrollments(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollments(o);
+		}
+		return (EnrollmentFormPage)this;
+	}
+	public EnrollmentFormPage addEnrollments(SchoolEnrollment o) {
+		if(o != null && !enrollments.contains(o))
+			this.enrollments.add(o);
+		return (EnrollmentFormPage)this;
+	}
+	protected EnrollmentFormPage enrollmentsInit() {
+		if(!enrollmentsWrap.alreadyInitialized) {
+			_enrollments(enrollmentsWrap);
+			if(enrollments == null)
+				setEnrollments(enrollmentsWrap.o);
+		}
+		enrollmentsWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	//////////////////////
+	// enrollmentBlocks //
+	//////////////////////
+
+	/**	L'entité « enrollmentBlocks »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	protected List<SchoolEnrollment> enrollmentBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentBlocksWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentBlocks").o(enrollmentBlocks);
+
+	/**	<br/>L'entité « enrollmentBlocks »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlocks">Trouver l'entité enrollmentBlocks dans Solr</a>
+	 * <br/>
+	 * @param enrollmentBlocks est l'entité déjà construit. 
+	 **/
+	protected abstract void _enrollmentBlocks(List<SchoolEnrollment> c);
+
+	public List<SchoolEnrollment> getEnrollmentBlocks() {
+		return enrollmentBlocks;
+	}
+
+	public void setEnrollmentBlocks(List<SchoolEnrollment> enrollmentBlocks) {
+		this.enrollmentBlocks = enrollmentBlocks;
+		this.enrollmentBlocksWrap.alreadyInitialized = true;
+	}
+	public EnrollmentFormPage addEnrollmentBlocks(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentBlocks(o);
+		}
+		return (EnrollmentFormPage)this;
+	}
+	public EnrollmentFormPage addEnrollmentBlocks(SchoolEnrollment o) {
+		if(o != null && !enrollmentBlocks.contains(o))
+			this.enrollmentBlocks.add(o);
+		return (EnrollmentFormPage)this;
+	}
+	protected EnrollmentFormPage enrollmentBlocksInit() {
+		if(!enrollmentBlocksWrap.alreadyInitialized) {
+			_enrollmentBlocks(enrollmentBlocks);
+		}
+		enrollmentBlocksWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	/////////////////////
+	// enrollmentBlock //
+	/////////////////////
+
+	/**	L'entité « enrollmentBlock »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolEnrollment enrollmentBlock;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentBlockWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentBlock").o(enrollmentBlock);
+
+	/**	<br/>L'entité « enrollmentBlock »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlock">Trouver l'entité enrollmentBlock dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentBlock(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentBlock() {
+		return enrollmentBlock;
+	}
+
+	public void setEnrollmentBlock(SchoolEnrollment enrollmentBlock) {
+		this.enrollmentBlock = enrollmentBlock;
+		this.enrollmentBlockWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage enrollmentBlockInit() {
+		if(!enrollmentBlockWrap.alreadyInitialized) {
+			_enrollmentBlock(enrollmentBlockWrap);
+			if(enrollmentBlock == null)
+				setEnrollmentBlock(enrollmentBlockWrap.o);
+		}
+		if(enrollmentBlock != null)
+			enrollmentBlock.initDeepForClass(siteRequest_);
+		enrollmentBlockWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
+	//////////////////////////
+	// enrollmentEnrollment //
+	//////////////////////////
+
+	/**	L'entité « enrollmentEnrollment »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected SchoolEnrollment enrollmentEnrollment;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentEnrollment").o(enrollmentEnrollment);
+
+	/**	<br/>L'entité « enrollmentEnrollment »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollment">Trouver l'entité enrollmentEnrollment dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _enrollmentEnrollment(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentEnrollment() {
+		return enrollmentEnrollment;
+	}
+
+	public void setEnrollmentEnrollment(SchoolEnrollment enrollmentEnrollment) {
+		this.enrollmentEnrollment = enrollmentEnrollment;
+		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
+	}
+	protected EnrollmentFormPage enrollmentEnrollmentInit() {
+		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
+			_enrollmentEnrollment(enrollmentEnrollmentWrap);
+			if(enrollmentEnrollment == null)
+				setEnrollmentEnrollment(enrollmentEnrollmentWrap.o);
+		}
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.initDeepForClass(siteRequest_);
+		enrollmentEnrollmentWrap.alreadyInitialized(true);
+		return (EnrollmentFormPage)this;
+	}
+
 	////////////////
 	// yearSearch //
 	////////////////
@@ -188,42 +396,6 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 				setYear_(year_Wrap.o);
 		}
 		year_Wrap.alreadyInitialized(true);
-		return (EnrollmentFormPage)this;
-	}
-
-	//////////////////////
-	// enrollmentSearch //
-	//////////////////////
-
-	/**	L'entité « enrollmentSearch »
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 */
-	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
-	@JsonIgnore
-	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
-
-	/**	<br/>L'entité « enrollmentSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
-	 * <br/>
-	 * @param enrollmentSearch est l'entité déjà construit. 
-	 **/
-	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
-
-	public SearchList<SchoolEnrollment> getEnrollmentSearch() {
-		return enrollmentSearch;
-	}
-
-	public void setEnrollmentSearch(SearchList<SchoolEnrollment> enrollmentSearch) {
-		this.enrollmentSearch = enrollmentSearch;
-		this.enrollmentSearchWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentFormPage enrollmentSearchInit() {
-		if(!enrollmentSearchWrap.alreadyInitialized) {
-			_enrollmentSearch(enrollmentSearch);
-		}
-		enrollmentSearch.initDeepForClass(siteRequest_);
-		enrollmentSearchWrap.alreadyInitialized(true);
 		return (EnrollmentFormPage)this;
 	}
 
@@ -1375,9 +1547,13 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	public void initEnrollmentFormPage() {
 		listEnrollmentDesignInit();
 		enrollmentDesignInit();
+		enrollmentSearchInit();
+		enrollmentsInit();
+		enrollmentBlocksInit();
+		enrollmentBlockInit();
+		enrollmentEnrollmentInit();
 		yearSearchInit();
 		year_Init();
-		enrollmentSearchInit();
 		schoolKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
@@ -1416,10 +1592,14 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 			listEnrollmentDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentDesign != null)
 			enrollmentDesign.setSiteRequest_(siteRequest_);
-		if(yearSearch != null)
-			yearSearch.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
+		if(enrollmentBlock != null)
+			enrollmentBlock.setSiteRequest_(siteRequest_);
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.setSiteRequest_(siteRequest_);
+		if(yearSearch != null)
+			yearSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -1462,12 +1642,20 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 				return oEnrollmentFormPage.listEnrollmentDesign;
 			case "enrollmentDesign":
 				return oEnrollmentFormPage.enrollmentDesign;
+			case "enrollmentSearch":
+				return oEnrollmentFormPage.enrollmentSearch;
+			case "enrollments":
+				return oEnrollmentFormPage.enrollments;
+			case "enrollmentBlocks":
+				return oEnrollmentFormPage.enrollmentBlocks;
+			case "enrollmentBlock":
+				return oEnrollmentFormPage.enrollmentBlock;
+			case "enrollmentEnrollment":
+				return oEnrollmentFormPage.enrollmentEnrollment;
 			case "yearSearch":
 				return oEnrollmentFormPage.yearSearch;
 			case "year_":
 				return oEnrollmentFormPage.year_;
-			case "enrollmentSearch":
-				return oEnrollmentFormPage.enrollmentSearch;
 			case "schoolKey":
 				return oEnrollmentFormPage.schoolKey;
 			case "schoolName":

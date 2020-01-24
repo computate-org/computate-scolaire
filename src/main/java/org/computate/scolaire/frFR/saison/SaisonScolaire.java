@@ -340,6 +340,23 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: yearEnrollmentFee
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
+	 * r: annee
+	 * r.enUS: year
+	 */                    
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
+		if(annee_ != null)
+			c.o(annee_.getAnneeFraisInscription());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: seasonStartDate
 	 * Indexe: true
 	 * Stocke: true
@@ -392,19 +409,6 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * NomAffichage.enUS: winter
 	 */                   
 	protected void _saisonHiver(Couverture<Boolean> c) {}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonEnrollmentFee
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 */         
-	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {}
 
 	/**
 	 * {@inheritDoc}
@@ -527,10 +531,10 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * Var.enUS: strSeasonEnrollmentFee
-	 * r: saisonFraisInscription
-	 * r.enUS: seasonEnrollmentFee
+	 * r: anneeFraisInscription
+	 * r.enUS: yearEnrollmentFee
 	 */
-	@Override public String strSaisonFraisInscription() {
-		return saisonFraisInscription == null ? "" : saisonFraisInscription.setScale(0).toString();
+	@Override public String strAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(0).toString();
 	}
 }

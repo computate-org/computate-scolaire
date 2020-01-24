@@ -201,6 +201,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case "yearKey":
+						postSql.append(SiteContextEnUS.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("enrollmentKeys", Long.parseLong(jsonObject.getString(entityVar)), "yearKey", pk));
+						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContextEnUS.SQL_addA);
@@ -557,6 +561,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		if(patchRequest != null) {
 			List<Long> pks = patchRequest.getPks();
 			List<String> classes = patchRequest.getClasses();
+			if(o.getYearKey() != null) {
+				if(!pks.contains(o.getYearKey())) {
+					pks.add(o.getYearKey());
+					classes.add("SchoolYear");
+				}
+			}
 			for(Long pk : o.getBlockKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -649,6 +659,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.enrollment.SchoolEnrollment"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -679,15 +699,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
 						}
 						break;
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
-						}
+					case "setYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_setA2);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
+						break;
+					case "removeYearKey":
+						o2.setYearKey(requestJson.getString(methodName));
+						patchSql.append(SiteContextEnUS.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("enrollmentKeys", o2.getYearKey(), "yearKey", pk));
 						break;
 					case "addBlockKeys":
 						patchSql.append(SiteContextEnUS.SQL_addA);
@@ -1537,7 +1557,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/form", c -> {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-form", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 									response200FormSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
@@ -1591,7 +1611,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/form");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment-form");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			if(listSchoolEnrollment.size() == 1)
@@ -1622,7 +1642,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/pdf", c -> {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-pdf", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 									response200PdfSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
@@ -1676,7 +1696,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/pdf");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment-pdf");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			if(listSchoolEnrollment.size() == 1)
@@ -1707,7 +1727,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/email", c -> {
+							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment-email", c -> {
 								if(c.succeeded()) {
 									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 									response200EmailSearchPageSchoolEnrollment(listSchoolEnrollment, d -> {
@@ -1761,7 +1781,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment/email");
+			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment-email");
 			page.setPageSolrDocument(pageSolrDocument);
 			page.setW(w);
 			if(listSchoolEnrollment.size() == 1)
@@ -1980,14 +2000,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

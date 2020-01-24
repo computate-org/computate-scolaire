@@ -123,12 +123,13 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 											patchRequest.setRows(listSiteUser.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSiteUser.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listSiteUser.size() == 1) {
 												SiteUser o = listSiteUser.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestSiteUser(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -224,7 +225,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		if(patchRequest != null) {
 			List<Long> pks = patchRequest.getPks();
 			List<String> classes = patchRequest.getClasses();
-			o.patchRequestSiteUser();
 		}
 	}
 
@@ -241,6 +241,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 									indexSiteUser(siteUser, d -> {
 										if(d.succeeded()) {
 											patchRequestSiteUser(siteUser);
+											siteUser.patchRequestSiteUser();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -669,14 +670,6 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

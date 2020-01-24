@@ -118,6 +118,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeDebut("Page");
 			o.htmAnneeFin("Page");
+			o.htmAnneeFraisInscription("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("Page");
@@ -140,6 +141,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeDebut("POST");
 			o.htmAnneeFin("POST");
+			o.htmAnneeFraisInscription("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("POST");
@@ -162,6 +164,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeDebut("PATCH");
 			o.htmAnneeFin("PATCH");
+			o.htmAnneeFraisInscription("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("PATCH");
@@ -187,6 +190,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeDebut("Recherche");
 			o.htmAnneeFin("Recherche");
+			o.htmAnneeFraisInscription("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("Recherche");

@@ -1,5 +1,6 @@
 package org.computate.scolaire.enUS.year;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -91,6 +92,8 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 		if(yearStart != null)
 			c.o(yearStart + 1);
 	}
+
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {}
 
 	protected void _yearShortName(Wrap<String> c) {
 		String o = "year";

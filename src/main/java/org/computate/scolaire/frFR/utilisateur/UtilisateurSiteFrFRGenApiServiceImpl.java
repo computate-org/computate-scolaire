@@ -123,12 +123,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 											requetePatch.setRows(listeUtilisateurSite.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeUtilisateurSite.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeUtilisateurSite.size() == 1) {
 												UtilisateurSite o = listeUtilisateurSite.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchUtilisateurSite(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -224,7 +225,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		if(requetePatch != null) {
 			List<Long> pks = requetePatch.getPks();
 			List<String> classes = requetePatch.getClasses();
-			o.requetePatchUtilisateurSite();
 		}
 	}
 
@@ -241,6 +241,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									indexerUtilisateurSite(utilisateurSite, d -> {
 										if(d.succeeded()) {
 											requetePatchUtilisateurSite(utilisateurSite);
+											utilisateurSite.requetePatchUtilisateurSite();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -669,14 +670,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

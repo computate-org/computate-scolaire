@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -19,6 +20,27 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentKey(Wrap<Long> c) {
 		c.o(pk);
+	}
+
+	protected void _yearKey(Wrap<Long> c) {
+	}
+
+	protected void _yearSearch(SearchList<SchoolYear> l) {
+		if(yearKey != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:" + yearKey);
+			l.setC(SchoolYear.class);
+			l.setStore(true);
+		}
+		else {
+			l.setQuery(null);
+		}
+	}
+
+	protected void _year_(Wrap<SchoolYear> c) {
+		if(yearSearch.size() > 0) {
+			c.o(yearSearch.get(0));
+		}
 	}
 
 	protected void _blockKeys(List<Long> o) {}
@@ -49,13 +71,8 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolKey());
-	}
-
-	protected void _yearKey(Wrap<Long> c) {
-		if(block_ != null)
-			c.o(block_.getYearKey());
+		if(year_ != null)
+			c.o(year_.getSchoolKey());
 	}
 
 	protected void _seasonKey(Wrap<Long> c) {
@@ -121,7 +138,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
 			l.addFilterQuery("pk_indexed_long:" + childKey);
 			l.setC(SchoolChild.class);
 			l.setStore(true);
@@ -178,43 +194,43 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _schoolName(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolName());
+		if(year_ != null)
+			c.o(year_.getSchoolName());
 	}
 
 	protected void _schoolCompleteName(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolCompleteName());
+		if(year_ != null)
+			c.o(year_.getSchoolCompleteName());
 	}
 
 	protected void _schoolLocation(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolLocation());
+		if(year_ != null)
+			c.o(year_.getSchoolLocation());
 	}
 
 	protected void _schoolAddress(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolAddress());
+		if(year_ != null)
+			c.o(year_.getSchoolAddress());
 	}
 
 	protected void _schoolPhoneNumber(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolPhoneNumber());
+		if(year_ != null)
+			c.o(year_.getSchoolPhoneNumber());
 	}
 
 	protected void _schoolAdministratorName(Wrap<String> c) {
-		if(block_ != null)
-			c.o(block_.getSchoolAdministratorName());
+		if(year_ != null)
+			c.o(year_.getSchoolAdministratorName());
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {
-		if(block_ != null)
-			c.o(block_.getYearStart());
+		if(year_ != null)
+			c.o(year_.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<Integer> c) {
-		if(block_ != null)
-			c.o(block_.getYearEnd());
+		if(year_ != null)
+			c.o(year_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
@@ -232,9 +248,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(block_.getSeasonWinter());
 	}
 
-	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
-		if(block_ != null)
-			c.o(block_.getSeasonEnrollmentFee());
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
+		if(year_ != null)
+			c.o(year_.getYearEnrollmentFee());
 	}
 
 	protected void _seasonCompleteName(Wrap<String> c) {
@@ -325,6 +341,16 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _blockAdminName(Wrap<String> c) {
 		if(block_ != null)
 			c.o(block_.getBlockAdminName());
+	}
+
+	protected void _blockShortName(Wrap<String> c) {
+		if(block_ != null)
+			c.o(block_.getBlockShortName());
+	}
+
+	protected void _blockCompleteName(Wrap<String> c) {
+		if(block_ != null)
+			c.o(block_.getBlockCompleteName());
 	}
 
 	protected void _enrollmentApproved(Wrap<Boolean> c) {
@@ -457,6 +483,10 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentDate10(Wrap<LocalDate> c) {
 	}
+
+	protected void _enrollmentEnrollments(List<SchoolEnrollment> l) {}
+
+	protected void _enrollmentNumber(Wrap<Integer> l) {}
 
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;

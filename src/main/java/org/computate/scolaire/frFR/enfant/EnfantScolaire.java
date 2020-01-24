@@ -52,9 +52,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: regular
  * IconeNom: child
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
 */    
+// * Role.frFR: SiteAdmin
+// * Role.enUS: SiteAdmin
+// * RoleSession: true
 public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**

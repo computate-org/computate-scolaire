@@ -117,6 +117,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearStart("Page");
 			o.htmYearEnd("Page");
+			o.htmYearEnrollmentFee("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Page");
@@ -139,6 +140,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearStart("POST");
 			o.htmYearEnd("POST");
+			o.htmYearEnrollmentFee("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("POST");
@@ -161,6 +163,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearStart("PATCH");
 			o.htmYearEnd("PATCH");
+			o.htmYearEnrollmentFee("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("PATCH");
@@ -186,6 +189,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearStart("Recherche");
 			o.htmYearEnd("Recherche");
+			o.htmYearEnrollmentFee("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Recherche");

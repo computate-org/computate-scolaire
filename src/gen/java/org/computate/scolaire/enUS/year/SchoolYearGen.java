@@ -10,6 +10,7 @@ import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.math.BigDecimal;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -1502,6 +1503,138 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////
+	// yearEnrollmentFee //
+	///////////////////////
+
+	/**	L'entité « yearEnrollmentFee »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal yearEnrollmentFee;
+	@JsonIgnore
+	public Wrap<BigDecimal> yearEnrollmentFeeWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("yearEnrollmentFee").o(yearEnrollmentFee);
+
+	/**	<br/>L'entité « yearEnrollmentFee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.SchoolYear&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnrollmentFee">Trouver l'entité yearEnrollmentFee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _yearEnrollmentFee(Wrap<BigDecimal> c);
+
+	public BigDecimal getYearEnrollmentFee() {
+		return yearEnrollmentFee;
+	}
+
+	public void setYearEnrollmentFee(BigDecimal yearEnrollmentFee) {
+		this.yearEnrollmentFee = yearEnrollmentFee;
+		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
+	}
+	public SchoolYear setYearEnrollmentFee(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
+		return (SchoolYear)this;
+	}
+	public SchoolYear setYearEnrollmentFee(Double o) {
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
+		return (SchoolYear)this;
+	}
+	public SchoolYear setYearEnrollmentFee(Integer o) {
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
+		return (SchoolYear)this;
+	}
+	protected SchoolYear yearEnrollmentFeeInit() {
+		if(!yearEnrollmentFeeWrap.alreadyInitialized) {
+			_yearEnrollmentFee(yearEnrollmentFeeWrap);
+			if(yearEnrollmentFee == null)
+				setYearEnrollmentFee(yearEnrollmentFeeWrap.o);
+		}
+		yearEnrollmentFeeWrap.alreadyInitialized(true);
+		return (SchoolYear)this;
+	}
+
+	public Double solrYearEnrollmentFee() {
+		return yearEnrollmentFee == null ? null : yearEnrollmentFee.doubleValue();
+	}
+
+	public String strYearEnrollmentFee() {
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2).toString();
+	}
+
+	public String jsonYearEnrollmentFee() {
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.toString();
+	}
+
+	public String nomAffichageYearEnrollmentFee() {
+		return "enrollment fee";
+	}
+
+	public String htmTooltipYearEnrollmentFee() {
+		return null;
+	}
+
+	public String htmYearEnrollmentFee() {
+		return yearEnrollmentFee == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnrollmentFee());
+	}
+
+	public void inputYearEnrollmentFee(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "enrollment fee")
+			.a("id", classApiMethodMethod, "_yearEnrollmentFee");
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setYearEnrollmentFee inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+				a("name", "setYearEnrollmentFee");
+			} else {
+				a("class", "valueYearEnrollmentFee w3-input w3-border inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+				a("name", "yearEnrollmentFee");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "patchSchoolYearVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearEnrollmentFee', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ");
+			}
+			a("value", strYearEnrollmentFee())
+		.fg();
+
+	}
+
+	public void htmYearEnrollmentFee(String classApiMethodMethod) {
+		SchoolYear s = (SchoolYear)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggestSchoolYearYearEnrollmentFee").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classApiMethodMethod, "_yearEnrollmentFee").a("class", "").f().sx("enrollment fee").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputYearEnrollmentFee(classApiMethodMethod);
+							} g("div");
+							if("Page".equals(classApiMethodMethod)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+									.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); $('#", classApiMethodMethod, "_yearEnrollmentFee').val(null); patchSchoolYearVal([{ name: 'fq', value: 'pk:' + $('#SchoolYearForm :input[name=pk]').val() }], 'setYearEnrollmentFee', null, function() { addGlow($('#", classApiMethodMethod, "_yearEnrollmentFee')); }, function() { addError($('#", classApiMethodMethod, "_yearEnrollmentFee')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////
 	// yearShortName //
 	///////////////////
@@ -1687,6 +1820,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		enrollmentFormSearchInit();
 		yearStartInit();
 		yearEndInit();
+		yearEnrollmentFeeInit();
 		yearShortNameInit();
 		yearCompleteNameInit();
 	}
@@ -1769,6 +1903,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return oSchoolYear.yearStart;
 			case "yearEnd":
 				return oSchoolYear.yearEnd;
+			case "yearEnrollmentFee":
+				return oSchoolYear.yearEnrollmentFee;
 			case "yearShortName":
 				return oSchoolYear.yearShortName;
 			case "yearCompleteName":
@@ -1836,6 +1972,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return val;
 			case "yearEnd":
 				setYearEnd(val);
+				savesSchoolYear.add(var);
+				return val;
+			case "yearEnrollmentFee":
+				setYearEnrollmentFee(val);
 				savesSchoolYear.add(var);
 				return val;
 			default:
@@ -1951,6 +2091,12 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolYear.setYearEnd(yearEnd);
+			}
+
+			if(savesSchoolYear.contains("yearEnrollmentFee")) {
+				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
+				if(yearEnrollmentFee != null)
+					oSchoolYear.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
 			if(savesSchoolYear.contains("yearShortName")) {
@@ -2106,6 +2252,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			document.addField("yearEnd_indexed_int", yearEnd);
 			document.addField("yearEnd_stored_int", yearEnd);
 		}
+		if(yearEnrollmentFee != null) {
+			document.addField("yearEnrollmentFee_indexed_double", yearEnrollmentFee.doubleValue());
+			document.addField("yearEnrollmentFee_stored_double", yearEnrollmentFee.doubleValue());
+		}
 		if(yearShortName != null) {
 			document.addField("yearShortName_indexed_string", yearShortName);
 			document.addField("yearShortName_stored_string", yearShortName);
@@ -2169,6 +2319,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				return "yearStart_indexed_int";
 			case "yearEnd":
 				return "yearEnd_indexed_int";
+			case "yearEnrollmentFee":
+				return "yearEnrollmentFee_indexed_double";
 			case "yearShortName":
 				return "yearShortName_indexed_string";
 			case "yearCompleteName":
@@ -2266,6 +2418,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		if(yearEnd != null)
 			oSchoolYear.setYearEnd(yearEnd);
 
+		Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
+		if(yearEnrollmentFee != null)
+			oSchoolYear.setYearEnrollmentFee(yearEnrollmentFee);
+
 		String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
 		if(yearShortName != null)
 			oSchoolYear.setYearShortName(yearShortName);
@@ -2293,6 +2449,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				patchRequest.addVars("yearStart");
 			if(!Objects.equals(yearEnd, original.getYearEnd()))
 				patchRequest.addVars("yearEnd");
+			if(!Objects.equals(yearEnrollmentFee, original.getYearEnrollmentFee()))
+				patchRequest.addVars("yearEnrollmentFee");
 			super.patchRequestCluster();
 		}
 	}
@@ -2302,7 +2460,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), schoolKey, seasonKeys, yearStart, yearEnd);
+		return Objects.hash(super.hashCode(), schoolKey, seasonKeys, yearStart, yearEnd, yearEnrollmentFee);
 	}
 
 	////////////
@@ -2319,7 +2477,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				&& Objects.equals( schoolKey, that.schoolKey )
 				&& Objects.equals( seasonKeys, that.seasonKeys )
 				&& Objects.equals( yearStart, that.yearStart )
-				&& Objects.equals( yearEnd, that.yearEnd );
+				&& Objects.equals( yearEnd, that.yearEnd )
+				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee );
 	}
 
 	//////////////
@@ -2334,6 +2493,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		sb.append( ", seasonKeys: " ).append(seasonKeys);
 		sb.append( ", yearStart: " ).append(yearStart);
 		sb.append( ", yearEnd: " ).append(yearEnd);
+		sb.append( ", yearEnrollmentFee: " ).append(yearEnrollmentFee);
 		sb.append(" }");
 		return sb.toString();
 	}

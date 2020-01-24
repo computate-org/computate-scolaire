@@ -123,9 +123,9 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o(season_.getSeasonWinter());
 	}
 
-	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
 		if(season_ != null)
-			c.o(season_.getSeasonEnrollmentFee());
+			c.o(season_.getYearEnrollmentFee());
 	}
 
 	protected void _seasonShortName(Wrap<String> c) {

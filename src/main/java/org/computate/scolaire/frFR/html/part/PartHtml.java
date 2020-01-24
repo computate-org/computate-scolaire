@@ -52,9 +52,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri10
  * Rows: 1000000
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
-*/                       
+*/                      
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**

@@ -486,19 +486,19 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonEnrollmentFee
+	 * Var.enUS: yearEnrollmentFee
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 * r: SaisonFraisInscription
-	 * r.enUS: SeasonEnrollmentFee
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
 	 * r: age
 	 * r.enUS: age
-	 */                   
-	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
+	 */                    
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
 		if(age_ != null)
-			c.o(age_.getSaisonFraisInscription());
+			c.o(age_.getAnneeFraisInscription());
 	}
 
 	/**   
@@ -875,7 +875,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		c.o(o);
 	}
 
-	/**    
+	/**   
 	 * {@inheritDoc}
 	 * Var.enUS: blockAdminName
 	 * Indexe: true

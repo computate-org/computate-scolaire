@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -50,6 +51,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -75,6 +77,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -100,6 +103,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -142,11 +146,11 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/inscription/form");
+		c.o("/inscription-form");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/inscription/form-999.png");
+			c.o("/png/inscription-form-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -164,6 +168,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 	@Override public void htmlScriptsInscriptionFormGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionFormPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/MerePage.js").f().g("script");
@@ -175,33 +180,36 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 	@Override public void htmlScriptInscriptionFormGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
-		tl(1, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
-		tl(1, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature4').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature5').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature6').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature7').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature8').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature9').jSignature({'height':200}); ");
-		tl(1, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature10').jSignature({'height':200}); ");
+		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggereInscriptionScolaireBlocCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireBlocCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireEnfantCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireEnfantCle_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireMereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireMereCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolairePereCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePereCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireGardienCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireGardienCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolairePaiementCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolairePaiementCles_Page'), pk); ");
+		tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature4').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature5').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature6').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature7').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature8').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature9').jSignature({'height':200}); ");
+		tl(2, "$('#inputInscriptionScolaire' + pk + 'inscriptionSignature10').jSignature({'height':200}); ");
+		tl(1, "}");
 		tl(1, "websocketInscriptionScolaire(websocketInscriptionScolaireInner);");
 		l("});");
 	}
 
 	public void htmlFormPageInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Page");
 			o.htmPk("Page");
-			o.htmObjetId("Page");
+			o.htmCree("Page");
 			o.htmModifie("Page");
+			o.htmObjetId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -252,10 +260,10 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 	public void htmlFormPOSTInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("POST");
 			o.htmPk("POST");
-			o.htmObjetId("POST");
+			o.htmCree("POST");
 			o.htmModifie("POST");
+			o.htmObjetId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -306,10 +314,10 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 	public void htmlFormPATCHInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjetId("PATCH");
+			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
+			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -387,10 +395,10 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 
 	public void htmlFormRechercheInscriptionScolaire(InscriptionScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjetId("Recherche");
+			o.htmCree("Recherche");
 			o.htmModifie("Recherche");
+			o.htmObjetId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");
@@ -463,7 +471,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/inscription/form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+				{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("inscriptions").g("span");
@@ -482,7 +490,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 			requeteSite_.setRequetePk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/inscription/form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+					{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -507,7 +515,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 		} else {
 
 				{ e("h1").f();
-					{ e("a").a("href", "/inscription/form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
+					{ e("a").a("href", "/inscription-form").a("class", "w3-bar-item w3-btn w3-center w3-block w3-purple w3-hover-purple ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -528,7 +536,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription/form?q=", query, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/inscription-form?q=", query, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -536,19 +544,19 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription/form?q=", query, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/inscription-form?q=", query, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/inscription/form?q=", query, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/inscription-form?q=", query, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription/form?q=", query, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/inscription-form?q=", query, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
@@ -567,7 +575,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 						InscriptionScolaire o = listeInscriptionScolaire.getList().get(i);
 						Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 						List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-						String uri = "/inscription/form/" + o.getPk();
+						String uri = "/inscription-form/" + o.getPk();
 						{ e("tr").f();
 							{ e("td").f();
 								{ e("a").a("href", uri).f();
@@ -740,13 +748,13 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 	public static void htmlSuggereInscriptionFormGenPage(MiseEnPage p, String id) {
 		{ p.e("div").a("class", "w3-cell-row ").f();
 			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("a").a("href", "/inscription/form").a("class", "").f();
+				{ p.e("a").a("href", "/inscription-form").a("class", "").f();
 					p.e("i").a("class", "fas fa-edit w3-padding-small ").f().g("i");
 					p.sx("voir toutes les inscriptions");
 				} p.g("a");
 			} p.g("div");
 			{ p.e("div").a("class", "w3-cell ").f();
-				{ p.e("a").a("id", "rechargerToutesInscriptionFormGenPage", id).a("href", "/inscription/form").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionFormGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionFormGenPage", id, "')); }); return false; ").f();
+				{ p.e("a").a("id", "rechargerToutesInscriptionFormGenPage", id).a("href", "/inscription-form").a("class", "").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionFormGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionFormGenPage", id, "')); }); return false; ").f();
 					p.e("i").a("class", "fas fa-sync-alt w3-padding-small ").f().g("i");
 					p.sx("recharger toutes les inscriptions");
 				} p.g("a");
@@ -764,7 +772,7 @@ public class InscriptionFormGenPage extends InscriptionFormGenPageGen<ClusterPag
 				{ p.e("div").a("class", "w3-cell-row ").f();
 
 					p.e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-					{ p.e("form").a("action", "").a("id", "suggereFormInscriptionScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/inscription/form?q=objetSuggere:' + encodeURIComponent($('#suggereInscriptionScolaire", id, "').val()); return false; ").f();
+					{ p.e("form").a("action", "").a("id", "suggereFormInscriptionScolaire", id).a("style", "display: inline-block; width: 100%; ").a("onsubmit", "event.preventDefault(); window.location.href='/inscription-form?q=objetSuggere:' + encodeURIComponent($('#suggereInscriptionScolaire", id, "').val()); return false; ").f();
 						p.e("input")
 							.a("type", "text")
 							.a("placeholder", "rechercher inscriptions")

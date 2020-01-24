@@ -119,9 +119,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Page");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("Page");
-		} g("div");
 	}
 
 	public void htmlFormPOSTDesignInscription(DesignInscription o) {
@@ -140,9 +137,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("POST");
 		} g("div");
 	}
 
@@ -163,9 +157,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PATCH");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("PATCH");
-		} g("div");
 	}
 
 	public void htmlFormRechercheDesignInscription(DesignInscription o) {
@@ -184,9 +175,6 @@ public class DesignInscriptionGenPage extends DesignInscriptionGenPageGen<Cluste
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Recherche");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionCles("Recherche");
 		} g("div");
 	}
 

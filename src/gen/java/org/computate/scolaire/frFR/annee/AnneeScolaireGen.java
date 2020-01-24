@@ -10,6 +10,7 @@ import java.lang.Integer;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.math.BigDecimal;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -1507,6 +1508,139 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////
+	// anneeFraisInscription //
+	///////////////////////////
+
+	/**	L'entité « anneeFraisInscription »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected BigDecimal anneeFraisInscription;
+	@JsonIgnore
+	public Couverture<BigDecimal> anneeFraisInscriptionCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("anneeFraisInscription").o(anneeFraisInscription);
+
+	/**	<br/>L'entité « anneeFraisInscription »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeFraisInscription">Trouver l'entité anneeFraisInscription dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _anneeFraisInscription(Couverture<BigDecimal> c);
+
+	public BigDecimal getAnneeFraisInscription() {
+		return anneeFraisInscription;
+	}
+
+	public void setAnneeFraisInscription(BigDecimal anneeFraisInscription) {
+		this.anneeFraisInscription = anneeFraisInscription;
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire setAnneeFraisInscription(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setAnneeFraisInscription(Double o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setAnneeFraisInscription(Integer o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire anneeFraisInscriptionInit() {
+		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
+			_anneeFraisInscription(anneeFraisInscriptionCouverture);
+			if(anneeFraisInscription == null)
+				setAnneeFraisInscription(anneeFraisInscriptionCouverture.o);
+		}
+		anneeFraisInscriptionCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public Double solrAnneeFraisInscription() {
+		return anneeFraisInscription == null ? null : anneeFraisInscription.doubleValue();
+	}
+
+	public String strAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2).toString();
+	}
+
+	public String jsonAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.toString();
+	}
+
+	public String nomAffichageAnneeFraisInscription() {
+		return "frais d'inscription";
+	}
+
+	public String htmTooltipAnneeFraisInscription() {
+		return null;
+	}
+
+	public String htmAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFraisInscription());
+	}
+
+	public void inputAnneeFraisInscription(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		e("input")
+			.a("type", "text")
+			.a("placeholder", "frais d'inscription")
+			.a("title", "Description.enUS: ")
+			.a("id", classeApiMethodeMethode, "_anneeFraisInscription");
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setAnneeFraisInscription inputAnneeScolaire", pk, "AnneeFraisInscription w3-input w3-border ");
+				a("name", "setAnneeFraisInscription");
+			} else {
+				a("class", "valeurAnneeFraisInscription w3-input w3-border inputAnneeScolaire", pk, "AnneeFraisInscription w3-input w3-border ");
+				a("name", "anneeFraisInscription");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeFraisInscription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ");
+			}
+			a("value", strAnneeFraisInscription())
+		.fg();
+
+	}
+
+	public void htmAnneeFraisInscription(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggereAnneeScolaireAnneeFraisInscription").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classeApiMethodeMethode, "_anneeFraisInscription").a("class", "").f().sx("frais d'inscription").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAnneeFraisInscription(classeApiMethodeMethode);
+							} g("div");
+							if("Page".equals(classeApiMethodeMethode)) {
+								{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+									{ e("button")
+										.a("tabindex", "-1")
+										.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+									.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); $('#", classeApiMethodeMethode, "_anneeFraisInscription').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeFraisInscription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ")
+										.f();
+										e("i").a("class", "far fa-eraser ").f().g("i");
+									} g("button");
+								} g("div");
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////
 	// anneeNomCourt //
 	///////////////////
@@ -1692,6 +1826,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		formInscriptionRechercheInit();
 		anneeDebutInit();
 		anneeFinInit();
+		anneeFraisInscriptionInit();
 		anneeNomCourtInit();
 		anneeNomCompletInit();
 	}
@@ -1774,6 +1909,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.anneeDebut;
 			case "anneeFin":
 				return oAnneeScolaire.anneeFin;
+			case "anneeFraisInscription":
+				return oAnneeScolaire.anneeFraisInscription;
 			case "anneeNomCourt":
 				return oAnneeScolaire.anneeNomCourt;
 			case "anneeNomComplet":
@@ -1841,6 +1978,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return val;
 			case "anneeFin":
 				setAnneeFin(val);
+				sauvegardesAnneeScolaire.add(var);
+				return val;
+			case "anneeFraisInscription":
+				setAnneeFraisInscription(val);
 				sauvegardesAnneeScolaire.add(var);
 				return val;
 			default:
@@ -1956,6 +2097,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
 				if(anneeFin != null)
 					oAnneeScolaire.setAnneeFin(anneeFin);
+			}
+
+			if(sauvegardesAnneeScolaire.contains("anneeFraisInscription")) {
+				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+				if(anneeFraisInscription != null)
+					oAnneeScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
 			if(sauvegardesAnneeScolaire.contains("anneeNomCourt")) {
@@ -2111,6 +2258,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("anneeFin_indexed_int", anneeFin);
 			document.addField("anneeFin_stored_int", anneeFin);
 		}
+		if(anneeFraisInscription != null) {
+			document.addField("anneeFraisInscription_indexed_double", anneeFraisInscription.doubleValue());
+			document.addField("anneeFraisInscription_stored_double", anneeFraisInscription.doubleValue());
+		}
 		if(anneeNomCourt != null) {
 			document.addField("anneeNomCourt_indexed_string", anneeNomCourt);
 			document.addField("anneeNomCourt_stored_string", anneeNomCourt);
@@ -2174,6 +2325,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return "anneeDebut_indexed_int";
 			case "anneeFin":
 				return "anneeFin_indexed_int";
+			case "anneeFraisInscription":
+				return "anneeFraisInscription_indexed_double";
 			case "anneeNomCourt":
 				return "anneeNomCourt_indexed_string";
 			case "anneeNomComplet":
@@ -2271,6 +2424,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(anneeFin != null)
 			oAnneeScolaire.setAnneeFin(anneeFin);
 
+		Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+		if(anneeFraisInscription != null)
+			oAnneeScolaire.setAnneeFraisInscription(anneeFraisInscription);
+
 		String anneeNomCourt = (String)solrDocument.get("anneeNomCourt_stored_string");
 		if(anneeNomCourt != null)
 			oAnneeScolaire.setAnneeNomCourt(anneeNomCourt);
@@ -2298,6 +2455,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				requetePatch.addVars("anneeDebut");
 			if(!Objects.equals(anneeFin, original.getAnneeFin()))
 				requetePatch.addVars("anneeFin");
+			if(!Objects.equals(anneeFraisInscription, original.getAnneeFraisInscription()))
+				requetePatch.addVars("anneeFraisInscription");
 			super.requetePatchCluster();
 		}
 	}
@@ -2307,7 +2466,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin);
+		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin, anneeFraisInscription);
 	}
 
 	////////////
@@ -2324,7 +2483,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleCle, that.ecoleCle )
 				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( anneeDebut, that.anneeDebut )
-				&& Objects.equals( anneeFin, that.anneeFin );
+				&& Objects.equals( anneeFin, that.anneeFin )
+				&& Objects.equals( anneeFraisInscription, that.anneeFraisInscription );
 	}
 
 	//////////////
@@ -2339,6 +2499,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", anneeDebut: " ).append(anneeDebut);
 		sb.append( ", anneeFin: " ).append(anneeFin);
+		sb.append( ", anneeFraisInscription: " ).append(anneeFraisInscription);
 		sb.append(" }");
 		return sb.toString();
 	}

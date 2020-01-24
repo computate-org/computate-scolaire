@@ -430,32 +430,6 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCles());
 	}
 
-	public void inputInscriptionCles(String classeApiMethodeMethode) {
-		DesignInscription s = (DesignInscription)this;
-	}
-
-	public void htmInscriptionCles(String classeApiMethodeMethode) {
-		DesignInscription s = (DesignInscription)this;
-		{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile ").f();
-			if("Page".equals(classeApiMethodeMethode)) {
-				{ e("div").a("class", "w3-padding ").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-indigo ").f();
-							e("label").a("class", "").f().sx("inscriptions").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row  ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strInscriptionCles()).g("span");
-								} g("div");
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			}
-		} g("div");
-	}
-
 	////////////////////
 	// anneeRecherche //
 	////////////////////

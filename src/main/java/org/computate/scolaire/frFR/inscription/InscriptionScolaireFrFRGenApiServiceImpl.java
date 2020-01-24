@@ -201,6 +201,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				Set<String> entiteVars = jsonObject.fieldNames();
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
+					case "anneeCle":
+						postSql.append(SiteContexteFrFR.SQL_addA);
+						postSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", Long.parseLong(jsonObject.getString(entiteVar))));
+						break;
 					case "blocCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							postSql.append(SiteContexteFrFR.SQL_addA);
@@ -557,6 +561,12 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		if(requetePatch != null) {
 			List<Long> pks = requetePatch.getPks();
 			List<String> classes = requetePatch.getClasses();
+			if(o.getAnneeCle() != null) {
+				if(!pks.contains(o.getAnneeCle())) {
+					pks.add(o.getAnneeCle());
+					classes.add("AnneeScolaire");
+				}
+			}
 			for(Long pk : o.getBlocCles()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -649,6 +659,16 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.inscription.InscriptionScolaire"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+						}
+						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -679,15 +699,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
 						}
 						break;
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
-						}
+					case "setAnneeCle":
+						o2.setAnneeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_setA1);
+						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", o2.getAnneeCle()));
+						break;
+					case "removeAnneeCle":
+						o2.setAnneeCle(requeteJson.getString(methodeNom));
+						patchSql.append(SiteContexteFrFR.SQL_removeA);
+						patchSqlParams.addAll(Arrays.asList("anneeCle", pk, "inscriptionCles", o2.getAnneeCle()));
 						break;
 					case "addBlocCles":
 						patchSql.append(SiteContexteFrFR.SQL_addA);
@@ -1537,7 +1557,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription/form", c -> {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription-form", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
 									reponse200FormPageRechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
@@ -1591,7 +1611,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/form");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription-form");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			if(listeInscriptionScolaire.size() == 1)
@@ -1622,7 +1642,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription/pdf", c -> {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription-pdf", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
 									reponse200PdfPageRechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
@@ -1676,7 +1696,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/pdf");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription-pdf");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			if(listeInscriptionScolaire.size() == 1)
@@ -1707,7 +1727,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 				if(a.succeeded()) {
 					utilisateurInscriptionScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription/mail", c -> {
+							rechercheInscriptionScolaire(requeteSite, false, true, "/inscription-mail", c -> {
 								if(c.succeeded()) {
 									ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
 									reponse200MailPageRechercheInscriptionScolaire(listeInscriptionScolaire, d -> {
@@ -1761,7 +1781,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
-			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription/mail");
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/inscription-mail");
 			page.setPageDocumentSolr(pageDocumentSolr);
 			page.setW(w);
 			if(listeInscriptionScolaire.size() == 1)
@@ -1980,14 +2000,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

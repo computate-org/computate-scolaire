@@ -435,19 +435,19 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonEnrollmentFee
+	 * Var.enUS: yearEnrollmentFee
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 * r: SaisonFraisInscription
-	 * r.enUS: SeasonEnrollmentFee
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
 	 * r: session
 	 * r.enUS: session
-	 */                   
-	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
+	 */                    
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
 		if(session_ != null)
-			c.o(session_.getSaisonFraisInscription());
+			c.o(session_.getAnneeFraisInscription());
 	}
 
 	/**   

@@ -1874,82 +1874,82 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonHiver == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonHiver());
 	}
 
-	////////////////////////////
-	// saisonFraisInscription //
-	////////////////////////////
+	///////////////////////////
+	// anneeFraisInscription //
+	///////////////////////////
 
-	/**	L'entité « saisonFraisInscription »
+	/**	L'entité « anneeFraisInscription »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected BigDecimal saisonFraisInscription;
+	protected BigDecimal anneeFraisInscription;
 	@JsonIgnore
-	public Couverture<BigDecimal> saisonFraisInscriptionCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("saisonFraisInscription").o(saisonFraisInscription);
+	public Couverture<BigDecimal> anneeFraisInscriptionCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("anneeFraisInscription").o(anneeFraisInscription);
 
-	/**	<br/>L'entité « saisonFraisInscription »
+	/**	<br/>L'entité « anneeFraisInscription »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonFraisInscription">Trouver l'entité saisonFraisInscription dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeFraisInscription">Trouver l'entité anneeFraisInscription dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonFraisInscription(Couverture<BigDecimal> c);
+	protected abstract void _anneeFraisInscription(Couverture<BigDecimal> c);
 
-	public BigDecimal getSaisonFraisInscription() {
-		return saisonFraisInscription;
+	public BigDecimal getAnneeFraisInscription() {
+		return anneeFraisInscription;
 	}
 
-	public void setSaisonFraisInscription(BigDecimal saisonFraisInscription) {
-		this.saisonFraisInscription = saisonFraisInscription;
-		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
+	public void setAnneeFraisInscription(BigDecimal anneeFraisInscription) {
+		this.anneeFraisInscription = anneeFraisInscription;
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSaisonFraisInscription(String o) {
+	public AgeScolaire setAnneeFraisInscription(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
-	public AgeScolaire setSaisonFraisInscription(Double o) {
-			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
+	public AgeScolaire setAnneeFraisInscription(Double o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
-	public AgeScolaire setSaisonFraisInscription(Integer o) {
-			this.saisonFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.saisonFraisInscriptionCouverture.dejaInitialise = true;
+	public AgeScolaire setAnneeFraisInscription(Integer o) {
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
-	protected AgeScolaire saisonFraisInscriptionInit() {
-		if(!saisonFraisInscriptionCouverture.dejaInitialise) {
-			_saisonFraisInscription(saisonFraisInscriptionCouverture);
-			if(saisonFraisInscription == null)
-				setSaisonFraisInscription(saisonFraisInscriptionCouverture.o);
+	protected AgeScolaire anneeFraisInscriptionInit() {
+		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
+			_anneeFraisInscription(anneeFraisInscriptionCouverture);
+			if(anneeFraisInscription == null)
+				setAnneeFraisInscription(anneeFraisInscriptionCouverture.o);
 		}
-		saisonFraisInscriptionCouverture.dejaInitialise(true);
+		anneeFraisInscriptionCouverture.dejaInitialise(true);
 		return (AgeScolaire)this;
 	}
 
-	public Double solrSaisonFraisInscription() {
-		return saisonFraisInscription == null ? null : saisonFraisInscription.doubleValue();
+	public Double solrAnneeFraisInscription() {
+		return anneeFraisInscription == null ? null : anneeFraisInscription.doubleValue();
 	}
 
-	public String strSaisonFraisInscription() {
-		return saisonFraisInscription == null ? "" : saisonFraisInscription.setScale(2).toString();
+	public String strAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2).toString();
 	}
 
-	public String jsonSaisonFraisInscription() {
-		return saisonFraisInscription == null ? "" : saisonFraisInscription.toString();
+	public String jsonAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.toString();
 	}
 
-	public String nomAffichageSaisonFraisInscription() {
-		return "frais d'inscription";
+	public String nomAffichageAnneeFraisInscription() {
+		return "le fin de l'année";
 	}
 
-	public String htmTooltipSaisonFraisInscription() {
+	public String htmTooltipAnneeFraisInscription() {
 		return null;
 	}
 
-	public String htmSaisonFraisInscription() {
-		return saisonFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonFraisInscription());
+	public String htmAnneeFraisInscription() {
+		return anneeFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFraisInscription());
 	}
 
 	////////////////////
@@ -2727,7 +2727,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		saisonJourDebutInit();
 		saisonEteInit();
 		saisonHiverInit();
-		saisonFraisInscriptionInit();
+		anneeFraisInscriptionInit();
 		saisonNomCourtInit();
 		saisonNomCompletInit();
 		sessionJourDebutInit();
@@ -2827,8 +2827,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.saisonEte;
 			case "saisonHiver":
 				return oAgeScolaire.saisonHiver;
-			case "saisonFraisInscription":
-				return oAgeScolaire.saisonFraisInscription;
+			case "anneeFraisInscription":
+				return oAgeScolaire.anneeFraisInscription;
 			case "saisonNomCourt":
 				return oAgeScolaire.saisonNomCourt;
 			case "saisonNomComplet":
@@ -3073,10 +3073,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSaisonHiver(saisonHiver);
 			}
 
-			if(sauvegardesAgeScolaire.contains("saisonFraisInscription")) {
-				Double saisonFraisInscription = (Double)solrDocument.get("saisonFraisInscription_stored_double");
-				if(saisonFraisInscription != null)
-					oAgeScolaire.setSaisonFraisInscription(saisonFraisInscription);
+			if(sauvegardesAgeScolaire.contains("anneeFraisInscription")) {
+				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+				if(anneeFraisInscription != null)
+					oAgeScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
 			if(sauvegardesAgeScolaire.contains("saisonNomCourt")) {
@@ -3302,9 +3302,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("saisonHiver_indexed_boolean", saisonHiver);
 			document.addField("saisonHiver_stored_boolean", saisonHiver);
 		}
-		if(saisonFraisInscription != null) {
-			document.addField("saisonFraisInscription_indexed_double", saisonFraisInscription.doubleValue());
-			document.addField("saisonFraisInscription_stored_double", saisonFraisInscription.doubleValue());
+		if(anneeFraisInscription != null) {
+			document.addField("anneeFraisInscription_indexed_double", anneeFraisInscription.doubleValue());
+			document.addField("anneeFraisInscription_stored_double", anneeFraisInscription.doubleValue());
 		}
 		if(saisonNomCourt != null) {
 			document.addField("saisonNomCourt_indexed_string", saisonNomCourt);
@@ -3411,8 +3411,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return "saisonEte_indexed_boolean";
 			case "saisonHiver":
 				return "saisonHiver_indexed_boolean";
-			case "saisonFraisInscription":
-				return "saisonFraisInscription_indexed_double";
+			case "anneeFraisInscription":
+				return "anneeFraisInscription_indexed_double";
 			case "saisonNomCourt":
 				return "saisonNomCourt_indexed_string";
 			case "saisonNomComplet":
@@ -3552,9 +3552,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(saisonHiver != null)
 			oAgeScolaire.setSaisonHiver(saisonHiver);
 
-		Double saisonFraisInscription = (Double)solrDocument.get("saisonFraisInscription_stored_double");
-		if(saisonFraisInscription != null)
-			oAgeScolaire.setSaisonFraisInscription(saisonFraisInscription);
+		Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
+		if(anneeFraisInscription != null)
+			oAgeScolaire.setAnneeFraisInscription(anneeFraisInscription);
 
 		String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
 		if(saisonNomCourt != null)

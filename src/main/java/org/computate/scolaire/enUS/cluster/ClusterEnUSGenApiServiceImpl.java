@@ -277,12 +277,13 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 											patchRequest.setRows(listCluster.getRows());
 											patchRequest.setNumFound(Optional.ofNullable(listCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listCluster.size())));
 											patchRequest.initDeepPatchRequest(siteRequest);
+											siteRequest.setPatchRequest_(patchRequest);
 											if(listCluster.size() == 1) {
 												Cluster o = listCluster.get(0);
 												patchRequest.setPk(o.getPk());
 												patchRequest.setOriginal(o);
+												patchRequestCluster(o);
 											}
-											siteRequest.setPatchRequest_(patchRequest);
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
 												blockingCodeHandler -> {
@@ -378,7 +379,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		if(patchRequest != null) {
 			List<Long> pks = patchRequest.getPks();
 			List<String> classes = patchRequest.getClasses();
-			o.patchRequestCluster();
 		}
 	}
 
@@ -395,6 +395,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 									indexCluster(cluster, d -> {
 										if(d.succeeded()) {
 											patchRequestCluster(cluster);
+											cluster.patchRequestCluster();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -434,6 +435,16 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.enUS.cluster.Cluster"));
 			for(String methodName : methodNames) {
 				switch(methodName) {
+					case "setCreated":
+						if(requestJson.getString(methodName) == null) {
+							patchSql.append(SiteContextEnUS.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+						} else {
+							o2.setCreated(requestJson.getString(methodName));
+							patchSql.append(SiteContextEnUS.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
+						}
+						break;
 					case "setModified":
 						if(requestJson.getString(methodName) == null) {
 							patchSql.append(SiteContextEnUS.SQL_removeD);
@@ -462,16 +473,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 							o2.setDeleted(requestJson.getBoolean(methodName));
 							patchSql.append(SiteContextEnUS.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("deleted", o2.jsonDeleted(), pk));
-						}
-						break;
-					case "setCreated":
-						if(requestJson.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
-						} else {
-							o2.setCreated(requestJson.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("created", o2.jsonCreated(), pk));
 						}
 						break;
 				}
@@ -980,14 +981,6 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			String id = operationRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listSearch.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					) {
-				listSearch.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")));
 			}
 
 			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {

@@ -46,9 +46,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * NomVar.frFR: design-inscription
  * NomVar.enUS: enrollment-design
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
-*/           
+*/            
 public class DesignInscription extends DesignInscriptionGen<Cluster> {
 
 	/**
@@ -100,8 +98,6 @@ public class DesignInscription extends DesignInscriptionGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: InscriptionScolaire.designInscriptionCle
-	 * HtmlLigne: 5
-	 * HtmlCellule: 1
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
 	 */              

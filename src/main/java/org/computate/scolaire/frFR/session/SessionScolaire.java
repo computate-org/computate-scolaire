@@ -419,19 +419,19 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: seasonEnrollmentFee
+	 * Var.enUS: yearEnrollmentFee
 	 * Indexe: true
 	 * Stocke: true
-	 * NomAffichage.frFR: frais d'inscription
-	 * NomAffichage.enUS: enrollment fee
-	 * r: SaisonFraisInscription
-	 * r.enUS: SeasonEnrollmentFee
+	 * NomAffichage.frFR: le fin de l'année
+	 * NomAffichage.enUS: end of year
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
 	 * r: saison
 	 * r.enUS: season
-	 */                   
-	protected void _saisonFraisInscription(Couverture<BigDecimal> c) {
+	 */                    
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
 		if(saison_ != null)
-			c.o(saison_.getSaisonFraisInscription());
+			c.o(saison_.getAnneeFraisInscription());
 	}
 
 	/**   

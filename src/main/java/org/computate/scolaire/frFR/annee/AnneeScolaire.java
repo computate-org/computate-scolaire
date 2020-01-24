@@ -1,5 +1,6 @@
 package org.computate.scolaire.frFR.annee;                                
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -333,6 +334,19 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 		if(anneeDebut != null)
 			c.o(anneeDebut + 1);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: yearEnrollmentFee
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 3
+	 * NomAffichage.frFR: frais d'inscription
+	 * NomAffichage.enUS: enrollment fee
+	 */         
+	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {}
 
 	/**
 	 * {@inheritDoc}

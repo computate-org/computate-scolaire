@@ -9,4 +9,7 @@ public class ClusterPage extends ClusterPageGen<ClusterGenPage> {
 		if(getClass().getSimpleName().equals("ClusterPage"))
 			super.htmlBodyClusterGenPage();
 	}
+
+	@Override public void htmlScript() {
+	}
 }

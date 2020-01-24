@@ -944,6 +944,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 									try {
 										MethodUtils.invokeExactMethod(parent, "set" + StringUtils.capitalize(var), o);
 										i = htmlPageLayout2(htmlPartList, htmlPart, forStart, size);
+									} catch (RuntimeException e) {
+										throw e;
 									} catch (Exception e) {
 										throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "set" + StringUtils.capitalize(var), htmlVar, parent), e);
 									}

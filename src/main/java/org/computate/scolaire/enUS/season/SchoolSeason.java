@@ -99,6 +99,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 			c.o(year_.getYearEnd());
 	}
 
+	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
+		if(year_ != null)
+			c.o(year_.getYearEnrollmentFee());
+	}
+
 	protected void _seasonStartDate(Wrap<LocalDate> c) {}
 
 	@Override()
@@ -116,8 +121,6 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	protected void _seasonSummer(Wrap<Boolean> c) {}
 
 	protected void _seasonWinter(Wrap<Boolean> c) {}
-
-	protected void _seasonEnrollmentFee(Wrap<BigDecimal> c) {}
 
 	protected void _seasonFuture(Wrap<Boolean> c) {}
 
@@ -158,6 +161,6 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	@Override()
 	public String strSeasonEnrollmentFee() {
-		return seasonEnrollmentFee == null ? "" : seasonEnrollmentFee.setScale(0).toString();
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(0).toString();
 	}
 }

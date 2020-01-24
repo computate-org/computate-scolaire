@@ -277,12 +277,13 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 											requetePatch.setRows(listeCluster.getRows());
 											requetePatch.setNumFound(Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeCluster.size())));
 											requetePatch.initLoinRequetePatch(requeteSite);
+											requeteSite.setRequetePatch_(requetePatch);
 											if(listeCluster.size() == 1) {
 												Cluster o = listeCluster.get(0);
 												requetePatch.setPk(o.getPk());
 												requetePatch.setOriginal(o);
+												requetePatchCluster(o);
 											}
-											requeteSite.setRequetePatch_(requetePatch);
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
 												blockingCodeHandler -> {
@@ -378,7 +379,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		if(requetePatch != null) {
 			List<Long> pks = requetePatch.getPks();
 			List<String> classes = requetePatch.getClasses();
-			o.requetePatchCluster();
 		}
 	}
 
@@ -395,6 +395,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 									indexerCluster(cluster, d -> {
 										if(d.succeeded()) {
 											requetePatchCluster(cluster);
+											cluster.requetePatchCluster();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -434,6 +435,16 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			patchSqlParams.addAll(Arrays.asList(pk, "org.computate.scolaire.frFR.cluster.Cluster"));
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
+					case "setCree":
+						if(requeteJson.getString(methodeNom) == null) {
+							patchSql.append(SiteContexteFrFR.SQL_removeD);
+							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+						} else {
+							o2.setCree(requeteJson.getString(methodeNom));
+							patchSql.append(SiteContexteFrFR.SQL_setD);
+							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
+						}
+						break;
 					case "setModifie":
 						if(requeteJson.getString(methodeNom) == null) {
 							patchSql.append(SiteContexteFrFR.SQL_removeD);
@@ -462,16 +473,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							o2.setSupprime(requeteJson.getBoolean(methodeNom));
 							patchSql.append(SiteContexteFrFR.SQL_setD);
 							patchSqlParams.addAll(Arrays.asList("supprime", o2.jsonSupprime(), pk));
-						}
-						break;
-					case "setCree":
-						if(requeteJson.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
-						} else {
-							o2.setCree(requeteJson.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList("cree", o2.jsonCree(), pk));
 						}
 						break;
 				}
@@ -980,14 +981,6 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");
 			if(id != null) {
 				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")));
 			}
 
 			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {

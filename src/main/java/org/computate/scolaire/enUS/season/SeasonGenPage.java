@@ -118,7 +118,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonStartDate("Page");
 			o.htmSeasonSummer("Page");
 			o.htmSeasonWinter("Page");
-			o.htmSeasonEnrollmentFee("Page");
 			o.htmSeasonFuture("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -142,7 +141,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonStartDate("POST");
 			o.htmSeasonSummer("POST");
 			o.htmSeasonWinter("POST");
-			o.htmSeasonEnrollmentFee("POST");
 			o.htmSeasonFuture("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -166,7 +164,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonStartDate("PATCH");
 			o.htmSeasonSummer("PATCH");
 			o.htmSeasonWinter("PATCH");
-			o.htmSeasonEnrollmentFee("PATCH");
 			o.htmSeasonFuture("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -193,7 +190,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmSeasonStartDate("Recherche");
 			o.htmSeasonSummer("Recherche");
 			o.htmSeasonWinter("Recherche");
-			o.htmSeasonEnrollmentFee("Recherche");
 			o.htmSeasonFuture("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

@@ -46,7 +46,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageUrlId dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true">Trouver la classe pageH1 dans Solr</a>
  * <br/>
  **/
 public abstract class ClusterGen<DEV> extends Object {
@@ -592,10 +592,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			.a("id", classeApiMethodeMethode, "_archive")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setArchive");
+				s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
 				s.a("name", "setArchive");
 			} else {
-				s.a("class", "valeurArchive");
+				s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
 				s.a("name", "archive");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -702,10 +702,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			.a("id", classeApiMethodeMethode, "_supprime")
 			.a("value", "true");
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setSupprime");
+				s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
 				s.a("name", "setSupprime");
 			} else {
-				s.a("class", "valeurSupprime");
+				s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
 				s.a("name", "supprime");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

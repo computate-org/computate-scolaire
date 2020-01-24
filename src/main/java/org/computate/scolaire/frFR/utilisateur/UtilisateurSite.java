@@ -40,6 +40,9 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Couleur: gray
  * IconeGroupe: regular
  * IconeNom: user-cog
+ * 
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
  */     
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {    
 
