@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -96,19 +97,21 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSeasonGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestSchoolSeasonSessionKeys([{'name':'fq','value':'seasonKey:' + pk}], $('#listSchoolSeasonSessionKeys_Page'), pk); ");
-		tl(1, "suggestSchoolSeasonYearKey([{'name':'fq','value':'seasonKeys:' + pk}], $('#listSchoolSeasonYearKey_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestSchoolSeasonSessionKeys([{'name':'fq','value':'seasonKey:' + pk}], $('#listSchoolSeasonSessionKeys_Page'), pk); ");
+		tl(2, "suggestSchoolSeasonYearKey([{'name':'fq','value':'seasonKeys:' + pk}], $('#listSchoolSeasonYearKey_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketSchoolSeason(websocketSchoolSeasonInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSchoolSeason(SchoolSeason o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -128,10 +131,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSchoolSeason(SchoolSeason o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -151,10 +154,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSchoolSeason(SchoolSeason o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
+			o.htmCreated("PATCH");
 			o.htmModified("PATCH");
+			o.htmObjectId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -177,10 +180,10 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchSchoolSeason(SchoolSeason o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");

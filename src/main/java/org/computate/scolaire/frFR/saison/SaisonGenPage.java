@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -97,19 +98,21 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 	@Override public void htmlScriptSaisonGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
-		tl(1, "suggereSaisonScolaireSessionCles([{'name':'fq','value':'saisonCle:' + pk}], $('#listSaisonScolaireSessionCles_Page'), pk); ");
-		tl(1, "suggereSaisonScolaireAnneeCle([{'name':'fq','value':'saisonCles:' + pk}], $('#listSaisonScolaireAnneeCle_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggereSaisonScolaireSessionCles([{'name':'fq','value':'saisonCle:' + pk}], $('#listSaisonScolaireSessionCles_Page'), pk); ");
+		tl(2, "suggereSaisonScolaireAnneeCle([{'name':'fq','value':'saisonCles:' + pk}], $('#listSaisonScolaireAnneeCle_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketSaisonScolaire(websocketSaisonScolaireInner);");
 		l("});");
 	}
 
 	public void htmlFormPageSaisonScolaire(SaisonScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Page");
 			o.htmPk("Page");
-			o.htmObjetId("Page");
+			o.htmCree("Page");
 			o.htmModifie("Page");
+			o.htmObjetId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -129,10 +132,10 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTSaisonScolaire(SaisonScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("POST");
 			o.htmPk("POST");
-			o.htmObjetId("POST");
+			o.htmCree("POST");
 			o.htmModifie("POST");
+			o.htmObjetId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -152,10 +155,10 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHSaisonScolaire(SaisonScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjetId("PATCH");
+			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
+			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -178,10 +181,10 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 
 	public void htmlFormRechercheSaisonScolaire(SaisonScolaire o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjetId("Recherche");
+			o.htmCree("Recherche");
 			o.htmModifie("Recherche");
+			o.htmObjetId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");

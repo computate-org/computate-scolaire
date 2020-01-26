@@ -84,8 +84,16 @@ public class Cluster extends ClusterGen<Object> {
 	 * Description.enUS: The primary key in the database. 
 	 * NomAffichage.frFR: clé primaire
 	 * NomAffichage.enUS: primary key
-	 */                                        
+	 */                                       
 	protected void _pk(Couverture<Long> c) {}
+
+	/** 
+	 * {@inheritDoc}
+	 * Indexe: true
+	 * Stocke: true
+	 * InheritClePrimaire: true
+	 */                                       
+	protected void _inheritPk(Couverture<Long> c) {}
 
 	/**
 	 * {@inheritDoc}
@@ -208,6 +216,23 @@ public class Cluster extends ClusterGen<Object> {
 	 */                  
 	protected void _sessionId(Couverture<String> c) {
 		c.o(requeteSite_.getSessionId());
+	}
+
+	/**   
+	 * {@inheritDoc}
+	 * Var.enUS: saves
+	 * Indexe: true
+	 * Stocke: true
+	 * Sauvegardes: true
+	 * r: sauvegardes
+	 * r.enUS: saves
+	 */               
+	protected void _sauvegardes(Couverture<List<String>> c) {
+		try {
+			c.o((List<String>)FieldUtils.getField(getClass(), "sauvegardes" + getClass().getSimpleName(), true).get(this));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 	/**

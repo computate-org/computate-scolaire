@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import javax.crypto.spec.SecretKeySpec;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import javax.crypto.Cipher;
 import java.text.NumberFormat;
@@ -20,7 +21,6 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.http.CaseInsensitiveHeaders;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -34,6 +34,7 @@ import io.vertx.ext.web.api.OperationRequest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLConnection;
+import java.util.Optional;
 import java.lang.Object;
 
 /**	
@@ -157,40 +158,40 @@ The site configuration.
 		return (SiteRequestEnUS)this;
 	}
 
-	///////////////////
-	// patchRequest_ //
-	///////////////////
+	/////////////////
+	// apiRequest_ //
+	/////////////////
 
-	/**	L'entité « patchRequest_ »
+	/**	L'entité « apiRequest_ »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected PatchRequest patchRequest_;
+	protected ApiRequest apiRequest_;
 	@JsonIgnore
-	public Wrap<PatchRequest> patchRequest_Wrap = new Wrap<PatchRequest>().p(this).c(PatchRequest.class).var("patchRequest_").o(patchRequest_);
+	public Wrap<ApiRequest> apiRequest_Wrap = new Wrap<ApiRequest>().p(this).c(ApiRequest.class).var("apiRequest_").o(apiRequest_);
 
-	/**	<br/>L'entité « patchRequest_ »
+	/**	<br/>L'entité « apiRequest_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:patchRequest_">Trouver l'entité patchRequest_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiRequest_">Trouver l'entité apiRequest_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _patchRequest_(Wrap<PatchRequest> c);
+	protected abstract void _apiRequest_(Wrap<ApiRequest> c);
 
-	public PatchRequest getPatchRequest_() {
-		return patchRequest_;
+	public ApiRequest getApiRequest_() {
+		return apiRequest_;
 	}
 
-	public void setPatchRequest_(PatchRequest patchRequest_) {
-		this.patchRequest_ = patchRequest_;
-		this.patchRequest_Wrap.alreadyInitialized = true;
+	public void setApiRequest_(ApiRequest apiRequest_) {
+		this.apiRequest_ = apiRequest_;
+		this.apiRequest_Wrap.alreadyInitialized = true;
 	}
-	protected SiteRequestEnUS patchRequest_Init() {
-		if(!patchRequest_Wrap.alreadyInitialized) {
-			_patchRequest_(patchRequest_Wrap);
-			if(patchRequest_ == null)
-				setPatchRequest_(patchRequest_Wrap.o);
+	protected SiteRequestEnUS apiRequest_Init() {
+		if(!apiRequest_Wrap.alreadyInitialized) {
+			_apiRequest_(apiRequest_Wrap);
+			if(apiRequest_ == null)
+				setApiRequest_(apiRequest_Wrap.o);
 		}
-		patchRequest_Wrap.alreadyInitialized(true);
+		apiRequest_Wrap.alreadyInitialized(true);
 		return (SiteRequestEnUS)this;
 	}
 
@@ -1710,7 +1711,7 @@ The site configuration.
 		siteContext_Init();
 		siteConfig_Init();
 		siteRequest_Init();
-		patchRequest_Init();
+		apiRequest_Init();
 		vertxInit();
 		jsonObjectInit();
 		solrQueryInit();
@@ -1790,8 +1791,8 @@ The site configuration.
 				return oSiteRequestEnUS.siteConfig_;
 			case "siteRequest_":
 				return oSiteRequestEnUS.siteRequest_;
-			case "patchRequest_":
-				return oSiteRequestEnUS.patchRequest_;
+			case "apiRequest_":
+				return oSiteRequestEnUS.apiRequest_;
 			case "vertx":
 				return oSiteRequestEnUS.vertx;
 			case "jsonObject":
@@ -1909,6 +1910,17 @@ The site configuration.
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestSiteRequestEnUS() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SiteRequestEnUS original = (SiteRequestEnUS)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

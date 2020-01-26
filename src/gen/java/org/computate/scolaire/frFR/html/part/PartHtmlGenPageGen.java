@@ -1,12 +1,12 @@
 package org.computate.scolaire.frFR.html.part;
 
 import org.computate.scolaire.frFR.html.part.PartHtml;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -312,14 +312,14 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchPartHtmlGenPage() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		PartHtmlGenPage original = (PartHtmlGenPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiPartHtmlGenPage() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		PartHtmlGenPage original = (PartHtmlGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
-			super.requetePatchClusterPage();
+			super.requeteApiClusterPage();
 		}
 	}
 

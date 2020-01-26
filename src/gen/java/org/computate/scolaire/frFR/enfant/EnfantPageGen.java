@@ -1,7 +1,7 @@
 package org.computate.scolaire.frFR.enfant;
 
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -222,14 +223,14 @@ public abstract class EnfantPageGen<DEV> extends EnfantGenPage {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchEnfantPage() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		EnfantPage original = (EnfantPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiEnfantPage() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		EnfantPage original = (EnfantPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
-			super.requetePatchEnfantGenPage();
+			super.requeteApiEnfantGenPage();
 		}
 	}
 

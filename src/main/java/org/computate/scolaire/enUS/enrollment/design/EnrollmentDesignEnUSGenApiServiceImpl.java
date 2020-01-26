@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.enrollment.design;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 				if(a.succeeded()) {
 					createPOSTEnrollmentDesign(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							EnrollmentDesign enrollmentDesign = b.result();
 							sqlPOSTEnrollmentDesign(enrollmentDesign, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorEnrollmentDesign(siteRequest, eventHandler, i);
@@ -267,16 +267,16 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listEnrollmentDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listEnrollmentDesign.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listEnrollmentDesign.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listEnrollmentDesign.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listEnrollmentDesign.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listEnrollmentDesign.size() == 1) {
 												EnrollmentDesign o = listEnrollmentDesign.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestEnrollmentDesign(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestEnrollmentDesign(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -284,7 +284,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 													sqlEnrollmentDesign(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, f -> {
+																listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -318,7 +318,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHEnrollmentDesign(patchRequest, eventHandler);
+											response200PATCHEnrollmentDesign(apiRequest, eventHandler);
 										} else {
 											errorEnrollmentDesign(siteRequest, eventHandler, c);
 										}
@@ -340,7 +340,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void listPATCHEnrollmentDesign(PatchRequest patchRequest, SearchList<EnrollmentDesign> listEnrollmentDesign, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHEnrollmentDesign(ApiRequest apiRequest, SearchList<EnrollmentDesign> listEnrollmentDesign, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listEnrollmentDesign.getSiteRequest_();
 		listEnrollmentDesign.getList().forEach(o -> {
@@ -355,12 +355,12 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listEnrollmentDesign.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listEnrollmentDesign.size());
 				if(listEnrollmentDesign.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHEnrollmentDesign(patchRequest, listEnrollmentDesign, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketEnrollmentDesign", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHEnrollmentDesign(apiRequest, listEnrollmentDesign, dt, eventHandler);
 				} else {
-					response200PATCHEnrollmentDesign(patchRequest, eventHandler);
+					response200PATCHEnrollmentDesign(apiRequest, eventHandler);
 				}
 			} else {
 				errorEnrollmentDesign(listEnrollmentDesign.getSiteRequest_(), eventHandler, a);
@@ -368,11 +368,11 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		});
 	}
 
-	public void patchRequestEnrollmentDesign(EnrollmentDesign o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestEnrollmentDesign(EnrollmentDesign o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getHtmlPartKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -394,8 +394,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 								if(c.succeeded()) {
 									indexEnrollmentDesign(enrollmentDesign, d -> {
 										if(d.succeeded()) {
-											patchRequestEnrollmentDesign(enrollmentDesign);
-											enrollmentDesign.patchRequestEnrollmentDesign();
+											apiRequestEnrollmentDesign(enrollmentDesign);
+											enrollmentDesign.apiRequestEnrollmentDesign();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -530,10 +530,10 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		}
 	}
 
-	public void response200PATCHEnrollmentDesign(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHEnrollmentDesign(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

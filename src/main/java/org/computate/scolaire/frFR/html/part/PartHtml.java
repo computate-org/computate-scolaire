@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;         
+package org.computate.scolaire.frFR.html.part;     
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -17,6 +17,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * ApiUri.enUS: /api/html-part
  * 
  * ApiMethode: POST
+ * ApiMethode: PUT
  * ApiMethode: PATCH
  * ApiMethode: GET
  * ApiMethode: DELETE
@@ -52,7 +53,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * Tri.asc: tri10
  * Rows: 1000000
  * 
-*/                      
+*/          
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
@@ -79,7 +80,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: design d'inscription
 	 * NomAffichage.enUS: enrollment design
-	*/           
+	*/          
 	protected void _designInscriptionCle(Couverture<Long> c) {
 	}
 

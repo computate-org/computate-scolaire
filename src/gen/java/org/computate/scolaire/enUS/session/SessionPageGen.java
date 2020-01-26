@@ -5,7 +5,6 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -15,6 +14,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import org.computate.scolaire.enUS.session.SessionGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SessionPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -222,14 +222,14 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSessionPage() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SessionPage original = (SessionPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSessionPage() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SessionPage original = (SessionPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			super.patchRequestSessionGenPage();
+			super.apiRequestSessionGenPage();
 		}
 	}
 

@@ -10,6 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+
 import org.computate.scolaire.frFR.couverture.Couverture;
 import java.lang.Long;
 import java.util.Locale;
@@ -17,11 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -2838,26 +2840,26 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchSaisonScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		SaisonScolaire original = (SaisonScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiSaisonScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		SaisonScolaire original = (SaisonScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(sessionCles, original.getSessionCles()))
-				requetePatch.addVars("sessionCles");
+				requeteApi.addVars("sessionCles");
 			if(!Objects.equals(anneeCle, original.getAnneeCle()))
-				requetePatch.addVars("anneeCle");
+				requeteApi.addVars("anneeCle");
 			if(!Objects.equals(saisonJourDebut, original.getSaisonJourDebut()))
-				requetePatch.addVars("saisonJourDebut");
+				requeteApi.addVars("saisonJourDebut");
 			if(!Objects.equals(saisonEte, original.getSaisonEte()))
-				requetePatch.addVars("saisonEte");
+				requeteApi.addVars("saisonEte");
 			if(!Objects.equals(saisonHiver, original.getSaisonHiver()))
-				requetePatch.addVars("saisonHiver");
+				requeteApi.addVars("saisonHiver");
 			if(!Objects.equals(saisonFuture, original.getSaisonFuture()))
-				requetePatch.addVars("saisonFuture");
-			super.requetePatchCluster();
+				requeteApi.addVars("saisonFuture");
+			super.requeteApiCluster();
 		}
 	}
 

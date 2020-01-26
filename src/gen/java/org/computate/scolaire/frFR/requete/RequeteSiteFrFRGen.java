@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import javax.crypto.spec.SecretKeySpec;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import javax.crypto.Cipher;
 import java.text.NumberFormat;
@@ -20,7 +21,6 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import io.vertx.core.http.CaseInsensitiveHeaders;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -34,6 +34,7 @@ import io.vertx.ext.web.api.OperationRequest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.sql.SQLConnection;
+import java.util.Optional;
 import java.lang.Object;
 
 /**	
@@ -153,40 +154,40 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
-	///////////////////
-	// requetePatch_ //
-	///////////////////
+	/////////////////
+	// requeteApi_ //
+	/////////////////
 
-	/**	L'entité « requetePatch_ »
+	/**	L'entité « requeteApi_ »
 	 *	 is defined as null before being initialized. 
 	 */
-	protected RequetePatch requetePatch_;
+	protected RequeteApi requeteApi_;
 	@JsonIgnore
-	public Couverture<RequetePatch> requetePatch_Couverture = new Couverture<RequetePatch>().p(this).c(RequetePatch.class).var("requetePatch_").o(requetePatch_);
+	public Couverture<RequeteApi> requeteApi_Couverture = new Couverture<RequeteApi>().p(this).c(RequeteApi.class).var("requeteApi_").o(requeteApi_);
 
-	/**	<br/>L'entité « requetePatch_ »
+	/**	<br/>L'entité « requeteApi_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requetePatch_">Trouver l'entité requetePatch_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteApi_">Trouver l'entité requeteApi_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _requetePatch_(Couverture<RequetePatch> c);
+	protected abstract void _requeteApi_(Couverture<RequeteApi> c);
 
-	public RequetePatch getRequetePatch_() {
-		return requetePatch_;
+	public RequeteApi getRequeteApi_() {
+		return requeteApi_;
 	}
 
-	public void setRequetePatch_(RequetePatch requetePatch_) {
-		this.requetePatch_ = requetePatch_;
-		this.requetePatch_Couverture.dejaInitialise = true;
+	public void setRequeteApi_(RequeteApi requeteApi_) {
+		this.requeteApi_ = requeteApi_;
+		this.requeteApi_Couverture.dejaInitialise = true;
 	}
-	protected RequeteSiteFrFR requetePatch_Init() {
-		if(!requetePatch_Couverture.dejaInitialise) {
-			_requetePatch_(requetePatch_Couverture);
-			if(requetePatch_ == null)
-				setRequetePatch_(requetePatch_Couverture.o);
+	protected RequeteSiteFrFR requeteApi_Init() {
+		if(!requeteApi_Couverture.dejaInitialise) {
+			_requeteApi_(requeteApi_Couverture);
+			if(requeteApi_ == null)
+				setRequeteApi_(requeteApi_Couverture.o);
 		}
-		requetePatch_Couverture.dejaInitialise(true);
+		requeteApi_Couverture.dejaInitialise(true);
 		return (RequeteSiteFrFR)this;
 	}
 
@@ -1706,7 +1707,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		siteContexte_Init();
 		configSite_Init();
 		requeteSite_Init();
-		requetePatch_Init();
+		requeteApi_Init();
 		vertxInit();
 		objetJsonInit();
 		rechercheSolrInit();
@@ -1786,8 +1787,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.configSite_;
 			case "requeteSite_":
 				return oRequeteSiteFrFR.requeteSite_;
-			case "requetePatch_":
-				return oRequeteSiteFrFR.requetePatch_;
+			case "requeteApi_":
+				return oRequeteSiteFrFR.requeteApi_;
 			case "vertx":
 				return oRequeteSiteFrFR.vertx;
 			case "objetJson":
@@ -1905,6 +1906,17 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiRequeteSiteFrFR() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		RequeteSiteFrFR original = (RequeteSiteFrFR)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

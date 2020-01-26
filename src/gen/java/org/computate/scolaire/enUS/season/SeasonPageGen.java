@@ -6,15 +6,16 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.season.SeasonGenPage;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -222,14 +223,14 @@ public abstract class SeasonPageGen<DEV> extends SeasonGenPage {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSeasonPage() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SeasonPage original = (SeasonPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSeasonPage() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SeasonPage original = (SeasonPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			super.patchRequestSeasonGenPage();
+			super.apiRequestSeasonGenPage();
 		}
 	}
 

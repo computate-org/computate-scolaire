@@ -4,9 +4,9 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -312,14 +312,14 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestHtmlPartGenPage() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		HtmlPartGenPage original = (HtmlPartGenPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestHtmlPartGenPage() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		HtmlPartGenPage original = (HtmlPartGenPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			super.patchRequestClusterPage();
+			super.apiRequestClusterPage();
 		}
 	}
 

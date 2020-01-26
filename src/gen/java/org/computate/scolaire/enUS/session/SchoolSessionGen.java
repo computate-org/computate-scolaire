@@ -18,10 +18,12 @@ import org.computate.scolaire.enUS.season.SchoolSeason;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -3234,24 +3236,24 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolSession() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolSession original = (SchoolSession)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolSession() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolSession original = (SchoolSession)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(ageKeys, original.getAgeKeys()))
-				patchRequest.addVars("ageKeys");
+				apiRequest.addVars("ageKeys");
 			if(!Objects.equals(seasonKey, original.getSeasonKey()))
-				patchRequest.addVars("seasonKey");
+				apiRequest.addVars("seasonKey");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
-				patchRequest.addVars("schoolAddress");
+				apiRequest.addVars("schoolAddress");
 			if(!Objects.equals(sessionStartDate, original.getSessionStartDate()))
-				patchRequest.addVars("sessionStartDate");
+				apiRequest.addVars("sessionStartDate");
 			if(!Objects.equals(sessionEndDate, original.getSessionEndDate()))
-				patchRequest.addVars("sessionEndDate");
-			super.patchRequestCluster();
+				apiRequest.addVars("sessionEndDate");
+			super.apiRequestCluster();
 		}
 	}
 

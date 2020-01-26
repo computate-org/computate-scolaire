@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.mere;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 				if(a.succeeded()) {
 					creerPOSTMereScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequetePatch requetePatch = new RequetePatch();
-							requetePatch.setRows(1);
-							requetePatch.setNumFound(1L);
-							requetePatch.initLoinRequetePatch(requeteSite);
-							requeteSite.setRequetePatch_(requetePatch);
+						RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							MereScolaire mereScolaire = b.result();
 							sqlPOSTMereScolaire(mereScolaire, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
-																					requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requetePatch).toString());
+																					requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurMereScolaire(requeteSite, gestionnaireEvenements, i);
@@ -303,16 +303,16 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listeMereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequetePatch requetePatch = new RequetePatch();
-											requetePatch.setRows(listeMereScolaire.getRows());
-											requetePatch.setNumFound(Optional.ofNullable(listeMereScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeMereScolaire.size())));
-											requetePatch.initLoinRequetePatch(requeteSite);
-											requeteSite.setRequetePatch_(requetePatch);
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeMereScolaire.getRows());
+											requeteApi.setNumFound(Optional.ofNullable(listeMereScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeMereScolaire.size())));
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											if(listeMereScolaire.size() == 1) {
 												MereScolaire o = listeMereScolaire.get(0);
-												requetePatch.setPk(o.getPk());
-												requetePatch.setOriginal(o);
-												requetePatchMereScolaire(o);
+												requeteApi.setPk(o.getPk());
+												requeteApi.setOriginal(o);
+												requeteApiMereScolaire(o);
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -320,7 +320,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 													sqlMereScolaire(requeteSite, e -> {
 														if(e.succeeded()) {
 															try {
-																listePATCHMereScolaire(requetePatch, listeMereScolaire, dt, f -> {
+																listePATCHMereScolaire(requeteApi, listeMereScolaire, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
 																		if(connexionSql2 == null) {
@@ -354,7 +354,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHMereScolaire(requetePatch, gestionnaireEvenements);
+											reponse200PATCHMereScolaire(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
 										}
@@ -376,7 +376,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void listePATCHMereScolaire(RequetePatch requetePatch, ListeRecherche<MereScolaire> listeMereScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHMereScolaire(RequeteApi requeteApi, ListeRecherche<MereScolaire> listeMereScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
 		listeMereScolaire.getList().forEach(o -> {
@@ -391,12 +391,12 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeMereScolaire.size());
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeMereScolaire.size());
 				if(listeMereScolaire.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requetePatch).toString());
-					listePATCHMereScolaire(requetePatch, listeMereScolaire, dt, gestionnaireEvenements);
+					requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+					listePATCHMereScolaire(requeteApi, listeMereScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHMereScolaire(requetePatch, gestionnaireEvenements);
+					reponse200PATCHMereScolaire(requeteApi, gestionnaireEvenements);
 				}
 			} else {
 				erreurMereScolaire(listeMereScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -404,11 +404,11 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		});
 	}
 
-	public void requetePatchMereScolaire(MereScolaire o) {
-		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
-		if(requetePatch != null) {
-			List<Long> pks = requetePatch.getPks();
-			List<String> classes = requetePatch.getClasses();
+	public void requeteApiMereScolaire(MereScolaire o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
 			for(Long pk : o.getInscriptionCles()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -430,8 +430,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								if(c.succeeded()) {
 									indexerMereScolaire(mereScolaire, d -> {
 										if(d.succeeded()) {
-											requetePatchMereScolaire(mereScolaire);
-											mereScolaire.requetePatchMereScolaire();
+											requeteApiMereScolaire(mereScolaire);
+											mereScolaire.requeteApiMereScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -656,10 +656,10 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void reponse200PATCHMereScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHMereScolaire(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
-			JsonObject json = JsonObject.mapFrom(requetePatch);
+			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));

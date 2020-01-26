@@ -16,10 +16,12 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -2399,24 +2401,24 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolChild() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolChild original = (SchoolChild)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolChild() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolChild original = (SchoolChild)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
-				patchRequest.addVars("enrollmentKeys");
+				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(personFirstName, original.getPersonFirstName()))
-				patchRequest.addVars("personFirstName");
+				apiRequest.addVars("personFirstName");
 			if(!Objects.equals(personFirstNamePreferred, original.getPersonFirstNamePreferred()))
-				patchRequest.addVars("personFirstNamePreferred");
+				apiRequest.addVars("personFirstNamePreferred");
 			if(!Objects.equals(familyName, original.getFamilyName()))
-				patchRequest.addVars("familyName");
+				apiRequest.addVars("familyName");
 			if(!Objects.equals(personBirthDate, original.getPersonBirthDate()))
-				patchRequest.addVars("personBirthDate");
-			super.patchRequestCluster();
+				apiRequest.addVars("personBirthDate");
+			super.apiRequestCluster();
 		}
 	}
 

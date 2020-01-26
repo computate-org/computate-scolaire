@@ -5,8 +5,8 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.ClusterGenPage;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -137,18 +137,6 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 		}
 	}
 
-	/////////////////
-	// htmlScripts //
-	/////////////////
-
-	@Override public void htmlScripts() {
-		htmlScriptsClusterPage();
-		super.htmlScripts();
-	}
-
-	public void htmlScriptsClusterPage() {
-	}
-
 	////////////////
 	// htmlScript //
 	////////////////
@@ -159,6 +147,18 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 	}
 
 	public void htmlScriptClusterPage() {
+	}
+
+	/////////////////
+	// htmlScripts //
+	/////////////////
+
+	@Override public void htmlScripts() {
+		htmlScriptsClusterPage();
+		super.htmlScripts();
+	}
+
+	public void htmlScriptsClusterPage() {
 	}
 
 	//////////////
@@ -222,14 +222,14 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestClusterPage() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		ClusterPage original = (ClusterPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestClusterPage() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		ClusterPage original = (ClusterPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			super.patchRequestClusterGenPage();
+			super.apiRequestClusterGenPage();
 		}
 	}
 

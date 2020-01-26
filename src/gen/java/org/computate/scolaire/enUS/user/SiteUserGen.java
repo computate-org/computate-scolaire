@@ -12,9 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -1274,20 +1276,20 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSiteUser() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SiteUser original = (SiteUser)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSiteUser() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SiteUser original = (SiteUser)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(userReceiveEmails, original.getUserReceiveEmails()))
-				patchRequest.addVars("userReceiveEmails");
+				apiRequest.addVars("userReceiveEmails");
 			if(!Objects.equals(seeArchived, original.getSeeArchived()))
-				patchRequest.addVars("seeArchived");
+				apiRequest.addVars("seeArchived");
 			if(!Objects.equals(seeDeleted, original.getSeeDeleted()))
-				patchRequest.addVars("seeDeleted");
-			super.patchRequestCluster();
+				apiRequest.addVars("seeDeleted");
+			super.apiRequestCluster();
 		}
 	}
 

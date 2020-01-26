@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.inscription.design;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 				if(a.succeeded()) {
 					creerPOSTDesignInscription(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequetePatch requetePatch = new RequetePatch();
-							requetePatch.setRows(1);
-							requetePatch.setNumFound(1L);
-							requetePatch.initLoinRequetePatch(requeteSite);
-							requeteSite.setRequetePatch_(requetePatch);
+						RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							DesignInscription designInscription = b.result();
 							sqlPOSTDesignInscription(designInscription, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
-																					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requetePatch).toString());
+																					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurDesignInscription(requeteSite, gestionnaireEvenements, i);
@@ -267,16 +267,16 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listeDesignInscription.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequetePatch requetePatch = new RequetePatch();
-											requetePatch.setRows(listeDesignInscription.getRows());
-											requetePatch.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
-											requetePatch.initLoinRequetePatch(requeteSite);
-											requeteSite.setRequetePatch_(requetePatch);
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeDesignInscription.getRows());
+											requeteApi.setNumFound(Optional.ofNullable(listeDesignInscription.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeDesignInscription.size())));
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											if(listeDesignInscription.size() == 1) {
 												DesignInscription o = listeDesignInscription.get(0);
-												requetePatch.setPk(o.getPk());
-												requetePatch.setOriginal(o);
-												requetePatchDesignInscription(o);
+												requeteApi.setPk(o.getPk());
+												requeteApi.setOriginal(o);
+												requeteApiDesignInscription(o);
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -284,7 +284,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 													sqlDesignInscription(requeteSite, e -> {
 														if(e.succeeded()) {
 															try {
-																listePATCHDesignInscription(requetePatch, listeDesignInscription, dt, f -> {
+																listePATCHDesignInscription(requeteApi, listeDesignInscription, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
 																		if(connexionSql2 == null) {
@@ -318,7 +318,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHDesignInscription(requetePatch, gestionnaireEvenements);
+											reponse200PATCHDesignInscription(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurDesignInscription(requeteSite, gestionnaireEvenements, c);
 										}
@@ -340,7 +340,7 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		}
 	}
 
-	public void listePATCHDesignInscription(RequetePatch requetePatch, ListeRecherche<DesignInscription> listeDesignInscription, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHDesignInscription(RequeteApi requeteApi, ListeRecherche<DesignInscription> listeDesignInscription, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeDesignInscription.getRequeteSite_();
 		listeDesignInscription.getList().forEach(o -> {
@@ -355,12 +355,12 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeDesignInscription.size());
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeDesignInscription.size());
 				if(listeDesignInscription.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requetePatch).toString());
-					listePATCHDesignInscription(requetePatch, listeDesignInscription, dt, gestionnaireEvenements);
+					requeteSite.getVertx().eventBus().publish("websocketDesignInscription", JsonObject.mapFrom(requeteApi).toString());
+					listePATCHDesignInscription(requeteApi, listeDesignInscription, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHDesignInscription(requetePatch, gestionnaireEvenements);
+					reponse200PATCHDesignInscription(requeteApi, gestionnaireEvenements);
 				}
 			} else {
 				erreurDesignInscription(listeDesignInscription.getRequeteSite_(), gestionnaireEvenements, a);
@@ -368,11 +368,11 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		});
 	}
 
-	public void requetePatchDesignInscription(DesignInscription o) {
-		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
-		if(requetePatch != null) {
-			List<Long> pks = requetePatch.getPks();
-			List<String> classes = requetePatch.getClasses();
+	public void requeteApiDesignInscription(DesignInscription o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
 			for(Long pk : o.getPartHtmlCles()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -394,8 +394,8 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 								if(c.succeeded()) {
 									indexerDesignInscription(designInscription, d -> {
 										if(d.succeeded()) {
-											requetePatchDesignInscription(designInscription);
-											designInscription.requetePatchDesignInscription();
+											requeteApiDesignInscription(designInscription);
+											designInscription.requeteApiDesignInscription();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -530,10 +530,10 @@ public class DesignInscriptionFrFRGenApiServiceImpl implements DesignInscription
 		}
 	}
 
-	public void reponse200PATCHDesignInscription(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHDesignInscription(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
-			JsonObject json = JsonObject.mapFrom(requetePatch);
+			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));

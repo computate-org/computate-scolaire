@@ -18,10 +18,12 @@ import java.time.LocalTime;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -5529,40 +5531,40 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolBlock() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolBlock original = (SchoolBlock)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolBlock() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolBlock original = (SchoolBlock)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
-				patchRequest.addVars("enrollmentKeys");
+				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(ageKey, original.getAgeKey()))
-				patchRequest.addVars("ageKey");
+				apiRequest.addVars("ageKey");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
-				patchRequest.addVars("schoolAddress");
+				apiRequest.addVars("schoolAddress");
 			if(!Objects.equals(blockStartTime, original.getBlockStartTime()))
-				patchRequest.addVars("blockStartTime");
+				apiRequest.addVars("blockStartTime");
 			if(!Objects.equals(blockEndTime, original.getBlockEndTime()))
-				patchRequest.addVars("blockEndTime");
+				apiRequest.addVars("blockEndTime");
 			if(!Objects.equals(blockPricePerMonth, original.getBlockPricePerMonth()))
-				patchRequest.addVars("blockPricePerMonth");
+				apiRequest.addVars("blockPricePerMonth");
 			if(!Objects.equals(blockSunday, original.getBlockSunday()))
-				patchRequest.addVars("blockSunday");
+				apiRequest.addVars("blockSunday");
 			if(!Objects.equals(blockMonday, original.getBlockMonday()))
-				patchRequest.addVars("blockMonday");
+				apiRequest.addVars("blockMonday");
 			if(!Objects.equals(blockTuesday, original.getBlockTuesday()))
-				patchRequest.addVars("blockTuesday");
+				apiRequest.addVars("blockTuesday");
 			if(!Objects.equals(blockWednesday, original.getBlockWednesday()))
-				patchRequest.addVars("blockWednesday");
+				apiRequest.addVars("blockWednesday");
 			if(!Objects.equals(blockThursday, original.getBlockThursday()))
-				patchRequest.addVars("blockThursday");
+				apiRequest.addVars("blockThursday");
 			if(!Objects.equals(blockFriday, original.getBlockFriday()))
-				patchRequest.addVars("blockFriday");
+				apiRequest.addVars("blockFriday");
 			if(!Objects.equals(blockSaturday, original.getBlockSaturday()))
-				patchRequest.addVars("blockSaturday");
-			super.patchRequestCluster();
+				apiRequest.addVars("blockSaturday");
+			super.apiRequestCluster();
 		}
 	}
 

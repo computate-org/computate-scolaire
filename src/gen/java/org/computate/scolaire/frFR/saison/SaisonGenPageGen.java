@@ -1,6 +1,5 @@
 package org.computate.scolaire.frFR.saison;
 
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -10,12 +9,14 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
+
 import org.computate.scolaire.frFR.couverture.Couverture;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 
 /**	
@@ -312,14 +313,14 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchSaisonGenPage() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		SaisonGenPage original = (SaisonGenPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiSaisonGenPage() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		SaisonGenPage original = (SaisonGenPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
-			super.requetePatchClusterPage();
+			super.requeteApiClusterPage();
 		}
 	}
 

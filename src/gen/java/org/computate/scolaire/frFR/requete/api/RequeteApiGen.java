@@ -1,9 +1,10 @@
-package org.computate.scolaire.frFR.requete.patch;
+package org.computate.scolaire.frFR.requete.api;
 
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -23,15 +24,17 @@ import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Object;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
-public abstract class RequetePatchGen<DEV> extends Object {
+public abstract class RequeteApiGen<DEV> extends Object {
 
 	//////////////////
 	// requeteSite_ //
@@ -47,7 +50,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « requeteSite_ »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -61,14 +64,14 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
-	protected RequetePatch requeteSite_Init() {
+	protected RequeteApi requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
 			if(requeteSite_ == null)
 				setRequeteSite_(requeteSite_Couverture.o);
 		}
 		requeteSite_Couverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	//////////
@@ -84,7 +87,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « cree »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cree">Trouver l'entité cree dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cree">Trouver l'entité cree dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -98,30 +101,30 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.cree = cree;
 		this.creeCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setCree(Instant o) {
-		this.cree = ZonedDateTime.from(o);
+	public RequeteApi setCree(Instant o) {
+		this.cree = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public RequetePatch setCree(String o) {
-		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	public RequeteApi setCree(String o) {
+		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch setCree(Date o) {
-		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()));
+	public RequeteApi setCree(Date o) {
+		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch creeInit() {
+	protected RequeteApi creeInit() {
 		if(!creeCouverture.dejaInitialise) {
 			_cree(creeCouverture);
 			if(cree == null)
 				setCree(creeCouverture.o);
 		}
 		creeCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Date solrCree() {
@@ -161,7 +164,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « rows »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rows">Trouver l'entité rows dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rows">Trouver l'entité rows dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -175,20 +178,20 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.rows = rows;
 		this.rowsCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setRows(String o) {
+	public RequeteApi setRows(String o) {
 		if(NumberUtils.isParsable(o))
 			this.rows = Integer.parseInt(o);
 		this.rowsCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch rowsInit() {
+	protected RequeteApi rowsInit() {
 		if(!rowsCouverture.dejaInitialise) {
 			_rows(rowsCouverture);
 			if(rows == null)
 				setRows(rowsCouverture.o);
 		}
 		rowsCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Integer solrRows() {
@@ -228,7 +231,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « numFound »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numFound">Trouver l'entité numFound dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numFound">Trouver l'entité numFound dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -242,20 +245,20 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.numFound = numFound;
 		this.numFoundCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setNumFound(String o) {
+	public RequeteApi setNumFound(String o) {
 		if(NumberUtils.isParsable(o))
 			this.numFound = Long.parseLong(o);
 		this.numFoundCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch numFoundInit() {
+	protected RequeteApi numFoundInit() {
 		if(!numFoundCouverture.dejaInitialise) {
 			_numFound(numFoundCouverture);
 			if(numFound == null)
 				setNumFound(numFoundCouverture.o);
 		}
 		numFoundCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Long solrNumFound() {
@@ -295,7 +298,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « numPATCH »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numPATCH">Trouver l'entité numPATCH dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numPATCH">Trouver l'entité numPATCH dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -309,20 +312,20 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.numPATCH = numPATCH;
 		this.numPATCHCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setNumPATCH(String o) {
+	public RequeteApi setNumPATCH(String o) {
 		if(NumberUtils.isParsable(o))
 			this.numPATCH = Long.parseLong(o);
 		this.numPATCHCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch numPATCHInit() {
+	protected RequeteApi numPATCHInit() {
 		if(!numPATCHCouverture.dejaInitialise) {
 			_numPATCH(numPATCHCouverture);
 			if(numPATCH == null)
 				setNumPATCH(numPATCHCouverture.o);
 		}
 		numPATCHCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Long solrNumPATCH() {
@@ -362,7 +365,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « uuid »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:uuid">Trouver l'entité uuid dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:uuid">Trouver l'entité uuid dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -376,14 +379,14 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.uuid = uuid;
 		this.uuidCouverture.dejaInitialise = true;
 	}
-	protected RequetePatch uuidInit() {
+	protected RequeteApi uuidInit() {
 		if(!uuidCouverture.dejaInitialise) {
 			_uuid(uuidCouverture);
 			if(uuid == null)
 				setUuid(uuidCouverture.o);
 		}
 		uuidCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public String solrUuid() {
@@ -423,7 +426,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « id »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:id">Trouver l'entité id dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:id">Trouver l'entité id dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -437,14 +440,14 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.id = id;
 		this.idCouverture.dejaInitialise = true;
 	}
-	protected RequetePatch idInit() {
+	protected RequeteApi idInit() {
 		if(!idCouverture.dejaInitialise) {
 			_id(idCouverture);
 			if(id == null)
 				setId(idCouverture.o);
 		}
 		idCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public String solrId() {
@@ -484,7 +487,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « empty »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:empty">Trouver l'entité empty dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:empty">Trouver l'entité empty dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -498,19 +501,19 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.empty = empty;
 		this.emptyCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setEmpty(String o) {
+	public RequeteApi setEmpty(String o) {
 		this.empty = Boolean.parseBoolean(o);
 		this.emptyCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch emptyInit() {
+	protected RequeteApi emptyInit() {
 		if(!emptyCouverture.dejaInitialise) {
 			_empty(emptyCouverture);
 			if(empty == null)
 				setEmpty(emptyCouverture.o);
 		}
 		emptyCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Boolean solrEmpty() {
@@ -550,7 +553,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « pk »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pk">Trouver l'entité pk dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pk">Trouver l'entité pk dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -564,20 +567,20 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.pk = pk;
 		this.pkCouverture.dejaInitialise = true;
 	}
-	public RequetePatch setPk(String o) {
+	public RequeteApi setPk(String o) {
 		if(NumberUtils.isParsable(o))
 			this.pk = Long.parseLong(o);
 		this.pkCouverture.dejaInitialise = true;
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch pkInit() {
+	protected RequeteApi pkInit() {
 		if(!pkCouverture.dejaInitialise) {
 			_pk(pkCouverture);
 			if(pk == null)
 				setPk(pkCouverture.o);
 		}
 		pkCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public Long solrPk() {
@@ -618,7 +621,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « original »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:original">Trouver l'entité original dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:original">Trouver l'entité original dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -632,14 +635,14 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.original = original;
 		this.originalCouverture.dejaInitialise = true;
 	}
-	protected RequetePatch originalInit() {
+	protected RequeteApi originalInit() {
 		if(!originalCouverture.dejaInitialise) {
 			_original(originalCouverture);
 			if(original == null)
 				setOriginal(originalCouverture.o);
 		}
 		originalCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	/////////
@@ -655,7 +658,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « pks »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pks">Trouver l'entité pks dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pks">Trouver l'entité pks dans Solr</a>
 	 * <br/>
 	 * @param pks est l'entité déjà construit. 
 	 **/
@@ -669,38 +672,38 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.pks = pks;
 		this.pksCouverture.dejaInitialise = true;
 	}
-	public RequetePatch addPks(Long...objets) {
+	public RequeteApi addPks(Long...objets) {
 		for(Long o : objets) {
 			addPks(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch addPks(Long o) {
+	public RequeteApi addPks(Long o) {
 		if(o != null && !pks.contains(o))
 			this.pks.add(o);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch setPks(JsonArray objets) {
+	public RequeteApi setPks(JsonArray objets) {
 		pks.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPks(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch addPks(String o) {
+	public RequeteApi addPks(String o) {
 		if(NumberUtils.isParsable(o)) {
 			Long p = Long.parseLong(o);
 			addPks(p);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch pksInit() {
+	protected RequeteApi pksInit() {
 		if(!pksCouverture.dejaInitialise) {
 			_pks(pks);
 		}
 		pksCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public List<Long> solrPks() {
@@ -740,7 +743,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « classes »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classes">Trouver l'entité classes dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classes">Trouver l'entité classes dans Solr</a>
 	 * <br/>
 	 * @param classes est l'entité déjà construit. 
 	 **/
@@ -754,31 +757,31 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.classes = classes;
 		this.classesCouverture.dejaInitialise = true;
 	}
-	public RequetePatch addClasses(String...objets) {
+	public RequeteApi addClasses(String...objets) {
 		for(String o : objets) {
 			addClasses(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch addClasses(String o) {
+	public RequeteApi addClasses(String o) {
 		if(o != null && !classes.contains(o))
 			this.classes.add(o);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch setClasses(JsonArray objets) {
+	public RequeteApi setClasses(JsonArray objets) {
 		classes.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addClasses(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch classesInit() {
+	protected RequeteApi classesInit() {
 		if(!classesCouverture.dejaInitialise) {
 			_classes(classes);
 		}
 		classesCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public List<String> solrClasses() {
@@ -818,7 +821,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	/**	<br/>L'entité « vars »
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.patch.RequetePatch&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vars">Trouver l'entité vars dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vars">Trouver l'entité vars dans Solr</a>
 	 * <br/>
 	 * @param vars est l'entité déjà construit. 
 	 **/
@@ -832,31 +835,31 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		this.vars = vars;
 		this.varsCouverture.dejaInitialise = true;
 	}
-	public RequetePatch addVars(String...objets) {
+	public RequeteApi addVars(String...objets) {
 		for(String o : objets) {
 			addVars(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch addVars(String o) {
+	public RequeteApi addVars(String o) {
 		if(o != null && !vars.contains(o))
 			this.vars.add(o);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	public RequetePatch setVars(JsonArray objets) {
+	public RequeteApi setVars(JsonArray objets) {
 		vars.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addVars(o);
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
-	protected RequetePatch varsInit() {
+	protected RequeteApi varsInit() {
 		if(!varsCouverture.dejaInitialise) {
 			_vars(vars);
 		}
 		varsCouverture.dejaInitialise(true);
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
 	public List<String> solrVars() {
@@ -887,22 +890,22 @@ public abstract class RequetePatchGen<DEV> extends Object {
 	// initLoin //
 	//////////////
 
-	protected boolean dejaInitialiseRequetePatch = false;
+	protected boolean dejaInitialiseRequeteApi = false;
 
-	public RequetePatch initLoinRequetePatch(RequeteSiteFrFR requeteSite_) {
+	public RequeteApi initLoinRequeteApi(RequeteSiteFrFR requeteSite_) {
 		setRequeteSite_(requeteSite_);
-		if(!dejaInitialiseRequetePatch) {
-			dejaInitialiseRequetePatch = true;
-			initLoinRequetePatch();
+		if(!dejaInitialiseRequeteApi) {
+			dejaInitialiseRequeteApi = true;
+			initLoinRequeteApi();
 		}
-		return (RequetePatch)this;
+		return (RequeteApi)this;
 	}
 
-	public void initLoinRequetePatch() {
-		initRequetePatch();
+	public void initLoinRequeteApi() {
+		initRequeteApi();
 	}
 
-	public void initRequetePatch() {
+	public void initRequeteApi() {
 		requeteSite_Init();
 		creeInit();
 		rowsInit();
@@ -919,18 +922,18 @@ public abstract class RequetePatchGen<DEV> extends Object {
 	}
 
 	public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
-		initLoinRequetePatch(requeteSite_);
+		initLoinRequeteApi(requeteSite_);
 	}
 
 	/////////////////
 	// requeteSite //
 	/////////////////
 
-	public void requeteSiteRequetePatch(RequeteSiteFrFR requeteSite_) {
+	public void requeteSiteRequeteApi(RequeteSiteFrFR requeteSite_) {
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
-		requeteSiteRequetePatch(requeteSite_);
+		requeteSiteRequeteApi(requeteSite_);
 	}
 
 	/////////////
@@ -942,7 +945,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtenirRequetePatch(v);
+				o = obtenirRequeteApi(v);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
@@ -950,35 +953,35 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		}
 		return o;
 	}
-	public Object obtenirRequetePatch(String var) {
-		RequetePatch oRequetePatch = (RequetePatch)this;
+	public Object obtenirRequeteApi(String var) {
+		RequeteApi oRequeteApi = (RequeteApi)this;
 		switch(var) {
 			case "requeteSite_":
-				return oRequetePatch.requeteSite_;
+				return oRequeteApi.requeteSite_;
 			case "cree":
-				return oRequetePatch.cree;
+				return oRequeteApi.cree;
 			case "rows":
-				return oRequetePatch.rows;
+				return oRequeteApi.rows;
 			case "numFound":
-				return oRequetePatch.numFound;
+				return oRequeteApi.numFound;
 			case "numPATCH":
-				return oRequetePatch.numPATCH;
+				return oRequeteApi.numPATCH;
 			case "uuid":
-				return oRequetePatch.uuid;
+				return oRequeteApi.uuid;
 			case "id":
-				return oRequetePatch.id;
+				return oRequeteApi.id;
 			case "empty":
-				return oRequetePatch.empty;
+				return oRequeteApi.empty;
 			case "pk":
-				return oRequetePatch.pk;
+				return oRequeteApi.pk;
 			case "original":
-				return oRequetePatch.original;
+				return oRequeteApi.original;
 			case "pks":
-				return oRequetePatch.pks;
+				return oRequeteApi.pks;
 			case "classes":
-				return oRequetePatch.classes;
+				return oRequeteApi.classes;
 			case "vars":
-				return oRequetePatch.vars;
+				return oRequeteApi.vars;
 			default:
 				return null;
 		}
@@ -993,7 +996,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = attribuerRequetePatch(v, val);
+				o = attribuerRequeteApi(v, val);
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.attribuerPourClasse(v, val);
@@ -1001,8 +1004,8 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object attribuerRequetePatch(String var, Object val) {
-		RequetePatch oRequetePatch = (RequetePatch)this;
+	public Object attribuerRequeteApi(String var, Object val) {
+		RequeteApi oRequeteApi = (RequeteApi)this;
 		switch(var) {
 			default:
 				return null;
@@ -1019,7 +1022,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = definirRequetePatch(v, val);
+					o = definirRequeteApi(v, val);
 				else if(o instanceof Cluster) {
 					Cluster cluster = (Cluster)o;
 					o = cluster.definirPourClasse(v, val);
@@ -1028,10 +1031,21 @@ public abstract class RequetePatchGen<DEV> extends Object {
 		}
 		return o != null;
 	}
-	public Object definirRequetePatch(String var, String val) {
+	public Object definirRequeteApi(String var, String val) {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiRequeteApi() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		RequeteApi original = (RequeteApi)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 
@@ -1050,9 +1064,9 @@ public abstract class RequetePatchGen<DEV> extends Object {
 	@Override public boolean equals(Object o) {
 		if(this == o)
 			return true;
-		if(!(o instanceof RequetePatch))
+		if(!(o instanceof RequeteApi))
 			return false;
-		RequetePatch that = (RequetePatch)o;
+		RequeteApi that = (RequeteApi)o;
 		return true;
 	}
 
@@ -1062,7 +1076,7 @@ public abstract class RequetePatchGen<DEV> extends Object {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("RequetePatch { ");
+		sb.append("RequeteApi { ");
 		sb.append(" }");
 		return sb.toString();
 	}

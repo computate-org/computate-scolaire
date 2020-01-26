@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.age;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				if(a.succeeded()) {
 					createPOSTSchoolAge(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolAge schoolAge = b.result();
 							sqlPOSTSchoolAge(schoolAge, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolAge(siteRequest, eventHandler, i);
@@ -279,16 +279,16 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolAge.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolAge.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolAge.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolAge.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolAge.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolAge.size() == 1) {
 												SchoolAge o = listSchoolAge.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolAge(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolAge(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -296,7 +296,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 													sqlSchoolAge(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolAge(patchRequest, listSchoolAge, dt, f -> {
+																listPATCHSchoolAge(apiRequest, listSchoolAge, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -330,7 +330,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolAge(patchRequest, eventHandler);
+											response200PATCHSchoolAge(apiRequest, eventHandler);
 										} else {
 											errorSchoolAge(siteRequest, eventHandler, c);
 										}
@@ -352,7 +352,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		}
 	}
 
-	public void listPATCHSchoolAge(PatchRequest patchRequest, SearchList<SchoolAge> listSchoolAge, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolAge(ApiRequest apiRequest, SearchList<SchoolAge> listSchoolAge, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 		listSchoolAge.getList().forEach(o -> {
@@ -367,12 +367,12 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolAge.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolAge.size());
 				if(listSchoolAge.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolAge(patchRequest, listSchoolAge, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolAge(apiRequest, listSchoolAge, dt, eventHandler);
 				} else {
-					response200PATCHSchoolAge(patchRequest, eventHandler);
+					response200PATCHSchoolAge(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolAge(listSchoolAge.getSiteRequest_(), eventHandler, a);
@@ -380,11 +380,11 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		});
 	}
 
-	public void patchRequestSchoolAge(SchoolAge o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolAge(SchoolAge o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getBlockKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -412,8 +412,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								if(c.succeeded()) {
 									indexSchoolAge(schoolAge, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolAge(schoolAge);
-											schoolAge.patchRequestSchoolAge();
+											apiRequestSchoolAge(schoolAge);
+											schoolAge.apiRequestSchoolAge();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -578,10 +578,10 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		}
 	}
 
-	public void response200PATCHSchoolAge(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolAge(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -19,7 +20,6 @@ import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -250,6 +250,73 @@ public abstract class ClusterGen<DEV> extends Object {
 				} s.g("div");
 			}
 		} s.g("div");
+	}
+
+	///////////////
+	// inheritPk //
+	///////////////
+
+	/**	L'entité « inheritPk »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected Long inheritPk;
+	@JsonIgnore
+	public Couverture<Long> inheritPkCouverture = new Couverture<Long>().p(this).c(Long.class).var("inheritPk").o(inheritPk);
+
+	/**	<br/>L'entité « inheritPk »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inheritPk">Trouver l'entité inheritPk dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inheritPk(Couverture<Long> c);
+
+	public Long getInheritPk() {
+		return inheritPk;
+	}
+
+	public void setInheritPk(Long inheritPk) {
+		this.inheritPk = inheritPk;
+		this.inheritPkCouverture.dejaInitialise = true;
+	}
+	public Cluster setInheritPk(String o) {
+		if(NumberUtils.isParsable(o))
+			this.inheritPk = Long.parseLong(o);
+		this.inheritPkCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	protected Cluster inheritPkInit() {
+		if(!inheritPkCouverture.dejaInitialise) {
+			_inheritPk(inheritPkCouverture);
+			if(inheritPk == null)
+				setInheritPk(inheritPkCouverture.o);
+		}
+		inheritPkCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public Long solrInheritPk() {
+		return inheritPk;
+	}
+
+	public String strInheritPk() {
+		return inheritPk == null ? "" : inheritPk.toString();
+	}
+
+	public String jsonInheritPk() {
+		return inheritPk == null ? "" : inheritPk.toString();
+	}
+
+	public String nomAffichageInheritPk() {
+		return null;
+	}
+
+	public String htmTooltipInheritPk() {
+		return null;
+	}
+
+	public String htmInheritPk() {
+		return inheritPk == null ? "" : StringEscapeUtils.escapeHtml4(strInheritPk());
 	}
 
 	////////
@@ -1000,6 +1067,86 @@ public abstract class ClusterGen<DEV> extends Object {
 		return sessionId == null ? "" : StringEscapeUtils.escapeHtml4(strSessionId());
 	}
 
+	/////////////////
+	// sauvegardes //
+	/////////////////
+
+	/**	L'entité « sauvegardes »
+	 *	 is defined as null before being initialized. 
+	 */
+	protected List<String> sauvegardes;
+	@JsonIgnore
+	public Couverture<List<String>> sauvegardesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("sauvegardes").o(sauvegardes);
+
+	/**	<br/>L'entité « sauvegardes »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sauvegardes">Trouver l'entité sauvegardes dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sauvegardes(Couverture<List<String>> c);
+
+	public List<String> getSauvegardes() {
+		return sauvegardes;
+	}
+
+	public void setSauvegardes(List<String> sauvegardes) {
+		this.sauvegardes = sauvegardes;
+		this.sauvegardesCouverture.dejaInitialise = true;
+	}
+	public Cluster addSauvegardes(String...objets) {
+		for(String o : objets) {
+			addSauvegardes(o);
+		}
+		return (Cluster)this;
+	}
+	public Cluster addSauvegardes(String o) {
+		if(o != null && !sauvegardes.contains(o))
+			this.sauvegardes.add(o);
+		return (Cluster)this;
+	}
+	public Cluster setSauvegardes(JsonArray objets) {
+		sauvegardes.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addSauvegardes(o);
+		}
+		return (Cluster)this;
+	}
+	protected Cluster sauvegardesInit() {
+		if(!sauvegardesCouverture.dejaInitialise) {
+			_sauvegardes(sauvegardesCouverture);
+			if(sauvegardes == null)
+				setSauvegardes(sauvegardesCouverture.o);
+		}
+		sauvegardesCouverture.dejaInitialise(true);
+		return (Cluster)this;
+	}
+
+	public List<String> solrSauvegardes() {
+		return sauvegardes;
+	}
+
+	public String strSauvegardes() {
+		return sauvegardes == null ? "" : sauvegardes.toString();
+	}
+
+	public String jsonSauvegardes() {
+		return sauvegardes == null ? "" : sauvegardes.toString();
+	}
+
+	public String nomAffichageSauvegardes() {
+		return null;
+	}
+
+	public String htmTooltipSauvegardes() {
+		return null;
+	}
+
+	public String htmSauvegardes() {
+		return sauvegardes == null ? "" : StringEscapeUtils.escapeHtml4(strSauvegardes());
+	}
+
 	////////////////
 	// objetTitre //
 	////////////////
@@ -1476,6 +1623,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		requeteSite_Init();
 		pagePartsInit();
 		pkInit();
+		inheritPkInit();
 		idInit();
 		creeInit();
 		modifieInit();
@@ -1485,6 +1633,7 @@ public abstract class ClusterGen<DEV> extends Object {
 		classeNomSimpleInit();
 		classeNomsCanoniquesInit();
 		sessionIdInit();
+		sauvegardesInit();
 		objetTitreInit();
 		objetIdInit();
 		objetNomVarInit();
@@ -1535,6 +1684,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.pageParts;
 			case "pk":
 				return oCluster.pk;
+			case "inheritPk":
+				return oCluster.inheritPk;
 			case "id":
 				return oCluster.id;
 			case "cree":
@@ -1553,6 +1704,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return oCluster.classeNomsCanoniques;
 			case "sessionId":
 				return oCluster.sessionId;
+			case "sauvegardes":
+				return oCluster.sauvegardes;
 			case "objetTitre":
 				return oCluster.objetTitre;
 			case "objetId":
@@ -1660,6 +1813,12 @@ public abstract class ClusterGen<DEV> extends Object {
 			Long pk = (Long)solrDocument.get("pk_stored_long");
 			oCluster.setPk(pk);
 
+			if(sauvegardesCluster.contains("inheritPk")) {
+				Long inheritPk = (Long)solrDocument.get("inheritPk_stored_long");
+				if(inheritPk != null)
+					oCluster.setInheritPk(inheritPk);
+			}
+
 			String id = (String)solrDocument.get("id");
 			oCluster.setId(id);
 
@@ -1709,6 +1868,12 @@ public abstract class ClusterGen<DEV> extends Object {
 				String sessionId = (String)solrDocument.get("sessionId_stored_string");
 				if(sessionId != null)
 					oCluster.setSessionId(sessionId);
+			}
+
+			if(sauvegardesCluster.contains("sauvegardes")) {
+				List<String> sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+				if(sauvegardes != null)
+					oCluster.setSauvegardes(sauvegardes);
 			}
 
 			if(sauvegardesCluster.contains("objetTitre")) {
@@ -1811,6 +1976,10 @@ public abstract class ClusterGen<DEV> extends Object {
 			document.addField("pk_indexed_long", pk);
 			document.addField("pk_stored_long", pk);
 		}
+		if(inheritPk != null) {
+			document.addField("inheritPk_indexed_long", inheritPk);
+			document.addField("inheritPk_stored_long", inheritPk);
+		}
 		if(id != null) {
 			document.addField("id", id);
 			document.addField("id_indexed_string", id);
@@ -1850,6 +2019,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(sessionId != null) {
 			document.addField("sessionId_indexed_string", sessionId);
 			document.addField("sessionId_stored_string", sessionId);
+		}
+		if(sauvegardes != null) {
+			for(java.lang.String o : sauvegardes) {
+				document.addField("sauvegardes_indexed_strings", o);
+			}
+			for(java.lang.String o : sauvegardes) {
+				document.addField("sauvegardes_stored_strings", o);
+			}
 		}
 		if(objetTitre != null) {
 			document.addField("objetTitre_indexed_string", objetTitre);
@@ -1893,6 +2070,8 @@ public abstract class ClusterGen<DEV> extends Object {
 		switch(entiteVar) {
 			case "pk":
 				return "pk_indexed_long";
+			case "inheritPk":
+				return "inheritPk_indexed_long";
 			case "id":
 				return "id_indexed_string";
 			case "cree":
@@ -1911,6 +2090,8 @@ public abstract class ClusterGen<DEV> extends Object {
 				return "classeNomsCanoniques_indexed_strings";
 			case "sessionId":
 				return "sessionId_indexed_string";
+			case "sauvegardes":
+				return "sauvegardes_indexed_strings";
 			case "objetTitre":
 				return "objetTitre_indexed_string";
 			case "objetId":
@@ -1958,6 +2139,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(pk != null)
 			oCluster.setPk(pk);
 
+		Long inheritPk = (Long)solrDocument.get("inheritPk_stored_long");
+		if(inheritPk != null)
+			oCluster.setInheritPk(inheritPk);
+
 		String id = (String)solrDocument.get("id");
 		oCluster.setId(id);
 
@@ -1993,6 +2178,10 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(sessionId != null)
 			oCluster.setSessionId(sessionId);
 
+		List<String> sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null)
+			oCluster.setSauvegardes(sauvegardes);
+
 		String objetTitre = (String)solrDocument.get("objetTitre_stored_string");
 		if(objetTitre != null)
 			oCluster.setObjetTitre(objetTitre);
@@ -2014,21 +2203,21 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchCluster() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		Cluster original = (Cluster)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiCluster() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		Cluster original = (Cluster)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(cree, original.getCree()))
-				requetePatch.addVars("cree");
+				requeteApi.addVars("cree");
 			if(!Objects.equals(modifie, original.getModifie()))
-				requetePatch.addVars("modifie");
+				requeteApi.addVars("modifie");
 			if(!Objects.equals(archive, original.getArchive()))
-				requetePatch.addVars("archive");
+				requeteApi.addVars("archive");
 			if(!Objects.equals(supprime, original.getSupprime()))
-				requetePatch.addVars("supprime");
+				requeteApi.addVars("supprime");
 		}
 	}
 

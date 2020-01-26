@@ -18,10 +18,12 @@ import java.time.LocalTime;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -5534,40 +5536,40 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchBlocScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		BlocScolaire original = (BlocScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiBlocScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		BlocScolaire original = (BlocScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
-				requetePatch.addVars("inscriptionCles");
+				requeteApi.addVars("inscriptionCles");
 			if(!Objects.equals(ageCle, original.getAgeCle()))
-				requetePatch.addVars("ageCle");
+				requeteApi.addVars("ageCle");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
-				requetePatch.addVars("ecoleAddresse");
+				requeteApi.addVars("ecoleAddresse");
 			if(!Objects.equals(blocHeureDebut, original.getBlocHeureDebut()))
-				requetePatch.addVars("blocHeureDebut");
+				requeteApi.addVars("blocHeureDebut");
 			if(!Objects.equals(blocHeureFin, original.getBlocHeureFin()))
-				requetePatch.addVars("blocHeureFin");
+				requeteApi.addVars("blocHeureFin");
 			if(!Objects.equals(blocPrixParMois, original.getBlocPrixParMois()))
-				requetePatch.addVars("blocPrixParMois");
+				requeteApi.addVars("blocPrixParMois");
 			if(!Objects.equals(blocDimanche, original.getBlocDimanche()))
-				requetePatch.addVars("blocDimanche");
+				requeteApi.addVars("blocDimanche");
 			if(!Objects.equals(blocLundi, original.getBlocLundi()))
-				requetePatch.addVars("blocLundi");
+				requeteApi.addVars("blocLundi");
 			if(!Objects.equals(blocMardi, original.getBlocMardi()))
-				requetePatch.addVars("blocMardi");
+				requeteApi.addVars("blocMardi");
 			if(!Objects.equals(blocMercredi, original.getBlocMercredi()))
-				requetePatch.addVars("blocMercredi");
+				requeteApi.addVars("blocMercredi");
 			if(!Objects.equals(blocJeudi, original.getBlocJeudi()))
-				requetePatch.addVars("blocJeudi");
+				requeteApi.addVars("blocJeudi");
 			if(!Objects.equals(blocVendredi, original.getBlocVendredi()))
-				requetePatch.addVars("blocVendredi");
+				requeteApi.addVars("blocVendredi");
 			if(!Objects.equals(blocSamedi, original.getBlocSamedi()))
-				requetePatch.addVars("blocSamedi");
-			super.requetePatchCluster();
+				requeteApi.addVars("blocSamedi");
+			super.requeteApiCluster();
 		}
 	}
 

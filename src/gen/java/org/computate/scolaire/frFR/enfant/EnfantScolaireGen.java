@@ -16,10 +16,12 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -2400,24 +2402,24 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchEnfantScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		EnfantScolaire original = (EnfantScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiEnfantScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		EnfantScolaire original = (EnfantScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
-				requetePatch.addVars("inscriptionCles");
+				requeteApi.addVars("inscriptionCles");
 			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
-				requetePatch.addVars("personnePrenom");
+				requeteApi.addVars("personnePrenom");
 			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
-				requetePatch.addVars("personnePrenomPrefere");
+				requeteApi.addVars("personnePrenomPrefere");
 			if(!Objects.equals(familleNom, original.getFamilleNom()))
-				requetePatch.addVars("familleNom");
+				requeteApi.addVars("familleNom");
 			if(!Objects.equals(personneDateNaissance, original.getPersonneDateNaissance()))
-				requetePatch.addVars("personneDateNaissance");
-			super.requetePatchCluster();
+				requeteApi.addVars("personneDateNaissance");
+			super.requeteApiCluster();
 		}
 	}
 

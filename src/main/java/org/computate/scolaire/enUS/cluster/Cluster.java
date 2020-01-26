@@ -26,6 +26,8 @@ public class Cluster extends ClusterGen<Object> {
 
 	protected void _pk(Wrap<Long> c) {}
 
+	protected void _inheritPk(Wrap<Long> c) {}
+
 	protected void _id(Wrap<String> c) {
 		if(pk != null)
 			c.o(pk.toString());
@@ -63,6 +65,14 @@ public class Cluster extends ClusterGen<Object> {
 
 	protected void _sessionId(Wrap<String> c) {
 		c.o(siteRequest_.getSessionId());
+	}
+
+	protected void _saves(Wrap<List<String>> c) {
+		try {
+			c.o((List<String>)FieldUtils.getField(getClass(), "saves" + getClass().getSimpleName(), true).get(this));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			ExceptionUtils.rethrow(e);
+		}
 	}
 
 	protected void _objectTitle(Wrap<String> c) {

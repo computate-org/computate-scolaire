@@ -12,9 +12,10 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -2516,12 +2517,12 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestPageLayout() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		PageLayout original = (PageLayout)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestPageLayout() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		PageLayout original = (PageLayout)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 		}
 	}

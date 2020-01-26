@@ -12,12 +12,14 @@ import java.time.LocalTime;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -11723,108 +11725,108 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchInscriptionScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		InscriptionScolaire original = (InscriptionScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiInscriptionScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		InscriptionScolaire original = (InscriptionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(anneeCle, original.getAnneeCle()))
-				requetePatch.addVars("anneeCle");
+				requeteApi.addVars("anneeCle");
 			if(!Objects.equals(blocCles, original.getBlocCles()))
-				requetePatch.addVars("blocCles");
+				requeteApi.addVars("blocCles");
 			if(!Objects.equals(enfantCle, original.getEnfantCle()))
-				requetePatch.addVars("enfantCle");
+				requeteApi.addVars("enfantCle");
 			if(!Objects.equals(mereCles, original.getMereCles()))
-				requetePatch.addVars("mereCles");
+				requeteApi.addVars("mereCles");
 			if(!Objects.equals(pereCles, original.getPereCles()))
-				requetePatch.addVars("pereCles");
+				requeteApi.addVars("pereCles");
 			if(!Objects.equals(gardienCles, original.getGardienCles()))
-				requetePatch.addVars("gardienCles");
+				requeteApi.addVars("gardienCles");
 			if(!Objects.equals(paiementCles, original.getPaiementCles()))
-				requetePatch.addVars("paiementCles");
+				requeteApi.addVars("paiementCles");
 			if(!Objects.equals(enfantNomComplet, original.getEnfantNomComplet()))
-				requetePatch.addVars("enfantNomComplet");
+				requeteApi.addVars("enfantNomComplet");
 			if(!Objects.equals(enfantDateNaissance, original.getEnfantDateNaissance()))
-				requetePatch.addVars("enfantDateNaissance");
+				requeteApi.addVars("enfantDateNaissance");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
-				requetePatch.addVars("ecoleAddresse");
+				requeteApi.addVars("ecoleAddresse");
 			if(!Objects.equals(inscriptionApprouve, original.getInscriptionApprouve()))
-				requetePatch.addVars("inscriptionApprouve");
+				requeteApi.addVars("inscriptionApprouve");
 			if(!Objects.equals(inscriptionImmunisations, original.getInscriptionImmunisations()))
-				requetePatch.addVars("inscriptionImmunisations");
+				requeteApi.addVars("inscriptionImmunisations");
 			if(!Objects.equals(familleMarie, original.getFamilleMarie()))
-				requetePatch.addVars("familleMarie");
+				requeteApi.addVars("familleMarie");
 			if(!Objects.equals(familleSepare, original.getFamilleSepare()))
-				requetePatch.addVars("familleSepare");
+				requeteApi.addVars("familleSepare");
 			if(!Objects.equals(familleDivorce, original.getFamilleDivorce()))
-				requetePatch.addVars("familleDivorce");
+				requeteApi.addVars("familleDivorce");
 			if(!Objects.equals(familleAddresse, original.getFamilleAddresse()))
-				requetePatch.addVars("familleAddresse");
+				requeteApi.addVars("familleAddresse");
 			if(!Objects.equals(familleCommentVousConnaissezEcole, original.getFamilleCommentVousConnaissezEcole()))
-				requetePatch.addVars("familleCommentVousConnaissezEcole");
+				requeteApi.addVars("familleCommentVousConnaissezEcole");
 			if(!Objects.equals(inscriptionConsiderationsSpeciales, original.getInscriptionConsiderationsSpeciales()))
-				requetePatch.addVars("inscriptionConsiderationsSpeciales");
+				requeteApi.addVars("inscriptionConsiderationsSpeciales");
 			if(!Objects.equals(enfantConditionsMedicales, original.getEnfantConditionsMedicales()))
-				requetePatch.addVars("enfantConditionsMedicales");
+				requeteApi.addVars("enfantConditionsMedicales");
 			if(!Objects.equals(enfantEcolesPrecedemmentFrequentees, original.getEnfantEcolesPrecedemmentFrequentees()))
-				requetePatch.addVars("enfantEcolesPrecedemmentFrequentees");
+				requeteApi.addVars("enfantEcolesPrecedemmentFrequentees");
 			if(!Objects.equals(enfantDescription, original.getEnfantDescription()))
-				requetePatch.addVars("enfantDescription");
+				requeteApi.addVars("enfantDescription");
 			if(!Objects.equals(enfantObjectifs, original.getEnfantObjectifs()))
-				requetePatch.addVars("enfantObjectifs");
+				requeteApi.addVars("enfantObjectifs");
 			if(!Objects.equals(enfantPropre, original.getEnfantPropre()))
-				requetePatch.addVars("enfantPropre");
+				requeteApi.addVars("enfantPropre");
 			if(!Objects.equals(inscriptionNomGroupe, original.getInscriptionNomGroupe()))
-				requetePatch.addVars("inscriptionNomGroupe");
+				requeteApi.addVars("inscriptionNomGroupe");
 			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
-				requetePatch.addVars("inscriptionPaimentChaqueMois");
+				requeteApi.addVars("inscriptionPaimentChaqueMois");
 			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
-				requetePatch.addVars("inscriptionPaimentComplet");
+				requeteApi.addVars("inscriptionPaimentComplet");
 			if(!Objects.equals(inscriptionNomsParents, original.getInscriptionNomsParents()))
-				requetePatch.addVars("inscriptionNomsParents");
+				requeteApi.addVars("inscriptionNomsParents");
 			if(!Objects.equals(inscriptionSignature1, original.getInscriptionSignature1()))
-				requetePatch.addVars("inscriptionSignature1");
+				requeteApi.addVars("inscriptionSignature1");
 			if(!Objects.equals(inscriptionSignature2, original.getInscriptionSignature2()))
-				requetePatch.addVars("inscriptionSignature2");
+				requeteApi.addVars("inscriptionSignature2");
 			if(!Objects.equals(inscriptionSignature3, original.getInscriptionSignature3()))
-				requetePatch.addVars("inscriptionSignature3");
+				requeteApi.addVars("inscriptionSignature3");
 			if(!Objects.equals(inscriptionSignature4, original.getInscriptionSignature4()))
-				requetePatch.addVars("inscriptionSignature4");
+				requeteApi.addVars("inscriptionSignature4");
 			if(!Objects.equals(inscriptionSignature5, original.getInscriptionSignature5()))
-				requetePatch.addVars("inscriptionSignature5");
+				requeteApi.addVars("inscriptionSignature5");
 			if(!Objects.equals(inscriptionSignature6, original.getInscriptionSignature6()))
-				requetePatch.addVars("inscriptionSignature6");
+				requeteApi.addVars("inscriptionSignature6");
 			if(!Objects.equals(inscriptionSignature7, original.getInscriptionSignature7()))
-				requetePatch.addVars("inscriptionSignature7");
+				requeteApi.addVars("inscriptionSignature7");
 			if(!Objects.equals(inscriptionSignature8, original.getInscriptionSignature8()))
-				requetePatch.addVars("inscriptionSignature8");
+				requeteApi.addVars("inscriptionSignature8");
 			if(!Objects.equals(inscriptionSignature9, original.getInscriptionSignature9()))
-				requetePatch.addVars("inscriptionSignature9");
+				requeteApi.addVars("inscriptionSignature9");
 			if(!Objects.equals(inscriptionSignature10, original.getInscriptionSignature10()))
-				requetePatch.addVars("inscriptionSignature10");
+				requeteApi.addVars("inscriptionSignature10");
 			if(!Objects.equals(inscriptionDate1, original.getInscriptionDate1()))
-				requetePatch.addVars("inscriptionDate1");
+				requeteApi.addVars("inscriptionDate1");
 			if(!Objects.equals(inscriptionDate2, original.getInscriptionDate2()))
-				requetePatch.addVars("inscriptionDate2");
+				requeteApi.addVars("inscriptionDate2");
 			if(!Objects.equals(inscriptionDate3, original.getInscriptionDate3()))
-				requetePatch.addVars("inscriptionDate3");
+				requeteApi.addVars("inscriptionDate3");
 			if(!Objects.equals(inscriptionDate4, original.getInscriptionDate4()))
-				requetePatch.addVars("inscriptionDate4");
+				requeteApi.addVars("inscriptionDate4");
 			if(!Objects.equals(inscriptionDate5, original.getInscriptionDate5()))
-				requetePatch.addVars("inscriptionDate5");
+				requeteApi.addVars("inscriptionDate5");
 			if(!Objects.equals(inscriptionDate6, original.getInscriptionDate6()))
-				requetePatch.addVars("inscriptionDate6");
+				requeteApi.addVars("inscriptionDate6");
 			if(!Objects.equals(inscriptionDate7, original.getInscriptionDate7()))
-				requetePatch.addVars("inscriptionDate7");
+				requeteApi.addVars("inscriptionDate7");
 			if(!Objects.equals(inscriptionDate8, original.getInscriptionDate8()))
-				requetePatch.addVars("inscriptionDate8");
+				requeteApi.addVars("inscriptionDate8");
 			if(!Objects.equals(inscriptionDate9, original.getInscriptionDate9()))
-				requetePatch.addVars("inscriptionDate9");
+				requeteApi.addVars("inscriptionDate9");
 			if(!Objects.equals(inscriptionDate10, original.getInscriptionDate10()))
-				requetePatch.addVars("inscriptionDate10");
-			super.requetePatchCluster();
+				requeteApi.addVars("inscriptionDate10");
+			super.requeteApiCluster();
 		}
 	}
 

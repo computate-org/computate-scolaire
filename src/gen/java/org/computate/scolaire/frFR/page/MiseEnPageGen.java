@@ -12,9 +12,10 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -2516,12 +2517,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchMiseEnPage() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		MiseEnPage original = (MiseEnPage)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiMiseEnPage() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		MiseEnPage original = (MiseEnPage)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 		}
 	}

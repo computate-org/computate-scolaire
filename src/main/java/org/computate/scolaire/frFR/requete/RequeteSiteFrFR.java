@@ -32,7 +32,7 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 
 import io.vertx.core.Vertx;
@@ -46,7 +46,7 @@ import io.vertx.ext.web.api.OperationRequest;
 /**
  * MotCle: classeNomSimpleRequeteSite
  * NomCanonique.enUS: org.computate.scolaire.enUS.request.SiteRequestEnUS
- */    
+ */   
 public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Serializable {  
 
 	private static final long serialVersionUID = -6737494107881513257L;
@@ -89,9 +89,9 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	}
 
 	/**
-	 * Var.enUS: patchRequest_
+	 * Var.enUS: apiRequest_
 	 */
-	protected void _requetePatch_(Couverture<RequetePatch> c) { 
+	protected void _requeteApi_(Couverture<RequeteApi> c) { 
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.request.patch;
+package org.computate.scolaire.enUS.request.api;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
-public class PatchRequest extends PatchRequestGen<Object> {
+public class ApiRequest extends ApiRequestGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {}
 

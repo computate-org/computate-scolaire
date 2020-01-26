@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.guardian;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				if(a.succeeded()) {
 					createPOSTSchoolGuardian(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolGuardian schoolGuardian = b.result();
 							sqlPOSTSchoolGuardian(schoolGuardian, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolGuardian(siteRequest, eventHandler, i);
@@ -291,16 +291,16 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolGuardian.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolGuardian.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolGuardian.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolGuardian.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolGuardian.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolGuardian.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolGuardian.size() == 1) {
 												SchoolGuardian o = listSchoolGuardian.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolGuardian(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolGuardian(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -308,7 +308,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 													sqlSchoolGuardian(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolGuardian(patchRequest, listSchoolGuardian, dt, f -> {
+																listPATCHSchoolGuardian(apiRequest, listSchoolGuardian, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -342,7 +342,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolGuardian(patchRequest, eventHandler);
+											response200PATCHSchoolGuardian(apiRequest, eventHandler);
 										} else {
 											errorSchoolGuardian(siteRequest, eventHandler, c);
 										}
@@ -364,7 +364,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void listPATCHSchoolGuardian(PatchRequest patchRequest, SearchList<SchoolGuardian> listSchoolGuardian, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolGuardian(ApiRequest apiRequest, SearchList<SchoolGuardian> listSchoolGuardian, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
 		listSchoolGuardian.getList().forEach(o -> {
@@ -379,12 +379,12 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolGuardian.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolGuardian.size());
 				if(listSchoolGuardian.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolGuardian(patchRequest, listSchoolGuardian, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolGuardian(apiRequest, listSchoolGuardian, dt, eventHandler);
 				} else {
-					response200PATCHSchoolGuardian(patchRequest, eventHandler);
+					response200PATCHSchoolGuardian(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolGuardian(listSchoolGuardian.getSiteRequest_(), eventHandler, a);
@@ -392,11 +392,11 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		});
 	}
 
-	public void patchRequestSchoolGuardian(SchoolGuardian o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolGuardian(SchoolGuardian o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getEnrollmentKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -418,8 +418,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								if(c.succeeded()) {
 									indexSchoolGuardian(schoolGuardian, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolGuardian(schoolGuardian);
-											schoolGuardian.patchRequestSchoolGuardian();
+											apiRequestSchoolGuardian(schoolGuardian);
+											schoolGuardian.apiRequestSchoolGuardian();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -614,10 +614,10 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void response200PATCHSchoolGuardian(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolGuardian(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

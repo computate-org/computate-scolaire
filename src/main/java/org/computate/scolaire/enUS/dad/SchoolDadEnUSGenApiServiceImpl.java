@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.dad;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 				if(a.succeeded()) {
 					createPOSTSchoolDad(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolDad schoolDad = b.result();
 							sqlPOSTSchoolDad(schoolDad, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolDad(siteRequest, eventHandler, i);
@@ -303,16 +303,16 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolDad.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolDad.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolDad.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolDad.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolDad.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolDad.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolDad.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolDad.size() == 1) {
 												SchoolDad o = listSchoolDad.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolDad(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolDad(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -320,7 +320,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 													sqlSchoolDad(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolDad(patchRequest, listSchoolDad, dt, f -> {
+																listPATCHSchoolDad(apiRequest, listSchoolDad, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -354,7 +354,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolDad(patchRequest, eventHandler);
+											response200PATCHSchoolDad(apiRequest, eventHandler);
 										} else {
 											errorSchoolDad(siteRequest, eventHandler, c);
 										}
@@ -376,7 +376,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		}
 	}
 
-	public void listPATCHSchoolDad(PatchRequest patchRequest, SearchList<SchoolDad> listSchoolDad, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolDad(ApiRequest apiRequest, SearchList<SchoolDad> listSchoolDad, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
 		listSchoolDad.getList().forEach(o -> {
@@ -391,12 +391,12 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolDad.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolDad.size());
 				if(listSchoolDad.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolDad(patchRequest, listSchoolDad, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolDad(apiRequest, listSchoolDad, dt, eventHandler);
 				} else {
-					response200PATCHSchoolDad(patchRequest, eventHandler);
+					response200PATCHSchoolDad(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolDad(listSchoolDad.getSiteRequest_(), eventHandler, a);
@@ -404,11 +404,11 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		});
 	}
 
-	public void patchRequestSchoolDad(SchoolDad o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolDad(SchoolDad o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getEnrollmentKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -430,8 +430,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								if(c.succeeded()) {
 									indexSchoolDad(schoolDad, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolDad(schoolDad);
-											schoolDad.patchRequestSchoolDad();
+											apiRequestSchoolDad(schoolDad);
+											schoolDad.apiRequestSchoolDad();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -656,10 +656,10 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		}
 	}
 
-	public void response200PATCHSchoolDad(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolDad(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

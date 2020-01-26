@@ -12,9 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -1275,20 +1277,20 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchUtilisateurSite() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		UtilisateurSite original = (UtilisateurSite)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiUtilisateurSite() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		UtilisateurSite original = (UtilisateurSite)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(utilisateurRecevoirCourriels, original.getUtilisateurRecevoirCourriels()))
-				requetePatch.addVars("utilisateurRecevoirCourriels");
+				requeteApi.addVars("utilisateurRecevoirCourriels");
 			if(!Objects.equals(voirArchive, original.getVoirArchive()))
-				requetePatch.addVars("voirArchive");
+				requeteApi.addVars("voirArchive");
 			if(!Objects.equals(voirSupprime, original.getVoirSupprime()))
-				requetePatch.addVars("voirSupprime");
-			super.requetePatchCluster();
+				requeteApi.addVars("voirSupprime");
+			super.requeteApiCluster();
 		}
 	}
 

@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.gardien;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 				if(a.succeeded()) {
 					creerPOSTGardienScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-						RequetePatch requetePatch = new RequetePatch();
-							requetePatch.setRows(1);
-							requetePatch.setNumFound(1L);
-							requetePatch.initLoinRequetePatch(requeteSite);
-							requeteSite.setRequetePatch_(requetePatch);
+						RequeteApi requeteApi = new RequeteApi();
+							requeteApi.setRows(1);
+							requeteApi.setNumFound(1L);
+							requeteApi.initLoinRequeteApi(requeteSite);
+							requeteSite.setRequeteApi_(requeteApi);
 							GardienScolaire gardienScolaire = b.result();
 							sqlPOSTGardienScolaire(gardienScolaire, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 																		if(a.succeeded()) {
 																			connexionSql.close(i -> {
 																				if(a.succeeded()) {
-																					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
+																					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
 																					gestionnaireEvenements.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					erreurGardienScolaire(requeteSite, gestionnaireEvenements, i);
@@ -291,16 +291,16 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequetePatch requetePatch = new RequetePatch();
-											requetePatch.setRows(listeGardienScolaire.getRows());
-											requetePatch.setNumFound(Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeGardienScolaire.size())));
-											requetePatch.initLoinRequetePatch(requeteSite);
-											requeteSite.setRequetePatch_(requetePatch);
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeGardienScolaire.getRows());
+											requeteApi.setNumFound(Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeGardienScolaire.size())));
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											if(listeGardienScolaire.size() == 1) {
 												GardienScolaire o = listeGardienScolaire.get(0);
-												requetePatch.setPk(o.getPk());
-												requetePatch.setOriginal(o);
-												requetePatchGardienScolaire(o);
+												requeteApi.setPk(o.getPk());
+												requeteApi.setOriginal(o);
+												requeteApiGardienScolaire(o);
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -308,7 +308,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 													sqlGardienScolaire(requeteSite, e -> {
 														if(e.succeeded()) {
 															try {
-																listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, f -> {
+																listePATCHGardienScolaire(requeteApi, listeGardienScolaire, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
 																		if(connexionSql2 == null) {
@@ -342,7 +342,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
+											reponse200PATCHGardienScolaire(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
 										}
@@ -364,7 +364,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void listePATCHGardienScolaire(RequetePatch requetePatch, ListeRecherche<GardienScolaire> listeGardienScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHGardienScolaire(RequeteApi requeteApi, ListeRecherche<GardienScolaire> listeGardienScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeGardienScolaire.getRequeteSite_();
 		listeGardienScolaire.getList().forEach(o -> {
@@ -379,12 +379,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeGardienScolaire.size());
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeGardienScolaire.size());
 				if(listeGardienScolaire.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requetePatch).toString());
-					listePATCHGardienScolaire(requetePatch, listeGardienScolaire, dt, gestionnaireEvenements);
+					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+					listePATCHGardienScolaire(requeteApi, listeGardienScolaire, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHGardienScolaire(requetePatch, gestionnaireEvenements);
+					reponse200PATCHGardienScolaire(requeteApi, gestionnaireEvenements);
 				}
 			} else {
 				erreurGardienScolaire(listeGardienScolaire.getRequeteSite_(), gestionnaireEvenements, a);
@@ -392,11 +392,11 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		});
 	}
 
-	public void requetePatchGardienScolaire(GardienScolaire o) {
-		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
-		if(requetePatch != null) {
-			List<Long> pks = requetePatch.getPks();
-			List<String> classes = requetePatch.getClasses();
+	public void requeteApiGardienScolaire(GardienScolaire o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
 			for(Long pk : o.getInscriptionCles()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -418,8 +418,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								if(c.succeeded()) {
 									indexerGardienScolaire(gardienScolaire, d -> {
 										if(d.succeeded()) {
-											requetePatchGardienScolaire(gardienScolaire);
-											gardienScolaire.requetePatchGardienScolaire();
+											requeteApiGardienScolaire(gardienScolaire);
+											gardienScolaire.requeteApiGardienScolaire();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -614,10 +614,10 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void reponse200PATCHGardienScolaire(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHGardienScolaire(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
-			JsonObject json = JsonObject.mapFrom(requetePatch);
+			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));

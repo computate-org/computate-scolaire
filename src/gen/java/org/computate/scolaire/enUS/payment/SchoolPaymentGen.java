@@ -17,10 +17,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -2731,26 +2733,26 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolPayment() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolPayment original = (SchoolPayment)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolPayment() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolPayment original = (SchoolPayment)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
-				patchRequest.addVars("enrollmentKeys");
+				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(paymentDescription, original.getPaymentDescription()))
-				patchRequest.addVars("paymentDescription");
+				apiRequest.addVars("paymentDescription");
 			if(!Objects.equals(paymentDate, original.getPaymentDate()))
-				patchRequest.addVars("paymentDate");
+				apiRequest.addVars("paymentDate");
 			if(!Objects.equals(paymentAmount, original.getPaymentAmount()))
-				patchRequest.addVars("paymentAmount");
+				apiRequest.addVars("paymentAmount");
 			if(!Objects.equals(paymentCash, original.getPaymentCash()))
-				patchRequest.addVars("paymentCash");
+				apiRequest.addVars("paymentCash");
 			if(!Objects.equals(paymentCheck, original.getPaymentCheck()))
-				patchRequest.addVars("paymentCheck");
-			super.patchRequestCluster();
+				apiRequest.addVars("paymentCheck");
+			super.apiRequestCluster();
 		}
 	}
 

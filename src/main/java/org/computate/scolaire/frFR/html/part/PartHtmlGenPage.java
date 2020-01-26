@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -95,18 +96,20 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	@Override public void htmlScriptPartHtmlGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", requeteSite_.getRequetePk(), ";");
-		tl(1, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(requeteSite_.getRequetePk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggerePartHtmlDesignInscriptionCle([{'name':'fq','value':'partHtmlCles:' + pk}], $('#listPartHtmlDesignInscriptionCle_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketPartHtml(websocketPartHtmlInner);");
 		l("});");
 	}
 
 	public void htmlFormPagePartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Page");
 			o.htmPk("Page");
-			o.htmObjetId("Page");
+			o.htmCree("Page");
 			o.htmModifie("Page");
+			o.htmObjetId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Page");
@@ -162,10 +165,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTPartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("POST");
 			o.htmPk("POST");
-			o.htmObjetId("POST");
+			o.htmCree("POST");
 			o.htmModifie("POST");
+			o.htmObjetId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
@@ -221,10 +224,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHPartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjetId("PATCH");
+			o.htmCree("PATCH");
 			o.htmModifie("PATCH");
+			o.htmObjetId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("PATCH");
@@ -280,10 +283,10 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 
 	public void htmlFormRecherchePartHtml(PartHtml o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCree("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjetId("Recherche");
+			o.htmCree("Recherche");
 			o.htmModifie("Recherche");
+			o.htmObjetId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("Recherche");
@@ -531,6 +534,38 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 
+
+		if(listePartHtml != null && listePartHtml.size() == 1) {
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putPartHtmlModale').show(); ")
+				.f().sx("Remplacer le part de HTML")
+			.g("button");
+			{ e("div").a("id", "putPartHtmlModale").a("class", "w3-modal ").f();
+				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-yellow ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putPartHtmlModale').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Remplacer le part de HTML").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						PartHtml o = new PartHtml();
+						o.setRequeteSite_(requeteSite_);
+
+						// Form PUT
+						{ e("div").a("id", "putPartHtmlForm").f();
+							htmlFormPOSTPartHtml(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+							.a("onclick", "putPartHtml(", o.getPk(), ", $('#putPartHtmlForm')); ")
+							.f().sx("Remplacer le part de HTML")
+						.g("button");
+
+					} g("div");
+				} g("div");
+			} g("div");
+
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")

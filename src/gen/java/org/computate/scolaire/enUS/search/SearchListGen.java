@@ -6,6 +6,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.solr.client.solrj.SolrQuery;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Class;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -603,6 +605,17 @@ public abstract class SearchListGen<DEV> {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestSearchList() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SearchList original = (SearchList)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

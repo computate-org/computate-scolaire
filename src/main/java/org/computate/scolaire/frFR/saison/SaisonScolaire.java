@@ -452,8 +452,8 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: yearEnd
 	 * r: saisonFuture
 	 * r.enUS: seasonFuture
-	 * r: SaisonFraisInscription
-	 * r.enUS: SeasonEnrollmentFee
+	 * r: AnneeFraisInscription
+	 * r.enUS: YearEnrollmentFee
 	 */           
 	protected void _saisonNomCourt(Couverture<String> c) {
 		String o;
@@ -461,9 +461,9 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		if(BooleanUtils.isTrue(saisonFuture))
 			o = String.format("Classes supplimentaires pendant l'année scolaire %s-%s à %s", anneeDebut, anneeFin, ecoleNom);
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("Classes de la saison d'été (frais d'inscription singulaire $%s)", strSaisonFraisInscription());
+			o = String.format("Classes de la saison d'été (frais d'inscription singulaire $%s)", strAnneeFraisInscription());
 		else if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("Classes de la saison scolaire (frais d'inscription singulaire $%s)", strSaisonFraisInscription());
+			o = String.format("Classes de la saison scolaire (frais d'inscription singulaire $%s)", strAnneeFraisInscription());
 		else
 			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
 		
@@ -530,7 +530,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: strSeasonEnrollmentFee
+	 * Var.enUS: strYearEnrollmentFee
 	 * r: anneeFraisInscription
 	 * r.enUS: yearEnrollmentFee
 	 */

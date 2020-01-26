@@ -34,6 +34,7 @@ public interface HtmlPartEnUSGenApiService {
 	}
 
 	public void postHtmlPart(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
+	public void putHtmlPart(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void patchHtmlPart(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void getHtmlPart(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);
 	public void deleteHtmlPart(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler);

@@ -21,7 +21,6 @@ import org.computate.scolaire.enUS.enrollment.EnrollmentFormGenPage;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.time.Instant;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
@@ -36,6 +35,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentFormPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1841,14 +1841,14 @@ public abstract class EnrollmentFormPageGen<DEV> extends EnrollmentFormGenPage {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestEnrollmentFormPage() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		EnrollmentFormPage original = (EnrollmentFormPage)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestEnrollmentFormPage() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		EnrollmentFormPage original = (EnrollmentFormPage)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
-			super.patchRequestEnrollmentFormGenPage();
+			super.apiRequestEnrollmentFormGenPage();
 		}
 	}
 

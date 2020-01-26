@@ -10,6 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.lang.Long;
 import java.util.Locale;
@@ -17,11 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -2834,26 +2836,26 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolSeason() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolSeason original = (SchoolSeason)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolSeason() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolSeason original = (SchoolSeason)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
-				patchRequest.addVars("sessionKeys");
+				apiRequest.addVars("sessionKeys");
 			if(!Objects.equals(yearKey, original.getYearKey()))
-				patchRequest.addVars("yearKey");
+				apiRequest.addVars("yearKey");
 			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
-				patchRequest.addVars("seasonStartDate");
+				apiRequest.addVars("seasonStartDate");
 			if(!Objects.equals(seasonSummer, original.getSeasonSummer()))
-				patchRequest.addVars("seasonSummer");
+				apiRequest.addVars("seasonSummer");
 			if(!Objects.equals(seasonWinter, original.getSeasonWinter()))
-				patchRequest.addVars("seasonWinter");
+				apiRequest.addVars("seasonWinter");
 			if(!Objects.equals(seasonFuture, original.getSeasonFuture()))
-				patchRequest.addVars("seasonFuture");
-			super.patchRequestCluster();
+				apiRequest.addVars("seasonFuture");
+			super.apiRequestCluster();
 		}
 	}
 

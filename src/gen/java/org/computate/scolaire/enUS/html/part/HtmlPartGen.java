@@ -4,6 +4,7 @@ import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -16,7 +17,6 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -4049,66 +4049,66 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestHtmlPart() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		HtmlPart original = (HtmlPart)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestHtmlPart() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		HtmlPart original = (HtmlPart)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(enrollmentDesignKey, original.getEnrollmentDesignKey()))
-				patchRequest.addVars("enrollmentDesignKey");
+				apiRequest.addVars("enrollmentDesignKey");
 			if(!Objects.equals(htmlLink, original.getHtmlLink()))
-				patchRequest.addVars("htmlLink");
+				apiRequest.addVars("htmlLink");
 			if(!Objects.equals(htmlElement, original.getHtmlElement()))
-				patchRequest.addVars("htmlElement");
+				apiRequest.addVars("htmlElement");
 			if(!Objects.equals(htmlId, original.getHtmlId()))
-				patchRequest.addVars("htmlId");
+				apiRequest.addVars("htmlId");
 			if(!Objects.equals(htmlClasses, original.getHtmlClasses()))
-				patchRequest.addVars("htmlClasses");
+				apiRequest.addVars("htmlClasses");
 			if(!Objects.equals(htmlStyle, original.getHtmlStyle()))
-				patchRequest.addVars("htmlStyle");
+				apiRequest.addVars("htmlStyle");
 			if(!Objects.equals(htmlBefore, original.getHtmlBefore()))
-				patchRequest.addVars("htmlBefore");
+				apiRequest.addVars("htmlBefore");
 			if(!Objects.equals(htmlAfter, original.getHtmlAfter()))
-				patchRequest.addVars("htmlAfter");
+				apiRequest.addVars("htmlAfter");
 			if(!Objects.equals(htmlText, original.getHtmlText()))
-				patchRequest.addVars("htmlText");
+				apiRequest.addVars("htmlText");
 			if(!Objects.equals(htmlVar, original.getHtmlVar()))
-				patchRequest.addVars("htmlVar");
+				apiRequest.addVars("htmlVar");
 			if(!Objects.equals(htmlVarSpan, original.getHtmlVarSpan()))
-				patchRequest.addVars("htmlVarSpan");
+				apiRequest.addVars("htmlVarSpan");
 			if(!Objects.equals(htmlVarForm, original.getHtmlVarForm()))
-				patchRequest.addVars("htmlVarForm");
+				apiRequest.addVars("htmlVarForm");
 			if(!Objects.equals(htmlVarInput, original.getHtmlVarInput()))
-				patchRequest.addVars("htmlVarInput");
+				apiRequest.addVars("htmlVarInput");
 			if(!Objects.equals(htmlVarForEach, original.getHtmlVarForEach()))
-				patchRequest.addVars("htmlVarForEach");
+				apiRequest.addVars("htmlVarForEach");
 			if(!Objects.equals(htmlExclude, original.getHtmlExclude()))
-				patchRequest.addVars("htmlExclude");
+				apiRequest.addVars("htmlExclude");
 			if(!Objects.equals(pdfExclude, original.getPdfExclude()))
-				patchRequest.addVars("pdfExclude");
+				apiRequest.addVars("pdfExclude");
 			if(!Objects.equals(sort1, original.getSort1()))
-				patchRequest.addVars("sort1");
+				apiRequest.addVars("sort1");
 			if(!Objects.equals(sort2, original.getSort2()))
-				patchRequest.addVars("sort2");
+				apiRequest.addVars("sort2");
 			if(!Objects.equals(sort3, original.getSort3()))
-				patchRequest.addVars("sort3");
+				apiRequest.addVars("sort3");
 			if(!Objects.equals(sort4, original.getSort4()))
-				patchRequest.addVars("sort4");
+				apiRequest.addVars("sort4");
 			if(!Objects.equals(sort5, original.getSort5()))
-				patchRequest.addVars("sort5");
+				apiRequest.addVars("sort5");
 			if(!Objects.equals(sort6, original.getSort6()))
-				patchRequest.addVars("sort6");
+				apiRequest.addVars("sort6");
 			if(!Objects.equals(sort7, original.getSort7()))
-				patchRequest.addVars("sort7");
+				apiRequest.addVars("sort7");
 			if(!Objects.equals(sort8, original.getSort8()))
-				patchRequest.addVars("sort8");
+				apiRequest.addVars("sort8");
 			if(!Objects.equals(sort9, original.getSort9()))
-				patchRequest.addVars("sort9");
+				apiRequest.addVars("sort9");
 			if(!Objects.equals(sort10, original.getSort10()))
-				patchRequest.addVars("sort10");
-			super.patchRequestCluster();
+				apiRequest.addVars("sort10");
+			super.apiRequestCluster();
 		}
 	}
 

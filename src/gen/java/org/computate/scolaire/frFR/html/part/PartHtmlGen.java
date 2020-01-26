@@ -4,6 +4,7 @@ import java.lang.Double;
 import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -16,7 +17,6 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -4050,66 +4050,66 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchPartHtml() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		PartHtml original = (PartHtml)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiPartHtml() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		PartHtml original = (PartHtml)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(designInscriptionCle, original.getDesignInscriptionCle()))
-				requetePatch.addVars("designInscriptionCle");
+				requeteApi.addVars("designInscriptionCle");
 			if(!Objects.equals(htmlLien, original.getHtmlLien()))
-				requetePatch.addVars("htmlLien");
+				requeteApi.addVars("htmlLien");
 			if(!Objects.equals(htmlElement, original.getHtmlElement()))
-				requetePatch.addVars("htmlElement");
+				requeteApi.addVars("htmlElement");
 			if(!Objects.equals(htmlId, original.getHtmlId()))
-				requetePatch.addVars("htmlId");
+				requeteApi.addVars("htmlId");
 			if(!Objects.equals(htmlClasses, original.getHtmlClasses()))
-				requetePatch.addVars("htmlClasses");
+				requeteApi.addVars("htmlClasses");
 			if(!Objects.equals(htmlStyle, original.getHtmlStyle()))
-				requetePatch.addVars("htmlStyle");
+				requeteApi.addVars("htmlStyle");
 			if(!Objects.equals(htmlAvant, original.getHtmlAvant()))
-				requetePatch.addVars("htmlAvant");
+				requeteApi.addVars("htmlAvant");
 			if(!Objects.equals(htmlApres, original.getHtmlApres()))
-				requetePatch.addVars("htmlApres");
+				requeteApi.addVars("htmlApres");
 			if(!Objects.equals(htmlTexte, original.getHtmlTexte()))
-				requetePatch.addVars("htmlTexte");
+				requeteApi.addVars("htmlTexte");
 			if(!Objects.equals(htmlVar, original.getHtmlVar()))
-				requetePatch.addVars("htmlVar");
+				requeteApi.addVars("htmlVar");
 			if(!Objects.equals(htmlVarSpan, original.getHtmlVarSpan()))
-				requetePatch.addVars("htmlVarSpan");
+				requeteApi.addVars("htmlVarSpan");
 			if(!Objects.equals(htmlVarForm, original.getHtmlVarForm()))
-				requetePatch.addVars("htmlVarForm");
+				requeteApi.addVars("htmlVarForm");
 			if(!Objects.equals(htmlVarInput, original.getHtmlVarInput()))
-				requetePatch.addVars("htmlVarInput");
+				requeteApi.addVars("htmlVarInput");
 			if(!Objects.equals(htmlVarForEach, original.getHtmlVarForEach()))
-				requetePatch.addVars("htmlVarForEach");
+				requeteApi.addVars("htmlVarForEach");
 			if(!Objects.equals(htmlExclure, original.getHtmlExclure()))
-				requetePatch.addVars("htmlExclure");
+				requeteApi.addVars("htmlExclure");
 			if(!Objects.equals(pdfExclure, original.getPdfExclure()))
-				requetePatch.addVars("pdfExclure");
+				requeteApi.addVars("pdfExclure");
 			if(!Objects.equals(tri1, original.getTri1()))
-				requetePatch.addVars("tri1");
+				requeteApi.addVars("tri1");
 			if(!Objects.equals(tri2, original.getTri2()))
-				requetePatch.addVars("tri2");
+				requeteApi.addVars("tri2");
 			if(!Objects.equals(tri3, original.getTri3()))
-				requetePatch.addVars("tri3");
+				requeteApi.addVars("tri3");
 			if(!Objects.equals(tri4, original.getTri4()))
-				requetePatch.addVars("tri4");
+				requeteApi.addVars("tri4");
 			if(!Objects.equals(tri5, original.getTri5()))
-				requetePatch.addVars("tri5");
+				requeteApi.addVars("tri5");
 			if(!Objects.equals(tri6, original.getTri6()))
-				requetePatch.addVars("tri6");
+				requeteApi.addVars("tri6");
 			if(!Objects.equals(tri7, original.getTri7()))
-				requetePatch.addVars("tri7");
+				requeteApi.addVars("tri7");
 			if(!Objects.equals(tri8, original.getTri8()))
-				requetePatch.addVars("tri8");
+				requeteApi.addVars("tri8");
 			if(!Objects.equals(tri9, original.getTri9()))
-				requetePatch.addVars("tri9");
+				requeteApi.addVars("tri9");
 			if(!Objects.equals(tri10, original.getTri10()))
-				requetePatch.addVars("tri10");
-			super.requetePatchCluster();
+				requeteApi.addVars("tri10");
+			super.requeteApiCluster();
 		}
 	}
 

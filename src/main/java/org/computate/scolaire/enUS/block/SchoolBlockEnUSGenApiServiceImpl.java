@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.block;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				if(a.succeeded()) {
 					createPOSTSchoolBlock(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolBlock schoolBlock = b.result();
 							sqlPOSTSchoolBlock(schoolBlock, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolBlock(siteRequest, eventHandler, i);
@@ -311,16 +311,16 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolBlock.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolBlock.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolBlock.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolBlock.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolBlock.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolBlock.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolBlock.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolBlock.size() == 1) {
 												SchoolBlock o = listSchoolBlock.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolBlock(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolBlock(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -328,7 +328,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 													sqlSchoolBlock(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolBlock(patchRequest, listSchoolBlock, dt, f -> {
+																listPATCHSchoolBlock(apiRequest, listSchoolBlock, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -362,7 +362,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolBlock(patchRequest, eventHandler);
+											response200PATCHSchoolBlock(apiRequest, eventHandler);
 										} else {
 											errorSchoolBlock(siteRequest, eventHandler, c);
 										}
@@ -384,7 +384,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void listPATCHSchoolBlock(PatchRequest patchRequest, SearchList<SchoolBlock> listSchoolBlock, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolBlock(ApiRequest apiRequest, SearchList<SchoolBlock> listSchoolBlock, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		listSchoolBlock.getList().forEach(o -> {
@@ -399,12 +399,12 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolBlock.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolBlock.size());
 				if(listSchoolBlock.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolBlock(patchRequest, listSchoolBlock, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolBlock(apiRequest, listSchoolBlock, dt, eventHandler);
 				} else {
-					response200PATCHSchoolBlock(patchRequest, eventHandler);
+					response200PATCHSchoolBlock(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolBlock(listSchoolBlock.getSiteRequest_(), eventHandler, a);
@@ -412,11 +412,11 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		});
 	}
 
-	public void patchRequestSchoolBlock(SchoolBlock o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolBlock(SchoolBlock o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getEnrollmentKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -444,8 +444,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								if(c.succeeded()) {
 									indexSchoolBlock(schoolBlock, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolBlock(schoolBlock);
-											schoolBlock.patchRequestSchoolBlock();
+											apiRequestSchoolBlock(schoolBlock);
+											schoolBlock.apiRequestSchoolBlock();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -690,10 +690,10 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void response200PATCHSchoolBlock(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolBlock(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

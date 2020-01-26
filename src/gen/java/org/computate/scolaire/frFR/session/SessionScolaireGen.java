@@ -18,10 +18,12 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -3240,24 +3242,24 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchSessionScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		SessionScolaire original = (SessionScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiSessionScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		SessionScolaire original = (SessionScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(ageCles, original.getAgeCles()))
-				requetePatch.addVars("ageCles");
+				requeteApi.addVars("ageCles");
 			if(!Objects.equals(saisonCle, original.getSaisonCle()))
-				requetePatch.addVars("saisonCle");
+				requeteApi.addVars("saisonCle");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
-				requetePatch.addVars("ecoleAddresse");
+				requeteApi.addVars("ecoleAddresse");
 			if(!Objects.equals(sessionJourDebut, original.getSessionJourDebut()))
-				requetePatch.addVars("sessionJourDebut");
+				requeteApi.addVars("sessionJourDebut");
 			if(!Objects.equals(sessionJourFin, original.getSessionJourFin()))
-				requetePatch.addVars("sessionJourFin");
-			super.requetePatchCluster();
+				requeteApi.addVars("sessionJourFin");
+			super.requeteApiCluster();
 		}
 	}
 

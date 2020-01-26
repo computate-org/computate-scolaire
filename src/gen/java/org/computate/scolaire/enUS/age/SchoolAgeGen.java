@@ -18,10 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -3590,24 +3592,24 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolAge() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolAge original = (SchoolAge)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolAge() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolAge original = (SchoolAge)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))
-				patchRequest.addVars("blockKeys");
+				apiRequest.addVars("blockKeys");
 			if(!Objects.equals(sessionKey, original.getSessionKey()))
-				patchRequest.addVars("sessionKey");
+				apiRequest.addVars("sessionKey");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
-				patchRequest.addVars("schoolAddress");
+				apiRequest.addVars("schoolAddress");
 			if(!Objects.equals(ageStart, original.getAgeStart()))
-				patchRequest.addVars("ageStart");
+				apiRequest.addVars("ageStart");
 			if(!Objects.equals(ageEnd, original.getAgeEnd()))
-				patchRequest.addVars("ageEnd");
-			super.patchRequestCluster();
+				apiRequest.addVars("ageEnd");
+			super.apiRequestCluster();
 		}
 	}
 

@@ -30,7 +30,7 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -64,7 +64,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		c.o(this);
 	}
 
-	protected void _patchRequest_(Wrap<PatchRequest> c) { 
+	protected void _apiRequest_(Wrap<ApiRequest> c) { 
 	}
 
 	protected void _vertx(Wrap<Vertx> c) {

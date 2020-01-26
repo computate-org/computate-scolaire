@@ -6,6 +6,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.solr.client.solrj.SolrQuery;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
 import java.lang.Boolean;
 import java.lang.Class;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -603,6 +605,17 @@ public abstract class ListeRechercheGen<DEV> {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiListeRecherche() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		ListeRecherche original = (ListeRecherche)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(original != null) {
 		}
 	}
 

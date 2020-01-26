@@ -130,9 +130,9 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 		if(BooleanUtils.isTrue(seasonFuture))
 			o = String.format("Additional classes coming during the %s-%s school year at %s", yearStart, yearEnd, schoolName);
 		if(BooleanUtils.isTrue(seasonSummer))
-			o = String.format("Summer season classes (one time registration fee $%s)", strSeasonEnrollmentFee());
+			o = String.format("Summer season classes (one time registration fee $%s)", strYearEnrollmentFee());
 		else if(BooleanUtils.isTrue(seasonWinter))
-			o = String.format("Regular school year classes (one time registration fee $%s)", strSeasonEnrollmentFee());
+			o = String.format("Regular school year classes (one time registration fee $%s)", strYearEnrollmentFee());
 		else
 			o = String.format("%s season at %s", strSeasonStartDate(), schoolCompleteName);
 		
@@ -160,7 +160,7 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	}
 
 	@Override()
-	public String strSeasonEnrollmentFee() {
+	public String strYearEnrollmentFee() {
 		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(0).toString();
 	}
 }

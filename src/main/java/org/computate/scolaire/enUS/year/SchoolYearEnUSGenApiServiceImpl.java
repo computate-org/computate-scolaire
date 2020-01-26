@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.year;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				if(a.succeeded()) {
 					createPOSTSchoolYear(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolYear schoolYear = b.result();
 							sqlPOSTSchoolYear(schoolYear, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolYear(siteRequest, eventHandler, i);
@@ -279,16 +279,16 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolYear.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolYear.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolYear.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolYear.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolYear.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolYear.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolYear.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolYear.size() == 1) {
 												SchoolYear o = listSchoolYear.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolYear(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolYear(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -296,7 +296,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 													sqlSchoolYear(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolYear(patchRequest, listSchoolYear, dt, f -> {
+																listPATCHSchoolYear(apiRequest, listSchoolYear, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -330,7 +330,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolYear(patchRequest, eventHandler);
+											response200PATCHSchoolYear(apiRequest, eventHandler);
 										} else {
 											errorSchoolYear(siteRequest, eventHandler, c);
 										}
@@ -352,7 +352,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void listPATCHSchoolYear(PatchRequest patchRequest, SearchList<SchoolYear> listSchoolYear, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolYear(ApiRequest apiRequest, SearchList<SchoolYear> listSchoolYear, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
 		listSchoolYear.getList().forEach(o -> {
@@ -367,12 +367,12 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolYear.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolYear.size());
 				if(listSchoolYear.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolYear(patchRequest, listSchoolYear, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolYear(apiRequest, listSchoolYear, dt, eventHandler);
 				} else {
-					response200PATCHSchoolYear(patchRequest, eventHandler);
+					response200PATCHSchoolYear(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolYear(listSchoolYear.getSiteRequest_(), eventHandler, a);
@@ -380,11 +380,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		});
 	}
 
-	public void patchRequestSchoolYear(SchoolYear o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolYear(SchoolYear o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			if(o.getSchoolKey() != null) {
 				if(!pks.contains(o.getSchoolKey())) {
 					pks.add(o.getSchoolKey());
@@ -412,8 +412,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								if(c.succeeded()) {
 									indexSchoolYear(schoolYear, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolYear(schoolYear);
-											schoolYear.patchRequestSchoolYear();
+											apiRequestSchoolYear(schoolYear);
+											schoolYear.apiRequestSchoolYear();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -578,10 +578,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void response200PATCHSchoolYear(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolYear(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.payment;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				if(a.succeeded()) {
 					createPOSTSchoolPayment(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							SchoolPayment schoolPayment = b.result();
 							sqlPOSTSchoolPayment(schoolPayment, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchoolPayment(siteRequest, eventHandler, i);
@@ -283,16 +283,16 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchoolPayment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchoolPayment.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolPayment.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchoolPayment.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchoolPayment.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchoolPayment.size() == 1) {
 												SchoolPayment o = listSchoolPayment.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchoolPayment(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchoolPayment(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -300,7 +300,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 													sqlSchoolPayment(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, f -> {
+																listPATCHSchoolPayment(apiRequest, listSchoolPayment, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -334,7 +334,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchoolPayment(patchRequest, eventHandler);
+											response200PATCHSchoolPayment(apiRequest, eventHandler);
 										} else {
 											errorSchoolPayment(siteRequest, eventHandler, c);
 										}
@@ -356,7 +356,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public void listPATCHSchoolPayment(PatchRequest patchRequest, SearchList<SchoolPayment> listSchoolPayment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchoolPayment(ApiRequest apiRequest, SearchList<SchoolPayment> listSchoolPayment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		listSchoolPayment.getList().forEach(o -> {
@@ -371,12 +371,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchoolPayment.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolPayment.size());
 				if(listSchoolPayment.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchoolPayment(patchRequest, listSchoolPayment, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchoolPayment(apiRequest, listSchoolPayment, dt, eventHandler);
 				} else {
-					response200PATCHSchoolPayment(patchRequest, eventHandler);
+					response200PATCHSchoolPayment(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchoolPayment(listSchoolPayment.getSiteRequest_(), eventHandler, a);
@@ -384,11 +384,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		});
 	}
 
-	public void patchRequestSchoolPayment(SchoolPayment o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchoolPayment(SchoolPayment o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getEnrollmentKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -410,8 +410,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								if(c.succeeded()) {
 									indexSchoolPayment(schoolPayment, d -> {
 										if(d.succeeded()) {
-											patchRequestSchoolPayment(schoolPayment);
-											schoolPayment.patchRequestSchoolPayment();
+											apiRequestSchoolPayment(schoolPayment);
+											schoolPayment.apiRequestSchoolPayment();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -586,10 +586,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public void response200PATCHSchoolPayment(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchoolPayment(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

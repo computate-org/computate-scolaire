@@ -2,9 +2,9 @@ package org.computate.scolaire.frFR.utilisateur;
 
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
 import org.computate.scolaire.frFR.recherche.ResultatRecherche;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -119,16 +119,16 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listeUtilisateurSite.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-											RequetePatch requetePatch = new RequetePatch();
-											requetePatch.setRows(listeUtilisateurSite.getRows());
-											requetePatch.setNumFound(Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeUtilisateurSite.size())));
-											requetePatch.initLoinRequetePatch(requeteSite);
-											requeteSite.setRequetePatch_(requetePatch);
+											RequeteApi requeteApi = new RequeteApi();
+											requeteApi.setRows(listeUtilisateurSite.getRows());
+											requeteApi.setNumFound(Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listeUtilisateurSite.size())));
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
 											if(listeUtilisateurSite.size() == 1) {
 												UtilisateurSite o = listeUtilisateurSite.get(0);
-												requetePatch.setPk(o.getPk());
-												requetePatch.setOriginal(o);
-												requetePatchUtilisateurSite(o);
+												requeteApi.setPk(o.getPk());
+												requeteApi.setOriginal(o);
+												requeteApiUtilisateurSite(o);
 											}
 											WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 											executeurTravailleur.executeBlocking(
@@ -136,7 +136,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 													sqlUtilisateurSite(requeteSite, e -> {
 														if(e.succeeded()) {
 															try {
-																listePATCHUtilisateurSite(requetePatch, listeUtilisateurSite, dt, f -> {
+																listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection connexionSql2 = requeteSite.getConnexionSql();
 																		if(connexionSql2 == null) {
@@ -170,7 +170,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												}, resultHandler -> {
 												}
 											);
-											reponse200PATCHUtilisateurSite(requetePatch, gestionnaireEvenements);
+											reponse200PATCHUtilisateurSite(requeteApi, gestionnaireEvenements);
 										} else {
 											erreurUtilisateurSite(requeteSite, gestionnaireEvenements, c);
 										}
@@ -192,7 +192,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void listePATCHUtilisateurSite(RequetePatch requetePatch, ListeRecherche<UtilisateurSite> listeUtilisateurSite, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void listePATCHUtilisateurSite(RequeteApi requeteApi, ListeRecherche<UtilisateurSite> listeUtilisateurSite, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
 		listeUtilisateurSite.getList().forEach(o -> {
@@ -207,12 +207,12 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				requetePatch.setNumPATCH(requetePatch.getNumPATCH() + listeUtilisateurSite.size());
+				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeUtilisateurSite.size());
 				if(listeUtilisateurSite.next(dt)) {
-					requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requetePatch).toString());
-					listePATCHUtilisateurSite(requetePatch, listeUtilisateurSite, dt, gestionnaireEvenements);
+					requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+					listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, gestionnaireEvenements);
 				} else {
-					reponse200PATCHUtilisateurSite(requetePatch, gestionnaireEvenements);
+					reponse200PATCHUtilisateurSite(requeteApi, gestionnaireEvenements);
 				}
 			} else {
 				erreurUtilisateurSite(listeUtilisateurSite.getRequeteSite_(), gestionnaireEvenements, a);
@@ -220,11 +220,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		});
 	}
 
-	public void requetePatchUtilisateurSite(UtilisateurSite o) {
-		RequetePatch requetePatch = o.getRequeteSite_().getRequetePatch_();
-		if(requetePatch != null) {
-			List<Long> pks = requetePatch.getPks();
-			List<String> classes = requetePatch.getClasses();
+	public void requeteApiUtilisateurSite(UtilisateurSite o) {
+		RequeteApi requeteApi = o.getRequeteSite_().getRequeteApi_();
+		if(requeteApi != null) {
+			List<Long> pks = requeteApi.getPks();
+			List<String> classes = requeteApi.getClasses();
 		}
 	}
 
@@ -240,8 +240,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(c.succeeded()) {
 									indexerUtilisateurSite(utilisateurSite, d -> {
 										if(d.succeeded()) {
-											requetePatchUtilisateurSite(utilisateurSite);
-											utilisateurSite.requetePatchUtilisateurSite();
+											requeteApiUtilisateurSite(utilisateurSite);
+											utilisateurSite.requeteApiUtilisateurSite();
 											future.complete(o);
 											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -372,10 +372,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
-	public void reponse200PATCHUtilisateurSite(RequetePatch requetePatch, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void reponse200PATCHUtilisateurSite(RequeteApi requeteApi, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			RequeteSiteFrFR requeteSite = requetePatch.getRequeteSite_();
-			JsonObject json = JsonObject.mapFrom(requetePatch);
+			RequeteSiteFrFR requeteSite = requeteApi.getRequeteSite_();
+			JsonObject json = JsonObject.mapFrom(requeteApi);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			gestionnaireEvenements.handle(Future.failedFuture(e));

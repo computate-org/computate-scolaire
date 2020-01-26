@@ -13,9 +13,11 @@ import java.lang.Long;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -2161,26 +2163,26 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchool() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		School original = (School)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchool() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		School original = (School)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(yearKeys, original.getYearKeys()))
-				patchRequest.addVars("yearKeys");
+				apiRequest.addVars("yearKeys");
 			if(!Objects.equals(schoolName, original.getSchoolName()))
-				patchRequest.addVars("schoolName");
+				apiRequest.addVars("schoolName");
 			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
-				patchRequest.addVars("schoolPhoneNumber");
+				apiRequest.addVars("schoolPhoneNumber");
 			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
-				patchRequest.addVars("schoolAdministratorName");
+				apiRequest.addVars("schoolAdministratorName");
 			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
-				patchRequest.addVars("schoolLocation");
+				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
-				patchRequest.addVars("schoolAddress");
-			super.patchRequestCluster();
+				apiRequest.addVars("schoolAddress");
+			super.apiRequestCluster();
 		}
 	}
 

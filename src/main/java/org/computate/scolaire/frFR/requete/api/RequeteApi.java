@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.requete.patch;
+package org.computate.scolaire.frFR.requete.api;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -9,10 +9,10 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 
 /**    
- * NomCanonique.enUS: org.computate.scolaire.enUS.request.patch.PatchRequest
- * MotCle: classeNomSimpleRequetePatch
-*/   
-public class RequetePatch extends RequetePatchGen<Object> {
+ * NomCanonique.enUS: org.computate.scolaire.enUS.request.api.ApiRequest
+ * MotCle: classeNomSimpleRequeteApi
+*/ 
+public class RequeteApi extends RequeteApiGen<Object> {
 
 	/**
 	 * {@inheritDoc}

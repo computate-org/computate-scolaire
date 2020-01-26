@@ -66,6 +66,27 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		return next;
 	}
 
+	public boolean next() {
+		boolean next = false;
+		Long start = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getStart()).orElse(0L);
+		Integer rows = Optional.ofNullable(getRows()).orElse(0);
+		Long numFound = Optional.ofNullable(getSolrDocumentList()).map(l -> l.getNumFound()).orElse(0L);
+		if(numFound > 0) {
+			try {
+				setStart(start.intValue() + rows);
+				setQueryResponse(siteRequest_.getSiteContext_().getSolrClient().query(solrQuery));
+			} catch (SolrServerException | IOException e) {
+				ExceptionUtils.rethrow(e);
+			}
+			_solrDocumentList(solrDocumentListWrap);
+			setSolrDocumentList(solrDocumentListWrap.o);
+			list.clear();
+			_list(list);
+			next = true;
+		}
+		return next;
+	}
+
 	protected void _queryResponse(Wrap<QueryResponse> c) {
 		if(this.c != null)
 			solrQuery.addFilterQuery("classCanonicalNames_indexed_strings:" + ClientUtils.escapeQueryChars(this.c.getCanonicalName()));

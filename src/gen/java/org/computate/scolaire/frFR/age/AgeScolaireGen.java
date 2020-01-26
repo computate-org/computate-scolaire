@@ -18,10 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -3596,24 +3598,24 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchAgeScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		AgeScolaire original = (AgeScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiAgeScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		AgeScolaire original = (AgeScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(blocCles, original.getBlocCles()))
-				requetePatch.addVars("blocCles");
+				requeteApi.addVars("blocCles");
 			if(!Objects.equals(sessionCle, original.getSessionCle()))
-				requetePatch.addVars("sessionCle");
+				requeteApi.addVars("sessionCle");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
-				requetePatch.addVars("ecoleAddresse");
+				requeteApi.addVars("ecoleAddresse");
 			if(!Objects.equals(ageDebut, original.getAgeDebut()))
-				requetePatch.addVars("ageDebut");
+				requeteApi.addVars("ageDebut");
 			if(!Objects.equals(ageFin, original.getAgeFin()))
-				requetePatch.addVars("ageFin");
-			super.requetePatchCluster();
+				requeteApi.addVars("ageFin");
+			super.requeteApiCluster();
 		}
 	}
 

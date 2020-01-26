@@ -25,6 +25,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -94,18 +95,20 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 	@Override public void htmlScriptHtmlPartGenPage() {
 		l("$(document).ready(function() {");
 		tl(1, "window.eventBus = new EventBus('/eventbus');");
-		tl(1, "var pk = ", siteRequest_.getRequestPk(), ";");
-		tl(1, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartEnrollmentDesignKey_Page'), pk); ");
+		tl(1, "var pk = ", Optional.ofNullable(siteRequest_.getRequestPk()).map(l -> l.toString()).orElse("null"), ";");
+		tl(1, "if(pk != null) {");
+		tl(2, "suggestHtmlPartEnrollmentDesignKey([{'name':'fq','value':'htmlPartKeys:' + pk}], $('#listHtmlPartEnrollmentDesignKey_Page'), pk); ");
+		tl(1, "}");
 		tl(1, "websocketHtmlPart(websocketHtmlPartInner);");
 		l("});");
 	}
 
 	public void htmlFormPageHtmlPart(HtmlPart o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Page");
 			o.htmPk("Page");
-			o.htmObjectId("Page");
+			o.htmCreated("Page");
 			o.htmModified("Page");
+			o.htmObjectId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Page");
@@ -161,10 +164,10 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 	public void htmlFormPOSTHtmlPart(HtmlPart o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("POST");
 			o.htmPk("POST");
-			o.htmObjectId("POST");
+			o.htmCreated("POST");
 			o.htmModified("POST");
+			o.htmObjectId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
@@ -220,10 +223,10 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 	public void htmlFormPATCHHtmlPart(HtmlPart o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("PATCH");
 			o.htmPk("PATCH");
-			o.htmObjectId("PATCH");
+			o.htmCreated("PATCH");
 			o.htmModified("PATCH");
+			o.htmObjectId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("PATCH");
@@ -279,10 +282,10 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 	public void htmlFormSearchHtmlPart(HtmlPart o) {
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCreated("Recherche");
 			o.htmPk("Recherche");
-			o.htmObjectId("Recherche");
+			o.htmCreated("Recherche");
 			o.htmModified("Recherche");
+			o.htmObjectId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("Recherche");
@@ -530,6 +533,38 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			} g("div");
 		} g("div");
 
+
+		if(listHtmlPart != null && listHtmlPart.size() == 1) {
+			e("button")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("onclick", "$('#putHtmlPartModal').show(); ")
+				.f().sx("Replace theHTML part")
+			.g("button");
+			{ e("div").a("id", "putHtmlPartModal").a("class", "w3-modal ").f();
+				{ e("div").a("class", "w3-modal-content w3-card-4 ").f();
+					{ e("header").a("class", "w3-container w3-yellow ").f();
+						e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putHtmlPartModal').hide(); ").f().sx("×").g("span");
+						e("h2").a("class", "w3-padding ").f().sx("Replace theHTML part").g("h2");
+					} g("header");
+					{ e("div").a("class", "w3-container ").f();
+						HtmlPart o = new HtmlPart();
+						o.setSiteRequest_(siteRequest_);
+
+						// Form PUT
+						{ e("div").a("id", "putHtmlPartForm").f();
+							htmlFormPOSTHtmlPart(o);
+						} g("div");
+						e("button")
+							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+							.a("onclick", "putHtmlPart(", o.getPk(), ", $('#putHtmlPartForm')); ")
+							.f().sx("Replace theHTML part")
+						.g("button");
+
+					} g("div");
+				} g("div");
+			} g("div");
+
+		}
 
 		e("button")
 			.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")

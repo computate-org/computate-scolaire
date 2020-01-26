@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.user;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -119,16 +119,16 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSiteUser.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSiteUser.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSiteUser.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSiteUser.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSiteUser.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSiteUser.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSiteUser.size() == 1) {
 												SiteUser o = listSiteUser.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSiteUser(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSiteUser(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -136,7 +136,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 													sqlSiteUser(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSiteUser(patchRequest, listSiteUser, dt, f -> {
+																listPATCHSiteUser(apiRequest, listSiteUser, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -170,7 +170,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSiteUser(patchRequest, eventHandler);
+											response200PATCHSiteUser(apiRequest, eventHandler);
 										} else {
 											errorSiteUser(siteRequest, eventHandler, c);
 										}
@@ -192,7 +192,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void listPATCHSiteUser(PatchRequest patchRequest, SearchList<SiteUser> listSiteUser, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSiteUser(ApiRequest apiRequest, SearchList<SiteUser> listSiteUser, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSiteUser.getSiteRequest_();
 		listSiteUser.getList().forEach(o -> {
@@ -207,12 +207,12 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSiteUser.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSiteUser.size());
 				if(listSiteUser.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSiteUser(patchRequest, listSiteUser, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSiteUser(apiRequest, listSiteUser, dt, eventHandler);
 				} else {
-					response200PATCHSiteUser(patchRequest, eventHandler);
+					response200PATCHSiteUser(apiRequest, eventHandler);
 				}
 			} else {
 				errorSiteUser(listSiteUser.getSiteRequest_(), eventHandler, a);
@@ -220,11 +220,11 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		});
 	}
 
-	public void patchRequestSiteUser(SiteUser o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSiteUser(SiteUser o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 		}
 	}
 
@@ -240,8 +240,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(c.succeeded()) {
 									indexSiteUser(siteUser, d -> {
 										if(d.succeeded()) {
-											patchRequestSiteUser(siteUser);
-											siteUser.patchRequestSiteUser();
+											apiRequestSiteUser(siteUser);
+											siteUser.apiRequestSiteUser();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -372,10 +372,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 		}
 	}
 
-	public void response200PATCHSiteUser(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSiteUser(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

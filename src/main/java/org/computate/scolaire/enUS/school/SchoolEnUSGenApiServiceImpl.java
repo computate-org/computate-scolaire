@@ -2,9 +2,9 @@ package org.computate.scolaire.enUS.school;
 
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
 import org.computate.scolaire.enUS.search.SearchResult;
 import io.vertx.core.WorkerExecutor;
 import java.io.IOException;
@@ -102,11 +102,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 				if(a.succeeded()) {
 					createPOSTSchool(siteRequest, b -> {
 						if(b.succeeded()) {
-						PatchRequest patchRequest = new PatchRequest();
-							patchRequest.setRows(1);
-							patchRequest.setNumFound(1L);
-							patchRequest.initDeepPatchRequest(siteRequest);
-							siteRequest.setPatchRequest_(patchRequest);
+						ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1);
+							apiRequest.setNumFound(1L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
 							School school = b.result();
 							sqlPOSTSchool(school, c -> {
 								if(c.succeeded()) {
@@ -123,7 +123,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 																		if(a.succeeded()) {
 																			sqlConnection.close(i -> {
 																				if(a.succeeded()) {
-																					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
+																					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
 																					eventHandler.handle(Future.succeededFuture(g.result()));
 																				} else {
 																					errorSchool(siteRequest, eventHandler, i);
@@ -283,16 +283,16 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 											listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-											PatchRequest patchRequest = new PatchRequest();
-											patchRequest.setRows(listSchool.getRows());
-											patchRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
-											patchRequest.initDeepPatchRequest(siteRequest);
-											siteRequest.setPatchRequest_(patchRequest);
+											ApiRequest apiRequest = new ApiRequest();
+											apiRequest.setRows(listSchool.getRows());
+											apiRequest.setNumFound(Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(new Long(listSchool.size())));
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
 											if(listSchool.size() == 1) {
 												School o = listSchool.get(0);
-												patchRequest.setPk(o.getPk());
-												patchRequest.setOriginal(o);
-												patchRequestSchool(o);
+												apiRequest.setPk(o.getPk());
+												apiRequest.setOriginal(o);
+												apiRequestSchool(o);
 											}
 											WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 											workerExecutor.executeBlocking(
@@ -300,7 +300,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 													sqlSchool(siteRequest, e -> {
 														if(e.succeeded()) {
 															try {
-																listPATCHSchool(patchRequest, listSchool, dt, f -> {
+																listPATCHSchool(apiRequest, listSchool, dt, f -> {
 																	if(f.succeeded()) {
 																		SQLConnection sqlConnection2 = siteRequest.getSqlConnection();
 																		if(sqlConnection2 == null) {
@@ -334,7 +334,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												}, resultHandler -> {
 												}
 											);
-											response200PATCHSchool(patchRequest, eventHandler);
+											response200PATCHSchool(apiRequest, eventHandler);
 										} else {
 											errorSchool(siteRequest, eventHandler, c);
 										}
@@ -356,7 +356,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void listPATCHSchool(PatchRequest patchRequest, SearchList<School> listSchool, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void listPATCHSchool(ApiRequest apiRequest, SearchList<School> listSchool, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
 		listSchool.getList().forEach(o -> {
@@ -371,12 +371,12 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
-				patchRequest.setNumPATCH(patchRequest.getNumPATCH() + listSchool.size());
+				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchool.size());
 				if(listSchool.next(dt)) {
-					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(patchRequest).toString());
-					listPATCHSchool(patchRequest, listSchool, dt, eventHandler);
+					siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+					listPATCHSchool(apiRequest, listSchool, dt, eventHandler);
 				} else {
-					response200PATCHSchool(patchRequest, eventHandler);
+					response200PATCHSchool(apiRequest, eventHandler);
 				}
 			} else {
 				errorSchool(listSchool.getSiteRequest_(), eventHandler, a);
@@ -384,11 +384,11 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		});
 	}
 
-	public void patchRequestSchool(School o) {
-		PatchRequest patchRequest = o.getSiteRequest_().getPatchRequest_();
-		if(patchRequest != null) {
-			List<Long> pks = patchRequest.getPks();
-			List<String> classes = patchRequest.getClasses();
+	public void apiRequestSchool(School o) {
+		ApiRequest apiRequest = o.getSiteRequest_().getApiRequest_();
+		if(apiRequest != null) {
+			List<Long> pks = apiRequest.getPks();
+			List<String> classes = apiRequest.getClasses();
 			for(Long pk : o.getYearKeys()) {
 				if(!pks.contains(pk)) {
 					pks.add(pk);
@@ -410,8 +410,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								if(c.succeeded()) {
 									indexSchool(school, d -> {
 										if(d.succeeded()) {
-											patchRequestSchool(school);
-											school.patchRequestSchool();
+											apiRequestSchool(school);
+											school.apiRequestSchool();
 											future.complete(o);
 											eventHandler.handle(Future.succeededFuture(d.result()));
 										} else {
@@ -586,10 +586,10 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void response200PATCHSchool(PatchRequest patchRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void response200PATCHSchool(ApiRequest apiRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SiteRequestEnUS siteRequest = patchRequest.getSiteRequest_();
-			JsonObject json = JsonObject.mapFrom(patchRequest);
+			SiteRequestEnUS siteRequest = apiRequest.getSiteRequest_();
+			JsonObject json = JsonObject.mapFrom(apiRequest);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(json)));
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));

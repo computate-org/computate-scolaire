@@ -16,9 +16,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+
 import java.lang.String;
 import io.vertx.core.logging.Logger;
-import org.computate.scolaire.frFR.requete.patch.RequetePatch;
+
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -3012,30 +3014,30 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// requetePatch //
+	// requeteApi //
 	//////////////////
 
-	public void requetePatchGardienScolaire() {
-		RequetePatch requetePatch = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequetePatch_).orElse(null);
-		GardienScolaire original = (GardienScolaire)Optional.ofNullable(requetePatch).map(RequetePatch::getOriginal).orElse(null);
+	public void requeteApiGardienScolaire() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		GardienScolaire original = (GardienScolaire)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
-				requetePatch.addVars("inscriptionCles");
+				requeteApi.addVars("inscriptionCles");
 			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
-				requetePatch.addVars("personnePrenom");
+				requeteApi.addVars("personnePrenom");
 			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
-				requetePatch.addVars("personnePrenomPrefere");
+				requeteApi.addVars("personnePrenomPrefere");
 			if(!Objects.equals(familleNom, original.getFamilleNom()))
-				requetePatch.addVars("familleNom");
+				requeteApi.addVars("familleNom");
 			if(!Objects.equals(personneNumeroTelephone, original.getPersonneNumeroTelephone()))
-				requetePatch.addVars("personneNumeroTelephone");
+				requeteApi.addVars("personneNumeroTelephone");
 			if(!Objects.equals(personneRelation, original.getPersonneRelation()))
-				requetePatch.addVars("personneRelation");
+				requeteApi.addVars("personneRelation");
 			if(!Objects.equals(personneContactUrgence, original.getPersonneContactUrgence()))
-				requetePatch.addVars("personneContactUrgence");
+				requeteApi.addVars("personneContactUrgence");
 			if(!Objects.equals(personneChercher, original.getPersonneChercher()))
-				requetePatch.addVars("personneChercher");
-			super.requetePatchCluster();
+				requeteApi.addVars("personneChercher");
+			super.requeteApiCluster();
 		}
 	}
 

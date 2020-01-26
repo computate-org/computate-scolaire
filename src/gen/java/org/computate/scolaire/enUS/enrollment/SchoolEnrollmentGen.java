@@ -12,12 +12,14 @@ import java.time.LocalTime;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.mom.SchoolMom;
-import org.computate.scolaire.enUS.request.patch.PatchRequest;
+
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -11694,108 +11696,108 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	//////////////////
-	// patchRequest //
+	// apiRequest //
 	//////////////////
 
-	public void patchRequestSchoolEnrollment() {
-		PatchRequest patchRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getPatchRequest_).orElse(null);
-		SchoolEnrollment original = (SchoolEnrollment)Optional.ofNullable(patchRequest).map(PatchRequest::getOriginal).orElse(null);
+	public void apiRequestSchoolEnrollment() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		SchoolEnrollment original = (SchoolEnrollment)Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(original != null) {
 			if(!Objects.equals(yearKey, original.getYearKey()))
-				patchRequest.addVars("yearKey");
+				apiRequest.addVars("yearKey");
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))
-				patchRequest.addVars("blockKeys");
+				apiRequest.addVars("blockKeys");
 			if(!Objects.equals(childKey, original.getChildKey()))
-				patchRequest.addVars("childKey");
+				apiRequest.addVars("childKey");
 			if(!Objects.equals(momKeys, original.getMomKeys()))
-				patchRequest.addVars("momKeys");
+				apiRequest.addVars("momKeys");
 			if(!Objects.equals(dadKeys, original.getDadKeys()))
-				patchRequest.addVars("dadKeys");
+				apiRequest.addVars("dadKeys");
 			if(!Objects.equals(guardianKeys, original.getGuardianKeys()))
-				patchRequest.addVars("guardianKeys");
+				apiRequest.addVars("guardianKeys");
 			if(!Objects.equals(paymentKeys, original.getPaymentKeys()))
-				patchRequest.addVars("paymentKeys");
+				apiRequest.addVars("paymentKeys");
 			if(!Objects.equals(childCompleteName, original.getChildCompleteName()))
-				patchRequest.addVars("childCompleteName");
+				apiRequest.addVars("childCompleteName");
 			if(!Objects.equals(childBirthDate, original.getChildBirthDate()))
-				patchRequest.addVars("childBirthDate");
+				apiRequest.addVars("childBirthDate");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
-				patchRequest.addVars("schoolAddress");
+				apiRequest.addVars("schoolAddress");
 			if(!Objects.equals(enrollmentApproved, original.getEnrollmentApproved()))
-				patchRequest.addVars("enrollmentApproved");
+				apiRequest.addVars("enrollmentApproved");
 			if(!Objects.equals(enrollmentImmunizations, original.getEnrollmentImmunizations()))
-				patchRequest.addVars("enrollmentImmunizations");
+				apiRequest.addVars("enrollmentImmunizations");
 			if(!Objects.equals(familyMarried, original.getFamilyMarried()))
-				patchRequest.addVars("familyMarried");
+				apiRequest.addVars("familyMarried");
 			if(!Objects.equals(familySeparated, original.getFamilySeparated()))
-				patchRequest.addVars("familySeparated");
+				apiRequest.addVars("familySeparated");
 			if(!Objects.equals(familyDivorced, original.getFamilyDivorced()))
-				patchRequest.addVars("familyDivorced");
+				apiRequest.addVars("familyDivorced");
 			if(!Objects.equals(familyAddress, original.getFamilyAddress()))
-				patchRequest.addVars("familyAddress");
+				apiRequest.addVars("familyAddress");
 			if(!Objects.equals(familyHowDoYouKnowTheSchool, original.getFamilyHowDoYouKnowTheSchool()))
-				patchRequest.addVars("familyHowDoYouKnowTheSchool");
+				apiRequest.addVars("familyHowDoYouKnowTheSchool");
 			if(!Objects.equals(enrollmentSpecialConsiderations, original.getEnrollmentSpecialConsiderations()))
-				patchRequest.addVars("enrollmentSpecialConsiderations");
+				apiRequest.addVars("enrollmentSpecialConsiderations");
 			if(!Objects.equals(childMedicalConditions, original.getChildMedicalConditions()))
-				patchRequest.addVars("childMedicalConditions");
+				apiRequest.addVars("childMedicalConditions");
 			if(!Objects.equals(childPreviousSchoolsAttended, original.getChildPreviousSchoolsAttended()))
-				patchRequest.addVars("childPreviousSchoolsAttended");
+				apiRequest.addVars("childPreviousSchoolsAttended");
 			if(!Objects.equals(childDescription, original.getChildDescription()))
-				patchRequest.addVars("childDescription");
+				apiRequest.addVars("childDescription");
 			if(!Objects.equals(childObjectives, original.getChildObjectives()))
-				patchRequest.addVars("childObjectives");
+				apiRequest.addVars("childObjectives");
 			if(!Objects.equals(childPottyTrained, original.getChildPottyTrained()))
-				patchRequest.addVars("childPottyTrained");
+				apiRequest.addVars("childPottyTrained");
 			if(!Objects.equals(enrollmentGroupName, original.getEnrollmentGroupName()))
-				patchRequest.addVars("enrollmentGroupName");
+				apiRequest.addVars("enrollmentGroupName");
 			if(!Objects.equals(enrollmentPaymentEachMonth, original.getEnrollmentPaymentEachMonth()))
-				patchRequest.addVars("enrollmentPaymentEachMonth");
+				apiRequest.addVars("enrollmentPaymentEachMonth");
 			if(!Objects.equals(enrollmentPaymentComplete, original.getEnrollmentPaymentComplete()))
-				patchRequest.addVars("enrollmentPaymentComplete");
+				apiRequest.addVars("enrollmentPaymentComplete");
 			if(!Objects.equals(enrollmentParentNames, original.getEnrollmentParentNames()))
-				patchRequest.addVars("enrollmentParentNames");
+				apiRequest.addVars("enrollmentParentNames");
 			if(!Objects.equals(enrollmentSignature1, original.getEnrollmentSignature1()))
-				patchRequest.addVars("enrollmentSignature1");
+				apiRequest.addVars("enrollmentSignature1");
 			if(!Objects.equals(enrollmentSignature2, original.getEnrollmentSignature2()))
-				patchRequest.addVars("enrollmentSignature2");
+				apiRequest.addVars("enrollmentSignature2");
 			if(!Objects.equals(enrollmentSignature3, original.getEnrollmentSignature3()))
-				patchRequest.addVars("enrollmentSignature3");
+				apiRequest.addVars("enrollmentSignature3");
 			if(!Objects.equals(enrollmentSignature4, original.getEnrollmentSignature4()))
-				patchRequest.addVars("enrollmentSignature4");
+				apiRequest.addVars("enrollmentSignature4");
 			if(!Objects.equals(enrollmentSignature5, original.getEnrollmentSignature5()))
-				patchRequest.addVars("enrollmentSignature5");
+				apiRequest.addVars("enrollmentSignature5");
 			if(!Objects.equals(enrollmentSignature6, original.getEnrollmentSignature6()))
-				patchRequest.addVars("enrollmentSignature6");
+				apiRequest.addVars("enrollmentSignature6");
 			if(!Objects.equals(enrollmentSignature7, original.getEnrollmentSignature7()))
-				patchRequest.addVars("enrollmentSignature7");
+				apiRequest.addVars("enrollmentSignature7");
 			if(!Objects.equals(enrollmentSignature8, original.getEnrollmentSignature8()))
-				patchRequest.addVars("enrollmentSignature8");
+				apiRequest.addVars("enrollmentSignature8");
 			if(!Objects.equals(enrollmentSignature9, original.getEnrollmentSignature9()))
-				patchRequest.addVars("enrollmentSignature9");
+				apiRequest.addVars("enrollmentSignature9");
 			if(!Objects.equals(enrollmentSignature10, original.getEnrollmentSignature10()))
-				patchRequest.addVars("enrollmentSignature10");
+				apiRequest.addVars("enrollmentSignature10");
 			if(!Objects.equals(enrollmentDate1, original.getEnrollmentDate1()))
-				patchRequest.addVars("enrollmentDate1");
+				apiRequest.addVars("enrollmentDate1");
 			if(!Objects.equals(enrollmentDate2, original.getEnrollmentDate2()))
-				patchRequest.addVars("enrollmentDate2");
+				apiRequest.addVars("enrollmentDate2");
 			if(!Objects.equals(enrollmentDate3, original.getEnrollmentDate3()))
-				patchRequest.addVars("enrollmentDate3");
+				apiRequest.addVars("enrollmentDate3");
 			if(!Objects.equals(enrollmentDate4, original.getEnrollmentDate4()))
-				patchRequest.addVars("enrollmentDate4");
+				apiRequest.addVars("enrollmentDate4");
 			if(!Objects.equals(enrollmentDate5, original.getEnrollmentDate5()))
-				patchRequest.addVars("enrollmentDate5");
+				apiRequest.addVars("enrollmentDate5");
 			if(!Objects.equals(enrollmentDate6, original.getEnrollmentDate6()))
-				patchRequest.addVars("enrollmentDate6");
+				apiRequest.addVars("enrollmentDate6");
 			if(!Objects.equals(enrollmentDate7, original.getEnrollmentDate7()))
-				patchRequest.addVars("enrollmentDate7");
+				apiRequest.addVars("enrollmentDate7");
 			if(!Objects.equals(enrollmentDate8, original.getEnrollmentDate8()))
-				patchRequest.addVars("enrollmentDate8");
+				apiRequest.addVars("enrollmentDate8");
 			if(!Objects.equals(enrollmentDate9, original.getEnrollmentDate9()))
-				patchRequest.addVars("enrollmentDate9");
+				apiRequest.addVars("enrollmentDate9");
 			if(!Objects.equals(enrollmentDate10, original.getEnrollmentDate10()))
-				patchRequest.addVars("enrollmentDate10");
-			super.patchRequestCluster();
+				apiRequest.addVars("enrollmentDate10");
+			super.apiRequestCluster();
 		}
 	}
 
